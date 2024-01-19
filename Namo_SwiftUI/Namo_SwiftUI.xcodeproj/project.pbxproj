@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717592B595C1200B0F3B3 /* NamoHome.swift */; };
+		2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */; };
+		2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175D2B59FC0D00B0F3B3 /* Constants.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
 		5012A9C32B5933CC00544AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012A9C22B5933CC00544AB0 /* Assets.xcassets */; };
@@ -33,11 +36,13 @@
 		5021D8F82B5942A6009B4AD1 /* LocalSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8F72B5942A6009B4AD1 /* LocalSample.swift */; };
 		5021D8FA2B5942B2009B4AD1 /* APISample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8F92B5942B2009B4AD1 /* APISample.swift */; };
 		5021D8FC2B5942BD009B4AD1 /* ExtensionsSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8FB2B5942BD009B4AD1 /* ExtensionsSample.swift */; };
-		5021D8FE2B5942C3009B4AD1 /* UtilsSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8FD2B5942C3009B4AD1 /* UtilsSample.swift */; };
 		5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8FF2B5942D1009B4AD1 /* FactoryDI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C5717592B595C1200B0F3B3 /* NamoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoHome.swift; sourceTree = "<group>"; };
+		2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoTabView.swift; sourceTree = "<group>"; };
+		2C57175D2B59FC0D00B0F3B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
 		5012A9C02B5933CB00544AB0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -60,7 +65,6 @@
 		5021D8F72B5942A6009B4AD1 /* LocalSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSample.swift; sourceTree = "<group>"; };
 		5021D8F92B5942B2009B4AD1 /* APISample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISample.swift; sourceTree = "<group>"; };
 		5021D8FB2B5942BD009B4AD1 /* ExtensionsSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsSample.swift; sourceTree = "<group>"; };
-		5021D8FD2B5942C3009B4AD1 /* UtilsSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsSample.swift; sourceTree = "<group>"; };
 		5021D8FF2B5942D1009B4AD1 /* FactoryDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryDI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +176,8 @@
 			children = (
 				5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */,
 				5012A9C02B5933CB00544AB0 /* SplashView.swift */,
+				2C5717592B595C1200B0F3B3 /* NamoHome.swift */,
+				2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -253,7 +259,7 @@
 		5012A9E92B593C4400544AB0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5021D8FD2B5942C3009B4AD1 /* UtilsSample.swift */,
+				2C57175D2B59FC0D00B0F3B3 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -386,6 +392,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5021D8D52B593F27009B4AD1 /* ScheduleRepository.swift in Sources */,
+				2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */,
+				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
 				5021D8D92B593F4D009B4AD1 /* ScheduleRepositoryImpl.swift in Sources */,
 				5021D8F62B59428F009B4AD1 /* OnboardingViewModel.swift in Sources */,
@@ -396,7 +404,6 @@
 				5021D8DB2B593F6A009B4AD1 /* CommonSample.swift in Sources */,
 				5021D8FC2B5942BD009B4AD1 /* ExtensionsSample.swift in Sources */,
 				5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */,
-				5021D8FE2B5942C3009B4AD1 /* UtilsSample.swift in Sources */,
 				5021D8DE2B593FB9009B4AD1 /* HomeMainViewModel.swift in Sources */,
 				5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */,
 				5021D8FA2B5942B2009B4AD1 /* APISample.swift in Sources */,
@@ -406,6 +413,7 @@
 				5021D8D32B593EF2009B4AD1 /* Schedule.swift in Sources */,
 				5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */,
 				5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */,
+				2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +472,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -521,7 +529,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -546,6 +554,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,6 +584,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

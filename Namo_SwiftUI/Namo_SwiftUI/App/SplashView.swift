@@ -8,14 +8,29 @@
 import SwiftUI
 
 struct SplashView: View {
+	@State var isActive: Bool = false
+	@State var isLogin: Bool = false
+	
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+			if isActive && isLogin {
+				NamoHome()
+			} else if isActive && !isLogin {
+				// 온보딩 view
+			} else {
+				// splash view
+				Text("Splash View")
+			}
         }
-        .padding()
+		.onAppear {
+			// 로그인 후
+			isLogin = true
+			
+			// 스플래시 뷰 지속 시간
+			DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+				isActive = true
+			}
+		}
     }
 }
 
