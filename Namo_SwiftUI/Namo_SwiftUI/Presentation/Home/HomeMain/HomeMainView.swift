@@ -9,7 +9,25 @@ import SwiftUI
 
 struct HomeMainView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Hello, World!")
+			.font(.pretendard(.thin, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.extraLight, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.light, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.regular, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.medium, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.semibold, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.bold, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.extrabold, size: 30))
+		Text("Hello, World!")
+			.font(.pretendard(.black, size: 30))
+		
     }
 }
 
