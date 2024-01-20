@@ -53,6 +53,15 @@
         "branch" : "master",
         "revision" : "65269e499f882a2f8bc7ebe3e5a36a1ed7be48dc"
       }
+    },
+    {
+      "identity" : "swiftuicalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GGJJack/SwiftUICalendar",
+      "state" : {
+        "revision" : "7ecd220909bc25529e35e2addb513a20abbfec82",
+        "version" : "0.1.14"
+      }
     }
   ],
   "version" : 2
