@@ -7,123 +7,118 @@
 
 import SwiftUI
 
+// 온보딩 화면
+
 struct OnboardingView: View {
     
     @State var onboardingIndex = 1
     @State var onboardingSetences: [String] = ["소중한 나의 일정과 기록,\n 어떻게 관리하시나요?", "중요한 일정을 잊지 않도록\n 캘린더에 표시", "일정을 사진과 글로 기록하고\n 한 눈에 모아보세요", "그룹 캘린더에서 친구들 일정 확인 후\n 손쉽게 모임 일정을 잡고", "사진 공유와 금액 정산까지 효율적으로"]
     
+    @State private var isLinkActive = false
+    
     var body: some View {
         
-        VStack {
+        NavigationStack {
             
-            CustomIndicator(onboardingIndex: $onboardingIndex)
-                .padding(.top, 40)
-            
-            TabView(selection: $onboardingIndex) {
+            VStack {
                 
-                ForEach(1..<6, id: \.self) { index in
+                CustomIndicator(onboardingIndex: $onboardingIndex)
+                    .padding(.top, 40)
+                
+                TabView(selection: $onboardingIndex) {
                     
-                    VStack {
+                    ForEach(1..<6, id: \.self) { index in
                         
-                        Text(onboardingSetences[index-1])
-                                           .multilineTextAlignment(.center)
-                                           .fontWeight(.bold)
-                                           .font(.system(size: 20))
+                        VStack {
+                            
+                            Text(onboardingSetences[index-1])
+                                               .multilineTextAlignment(.center)
+                                               .fontWeight(.bold)
+                                               .font(.system(size: 20))
+                            
+                            Rectangle()
+                                .foregroundStyle(.clear)
+                                .frame(height: 100)
                         
-                        Rectangle()
-                            .foregroundStyle(.clear)
-                            .frame(height: 100)
-                    
-                        
-                        LottieView(fileName: "onboarding\(onboardingIndex)")
-                                        .frame(width: onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50,
-                                               height: onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50)
-                                        .id(onboardingIndex)
-//                                        .animation(.easeInOut, value: onboardingIndex)
-                                        .padding(.bottom, onboardingIndex == 2 ? 20 : 0)
-                                        .padding(.top, -60)
-                                        .tag(index)
+                            
+                            LottieView(fileName: "onboarding\(onboardingIndex)")
+                                            .frame(width: onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50,
+                                                   height: onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50)
+                                            .id(onboardingIndex)
+
+                                            .padding(.bottom, onboardingIndex == 2 ? 20 : 0)
+                                            .padding(.top, -60)
+                                            .tag(index)
+                            }
                         }
-                    }
-            }
-            .tabViewStyle(PageTabViewStyle())
-            
-            Spacer()
-            
-            HStack {
+                }
+                .tabViewStyle(PageTabViewStyle())
                 
                 Spacer()
                 
-                Button {
+                HStack {
                     
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        onboardingIndex = 5
+                    Spacer()
+                    
+                    Button {
+                        
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            onboardingIndex = 5
+                        }
+                    } label: {
+                        HStack {
+                            Text("Skip")
+                                .foregroundStyle(Color.mainOrange)
+                                .padding(-5)
+                                .frame(width: 47, height: 18)
+                            Image(systemName: "chevron.forward")
+                                .foregroundStyle(Color.mainOrange)
+                        }
                     }
-                } label: {
-                    HStack {
-                        Text("Skip")
-                            .foregroundStyle(Color.mainOrange)
-                            .padding(-5)
-                            .frame(width: 47, height: 18)
-                        Image(systemName: "chevron.forward")
-                            .foregroundStyle(Color.mainOrange)
-                    }
+                    .hidden(onboardingIndex == 5)
+                    .padding(.trailing, 25)
                 }
-                .hidden(onboardingIndex == 5)
-                .padding(.trailing, 25)
-            }
-            .padding(.bottom, 15)
-            
-//            if onboardingIndex == 5 {
-//                Group {
-//                    
-//                    VStack {
-//                        HStack {
-//                            Text("나의 모임 기록")
-//                            Text("나모")
-//                                .bold()
-//                        }
-//                        Text("지금 바로 시작하세요")
-//                    }
-//                }
-//                .padding(.bottom, 20)
-//            }
-            
-            
+                .padding(.bottom, 15)
+                
+                Button {
 
-            Button {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        
+                        if onboardingIndex == 5 {
+                            
+                            isLinkActive = true
+                            
+                        } else {
+                            onboardingIndex += 1
+                        }
+                    }
 
-                withAnimation(.easeInOut(duration: 0.25)) {
+                } label: {
                     
                     if onboardingIndex == 5 {
                         
-                        AgreeMainView()
+                        Text("시작하기")
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                            .frame(width: screenWidth-50, height: 55)
+                            .background(Color.mainOrange)
+                        
                     } else {
-                        onboardingIndex += 1
+                        
+                        Text("다음")
+                            .foregroundStyle(Color(.mainOrange))
+                            .fontWeight(.bold)
+                            .frame(width: screenWidth-50, height: 55)
+                            .background(Color.textBackground)
                     }
                 }
-
-            } label: {
-                
-                if onboardingIndex == 5 {
-                    
-                    Text("시작하기")
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                        .frame(width: screenWidth-50, height: 55)
-                        .background(Color.mainOrange)
-                    
-                } else {
-                    
-                    Text("다음")
-                        .foregroundStyle(Color(.mainOrange))
-                        .fontWeight(.bold)
-                        .frame(width: screenWidth-50, height: 55)
-                        .background(Color.textBackground)
-                }
+                .cornerRadius(15)
+                .padding(.bottom, 25)
             }
-            .cornerRadius(15)
-            .padding(.bottom, 25)
+            .navigationDestination(isPresented: $isLinkActive) {
+                AgreeMainView()
+            }
+            
         }
     }
 }

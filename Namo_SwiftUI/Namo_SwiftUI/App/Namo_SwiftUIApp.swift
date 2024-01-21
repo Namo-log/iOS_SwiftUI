@@ -11,8 +11,8 @@ import SwiftUI
 struct Namo_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-//            SplashView()
-            OnboardingView()
+            SplashView()
+
         }
     }
 }

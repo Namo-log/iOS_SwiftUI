@@ -8,7 +8,7 @@
 import SwiftUI
 import Lottie
 
-// Lottie
+// Lottie뷰 정의
 struct LottieView: UIViewRepresentable {
     
     var fileName: String
