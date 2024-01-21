@@ -50,6 +50,7 @@
 		508EC7B52B5A76C5006E5EEA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 508EC7B42B5A76C5006E5EEA /* Lottie */; };
 		508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508EC7B62B5A77C9006E5EEA /* LottieView.swift */; };
 		50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D62B5D3DB2000307E4 /* LoginView.swift */; };
+		50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		504A313D2B5BE96F007888B7 /* AgreeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeMainView.swift; sourceTree = "<group>"; };
 		508EC7B62B5A77C9006E5EEA /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		50CB10D62B5D3DB2000307E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeSubView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				504A313D2B5BE96F007888B7 /* AgreeMainView.swift */,
+				50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */,
 				5021D8F32B594279009B4AD1 /* OnboardingView.swift */,
 			);
 			path = OnboardingMain;
@@ -477,6 +480,7 @@
 				5021D8FA2B5942B2009B4AD1 /* APISample.swift in Sources */,
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
 				5021D8F82B5942A6009B4AD1 /* LocalSample.swift in Sources */,
+				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
 				5021D8EC2B59408F009B4AD1 /* GroupMainViewModel.swift in Sources */,
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				5021D8D32B593EF2009B4AD1 /* Schedule.swift in Sources */,
