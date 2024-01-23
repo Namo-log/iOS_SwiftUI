@@ -14,6 +14,8 @@ enum ColorCirclePresentMode {
     case selected
     /// 현재 선택 불가능한 상태
     case unAvailable
+    /// 체크마크 넣은 상태
+    case checked
 }
 
 struct ColorCircleView: View {
@@ -43,11 +45,17 @@ struct ColorCircleView: View {
                     .aspectRatio(0.55, contentMode: .fit)
             }
             
+            if (selectState == .checked) {
+                Image("checkMark")
+                    .resizable()
+                    .scaledToFit()
+                    .scaleEffect(CGSize(width: 0.5, height: 0.5))
+            }
         }
         
     }
 }
 
 #Preview {
-    ColorCircleView(color: .cyan, selectState: .selected)
+    ColorCircleView(color: .cyan, selectState: .checked)
 }
