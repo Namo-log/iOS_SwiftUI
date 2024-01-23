@@ -51,6 +51,7 @@
 		508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508EC7B62B5A77C9006E5EEA /* LottieView.swift */; };
 		50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D62B5D3DB2000307E4 /* LoginView.swift */; };
 		50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */; };
+		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		508EC7B62B5A77C9006E5EEA /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		50CB10D62B5D3DB2000307E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeSubView.swift; sourceTree = "<group>"; };
+		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				508EC7B62B5A77C9006E5EEA /* LottieView.swift */,
+				88D6C9F42B60119C004742AD /* ColorCircleView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				5021D8D92B593F4D009B4AD1 /* ScheduleRepositoryImpl.swift in Sources */,
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
 				5021D8E72B594060009B4AD1 /* DiaryMainViewModel.swift in Sources */,
+				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
 				5021D8F22B5940D6009B4AD1 /* CustomMainViewModel.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
