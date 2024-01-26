@@ -9,9 +9,25 @@ import SwiftUI
 
 struct ToDoCreateView: View {
     
-    @State private var ToDoTitle: String = ""
+    /// 일정 이름
+    @State private var toDoTitle: String = ""
+    /// 카테고리 색상
     @State private var categoryColor: Color = .mainOrange
-    @State private var categoryName: String = "일정"
+    /// 카테고리 이름
+    @State private var categoryName: String = "카테고리"
+    /// 시작 날짜 + 시각
+    @State private var startDateTime: Date = Date()
+    /// 종료 날짜 + 시각
+    @State private var endDateTime: Date = Date()
+    /// 장소명 -> 추후 long/latitude 추가 가능성 있습니다
+    @State private var place: String = "위치명"
+    
+    /// 시작 날짜 + 시각 Picker Show value
+    @State private var showStartTimePicker: Bool = false
+    /// 종료 날짜 + 시각 Picker Show value
+    @State private var showEndTimePicker: Bool = false
+    /// 알림 선택란 Show value
+    @State private var showNotificationSetting: Bool = true
     
     init() {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
@@ -21,7 +37,7 @@ struct ToDoCreateView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                TextField("일정 이름", text: $ToDoTitle)
+                TextField("일정 이름", text: $toDoTitle)
                     .font(.pretendard(.bold, size: 22))
                     .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
                 
@@ -46,17 +62,37 @@ struct ToDoCreateView: View {
                             .font(.pretendard(.regular, size: 15))
                             .foregroundStyle(.mainText)
                             .onTapGesture {
-                                print("show timepicker1")
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    print("showStartTimePicker")
+                                    self.showStartTimePicker.toggle()
+                                }
                             }
                     }
+                    
+                    if (showStartTimePicker) {
+                        DatePicker("StartTimePicker", selection: $startDateTime)
+                            .datePickerStyle(.wheel)
+                            .labelsHidden()
+                    }
+                    
                     ListItem(listTitle: "종료") {
                         Text("2023.01.25 (목) 01:25 AM")
                             .font(.pretendard(.regular, size: 15))
                             .foregroundStyle(.mainText)
                             .onTapGesture {
-                                print("show timepicker2")
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    print("showEndTimePicker")
+                                    self.showEndTimePicker.toggle()
+                                }
                             }
                     }
+                    
+                    if (showEndTimePicker) {
+                        DatePicker("EndTimePicker", selection: $endDateTime)
+                            .datePickerStyle(.wheel)
+                            .labelsHidden()
+                    }
+                    
                     ListItem(listTitle: "알림") {
                         HStack {
                             Text("5분 전")
@@ -65,12 +101,24 @@ struct ToDoCreateView: View {
                                 .onTapGesture {
                                     print("show noticeIntervalList")
                                 }
-                            Image("vector3")
+                            Image(showNotificationSetting == true ? "upChevron" : "downChevron")
                                 .renderingMode(.template)
                                 .foregroundStyle(.mainText)
                         }
                         .lineSpacing(12)
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                self.showNotificationSetting.toggle()
+                            }
+                        }
                     }
+                    
+                    if (showNotificationSetting) {
+//                        ColorToggleButton(buttonText: "test") {
+//                            print("asdf")
+//                        }
+                    }
+                    
                     ListItem(listTitle: "장소") {
                         HStack {
                             NavigationLink("탐앤탐스 탐스커버리 건대점", destination: HomeMainView())
