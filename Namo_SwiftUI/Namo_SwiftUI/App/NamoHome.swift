@@ -17,29 +17,31 @@ enum Tab {
 struct NamoHome: View {
 	@State var currentTab: Tab = .home
 	
-    var body: some View {
-		ZStack(alignment: .bottom) {
-			VStack(spacing: 0) {
-				Spacer(minLength: 0)
-				
-				switch currentTab {
-				case .home:
-					HomeMainView()
-				case .diary:
-					DiaryMainView()
-				case .group:
-					GroupMainView()
-				case .custom:
-					CustomMainView()
+	var body: some View {
+		NavigationStack {
+			ZStack(alignment: .bottom) {
+				VStack(spacing: 0) {
+					Spacer(minLength: 0)
+					
+					switch currentTab {
+					case .home:
+						HomeMainView()
+					case .diary:
+						DiaryMainView()
+					case .group:
+						GroupMainView()
+					case .custom:
+						CustomMainView()
+					}
+					
+					Spacer(minLength: 0)
 				}
 				
-				Spacer(minLength: 0)
+				NamoTabView(currentTab: $currentTab)
 			}
-			
-			NamoTabView(currentTab: $currentTab)
+			.ignoresSafeArea(edges: .bottom)
 		}
-		.ignoresSafeArea(edges: .bottom)
-    }
+	}
 }
 
 #Preview {
