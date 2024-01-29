@@ -61,6 +61,7 @@
 		8834ADF32B67BFFC0024F724 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF22B67BFFC0024F724 /* KakaoSDKAuth */; };
 		8834ADF52B67BFFC0024F724 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF42B67BFFC0024F724 /* KakaoSDKCommon */; };
 		8834ADF72B67BFFC0024F724 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF62B67BFFC0024F724 /* KakaoSDKUser */; };
+		8834ADF92B67C0D10024F724 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADF82B67C0D10024F724 /* secret.swift */; };
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
 		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
 /* End PBXBuildFile section */
@@ -109,6 +110,7 @@
 		508EC7B62B5A77C9006E5EEA /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		50CB10D62B5D3DB2000307E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeSubView.swift; sourceTree = "<group>"; };
+		8834ADF82B67C0D10024F724 /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,6 +252,7 @@
 				2C5717592B595C1200B0F3B3 /* NamoHome.swift */,
 				2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */,
 				50CB10D62B5D3DB2000307E4 /* LoginView.swift */,
+				8834ADF82B67C0D10024F724 /* secret.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
+				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
 				5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */,
 				2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */,
 				5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */,
