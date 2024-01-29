@@ -199,6 +199,7 @@
 		5012A9DA2B59394F00544AB0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				8834ADFA2B67C36E0024F724 /* Login */,
 				5012A9E62B593BD000544AB0 /* Components */,
 				5012A9E52B593BA500544AB0 /* Onboarding */,
 				5012A9E42B593B9800544AB0 /* Home */,
@@ -251,7 +252,6 @@
 				5012A9C02B5933CB00544AB0 /* SplashView.swift */,
 				2C5717592B595C1200B0F3B3 /* NamoHome.swift */,
 				2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */,
-				50CB10D62B5D3DB2000307E4 /* LoginView.swift */,
 				8834ADF82B67C0D10024F724 /* secret.swift */,
 			);
 			path = App;
@@ -397,6 +397,14 @@
 				5021D8F32B594279009B4AD1 /* OnboardingView.swift */,
 			);
 			path = OnboardingMain;
+			sourceTree = "<group>";
+		};
+		8834ADFA2B67C36E0024F724 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				50CB10D62B5D3DB2000307E4 /* LoginView.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		88D6C9F62B60286A004742AD /* HomeToDo */ = {
