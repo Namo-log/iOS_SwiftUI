@@ -21,6 +21,10 @@
 		2C5717902B5BF56100B0F3B3 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C5717872B5BF56100B0F3B3 /* Pretendard-ExtraBold.otf */; };
 		2C5717912B5BF56100B0F3B3 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C5717882B5BF56100B0F3B3 /* Pretendard-Bold.otf */; };
 		2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717932B5BF71200B0F3B3 /* Font+.swift */; };
+		2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E12B5F7E7800B0F3B3 /* Color+.swift */; };
+		2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */; };
+		2C5717E62B61306700B0F3B3 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E52B61306700B0F3B3 /* Date+.swift */; };
+		2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
 		5012A9C32B5933CC00544AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012A9C22B5933CC00544AB0 /* Assets.xcassets */; };
@@ -70,6 +74,10 @@
 		2C5717882B5BF56100B0F3B3 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		2C5717922B5BF5AF00B0F3B3 /* Namo-SwiftUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Namo-SwiftUI-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2C5717932B5BF71200B0F3B3 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		2C5717E12B5F7E7800B0F3B3 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonthDay+.swift"; sourceTree = "<group>"; };
+		2C5717E52B61306700B0F3B3 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
 		5012A9C02B5933CB00544AB0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -289,6 +297,7 @@
 			children = (
 				508EC7B62B5A77C9006E5EEA /* LottieView.swift */,
 				88D6C9F42B60119C004742AD /* ColorCircleView.swift */,
+				2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -322,6 +331,9 @@
 			children = (
 				504A313B2B5BDDF3007888B7 /* ViewHiddenModifier.swift */,
 				2C5717932B5BF71200B0F3B3 /* Font+.swift */,
+				2C5717E12B5F7E7800B0F3B3 /* Color+.swift */,
+				2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */,
+				2C5717E52B61306700B0F3B3 /* Date+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -482,11 +494,14 @@
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
 				5021D8D92B593F4D009B4AD1 /* ScheduleRepositoryImpl.swift in Sources */,
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
+				2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */,
 				5021D8E72B594060009B4AD1 /* DiaryMainViewModel.swift in Sources */,
 				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
 				5021D8F22B5940D6009B4AD1 /* CustomMainViewModel.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
+				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
+				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
 				5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */,
 				2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */,
 				5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */,
@@ -497,6 +512,7 @@
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
 				5021D8F82B5942A6009B4AD1 /* LocalSample.swift in Sources */,
 				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
+				2C5717E62B61306700B0F3B3 /* Date+.swift in Sources */,
 				5021D8EC2B59408F009B4AD1 /* GroupMainViewModel.swift in Sources */,
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				5021D8D32B593EF2009B4AD1 /* Schedule.swift in Sources */,
@@ -637,6 +653,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Namo_SwiftUI/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Namo-SwiftUI-Info.plist";
@@ -668,6 +685,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Namo_SwiftUI/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Namo-SwiftUI-Info.plist";

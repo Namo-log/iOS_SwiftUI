@@ -44,7 +44,7 @@ struct NamoTabView: View {
 		}
 		.padding(.horizontal, 30)
 		.padding(.top, 13)
-		.frame(width: screenWidth, height: 80)
+		.frame(width: screenWidth, height: tabBarHeight)
 		.background(
 			Rectangle()
 				.fill(Color.white)
