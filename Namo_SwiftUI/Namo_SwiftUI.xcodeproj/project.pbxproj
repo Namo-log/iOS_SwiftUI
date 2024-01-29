@@ -55,6 +55,12 @@
 		508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508EC7B62B5A77C9006E5EEA /* LottieView.swift */; };
 		50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D62B5D3DB2000307E4 /* LoginView.swift */; };
 		50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */; };
+		8834ADEB2B67BEBE0024F724 /* naveridlogin-ios-sp in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADEA2B67BEBE0024F724 /* naveridlogin-ios-sp */; };
+		8834ADEE2B67BF430024F724 /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADED2B67BF430024F724 /* KakaoMapsSDK_SPM */; };
+		8834ADF12B67BFFC0024F724 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF02B67BFFC0024F724 /* KakaoSDK */; };
+		8834ADF32B67BFFC0024F724 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF22B67BFFC0024F724 /* KakaoSDKAuth */; };
+		8834ADF52B67BFFC0024F724 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF42B67BFFC0024F724 /* KakaoSDKCommon */; };
+		8834ADF72B67BFFC0024F724 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF62B67BFFC0024F724 /* KakaoSDKUser */; };
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
 		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
 /* End PBXBuildFile section */
@@ -113,10 +119,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5012A9D62B59389F00544AB0 /* RealmSwift in Frameworks */,
+				8834ADF12B67BFFC0024F724 /* KakaoSDK in Frameworks */,
+				8834ADEE2B67BF430024F724 /* KakaoMapsSDK_SPM in Frameworks */,
 				5012A9D42B59389F00544AB0 /* Realm in Frameworks */,
+				8834ADF52B67BFFC0024F724 /* KakaoSDKCommon in Frameworks */,
 				5012A9CE2B59382200544AB0 /* Alamofire in Frameworks */,
 				5012A9D12B59382F00544AB0 /* Factory in Frameworks */,
+				8834ADF32B67BFFC0024F724 /* KakaoSDKAuth in Frameworks */,
+				8834ADF72B67BFFC0024F724 /* KakaoSDKUser in Frameworks */,
 				2C57177E2B5BE9E800B0F3B3 /* SwiftUICalendar in Frameworks */,
+				8834ADEB2B67BEBE0024F724 /* naveridlogin-ios-sp in Frameworks */,
 				5012A9D92B59391600544AB0 /* Kingfisher in Frameworks */,
 				508EC7B52B5A76C5006E5EEA /* Lottie in Frameworks */,
 			);
@@ -416,6 +428,12 @@
 				5012A9D82B59391600544AB0 /* Kingfisher */,
 				508EC7B42B5A76C5006E5EEA /* Lottie */,
 				2C57177D2B5BE9E800B0F3B3 /* SwiftUICalendar */,
+				8834ADEA2B67BEBE0024F724 /* naveridlogin-ios-sp */,
+				8834ADED2B67BF430024F724 /* KakaoMapsSDK_SPM */,
+				8834ADF02B67BFFC0024F724 /* KakaoSDK */,
+				8834ADF22B67BFFC0024F724 /* KakaoSDKAuth */,
+				8834ADF42B67BFFC0024F724 /* KakaoSDKCommon */,
+				8834ADF62B67BFFC0024F724 /* KakaoSDKUser */,
 			);
 			productName = Namo_SwiftUI;
 			productReference = 5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */;
@@ -452,6 +470,9 @@
 				5012A9D72B59391600544AB0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				508EC7B32B5A76C5006E5EEA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				2C57177C2B5BE9E800B0F3B3 /* XCRemoteSwiftPackageReference "SwiftUICalendar" */,
+				8834ADE92B67BEBE0024F724 /* XCRemoteSwiftPackageReference "naveridlogin-ios-sp" */,
+				8834ADEC2B67BF430024F724 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
+				8834ADEF2B67BFFC0024F724 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 5012A9BC2B5933CB00544AB0 /* Products */;
 			projectDirPath = "";
@@ -781,6 +802,30 @@
 				minimumVersion = 4.3.4;
 			};
 		};
+		8834ADE92B67BEBE0024F724 /* XCRemoteSwiftPackageReference "naveridlogin-ios-sp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kyungkoo/naveridlogin-ios-sp.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.5;
+			};
+		};
+		8834ADEC2B67BF430024F724 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.3;
+			};
+		};
+		8834ADEF2B67BFFC0024F724 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.20.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -818,6 +863,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 508EC7B32B5A76C5006E5EEA /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		8834ADEA2B67BEBE0024F724 /* naveridlogin-ios-sp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8834ADE92B67BEBE0024F724 /* XCRemoteSwiftPackageReference "naveridlogin-ios-sp" */;
+			productName = "naveridlogin-ios-sp";
+		};
+		8834ADED2B67BF430024F724 /* KakaoMapsSDK_SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8834ADEC2B67BF430024F724 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = KakaoMapsSDK_SPM;
+		};
+		8834ADF02B67BFFC0024F724 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8834ADEF2B67BFFC0024F724 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		8834ADF22B67BFFC0024F724 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8834ADEF2B67BFFC0024F724 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		8834ADF42B67BFFC0024F724 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8834ADEF2B67BFFC0024F724 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		8834ADF62B67BFFC0024F724 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8834ADEF2B67BFFC0024F724 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

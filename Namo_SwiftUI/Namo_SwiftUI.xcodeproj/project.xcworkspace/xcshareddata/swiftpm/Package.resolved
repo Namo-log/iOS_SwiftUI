@@ -19,6 +19,24 @@
       }
     },
     {
+      "identity" : "kakao-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kakao/kakao-ios-sdk",
+      "state" : {
+        "revision" : "ae3c60cbd4e3b348775f8c766e5b908fa1e66c5a",
+        "version" : "2.20.0"
+      }
+    },
+    {
+      "identity" : "kakaomapssdk-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git",
+      "state" : {
+        "revision" : "d2b50b7ae9785f16287df49aa2d010c8e00cf6ee",
+        "version" : "2.6.3"
+      }
+    },
+    {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher",
@@ -34,6 +52,15 @@
       "state" : {
         "revision" : "3f1202f254ad5d71f6c5b518ed2d6b9e2abe6969",
         "version" : "4.3.4"
+      }
+    },
+    {
+      "identity" : "naveridlogin-ios-sp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kyungkoo/naveridlogin-ios-sp.git",
+      "state" : {
+        "revision" : "85b08cf3be9bfd84df09437c64bc621c93336770",
+        "version" : "4.1.5"
       }
     },
     {
