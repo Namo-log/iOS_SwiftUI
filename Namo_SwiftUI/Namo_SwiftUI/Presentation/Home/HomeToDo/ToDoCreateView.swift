@@ -96,17 +96,19 @@ struct ToDoCreateView: View {
                     
                     VStack(alignment: .center, spacing: 20) {
                         ListItem(listTitle: "카테고리") {
-                            HStack {
-                                ColorCircleView(color: categoryColor)
-                                    .frame(width: 13, height: 13)
-                                NavigationLink(categoryName, destination: HomeMainView())
-                                    .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
-                                Image("vector3")
-                                    .renderingMode(.template)
-                                    .foregroundStyle(.mainText)
+                            NavigationLink(destination: HomeMainView()) {
+                                HStack {
+                                    ColorCircleView(color: categoryColor)
+                                        .frame(width: 13, height: 13)
+                                    NavigationLink(categoryName, destination: HomeMainView())
+                                        .font(.pretendard(.regular, size: 15))
+                                        .foregroundStyle(.mainText)
+                                    Image("vector3")
+                                        .renderingMode(.template)
+                                        .foregroundStyle(.mainText)
+                                }
+                                .lineSpacing(12)
                             }
-                            .lineSpacing(12)
                         }
                         .padding(.vertical, 14)
 
@@ -213,15 +215,17 @@ struct ToDoCreateView: View {
                         }
                         
                         ListItem(listTitle: "장소") {
-                            HStack {
-                                NavigationLink("탐앤탐스 탐스커버리 건대점", destination: HomeMainView())
-                                    .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
-                                Image("vector3")
-                                    .renderingMode(.template)
-                                    .foregroundStyle(.mainText)
+                            NavigationLink(destination: HomeMainView()) {
+                                HStack {
+                                    Text("탐앤탐스 탐스커버리 건대점")
+                                        .font(.pretendard(.regular, size: 15))
+                                        .foregroundStyle(.mainText)
+                                    Image("vector3")
+                                        .renderingMode(.template)
+                                        .foregroundStyle(.mainText)
+                                }
+                                .lineSpacing(12)
                             }
-                            .lineSpacing(12)
                         }
                         .padding(.vertical, 14)
                     }
