@@ -52,6 +52,13 @@ enum NotificationSetting: CaseIterable {
     }
 }
 
+
+func test() async {
+    let repo: ScheduleRepository = ScheduleRepositoryImpl()
+    let result = await repo.test()
+    print(result ?? "결과 불러오기 실패")
+}
+
 struct ToDoCreateView: View {
     
     /// 일정 이름
@@ -121,8 +128,14 @@ struct ToDoCreateView: View {
                                         print("showStartTimePicker")
                                         self.showStartTimePicker.toggle()
                                     }
+                                    
+                                    Task {
+                                        print("asdfasdfsadf")
+                                        await test()
+                                    }
                                 }
                         }
+                        
                         
                         if (showStartTimePicker) {
                             DatePicker("StartTimePicker", selection: $startDateTime)
