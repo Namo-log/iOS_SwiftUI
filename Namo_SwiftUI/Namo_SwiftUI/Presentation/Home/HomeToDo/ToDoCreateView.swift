@@ -53,12 +53,6 @@ enum NotificationSetting: CaseIterable {
 }
 
 
-func test() async {
-    let repo: ScheduleRepository = ScheduleRepositoryImpl()
-    let result = await repo.test()
-    print(result ?? "결과 불러오기 실패")
-}
-
 struct ToDoCreateView: View {
     
     /// 일정 이름
@@ -86,6 +80,9 @@ struct ToDoCreateView: View {
     
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
+    
+    // ToDoCreateViewModel
+    @StateObject var viewModel = ToDoCreateViewModel()
     
     init() {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
@@ -130,8 +127,8 @@ struct ToDoCreateView: View {
                                     }
                                     
                                     Task {
-                                        print("asdfasdfsadf")
-                                        await test()
+                                        // viewModel의 fetch 함수 호출
+                                        await viewModel.fetchTest()
                                     }
                                 }
                         }
