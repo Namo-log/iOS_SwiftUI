@@ -36,6 +36,13 @@ class AuthManager: RequestInterceptor {
             print("토큰 없다")
             return
         }
+        
+        // 또는 이것처럼 처리도 가능함
+//        guard let accessToken = UserDefaults.standard.string(forKey: "accessToken") else {
+//            completion(.failure(APIError.customError("토큰 조회 실패")))
+//            return
+//        }
+        
         //: 조건 확인 끝
         
         // URLRequest 헤더 추가, return
@@ -75,6 +82,10 @@ class AuthManager: RequestInterceptor {
             }
             print("토큰이 없어")
             return
+            
+            // 이것처럼 처리도 가능
+//            completion(.doNotRetryWithError(APIError.customError("토큰 조회 실패")))
+//            return
         }
         
         // 여기는 대충 AF Req 생성 과정임
@@ -100,6 +111,7 @@ class AuthManager: RequestInterceptor {
                 // 재시도 횟수 내일 때만 재시도
                 request.retryCount < self.retryLimit ?
                 completion(.retry) : completion(.doNotRetry)
+//                completion(.retry) : completion(.doNotRetryWithError(APIError.customError("재시도 횟수 초과"))) //
             case .failure(let error):
                 // 토큰 갱신 실패 시 에러 처리
                 print(error)
@@ -108,14 +120,10 @@ class AuthManager: RequestInterceptor {
                         name: NSNotification.Name("아니 토큰 갱신도 못하네 허허"),
                         object: nil)
                 }
+                // 이것도 가능
+//                completion(.doNotRetryWithError(error))
             }
         }
     }
 
-}
-
-// 예시 Auth Decodable Model
-struct Auth: Decodable {
-    let accessToken: String
-    let refreshToken: String
 }

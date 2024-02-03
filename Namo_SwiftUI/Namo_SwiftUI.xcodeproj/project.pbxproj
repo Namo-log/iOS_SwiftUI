@@ -72,6 +72,7 @@
 		8879A7E62B69285700794475 /* ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* ScheduleEndPoint.swift */; };
 		8879A7E92B6A494D00794475 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E82B6A494D00794475 /* Data+.swift */; };
 		8879A7ED2B6A521B00794475 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7EC2B6A521B00794475 /* APITask.swift */; };
+		88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1A2B6E867000E47C8B /* Auth.swift */; };
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
 		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
 /* End PBXBuildFile section */
@@ -131,6 +132,7 @@
 		8879A7E52B69285700794475 /* ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		8879A7E82B6A494D00794475 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8879A7EC2B6A521B00794475 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
+		88A7EF1A2B6E867000E47C8B /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -233,6 +235,7 @@
 		5012A9DB2B59396000544AB0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8879A7DF2B6927E300794475 /* DTO */,
 				5021D8D22B593EF2009B4AD1 /* Schedule.swift */,
 			);
 			path = Model;
@@ -351,7 +354,6 @@
 				8879A7DC2B691BC000794475 /* Auth */,
 				8879A7E72B6A493200794475 /* Extension */,
 				8879A7E22B69280A00794475 /* EndPoint */,
-				8879A7DF2B6927E300794475 /* DTO */,
 				8834ADFB2B67CAD40024F724 /* Base */,
 				5021D8F92B5942B2009B4AD1 /* APISample.swift */,
 			);
@@ -455,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				8879A7E02B6927ED00794475 /* testDTO.swift */,
+				88A7EF1A2B6E867000E47C8B /* Auth.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */,
 				8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */,
 				2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */,
+				88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */,
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
 				8879A7E62B69285700794475 /* ScheduleEndPoint.swift in Sources */,
