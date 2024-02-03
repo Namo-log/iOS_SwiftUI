@@ -13,7 +13,7 @@ class ToDoCreateViewModel: ObservableObject {
     
     /// 테스트
     func fetchTest() async {
-        let repo: ScheduleRepository = ScheduleRepositoryTest()
+        let repo: Example_ScheduleRepository = ScheduleRepositoryTest()
         let result = await repo.test()
         
         test = result
@@ -22,7 +22,7 @@ class ToDoCreateViewModel: ObservableObject {
     
     /// 실사용
     func fetchData() async {
-        let repo: ScheduleRepository = ScheduleRepositoryImpl()
+        let repo: Example_ScheduleRepository = Example_ScheduleRepositoryImpl()
         let result = await repo.test()
         
         test = result

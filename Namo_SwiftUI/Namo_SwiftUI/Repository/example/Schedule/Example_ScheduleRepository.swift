@@ -7,7 +7,7 @@
 
 /// 스케줄 관련 데이터를 API 처리하기 위한 Repository 입니다.
 /// 게이트웨이
-protocol ScheduleRepository {
+protocol Example_ScheduleRepository {
     
     /// 지정된 ID에 해당하는 스케줄 데이터를 비동기적으로 가져옵니다.
     ///

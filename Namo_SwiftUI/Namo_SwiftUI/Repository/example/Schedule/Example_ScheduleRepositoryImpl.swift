@@ -9,23 +9,23 @@ import Foundation
 import Alamofire
 
 /// `ScheduleRepository의 Implement Class` 입니다.
-final class ScheduleRepositoryImpl: ScheduleRepository {
+final class Example_ScheduleRepositoryImpl: Example_ScheduleRepository {
     
     func fetchSchedule(id: Int) async -> testGetDeDTO? {
-        return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.getSchedule(id: id))
+        return await APIManager.shared.performRequest(endPoint: Example_ScheduleEndPoint.getSchedule(id: id))
     }
     
     func postSchedule(data: testEnDTO) async -> testDeDTO? {
-        return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.postScehdule(dto: data))
+        return await APIManager.shared.performRequest(endPoint: Example_ScheduleEndPoint.postScehdule(dto: data))
     }
     
     func test() async -> testDecodeDTO? {
-        return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.test)
+        return await APIManager.shared.performRequest(endPoint: Example_ScheduleEndPoint.test)
     }
 }
 
 /// `ScheduleRepository의 Test용 Implement Class` 입니다.
-final class ScheduleRepositoryTest: ScheduleRepository {
+final class ScheduleRepositoryTest: Example_ScheduleRepository {
     
     func fetchSchedule(id: Int) async -> testGetDeDTO? {
         // 테스트용 구현: 임의의 값을 반환
