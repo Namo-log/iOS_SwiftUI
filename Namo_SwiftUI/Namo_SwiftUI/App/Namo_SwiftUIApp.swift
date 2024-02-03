@@ -11,7 +11,7 @@ import SwiftUI
 struct Namo_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ToDoCreateView()
+            SplashView()
 
         }
     }
