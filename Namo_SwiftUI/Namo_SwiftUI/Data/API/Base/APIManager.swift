@@ -36,8 +36,8 @@ final class APIManager {
             let request = await self.requestData(endPoint: endPoint)
             let result = try request.result.get()
             print("inferred DataType to be decoded : \(T.self)")
-            let decodedData = try result.decode(type: T.self, decoder: decoder)
-            return decodedData
+            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+            return decodedData.result
         } catch {
             print("에러 발생: \(error)")
             return nil
