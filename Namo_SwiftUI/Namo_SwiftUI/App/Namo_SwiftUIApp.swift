@@ -15,7 +15,7 @@ struct Namo_SwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ExampleView()
+            SplashView()
                 .environmentObject(appState)
         }
     }
