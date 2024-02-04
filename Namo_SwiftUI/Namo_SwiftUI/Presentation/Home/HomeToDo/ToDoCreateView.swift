@@ -52,6 +52,7 @@ enum NotificationSetting: CaseIterable {
     }
 }
 
+
 struct ToDoCreateView: View {
     
     /// 일정 이름
@@ -79,6 +80,9 @@ struct ToDoCreateView: View {
     
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
+    
+    // ToDoCreateViewModel
+    @StateObject var viewModel = ToDoCreateViewModel()
     
     init() {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
@@ -121,8 +125,14 @@ struct ToDoCreateView: View {
                                         print("showStartTimePicker")
                                         self.showStartTimePicker.toggle()
                                     }
+                                    
+                                    Task {
+                                        // viewModel의 fetch 함수 호출
+                                        await viewModel.fetchTest()
+                                    }
                                 }
                         }
+                        
                         
                         if (showStartTimePicker) {
                             DatePicker("StartTimePicker", selection: $startDateTime)
