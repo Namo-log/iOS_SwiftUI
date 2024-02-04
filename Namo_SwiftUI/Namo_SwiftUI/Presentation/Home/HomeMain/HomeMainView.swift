@@ -143,7 +143,6 @@ struct HomeMainView: View {
 
 #Preview {
 	HomeMainView()
-		.environmentObject(AppState())
 }
 
 struct CalendarScheduleDetailItem: View {
