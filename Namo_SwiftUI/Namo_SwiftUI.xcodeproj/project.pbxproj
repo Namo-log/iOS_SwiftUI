@@ -25,6 +25,9 @@
 		2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */; };
 		2C5717E62B61306700B0F3B3 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E52B61306700B0F3B3 /* Date+.swift */; };
 		2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */; };
+		2C7232352B6DFEEF0097D669 /* ScheduleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */; };
+		2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001D2B6F50460054C31B /* CalendarItem.swift */; };
+		2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
 		5012A9C32B5933CC00544AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012A9C22B5933CC00544AB0 /* Assets.xcassets */; };
@@ -37,7 +40,6 @@
 		5021D8D32B593EF2009B4AD1 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8D22B593EF2009B4AD1 /* Schedule.swift */; };
 		5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8D42B593F27009B4AD1 /* Example_ScheduleRepository.swift */; };
 		5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8D82B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift */; };
-		5021D8DE2B593FB9009B4AD1 /* HomeMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8DD2B593FB9009B4AD1 /* HomeMainViewModel.swift */; };
 		5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */; };
 		5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8E22B594044009B4AD1 /* DiaryMainView.swift */; };
 		5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8E92B59407C009B4AD1 /* GroupMainView.swift */; };
@@ -114,6 +116,9 @@
 		2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonthDay+.swift"; sourceTree = "<group>"; };
 		2C5717E52B61306700B0F3B3 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
+		2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractor.swift; sourceTree = "<group>"; };
+		2CFE001D2B6F50460054C31B /* CalendarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItem.swift; sourceTree = "<group>"; };
+		2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScheduleItem.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
 		5012A9C02B5933CB00544AB0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -122,7 +127,6 @@
 		5021D8D22B593EF2009B4AD1 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		5021D8D42B593F27009B4AD1 /* Example_ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleRepository.swift; sourceTree = "<group>"; };
 		5021D8D82B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleRepositoryImpl.swift; sourceTree = "<group>"; };
-		5021D8DD2B593FB9009B4AD1 /* HomeMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainViewModel.swift; sourceTree = "<group>"; };
 		5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		5021D8E22B594044009B4AD1 /* DiaryMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryMainView.swift; sourceTree = "<group>"; };
 		5021D8E92B59407C009B4AD1 /* GroupMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMainView.swift; sourceTree = "<group>"; };
@@ -434,7 +438,9 @@
 			isa = PBXGroup;
 			children = (
 				5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */,
-				5021D8DD2B593FB9009B4AD1 /* HomeMainViewModel.swift */,
+				2CFE001D2B6F50460054C31B /* CalendarItem.swift */,
+				2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */,
+				2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */,
 			);
 			path = HomeMain;
 			sourceTree = "<group>";
@@ -780,6 +786,7 @@
 				2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */,
 				88A7EF242B6E896B00E47C8B /* Example_PetRepositoryImpl.swift in Sources */,
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
+				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				507C84CB2B6F353D00147C60 /* ScheduleInteractorSample.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
 				88A7EF292B6E89A800E47C8B /* getPetInfoDTO.swift in Sources */,
@@ -800,8 +807,8 @@
 				507C84DB2B6F37D200147C60 /* AuthRepository.swift in Sources */,
 				5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */,
 				2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */,
+				2C7232352B6DFEEF0097D669 /* ScheduleInteractor.swift in Sources */,
 				5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */,
-				5021D8DE2B593FB9009B4AD1 /* HomeMainViewModel.swift in Sources */,
 				5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */,
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
@@ -811,6 +818,7 @@
 				507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */,
 				88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */,
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
+				2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */,
 				5021D8F82B5942A6009B4AD1 /* LocalSample.swift in Sources */,
 				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
 				50BE93472B6F7CB50005022E /* MemoInteractorSample.swift in Sources */,

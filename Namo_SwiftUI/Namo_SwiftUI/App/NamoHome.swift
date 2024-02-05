@@ -15,6 +15,7 @@ enum Tab {
 }
 
 struct NamoHome: View {
+	@EnvironmentObject var appState: AppState
 	@State var currentTab: Tab = .home
 	
 	var body: some View {
@@ -38,6 +39,7 @@ struct NamoHome: View {
 				}
 				
 				NamoTabView(currentTab: $currentTab)
+					.hidden(appState.isTabbarHidden)
 			}
 			.ignoresSafeArea(edges: .bottom)
 		}

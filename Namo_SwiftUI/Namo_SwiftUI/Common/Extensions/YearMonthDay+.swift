@@ -22,8 +22,27 @@ extension YearMonthDay {
 	}
 	
 	func toDate() -> Date {
-		var dateComponent = self.toDateComponents()
+		let dateComponent = self.toDateComponents()
 		
 		return Calendar.current.date(from: dateComponent)!
+	}
+	
+	func getShortWeekday() -> String {
+		switch self.dayOfWeek {
+		case .sun:
+			return "일"
+		case .mon:
+			return "월"
+		case .tue:
+			return "화"
+		case .wed:
+			return "수"
+		case .thu:
+			return "목"
+		case .fri:
+			return "금"
+		case .sat:
+			return "토"
+		}
 	}
 }
