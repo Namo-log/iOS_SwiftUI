@@ -95,6 +95,7 @@
 		88A7EF2F2B6E8AE400E47C8B /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */; };
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
 		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
+		88E3A02B2B7243A400B9F75C /* ToDoSelectCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -175,6 +176,7 @@
 		88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
+		88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectCategoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -672,6 +674,7 @@
 			children = (
 				88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */,
 				882DB35F2B6BBBDF00A2759E /* ToDoCreateViewModel.swift */,
+				88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */,
 			);
 			path = HomeToDo;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				2C7232352B6DFEEF0097D669 /* ScheduleInteractor.swift in Sources */,
 				5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */,
 				5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */,
+				88E3A02B2B7243A400B9F75C /* ToDoSelectCategoryView.swift in Sources */,
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
