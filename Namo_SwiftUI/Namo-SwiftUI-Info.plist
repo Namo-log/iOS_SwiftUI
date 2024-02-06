@@ -19,5 +19,9 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Thin.otf</string>
 	</array>
+	<key>KAKAO_APP_KEY</key>
+	<string>a2144d7219c50ba0203a787b9c754d90</string>
+	<key>KAKAO_PHASE</key>
+	<string></string>
 </dict>
 </plist>
