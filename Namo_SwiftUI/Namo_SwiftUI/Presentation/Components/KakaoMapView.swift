@@ -61,6 +61,7 @@ struct KakaoMapView: UIViewRepresentable {
         
         var controller: KMController?
         var first: Bool
+        var pinList: [Place] = []
 
         override init() {
             first = true
@@ -76,7 +77,7 @@ struct KakaoMapView: UIViewRepresentable {
         func addViews() {
             let defaultPosition: MapPoint = MapPoint(longitude: 127.108678, latitude: 37.402001)
             //지도(KakaoMap)를 그리기 위한 viewInfo를 생성
-            let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", appName:"openmap", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 16)
+            let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", appName:"openmap", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 17)
             
             //KakaoMap 추가.
             if controller?.addView(mapviewInfo) == Result.OK {
@@ -101,10 +102,14 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
             if let poi = layer?.getPoi(poiID: poiID) {
+                layer?.getAllPois()?.forEach { poi in
+                    poi.changeStyle(styleID: "defaultStyle")
+                }
                 print("poi style 변경")
                 poi.changeStyle(styleID: "selectedStyle")
                 print("infoWindow 표시")
-                attachInfoWindow(poiPosition: position)
+                let place = pinList.first(where: { $0.id == Int(poiID) })
+                createInfoWindow(position: position, place: place)
             }
         }
         
@@ -133,53 +138,42 @@ struct KakaoMapView: UIViewRepresentable {
             manager.addPoiStyle(poiStyle2)
         }
         
-        // Poi 생성 - 테스트용
-        func createPois() {
-            let view = controller?.getView("mapview") as! KakaoMap
-            let manager = view.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            
-            let poiOption = PoiOptions(styleID: "defaultStyle")
-            poiOption.rank = 0
-            poiOption.clickable = true
-            
-            let _ = layer?.addPois(option: poiOption, at: [MapPoint(longitude: 127.108678, latitude: 37.402001)])
-            layer?.showAllPois()
-
-        }
-        
         /// map의 poi들을 Update하는 함수입니다.
         /// Binding된 pinList가 변경됨에 따라 호출되는 함수입니다.
         /// 기존 지도의 핀들은 모두 삭제되고, pinList 내의 아이템들만 지도에 표시됩니다.
         func updatePois(pinList: [Place]) {
+            self.pinList = pinList
             let view = controller?.getView("mapview") as! KakaoMap
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            
-            let poiOption = PoiOptions(styleID: "defaultStyle")
-            poiOption.rank = 0
-            poiOption.clickable = true
             
             print("Kakao Map's pois update 실행")
             
             let pois = layer?.getAllPois().map { $0.map { return $0.itemID} } ?? []
             layer?.removePois(poiIDs: pois)
-            
-            var poiList: [MapPoint] = []
-            
-            pinList.forEach { place in
-                poiList.append(MapPoint(longitude: place.y, latitude: place.x))
-            }
+        
+            let poiList = pinList.map { return MapPoint(longitude: $0.y, latitude: $0.x) }
     
-            let _ = layer?.addPois(option: poiOption, at: poiList)
+            let poiOptions = pinList.map { place in
+                let poiOption = PoiOptions(styleID: "defaultStyle", poiID: String(place.id))
+                poiOption.rank = 0
+                poiOption.clickable = true
+                return poiOption
+            }
+            
+            let _ = layer?.addPois(options: poiOptions, at: poiList)
             layer?.showAllPois()
         }
         
         // MARK: InfoWindow
         
-        // 컴포넌트를 구성하여 InfoWindow를 생성한다.
-        func createInfoWindow(position: MapPoint) {
+        // 컴포넌트를 구성하여 해당 위치에 place의 내용으로 InfoWindow를 생성한다.
+        func createInfoWindow(position: MapPoint, place: Place?) {
             let view = controller?.getView("mapview") as! KakaoMap
+
+            let guiManager = view.getGuiManager()
+            // guiManager 추가 후 원래 존재하던 infoWindow 삭제
+            guiManager.infoWindowLayer.clear()
             
             // InfoWindow객체 생성
             let infoWindow = InfoWindow("infoWindow");
@@ -196,15 +190,16 @@ struct KakaoMapView: UIViewRepresentable {
             //bodyImage의 child로 들어갈 layout.
             let layout: GuiLayout = GuiLayout("layout")
             layout.arrangement = .horizontal    //가로배치
-            let button1: GuiButton = GuiButton("button1")
+            let button1: GuiButton = GuiButton(place?.name ?? "이름 없음")
             button1.image = UIImage.vector3
             button1.align.hAlign = .center
             button1.align.vAlign = .middle
             button1.imageSize = .init(width: 20, height: 20)
+            button1.padding = .init(left: 10, right: 5, top: 10, bottom: 10)
             
             let text = GuiText("text")
             let style = TextStyle()
-            text.addText(text: "안녕하세요~", style: style)
+            text.addText(text: "\(place?.name ?? "이름 없음")", style: style)
             //Text의 정렬. Layout의 크기는 child component들의 크기를 모두 합친 크기가 되는데, Layout상의 배치에 따라 공간의 여분이 있는 component는 align을 지정할 수 있다.
             text.align = GuiAlignment(vAlign: .middle, hAlign: .left)   // 좌중단 정렬.
             
@@ -224,7 +219,6 @@ struct KakaoMapView: UIViewRepresentable {
             infoWindow.delegate = self
             
             // guiManager를 통해 InfoWindow를 뷰에 추가한다. 뷰에 추가하기 전까지는 뷰 위에 표시되지 않는다.
-            let guiManager = view.getGuiManager()
             guiManager.infoWindowLayer.addInfoWindow(infoWindow)
             infoWindow.show()
         }
@@ -237,14 +231,5 @@ struct KakaoMapView: UIViewRepresentable {
 //            (gui as? InfoWindow)?.position = MapPoint(longitude: 126.996, latitude: 37.533)
         }
         
-        /// 주어진 Poiposition에 맞추어 infoWindow를 생성하는 함수입니다.
-        func attachInfoWindow(poiPosition: MapPoint) {
-            let view = controller?.getView("mapview") as! KakaoMap
-            let guiManager = view.getGuiManager()
-            
-            guiManager.infoWindowLayer.clear()
-            
-            createInfoWindow(position: poiPosition)
-        }
     }
 }
