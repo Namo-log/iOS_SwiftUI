@@ -80,6 +80,7 @@
 		8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADFE2B67CB0C0024F724 /* APIError.swift */; };
 		8834AE012B67CB320024F724 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834AE002B67CB320024F724 /* APIManager.swift */; };
 		884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D22B74C69D00766503 /* KakaoMapDTO.swift */; };
+		884382D52B74D5EA00766503 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D42B74D5EA00766503 /* Place.swift */; };
 		8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7DD2B691BC900794475 /* AuthManager.swift */; };
 		8879A7E12B6927ED00794475 /* testDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E02B6927ED00794475 /* testDTO.swift */; };
 		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
@@ -163,6 +164,7 @@
 		8834ADFE2B67CB0C0024F724 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		8834AE002B67CB320024F724 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		884382D22B74C69D00766503 /* KakaoMapDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDTO.swift; sourceTree = "<group>"; };
+		884382D42B74D5EA00766503 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		8879A7DD2B691BC900794475 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8879A7E02B6927ED00794475 /* testDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDTO.swift; sourceTree = "<group>"; };
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 			children = (
 				8879A7DF2B6927E300794475 /* DTO */,
 				5021D8D22B593EF2009B4AD1 /* Schedule.swift */,
+				884382D42B74D5EA00766503 /* Place.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -840,6 +843,7 @@
 				507C84E22B6F402700147C60 /* ExampleView2.swift in Sources */,
 				5021D8D32B593EF2009B4AD1 /* Schedule.swift in Sources */,
 				507C84D92B6F37BD00147C60 /* CategoryRepositorySample.swift in Sources */,
+				884382D52B74D5EA00766503 /* Place.swift in Sources */,
 				507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,
 				88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */,

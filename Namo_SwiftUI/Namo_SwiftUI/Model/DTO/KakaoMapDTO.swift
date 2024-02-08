@@ -34,6 +34,18 @@ struct Document: Codable {
     }
 }
 
+extension Document {
+    func toPlace() -> Place {
+        return .init(id: Int(id) ?? 0,
+                     x: Double(x) ?? 0.0,
+                     y: Double(y) ?? 0.0,
+                     name: placeName,
+                     address: addressName,
+                     rodeAddress: roadAddressName
+        )
+    }
+}
+
 /// KakaoMap REST API 통신에 사용하는 Response DTO입니다.
 struct Meta: Codable {
     let sameName: SameName
