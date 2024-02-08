@@ -57,7 +57,7 @@ struct KakaoMapView: UIViewRepresentable {
     }
     
     /// Coordinator 구현. KMControllerDelegate를 adopt한다.
-    class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
+    class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate, GuiEventDelegate {
         
         var controller: KMController?
         var first: Bool
@@ -92,6 +92,8 @@ struct KakaoMapView: UIViewRepresentable {
             }
         }
         
+        // MARK: Poi
+        
         // KakaoMapEventDelegate - poi가 탭되었을 때 이벤트
         func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
             print("pin tapped at \(position), id:\(poiID)")
@@ -101,6 +103,8 @@ struct KakaoMapView: UIViewRepresentable {
             if let poi = layer?.getPoi(poiID: poiID) {
                 print("poi style 변경")
                 poi.changeStyle(styleID: "selectedStyle")
+                print("infoWindow 표시")
+                attachInfoWindow(poiPosition: position)
             }
         }
         
@@ -169,6 +173,78 @@ struct KakaoMapView: UIViewRepresentable {
     
             let _ = layer?.addPois(option: poiOption, at: poiList)
             layer?.showAllPois()
+        }
+        
+        // MARK: InfoWindow
+        
+        // 컴포넌트를 구성하여 InfoWindow를 생성한다.
+        func createInfoWindow(position: MapPoint) {
+            let view = controller?.getView("mapview") as! KakaoMap
+            
+            // InfoWindow객체 생성
+            let infoWindow = InfoWindow("infoWindow");
+            
+            // bodyImage
+            let bodyImage = GuiImage("bgImage")
+            bodyImage.image = UIImage(named: "white_black_round10.png")
+            bodyImage.imageStretch = GuiEdgeInsets(top: 9, left: 9, bottom: 9, right: 9)
+            
+            // tailImage
+            let tailImage = GuiImage("tailImage")
+            tailImage.image = UIImage(named: "white_black.png")
+            
+            //bodyImage의 child로 들어갈 layout.
+            let layout: GuiLayout = GuiLayout("layout")
+            layout.arrangement = .horizontal    //가로배치
+            let button1: GuiButton = GuiButton("button1")
+            button1.image = UIImage.vector3
+            button1.align.hAlign = .center
+            button1.align.vAlign = .middle
+            button1.imageSize = .init(width: 20, height: 20)
+            
+            let text = GuiText("text")
+            let style = TextStyle()
+            text.addText(text: "안녕하세요~", style: style)
+            //Text의 정렬. Layout의 크기는 child component들의 크기를 모두 합친 크기가 되는데, Layout상의 배치에 따라 공간의 여분이 있는 component는 align을 지정할 수 있다.
+            text.align = GuiAlignment(vAlign: .middle, hAlign: .left)   // 좌중단 정렬.
+            
+            //body image의 child component로 레이아웃을 넣는다.
+            bodyImage.child = layout
+            infoWindow.body = bodyImage
+            infoWindow.tail = tailImage
+            infoWindow.bodyOffset.y = -10
+            
+            // layout구성요소
+            layout.addChild(text)
+            layout.addChild(button1)
+            
+            // InfoWindow가 표시될 위치
+            infoWindow.position = position
+            infoWindow.positionOffset.y = -30
+            infoWindow.delegate = self
+            
+            // guiManager를 통해 InfoWindow를 뷰에 추가한다. 뷰에 추가하기 전까지는 뷰 위에 표시되지 않는다.
+            let guiManager = view.getGuiManager()
+            guiManager.infoWindowLayer.addInfoWindow(infoWindow)
+            infoWindow.show()
+        }
+            
+        // 버튼이 클릭될 때 발생
+        func guiDidTapped(_ gui: KakaoMapsSDK.GuiBase, componentName: String) {
+            print("Gui: \(gui.name), Component: \(componentName) tapped")
+            
+            // InfoWindow의 position을 업데이트한다.
+//            (gui as? InfoWindow)?.position = MapPoint(longitude: 126.996, latitude: 37.533)
+        }
+        
+        /// 주어진 Poiposition에 맞추어 infoWindow를 생성하는 함수입니다.
+        func attachInfoWindow(poiPosition: MapPoint) {
+            let view = controller?.getView("mapview") as! KakaoMap
+            let guiManager = view.getGuiManager()
+            
+            guiManager.infoWindowLayer.clear()
+            
+            createInfoWindow(position: poiPosition)
         }
     }
 }
