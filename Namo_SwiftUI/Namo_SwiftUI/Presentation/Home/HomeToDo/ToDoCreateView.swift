@@ -80,6 +80,9 @@ struct ToDoCreateView: View {
     
     // KakaoMapView draw State
     @State var draw: Bool = false
+    @State var pinList: [Place] = [
+        Place(id: 0, x: 37.382001, y: 127.088678, name: "asdf", address: "asdf", rodeAddress: "asdf")
+    ]
     
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -244,7 +247,7 @@ struct ToDoCreateView: View {
                     }
                     .padding(.horizontal, 30)
                     
-                    KakaoMapView(draw: $draw).onAppear(perform: {
+                    KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
                         self.draw = true
                     }).onDisappear(perform: {
                         self.draw = false
