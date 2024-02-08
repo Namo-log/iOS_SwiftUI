@@ -78,6 +78,9 @@ struct ToDoCreateView: View {
     /// 알림 선택란 Show value
     @State private var showNotificationSetting: Bool = false
     
+    // KakaoMapView draw State
+    @State var draw: Bool = false
+    
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
     
@@ -92,7 +95,7 @@ struct ToDoCreateView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+//            ScrollView {
                 VStack {
                     TextField("일정 이름", text: $toDoTitle)
                         .font(.pretendard(.bold, size: 22))
@@ -241,6 +244,14 @@ struct ToDoCreateView: View {
                     }
                     .padding(.horizontal, 30)
                     
+                    KakaoMapView(draw: $draw).onAppear(perform: {
+                        self.draw = true
+                    }).onDisappear(perform: {
+                        self.draw = false
+                    })
+                    .frame(width: 330, height:200)
+                    .border(Color.init(hex: "#D9D9D9"), width: 1)
+                    
                     Spacer()
                 }
                 .navigationTitle("새 일정")
@@ -266,7 +277,7 @@ struct ToDoCreateView: View {
                         .foregroundStyle(.mainText)
                     }
                 }//: VStack - toolbar
-            }//: ScrollView
+//            }//: ScrollView
         }//: NavigationStack
     }
     
