@@ -79,6 +79,7 @@
 		8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADFC2B67CAE00024F724 /* EndPoint.swift */; };
 		8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADFE2B67CB0C0024F724 /* APIError.swift */; };
 		8834AE012B67CB320024F724 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834AE002B67CB320024F724 /* APIManager.swift */; };
+		884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D22B74C69D00766503 /* KakaoMapDTO.swift */; };
 		8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7DD2B691BC900794475 /* AuthManager.swift */; };
 		8879A7E12B6927ED00794475 /* testDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E02B6927ED00794475 /* testDTO.swift */; };
 		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
@@ -161,6 +162,7 @@
 		8834ADFC2B67CAE00024F724 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		8834ADFE2B67CB0C0024F724 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		8834AE002B67CB320024F724 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		884382D22B74C69D00766503 /* KakaoMapDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDTO.swift; sourceTree = "<group>"; };
 		8879A7DD2B691BC900794475 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8879A7E02B6927ED00794475 /* testDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDTO.swift; sourceTree = "<group>"; };
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
@@ -621,6 +623,7 @@
 				88A7EF272B6E899400E47C8B /* example */,
 				88A7EF1A2B6E867000E47C8B /* Auth.swift */,
 				88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */,
+				884382D22B74C69D00766503 /* KakaoMapDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -853,6 +856,7 @@
 				8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */,
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */,
+				884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
