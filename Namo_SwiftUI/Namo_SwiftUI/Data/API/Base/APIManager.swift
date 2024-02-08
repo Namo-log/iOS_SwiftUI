@@ -105,3 +105,40 @@ extension APIManager {
     }
 }
 
+extension APIManager {
+    func KakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil) async -> KakaoMapResponseDTO? {
+        
+        var params: Parameters = [ "query" : query ]
+        
+        if let x = x { params["x"] = String(x) }
+        if let y = y { params["y"] = String(y) }
+        if let radius = radius { params["radius"] = radius }
+        if let page = page { params["page"] = page }
+        if let size = size { params["size"] = size }
+        
+        let headers: HTTPHeaders = [ "Authorization" : "KakaoAK \(SecretConstants.kakaoMapRESTAPIKey)"]
+        
+        var result: KakaoMapResponseDTO?
+        
+        AF.request(
+            "https://dapi.kakao.com/v2/local/search/keyword.json",
+            method: .get,
+            parameters: params,
+            encoding: URLEncoding.default,
+            headers: headers
+        )
+        .validate()
+        .responseDecodable(of: KakaoMapResponseDTO.self) { dataResponse in
+            switch dataResponse.result {
+            case .success(let success):
+                result = success
+                print(success)
+            case .failure(let error):
+                print(error)
+                result = nil
+            }
+        }
+        
+        return result
+    }
+}
