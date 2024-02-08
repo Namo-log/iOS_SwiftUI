@@ -165,6 +165,7 @@
 		8834AE002B67CB320024F724 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		884382D22B74C69D00766503 /* KakaoMapDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDTO.swift; sourceTree = "<group>"; };
 		884382D42B74D5EA00766503 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		885C8BCD2B7393BC008F0595 /* Namo_SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Namo_SwiftUI.entitlements; sourceTree = "<group>"; };
 		8879A7DD2B691BC900794475 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8879A7E02B6927ED00794475 /* testDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDTO.swift; sourceTree = "<group>"; };
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
@@ -244,6 +245,7 @@
 		5012A9BD2B5933CB00544AB0 /* Namo_SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				885C8BCD2B7393BC008F0595 /* Namo_SwiftUI.entitlements */,
 				2C5717922B5BF5AF00B0F3B3 /* Namo-SwiftUI-Info.plist */,
 				5012A9E02B5939D500544AB0 /* DI */,
 				5012A9DF2B5939CD00544AB0 /* App */,
@@ -991,10 +993,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Namo_SwiftUI/Namo_SwiftUI.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Namo_SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8T2JAAS967;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Namo-SwiftUI-Info.plist";
@@ -1010,8 +1016,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.goghrf.Namo-SwiftUI";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = namo_debug;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1023,10 +1031,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Namo_SwiftUI/Namo_SwiftUI.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Namo_SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8T2JAAS967;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Namo-SwiftUI-Info.plist";
@@ -1042,8 +1054,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.goghrf.Namo-SwiftUI";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = namo_release;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
