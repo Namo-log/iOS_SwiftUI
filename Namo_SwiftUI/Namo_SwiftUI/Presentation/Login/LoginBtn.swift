@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct LoginBtn: View {
+    
+    @State var textContent: String
+    @State var textColor: Color
+    @State var btnBackgroundColor: String
+    @State var btnImage: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        Button {
+
+        } label: {
+            
+            Text(textContent)
+                .foregroundStyle(textColor)
+                .font(Font.pretendard(.bold, size: 18))
+                
+        }
+        .frame(width: screenWidth-50, height: 55)
+        .background(Color(hex: btnBackgroundColor))
+        .cornerRadius(15)
+        .overlay(
+            Image(btnImage)
+                .padding(.leading, 17),
+            alignment: .leading
+        )
     }
 }
 
 #Preview {
-    LoginBtn()
+    LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: "#FFE812", btnImage: "ic_login_kakao")
 }

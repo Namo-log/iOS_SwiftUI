@@ -13,4 +13,6 @@ class AppState: ObservableObject {
     @Published var example = 0
 	
 	@Published var isTabbarHidden: Bool = false
+    
+    @Published var isLogin: Bool = false
 }

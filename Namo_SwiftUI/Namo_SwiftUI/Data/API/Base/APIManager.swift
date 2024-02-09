@@ -43,6 +43,20 @@ final class APIManager {
             return nil
         }
     }
+    
+    // BaseResponse를 반환하는 메소드
+    func performRequestBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
+        do {
+            let request = await self.requestData(endPoint: endPoint)
+            let result = try request.result.get()
+            print("inferred DataType to be decoded : \(T.self)")
+            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+            return decodedData
+        } catch {
+            print("에러 발생: \(error)")
+            return nil
+        }
+    }
 }
 
 extension APIManager {
@@ -101,6 +115,16 @@ extension APIManager {
                   multipartFormData.append(image, withName: "images", fileName: "\(image).png", mimeType: "image/png")
               }
           }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+          
+          
+      case let .authRequestJSONEncodable(parameters):
+          return AF.request(
+            "\(endPoint.baseURL)\(endPoint.path)",
+            method: endPoint.method,
+            parameters: parameters,
+            encoder: JSONParameterEncoder.default,
+            headers: endPoint.headers
+          )
       }
     }
 }

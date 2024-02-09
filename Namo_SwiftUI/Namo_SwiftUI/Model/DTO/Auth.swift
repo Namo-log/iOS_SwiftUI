@@ -7,7 +7,17 @@
 
 import Foundation
 
-struct Auth: Decodable {
+struct Auth: Codable {
     let accessToken: String
     let refreshToken: String
+}
+
+struct SocialAccessToken: Encodable {
+    
+    let accessToken: String
+}
+
+struct ServerAccessToken: Encodable {
+    
+    let accessToken: String
 }
