@@ -81,6 +81,7 @@
 		8834AE012B67CB320024F724 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834AE002B67CB320024F724 /* APIManager.swift */; };
 		884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D22B74C69D00766503 /* KakaoMapDTO.swift */; };
 		884382D52B74D5EA00766503 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D42B74D5EA00766503 /* Place.swift */; };
+		8870C8572B7766F8001D083B /* ToDoSelectPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */; };
 		8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7DD2B691BC900794475 /* AuthManager.swift */; };
 		8879A7E12B6927ED00794475 /* testDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E02B6927ED00794475 /* testDTO.swift */; };
 		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
@@ -166,6 +167,7 @@
 		884382D22B74C69D00766503 /* KakaoMapDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDTO.swift; sourceTree = "<group>"; };
 		884382D42B74D5EA00766503 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		885C8BCD2B7393BC008F0595 /* Namo_SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Namo_SwiftUI.entitlements; sourceTree = "<group>"; };
+		8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectPlaceView.swift; sourceTree = "<group>"; };
 		8879A7DD2B691BC900794475 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8879A7E02B6927ED00794475 /* testDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDTO.swift; sourceTree = "<group>"; };
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 				88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */,
 				882DB35F2B6BBBDF00A2759E /* ToDoCreateViewModel.swift */,
 				88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */,
+				8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */,
 			);
 			path = HomeToDo;
 			sourceTree = "<group>";
@@ -816,6 +819,7 @@
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
 				507C84C62B6F34FC00147C60 /* CategoryInteractorSample.swift in Sources */,
 				8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */,
+				8870C8572B7766F8001D083B /* ToDoSelectPlaceView.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
 				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
 				507C84DB2B6F37D200147C60 /* AuthRepository.swift in Sources */,
