@@ -45,10 +45,12 @@
 		5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8E92B59407C009B4AD1 /* GroupMainView.swift */; };
 		5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8EF2B5940C8009B4AD1 /* CustomMainView.swift */; };
 		5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8F32B594279009B4AD1 /* OnboardingView.swift */; };
-		5021D8F82B5942A6009B4AD1 /* LocalSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8F72B5942A6009B4AD1 /* LocalSample.swift */; };
 		5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8FF2B5942D1009B4AD1 /* FactoryDI.swift */; };
 		504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A313B2B5BDDF3007888B7 /* ViewHiddenModifier.swift */; };
 		504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A313D2B5BE96F007888B7 /* AgreeMainView.swift */; };
+		504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8E9F2B75CB6400ADB867 /* KeyChainManager.swift */; };
+		504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */; };
+		504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8EA42B75D1D000ADB867 /* LoginBtn.swift */; };
 		507C84BF2B6F345E00147C60 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84BE2B6F345E00147C60 /* AppState.swift */; };
 		507C84C62B6F34FC00147C60 /* CategoryInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84C52B6F34FC00147C60 /* CategoryInteractorSample.swift */; };
 		507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84C82B6F353000147C60 /* MoimInteractorSample.swift */; };
@@ -132,10 +134,12 @@
 		5021D8E92B59407C009B4AD1 /* GroupMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMainView.swift; sourceTree = "<group>"; };
 		5021D8EF2B5940C8009B4AD1 /* CustomMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMainView.swift; sourceTree = "<group>"; };
 		5021D8F32B594279009B4AD1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		5021D8F72B5942A6009B4AD1 /* LocalSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSample.swift; sourceTree = "<group>"; };
 		5021D8FF2B5942D1009B4AD1 /* FactoryDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryDI.swift; sourceTree = "<group>"; };
 		504A313B2B5BDDF3007888B7 /* ViewHiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHiddenModifier.swift; sourceTree = "<group>"; };
 		504A313D2B5BE96F007888B7 /* AgreeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeMainView.swift; sourceTree = "<group>"; };
+		504F8E9F2B75CB6400ADB867 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndPoint.swift; sourceTree = "<group>"; };
+		504F8EA42B75D1D000ADB867 /* LoginBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBtn.swift; sourceTree = "<group>"; };
 		507C84BE2B6F345E00147C60 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		507C84C52B6F34FC00147C60 /* CategoryInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractorSample.swift; sourceTree = "<group>"; };
 		507C84C82B6F353000147C60 /* MoimInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimInteractorSample.swift; sourceTree = "<group>"; };
@@ -391,7 +395,7 @@
 		5012A9E72B593C0900544AB0 /* Local */ = {
 			isa = PBXGroup;
 			children = (
-				5021D8F72B5942A6009B4AD1 /* LocalSample.swift */,
+				504F8E9F2B75CB6400ADB867 /* KeyChainManager.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -461,6 +465,14 @@
 				5021D8E92B59407C009B4AD1 /* GroupMainView.swift */,
 			);
 			path = GroupMain;
+			sourceTree = "<group>";
+		};
+		504F8EA12B75CC1800ADB867 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		507C84BD2B6F343600147C60 /* Business */ = {
@@ -589,6 +601,7 @@
 			isa = PBXGroup;
 			children = (
 				50CB10D62B5D3DB2000307E4 /* LoginView.swift */,
+				504F8EA42B75D1D000ADB867 /* LoginBtn.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -625,6 +638,7 @@
 		8879A7E22B69280A00794475 /* EndPoint */ = {
 			isa = PBXGroup;
 			children = (
+				504F8EA12B75CC1800ADB867 /* Auth */,
 				88A7EF1E2B6E891E00E47C8B /* example */,
 			);
 			path = EndPoint;
@@ -796,16 +810,19 @@
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
 				2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */,
 				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
+				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				507C84DD2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
 				882DB3602B6BBBDF00A2759E /* ToDoCreateViewModel.swift in Sources */,
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
+				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,
 				8834AE012B67CB320024F724 /* APIManager.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
 				507C84C62B6F34FC00147C60 /* CategoryInteractorSample.swift in Sources */,
 				8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
 				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
+				504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */,
 				507C84DB2B6F37D200147C60 /* AuthRepository.swift in Sources */,
 				5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */,
 				2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */,
@@ -821,7 +838,6 @@
 				88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */,
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
 				2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */,
-				5021D8F82B5942A6009B4AD1 /* LocalSample.swift in Sources */,
 				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
 				50BE93472B6F7CB50005022E /* MemoInteractorSample.swift in Sources */,
 				88A7EF262B6E897F00E47C8B /* Example_PetRepositoryTest.swift in Sources */,
