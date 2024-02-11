@@ -23,34 +23,16 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		return mappedSchedules
 	}
 	
+	// 2: 모든 스케쥴을 get하는 API call
 	func getSchedules() async -> [Schedule] {
 		if let schedules = await scheduleRepository.getAllSchedule() {
-			print("asd")
 			return schedules.map({ $0.toSchedule() })
 		} else {
-			print("empty")
 			return []
 		}
 		
 	}
 	
-	// 2: dummyData
-//	func getDummyData() -> [DummySchedule] {
-//		return [
-//			DummySchedule(scheduleId: 0, name: "테스트123", startDate: Date(timeIntervalSince1970: 1704023407), endDate: Date(timeIntervalSince1970: 1704196207), color: "#DA6022"),
-//			DummySchedule(scheduleId: 1, name: "UMC 운영진 회의", startDate: Date(timeIntervalSince1970: 1706182200), endDate: Date(timeIntervalSince1970: 1706185800), color: "#DA6022"),
-//			DummySchedule(scheduleId: 2, name: "따스알", startDate: Date(timeIntervalSince1970: 1706238000), endDate: Date(timeIntervalSince1970: 1706241600), color: "#DA6022"),
-//			DummySchedule(scheduleId: 3, name: "약속", startDate: Date(timeIntervalSince1970: 1706247000), endDate: Date(timeIntervalSince1970: 1706274000), color: "#DE8989"),
-//			DummySchedule(scheduleId: 4, name: "나모 iOS 회의", startDate: Date(timeIntervalSince1970: 1706247000), endDate: Date(timeIntervalSince1970: 1706250600), color: "#525241"),
-//			DummySchedule(scheduleId: 5, name: "테스트용", startDate: Date(timeIntervalSince1970: 1706355607), endDate: Date(timeIntervalSince1970: 1706356207), color: "#5C8596"),
-//			DummySchedule(scheduleId: 5, name: "테스트22", startDate: Date(timeIntervalSince1970: 1706701807), endDate: Date(timeIntervalSince1970: 1706874607), color: "#5C8596"),
-//			DummySchedule(scheduleId: 5, name: "테스트999", startDate: Date(timeIntervalSince1970: 1706701807), endDate: Date(timeIntervalSince1970: 1707740000), color: "#666666"),
-//			DummySchedule(scheduleId: 5, name: "zzz", startDate: Date(timeIntervalSince1970: 1707078600), endDate: Date(timeIntervalSince1970: 1707093000), color: "#123123"),
-//			DummySchedule(scheduleId: 6, name: "설날 연휴", startDate: Date(timeIntervalSince1970: 1707404400), endDate: Date(timeIntervalSince1970: 1707750000), color: "#5C8596"),
-//			DummySchedule(scheduleId: 6, name: "ddd", startDate: Date(timeIntervalSince1970: 1707805800), endDate: Date(timeIntervalSince1970: 1707813000), color: "#333333"),
-//			
-//		]
-//	}
 	// 3: 서버에서 받아온 스케쥴들을 View의 Model로 매핑
 	func setSchedules(_ schedules: [Schedule]) -> [YearMonthDay: [CalendarSchedule]] {
 		var schedulesDict: [YearMonthDay: [CalendarSchedule]] = [:]
