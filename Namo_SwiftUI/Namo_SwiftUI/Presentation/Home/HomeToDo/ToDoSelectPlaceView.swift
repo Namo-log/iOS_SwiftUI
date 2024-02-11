@@ -20,22 +20,23 @@ struct ToDoSelectPlaceView: View {
     @State var showBtns: Bool = false
     
     var body: some View {
-        ZStack {
-//            KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
-//                self.draw = true
-//            }).onDisappear(perform: {
-//                self.draw = false
-//            })
-//            .frame(width: 330, height:200)
-//            .backgroundStyle(.black)
-//            .zIndex(0)
-            Color.blue
-                .ignoresSafeArea(.all)
+        ZStack(alignment: .topLeading) {
+            KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
+                self.draw = true
+            }).onDisappear(perform: {
+                self.draw = false
+            })
+            .frame(width: 300, height:100)
+            .backgroundStyle(.black)
+            .zIndex(0)
             
-            VStack {
+            VStack(alignment: .leading) {
+                circleItemView()
+                    .padding(.all, 12)
                 Spacer()
                 if showBtns {
                     HStack {
+                        
                         Spacer()
                         Button(action: {}) {
                             Text("취소")
@@ -69,14 +70,14 @@ struct ToDoSelectPlaceView: View {
                         Spacer()
                     }
                     .padding(.bottom, 16)
-                }
+                } //: HStack
                
                 placeListView(searchText: $searchText, pinList: $pinList)
                     .frame(height: 480)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
-            }
-            .ignoresSafeArea(.all)
+            } //: Vstack
+            .ignoresSafeArea(edges: .bottom)
         }
     }
     
@@ -152,6 +153,22 @@ struct ToDoSelectPlaceView: View {
             }
             .background(.textBackground)
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
+        }
+    }
+    
+    private struct circleItemView: View {
+        var body: some View {
+            ZStack {
+                Circle()
+                    .fill(.white)
+                    .frame(width: 40, height: 40)
+                    .shadow(radius: 2)
+                Image(systemName: "arrow.left")
+                    .renderingMode(.template)
+                    .foregroundStyle(.mainOrange)
+                    .font(.system(size: 20))
+            }
+            
         }
     }
 }
