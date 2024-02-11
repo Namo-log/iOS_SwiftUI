@@ -11,6 +11,7 @@ import SwiftUICalendar
 // 캘린더에 표시되는 아이템
 struct CalendarItem: View {
 	let date: YearMonthDay
+	let tempColor = "0xDA6022"
 	
 	@EnvironmentObject var appState: AppState
 	
@@ -49,32 +50,88 @@ struct CalendarItem: View {
 									if date == schedule.startDate.toYMD() {
 										// 현재 날이 시작일인 동시에 마지막 날이라면 -> 하루 짜리 스케쥴
 										if date == schedule.endDate.adjustDateIfMidNight().toYMD() {
-											CalendarScheduleItem(calendarScheduleItemype: .onlyOneDay, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: schedule.name)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .onlyOneDay,
+												isLargeItem: true,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: schedule.name
+											)
 										} else {
 											// 여러 일 지속 스케쥴의 시작부분인데 토요일(주의 마지막)인 경우 오른쪽 코너 주기
 											if date.dayOfWeek == .sat {
-												CalendarScheduleItem(calendarScheduleItemype: .startDayWithRightCorner, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: schedule.name)
+												CalendarScheduleItem(
+													calendarScheduleItemype: .startDayWithRightCorner,
+													isLargeItem: true,
+													color: tempColor,
+													geometryWidth: geometry.size.width,
+													isFocusYearMonth: date.isFocusYearMonth ?? true,
+													scheduleName: schedule.name
+												)
 											} else {
 												// 여러일 지속 스케쥴의 시작부분
-												CalendarScheduleItem(calendarScheduleItemype: .startDay, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: schedule.name)
+												CalendarScheduleItem(
+													calendarScheduleItemype: .startDay,
+													isLargeItem: true,
+													color: tempColor,
+													geometryWidth: geometry.size.width,
+													isFocusYearMonth: date.isFocusYearMonth ?? true,
+													scheduleName: schedule.name
+												)
 											}
 										}
 									} else if date == schedule.endDate.adjustDateIfMidNight().toYMD() {
 										// 여러 일 지속 스케쥴 -> 끝 부분(오른쪽만 radius)
 										if date.dayOfWeek == .sun {
-											CalendarScheduleItem(calendarScheduleItemype: .endDayWithLeftCorner, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: schedule.name)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .endDayWithLeftCorner,
+												isLargeItem: true,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: schedule.name
+											)
 										} else {
-											CalendarScheduleItem(calendarScheduleItemype: .endDay, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .endDay,
+												isLargeItem: true,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										}
 										
 									} else {
 										// 여러 일 지속 스케쥴 -> 중간 부분(no radius)
 										if date.dayOfWeek == .sat {
-											CalendarScheduleItem(calendarScheduleItemype: .midDayWithRightCorner, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .midDayWithRightCorner,
+												isLargeItem: true,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										} else if date.dayOfWeek == .sun {
-											CalendarScheduleItem(calendarScheduleItemype: .midDayWithLeftCorner, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: schedule.name)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .midDayWithLeftCorner,
+												isLargeItem: true,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: schedule.name
+											)
 										} else {
-											CalendarScheduleItem(calendarScheduleItemype: .midDay, isLargeItem: true, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .midDay,
+												isLargeItem: true,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										}
 									}
 								} else {
@@ -82,30 +139,86 @@ struct CalendarItem: View {
 									if date == schedule.startDate.toYMD() {
 										if date == schedule.endDate.adjustDateIfMidNight().toYMD() {
 											// 만약 하루짜리 스케쥴이면 -> 한개짜리 스케쥴 item
-											CalendarScheduleItem(calendarScheduleItemype: .onlyOneDay, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .onlyOneDay,
+												isLargeItem: false,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										} else {
 											// 여러 일 지속 스케쥴 -> 시작 부분(왼쪽만 radius)
 											if date.dayOfWeek == .sat {
-												CalendarScheduleItem(calendarScheduleItemype: .startDayWithRightCorner, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+												CalendarScheduleItem(
+													calendarScheduleItemype: .startDayWithRightCorner,
+													isLargeItem: false,
+													color: tempColor,
+													geometryWidth: geometry.size.width,
+													isFocusYearMonth: date.isFocusYearMonth ?? true,
+													scheduleName: nil
+												)
 											} else {
-												CalendarScheduleItem(calendarScheduleItemype: .startDay, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+												CalendarScheduleItem(
+													calendarScheduleItemype: .startDay,
+													isLargeItem: false,
+													color: tempColor,
+													geometryWidth: geometry.size.width,
+													isFocusYearMonth: date.isFocusYearMonth ?? true,
+													scheduleName: nil
+												)
 											}
 										}
 									} else if date == schedule.endDate.adjustDateIfMidNight().toYMD() {
 										// 여러 일 지속 스케쥴 -> 끝 부분(오른쪽만 radius)
 										if date.dayOfWeek == .sun {
-											CalendarScheduleItem(calendarScheduleItemype: .endDayWithLeftCorner, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .endDayWithLeftCorner,
+												isLargeItem: false,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										} else {
-											CalendarScheduleItem(calendarScheduleItemype: .endDay, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .endDay,
+												isLargeItem: false,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										}
 									} else {
 										// 여러 일 지속 스케쥴 -> 중간 부분(no radius)
 										if date.dayOfWeek == .sat {
-											CalendarScheduleItem(calendarScheduleItemype: .midDayWithRightCorner, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .midDayWithRightCorner,
+												isLargeItem: false,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										} else if date.dayOfWeek == .sun {
-											CalendarScheduleItem(calendarScheduleItemype: .midDayWithLeftCorner, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .midDayWithLeftCorner,
+												isLargeItem: false,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										} else {
-											CalendarScheduleItem(calendarScheduleItemype: .midDay, isLargeItem: false, color: schedule.color, geometryWidth: geometry.size.width, isFocusYearMonth: date.isFocusYearMonth ?? true, scheduleName: nil)
+											CalendarScheduleItem(
+												calendarScheduleItemype: .midDay,
+												isLargeItem: false,
+												color: tempColor,
+												geometryWidth: geometry.size.width,
+												isFocusYearMonth: date.isFocusYearMonth ?? true,
+												scheduleName: nil
+											)
 										}
 									}
 								}

@@ -28,4 +28,14 @@ extension Container {
         self { APIAuthRepositoryImpl() }
             .singleton
     }
+	
+	var scheduleInteractor: Factory<ScheduleInteractor> {
+		self { ScheduleInteractorImpl() }
+			.singleton
+	}
+	
+	var scheduleRepository: Factory<ScheduleRepository> {
+		self { ScheduleRepositoryImpl() }
+			.singleton
+	}
 }
