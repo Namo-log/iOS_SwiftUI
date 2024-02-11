@@ -11,6 +11,7 @@ import Factory
 
 struct HomeMainView: View {
 	@Injected(\.scheduleInteractor) var scheduleInteractor
+	@Injected(\.categoryInteractor) var categoryInteractor
 	@StateObject var calendarController = CalendarController()
 	
 	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
@@ -88,6 +89,7 @@ struct HomeMainView: View {
 		.ignoresSafeArea(edges: .bottom)
 		.task {
 			self.calendarSchedule = await scheduleInteractor.setCalendar()
+			await categoryInteractor.getCategories()
 		}
 	}
 	
@@ -167,7 +169,7 @@ struct HomeMainView: View {
 					}
 					
 					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, scheduleInteractor: scheduleInteractor)
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
 					}
 				}
 				.frame(width: screenWidth-50)
@@ -195,41 +197,46 @@ struct HomeMainView: View {
 struct CalendarScheduleDetailItem: View {
 	let ymd: YearMonthDay
 	let schedule: Schedule
-	let scheduleInteractor: ScheduleInteractor
+	@EnvironmentObject var appState: AppState
+	
+	@Injected(\.scheduleInteractor) var scheduleInteractor
+	@Injected(\.categoryInteractor) var categoryInteractor
+	
 	
 	var body: some View {
-		HStack(spacing: 15) {
-			Rectangle()
-				.fill(Color(.mainOrange)) // TODO: 색깔 변경
-				.frame(width: 30, height: 55)
-				.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
-			
-			VStack(alignment: .leading, spacing: 4) {
-//				Text("11:00 - 13:00")
-				Text(scheduleInteractor.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
-					.font(.pretendard(.medium, size: 12))
-					.foregroundStyle(Color(.mainText))
+		if let paletteId = appState.categoryPalette[schedule.categoryId] {
+			HStack(spacing: 15) {
+				Rectangle()
+					.fill(categoryInteractor.getColorWithPaletteId(id: paletteId))
+					.frame(width: 30, height: 55)
+					.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
 				
-				Text(schedule.name)
-					.font(.pretendard(.bold, size: 15))
+				VStack(alignment: .leading, spacing: 4) {
+					Text(scheduleInteractor.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
+						.font(.pretendard(.medium, size: 12))
+						.foregroundStyle(Color(.mainText))
+					
+					Text(schedule.name)
+						.font(.pretendard(.bold, size: 15))
+				}
+				
+				Spacer()
+				
+				Button(action: {}, label: {
+					Image(.btnAddRecord)
+						.resizable()
+						.frame(width: 34, height: 34)
+						.padding(.trailing, 11)
+				})
+				
 			}
-			
-			Spacer()
-			
-			Button(action: {}, label: {
-				Image(.btnAddRecord)
-					.resizable()
-					.frame(width: 34, height: 34)
-					.padding(.trailing, 11)
-			})
-			
+			.frame(width: screenWidth-50, height: 55)
+			.background(
+				RoundedRectangle(cornerRadius: 15)
+					.fill(Color(.textBackground))
+					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
+			)
 		}
-		.frame(width: screenWidth-50, height: 55)
-		.background(
-			RoundedRectangle(cornerRadius: 15)
-				.fill(Color(.textBackground))
-				.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
-		)
 	}
 }
 

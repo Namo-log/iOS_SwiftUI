@@ -38,4 +38,14 @@ extension Container {
 		self { ScheduleRepositoryImpl() }
 			.singleton
 	}
+	
+	var categoryInteractor: Factory<CategoryInteractor> {
+		self { CategoryInteractorImpl() }
+			.singleton
+	}
+	
+	var categoryRepository: Factory<CategoryRepository> {
+		self { CategoryRepositoryImpl() }
+			.singleton
+	}
 }

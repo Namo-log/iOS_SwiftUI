@@ -27,6 +27,12 @@
 		2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */; };
 		2C7232352B6DFEEF0097D669 /* ScheduleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */; };
 		2CF445042B760A8100A8E514 /* NamoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445032B760A8100A8E514 /* NamoAlertView.swift */; };
+		2CF445082B78E22900A8E514 /* CategoryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445072B78E22900A8E514 /* CategoryEndPoint.swift */; };
+		2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445092B78E3C700A8E514 /* CategoryDTO.swift */; };
+		2CF4450C2B78E95000A8E514 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4450B2B78E95000A8E514 /* CategoryRepository.swift */; };
+		2CF4450E2B78EDC300A8E514 /* CategoryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4450D2B78EDC300A8E514 /* CategoryRepositoryImpl.swift */; };
+		2CF445102B78EEC400A8E514 /* CategoryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4450F2B78EEC400A8E514 /* CategoryInteractor.swift */; };
+		2CF445122B78EED100A8E514 /* CategoryInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445112B78EED100A8E514 /* CategoryInteractorImpl.swift */; };
 		2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001D2B6F50460054C31B /* CalendarItem.swift */; };
 		2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */; };
 		2CFE00222B70A41C0054C31B /* ScheduleInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00212B70A41C0054C31B /* ScheduleInteractorImpl.swift */; };
@@ -59,12 +65,10 @@
 		504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */; };
 		504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8EA42B75D1D000ADB867 /* LoginBtn.swift */; };
 		507C84BF2B6F345E00147C60 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84BE2B6F345E00147C60 /* AppState.swift */; };
-		507C84C62B6F34FC00147C60 /* CategoryInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84C52B6F34FC00147C60 /* CategoryInteractorSample.swift */; };
 		507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84C82B6F353000147C60 /* MoimInteractorSample.swift */; };
 		507C84CD2B6F356C00147C60 /* AuthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84CC2B6F356C00147C60 /* AuthInteractor.swift */; };
 		507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84CE2B6F35B100147C60 /* APIAuthInteractorImpl.swift */; };
 		507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84D62B6F37B200147C60 /* MoimRepositorySample.swift */; };
-		507C84D92B6F37BD00147C60 /* CategoryRepositorySample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84D82B6F37BD00147C60 /* CategoryRepositorySample.swift */; };
 		507C84DB2B6F37D200147C60 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84DA2B6F37D200147C60 /* AuthRepository.swift */; };
 		507C84DD2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84DC2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift */; };
 		507C84E02B6F3FFF00147C60 /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84DF2B6F3FFF00147C60 /* ExampleView.swift */; };
@@ -125,6 +129,12 @@
 		2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractor.swift; sourceTree = "<group>"; };
 		2CF445032B760A8100A8E514 /* NamoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertView.swift; sourceTree = "<group>"; };
+		2CF445072B78E22900A8E514 /* CategoryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEndPoint.swift; sourceTree = "<group>"; };
+		2CF445092B78E3C700A8E514 /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
+		2CF4450B2B78E95000A8E514 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
+		2CF4450D2B78EDC300A8E514 /* CategoryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepositoryImpl.swift; sourceTree = "<group>"; };
+		2CF4450F2B78EEC400A8E514 /* CategoryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractor.swift; sourceTree = "<group>"; };
+		2CF445112B78EED100A8E514 /* CategoryInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractorImpl.swift; sourceTree = "<group>"; };
 		2CFE001D2B6F50460054C31B /* CalendarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItem.swift; sourceTree = "<group>"; };
 		2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScheduleItem.swift; sourceTree = "<group>"; };
 		2CFE00212B70A41C0054C31B /* ScheduleInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractorImpl.swift; sourceTree = "<group>"; };
@@ -153,12 +163,10 @@
 		504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndPoint.swift; sourceTree = "<group>"; };
 		504F8EA42B75D1D000ADB867 /* LoginBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBtn.swift; sourceTree = "<group>"; };
 		507C84BE2B6F345E00147C60 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		507C84C52B6F34FC00147C60 /* CategoryInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractorSample.swift; sourceTree = "<group>"; };
 		507C84C82B6F353000147C60 /* MoimInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimInteractorSample.swift; sourceTree = "<group>"; };
 		507C84CC2B6F356C00147C60 /* AuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractor.swift; sourceTree = "<group>"; };
 		507C84CE2B6F35B100147C60 /* APIAuthInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthInteractorImpl.swift; sourceTree = "<group>"; };
 		507C84D62B6F37B200147C60 /* MoimRepositorySample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRepositorySample.swift; sourceTree = "<group>"; };
-		507C84D82B6F37BD00147C60 /* CategoryRepositorySample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepositorySample.swift; sourceTree = "<group>"; };
 		507C84DA2B6F37D200147C60 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		507C84DC2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthRepositoryImpl.swift; sourceTree = "<group>"; };
 		507C84DF2B6F3FFF00147C60 /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
@@ -230,6 +238,14 @@
 				2C5717812B5BF56100B0F3B3 /* Pretendard-Thin.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		2CF445062B78E21B00A8E514 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				2CF445072B78E22900A8E514 /* CategoryEndPoint.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		5012A9B22B5933CB00544AB0 = {
@@ -510,7 +526,8 @@
 		507C84C12B6F34CD00147C60 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				507C84C52B6F34FC00147C60 /* CategoryInteractorSample.swift */,
+				2CF4450F2B78EEC400A8E514 /* CategoryInteractor.swift */,
+				2CF445112B78EED100A8E514 /* CategoryInteractorImpl.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -544,7 +561,8 @@
 		507C84D02B6F371900147C60 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				507C84D82B6F37BD00147C60 /* CategoryRepositorySample.swift */,
+				2CF4450B2B78E95000A8E514 /* CategoryRepository.swift */,
+				2CF4450D2B78EDC300A8E514 /* CategoryRepositoryImpl.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -645,6 +663,7 @@
 				88A7EF1A2B6E867000E47C8B /* Auth.swift */,
 				88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */,
 				2CFE00232B70A6EB0054C31B /* ScheduleDTO.swift */,
+				2CF445092B78E3C700A8E514 /* CategoryDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -652,6 +671,7 @@
 		8879A7E22B69280A00794475 /* EndPoint */ = {
 			isa = PBXGroup;
 			children = (
+				2CF445062B78E21B00A8E514 /* Category */,
 				504F8EA12B75CC1800ADB867 /* Auth */,
 				88A7EF1E2B6E891E00E47C8B /* example */,
 				2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */,
@@ -835,9 +855,9 @@
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,
 				8834AE012B67CB320024F724 /* APIManager.swift in Sources */,
+				2CF4450E2B78EDC300A8E514 /* CategoryRepositoryImpl.swift in Sources */,
 				2CFE00222B70A41C0054C31B /* ScheduleInteractorImpl.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
-				507C84C62B6F34FC00147C60 /* CategoryInteractorSample.swift in Sources */,
 				8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
 				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
@@ -852,6 +872,7 @@
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
+				2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */,
 				8879A7E12B6927ED00794475 /* testDTO.swift in Sources */,
 				507C84BF2B6F345E00147C60 /* AppState.swift in Sources */,
 				507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */,
@@ -865,17 +886,20 @@
 				88A7EF2F2B6E8AE400E47C8B /* BaseResponse.swift in Sources */,
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				507C84E22B6F402700147C60 /* ExampleView2.swift in Sources */,
-				507C84D92B6F37BD00147C60 /* CategoryRepositorySample.swift in Sources */,
 				2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */,
 				507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */,
+				2CF445102B78EEC400A8E514 /* CategoryInteractor.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,
 				88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */,
 				5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */,
 				5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */,
 				8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */,
+				2CF445122B78EED100A8E514 /* CategoryInteractorImpl.swift in Sources */,
 				2CFE00262B70BF3C0054C31B /* ScheduleRepository.swift in Sources */,
 				507C84CD2B6F356C00147C60 /* AuthInteractor.swift in Sources */,
+				2CF4450C2B78E95000A8E514 /* CategoryRepository.swift in Sources */,
 				2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */,
+				2CF445082B78E22900A8E514 /* CategoryEndPoint.swift in Sources */,
 				88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */,
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				507C84E02B6F3FFF00147C60 /* ExampleView.swift in Sources */,
