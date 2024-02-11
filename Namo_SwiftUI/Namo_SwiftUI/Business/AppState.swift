@@ -18,4 +18,6 @@ class AppState: ObservableObject {
 	
 	@Published var showAlert: Bool = false
 	@Published var alertMessage: String = ""
+    
+    @Published var isLogin: Bool = false
 }
