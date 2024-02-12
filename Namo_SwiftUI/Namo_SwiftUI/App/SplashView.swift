@@ -33,7 +33,7 @@ struct SplashView: View {
             } else {
                 ZStack {
                     
-                    LinearGradient(gradient: Gradient(colors: [Color(hex: "#e59744"), Color.mainOrange]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    LinearGradient(gradient: Gradient(colors: [Color(hex: 0xe59744), Color.mainOrange]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     
                     Image(.logo)
                 }
