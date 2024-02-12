@@ -7,13 +7,14 @@
 
 import SwiftUI
 import SwiftUICalendar
+import Factory
 
 // 캘린더에 표시되는 아이템
 struct CalendarItem: View {
 	let date: YearMonthDay
-	let tempColor = "0xDA6022"
 	
 	@EnvironmentObject var appState: AppState
+	@Injected(\.categoryInteractor) var categoryInteractor
 	
 	@Binding var focusDate: YearMonthDay?
 	@Binding var calendarSchedule: [YearMonthDay: [CalendarSchedule]]
@@ -44,6 +45,7 @@ struct CalendarItem: View {
 					VStack(alignment: .leading, spacing: focusDate == nil ? 4 : 2) {
 						ForEach(schedules.indices, id: \.self) { index in
 							if let schedule = schedules[index].schedule {
+								let color = categoryInteractor.getColorWithPaletteId(id: appState.categoryPalette[schedule.categoryId] ?? 0)
 								// 캘린더 펼친 상태
 								if focusDate == nil {
 									// 현재 날이 시작일이라면
@@ -53,7 +55,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .onlyOneDay,
 												isLargeItem: true,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: schedule.name
@@ -64,7 +66,7 @@ struct CalendarItem: View {
 												CalendarScheduleItem(
 													calendarScheduleItemype: .startDayWithRightCorner,
 													isLargeItem: true,
-													color: tempColor,
+													backgroundColor: color,
 													geometryWidth: geometry.size.width,
 													isFocusYearMonth: date.isFocusYearMonth ?? true,
 													scheduleName: schedule.name
@@ -74,7 +76,7 @@ struct CalendarItem: View {
 												CalendarScheduleItem(
 													calendarScheduleItemype: .startDay,
 													isLargeItem: true,
-													color: tempColor,
+													backgroundColor: color,
 													geometryWidth: geometry.size.width,
 													isFocusYearMonth: date.isFocusYearMonth ?? true,
 													scheduleName: schedule.name
@@ -87,7 +89,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .endDayWithLeftCorner,
 												isLargeItem: true,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: schedule.name
@@ -96,7 +98,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .endDay,
 												isLargeItem: true,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -109,7 +111,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .midDayWithRightCorner,
 												isLargeItem: true,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -118,7 +120,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .midDayWithLeftCorner,
 												isLargeItem: true,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: schedule.name
@@ -127,7 +129,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .midDay,
 												isLargeItem: true,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -142,7 +144,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .onlyOneDay,
 												isLargeItem: false,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -153,7 +155,7 @@ struct CalendarItem: View {
 												CalendarScheduleItem(
 													calendarScheduleItemype: .startDayWithRightCorner,
 													isLargeItem: false,
-													color: tempColor,
+													backgroundColor: color,
 													geometryWidth: geometry.size.width,
 													isFocusYearMonth: date.isFocusYearMonth ?? true,
 													scheduleName: nil
@@ -162,7 +164,7 @@ struct CalendarItem: View {
 												CalendarScheduleItem(
 													calendarScheduleItemype: .startDay,
 													isLargeItem: false,
-													color: tempColor,
+													backgroundColor: color,
 													geometryWidth: geometry.size.width,
 													isFocusYearMonth: date.isFocusYearMonth ?? true,
 													scheduleName: nil
@@ -175,7 +177,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .endDayWithLeftCorner,
 												isLargeItem: false,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -184,7 +186,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .endDay,
 												isLargeItem: false,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -196,7 +198,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .midDayWithRightCorner,
 												isLargeItem: false,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -205,7 +207,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .midDayWithLeftCorner,
 												isLargeItem: false,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil
@@ -214,7 +216,7 @@ struct CalendarItem: View {
 											CalendarScheduleItem(
 												calendarScheduleItemype: .midDay,
 												isLargeItem: false,
-												color: tempColor,
+												backgroundColor: color,
 												geometryWidth: geometry.size.width,
 												isFocusYearMonth: date.isFocusYearMonth ?? true,
 												scheduleName: nil

@@ -156,35 +156,46 @@ struct HomeMainView: View {
 				.padding(.vertical, 20)
 			
 			
-			if let schedules = calendarSchedule[focusDate!]?.compactMap({$0.schedule}) {
-				ScrollView(.vertical) {
-					HStack {
-						Text("개인 일정")
-							.font(.pretendard(.bold, size: 15))
-							.foregroundStyle(Color(.mainText))
-							.padding(.bottom, 11)
-							.padding(.leading, 3)
-						
-						Spacer()
-					}
+			
+			ScrollView(.vertical) {
+				HStack {
+					Text("개인 일정")
+						.font(.pretendard(.bold, size: 15))
+						.foregroundStyle(Color(.mainText))
+						.padding(.bottom, 11)
+						.padding(.leading, 3)
 					
+					Spacer()
+				}
+				
+				if let schedules = calendarSchedule[focusDate!]?.compactMap({$0.schedule}) {
 					ForEach(schedules, id: \.self) { schedule in
 						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
 					}
 				}
-				.frame(width: screenWidth-50)
-				.padding(.horizontal, 25)
-
-				
-			} else {
-				Text("이 날 일정 없어용")
+				else {
+					Text("등록된 개인 일정이 없습니다.")
+						.font(.pretendard(.medium, size: 14))
+						.foregroundStyle(Color(.mainText))
+				}
 			}
+			.frame(width: screenWidth-50)
+			.padding(.horizontal, 25)
+
+				 
 			
 			Spacer(minLength: 0)
 			
 		}
 		.frame(width: screenWidth, height: screenHeight * 0.47)
 		.background(Color.white)
+		.overlay(alignment: .bottomTrailing) {
+			Button(action: {}, label: {
+				Image(.floatingAdd)
+					.padding(.bottom, 37)
+					.padding(.trailing, 25)
+			})
+		}
 	}
 	
 	
@@ -223,7 +234,7 @@ struct CalendarScheduleDetailItem: View {
 				Spacer()
 				
 				Button(action: {}, label: {
-					Image(.btnAddRecord)
+					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
 						.resizable()
 						.frame(width: 34, height: 34)
 						.padding(.trailing, 11)

@@ -22,7 +22,7 @@ enum CalendarScheduleItemype {
 struct CalendarScheduleItem: View {
 	let calendarScheduleItemype: CalendarScheduleItemype
 	let isLargeItem: Bool
-	let color: String
+	let backgroundColor: Color
 	let geometryWidth: CGFloat
 	let isFocusYearMonth: Bool
 	let scheduleName: String?
@@ -30,7 +30,7 @@ struct CalendarScheduleItem: View {
 	var body: some View {
 		ZStack(alignment: .leading) {
 			Rectangle()
-				.fill(Color(hex: color))
+				.fill(backgroundColor)
 				.clipShape(RoundedCorners(radius: 3, corners: getCorners(calendarScheduleItemype)))
 				.frame(width: getWidth(calendarScheduleItemype, geoWidth: geometryWidth), height: isLargeItem ? 12 : 4)
 				.opacity(isFocusYearMonth ? 1 : 0.5)

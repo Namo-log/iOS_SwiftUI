@@ -11,7 +11,7 @@ struct LoginBtn: View {
     
     @State var textContent: String
     @State var textColor: Color
-    @State var btnBackgroundColor: String
+    @State var btnBackgroundColor: UInt
     @State var btnImage: String
     
     var body: some View {
@@ -37,5 +37,5 @@ struct LoginBtn: View {
 }
 
 #Preview {
-    LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: "#FFE812", btnImage: "ic_login_kakao")
+    LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: 0xFFE812, btnImage: "ic_login_kakao")
 }
