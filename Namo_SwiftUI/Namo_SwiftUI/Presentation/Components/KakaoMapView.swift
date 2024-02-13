@@ -62,6 +62,7 @@ struct KakaoMapView: UIViewRepresentable {
         var controller: KMController?
         var first: Bool
         var pinList: [Place] = []
+        var selectedPoi: String?
 
         override init() {
             first = true
@@ -88,8 +89,6 @@ struct KakaoMapView: UIViewRepresentable {
                 // map Layer 기본 설정
                 createLabelLayer()
                 createPoiStyle()
-                // 기본 핀 추가
-//                createPois()
             }
         }
         
@@ -101,15 +100,22 @@ struct KakaoMapView: UIViewRepresentable {
             let view = controller?.getView("mapview") as! KakaoMap
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            if let poi = layer?.getPoi(poiID: poiID) {
-                layer?.getAllPois()?.forEach { poi in
-                    poi.changeStyle(styleID: "defaultStyle")
+            
+            // 현재 선택한 Poi
+            if let curPoi = layer?.getPoi(poiID: poiID) {
+                
+                // 이전에 선택한 Poi 스타일 변경
+                if let selectedPoi = self.selectedPoi, let prePoi = layer?.getPoi(poiID: selectedPoi) {
+                    prePoi.changeStyle(styleID: "defaultStyle")
                 }
-                print("poi style 변경")
-                poi.changeStyle(styleID: "selectedStyle")
-                print("infoWindow 표시")
+                
+                curPoi.changeStyle(styleID: "selectedStyle")
+                
+                // infoWindow 표시
                 let place = pinList.first(where: { $0.id == Int(poiID) })
                 createInfoWindow(position: position, place: place)
+                
+                self.selectedPoi = poiID
             }
         }
         
