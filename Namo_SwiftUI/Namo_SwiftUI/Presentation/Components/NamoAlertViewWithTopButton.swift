@@ -8,6 +8,24 @@
 import SwiftUI
 import Factory
 
+/*
+ 사용 예시
+ NamoAlertViewWithTopButton(
+	 showAlert: $showNewGroupAlert,
+	 title: "새 그룹",
+	 leftButtonTitle: "닫기",
+	 leftButtonAction: {},
+	 rightButtonTitle: "완료",
+	 rightButtonAction: {},
+	 content: AnyView(
+		 VStack(spacing: 0) {
+ 
+		}
+	 )
+ )
+ 
+ */
+
 struct NamoAlertViewWithTopButton: View {
 	@Injected(\.appState) var appState
 	
