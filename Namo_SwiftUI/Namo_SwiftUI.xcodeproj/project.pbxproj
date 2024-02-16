@@ -33,6 +33,11 @@
 		2CF4450E2B78EDC300A8E514 /* CategoryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4450D2B78EDC300A8E514 /* CategoryRepositoryImpl.swift */; };
 		2CF445102B78EEC400A8E514 /* CategoryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4450F2B78EEC400A8E514 /* CategoryInteractor.swift */; };
 		2CF445122B78EED100A8E514 /* CategoryInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445112B78EED100A8E514 /* CategoryInteractorImpl.swift */; };
+		2CF445142B7F373600A8E514 /* MoimInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445132B7F373600A8E514 /* MoimInteractor.swift */; };
+		2CF445162B7F374500A8E514 /* MoimInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445152B7F374500A8E514 /* MoimInteractorImpl.swift */; };
+		2CF445182B7F482000A8E514 /* NamoAlertViewWithTopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */; };
+		2CF4451A2B7FA0A200A8E514 /* GroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445192B7FA0A200A8E514 /* GroupDTO.swift */; };
+		2CF4451C2B7FA0C300A8E514 /* GroupListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4451B2B7FA0C300A8E514 /* GroupListItem.swift */; };
 		2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001D2B6F50460054C31B /* CalendarItem.swift */; };
 		2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */; };
 		2CFE00222B70A41C0054C31B /* ScheduleInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00212B70A41C0054C31B /* ScheduleInteractorImpl.swift */; };
@@ -65,7 +70,6 @@
 		504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */; };
 		504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504F8EA42B75D1D000ADB867 /* LoginBtn.swift */; };
 		507C84BF2B6F345E00147C60 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84BE2B6F345E00147C60 /* AppState.swift */; };
-		507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84C82B6F353000147C60 /* MoimInteractorSample.swift */; };
 		507C84CD2B6F356C00147C60 /* AuthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84CC2B6F356C00147C60 /* AuthInteractor.swift */; };
 		507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84CE2B6F35B100147C60 /* APIAuthInteractorImpl.swift */; };
 		507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C84D62B6F37B200147C60 /* MoimRepositorySample.swift */; };
@@ -135,6 +139,11 @@
 		2CF4450D2B78EDC300A8E514 /* CategoryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepositoryImpl.swift; sourceTree = "<group>"; };
 		2CF4450F2B78EEC400A8E514 /* CategoryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractor.swift; sourceTree = "<group>"; };
 		2CF445112B78EED100A8E514 /* CategoryInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInteractorImpl.swift; sourceTree = "<group>"; };
+		2CF445132B7F373600A8E514 /* MoimInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimInteractor.swift; sourceTree = "<group>"; };
+		2CF445152B7F374500A8E514 /* MoimInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimInteractorImpl.swift; sourceTree = "<group>"; };
+		2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertViewWithTopButton.swift; sourceTree = "<group>"; };
+		2CF445192B7FA0A200A8E514 /* GroupDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDTO.swift; sourceTree = "<group>"; };
+		2CF4451B2B7FA0C300A8E514 /* GroupListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListItem.swift; sourceTree = "<group>"; };
 		2CFE001D2B6F50460054C31B /* CalendarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItem.swift; sourceTree = "<group>"; };
 		2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScheduleItem.swift; sourceTree = "<group>"; };
 		2CFE00212B70A41C0054C31B /* ScheduleInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractorImpl.swift; sourceTree = "<group>"; };
@@ -163,7 +172,6 @@
 		504F8EA22B75CC2400ADB867 /* AuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndPoint.swift; sourceTree = "<group>"; };
 		504F8EA42B75D1D000ADB867 /* LoginBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBtn.swift; sourceTree = "<group>"; };
 		507C84BE2B6F345E00147C60 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		507C84C82B6F353000147C60 /* MoimInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimInteractorSample.swift; sourceTree = "<group>"; };
 		507C84CC2B6F356C00147C60 /* AuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractor.swift; sourceTree = "<group>"; };
 		507C84CE2B6F35B100147C60 /* APIAuthInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthInteractorImpl.swift; sourceTree = "<group>"; };
 		507C84D62B6F37B200147C60 /* MoimRepositorySample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRepositorySample.swift; sourceTree = "<group>"; };
@@ -415,6 +423,7 @@
 				88D6C9F42B60119C004742AD /* ColorCircleView.swift */,
 				2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */,
 				2CF445032B760A8100A8E514 /* NamoAlertView.swift */,
+				2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -490,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				5021D8E92B59407C009B4AD1 /* GroupMainView.swift */,
+				2CF4451B2B7FA0C300A8E514 /* GroupListItem.swift */,
 			);
 			path = GroupMain;
 			sourceTree = "<group>";
@@ -535,7 +545,8 @@
 		507C84C22B6F34D500147C60 /* Moim */ = {
 			isa = PBXGroup;
 			children = (
-				507C84C82B6F353000147C60 /* MoimInteractorSample.swift */,
+				2CF445132B7F373600A8E514 /* MoimInteractor.swift */,
+				2CF445152B7F374500A8E514 /* MoimInteractorImpl.swift */,
 			);
 			path = Moim;
 			sourceTree = "<group>";
@@ -664,6 +675,7 @@
 				88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */,
 				2CFE00232B70A6EB0054C31B /* ScheduleDTO.swift */,
 				2CF445092B78E3C700A8E514 /* CategoryDTO.swift */,
+				2CF445192B7FA0A200A8E514 /* GroupDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -843,6 +855,7 @@
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
+				2CF4451A2B7FA0A200A8E514 /* GroupDTO.swift in Sources */,
 				88A7EF292B6E89A800E47C8B /* getPetInfoDTO.swift in Sources */,
 				5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */,
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
@@ -856,7 +869,9 @@
 				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,
 				8834AE012B67CB320024F724 /* APIManager.swift in Sources */,
 				2CF4450E2B78EDC300A8E514 /* CategoryRepositoryImpl.swift in Sources */,
+				2CF445142B7F373600A8E514 /* MoimInteractor.swift in Sources */,
 				2CFE00222B70A41C0054C31B /* ScheduleInteractorImpl.swift in Sources */,
+				2CF445162B7F374500A8E514 /* MoimInteractorImpl.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
 				8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
@@ -870,6 +885,7 @@
 				5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */,
 				2CFE003F2B71FE7E0054C31B /* ErrorHandler.swift in Sources */,
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
+				2CF4451C2B7FA0C300A8E514 /* GroupListItem.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */,
@@ -880,6 +896,7 @@
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
 				2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */,
 				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
+				2CF445182B7F482000A8E514 /* NamoAlertViewWithTopButton.swift in Sources */,
 				50BE93472B6F7CB50005022E /* MemoInteractorSample.swift in Sources */,
 				88A7EF262B6E897F00E47C8B /* Example_PetRepositoryTest.swift in Sources */,
 				2C5717E62B61306700B0F3B3 /* Date+.swift in Sources */,
@@ -887,7 +904,6 @@
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				507C84E22B6F402700147C60 /* ExampleView2.swift in Sources */,
 				2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */,
-				507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */,
 				2CF445102B78EEC400A8E514 /* CategoryInteractor.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,
 				88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */,
