@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 /// 알림 시각 설정을 위한 enum입니다.
 /// 임시 세팅입니다.
@@ -55,12 +56,16 @@ enum NotificationSetting: CaseIterable {
 
 struct ToDoCreateView: View {
     
+    @EnvironmentObject var appState: AppState
+    @Injected(\.scheduleInteractor) var schduleInteractor
+    @Injected(\.categoryInteractor) var categoryInteractor
+    
     /// 일정 이름
     @State private var toDoTitle: String = ""
     /// 카테고리 색상
-    @State private var categoryColor: Color = .mainOrange
+    @State private var categoryColor: Color = .mainText
     /// 카테고리 이름
-    @State private var categoryName: String = "카테고리"
+    @State private var categoryName: String = "카테고리 없음"
     /// 시작 날짜 + 시각
     @State private var startDateTime: Date = Date()
     /// 종료 날짜 + 시각
@@ -86,9 +91,6 @@ struct ToDoCreateView: View {
     
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
-    
-    // ToDoCreateViewModel
-    @StateObject var viewModel = ToDoCreateViewModel()
     
     init() {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
@@ -133,8 +135,7 @@ struct ToDoCreateView: View {
                                     }
                                     
                                     Task {
-                                        // viewModel의 fetch 함수 호출
-                                        await viewModel.fetchTest()
+                                        //fetch 함수 호출
                                     }
                                 }
                         }
@@ -329,8 +330,8 @@ struct ToDoCreateView: View {
     
     /// 알림 리스트 값을 문자열로 반환해주는 함수 입니다.
     private func notiListInString(_ notifications: [NotificationSetting]) -> String {
-        let returnString = notifications.reduce(into: ""){ $0 += $1.toString }
-        return returnString
+        let returnString = notifications.reduce(into: ""){ $0 += $1.toString+", " }
+        return String(returnString.dropLast(2))
     }
 }
 
