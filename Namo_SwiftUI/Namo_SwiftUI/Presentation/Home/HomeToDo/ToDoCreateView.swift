@@ -253,7 +253,7 @@ struct ToDoCreateView: View {
                         self.draw = false
                     })
                     .frame(width: 330, height:200)
-                    .border(Color.init(hex: "#D9D9D9"), width: 1)
+                    .border(Color.init(hex: 0xD9D9D9), width: 1)
                     
                     Spacer()
                 }

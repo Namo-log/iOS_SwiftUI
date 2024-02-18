@@ -26,7 +26,7 @@ struct ToDoSelectPlaceView: View {
             }).onDisappear(perform: {
                 self.draw = false
             })
-            .frame(width: 300, height:100)
+            .frame(height:380)
             .backgroundStyle(.black)
             .zIndex(0)
             
