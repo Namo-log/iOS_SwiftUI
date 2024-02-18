@@ -111,6 +111,7 @@
 		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
 		88E3A02B2B7243A400B9F75C /* ToDoSelectCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */; };
 		88E3A02D2B726F6C00B9F75C /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */; };
+		88E48F7E2B820FFD00B064A0 /* ScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -208,6 +209,7 @@
 		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
 		88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectCategoryView.swift; sourceTree = "<group>"; };
 		88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
+		88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTemplate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,8 +323,8 @@
 			children = (
 				2CFE00542B73658A0054C31B /* Schedule.swift */,
 				8879A7DF2B6927E300794475 /* DTO */,
-				5021D8D22B593EF2009B4AD1 /* Schedule.swift */,
 				884382D42B74D5EA00766503 /* Place.swift */,
+				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -854,6 +856,7 @@
 				88A7EF2B2B6E89B400E47C8B /* postPetInfoDTO.swift in Sources */,
 				2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */,
 				88A7EF242B6E896B00E47C8B /* Example_PetRepositoryImpl.swift in Sources */,
+				88E48F7E2B820FFD00B064A0 /* ScheduleTemplate.swift in Sources */,
 				2CF445042B760A8100A8E514 /* NamoAlertView.swift in Sources */,
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
@@ -908,8 +911,6 @@
 				88A7EF2F2B6E8AE400E47C8B /* BaseResponse.swift in Sources */,
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				507C84E22B6F402700147C60 /* ExampleView2.swift in Sources */,
-				5021D8D32B593EF2009B4AD1 /* Schedule.swift in Sources */,
-				507C84D92B6F37BD00147C60 /* CategoryRepositorySample.swift in Sources */,
 				884382D52B74D5EA00766503 /* Place.swift in Sources */,
 				2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */,
 				507C84C92B6F353000147C60 /* MoimInteractorSample.swift in Sources */,
