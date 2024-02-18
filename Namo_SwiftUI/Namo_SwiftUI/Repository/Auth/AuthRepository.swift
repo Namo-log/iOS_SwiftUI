@@ -14,7 +14,7 @@ import Foundation
 protocol AuthRepository {
     
     // 서버로부터 토큰을 발급받는 메소드
-    func getTokenKakao(socialAccessToken: SocialAccessToken) async -> Auth?
+    func getToken(socialAccessToken: SocialAccessToken, social: String) async -> Auth?
     
     // 로그아웃. 토큰 삭제
     func removeToken<T:Decodable>(serverAccessToken: ServerAccessToken) async -> BaseResponse<T>?

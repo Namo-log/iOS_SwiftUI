@@ -47,6 +47,9 @@ struct LoginView: View {
                     }
                     LoginBtn(textContent: "네이버 로그인", textColor: .white, btnBackgroundColor: 0x03C75A, btnImage: "ic_login_naver 1")
                     .padding(.top, 22)
+                    .onTapGesture {
+                        authInteractor.naverLogin()
+                    }
                     
                     LoginBtn(textContent: "Apple 로그인", textColor: .white, btnBackgroundColor: 0x000000, btnImage: "ic_login_apple")
                     .padding(.top, 22)

@@ -13,6 +13,10 @@ protocol AuthInteractor {
     
     // 카카오 로그인
     func kakaoLogin() async
+    
+    // 네이버 로그인
+    func naverLogin()
+    
     // 로그아웃
     func logout() async
     

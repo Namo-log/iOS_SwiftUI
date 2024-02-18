@@ -11,9 +11,9 @@ import Foundation
 class APIAuthRepositoryImpl: AuthRepository {
     
     // 서버로부터 토큰을 발급받는 메소드
-    func getTokenKakao(socialAccessToken: SocialAccessToken) async -> Auth? {
+    func getToken(socialAccessToken: SocialAccessToken, social: String) async -> Auth? {
         return await APIManager.shared.performRequest(
-            endPoint: AuthEndPoint.fetchTokenKakao(socialAccessToken: socialAccessToken))
+            endPoint: AuthEndPoint.fetchToken(socialAccessToken: socialAccessToken, social: social))
     }
     
     // 로그아웃 메소드

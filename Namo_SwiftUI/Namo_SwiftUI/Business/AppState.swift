@@ -15,6 +15,8 @@ class AppState: ObservableObject {
 	// Tabbar
 	@Published var isTabbarHidden: Bool = false
 	@Published var isTabbarOpaque: Bool = false
+    
+    @Published var currentTab: Tab = .home
 	
 	// Alert
 	@Published var showAlert: Bool = false
