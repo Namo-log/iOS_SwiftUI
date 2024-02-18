@@ -31,7 +31,12 @@ struct ToDoSelectPlaceView: View {
             .zIndex(0)
             
             VStack(alignment: .leading) {
-                circleItemView()
+                CircleItemView {
+                    Image(systemName: "arrow.left")
+                        .renderingMode(.template)
+                        .foregroundStyle(.mainOrange)
+                        .font(.system(size: 20))
+                }
                     .padding(.all, 12)
                 Spacer()
                 if showBtns {
@@ -156,21 +161,6 @@ struct ToDoSelectPlaceView: View {
         }
     }
     
-    private struct circleItemView: View {
-        var body: some View {
-            ZStack {
-                Circle()
-                    .fill(.white)
-                    .frame(width: 40, height: 40)
-                    .shadow(radius: 2)
-                Image(systemName: "arrow.left")
-                    .renderingMode(.template)
-                    .foregroundStyle(.mainOrange)
-                    .font(.system(size: 20))
-            }
-            
-        }
-    }
 }
 
 #Preview {
