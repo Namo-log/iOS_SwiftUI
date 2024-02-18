@@ -167,9 +167,17 @@ struct ToDoCreateView: View {
                                 .tint(.mainOrange)
                         }
                         
+                        
+                        
                         ListItem(listTitle: "알림") {
                             HStack {
-                                Text(notificationList == [] ? "없음" : notiListInString(notificationList))
+                                Text(notificationList == [] ? "없음" : notiListInString(
+                                    notificationList.sorted(by: {
+                                        return $0.toInt > $1.toInt
+                                    })
+                                )
+                                
+                                )
                                     .font(.pretendard(.regular, size: 15))
                                     .foregroundStyle(.mainText)
                                 Image(showNotificationSetting == true ? "upChevron" : "downChevron")
@@ -193,7 +201,11 @@ struct ToDoCreateView: View {
                                 HStack {
                                     let halfenButtonIndices1 = buttons.indices[0..<buttons.count/2]
                                     ForEach(halfenButtonIndices1, id: \.self) { index in
-                                        ColorToggleButton(isOn: notificationList.contains(buttons[index]),
+                                        ColorToggleButton(isOn:  Binding(
+                                            get: { notificationList.contains(buttons[index]) },
+                                            set: { _ in
+                                                notificationList.contains(buttons[index]) }
+                                        ),
                                                           buttonText: buttons[index].toString) {
                                             if buttons[index] == .none {
                                                 notificationList.removeAll()
@@ -214,13 +226,18 @@ struct ToDoCreateView: View {
                                 HStack {
                                     let halfenButtonIndices2 = buttons.indices[buttons.count/2..<buttons.count]
                                     ForEach(halfenButtonIndices2, id: \.self) { index in
-                                        ColorToggleButton(isOn: notificationList.contains(buttons[index]),
+                                        ColorToggleButton(isOn:Binding(
+                                            get: { notificationList.contains(buttons[index]) },
+                                            set: { _ in
+                                              notificationList.contains(buttons[index]) }
+                                        ),
                                                           buttonText: buttons[index].toString) {
                                             if let index = notificationList.firstIndex(of: buttons[index]) {
                                                 notificationList.remove(at: index)
                                             } else {
                                                 notificationList.append(buttons[index])
                                             }
+                                            print(notificationList)
                                         }
                                         if index != halfenButtonIndices2.last {
                                             Spacer()
@@ -234,7 +251,7 @@ struct ToDoCreateView: View {
                         ListItem(listTitle: "장소") {
                             NavigationLink(destination: HomeMainView()) {
                                 HStack {
-                                    Text("탐앤탐스 탐스커버리 건대점")
+                                    Text(place)
                                         .font(.pretendard(.regular, size: 15))
                                         .foregroundStyle(.mainText)
                                     Image("vector3")
@@ -303,14 +320,13 @@ struct ToDoCreateView: View {
     
     private struct ColorToggleButton: View {
         
-        @State var isOn: Bool
+        @Binding var isOn: Bool
         let buttonText: String
         let action: () -> Void
         
         var body: some View {
             Button(action: {
                 self.action()
-                self.isOn.toggle()
             }) {
                 Text(buttonText)
                     .font(.pretendard(self.isOn ? .bold : .regular, size: 15))
