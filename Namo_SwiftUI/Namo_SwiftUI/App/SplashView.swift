@@ -9,29 +9,45 @@ import SwiftUI
 
 struct SplashView: View {
     
-	@State var isActive: Bool = false
-	@State var isLogin: Bool = false
-	
+    @State var isActive: Bool = false   // 다음 화면 활성화
+    @State var onboardingDone: Bool = false     // 첫 실행 여부. false면 첫 실행. UserDefaults에 저장
+    @State var existToken: Bool = KeyChainManager.itemExists(key: "accessToken")    // 토큰 존재 여부 확인
+    @EnvironmentObject var appState: AppState
+    
     var body: some View {
         ZStack {
-			if isActive && isLogin {
-				NamoHome()
-			} else if isActive && !isLogin {
-				// 온보딩 view
-			} else {
-				// splash view
-				Text("Splash View")
-			}
+            
+            if !onboardingDone && isActive {        // 온보딩 화면을 완료하지 않은 경우
+                OnboardingView()
+            } else if onboardingDone && isActive && existToken {    // 온보딩 화면을 완료하고 토큰이 존재하는 경우
+                
+                NamoHome()
+                .onAppear {
+                    DispatchQueue.main.async {
+                        appState.isLogin = true
+                    }
+                }
+                
+            } else if onboardingDone && isActive && !existToken {   // 온보딩 화면을 완료하고 토큰이 존재하지 않는 경우
+                LoginView()
+            } else {
+                ZStack {
+                    
+                    LinearGradient(gradient: Gradient(colors: [Color(hex: 0xe59744), Color.mainOrange]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    
+                    Image(.logo)
+                }
+            }
         }
-		.onAppear {
-			// 로그인 후
-			isLogin = true
-			
-			// 스플래시 뷰 지속 시간
-			DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-				isActive = true
-			}
-		}
+        .onAppear {
+            
+            self.onboardingDone = UserDefaults.standard.bool(forKey: "onboardingDone")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                isActive = true
+            }
+        }
+        .ignoresSafeArea()
     }
 }
 

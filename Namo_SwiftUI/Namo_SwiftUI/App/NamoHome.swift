@@ -40,6 +40,12 @@ struct NamoHome: View {
 				
 				NamoTabView(currentTab: $currentTab)
 					.hidden(appState.isTabbarHidden)
+					.overlay {
+						if appState.isTabbarOpaque && !appState.isTabbarHidden {
+							Color.black.opacity(0.5)
+						}
+					}
+
 			}
 			.ignoresSafeArea(edges: .bottom)
 		}
