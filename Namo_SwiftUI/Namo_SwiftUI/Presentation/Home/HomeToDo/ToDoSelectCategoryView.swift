@@ -7,21 +7,22 @@
 
 
 import SwiftUI
+import Factory
 
 struct ToDoCategory: Hashable {
+    var categoryId: Int
     var name: String
     var color: Color
     var isSelected: Bool
 }
 
 struct ToDoSelectCategoryView: View {
+    @EnvironmentObject var appState: AppState
+    @Injected(\.categoryInteractor) var categoryInteractor
 
-    @State private var categoryList: [ToDoCategory] = [
-        ToDoCategory(name: "일정", color: .blue, isSelected: true),
-        ToDoCategory(name: "약속", color: .mainOrange, isSelected: false),
-        ToDoCategory(name: "알바", color: .indigo, isSelected: false),
-        ToDoCategory(name: "기념일", color: .yellow, isSelected: false)
+    @State private var categoryList: [ScheduleCategory] = [
     ]
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
@@ -29,7 +30,7 @@ struct ToDoSelectCategoryView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     ForEach(categoryList, id: \.self) { category in
                         HStack {
-                            ColorCircleView(color: category.color, selectState: category.isSelected ? .checked : .available)
+                            ColorCircleView(color: category.color, selectState: category.isSelected ?? false ? .checked : .available)
                                 .frame(width: 20, height: 20)
                             Text(category.name)
                                 .font(.pretendard(.regular, size: 15))
@@ -38,13 +39,15 @@ struct ToDoSelectCategoryView: View {
                         }
                         .lineSpacing(12)
                         .onTapGesture {
-                            if let index = categoryList.firstIndex(where: {
-                                $0.hashValue == category.hashValue
-                            }) {
-                                categoryList[index]
-                                    .isSelected
-                                    .toggle()
+                            for index in categoryList.indices {
+                                if  categoryList[index].hashValue == category.hashValue {
+                                    categoryList[index].isSelected = true
+                                    self.appState.scheduleState.scheduleTemp.categoryId = category.categoryId
+                                } else {
+                                    categoryList[index].isSelected = false
+                                }
                             }
+                            dismiss()
                         }
                     }
                                 
@@ -62,10 +65,11 @@ struct ToDoSelectCategoryView: View {
                 .padding(EdgeInsets(top: 10, leading: 30, bottom: 20, trailing: 30))
                 .navigationTitle("카테고리")
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true) // Back버튼 지우기
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            // 닫기
+                            dismiss()
                         }, label: {
                             Text("닫기")
                                 .font(.pretendard(.regular, size: 15))
@@ -75,6 +79,23 @@ struct ToDoSelectCategoryView: View {
                 }//: toolbar
             }//: ScrollView
         }//: NavigationStack
+        .onAppear {
+            Task {
+                await self.categoryInteractor.getCategories()
+                self.categoryList = self.appState.categoryState.categoryList.map { category in
+                    
+                    return ScheduleCategory(
+                        categoryId: category.categoryId,
+                        name: category.name,
+                        paletteId: category.paletteId,
+                        isShare: category.isShare,
+                        color: categoryInteractor.getColorWithPaletteId(id: category.paletteId),
+                        isSelected: self.appState.scheduleState.scheduleTemp.categoryId == category.categoryId ? true : false
+                    )
+                    
+                }
+            }
+        }
     }
 }
 
@@ -82,4 +103,5 @@ struct ToDoSelectCategoryView: View {
 
 #Preview {
     ToDoSelectCategoryView()
+        .environmentObject(AppState())
 }
