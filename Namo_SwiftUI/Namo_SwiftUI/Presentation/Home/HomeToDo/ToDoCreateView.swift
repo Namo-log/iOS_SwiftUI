@@ -51,6 +51,25 @@ enum NotificationSetting: CaseIterable {
             return 0
         }
     }
+    
+    static func getValueFromInt(_ int: Int) -> NotificationSetting{
+        switch int {
+        case -1:
+            return .none
+        case 60:
+            return .oneHour
+        case 30:
+            return .thirtyMin
+        case 10:
+            return .tenMin
+        case 5:
+            return .fiveMin
+        case 0:
+            return .exactTime
+        default:
+            return .none
+        }
+    }
 }
 
 
@@ -59,22 +78,6 @@ struct ToDoCreateView: View {
     @EnvironmentObject var appState: AppState
     @Injected(\.scheduleInteractor) var schduleInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
-    
-    /// 일정 이름
-    @State private var toDoTitle: String = ""
-    /// 카테고리 색상
-    @State private var categoryColor: Color = .mainText
-    /// 카테고리 이름
-    @State private var categoryName: String = "카테고리 없음"
-    /// 시작 날짜 + 시각
-    @State private var startDateTime: Date = Date()
-    /// 종료 날짜 + 시각
-    @State private var endDateTime: Date = Date()
-    /// 알림 선택 목록
-    @State private var notificationList: [NotificationSetting] = []
-//    @State private var notificationList: [NotificationSetting:Bool] = [:]
-    /// 장소명 -> 추후 long/latitude 추가 가능성 있습니다
-    @State private var place: String = "위치명"
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -85,221 +88,231 @@ struct ToDoCreateView: View {
     
     // KakaoMapView draw State
     @State var draw: Bool = false
-    @State var pinList: [Place] = [
-        Place(id: 0, x: 37.382001, y: 127.088678, name: "asdf", address: "asdf", rodeAddress: "asdf")
-    ]
+    @State var pinList: [Place] = []
+    
+    @State var showDeleteBtn: Bool = false
     
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
     
-    init() {
+    init(schedule: Schedule?) {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
         UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Pretendard-Bold", size: 15)!]
+        UINavigationBar.appearance().barTintColor = .white
         self.dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
+    
+//        if let schedule = schedule {
+//            toDoTitle = schedule.name
+//            if let paletteId = appState.categoryPalette[schedule.categoryId] {
+//                categoryColor = categoryInteractor.getColorWithPaletteId(id: paletteId)
+//            }
+//            categoryName = appState.categoryName[schedule.categoryId] ?? "카테고리 없음"
+//            startDateTime = schedule.startDate
+//            endDateTime = schedule.endDate
+//            notificationList = schedule.alarmDate.map { NotificationSetting.getValueFromInt($0) }
+//            pinList = [Place(id: 0, x: schedule.x ?? 0, y: schedule.y ?? 0, name: schedule.locationName, address: "", rodeAddress: "")]
+//              self.showDeleteBtn = true
+//        }
     }
     
     var body: some View {
-        NavigationStack {
-//            ScrollView {
-                VStack {
-                    TextField("일정 이름", text: $toDoTitle)
-                        .font(.pretendard(.bold, size: 22))
-                        .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
-                    
-                    VStack(alignment: .center, spacing: 20) {
-                        ListItem(listTitle: "카테고리") {
-                            NavigationLink(destination: HomeMainView()) {
-                                HStack {
-                                    ColorCircleView(color: categoryColor)
-                                        .frame(width: 13, height: 13)
-                                    NavigationLink(categoryName, destination: HomeMainView())
-                                        .font(.pretendard(.regular, size: 15))
-                                        .foregroundStyle(.mainText)
-                                    Image("vector3")
-                                        .renderingMode(.template)
-                                        .foregroundStyle(.mainText)
+        
+//        ZStack(alignment: .top) {
+//            
+//            Color.black.opacity(0.5)
+//            
+//            if showDeleteBtn {
+//                CircleItemView(content: {
+//                    Image("ic_delete_schedule")
+//                        .resizable()
+//                        .frame(width: 30, height: 30)
+//                })
+//                .offset(y: 90)
+//            }
+            
+            NavigationStack {
+                ScrollView {
+                    VStack {
+                        TextField("일정 이름", text: $appState.scheduleState.scheduleTemp.name)
+                            .font(.pretendard(.bold, size: 22))
+                            .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
+                        
+                        VStack(alignment: .center, spacing: 20) {
+                            ListItem(listTitle: "카테고리") {
+                                NavigationLink(destination: ToDoSelectCategoryView()) {
+                                    HStack {
+                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.paletteId ?? -1))
+                                            .frame(width: 13, height: 13)
+                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.name ?? "카테고리 없음")
+                                            .font(.pretendard(.regular, size: 15))
+                                            .foregroundStyle(.mainText)
+                                        Image("vector3")
+                                            .renderingMode(.template)
+                                            .foregroundStyle(.mainText)
+                                    }
+                                    .lineSpacing(12)
                                 }
-                                .lineSpacing(12)
                             }
-                        }
-                        .padding(.vertical, 14)
+                            .padding(.vertical, 14)
 
-                        ListItem(listTitle: "시작") {
-                            Text(dateFormatter.string(from: startDateTime))
-                                .font(.pretendard(.regular, size: 15))
-                                .foregroundStyle(.mainText)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        print("showStartTimePicker")
-                                        self.showStartTimePicker.toggle()
-                                    }
-                                    
-                                    Task {
-                                        //fetch 함수 호출
-                                    }
-                                }
-                        }
-                        
-                        
-                        if (showStartTimePicker) {
-                            DatePicker("StartTimePicker", selection: $startDateTime)
-                                .datePickerStyle(.graphical)
-                                .labelsHidden()
-                                .tint(.mainOrange)
-                        }
-                        
-                        ListItem(listTitle: "종료") {
-                            Text(dateFormatter.string(from: endDateTime))
-                                .font(.pretendard(.regular, size: 15))
-                                .foregroundStyle(.mainText)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        print("showEndTimePicker")
-                                        self.showEndTimePicker.toggle()
-                                    }
-                                }
-                        }
-                        
-                        if (showEndTimePicker) {
-                            DatePicker("EndTimePicker", selection: $endDateTime, in: startDateTime...)
-                                .datePickerStyle(.graphical)
-                                .labelsHidden()
-                                .tint(.mainOrange)
-                        }
-                        
-                        
-                        
-                        ListItem(listTitle: "알림") {
-                            HStack {
-                                Text(notificationList == [] ? "없음" : notiListInString(
-                                    notificationList.sorted(by: {
-                                        return $0.toInt > $1.toInt
-                                    })
-                                )
-                                
-                                )
+                            ListItem(listTitle: "시작") {
+                                Text(dateFormatter.string(from: appState.scheduleState.scheduleTemp.startDate))
                                     .font(.pretendard(.regular, size: 15))
                                     .foregroundStyle(.mainText)
-                                Image(showNotificationSetting == true ? "upChevron" : "downChevron")
-                                    .renderingMode(.template)
-                                    .foregroundStyle(.mainText)
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut(duration: 0.3)) {
+                                            self.showStartTimePicker.toggle()
+                                        }
+                                    }
                             }
-                            .lineSpacing(12)
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.3)) {
-                                    self.showNotificationSetting.toggle()
-                                }
-                            }
-                        }
-                        
-                        if (showNotificationSetting) {
-                            // 테스트용
-//                            let buttons = ["없음", "30분 전", "60분 전", "10분 전", "5분 전", "정시"]
-                            let buttons = NotificationSetting.allCases
                             
-                            VStack(spacing: 12) {
-                                HStack {
-                                    let halfenButtonIndices1 = buttons.indices[0..<buttons.count/2]
-                                    ForEach(halfenButtonIndices1, id: \.self) { index in
-                                        ColorToggleButton(isOn:  Binding(
-                                            get: { notificationList.contains(buttons[index]) },
-                                            set: { _ in
-                                                notificationList.contains(buttons[index]) }
-                                        ),
-                                                          buttonText: buttons[index].toString) {
-                                            if buttons[index] == .none {
-                                                notificationList.removeAll()
-                                            }
-                                            else {
-                                                if let index = notificationList.firstIndex(of: buttons[index]) {
-                                                    notificationList.remove(at: index)
-                                                } else {
-                                                    notificationList.append(buttons[index])
-                                                }
-                                            }
-                                        }
-                                        if index != halfenButtonIndices1.last {
-                                            Spacer()
-                                        }
-                                    }
-                                }
-                                HStack {
-                                    let halfenButtonIndices2 = buttons.indices[buttons.count/2..<buttons.count]
-                                    ForEach(halfenButtonIndices2, id: \.self) { index in
-                                        ColorToggleButton(isOn:Binding(
-                                            get: { notificationList.contains(buttons[index]) },
-                                            set: { _ in
-                                              notificationList.contains(buttons[index]) }
-                                        ),
-                                                          buttonText: buttons[index].toString) {
-                                            if let index = notificationList.firstIndex(of: buttons[index]) {
-                                                notificationList.remove(at: index)
-                                            } else {
-                                                notificationList.append(buttons[index])
-                                            }
-                                            print(notificationList)
-                                        }
-                                        if index != halfenButtonIndices2.last {
-                                            Spacer()
-                                        }
-                                    }
-                                }
+                            
+                            if (showStartTimePicker) {
+                                DatePicker("StartTimePicker", selection: $appState.scheduleState.scheduleTemp.startDate)
+                                    .datePickerStyle(.graphical)
+                                    .labelsHidden()
+                                    .tint(.mainOrange)
                             }
-                           
-                        }
-                        
-                        ListItem(listTitle: "장소") {
-                            NavigationLink(destination: HomeMainView()) {
+                            
+                            ListItem(listTitle: "종료") {
+                                Text(dateFormatter.string(from: appState.scheduleState.scheduleTemp.endDate))
+                                    .font(.pretendard(.regular, size: 15))
+                                    .foregroundStyle(.mainText)
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut(duration: 0.3)) {
+                                            self.showEndTimePicker.toggle()
+                                        }
+                                    }
+                            }
+                            
+                            if (showEndTimePicker) {
+                                DatePicker("EndTimePicker", selection: $appState.scheduleState.scheduleTemp.endDate, in: appState.scheduleState.scheduleTemp.startDate...)
+                                    .datePickerStyle(.graphical)
+                                    .labelsHidden()
+                                    .tint(.mainOrange)
+                            }
+                            
+                            
+                            
+                            ListItem(listTitle: "알림") {
                                 HStack {
-                                    Text(place)
-                                        .font(.pretendard(.regular, size: 15))
-                                        .foregroundStyle(.mainText)
-                                    Image("vector3")
+                                    Text(appState.scheduleState.scheduleTemp.alarmDate.isEmpty
+                                                          ? "없음"
+                                                          : notiListInString(appState.scheduleState.scheduleTemp.alarmDate.sorted(by: { $0 > $1 })
+                                        .map { NotificationSetting.getValueFromInt($0) })
+                                    )
+                                    .font(.pretendard(.regular, size: 15))
+                                    .foregroundStyle(.mainText)
+                                    
+                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
                                         .renderingMode(.template)
                                         .foregroundStyle(.mainText)
                                 }
                                 .lineSpacing(12)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        self.showNotificationSetting.toggle()
+                                    }
+                                }
                             }
+                            
+                            if (showNotificationSetting) {
+                                let notificationsList = NotificationSetting.allCases
+                                
+                                let rows = [
+                                    GridItem(.fixed(35), spacing: 15, alignment: .leading),
+                                    GridItem(.fixed(35), spacing: 15, alignment: .centerFirstTextBaseline)
+                                    ]
+                                
+                                LazyHGrid(rows: rows, spacing: 12) {
+                                    ForEach(notificationsList, id: \.self) { item in
+                                        ColorToggleButton(
+                                            isOn: Binding(get: {appState.scheduleState.scheduleTemp.alarmDate.contains(item.toInt)},
+                                                          set: {_ in appState.scheduleState.scheduleTemp.alarmDate.contains(item.toInt)}),
+                                            buttonText: item.toString,
+                                            action: {
+                                                if item == .none {
+                                                    appState.scheduleState.scheduleTemp.alarmDate = []
+                                                }
+                                                else {
+                                                    if let index = appState.scheduleState.scheduleTemp.alarmDate.firstIndex(of: item.toInt) {
+                                                        appState.scheduleState.scheduleTemp.alarmDate.remove(at: index)
+                                                    }
+                                                    else {
+                                                        appState.scheduleState.scheduleTemp.alarmDate.append(item.toInt)
+                                                    }
+                                                }
+                                            })
+                                    }
+                                }
+                               
+                            }
+                            
+                            ListItem(listTitle: "장소") {
+                                NavigationLink(destination: ToDoSelectPlaceView()) {
+                                    HStack {
+                                        Text(appState.scheduleState.scheduleTemp.locationName.isEmpty ? "위치명" : appState.scheduleState.scheduleTemp.locationName)
+                                            .font(.pretendard(.regular, size: 15))
+                                            .foregroundStyle(.mainText)
+                                        Image("vector3")
+                                            .renderingMode(.template)
+                                            .foregroundStyle(.mainText)
+                                    }
+                                    .lineSpacing(12)
+                                }
+                            }
+                            .padding(.vertical, 14)
                         }
-                        .padding(.vertical, 14)
-                    }
-                    .padding(.horizontal, 30)
-                    
-                    KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
-                        self.draw = true
-                    }).onDisappear(perform: {
-                        self.draw = false
-                    })
-                    .frame(width: 330, height:200)
-                    .border(Color.init(hex: 0xD9D9D9), width: 1)
-                    
-                    Spacer()
-                }
-                .navigationTitle("새 일정")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button(action: {
-                            // 닫기
-                        }, label: {
-                            Text("닫기")
-                                .font(.pretendard(.regular, size: 15))
+                        .padding(.horizontal, 30)
+                        
+                        KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
+                            self.draw = true
+                        }).onDisappear(perform: {
+                            self.draw = false
                         })
-                        .foregroundStyle(.mainText)
+                        .frame(width: 330, height:200)
+                        .border(Color.init(hex: 0xD9D9D9), width: 1)
+                        
+                        Spacer()
                     }
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            // 저장
-                        }, label: {
-                            Text("저장")
-                                .font(.pretendard(.regular, size: 15))
-                        })
-                        .foregroundStyle(.mainText)
-                    }
-                }//: VStack - toolbar
-//            }//: ScrollView
-        }//: NavigationStack
+                    .navigationTitle("새 일정")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarBackButtonHidden(true)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button(action: {
+                                // 닫기
+                            }, label: {
+                                Text("닫기")
+                                    .font(.pretendard(.regular, size: 15))
+                            })
+                            .foregroundStyle(.mainText)
+                        }
+                        
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button(action: {
+                                // 저장
+                                print(appState.scheduleState.scheduleTemp)
+                            }, label: {
+                                Text("저장")
+                                    .font(.pretendard(.regular, size: 15))
+                            })
+                            .foregroundStyle(.mainText)
+                        }
+                    }//: VStack - toolbar
+                }//: ScrollView
+            }//: NavigationStack
+//            .clipShape(UnevenRoundedRectangle(cornerRadii: .init(
+//                topLeading: 15,
+//                topTrailing: 15)))
+//            .shadow(radius: 10)
+//            .offset(y: 150)
+//        }
+//        .ignoresSafeArea(.all)
+        
+    
+        
+        
     }
     
     private struct ListItem<Content: View>: View {
@@ -354,5 +367,6 @@ struct ToDoCreateView: View {
 
 
 #Preview {
-    ToDoCreateView()
+    ToDoCreateView(schedule: nil)
+        .environmentObject(AppState())
 }
