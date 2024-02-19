@@ -13,7 +13,7 @@ struct ScheduleState {
 }
 
 struct CategoryState {
-    var categoryList: [CategoryDTO]
+    var categoryList: [ScheduleCategory]
 }
 
 class AppState: ObservableObject {

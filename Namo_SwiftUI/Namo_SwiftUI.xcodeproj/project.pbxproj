@@ -91,6 +91,7 @@
 		8834AE012B67CB320024F724 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834AE002B67CB320024F724 /* APIManager.swift */; };
 		884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D22B74C69D00766503 /* KakaoMapDTO.swift */; };
 		884382D52B74D5EA00766503 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884382D42B74D5EA00766503 /* Place.swift */; };
+		8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8862E6372B839F760004DE4B /* ScheduleCategory.swift */; };
 		8870C8572B7766F8001D083B /* ToDoSelectPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */; };
 		8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7DD2B691BC900794475 /* AuthManager.swift */; };
 		8879A7E12B6927ED00794475 /* testDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E02B6927ED00794475 /* testDTO.swift */; };
@@ -189,6 +190,7 @@
 		884382D22B74C69D00766503 /* KakaoMapDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapDTO.swift; sourceTree = "<group>"; };
 		884382D42B74D5EA00766503 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		885C8BCD2B7393BC008F0595 /* Namo_SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Namo_SwiftUI.entitlements; sourceTree = "<group>"; };
+		8862E6372B839F760004DE4B /* ScheduleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCategory.swift; sourceTree = "<group>"; };
 		8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectPlaceView.swift; sourceTree = "<group>"; };
 		8879A7DD2B691BC900794475 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8879A7E02B6927ED00794475 /* testDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDTO.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				8879A7DF2B6927E300794475 /* DTO */,
 				884382D42B74D5EA00766503 /* Place.swift */,
 				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
+				8862E6372B839F760004DE4B /* ScheduleCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
+				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
 				88A7EF292B6E89A800E47C8B /* getPetInfoDTO.swift in Sources */,
 				5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */,
