@@ -53,4 +53,9 @@ extension Container {
 		self { MoimInteractorImpl() }
 			.singleton
 	}
+	
+	var moimRepository: Factory<MoimRepository> {
+		self { MoimRepositoryImpl() }
+			.singleton
+	}
 }

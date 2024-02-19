@@ -9,11 +9,11 @@ import SwiftUI
 import Kingfisher
 
 struct GroupListItem: View {
-	let group: GroupDTO
+	let group: Moim
 	
 	var body: some View {
 		HStack(spacing: 15) {
-			KFImage(URL(string: group.groupImageUrl ?? ""))
+			KFImage(URL(string: group.groupImgUrl ?? ""))
 				.resizable()
 				.aspectRatio(contentMode: .fill)
 				.frame(width: 45, height: 45)

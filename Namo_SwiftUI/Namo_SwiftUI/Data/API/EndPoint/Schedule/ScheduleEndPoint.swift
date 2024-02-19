@@ -19,7 +19,7 @@ extension ScheduleEndPoint: EndPoint {
 	
 	var path: String {
 		switch self {
-		case .postScehdule(let data):
+		case .postScehdule:
 			return ""
 		case .getAllSchedule:
 			return "/all"
@@ -28,7 +28,7 @@ extension ScheduleEndPoint: EndPoint {
 	
 	var method: Alamofire.HTTPMethod {
 		switch self {
-		case .postScehdule(let data):
+		case .postScehdule:
 			return .post
 		case .getAllSchedule:
 			return .get

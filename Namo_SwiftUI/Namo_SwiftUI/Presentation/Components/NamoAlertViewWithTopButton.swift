@@ -34,7 +34,7 @@ struct NamoAlertViewWithTopButton: View {
 	let leftButtonTitle: String
 	let leftButtonAction: () -> Void
 	let rightButtonTitle: String
-	let rightButtonAction: () -> Void
+	let rightButtonAction: () async -> Void
 	let content: AnyView
 	
     var body: some View {
@@ -61,7 +61,11 @@ struct NamoAlertViewWithTopButton: View {
 					
 					Spacer()
 					
-					Button(action: rightAction, label: {
+					Button(action: {
+						Task {
+							await rightAction()
+						}
+					}, label: {
 						Text(rightButtonTitle)
 							.font(.pretendard(.regular, size: 15))
 					})
@@ -90,9 +94,11 @@ struct NamoAlertViewWithTopButton: View {
 		leftButtonAction()
 	}
 	
-	private func rightAction() {
-		appState.isTabbarOpaque = false
-		showAlert = false
-		rightButtonAction()
+	private func rightAction() async {
+		DispatchQueue.main.async {
+			self.appState.isTabbarOpaque = false
+			self.showAlert = false
+		}
+		await rightButtonAction()
 	}
 }

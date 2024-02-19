@@ -6,5 +6,5 @@
 //
 
 protocol MoimInteractor {
-	func getDummyGroups() -> [GroupDTO]
+	func getGroups() async -> [Moim]
 }

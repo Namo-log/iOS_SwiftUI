@@ -46,7 +46,6 @@ class AuthManager: RequestInterceptor {
         // URLRequest 헤더 추가, return
         var urlRequest = urlRequest
 		urlRequest.headers.add(.authorization(accessToken))
-        urlRequest.headers.add(.contentType("application/json"))
         
         completion(.success(urlRequest))
     }

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import PhotosUI
 import Factory
 
 struct GroupMainView: View {
 	@Injected(\.moimInteractor) var moimInteractor
+	@Injected(\.moimRepository) var moimRepository
 	
-	@State var myGroups: [GroupDTO] = []
+	@State var myGroups: [Moim] = []
 	
 	// New Group
 	@State var showNewGroupAlert: Bool = false
@@ -21,6 +23,10 @@ struct GroupMainView: View {
 	@State var showGroupCodeAlert: Bool = false
 	@State var groupCode: String = ""
 	
+	// photo picker
+	@State var pickedItem: PhotosPickerItem?
+	@State var pickedImage: Data?
+	
     var body: some View {
 		ZStack {
 			VStack(spacing: 26.5) {
@@ -28,6 +34,7 @@ struct GroupMainView: View {
 				
 				groupList
 			}
+			.padding(.top, 16.5)
 			
 			if showNewGroupAlert {
 				newGroupAlertView
@@ -37,9 +44,10 @@ struct GroupMainView: View {
 				groupCodeAlertView
 			}
 		}
-		.padding(.top, 16.5)
 		.onAppear {
-			self.myGroups = moimInteractor.getDummyGroups()
+			Task {
+				self.myGroups = await moimInteractor.getGroups()
+			}
 		}
     }
 	
@@ -86,7 +94,9 @@ struct GroupMainView: View {
 			leftButtonTitle: "닫기",
 			leftButtonAction: {},
 			rightButtonTitle: "완료",
-			rightButtonAction: {},
+			rightButtonAction: {
+				let _ = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
+			},
 			content: AnyView(
 				VStack(spacing: 0) {
 					HStack {
@@ -119,7 +129,31 @@ struct GroupMainView: View {
 						
 						Spacer()
 						
-						Image(.icGroup)
+						PhotosPicker(selection: $pickedItem, matching: .images, label: {
+							if let imageData = pickedImage,
+							   let uiImage = UIImage(data: imageData) {
+								Image(uiImage: uiImage)
+									.resizable()
+									.aspectRatio(contentMode: .fill)
+									.frame(width: 60, height: 60)
+									.clipShape(RoundedRectangle(cornerRadius: 5))
+							} else {
+								Image(.icGroup)
+							}
+						})
+						.onChange(of: pickedItem) { item in
+							if item == nil {return}
+							
+							Task {
+								if let image = try? await item?.loadTransferable(type: Data.self) {
+									let compressedImage = UIImage(data: image)?.jpegData(compressionQuality: 0.2)
+									pickedImage = compressedImage
+								} else {
+									print("image load failed")
+								}
+							}
+						}
+						
 					}
 					.padding(.bottom, 20)
 					
@@ -144,6 +178,11 @@ struct GroupMainView: View {
 					.padding(.bottom, 22)
 			)
 		)
+		.onDisappear {
+			groupName = ""
+			pickedItem = nil
+			pickedImage = nil
+		}
 	}
 	
 	private var groupCodeAlertView: some View {

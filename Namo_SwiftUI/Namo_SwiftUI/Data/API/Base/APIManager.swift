@@ -40,7 +40,7 @@ final class APIManager {
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
 		}
-		
+//		print(String(data: result, encoding: .utf8))
 		do {
 			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
 			return decodedData.result
@@ -118,10 +118,26 @@ extension APIManager {
       case let .uploadImages(images):
           return AF.upload(multipartFormData: { multipartFormData in
               for image in images {
-                  multipartFormData.append(image, withName: "images", fileName: "\(image).png", mimeType: "image/png")
+				  if let image = image {
+					  multipartFormData.append(image, withName: "img", fileName: "\(image).png", mimeType: "image/png")
+				  }
               }
-          }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
-          
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+		  
+	  case let .uploadImagesWithBody(images, body):
+		  return AF.upload(multipartFormData: { multipartFormData in
+			  for image in images {
+				  if let image = image {
+					  multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+				  }
+			  }
+			  
+			  for (key, value) in body {
+				  if let data = String(describing: value).data(using: .utf8) {
+					  multipartFormData.append(data, withName: key)
+				  }
+			  }
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
           
       case let .authRequestJSONEncodable(parameters):
           return AF.request(
