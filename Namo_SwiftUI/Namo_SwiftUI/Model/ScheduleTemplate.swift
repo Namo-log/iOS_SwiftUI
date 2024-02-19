@@ -10,19 +10,19 @@ import Foundation
 /// 일정 생성에 사용되는 모델입니다.
 struct ScheduleTemplate {
     /// 일정 이름
-    let name: String? = nil
+    var name: String
     /// 카테고리 ID
-    let categoryId: Int? = nil
+    var categoryId: Int
     /// 시작 날짜-시간
-    let startDate: Date? = nil
+    var startDate: Date
     /// 종료 날짜-시간
-    let endDate: Date? = nil
+    var endDate: Date
     /// 알람 설정 시간
-    let alarmDate: [Int]? = nil
+    var alarmDate: [Int]
     /// 위도입니다 : latitude
-    let x: Double? = nil
+    var x: Double
     /// 경도입니다 : longitude
-    let y: Double? = nil
+    var y: Double
     /// 장소 이름
-    let locationName: String? = nil
+    var locationName: String
 }
