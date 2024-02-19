@@ -220,15 +220,17 @@ struct ToDoCreateView: View {
                                 let notificationsList = NotificationSetting.allCases
                                 
                                 let rows = [
-                                    GridItem(.fixed(35), spacing: 15, alignment: .leading),
-                                    GridItem(.fixed(35), spacing: 15, alignment: .centerFirstTextBaseline)
+                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
+                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
                                     ]
                                 
-                                LazyHGrid(rows: rows, spacing: 12) {
+                                LazyHGrid(rows: rows) {
                                     ForEach(notificationsList, id: \.self) { item in
                                         ColorToggleButton(
-                                            isOn: Binding(get: {appState.scheduleState.scheduleTemp.alarmDate.contains(item.toInt)},
-                                                          set: {_ in appState.scheduleState.scheduleTemp.alarmDate.contains(item.toInt)}),
+                                            isOn: Binding(get: {
+                                                if item == .none { appState.scheduleState.scheduleTemp.alarmDate.isEmpty }
+                                                else { appState.scheduleState.scheduleTemp.alarmDate.contains(item.toInt) }
+                                            },set: {_ in }),
                                             buttonText: item.toString,
                                             action: {
                                                 if item == .none {
