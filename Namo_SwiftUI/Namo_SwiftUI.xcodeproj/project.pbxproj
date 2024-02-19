@@ -79,7 +79,6 @@
 		50BE93472B6F7CB50005022E /* MemoInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE93462B6F7CB50005022E /* MemoInteractorSample.swift */; };
 		50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D62B5D3DB2000307E4 /* LoginView.swift */; };
 		50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */; };
-		882DB3602B6BBBDF00A2759E /* ToDoCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882DB35F2B6BBBDF00A2759E /* ToDoCreateViewModel.swift */; };
 		8834ADEB2B67BEBE0024F724 /* naveridlogin-ios-sp in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADEA2B67BEBE0024F724 /* naveridlogin-ios-sp */; };
 		8834ADEE2B67BF430024F724 /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADED2B67BF430024F724 /* KakaoMapsSDK_SPM */; };
 		8834ADF12B67BFFC0024F724 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF02B67BFFC0024F724 /* KakaoSDK */; };
@@ -183,7 +182,6 @@
 		50BE93462B6F7CB50005022E /* MemoInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoInteractorSample.swift; sourceTree = "<group>"; };
 		50CB10D62B5D3DB2000307E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		50CB10D82B5D5A6E000307E4 /* AgreeSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeSubView.swift; sourceTree = "<group>"; };
-		882DB35F2B6BBBDF00A2759E /* ToDoCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateViewModel.swift; sourceTree = "<group>"; };
 		8834ADF82B67C0D10024F724 /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		8834ADFC2B67CAE00024F724 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		8834ADFE2B67CB0C0024F724 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -741,7 +739,6 @@
 			isa = PBXGroup;
 			children = (
 				88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */,
-				882DB35F2B6BBBDF00A2759E /* ToDoCreateViewModel.swift */,
 				88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */,
 				8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */,
 			);
@@ -873,7 +870,6 @@
 				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				507C84DD2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
-				882DB3602B6BBBDF00A2759E /* ToDoCreateViewModel.swift in Sources */,
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,
 				8834AE012B67CB320024F724 /* APIManager.swift in Sources */,
