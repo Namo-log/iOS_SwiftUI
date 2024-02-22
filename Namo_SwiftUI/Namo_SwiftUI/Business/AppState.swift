@@ -10,6 +10,7 @@ import Foundation
 struct ScheduleState {
     var currentSchedule: Schedule
     var scheduleTemp: ScheduleTemplate
+    var placeList: [Place]
 }
 
 struct CategoryState {
@@ -59,7 +60,8 @@ class AppState: ObservableObject {
             x: 0.0,
             y: 0.0,
             locationName: ""
-        )
+        ),
+        placeList: []
     )
     
     // Category

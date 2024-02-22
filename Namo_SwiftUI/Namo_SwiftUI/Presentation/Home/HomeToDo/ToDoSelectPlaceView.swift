@@ -6,27 +6,26 @@
 //
 
 import SwiftUI
+import Factory
 
 struct ToDoSelectPlaceView: View {
     
+    @EnvironmentObject var appState: AppState
     @State var draw: Bool = true
-    @State var pinList: [Place] = [
-        Place(id: 0, x: 0.0, y: 1.1, name: "탐앤탐스 탐스커버리 건대점", address: "서울 광진구 뭐시기", rodeAddress: "뭐시기 뭐시기"),
-        Place(id: 1, x: 0.0, y: 1.1, name: "zxcv", address: "zcxv", rodeAddress: "zxcv"),
-        Place(id: 2, x: 0.0, y: 1.1, name: "qwre", address: "qwer", rodeAddress: "reqw"),
-        Place(id: 3, x: 0.0, y: 1.1, name: "vcbx", address: "xvbc", rodeAddress: "xbcv")
-    ]
+
     @State var searchText: String = ""
     @State var showBtns: Bool = false
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
-            KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
+            KakaoMapView(draw: $draw, pinList: $appState.scheduleState.placeList).onAppear(perform: {
                 self.draw = true
             }).onDisappear(perform: {
                 self.draw = false
             })
-            .frame(height:380)
+            .frame(height:580)
             .backgroundStyle(.black)
             .zIndex(0)
             
@@ -37,9 +36,12 @@ struct ToDoSelectPlaceView: View {
                         .foregroundStyle(.mainOrange)
                         .font(.system(size: 20))
                 }
-                    .padding(.all, 12)
+                .padding(.all, 12)
+                .onTapGesture {
+                    dismiss()
+                }
                 Spacer()
-                if showBtns {
+                if !showBtns {
                     HStack {
                         
                         Spacer()
@@ -58,7 +60,9 @@ struct ToDoSelectPlaceView: View {
                             
                         }
                         Spacer(minLength: 20)
-                        Button(action: {}) {
+                        Button(action: {
+                            print(appState.scheduleState.placeList)
+                        }) {
                             Text("확인")
                                 .font(.pretendard(.bold, size: 15))
                                 .lineLimit(1)
@@ -77,8 +81,8 @@ struct ToDoSelectPlaceView: View {
                     .padding(.bottom, 16)
                 } //: HStack
                
-                placeListView(searchText: $searchText, pinList: $pinList)
-                    .frame(height: 480)
+                placeListView(searchText: $searchText, pinList: $appState.scheduleState.placeList)
+                    .frame(height: 280)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
             } //: Vstack
@@ -89,6 +93,7 @@ struct ToDoSelectPlaceView: View {
     private struct placeListView: View {
         @Binding var searchText: String
         @Binding var pinList: [Place]
+        @Injected(\.scheduleInteractor) var scheduleInteractor
         
         var body: some View {
             ZStack {
@@ -108,6 +113,13 @@ struct ToDoSelectPlaceView: View {
                         .padding(.trailing, 20)
                         
                         Button(action: {
+                            Task {
+                                // Interactor + Repository로 추후 변경
+                                APIManager.shared.KakaoMapAPIRequest(query: searchText) { result,err  in
+                                    let searchResult = result?.documents.map {$0.toPlace()} ?? []
+                                    pinList = searchResult
+                                }
+                            }
                         }) {
                             Text("검색")
                                 .font(.pretendard(.bold, size: 15))
@@ -124,8 +136,11 @@ struct ToDoSelectPlaceView: View {
                     .padding(.vertical, 20)
                     
                     ScrollView {
-                        ForEach(pinList, id: \.id) { place in
-                            placeListItemView(place: place)
+                        ForEach($pinList, id: \.id) { place in
+                            placeListItemView(place: place, onTapGesture: {
+//                                let poiId = String(place.wrappedValue.id)
+//                                kakaoMapCoordinator.selectPoi(poiID: poiId)
+                            })
                                 .shadow(radius: 3)
                                 .padding(.vertical, 10)
                                 .padding(.horizontal, 20)
@@ -135,11 +150,13 @@ struct ToDoSelectPlaceView: View {
                     Spacer()
                 }
             }
+            .toolbar(.hidden, for: .navigationBar) // 네비게이션 바 hide
         }
     }
     
     private struct placeListItemView: View {
-        @State var place: Place
+        @Binding var place: Place
+        var onTapGesture: () -> Void
         
         var body: some View {
             HStack {
@@ -158,6 +175,10 @@ struct ToDoSelectPlaceView: View {
             }
             .background(.textBackground)
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
+            .onTapGesture {
+                onTapGesture()
+                NotificationCenter.default.post(name: NSNotification.Name("SendPlace"), object: nil, userInfo: ["place":place])
+            }
         }
     }
     

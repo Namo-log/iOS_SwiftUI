@@ -88,10 +88,11 @@ struct ToDoCreateView: View {
     
     // KakaoMapView draw State
     @State var draw: Bool = false
-    @State var pinList: [Place] = []
     
+    // 취소 확인 버튼 Show State
     @State var showDeleteBtn: Bool = false
     
+//    @Environment(\.dismiss) private var dismiss
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
     
@@ -267,7 +268,7 @@ struct ToDoCreateView: View {
                         }
                         .padding(.horizontal, 30)
                         
-                        KakaoMapView(draw: $draw, pinList: $pinList).onAppear(perform: {
+                        KakaoMapView(draw: $draw, pinList: $appState.scheduleState.placeList).onAppear(perform: {
                             self.draw = true
                         }).onDisappear(perform: {
                             self.draw = false
@@ -284,6 +285,7 @@ struct ToDoCreateView: View {
                         ToolbarItem(placement: .topBarLeading) {
                             Button(action: {
                                 // 닫기
+//                                dismiss()
                             }, label: {
                                 Text("닫기")
                                     .font(.pretendard(.regular, size: 15))
