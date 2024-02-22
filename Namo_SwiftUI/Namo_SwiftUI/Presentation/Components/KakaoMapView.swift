@@ -43,6 +43,8 @@ struct KakaoMapView: UIViewRepresentable {
         else {
             context.coordinator.controller?.stopRendering()
             context.coordinator.controller?.stopEngine()
+            // KakaoMapCoordinator의 Observer 등록 해제
+            NotificationCenter.default.removeObserver(context.coordinator)
         }
     }
     
