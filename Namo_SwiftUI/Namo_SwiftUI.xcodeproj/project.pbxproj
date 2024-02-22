@@ -114,6 +114,8 @@
 		88E48F7E2B820FFD00B064A0 /* ScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */; };
 		88E48F802B827C2500B064A0 /* CircleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E48F7F2B827C2500B064A0 /* CircleItemView.swift */; };
 		88EFE45D2B87916B0085826B /* ClearBackgournd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE45C2B87916B0085826B /* ClearBackgournd.swift */; };
+		88EFE4602B87C7680085826B /* PlaceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE45F2B87C7680085826B /* PlaceInteractor.swift */; };
+		88EFE4622B87C7780085826B /* PlaceInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -214,6 +216,8 @@
 		88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTemplate.swift; sourceTree = "<group>"; };
 		88E48F7F2B827C2500B064A0 /* CircleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleItemView.swift; sourceTree = "<group>"; };
 		88EFE45C2B87916B0085826B /* ClearBackgournd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearBackgournd.swift; sourceTree = "<group>"; };
+		88EFE45F2B87C7680085826B /* PlaceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInteractor.swift; sourceTree = "<group>"; };
+		88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInteractorImpl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -536,6 +540,7 @@
 		507C84C02B6F346200147C60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				88EFE45E2B87C75A0085826B /* Place */,
 				507C84C42B6F34E200147C60 /* Auth */,
 				507C84C32B6F34DA00147C60 /* Schedule */,
 				50BE93452B6F7C880005022E /* Memo */,
@@ -751,6 +756,15 @@
 			path = HomeToDo;
 			sourceTree = "<group>";
 		};
+		88EFE45E2B87C75A0085826B /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				88EFE45F2B87C7680085826B /* PlaceInteractor.swift */,
+				88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */,
+			);
+			path = Place;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -904,11 +918,13 @@
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
+				88EFE4602B87C7680085826B /* PlaceInteractor.swift in Sources */,
 				2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */,
 				8879A7E12B6927ED00794475 /* testDTO.swift in Sources */,
 				507C84BF2B6F345E00147C60 /* AppState.swift in Sources */,
 				507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */,
 				88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */,
+				88EFE4622B87C7780085826B /* PlaceInteractorImpl.swift in Sources */,
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
 				2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */,
 				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
