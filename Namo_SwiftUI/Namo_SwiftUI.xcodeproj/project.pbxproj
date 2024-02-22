@@ -42,6 +42,7 @@
 		2CF445202B80536900A8E514 /* MoimRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4451F2B80536900A8E514 /* MoimRepositoryImpl.swift */; };
 		2CF445242B8054A000A8E514 /* MoimEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445232B8054A000A8E514 /* MoimEndPoint.swift */; };
 		2CF445262B83516400A8E514 /* GroupCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445252B83516400A8E514 /* GroupCalendarView.swift */; };
+		2CF445282B87628A00A8E514 /* CalendarScheduleDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445272B87628A00A8E514 /* CalendarScheduleDetailItem.swift */; };
 		2CFE001E2B6F50460054C31B /* CalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001D2B6F50460054C31B /* CalendarItem.swift */; };
 		2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */; };
 		2CFE00222B70A41C0054C31B /* ScheduleInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00212B70A41C0054C31B /* ScheduleInteractorImpl.swift */; };
@@ -151,6 +152,7 @@
 		2CF4451F2B80536900A8E514 /* MoimRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRepositoryImpl.swift; sourceTree = "<group>"; };
 		2CF445232B8054A000A8E514 /* MoimEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimEndPoint.swift; sourceTree = "<group>"; };
 		2CF445252B83516400A8E514 /* GroupCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarView.swift; sourceTree = "<group>"; };
+		2CF445272B87628A00A8E514 /* CalendarScheduleDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScheduleDetailItem.swift; sourceTree = "<group>"; };
 		2CFE001D2B6F50460054C31B /* CalendarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItem.swift; sourceTree = "<group>"; };
 		2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScheduleItem.swift; sourceTree = "<group>"; };
 		2CFE00212B70A41C0054C31B /* ScheduleInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractorImpl.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 				5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */,
 				2CFE001D2B6F50460054C31B /* CalendarItem.swift */,
 				2CFE001F2B6F50890054C31B /* CalendarScheduleItem.swift */,
+				2CF445272B87628A00A8E514 /* CalendarScheduleDetailItem.swift */,
 			);
 			path = HomeMain;
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CFE00242B70A6EB0054C31B /* ScheduleDTO.swift in Sources */,
+				2CF445282B87628A00A8E514 /* CalendarScheduleDetailItem.swift in Sources */,
 				5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */,
 				2CFE00552B73658A0054C31B /* Schedule.swift in Sources */,
 				88A7EF2B2B6E89B400E47C8B /* postPetInfoDTO.swift in Sources */,

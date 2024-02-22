@@ -54,6 +54,15 @@ struct GroupCalendarView: View {
 				.padding(.trailing, 6)
 				.padding(.bottom, 20)
 				
+				if focusDate != nil {
+					detailView
+						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
+						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
+				} else {
+					Spacer(minLength: 0)
+						.frame(height: tabBarHeight)
+				}
+				
 			}
 			
 			if showDatePicker {
@@ -64,6 +73,7 @@ struct GroupCalendarView: View {
 				groupInfo
 			}
 		}
+		.ignoresSafeArea(edges: .bottom)
 		.toolbar(.hidden, for: .navigationBar)
 		.onAppear {
 			groupName = moim.groupName ?? ""
@@ -72,6 +82,14 @@ struct GroupCalendarView: View {
 	
 	private var header: some View {
 		HStack {
+			// TODO: 임시 뒤로가기 버튼. 디자인 나오면 수정 예정
+			Button(action: {
+				dismiss()
+			}, label: {
+				Image(systemName: "arrow.left")
+			})
+			.foregroundStyle(Color.black)
+			
 			Button(action: {
 				showDatePicker = true
 			}, label: {
@@ -121,6 +139,50 @@ struct GroupCalendarView: View {
 				.fill(Color.white)
 				.shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 8)
 		)
+	}
+	
+	private var detailView: some View {
+		VStack(spacing: 0) {
+			Text(String(format: "%02d.%02d (%@)", focusDate!.month, focusDate!.day, focusDate!.getShortWeekday()))
+				.font(.pretendard(.bold, size: 22))
+				.padding(.vertical, 20)
+			
+			ScrollView(.vertical) {
+				HStack {
+					Text("개인 일정")
+						.font(.pretendard(.bold, size: 15))
+						.foregroundStyle(Color(.mainText))
+						.padding(.bottom, 11)
+						.padding(.leading, 3)
+					
+					Spacer()
+				}
+				
+				if let schedules = calendarSchedule[focusDate!]?.compactMap({$0.schedule}) {
+					ForEach(schedules, id: \.self) {schedule in
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+					}
+				} else {
+					Text("등록된 개인 일정이 없습니다.")
+						.font(.pretendard(.medium, size: 14))
+						.foregroundStyle(Color(.mainText))
+				}
+			}
+			.frame(width: screenWidth-50)
+			.padding(.horizontal, 25)
+			
+			Spacer(minLength: 0)
+		}
+		.frame(width: screenWidth, height: screenHeight * 0.47)
+		.background(Color.white)
+		.overlay(alignment: .bottomTrailing) {
+			Button(action: {}, label: {
+				Image(.floatingAdd)
+					.padding(.bottom, 37)
+					.padding(.trailing, 25)
+			})
+		}
+
 	}
 	
 	private var datePicker: some View {
