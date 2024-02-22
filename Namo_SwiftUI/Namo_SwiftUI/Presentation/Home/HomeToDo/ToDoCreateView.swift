@@ -92,7 +92,11 @@ struct ToDoCreateView: View {
     // 취소 확인 버튼 Show State
     @State var showDeleteBtn: Bool = false
     
-//    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
+    
+    // ToDoSelectPlaceView 표시용
+    @State var isShowSheet: Bool = false
+
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
     
@@ -118,18 +122,18 @@ struct ToDoCreateView: View {
     
     var body: some View {
         
-//        ZStack(alignment: .top) {
-//            
+        ZStack(alignment: .top) {
+            
 //            Color.black.opacity(0.5)
-//            
-//            if showDeleteBtn {
-//                CircleItemView(content: {
-//                    Image("ic_delete_schedule")
-//                        .resizable()
-//                        .frame(width: 30, height: 30)
-//                })
-//                .offset(y: 90)
-//            }
+            
+            if showDeleteBtn {
+                CircleItemView(content: {
+                    Image("ic_delete_schedule")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                })
+                .offset(y: 90)
+            }
             
             NavigationStack {
                 ScrollView {
@@ -252,7 +256,24 @@ struct ToDoCreateView: View {
                             }
                             
                             ListItem(listTitle: "장소") {
-                                NavigationLink(destination: ToDoSelectPlaceView()) {
+//                                NavigationLink(destination: ToDoSelectPlaceView()) {
+//                                    HStack {
+//                                        Text(appState.scheduleState.scheduleTemp.locationName.isEmpty ? "위치명" : appState.scheduleState.scheduleTemp.locationName)
+//                                            .font(.pretendard(.regular, size: 15))
+//                                            .foregroundStyle(.mainText)
+//                                        Image("vector3")
+//                                            .renderingMode(.template)
+//                                            .foregroundStyle(.mainText)
+//                                    }
+//                                    .lineSpacing(12)
+//                                    
+//                                }
+                                Button(action: {
+                                    self.draw = false
+                                    withAnimation {
+                                        isShowSheet = true
+                                    }
+                                }, label: {
                                     HStack {
                                         Text(appState.scheduleState.scheduleTemp.locationName.isEmpty ? "위치명" : appState.scheduleState.scheduleTemp.locationName)
                                             .font(.pretendard(.regular, size: 15))
@@ -262,7 +283,7 @@ struct ToDoCreateView: View {
                                             .foregroundStyle(.mainText)
                                     }
                                     .lineSpacing(12)
-                                }
+                                })
                             }
                             .padding(.vertical, 14)
                         }
@@ -285,7 +306,7 @@ struct ToDoCreateView: View {
                         ToolbarItem(placement: .topBarLeading) {
                             Button(action: {
                                 // 닫기
-//                                dismiss()
+                                dismiss()
                             }, label: {
                                 Text("닫기")
                                     .font(.pretendard(.regular, size: 15))
@@ -306,17 +327,14 @@ struct ToDoCreateView: View {
                     }//: VStack - toolbar
                 }//: ScrollView
             }//: NavigationStack
-//            .clipShape(UnevenRoundedRectangle(cornerRadii: .init(
-//                topLeading: 15,
-//                topTrailing: 15)))
-//            .shadow(radius: 10)
-//            .offset(y: 150)
-//        }
-//        .ignoresSafeArea(.all)
-        
-    
-        
-        
+            .clipShape(UnevenRoundedRectangle(cornerRadii: .init(
+                topLeading: 15,
+                topTrailing: 15)))
+            .shadow(radius: 10)
+            .offset(y: 150)
+        }
+        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet) : nil)
+        .ignoresSafeArea(.all, edges: .bottom)
     }
     
     private struct ListItem<Content: View>: View {
