@@ -268,7 +268,7 @@ struct ToDoCreateView: View {
                         }
                         .padding(.horizontal, 30)
                         
-                        KakaoMapView(draw: $draw, pinList: $appState.scheduleState.placeList).onAppear(perform: {
+                        KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList).onAppear(perform: {
                             self.draw = true
                         }).onDisappear(perform: {
                             self.draw = false

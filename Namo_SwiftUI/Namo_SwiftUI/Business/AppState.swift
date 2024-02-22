@@ -10,11 +10,14 @@ import Foundation
 struct ScheduleState {
     var currentSchedule: Schedule
     var scheduleTemp: ScheduleTemplate
-    var placeList: [Place]
 }
 
 struct CategoryState {
     var categoryList: [ScheduleCategory]
+}
+
+struct PlaceState {
+    var placeList: [Place]
 }
 
 class AppState: ObservableObject {
@@ -60,13 +63,17 @@ class AppState: ObservableObject {
             x: 0.0,
             y: 0.0,
             locationName: ""
-        ),
-        placeList: []
+        )
     )
     
     // Category
     @Published var categoryState: CategoryState = CategoryState(
         categoryList: []
+    )
+    
+    // Place
+    @Published var placeState: PlaceState = PlaceState(
+        placeList: []
     )
 
     // categoryId : name

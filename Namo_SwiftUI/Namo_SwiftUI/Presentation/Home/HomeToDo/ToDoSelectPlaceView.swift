@@ -20,7 +20,7 @@ struct ToDoSelectPlaceView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            KakaoMapView(draw: $draw, pinList: $appState.scheduleState.placeList).onAppear(perform: {
+            KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList).onAppear(perform: {
                 self.draw = true
             }).onDisappear(perform: {
                 self.draw = false
@@ -61,7 +61,7 @@ struct ToDoSelectPlaceView: View {
                         }
                         Spacer(minLength: 20)
                         Button(action: {
-                            print(appState.scheduleState.placeList)
+                            print(appState.placeState.placeList)
                         }) {
                             Text("확인")
                                 .font(.pretendard(.bold, size: 15))
@@ -81,7 +81,7 @@ struct ToDoSelectPlaceView: View {
                     .padding(.bottom, 16)
                 } //: HStack
                
-                placeListView(searchText: $searchText, pinList: $appState.scheduleState.placeList)
+                placeListView(searchText: $searchText, pinList: $appState.placeState.placeList)
                     .frame(height: 280)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
