@@ -36,12 +36,12 @@ struct Document: Codable {
 
 extension Document {
     func toPlace() -> Place {
-        return .init(id: Int(id) ?? 0,
-                     x: Double(x) ?? 0.0,
-                     y: Double(y) ?? 0.0,
-                     name: placeName,
-                     address: addressName,
-                     rodeAddress: roadAddressName
+        return .init(id: Int(self.id) ?? 0,
+                     x: Double(self.x) ?? 0.0,
+                     y: Double(self.y) ?? 0.0,
+                     name: self.placeName,
+                     address: self.addressName,
+                     rodeAddress: self.roadAddressName
         )
     }
 }
