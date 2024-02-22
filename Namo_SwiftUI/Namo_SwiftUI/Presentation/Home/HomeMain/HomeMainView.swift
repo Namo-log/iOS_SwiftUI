@@ -137,16 +137,43 @@ struct HomeMainView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?.compactMap({$0.schedule}) {
+				if let schedules = calendarSchedule[focusDate!]?
+					.compactMap(({$0.schedule}))
+					.filter({!$0.moimSchedule})
+				{
 					ForEach(schedules, id: \.self) { schedule in
 						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
 					}
-				}
-				else {
+				} else {
 					Text("등록된 개인 일정이 없습니다.")
 						.font(.pretendard(.medium, size: 14))
 						.foregroundStyle(Color(.mainText))
 				}
+				
+				HStack {
+					Text("모임 일정")
+						.font(.pretendard(.bold, size: 15))
+						.foregroundStyle(Color(.mainText))
+						.padding(.top, 20)
+						.padding(.bottom, 11)
+						.padding(.leading, 3)
+					
+					Spacer()
+				}
+				
+				if let schedules = calendarSchedule[focusDate!]?
+					.compactMap({$0.schedule})
+					.filter({$0.moimSchedule})
+				{
+					ForEach(schedules, id: \.self) { schedule in
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+					}
+				} else {
+					Text("등록된 모임 일정이 없습니다.")
+						.font(.pretendard(.medium, size: 14))
+						.foregroundStyle(Color(.mainText))
+				}
+				
 			}
 			.frame(width: screenWidth-50)
 			.padding(.horizontal, 25)
