@@ -16,7 +16,9 @@ struct ToDoSelectPlaceView: View {
     @State var searchText: String = ""
     @State var showBtns: Bool = false
     
-    @Environment(\.dismiss) private var dismiss
+    @Binding var isShowSheet: Bool
+    
+//    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -38,7 +40,11 @@ struct ToDoSelectPlaceView: View {
                 }
                 .padding(.all, 12)
                 .onTapGesture {
-                    dismiss()
+//                    dismiss()
+                    withAnimation {
+                        isShowSheet = false
+                    }
+                    
                 }
                 Spacer()
                 if !showBtns {
@@ -82,12 +88,14 @@ struct ToDoSelectPlaceView: View {
                 } //: HStack
                
                 placeListView(searchText: $searchText, pinList: $appState.placeState.placeList)
-                    .frame(height: 280)
+                    .frame(height: 480)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
             } //: Vstack
-            .ignoresSafeArea(edges: .bottom)
+            .ignoresSafeArea(.all, edges: .bottom)
         }
+        .background(.white)
+        .transition(.move(edge: .trailing))
     }
     
     private struct placeListView: View {
@@ -136,14 +144,13 @@ struct ToDoSelectPlaceView: View {
                     .padding(.vertical, 20)
                     
                     ScrollView {
-                        ForEach($pinList, id: \.id) { place in
-                            placeListItemView(place: place, onTapGesture: {
-//                                let poiId = String(place.wrappedValue.id)
-//                                kakaoMapCoordinator.selectPoi(poiID: poiId)
-                            })
-                                .shadow(radius: 3)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 20)
+                        VStack(spacing: 0) {
+                            ForEach($pinList, id: \.id) { place in
+                                placeListItemView(place: place)
+                                    .shadow(radius: 3)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal, 20)
+                            }
                         }
                     }
                     
@@ -156,7 +163,6 @@ struct ToDoSelectPlaceView: View {
     
     private struct placeListItemView: View {
         @Binding var place: Place
-        var onTapGesture: () -> Void
         
         var body: some View {
             HStack {
@@ -176,15 +182,14 @@ struct ToDoSelectPlaceView: View {
             .background(.textBackground)
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
             .onTapGesture {
-                onTapGesture()
                 NotificationCenter.default.post(name: NSNotification.Name("SendPlace"), object: nil, userInfo: ["place":place])
             }
         }
     }
     
 }
-
-#Preview {
-    ToDoSelectPlaceView()
-        
-}
+//
+//#Preview {
+//    ToDoSelectPlaceView()
+//        
+//}
