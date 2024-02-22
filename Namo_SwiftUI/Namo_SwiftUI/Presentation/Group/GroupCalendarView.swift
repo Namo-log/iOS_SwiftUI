@@ -47,7 +47,7 @@ struct GroupCalendarView: View {
 					.padding(.bottom, 11)
 				
 				CalendarView(calendarController) { date in
-					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule)
+					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule, shouldHideTabBar: false)
 				}
 				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
