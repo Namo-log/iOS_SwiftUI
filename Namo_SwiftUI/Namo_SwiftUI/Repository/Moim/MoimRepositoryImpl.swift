@@ -16,8 +16,10 @@ final class MoimRepositoryImpl: MoimRepository {
 		return await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
 	}
 	
-	func changeMoimName(data: changeMoimNameRequest) async -> Int? {
-		return await APIManager.shared.performRequest(endPoint: MoimEndPoint.changeMoimName(data: data))
+	func changeMoimName(data: changeMoimNameRequest) async -> Bool {
+		let response: BaseResponse<Int>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimEndPoint.changeMoimName(data: data))
+		
+		return response?.code == 200 ? true : false
 	}
 	
 	func participateMoim(groupCode: String) async -> Int? {

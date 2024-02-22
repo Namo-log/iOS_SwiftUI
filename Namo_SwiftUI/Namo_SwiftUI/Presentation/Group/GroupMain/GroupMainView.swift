@@ -79,7 +79,11 @@ struct GroupMainView: View {
 		ScrollView(.vertical) {
 			VStack(spacing: 20) {
 				ForEach(myGroups, id: \.groupId) { group in
-					GroupListItem(group: group)
+					NavigationLink(destination: GroupCalendarView(moim: group), label: {
+						GroupListItem(group: group)
+							.tint(Color.black)
+					})
+					
 				}
 				
 				Spacer()
@@ -95,7 +99,17 @@ struct GroupMainView: View {
 			leftButtonAction: {},
 			rightButtonTitle: "완료",
 			rightButtonAction: {
-				let _ = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
+				let response = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
+				
+				// response가 잘 들어왔으면, 그룹 목록 새로고침
+				if response != nil {
+					Task {
+						self.myGroups = await moimInteractor.getGroups()
+					}
+					return true
+				}
+				
+				return false
 			},
 			content: AnyView(
 				VStack(spacing: 0) {
@@ -192,7 +206,9 @@ struct GroupMainView: View {
 			leftButtonTitle: "닫기",
 			leftButtonAction: {},
 			rightButtonTitle: "저장",
-			rightButtonAction: {},
+			rightButtonAction: {
+				return true
+			},
 			content: AnyView(
 				HStack {
 					Text("그룹 코드")

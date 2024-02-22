@@ -51,40 +51,9 @@ struct HomeMainView: View {
 				
 			}
 			
-			if showDatePicker {
-				NamoAlertView(
-					showAlert: $showDatePicker,
-					content: AnyView(
-						HStack(spacing: 0) {
-							Picker("", selection: $pickerCurrentYear) {
-								ForEach(2000...2099, id: \.self) {
-									Text("\(String($0))년")
-										.font(.pretendard(.regular, size: 23))
-								}
-							}
-							.pickerStyle(.inline)
-							
-							Picker("", selection: $pickerCurrentMonth) {
-								ForEach(1...12, id: \.self) {
-									Text("\(String($0))월")
-										.font(.pretendard(.regular, size: 23))
-								}
-							}
-							.pickerStyle(.inline)
-						}
-						.frame(height: 154)
-					),
-					leftButtonTitle: "취소",
-					leftButtonAction: {
-						pickerCurrentYear = calendarController.yearMonth.year
-						pickerCurrentMonth = calendarController.yearMonth.month
-					},
-					rightButtonTitle: "확인",
-					rightButtonAction: {
-						calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
-					}
-				)
-			}
+				if showDatePicker {
+					datePicker
+				}
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
@@ -196,6 +165,41 @@ struct HomeMainView: View {
 					.padding(.trailing, 25)
 			})
 		}
+	}
+	
+	private var datePicker: some View {
+		NamoAlertView(
+			showAlert: $showDatePicker,
+			content: AnyView(
+				HStack(spacing: 0) {
+					Picker("", selection: $pickerCurrentYear) {
+						ForEach(2000...2099, id: \.self) {
+							Text("\(String($0))년")
+								.font(.pretendard(.regular, size: 23))
+						}
+					}
+					.pickerStyle(.inline)
+					
+					Picker("", selection: $pickerCurrentMonth) {
+						ForEach(1...12, id: \.self) {
+							Text("\(String($0))월")
+								.font(.pretendard(.regular, size: 23))
+						}
+					}
+					.pickerStyle(.inline)
+				}
+				.frame(height: 154)
+			),
+			leftButtonTitle: "취소",
+			leftButtonAction: {
+				pickerCurrentYear = calendarController.yearMonth.year
+				pickerCurrentMonth = calendarController.yearMonth.month
+			},
+			rightButtonTitle: "확인",
+			rightButtonAction: {
+				calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+			}
+		)
 	}
 	
 	

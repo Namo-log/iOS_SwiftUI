@@ -16,7 +16,9 @@ import Factory
 	 leftButtonTitle: "닫기",
 	 leftButtonAction: {},
 	 rightButtonTitle: "완료",
-	 rightButtonAction: {},
+	 rightButtonAction: {
+		return true  // 작업 성공 시 true를 리턴해야 AlertView가 닫힙니다.
+	},
 	 content: AnyView(
 		 VStack(spacing: 0) {
  
@@ -34,7 +36,7 @@ struct NamoAlertViewWithTopButton: View {
 	let leftButtonTitle: String
 	let leftButtonAction: () -> Void
 	let rightButtonTitle: String
-	let rightButtonAction: () async -> Void
+	let rightButtonAction: () async -> Bool
 	let content: AnyView
 	
     var body: some View {
@@ -95,10 +97,13 @@ struct NamoAlertViewWithTopButton: View {
 	}
 	
 	private func rightAction() async {
-		DispatchQueue.main.async {
-			self.appState.isTabbarOpaque = false
-			self.showAlert = false
+		let isSuccess = await rightButtonAction()
+		
+		if isSuccess {
+			DispatchQueue.main.async {
+				self.appState.isTabbarOpaque = false
+				self.showAlert = false
+			}
 		}
-		await rightButtonAction()
 	}
 }

@@ -10,7 +10,7 @@ import Foundation
 protocol MoimRepository {
 	func createMoim(groupName: String, image: Data?) async -> createMoimResponse?
 	func getMoimList() async -> getMoimListResponse?
-	func changeMoimName(data: changeMoimNameRequest) async -> Int?
+	func changeMoimName(data: changeMoimNameRequest) async -> Bool
 	func participateMoim(groupCode: String) async -> Int?
 	func withdrawMoim(moimId: Int) async -> Bool
 }

@@ -9,7 +9,7 @@ import Foundation
 
 struct Moim: Decodable {
 	let groupId: Int
-	let groupName: String?
+	var groupName: String?
 	let groupImgUrl: String?
 	let groupCode: String
 	let moimUsers: [MoimUser]
