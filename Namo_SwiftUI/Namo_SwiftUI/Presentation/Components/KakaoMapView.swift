@@ -20,7 +20,6 @@ struct KakaoMapView: UIViewRepresentable {
         let view: KMViewContainer = KMViewContainer(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         context.coordinator.createController(view)
         context.coordinator.controller?.initEngine()
-        
         return view
     }
 
@@ -37,6 +36,8 @@ struct KakaoMapView: UIViewRepresentable {
                 context.coordinator.controller?.startRendering()
                 /// pinList 업데이트
                 context.coordinator.updatePois(pinList: pinList)
+                /// pin tracking - is it really needed?
+//                context.coordinator.trackFirstPin(pinList: pinList)
             }
         }
         else {
@@ -53,30 +54,40 @@ struct KakaoMapView: UIViewRepresentable {
     /// Cleans up the presented `UIView` (and coordinator) in
     /// anticipation of their removal.
     static func dismantleUIView(_ uiView: KMViewContainer, coordinator: KakaoMapCoordinator) {
-        
     }
     
     /// Coordinator 구현. KMControllerDelegate를 adopt한다.
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate, GuiEventDelegate {
-        
+        /// KakaoMapController
         var controller: KMController?
-        var first: Bool
+//        var first: Bool // 필요없을지도
+        /// Map에서 참조하는 PlaceList 입니다.
+        /// 해당 배열에 저장된 Place들을 기반으로 지도에 표시되고, 행동합니다.
         var pinList: [Place] = []
+        /// 현재 선택된 Place Poi입니다.
         var selectedPoi: String?
-
+        
         override init() {
-            first = true
+//            first = true
             super.init()
+            // KakaoMapView 외부와의 상호작용 위한 Observer 등록
+            NotificationCenter.default.addObserver(self, selector: #selector(handlePlace(_:)), name: NSNotification.Name("SendPlace"), object: nil)
         }
         
-         // KMController 객체 생성 및 event delegate 지정
+        deinit {
+            // Observer 등록 해제
+            NotificationCenter.default.removeObserver(self)
+        }
+        
+        // KMController 객체 생성 및 event delegate 지정
         func createController(_ view: KMViewContainer) {
             controller = KMController(viewContainer: view)
             controller?.delegate = self
         }
         
+        // KakaoMap 기본 설정 및 view 추가
         func addViews() {
-            let defaultPosition: MapPoint = MapPoint(longitude: 127.108678, latitude: 37.402001)
+            let defaultPosition: MapPoint = MapPoint(longitude: 127.108678, latitude: 37.402001) // 추후 사용자 현재 위치 매니징 필요
             //지도(KakaoMap)를 그리기 위한 viewInfo를 생성
             let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", appName:"openmap", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 17)
             
@@ -92,32 +103,16 @@ struct KakaoMapView: UIViewRepresentable {
             }
         }
         
-        // MARK: Poi
-        
-        // KakaoMapEventDelegate - poi가 탭되었을 때 이벤트
-        func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
-            print("pin tapped at \(position), id:\(poiID)")
-            let view = controller?.getView("mapview") as! KakaoMap
-            let manager = view.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            
-            // 현재 선택한 Poi
-            if let curPoi = layer?.getPoi(poiID: poiID) {
-                
-                // 이전에 선택한 Poi 스타일 변경
-                if let selectedPoi = self.selectedPoi, let prePoi = layer?.getPoi(poiID: selectedPoi) {
-                    prePoi.changeStyle(styleID: "defaultStyle")
-                }
-                
-                curPoi.changeStyle(styleID: "selectedStyle")
-                
-                // infoWindow 표시
-                let place = pinList.first(where: { $0.id == Int(poiID) })
-                createInfoWindow(position: position, place: place)
-                
-                self.selectedPoi = poiID
+        /// Place 선택 이벤트 Notification 처리 함수
+        @objc func handlePlace(_ notification: Notification) {
+            if let userInfo = notification.userInfo,
+               let place = userInfo["place"] as? Place {
+                selectPoi(poiID: String(place.id))
+                print("\(place) selected")
             }
         }
+        
+        // MARK: Poi
         
         // Poi생성을 위한 LabelLayer 생성
         func createLabelLayer() {
@@ -148,18 +143,23 @@ struct KakaoMapView: UIViewRepresentable {
         /// Binding된 pinList가 변경됨에 따라 호출되는 함수입니다.
         /// 기존 지도의 핀들은 모두 삭제되고, pinList 내의 아이템들만 지도에 표시됩니다.
         func updatePois(pinList: [Place]) {
-            self.pinList = pinList
-            let view = controller?.getView("mapview") as! KakaoMap
-            let manager = view.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            self.pinList = pinList // 내부 관리 pinList 저장
+            let view = controller?.getView("mapview") as! KakaoMap // controller에서 "mapview"로 선언된 view 갖고오기
+            let manager = view.getLabelManager() // view에 존재하는 labelManager 갖고오기
+            let layer = manager.getLabelLayer(layerID: "PoiLayer") // labelManager에서 "PoiLayer"로 선언된 layer 갖고오기
             
-            print("Kakao Map's pois update 실행")
+            // guiManager 추가 후 원래 존재하던 infoWindow 삭제
+            let guiManager = view.getGuiManager()
+            guiManager.infoWindowLayer.clear()
             
+            // 기존 layer에 존재하던 모든 Poi 삭제
             let pois = layer?.getAllPois().map { $0.map { return $0.itemID} } ?? []
             layer?.removePois(poiIDs: pois)
-        
-            let poiList = pinList.map { return MapPoint(longitude: $0.y, latitude: $0.x) }
-    
+            
+            // poi MapPoint Mapping
+            let poiList = pinList.map { return MapPoint(longitude: $0.x, latitude: $0.y) }
+
+            // poi Options 생성
             let poiOptions = pinList.map { place in
                 let poiOption = PoiOptions(styleID: "defaultStyle", poiID: String(place.id))
                 poiOption.rank = 0
@@ -167,13 +167,70 @@ struct KakaoMapView: UIViewRepresentable {
                 return poiOption
             }
             
+            // layer에 optionList와 poiList를 1:1 mapping하여 추가
             let _ = layer?.addPois(options: poiOptions, at: poiList)
+            // pois 공개
             layer?.showAllPois()
+        }
+        
+        // KakaoMapEventDelegate - poi가 탭되었을 때 이벤트 delgate
+        // selectPoi로 위임합니다.
+        func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
+            selectPoi(poiID: poiID)
+        }
+        
+        /// 특정 poiID에 해당하는 Poi를 kakaoMapView에서 선택합니다
+        /// 선택된 poi는 selectedStyle로 변경되며, 카메라 시점이 변경됩니다.
+        func selectPoi(poiID: String) {
+            let view = controller?.getView("mapview") as! KakaoMap
+            let manager = view.getLabelManager()
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            let trackingManager = view.getTrackingManager() // view에 존재하는 trackingManager 갖고오기 -> 안쓸듯
+            
+            // 현재 선택한 Poi
+            if let curPoi = layer?.getPoi(poiID: poiID) {
+                
+                // 이전에 선택한 Poi 스타일 되돌리기
+                if let selectedPoi = self.selectedPoi, let prePoi = layer?.getPoi(poiID: selectedPoi) {
+                    prePoi.changeStyle(styleID: "defaultStyle")
+                }
+                // 선택한 poi 스타일 지정
+                curPoi.changeStyle(styleID: "selectedStyle")
+                
+                // infoWindow 표시
+                if let place = pinList.first(where: { $0.id == Int(poiID) }) {
+                    createInfoWindow(position: MapPoint(longitude: place.x, latitude: place.y), place: place)
+                }
+                
+                // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
+                if trackingManager.isTracking {
+                    trackingManager.stopTracking()
+                }
+                trackingManager.startTrackingPoi(curPoi)
+//                print("TrackingCurrPinON")
+                
+                self.selectedPoi = poiID
+            }
+        }
+        
+        /// pinList의 첫번째 place에 해당하는 Poi를 Track하게 합니다.
+        /// Binding된 pinList가 변경됨에 따라 호출되는 함수입니다.
+        func trackFirstPin(pinList: [Place]) {
+            let view = controller?.getView("mapview") as! KakaoMap
+            let manager = view.getLabelManager()
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            let trackingManager = view.getTrackingManager()
+            // 현재 선택한 Poi
+            if let poiID = pinList.first?.id, let curPoi = layer?.getPoi(poiID: String(poiID)) {
+                // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
+                trackingManager.startTrackingPoi(curPoi)
+                print("TrackinFirstPinOn")
+            }
         }
         
         // MARK: InfoWindow
         
-        // 컴포넌트를 구성하여 해당 위치에 place의 내용으로 InfoWindow를 생성한다.
+        /// 컴포넌트를 구성하여 해당 위치에 place의 내용으로 InfoWindow를 생성한다.
         func createInfoWindow(position: MapPoint, place: Place?) {
             let view = controller?.getView("mapview") as! KakaoMap
 
@@ -229,13 +286,16 @@ struct KakaoMapView: UIViewRepresentable {
             infoWindow.show()
         }
             
-        // 버튼이 클릭될 때 발생
+        /// GUI가 클릭될 때 발생하는 이벤트 delgate
         func guiDidTapped(_ gui: KakaoMapsSDK.GuiBase, componentName: String) {
             print("Gui: \(gui.name), Component: \(componentName) tapped")
             
             // InfoWindow의 position을 업데이트한다.
-//            (gui as? InfoWindow)?.position = MapPoint(longitude: 126.996, latitude: 37.533)
+    //            (gui as? InfoWindow)?.position = MapPoint(longitude: 126.996, latitude: 37.533)
         }
         
     }
 }
+
+
+
