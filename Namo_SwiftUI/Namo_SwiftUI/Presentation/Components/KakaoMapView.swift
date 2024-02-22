@@ -203,12 +203,15 @@ struct KakaoMapView: UIViewRepresentable {
                 }
                 
                 // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
-                if trackingManager.isTracking {
-                    trackingManager.stopTracking()
-                }
-                trackingManager.startTrackingPoi(curPoi)
+//                if trackingManager.isTracking {
+//                    trackingManager.stopTracking()
+//                }
+//                trackingManager.startTrackingPoi(curPoi)
 //                print("TrackingCurrPinON")
                 
+                // 현재 Poi의 위치를 받아 카메라를 이동
+                moveCamera(position: curPoi.position)
+                // 선택된 poi 업데이트
                 self.selectedPoi = poiID
             }
         }
@@ -225,6 +228,31 @@ struct KakaoMapView: UIViewRepresentable {
                 // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
                 trackingManager.startTrackingPoi(curPoi)
                 print("TrackinFirstPinOn")
+            }
+        }
+        
+        /// 입력받은 position의 위치로 Camera를 이동합니다.
+        /// isAnimate 변수에 따라 이동 시 애니메이션의 유무를 설정 가능합니다. - 기본 값은 true입니다.
+        func moveCamera(position: MapPoint, isAnimate: Bool = true) {
+            let mapView: KakaoMap = controller?.getView("mapview") as! KakaoMap
+            // CameraUpdateType을 CameraPosition으로 생성하여 지도의 카메라를 특정 좌표로 이동시킨다. MapPoint, 카메라가 바라보는 높이, 회전각 및 틸트를 지정할 수 있다.
+            let cameraUpdate = CameraUpdate.make(cameraPosition: CameraPosition(target: position, height: 200, rotation: 0, tilt: 0)) // height 확정 필요
+
+            if isAnimate {
+                //지정한 CameraUpdate 대로 카메라 애니메이션을 시작한다.
+                //애니메이션의 옵션을 지정할 수 있다.
+                //autoElevation : 장거리 이동시 카메라 높낮이를 올려 이동을 잘 보이도록 하는 애니메이션.
+                //consecutive : animateCamera를 연속적으로 호출하는 경우, 각 애니메이션을 이어서 연속적으로 수행한다.
+                //durationInMiliis : 애니메이션 동작시간(ms).
+                mapView.animateCamera(
+                    cameraUpdate: cameraUpdate,
+                    options: CameraAnimationOptions(
+                        autoElevation: true, // autoElevation 컨펌 필요
+                        consecutive: true,
+                        durationInMillis: 2000))
+            } else {
+                //애니메이션 없이 CameraUpdate에 지정된대로 카메라를 즉시 조정.
+                mapView.moveCamera(cameraUpdate)
             }
         }
         
