@@ -60,7 +60,7 @@ struct KakaoMapView: UIViewRepresentable {
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate, GuiEventDelegate {
         /// KakaoMapController
         var controller: KMController?
-//        var first: Bool // 필요없을지도
+        var isFirst: Bool = true // 필요없을지도
         /// Map에서 참조하는 PlaceList 입니다.
         /// 해당 배열에 저장된 Place들을 기반으로 지도에 표시되고, 행동합니다.
         var pinList: [Place] = []
@@ -68,7 +68,6 @@ struct KakaoMapView: UIViewRepresentable {
         var selectedPoi: String?
         
         override init() {
-//            first = true
             super.init()
             // KakaoMapView 외부와의 상호작용 위한 Observer 등록
             NotificationCenter.default.addObserver(self, selector: #selector(handlePlace(_:)), name: NSNotification.Name("SendPlace"), object: nil)
@@ -171,6 +170,16 @@ struct KakaoMapView: UIViewRepresentable {
             let _ = layer?.addPois(options: poiOptions, at: poiList)
             // pois 공개
             layer?.showAllPois()
+            
+            // 첫 Update인 경우 첫 아이템 select 처리
+            if isFirst {
+                if let poiID = pinList.first?.id {
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                        self.selectPoi(poiID: String(poiID))
+                    }
+                }
+                isFirst = false
+            }
         }
         
         // KakaoMapEventDelegate - poi가 탭되었을 때 이벤트 delgate
@@ -185,7 +194,7 @@ struct KakaoMapView: UIViewRepresentable {
             let view = controller?.getView("mapview") as! KakaoMap
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            let trackingManager = view.getTrackingManager() // view에 존재하는 trackingManager 갖고오기 -> 안쓸듯
+//            let trackingManager = view.getTrackingManager() // view에 존재하는 trackingManager 갖고오기 -> 안쓸듯
             
             // 현재 선택한 Poi
             if let curPoi = layer?.getPoi(poiID: poiID) {
@@ -249,7 +258,7 @@ struct KakaoMapView: UIViewRepresentable {
                     options: CameraAnimationOptions(
                         autoElevation: true, // autoElevation 컨펌 필요
                         consecutive: true,
-                        durationInMillis: 2000))
+                        durationInMillis: 1500))
             } else {
                 //애니메이션 없이 CameraUpdate에 지정된대로 카메라를 즉시 조정.
                 mapView.moveCamera(cameraUpdate)
