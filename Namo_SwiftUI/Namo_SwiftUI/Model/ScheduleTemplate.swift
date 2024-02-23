@@ -19,9 +19,9 @@ struct ScheduleTemplate {
     var endDate: Date
     /// 알람 설정 시간
     var alarmDate: [Int]
-    /// 위도입니다 : latitude
-    var x: Double
     /// 경도입니다 : longitude
+    var x: Double
+    /// 위도입니다 : latitude
     var y: Double
     /// 장소 이름
     var locationName: String
