@@ -6,5 +6,5 @@
 //
 
 protocol PlaceRepository {
-    func getKakaoMapPlaces(query:String) async -> [Place]
+    func getKakaoMapPlaces(query:String) async -> KakaoMapResponseDTO?
 }

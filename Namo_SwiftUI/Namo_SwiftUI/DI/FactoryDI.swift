@@ -53,4 +53,9 @@ extension Container {
         self { PlaceInteractorImpl() }
             .singleton
     }
+    
+    var placeRepository: Factory<PlaceRepository> {
+        self { PlaceRepositoryImpl() }
+            .singleton
+    }
 }
