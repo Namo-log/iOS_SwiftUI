@@ -13,11 +13,12 @@ struct PlaceInteractorImpl: PlaceInteractor {
     @Injected(\.appState) private var appState
     
     func getPlaceList(query: String) async {
-        <#code#>
+        print(query)
     }
     
-    func selectPlace(placeId: Int) {
-        <#code#>
+    func selectPlace(place: Place?) {
+        appState.placeState.selectedPlace = place
+        print("place 변경 : \(String(describing: appState.placeState.selectedPlace))")
     }
     
 }

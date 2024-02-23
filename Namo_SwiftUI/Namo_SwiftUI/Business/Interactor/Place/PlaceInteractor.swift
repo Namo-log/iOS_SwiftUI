@@ -7,5 +7,5 @@
 
 protocol PlaceInteractor {
     func getPlaceList(query: String) async
-    func selectPlace(placeId: Int)
+    func selectPlace(place: Place?)
 }

@@ -18,6 +18,7 @@ struct CategoryState {
 
 struct PlaceState {
     var placeList: [Place]
+    var selectedPlace: Place?
 }
 
 class AppState: ObservableObject {
@@ -73,7 +74,7 @@ class AppState: ObservableObject {
     
     // Place
     @Published var placeState: PlaceState = PlaceState(
-        placeList: []
+        placeList: [], selectedPlace: nil
     )
 
     // categoryId : name
