@@ -8,10 +8,12 @@
 import Foundation
 import SwiftUI
 import KakaoMapsSDK
+import Factory
 
 struct KakaoMapView: UIViewRepresentable {
     @Binding var draw: Bool
     @Binding var pinList: [Place]
+    @Binding var selectedPlace: Place?
     
     /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
@@ -35,7 +37,7 @@ struct KakaoMapView: UIViewRepresentable {
                 context.coordinator.controller?.startEngine()
                 context.coordinator.controller?.startRendering()
                 /// pinList 업데이트
-                context.coordinator.updatePois(pinList: pinList)
+                context.coordinator.updatePois(pinList: pinList, selectedPlace: selectedPlace)
                 /// pin tracking - is it really needed?
 //                context.coordinator.trackFirstPin(pinList: pinList)
             }
@@ -62,12 +64,17 @@ struct KakaoMapView: UIViewRepresentable {
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate, GuiEventDelegate {
         /// KakaoMapController
         var controller: KMController?
-        var isFirst: Bool = true // 필요없을지도
+//        var isFirst: Bool = true // 필요없을지도
         /// Map에서 참조하는 PlaceList 입니다.
         /// 해당 배열에 저장된 Place들을 기반으로 지도에 표시되고, 행동합니다.
         var pinList: [Place] = []
-        /// 현재 선택된 Place Poi입니다.
+        /// 현재 지도 상에서 선택된 Place Poi입니다. - 이전에 선택된 poiID의 의미를 내포합니다
         var selectedPoi: String?
+        /// 현재 화면 상(App)에서 선택된 Place 입니다. - 외부에서 주입된 선택된 Place입니다
+        var selectedPlace: Place?
+        
+        /// appState의 placeState와 상호작용하기 위한 Interactor입니다
+        @Injected(\.placeInteractor) var placeInteractor
         
         override init() {
             super.init()
@@ -108,8 +115,7 @@ struct KakaoMapView: UIViewRepresentable {
         @objc func handlePlace(_ notification: Notification) {
             if let userInfo = notification.userInfo,
                let place = userInfo["place"] as? Place {
-                selectPoi(poiID: String(place.id))
-                print("\(place) selected")
+                placeInteractor.selectPlace(place: place)
             }
         }
         
@@ -143,8 +149,10 @@ struct KakaoMapView: UIViewRepresentable {
         /// map의 poi들을 Update하는 함수입니다.
         /// Binding된 pinList가 변경됨에 따라 호출되는 함수입니다.
         /// 기존 지도의 핀들은 모두 삭제되고, pinList 내의 아이템들만 지도에 표시됩니다.
-        func updatePois(pinList: [Place]) {
+        func updatePois(pinList: [Place], selectedPlace: Place?) {
             self.pinList = pinList // 내부 관리 pinList 저장
+            self.selectedPlace = selectedPlace // 내부 관리 selectedPlace 저장
+            
             let view = controller?.getView("mapview") as! KakaoMap // controller에서 "mapview"로 선언된 view 갖고오기
             let manager = view.getLabelManager() // view에 존재하는 labelManager 갖고오기
             let layer = manager.getLabelLayer(layerID: "PoiLayer") // labelManager에서 "PoiLayer"로 선언된 layer 갖고오기
@@ -173,25 +181,27 @@ struct KakaoMapView: UIViewRepresentable {
             // pois 공개
             layer?.showAllPois()
             
-            // 첫 Update인 경우 첫 아이템 select 처리
-            if isFirst {
-                if let poiID = pinList.first?.id {
-                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        self.selectPoi(poiID: String(poiID))
-                    }
+            // poi select 표시 해야하는 경우
+            // Binding된 SelectedPlace가 존재하고, pinList에 해당 SelectedPlace가 존재할 때
+            if let selectedPlace = self.selectedPlace, let pin = pinList.first(where: { $0.id == selectedPlace.id }) {
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                    self.selectPoi(poiID: String(pin.id))
                 }
-                isFirst = false
             }
         }
         
         // KakaoMapEventDelegate - poi가 탭되었을 때 이벤트 delgate
-        // selectPoi로 위임합니다.
         func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
-            selectPoi(poiID: poiID)
+            // pinList에서 해당 poiID에 해당하는 Place 확인
+            if let place = pinList.first(where: { $0.id == Int(poiID) }) {
+                // appState의 selectedPlace 변경
+                placeInteractor.selectPlace(place: place)
+            }
         }
         
         /// 특정 poiID에 해당하는 Poi를 kakaoMapView에서 선택합니다
         /// 선택된 poi는 selectedStyle로 변경되며, 카메라 시점이 변경됩니다.
+        /// KakaoMapView에서 "선택 표시"를 담당하는 것이지, appState를 변경하지 않습니다.
         func selectPoi(poiID: String) {
             let view = controller?.getView("mapview") as! KakaoMap
             let manager = view.getLabelManager()
@@ -222,7 +232,7 @@ struct KakaoMapView: UIViewRepresentable {
                 
                 // 현재 Poi의 위치를 받아 카메라를 이동
                 moveCamera(position: curPoi.position)
-                // 선택된 poi 업데이트
+                // 지도에서 선택된 poi 업데이트
                 self.selectedPoi = poiID
             }
         }
