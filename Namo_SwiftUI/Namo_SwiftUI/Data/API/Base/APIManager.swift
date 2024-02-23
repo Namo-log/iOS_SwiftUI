@@ -63,6 +63,20 @@ final class APIManager {
             return nil
         }
     }
+    
+    // BaseResponse 없는 메소드
+    func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+        do {
+            let request = await self.requestData(endPoint: endPoint)
+            let result = try request.result.get()
+            print("inferred DataType to be decoded : \(T.self)")
+            let decodedData = try result.decode(type: T.self, decoder: decoder)
+            return decodedData
+        } catch {
+            print("에러 발생: \(error)")
+            return nil
+        }
+    }
 }
 
 extension APIManager {
@@ -129,6 +143,15 @@ extension APIManager {
             method: endPoint.method,
             parameters: parameters,
             encoder: JSONParameterEncoder.default,
+            headers: endPoint.headers
+          )
+          
+      case let .requestParametersExAPI(parameters, encoding):
+          return AF.request(
+            "\(endPoint.baseURL)\(endPoint.path)",
+            method: endPoint.method,
+            parameters: parameters,
+            encoding: encoding,
             headers: endPoint.headers
           )
       }
