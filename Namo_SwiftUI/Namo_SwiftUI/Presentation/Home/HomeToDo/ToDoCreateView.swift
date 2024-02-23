@@ -320,7 +320,11 @@ struct ToDoCreateView: View {
                         ToolbarItem(placement: .topBarTrailing) {
                             Button(action: {
                                 // 저장
-                                print(appState.scheduleState.scheduleTemp)
+                                Task {
+                                    await schduleInteractor.postNewSchedule()
+                                }
+                                // 닫기
+                                dismiss()
                             }, label: {
                                 Text("저장")
                                     .font(.pretendard(.regular, size: 15))

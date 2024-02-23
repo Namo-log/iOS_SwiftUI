@@ -163,5 +163,30 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
             appState.scheduleState.scheduleTemp.y = place.y
         }
     }
+    
+    /// scheduleState.schuduleTemp의 내용을 추가하여 서버로 전송합니다.
+    func postNewSchedule() async {
+        let temp = appState.scheduleState.scheduleTemp
+        
+        let calendar = Calendar.current
+        let startDate = temp.startDate
+        let endDate = temp.endDate
+
+        let interval = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        
+        let postSchedule = postScheduleRequest(
+            name: temp.name,
+            startDate: Int(startDate.timeIntervalSince1970),
+            endDate: Int(endDate.timeIntervalSince1970),
+            interval: interval,
+            alarmDate: temp.alarmDate,
+            x: temp.x,
+            y: temp.y,
+            locationName: temp.locationName,
+            categoryId: temp.categoryId
+        )
+        
+        let result = await scheduleRepository.postSchedule(data: postSchedule)
+    }
 	
 }
