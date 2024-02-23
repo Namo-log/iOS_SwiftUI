@@ -289,13 +289,16 @@ struct ToDoCreateView: View {
                         }
                         .padding(.horizontal, 30)
                         
-                        KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList).onAppear(perform: {
+                        KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
+                            .onAppear(perform: {
                             self.draw = true
                         }).onDisappear(perform: {
                             self.draw = false
                         })
                         .frame(width: 330, height:200)
                         .border(Color.init(hex: 0xD9D9D9), width: 1)
+                        
+                        
                         
                         Spacer()
                     }
@@ -333,7 +336,7 @@ struct ToDoCreateView: View {
             .shadow(radius: 10)
             .offset(y: 150)
         }
-        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet) : nil)
+        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
     }
     

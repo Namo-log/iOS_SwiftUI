@@ -17,12 +17,15 @@ struct ToDoSelectPlaceView: View {
     @State var showBtns: Bool = false
     
     @Binding var isShowSheet: Bool
+    @Binding var preMapDraw: Bool
+    
+    @Injected(\.placeInteractor) var placeInteractor
     
 //    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList).onAppear(perform: {
+            KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace).onAppear(perform: {
                 self.draw = true
             }).onDisappear(perform: {
                 self.draw = false
@@ -40,7 +43,7 @@ struct ToDoSelectPlaceView: View {
                 }
                 .padding(.all, 12)
                 .onTapGesture {
-//                    dismiss()
+                    preMapDraw = true
                     withAnimation {
                         isShowSheet = false
                     }
@@ -51,7 +54,9 @@ struct ToDoSelectPlaceView: View {
                     HStack {
                         
                         Spacer()
-                        Button(action: {}) {
+                        Button(action: {
+                            placeInteractor.selectPlace(place: nil)
+                        }) {
                             Text("취소")
                                 .font(.pretendard(.bold, size: 15))
                                 .lineLimit(1)
@@ -87,8 +92,8 @@ struct ToDoSelectPlaceView: View {
                     .padding(.bottom, 16)
                 } //: HStack
                
-                placeListView(searchText: $searchText, pinList: $appState.placeState.placeList)
-                    .frame(height: 480)
+                placeListView(searchText: $searchText, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
+                    .frame(height: 280)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
             } //: Vstack
@@ -101,6 +106,7 @@ struct ToDoSelectPlaceView: View {
     private struct placeListView: View {
         @Binding var searchText: String
         @Binding var pinList: [Place]
+        @Binding var selectedPlace: Place?
         @Injected(\.scheduleInteractor) var scheduleInteractor
         
         var body: some View {
@@ -146,7 +152,7 @@ struct ToDoSelectPlaceView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             ForEach($pinList, id: \.id) { place in
-                                placeListItemView(place: place)
+                                placeListItemView(place: place, selectedPlace: $selectedPlace)
                                     .shadow(radius: 3)
                                     .padding(.vertical, 10)
                                     .padding(.horizontal, 20)
@@ -163,6 +169,7 @@ struct ToDoSelectPlaceView: View {
     
     private struct placeListItemView: View {
         @Binding var place: Place
+        @Binding var selectedPlace: Place?
         
         var body: some View {
             HStack {
@@ -178,6 +185,11 @@ struct ToDoSelectPlaceView: View {
                 }
                 .padding(.all, 12)
                 Spacer()
+                if let selectedPlace = self.selectedPlace, place.id == selectedPlace.id {
+                    ColorCircleView(color: .mainOrange, selectState: .checked)
+                        .frame(width: 20, height: 20)
+                        .padding(.horizontal, 10)
+                }
             }
             .background(.textBackground)
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
