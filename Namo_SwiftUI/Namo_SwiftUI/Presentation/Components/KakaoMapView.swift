@@ -104,10 +104,10 @@ struct KakaoMapView: UIViewRepresentable {
                 print("OK") //추가 성공. 성공시 추가적으로 수행할 작업을 진행한다.
                 if let mapView = controller?.getView("mapview") as? KakaoMap {
                     mapView.eventDelegate = self // EventDelegate 전달
+                    // map Layer 기본 설정
+                    createLabelLayer(mapView)
+                    createPoiStyle(mapView)
                 }
-                // map Layer 기본 설정
-                createLabelLayer()
-                createPoiStyle()
             }
         }
         
@@ -122,16 +122,14 @@ struct KakaoMapView: UIViewRepresentable {
         // MARK: Poi
         
         // Poi생성을 위한 LabelLayer 생성
-        func createLabelLayer() {
-            let view = controller?.getView("mapview") as! KakaoMap
+        func createLabelLayer(_ view: KakaoMap) {
             let manager = view.getLabelManager()
             let layerOption = LabelLayerOptions(layerID: "PoiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 0)
             let _ = manager.addLabelLayer(option: layerOption)
         }
         
         // Poi의 Style 생성
-        func createPoiStyle() {
-            let view = controller?.getView("mapview") as! KakaoMap
+        func createPoiStyle(_ view: KakaoMap) {
             let manager = view.getLabelManager()
             
             // 검색 시 기본 핀
@@ -153,7 +151,8 @@ struct KakaoMapView: UIViewRepresentable {
             self.pinList = pinList // 내부 관리 pinList 저장
             self.selectedPlace = selectedPlace // 내부 관리 selectedPlace 저장
             
-            let view = controller?.getView("mapview") as! KakaoMap // controller에서 "mapview"로 선언된 view 갖고오기
+            // controller에서 "mapview"로 선언된 view 갖고오기
+            guard let view = controller?.getView("mapview") as? KakaoMap else { return }
             let manager = view.getLabelManager() // view에 존재하는 labelManager 갖고오기
             let layer = manager.getLabelLayer(layerID: "PoiLayer") // labelManager에서 "PoiLayer"로 선언된 layer 갖고오기
             
@@ -203,7 +202,7 @@ struct KakaoMapView: UIViewRepresentable {
         /// 선택된 poi는 selectedStyle로 변경되며, 카메라 시점이 변경됩니다.
         /// KakaoMapView에서 "선택 표시"를 담당하는 것이지, appState를 변경하지 않습니다.
         func showSelectionAtPoi(poiID: String) {
-            let view = controller?.getView("mapview") as! KakaoMap
+            guard let view = controller?.getView("mapview") as? KakaoMap else { return }
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
 //            let trackingManager = view.getTrackingManager() // view에 존재하는 trackingManager 갖고오기 -> 안쓸듯
@@ -220,7 +219,7 @@ struct KakaoMapView: UIViewRepresentable {
                 
                 // infoWindow 표시
                 if let place = pinList.first(where: { $0.id == Int(poiID) }) {
-                    createInfoWindow(position: MapPoint(longitude: place.x, latitude: place.y), place: place)
+                    createInfoWindow(view: view, position: MapPoint(longitude: place.x, latitude: place.y), place: place)
                 }
                 
                 // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
@@ -231,7 +230,7 @@ struct KakaoMapView: UIViewRepresentable {
 //                print("TrackingCurrPinON")
                 
                 // 현재 Poi의 위치를 받아 카메라를 이동
-                moveCamera(position: curPoi.position)
+                moveCamera(view: view, position: curPoi.position)
                 // 지도에서 선택된 poi 업데이트
                 self.selectedPoi = poiID
             }
@@ -239,23 +238,22 @@ struct KakaoMapView: UIViewRepresentable {
         
         /// pinList의 첫번째 place에 해당하는 Poi를 Track하게 합니다.
         /// Binding된 pinList가 변경됨에 따라 호출되는 함수입니다.
-        func trackFirstPin(pinList: [Place]) {
-            let view = controller?.getView("mapview") as! KakaoMap
-            let manager = view.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            let trackingManager = view.getTrackingManager()
-            // 현재 선택한 Poi
-            if let poiID = pinList.first?.id, let curPoi = layer?.getPoi(poiID: String(poiID)) {
-                // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
-                trackingManager.startTrackingPoi(curPoi)
-                print("TrackinFirstPinOn")
-            }
-        }
+//        func trackFirstPin(pinList: [Place]) {
+//            let view = controller?.getView("mapview") as! KakaoMap
+//            let manager = view.getLabelManager()
+//            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+//            let trackingManager = view.getTrackingManager()
+//            // 현재 선택한 Poi
+//            if let poiID = pinList.first?.id, let curPoi = layer?.getPoi(poiID: String(poiID)) {
+//                // TrackingManager에서 _currentDirectionArraPoi의 tracking을 시작한다.
+//                trackingManager.startTrackingPoi(curPoi)
+//                print("TrackinFirstPinOn")
+//            }
+//        }
         
         /// 입력받은 position의 위치로 Camera를 이동합니다.
         /// isAnimate 변수에 따라 이동 시 애니메이션의 유무를 설정 가능합니다. - 기본 값은 true입니다.
-        func moveCamera(position: MapPoint, isAnimate: Bool = true) {
-            let mapView: KakaoMap = controller?.getView("mapview") as! KakaoMap
+        func moveCamera(view: KakaoMap, position: MapPoint, isAnimate: Bool = true) {
             // CameraUpdateType을 CameraPosition으로 생성하여 지도의 카메라를 특정 좌표로 이동시킨다. MapPoint, 카메라가 바라보는 높이, 회전각 및 틸트를 지정할 수 있다.
             let cameraUpdate = CameraUpdate.make(cameraPosition: CameraPosition(target: position, height: 200, rotation: 0, tilt: 0)) // height 확정 필요
 
@@ -265,7 +263,7 @@ struct KakaoMapView: UIViewRepresentable {
                 //autoElevation : 장거리 이동시 카메라 높낮이를 올려 이동을 잘 보이도록 하는 애니메이션.
                 //consecutive : animateCamera를 연속적으로 호출하는 경우, 각 애니메이션을 이어서 연속적으로 수행한다.
                 //durationInMiliis : 애니메이션 동작시간(ms).
-                mapView.animateCamera(
+                view.animateCamera(
                     cameraUpdate: cameraUpdate,
                     options: CameraAnimationOptions(
                         autoElevation: true, // autoElevation 컨펌 필요
@@ -273,15 +271,14 @@ struct KakaoMapView: UIViewRepresentable {
                         durationInMillis: 1500))
             } else {
                 //애니메이션 없이 CameraUpdate에 지정된대로 카메라를 즉시 조정.
-                mapView.moveCamera(cameraUpdate)
+                view.moveCamera(cameraUpdate)
             }
         }
         
         // MARK: InfoWindow
         
         /// 컴포넌트를 구성하여 해당 위치에 place의 내용으로 InfoWindow를 생성한다.
-        func createInfoWindow(position: MapPoint, place: Place?) {
-            let view = controller?.getView("mapview") as! KakaoMap
+        func createInfoWindow(view: KakaoMap, position: MapPoint, place: Place?) {
 
             let guiManager = view.getGuiManager()
             // guiManager 추가 후 원래 존재하던 infoWindow 삭제
