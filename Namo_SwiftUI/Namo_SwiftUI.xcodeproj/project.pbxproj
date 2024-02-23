@@ -98,6 +98,8 @@
 		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
 		8879A7E92B6A494D00794475 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E82B6A494D00794475 /* Data+.swift */; };
 		8879A7ED2B6A521B00794475 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7EC2B6A521B00794475 /* APITask.swift */; };
+		889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */; };
+		889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */; };
 		88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1A2B6E867000E47C8B /* Auth.swift */; };
 		88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */; };
 		88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */; };
@@ -200,6 +202,8 @@
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		8879A7E82B6A494D00794475 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8879A7EC2B6A521B00794475 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
+		889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
+		889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		88A7EF1A2B6E867000E47C8B /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Example_PetEndPoint.swift; path = Namo_SwiftUI/Data/API/EndPoint/example/Example_PetEndPoint.swift; sourceTree = SOURCE_ROOT; };
 		88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_PetRepository.swift; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 		5012A9DC2B59399600544AB0 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				889EE0DF2B888EAE00F2FFB3 /* Place */,
 				507C84D32B6F378D00147C60 /* Auth */,
 				507C84D22B6F378800147C60 /* Schedule */,
 				50BE93422B6F7C200005022E /* Memo */,
@@ -707,6 +712,15 @@
 			path = EndPoint;
 			sourceTree = "<group>";
 		};
+		889EE0DF2B888EAE00F2FFB3 /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */,
+				889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */,
+			);
+			path = Place;
+			sourceTree = "<group>";
+		};
 		88A7EF1E2B6E891E00E47C8B /* example */ = {
 			isa = PBXGroup;
 			children = (
@@ -872,6 +886,7 @@
 			files = (
 				2CFE00242B70A6EB0054C31B /* ScheduleDTO.swift in Sources */,
 				5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */,
+				889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */,
 				2CFE00552B73658A0054C31B /* Schedule.swift in Sources */,
 				88A7EF2B2B6E89B400E47C8B /* postPetInfoDTO.swift in Sources */,
 				2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */,
@@ -952,6 +967,7 @@
 				2CF445082B78E22900A8E514 /* CategoryEndPoint.swift in Sources */,
 				88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */,
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
+				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
 				507C84E02B6F3FFF00147C60 /* ExampleView.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
 				8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */,
