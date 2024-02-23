@@ -44,6 +44,7 @@ struct ToDoSelectPlaceView: View {
                 }
                 .padding(.all, 12)
                 .onTapGesture {
+                    placeInteractor.clearPlaces(isSave: false)
                     self.dismissThis()
                 }
                 Spacer()
@@ -69,8 +70,9 @@ struct ToDoSelectPlaceView: View {
                         }
                         Spacer(minLength: 20)
                         Button(action: {
-                            self.dismissThis()
                             scheduleInteractor.setPlaceToScheduleTemp()
+                            placeInteractor.clearPlaces(isSave: true)
+                            self.dismissThis()
                         }) {
                             Text("확인")
                                 .font(.pretendard(.bold, size: 15))
