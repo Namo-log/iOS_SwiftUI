@@ -20,6 +20,7 @@ struct ToDoSelectPlaceView: View {
     @Binding var preMapDraw: Bool
     
     @Injected(\.placeInteractor) var placeInteractor
+    @Injected(\.scheduleInteractor) var scheduleInteractor
     
 //    @Environment(\.dismiss) private var dismiss
     
@@ -43,14 +44,10 @@ struct ToDoSelectPlaceView: View {
                 }
                 .padding(.all, 12)
                 .onTapGesture {
-                    preMapDraw = true
-                    withAnimation {
-                        isShowSheet = false
-                    }
-                    
+                    self.dismissThis()
                 }
                 Spacer()
-                if !showBtns {
+                if appState.placeState.selectedPlace != nil {
                     HStack {
                         
                         Spacer()
@@ -72,7 +69,8 @@ struct ToDoSelectPlaceView: View {
                         }
                         Spacer(minLength: 20)
                         Button(action: {
-                            print(appState.placeState.placeList)
+                            self.dismissThis()
+                            scheduleInteractor.setPlaceToScheduleTemp()
                         }) {
                             Text("확인")
                                 .font(.pretendard(.bold, size: 15))
@@ -103,11 +101,18 @@ struct ToDoSelectPlaceView: View {
         .transition(.move(edge: .trailing))
     }
     
+    /// 현재 SelectPlace 화면을 dismiss하고, 표시될 ToDoCreateView의 draw를 준비합니다.
+    private func dismissThis() {
+        self.preMapDraw = true
+        withAnimation {
+            self.isShowSheet = false
+        }
+    }
+    
     private struct placeListView: View {
         @Binding var searchText: String
         @Binding var pinList: [Place]
         @Binding var selectedPlace: Place?
-        @Injected(\.scheduleInteractor) var scheduleInteractor
         
         var body: some View {
             ZStack {

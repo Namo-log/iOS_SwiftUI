@@ -11,7 +11,7 @@ import Factory
 
 struct ScheduleInteractorImpl: ScheduleInteractor {
 	
-	
+    @Injected(\.appState) private var appState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
@@ -155,9 +155,13 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		}
 	}
 	
-	
-	
-	
-	
+    /// 지도에서 선택한 selectedPlace의 정보를 scheduleTemp에 저장합니다
+    func setPlaceToScheduleTemp() {
+        if let place = appState.placeState.selectedPlace {
+            appState.scheduleState.scheduleTemp.locationName = place.name
+            appState.scheduleState.scheduleTemp.x = place.x
+            appState.scheduleState.scheduleTemp.y = place.y
+        }
+    }
 	
 }
