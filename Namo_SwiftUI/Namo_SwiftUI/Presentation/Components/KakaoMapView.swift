@@ -185,7 +185,7 @@ struct KakaoMapView: UIViewRepresentable {
             // Binding된 SelectedPlace가 존재하고, pinList에 해당 SelectedPlace가 존재할 때
             if let selectedPlace = self.selectedPlace, let pin = pinList.first(where: { $0.id == selectedPlace.id }) {
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                    self.selectPoi(poiID: String(pin.id))
+                    self.showSelectionAtPoi(poiID: String(pin.id))
                 }
             }
         }
@@ -202,7 +202,7 @@ struct KakaoMapView: UIViewRepresentable {
         /// 특정 poiID에 해당하는 Poi를 kakaoMapView에서 선택합니다
         /// 선택된 poi는 selectedStyle로 변경되며, 카메라 시점이 변경됩니다.
         /// KakaoMapView에서 "선택 표시"를 담당하는 것이지, appState를 변경하지 않습니다.
-        func selectPoi(poiID: String) {
+        func showSelectionAtPoi(poiID: String) {
             let view = controller?.getView("mapview") as! KakaoMap
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
