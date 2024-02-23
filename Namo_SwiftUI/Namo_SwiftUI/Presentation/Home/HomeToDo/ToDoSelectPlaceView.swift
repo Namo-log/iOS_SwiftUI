@@ -112,6 +112,7 @@ struct ToDoSelectPlaceView: View {
     }
     
     private struct placeListView: View {
+        @Injected(\.placeInteractor) var placeInteractor
         @Binding var searchText: String
         @Binding var pinList: [Place]
         @Binding var selectedPlace: Place?
@@ -135,11 +136,7 @@ struct ToDoSelectPlaceView: View {
                         
                         Button(action: {
                             Task {
-                                // Interactor + Repository로 추후 변경
-                                APIManager.shared.KakaoMapAPIRequest(query: searchText) { result,err  in
-                                    let searchResult = result?.documents.map {$0.toPlace()} ?? []
-                                    pinList = searchResult
-                                }
+                                await placeInteractor.getPlaceList(query:searchText)
                             }
                         }) {
                             Text("검색")
