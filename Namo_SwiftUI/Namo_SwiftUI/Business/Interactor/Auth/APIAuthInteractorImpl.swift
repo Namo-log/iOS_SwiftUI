@@ -27,12 +27,14 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor {
                 
                 if let error = error {
                     print(error.localizedDescription)
-                    print("카카오 토큰 받아오기 실패")
+                    print("카카오 토큰(앱) 받아오기 실패")
                 } else {
                     
-                    print("카카오 토큰 받아오기 성공")
+                    print("카카오 토큰(앱) 받아오기 성공")
                     
                     guard let accessToken = oauthToken?.accessToken else { return }
+                    
+                    print("카카오 accessToken: \(accessToken)")
                     
                     let socialAccessToken = SocialAccessToken(accessToken: accessToken)
                     
@@ -48,7 +50,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor {
                             print("refreshToken: \(serverTokens.refreshToken)")
                             
                             DispatchQueue.main.async {
-                                self.appState.isLogin = true
+                                UserDefaults.standard.set(true, forKey: "isLogin")
                                 self.appState.isTabbarHidden = false
                             }
                             
@@ -64,11 +66,14 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor {
                 
                 if let error = error {
                     print(error)
+                    print("카카오 토큰(웹) 받아오기 실패")
                 } else {
                     
-                    print("카카오 토큰 받아오기 성공")
+                    print("카카오 토큰(웹) 받아오기 성공")
                     
                     guard let accessToken = oauthToken?.accessToken else { return }
+                    
+                    print("카카오 accessToken: \(accessToken)")
                     
                     let socialAccessToken = SocialAccessToken(accessToken: accessToken)
                     
@@ -85,7 +90,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor {
                             
                             DispatchQueue.main.async {
                                 
-                                self.appState.isLogin = true
+                                UserDefaults.standard.set(true, forKey: "isLogin")
                                 self.appState.isTabbarHidden = false
                             }
            
@@ -120,7 +125,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor {
             print(result?.message ?? "로그아웃 성공")
             
             DispatchQueue.main.async {
-                self.appState.isLogin = false
+                UserDefaults.standard.set(false, forKey: "isLogin")
                 self.appState.isTabbarHidden = true
                 self.appState.currentTab = .home
             }
@@ -152,7 +157,7 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         let socialAccessToken = SocialAccessToken(
             accessToken: NaverThirdPartyLoginConnection.getSharedInstance().accessToken)
         
-        print(socialAccessToken)
+        print("네이버 AccessToken: \(socialAccessToken)")
         
         Task {
             
@@ -167,7 +172,7 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                 
                 DispatchQueue.main.async {
                     
-                    self.appState.isLogin = true
+                    UserDefaults.standard.set(true, forKey: "isLogin")
                     self.appState.isTabbarHidden = false
                 }
 
@@ -178,8 +183,7 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
     }
     
     func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
-        
-        
+  
     }
     
     func oauth20ConnectionDidFinishDeleteToken() {

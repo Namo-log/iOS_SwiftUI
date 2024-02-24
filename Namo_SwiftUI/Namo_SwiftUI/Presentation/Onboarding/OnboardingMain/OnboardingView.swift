@@ -112,7 +112,6 @@ struct OnboardingView: View {
                             // 화면 이동에 대한 플로우가 바뀌어서 아직 화면 이동 로직은 구현하지 않았습니다.
                             
                             UserDefaults.standard.set(true, forKey: "onboardingDone")
-                            UserDefaults.standard.synchronize()
                             
                             goToLogin = true
                             
