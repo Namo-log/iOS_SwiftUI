@@ -89,8 +89,8 @@ struct ToDoCreateView: View {
     // KakaoMapView draw State
     @State var draw: Bool = false
     
-    // 취소 확인 버튼 Show State
-    @State var showDeleteBtn: Bool = false
+    // 수정 화면일때 화면 변경 State
+    @State var isRevise: Bool = false
     
     @Environment(\.dismiss) private var dismiss
     
@@ -105,34 +105,26 @@ struct ToDoCreateView: View {
         UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Pretendard-Bold", size: 15)!]
         UINavigationBar.appearance().barTintColor = .white
         self.dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
-    
-//        if let schedule = schedule {
-//            toDoTitle = schedule.name
-//            if let paletteId = appState.categoryPalette[schedule.categoryId] {
-//                categoryColor = categoryInteractor.getColorWithPaletteId(id: paletteId)
-//            }
-//            categoryName = appState.categoryName[schedule.categoryId] ?? "카테고리 없음"
-//            startDateTime = schedule.startDate
-//            endDateTime = schedule.endDate
-//            notificationList = schedule.alarmDate.map { NotificationSetting.getValueFromInt($0) }
-//            pinList = [Place(id: 0, x: schedule.x ?? 0, y: schedule.y ?? 0, name: schedule.locationName, address: "", rodeAddress: "")]
-//              self.showDeleteBtn = true
-//        }
+        // schedule 받은 경우 해당 schedule -> Template 저장 / nil이면 기본값
+        schduleInteractor.setScheduleToTemplate(schedule: schedule)
     }
     
     var body: some View {
         
         ZStack(alignment: .top) {
-            
-//            Color.black.opacity(0.5)
-            
-            if showDeleteBtn {
+                 
+            if isRevise {
                 CircleItemView(content: {
                     Image("ic_delete_schedule")
                         .resizable()
                         .frame(width: 30, height: 30)
                 })
                 .offset(y: 90)
+                .onTapGesture(perform: {
+                    Task {
+                        print("여기에 삭제하시겠습니까 화면 표시")
+                    }
+                })
             }
             
             NavigationStack {
@@ -256,18 +248,6 @@ struct ToDoCreateView: View {
                             }
                             
                             ListItem(listTitle: "장소") {
-//                                NavigationLink(destination: ToDoSelectPlaceView()) {
-//                                    HStack {
-//                                        Text(appState.scheduleState.scheduleTemp.locationName.isEmpty ? "위치명" : appState.scheduleState.scheduleTemp.locationName)
-//                                            .font(.pretendard(.regular, size: 15))
-//                                            .foregroundStyle(.mainText)
-//                                        Image("vector3")
-//                                            .renderingMode(.template)
-//                                            .foregroundStyle(.mainText)
-//                                    }
-//                                    .lineSpacing(12)
-//                                    
-//                                }
                                 Button(action: {
                                     self.draw = false
                                     withAnimation {
@@ -302,7 +282,7 @@ struct ToDoCreateView: View {
                         
                         Spacer()
                     }
-                    .navigationTitle("새 일정")
+                    .navigationTitle(self.isRevise ? "일정 편집" : "새 일정")
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationBarBackButtonHidden(true)
                     .toolbar {
@@ -321,7 +301,11 @@ struct ToDoCreateView: View {
                             Button(action: {
                                 // 저장
                                 Task {
-                                    await schduleInteractor.postNewSchedule()
+                                    if self.isRevise {
+                                        print("여기에 수정 스케쥴추가")
+                                    } else {
+                                        await schduleInteractor.postNewSchedule()
+                                    }
                                 }
                                 // 닫기
                                 dismiss()
@@ -342,6 +326,12 @@ struct ToDoCreateView: View {
         }
         .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
+        .onAppear(perform: {
+            // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때
+            if self.appState.scheduleState.scheduleTemp.scheduleId != nil {
+                self.isRevise = true
+            }
+        })
     }
     
     private struct ListItem<Content: View>: View {

@@ -188,5 +188,22 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         
         let result = await scheduleRepository.postSchedule(data: postSchedule)
     }
-	
+    
+    /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 ScheduleTemp로 저장합니다.
+    /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
+    func setScheduleToTemplate(schedule: Schedule?) {
+        DispatchQueue.main.async {
+            appState.scheduleState.scheduleTemp = ScheduleTemplate(
+                scheduleId: schedule?.scheduleId,
+                name: schedule?.name,
+                categoryId: schedule?.categoryId,
+                startDate: schedule?.startDate,
+                endDate: schedule?.endDate,
+                alarmDate: schedule?.alarmDate,
+                x: schedule?.x,
+                y: schedule?.y,
+                locationName: schedule?.locationName
+            )
+        }
+    }
 }

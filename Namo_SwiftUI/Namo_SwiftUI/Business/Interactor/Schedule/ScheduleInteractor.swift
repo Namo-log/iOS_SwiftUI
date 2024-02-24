@@ -25,4 +25,5 @@ protocol ScheduleInteractor {
 	func getScheduleTimeWithCurrentYMD(currentYMD: YearMonthDay, schedule: Schedule) -> String
     func setPlaceToScheduleTemp()
     func postNewSchedule() async
+    func setScheduleToTemplate(schedule: Schedule?)
 }
