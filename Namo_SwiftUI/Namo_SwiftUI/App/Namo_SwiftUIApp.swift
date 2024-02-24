@@ -8,6 +8,7 @@
 import SwiftUI
 import Factory
 import KakaoSDKCommon
+import KakaoSDKAuth
 import NaverThirdPartyLogin
 
 @main
@@ -37,6 +38,14 @@ struct Namo_SwiftUIApp: App {
         WindowGroup {
             SplashView()
                 .environmentObject(appState)
+                .onOpenURL(perform: { url in
+                    
+                    if AuthApi.isKakaoTalkLoginUrl(url) {
+                        AuthController.handleOpenUrl(url: url)
+                    } else {
+                        instance?.receiveAccessToken(url)
+                    }
+                })
         }
     }
 }
