@@ -55,16 +55,7 @@ class AppState: ObservableObject {
             hasDiary: false,
             moimSchedule: false
         ),
-        scheduleTemp: ScheduleTemplate(
-            name: "",
-            categoryId: -1,
-            startDate: Date(),
-            endDate: Date(),
-            alarmDate: [],
-            x: 0.0,
-            y: 0.0,
-            locationName: ""
-        )
+        scheduleTemp: ScheduleTemplate()
     )
     
     // Category
