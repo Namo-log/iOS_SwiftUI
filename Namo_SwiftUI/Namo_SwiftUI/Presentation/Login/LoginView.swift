@@ -39,19 +39,21 @@ struct LoginView: View {
                 Spacer()
                 
                 VStack {
-                    LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: 0xFFE812, btnImage: "ic_login_kakao")
-                    .onTapGesture {
+                    LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: 0xFFE812, btnImage: "ic_login_kakao") {
                         Task {
                             await authInteractor.kakaoLogin()
                         }
                     }
-                    LoginBtn(textContent: "네이버 로그인", textColor: .white, btnBackgroundColor: 0x03C75A, btnImage: "ic_login_naver 1")
-                    .padding(.top, 22)
-                    .onTapGesture {
+                    
+                    LoginBtn(textContent: "네이버 로그인", textColor: .white, btnBackgroundColor: 0x03C75A, btnImage: "ic_login_naver 1") {
                         authInteractor.naverLogin()
                     }
+                    .padding(.top, 22)
                     
-                    LoginBtn(textContent: "Apple 로그인", textColor: .white, btnBackgroundColor: 0x000000, btnImage: "ic_login_apple")
+                    
+                    LoginBtn(textContent: "Apple 로그인", textColor: .white, btnBackgroundColor: 0x000000, btnImage: "ic_login_apple"){
+                        
+                    }
                     .padding(.top, 22)
                 }
                 .padding(.bottom, 50)
