@@ -30,6 +30,7 @@ struct GroupCalendarView: View {
 	@State var groupName: String = ""
 	@State var newGroupName: String = ""
 	@FocusState var isGroupNameFoused: Bool
+	@State var textOffset: CGFloat = 300
 	let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
 	
 	// calendar
@@ -292,18 +293,29 @@ struct GroupCalendarView: View {
 						Text("그룹 코드")
 							.font(.pretendard(.bold, size: 15))
 							.padding(.leading, 29)
+							.padding(.horizontal, 12)
 						
-						Spacer()
-						
-						Text("\(moim.groupCode)")
-							.font(.pretendard(.regular, size: 15))
-							.foregroundStyle(Color(.mainText))
-							.kerning(3)
+						Color.clear
+							.frame(maxWidth: .infinity)
+							.overlay {
+								Text("\(moim.groupCode)")
+									.font(.pretendard(.regular, size: 15))
+									.foregroundStyle(Color(.mainText))
+									.kerning(3)
+									.fixedSize()
+									.offset(x: textOffset, y: 0)
+							}
+							.animation(.linear(duration: 10)
+								.repeatForever(autoreverses: false), value: textOffset)
+							.clipped()
+							.onAppear {
+								textOffset = -300.0
+							}
 						
 						Button(action: {}, label: {
 							Image(.btnCopy)
 						})
-						.padding(.trailing, 12)
+						.padding(.horizontal, 12)
 					}
 					.frame(height: 40)
 					.frame(maxWidth: .infinity)
