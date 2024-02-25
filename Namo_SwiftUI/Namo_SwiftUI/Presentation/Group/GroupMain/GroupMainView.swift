@@ -207,7 +207,17 @@ struct GroupMainView: View {
 			leftButtonAction: {},
 			rightButtonTitle: "저장",
 			rightButtonAction: {
-				return true
+				let response = await moimRepository.participateMoim(groupCode: groupCode)
+				
+				// 그룹 참여에 성공했으면, 그룹 목록 새로고침
+				if response {
+					Task {
+						self.myGroups = await moimInteractor.getGroups()
+					}
+					return true
+				}
+				
+				return false
 			},
 			content: AnyView(
 				HStack {

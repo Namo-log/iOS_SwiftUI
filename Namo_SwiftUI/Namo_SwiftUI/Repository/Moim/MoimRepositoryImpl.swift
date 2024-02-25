@@ -19,18 +19,20 @@ final class MoimRepositoryImpl: MoimRepository {
 	func changeMoimName(data: changeMoimNameRequest) async -> Bool {
 		let response: BaseResponse<Int>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimEndPoint.changeMoimName(data: data))
 		
-		return response?.code == 200 ? true : false
+		return response?.code == 200
 	}
 	
-	func participateMoim(groupCode: String) async -> Int? {
-		return await APIManager.shared.performRequest(endPoint: MoimEndPoint.participateMoim(groupCode: groupCode))
+	func participateMoim(groupCode: String) async -> Bool {
+		let response: BaseResponse<Int>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimEndPoint.participateMoim(groupCode: groupCode))
+		
+		return response?.code == 200
 	}
 	
 	func withdrawMoim(moimId: Int) async -> Bool {
 		// TODO: result가 아예 없어서 제네릭을 사용하기 위해 아무 Model 기입. 수정 필요
 		let response: BaseResponse<Moim>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimEndPoint.withdrawMoim(moimId: moimId))
 		
-		return response?.code == 200 ? true : false
+		return response?.code == 200
 	}
 	
 	
