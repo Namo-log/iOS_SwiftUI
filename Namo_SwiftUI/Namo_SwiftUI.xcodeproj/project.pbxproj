@@ -112,7 +112,7 @@
 		88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2C2B6E89BD00E47C8B /* deletePetInfoDTO.swift */; };
 		88A7EF2F2B6E8AE400E47C8B /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */; };
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
-		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
+		88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoEditView.swift */; };
 		88E3A02B2B7243A400B9F75C /* ToDoSelectCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */; };
 		88E3A02D2B726F6C00B9F75C /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */; };
 		88E48F7E2B820FFD00B064A0 /* ScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */; };
@@ -218,7 +218,7 @@
 		88A7EF2C2B6E89BD00E47C8B /* deletePetInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deletePetInfoDTO.swift; sourceTree = "<group>"; };
 		88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
-		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
+		88D6C9F72B6028B3004742AD /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectCategoryView.swift; sourceTree = "<group>"; };
 		88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTemplate.swift; sourceTree = "<group>"; };
@@ -777,7 +777,7 @@
 		88D6C9F62B60286A004742AD /* HomeToDo */ = {
 			isa = PBXGroup;
 			children = (
-				88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */,
+				88D6C9F72B6028B3004742AD /* ToDoEditView.swift */,
 				88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */,
 				8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */,
 			);
@@ -939,13 +939,13 @@
 				5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */,
 				88E3A02B2B7243A400B9F75C /* ToDoSelectCategoryView.swift in Sources */,
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
-				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
+				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				88E3A02D2B726F6C00B9F75C /* KakaoMapView.swift in Sources */,
 				88E48F802B827C2500B064A0 /* CircleItemView.swift in Sources */,
 				2CFE003F2B71FE7E0054C31B /* ErrorHandler.swift in Sources */,
 				507C84D72B6F37B200147C60 /* MoimRepositorySample.swift in Sources */,
-				88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */,
+				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				88EFE4602B87C7680085826B /* PlaceInteractor.swift in Sources */,
 				2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */,

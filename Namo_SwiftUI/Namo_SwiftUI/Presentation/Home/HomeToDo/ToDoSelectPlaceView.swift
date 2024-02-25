@@ -102,7 +102,7 @@ struct ToDoSelectPlaceView: View {
         .transition(.move(edge: .trailing))
     }
     
-    /// 현재 SelectPlace 화면을 dismiss하고, 표시될 ToDoCreateView의 draw를 준비합니다.
+    /// 현재 SelectPlace 화면을 dismiss하고, 표시될 ToDoEditView의 draw를 준비합니다.
     private func dismissThis() {
         self.preMapDraw = true
         withAnimation {

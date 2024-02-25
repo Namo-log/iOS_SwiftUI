@@ -99,7 +99,7 @@ struct HomeMainView: View {
 			await categoryInteractor.getCategories()
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
-            ToDoCreateView(schedule: nil)
+            ToDoEditView(schedule: nil)
                 .background(ClearBackground())
         })
 	}

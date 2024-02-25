@@ -1,5 +1,5 @@
 //
-//  ToDoCreateView.swift
+//  ToDoEditView.swift
 //  Namo_SwiftUI
 //
 //  Created by 박민서 on 1/24/24.
@@ -9,7 +9,7 @@ import SwiftUI
 import Factory
 
 
-struct ToDoCreateView: View {
+struct ToDoEditView: View {
     
     @EnvironmentObject var appState: AppState
     @Injected(\.scheduleInteractor) var scheduleInteractor
@@ -26,7 +26,7 @@ struct ToDoCreateView: View {
     @State var draw: Bool = false
     
     // 수정 화면일때 화면 변경 State
-    @State var isRevise: Bool = true
+    @State var isRevise: Bool = false
     
     @Environment(\.dismiss) private var dismiss
     
@@ -361,6 +361,6 @@ struct ToDoCreateView: View {
 
 
 #Preview {
-    ToDoCreateView(schedule: nil)
+    ToDoEditView(schedule: nil)
         .environmentObject(AppState())
 }
