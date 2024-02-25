@@ -96,6 +96,9 @@ struct ToDoCreateView: View {
     
     // ToDoSelectPlaceView 표시용
     @State var isShowSheet: Bool = false
+    
+    // 삭제 Alert 표시용
+    @State var showAlert: Bool = false
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -112,7 +115,7 @@ struct ToDoCreateView: View {
     var body: some View {
         
         ZStack(alignment: .top) {
-                 
+            
             if isRevise {
                 CircleItemView(content: {
                     Image("ic_delete_schedule")
@@ -122,7 +125,7 @@ struct ToDoCreateView: View {
                 .offset(y: 90)
                 .onTapGesture(perform: {
                     Task {
-                        print("여기에 삭제하시겠습니까 화면 표시")
+                        self.showAlert = true
                     }
                 })
             }
@@ -151,7 +154,7 @@ struct ToDoCreateView: View {
                                 }
                             }
                             .padding(.vertical, 14)
-
+                            
                             ListItem(listTitle: "시작") {
                                 Text(dateFormatter.string(from: appState.scheduleState.scheduleTemp.startDate))
                                     .font(.pretendard(.regular, size: 15))
@@ -194,9 +197,9 @@ struct ToDoCreateView: View {
                             ListItem(listTitle: "알림") {
                                 HStack {
                                     Text(appState.scheduleState.scheduleTemp.alarmDate.isEmpty
-                                                          ? "없음"
-                                                          : notiListInString(appState.scheduleState.scheduleTemp.alarmDate.sorted(by: { $0 > $1 })
-                                        .map { NotificationSetting.getValueFromInt($0) })
+                                         ? "없음"
+                                         : notiListInString(appState.scheduleState.scheduleTemp.alarmDate.sorted(by: { $0 > $1 })
+                                            .map { NotificationSetting.getValueFromInt($0) })
                                     )
                                     .font(.pretendard(.regular, size: 15))
                                     .foregroundStyle(.mainText)
@@ -219,7 +222,7 @@ struct ToDoCreateView: View {
                                 let rows = [
                                     GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
                                     GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
-                                    ]
+                                ]
                                 
                                 LazyHGrid(rows: rows) {
                                     ForEach(notificationsList, id: \.self) { item in
@@ -244,7 +247,7 @@ struct ToDoCreateView: View {
                                             })
                                     }
                                 }
-                               
+                                
                             }
                             
                             ListItem(listTitle: "장소") {
@@ -271,12 +274,12 @@ struct ToDoCreateView: View {
                         
                         KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
                             .onAppear(perform: {
-                            self.draw = true
-                        }).onDisappear(perform: {
-                            self.draw = false
-                        })
-                        .frame(width: 330, height:200)
-                        .border(Color.init(hex: 0xD9D9D9), width: 1)
+                                self.draw = true
+                            }).onDisappear(perform: {
+                                self.draw = false
+                            })
+                            .frame(width: 330, height:200)
+                            .border(Color.init(hex: 0xD9D9D9), width: 1)
                         
                         
                         
@@ -323,6 +326,40 @@ struct ToDoCreateView: View {
                 topTrailing: 15)))
             .shadow(radius: 10)
             .offset(y: 150)
+            
+            if showAlert {
+                NamoAlertView(
+                    showAlert: $showAlert,
+                    content: AnyView(
+                        VStack {
+                            Text("일정을 정말 삭제하시겠어요?")
+                                .font(.pretendard(.bold, size: 18))
+                                .foregroundStyle(.mainText)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 24)
+                                .padding(.bottom, 8)
+                            Text("일정 삭제 시, 해당 일정에 대한\n기록 또한 삭제됩니다.")
+                                .font(.pretendard(.regular, size: 14))
+                                .foregroundStyle(.mainText)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                        }
+                            .frame(minHeight:114)
+                    ),
+                    leftButtonTitle: "취소",
+                    leftButtonAction: {
+                        // 자동 dismiss
+                    },
+                    rightButtonTitle: "삭제",
+                    rightButtonAction: {
+                        Task {
+                            // 삭제 후 dismiss
+                        }
+                    }
+                )
+            }
+            
+            
         }
         .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw) : nil)
         .ignoresSafeArea(.all, edges: .bottom)

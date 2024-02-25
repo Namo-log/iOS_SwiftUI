@@ -22,7 +22,6 @@ struct ToDoSelectPlaceView: View {
     @Injected(\.placeInteractor) var placeInteractor
     @Injected(\.scheduleInteractor) var scheduleInteractor
     
-//    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack(alignment: .topLeading) {
