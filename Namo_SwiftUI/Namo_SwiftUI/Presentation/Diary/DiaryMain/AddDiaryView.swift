@@ -12,6 +12,7 @@ struct AddDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     let info: ScheduleInfo
+    let isEditing: Bool
     
     @State var placeholderText: String = "메모 입력"
     @State var memo = ""
@@ -26,12 +27,21 @@ struct AddDiaryView: View {
         Button{
             self.presentationMode.wrappedValue.dismiss()
         } label: {
-            HStack {
-                Image(.icBack)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 24, height: 14)
-            }
+            Image(.icBack)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 24, height: 14)
+        }
+    }
+    
+    var trashButton : some View {
+        Button{
+            print("기록 삭제")
+        } label: {
+            Image(.btnTrash)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 30, height: 30)
         }
     }
     
@@ -167,27 +177,29 @@ struct AddDiaryView: View {
             Spacer()
             
             Button {
-                print("기록 저장")
+                print(isEditing ? "기록 수정" : "기록 저장")
             } label: {
                 ZStack() {
                     Rectangle()
-                        .fill(.mainOrange)
+                        .fill(isEditing ? .white : .mainOrange)
                         .frame(height: 60 + 10) // 하단의 Safe Area 영역 칠한 거 높이 10으로 가정
+                        .shadow(color: .black.opacity(0.25), radius: 7)
                     
-                    Text("기록 저장")
+                    Text(isEditing ? "기록 수정" : "기록 저장")
                         .font(.pretendard(.bold, size: 15))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(isEditing ? .mainOrange : .white)
                         .padding(.bottom, 10) // Safe Area 칠한만큼
                 }
             }
         } // VStack
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: backButton)
+        .navigationBarItems(leading: backButton, trailing: isEditing ? trashButton : nil)
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
     }
 }
 
 #Preview {
-    AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
+    AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)
+//    AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: true)
 }

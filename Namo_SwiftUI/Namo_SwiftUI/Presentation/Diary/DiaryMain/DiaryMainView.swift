@@ -35,6 +35,7 @@ struct DiaryMainView: View {
                     
                     Spacer()
                     
+                    // TODO: - 탭 이동
                     Capsule()
                         .foregroundColor(.mainGray)
                         .frame(width: 152, height: 30)
@@ -75,7 +76,7 @@ struct DiaryMainView: View {
                 }
                 
                 // TODO: - 추후 일정 화면에서 연결해야 함
-                NavigationLink(destination: AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                NavigationLink(destination: AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)) {
                   Text("기록 추가 임시 버튼")
                 }
                 
@@ -174,20 +175,21 @@ struct DiaryItem: View {
                     Rectangle()
                         .fill(.clear)
                         .frame(width: 1, height: 150)
+                    
                     // 다이어리 수정 버튼
-                    HStack(alignment: .center, spacing: 3) {
-                        Image(.icEditDiary)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 20, height: 20)
-                        
-                        Text("수정")
-                            .font(.pretendard(.light, size: 12))
-                            .foregroundStyle(.mainText)
+                    NavigationLink(destination: AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: true)) {
+                        HStack(alignment: .center, spacing: 3) {
+                            Image(.icEditDiary)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 20, height: 20)
+                            
+                            Text("수정")
+                                .font(.pretendard(.light, size: 12))
+                                .foregroundStyle(.mainText)
+                        }
                     }
-                    .onTapGesture {
-                        print("다이어리 수정 버튼 클릭")
-                    }
+//                    .foregroundStyle(/*@START_MENU_TOKEN@*/SecondaryContentStyle()/*@END_MENU_TOKEN@*/)
                 }
                 
                 // 내용과 사진
