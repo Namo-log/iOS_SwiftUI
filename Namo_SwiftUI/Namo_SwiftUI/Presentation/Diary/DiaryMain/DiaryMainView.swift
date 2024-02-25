@@ -15,45 +15,10 @@ struct DiaryMainView: View {
     @State var pickerCurrentYear: Int = Date().toYMD().year
     @State var pickerCurrentMonth: Int = Date().toYMD().month
     
-    @State var dummyDiary = [1,2]
+    @State var dummyDiary: [Int] = [1,2]
     
     var body: some View {
         ZStack {
-            if showDatePicker {
-                NamoAlertView(
-                    showAlert: $showDatePicker,
-                    content: AnyView(
-                        HStack(spacing: 0) {
-                            Picker("", selection: $pickerCurrentYear) {
-                                ForEach(2000...2099, id: \.self) {
-                                    Text("\(String($0))년")
-                                        .font(.pretendard(.regular, size: 23))
-                                }
-                            }
-                            .pickerStyle(.inline)
-                            
-                            Picker("", selection: $pickerCurrentMonth) {
-                                ForEach(1...12, id: \.self) {
-                                    Text("\(String($0))월")
-                                        .font(.pretendard(.regular, size: 23))
-                                }
-                            }
-                            .pickerStyle(.inline)
-                        }
-                            .frame(height: 154)
-                    ),
-                    leftButtonTitle: "취소",
-                    leftButtonAction: {
-                        pickerCurrentYear = Date().toYMD().year
-                        pickerCurrentMonth = Date().toYMD().month
-                    },
-                    rightButtonTitle: "확인",
-                    rightButtonAction: {
-                        currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
-                    }
-                )
-            }
-            
             VStack {
                 HStack {
                     Button {
@@ -108,10 +73,57 @@ struct DiaryMainView: View {
                         }
                     }
                 }
+                
+                // TODO: - 추후 일정 화면에서 연결해야 함
+                NavigationLink(destination: AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                  Text("기록 추가 임시 버튼")
+                }
+                
                 Spacer()
+            }
+            
+            if showDatePicker {
+                NamoAlertView(
+                    showAlert: $showDatePicker,
+                    content: AnyView(
+                        HStack(spacing: 0) {
+                            Picker("", selection: $pickerCurrentYear) {
+                                ForEach(2000...2099, id: \.self) {
+                                    Text("\(String($0))년")
+                                        .font(.pretendard(.regular, size: 23))
+                                }
+                            }
+                            .pickerStyle(.inline)
+                            
+                            Picker("", selection: $pickerCurrentMonth) {
+                                ForEach(1...12, id: \.self) {
+                                    Text("\(String($0))월")
+                                        .font(.pretendard(.regular, size: 23))
+                                }
+                            }
+                            .pickerStyle(.inline)
+                        }
+                            .frame(height: 154)
+                    ),
+                    leftButtonTitle: "취소",
+                    leftButtonAction: {
+                        pickerCurrentYear = Date().toYMD().year
+                        pickerCurrentMonth = Date().toYMD().month
+                    },
+                    rightButtonTitle: "확인",
+                    rightButtonAction: {
+                        currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
+                    }
+                )
             }
         }
     }
+}
+
+struct ScheduleInfo: Hashable {
+    let scheduleName: String
+    let date: String
+    let place: String
 }
 
 // 다이어리 날짜 아이템
