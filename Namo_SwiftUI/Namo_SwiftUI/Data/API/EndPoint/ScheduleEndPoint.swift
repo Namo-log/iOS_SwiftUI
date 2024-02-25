@@ -8,8 +8,8 @@
 import Alamofire
 
 enum ScheduleEndPoint {
-	case postScehdule(data: postScheduleRequest)
-	case getAllSchedule
+    case getAllSchedule
+	case postSchedule(data: postScheduleRequest)
     case patchSchedule(scheduleId: Int, data: postScheduleRequest)
 }
 
@@ -20,10 +20,10 @@ extension ScheduleEndPoint: EndPoint {
 	
 	var path: String {
 		switch self {
-		case .postScehdule:
+        case .getAllSchedule:
+            return "/all"
+		case .postSchedule:
 			return ""
-		case .getAllSchedule:
-			return "/all"
         case let .patchSchedule(scheduleId, _):
             return "/\(scheduleId)"
 		}
@@ -31,10 +31,10 @@ extension ScheduleEndPoint: EndPoint {
 	
 	var method: HTTPMethod {
 		switch self {
-		case .postScehdule:
+        case .getAllSchedule:
+            return .get
+		case .postSchedule:
 			return .post
-		case .getAllSchedule:
-			return .get
         case .patchSchedule:
             return .patch
 		}
@@ -42,10 +42,10 @@ extension ScheduleEndPoint: EndPoint {
 	
 	var task: APITask {
 		switch self {
-        case let .postScehdule(data), let .patchSchedule(_, data):
+        case .getAllSchedule:
+            return .requestPlain
+        case let .postSchedule(data), let .patchSchedule(_, data):
 			return .requestJSONEncodable(parameters: data)
-		case .getAllSchedule:
-			return .requestPlain
 		}
 	}
 	

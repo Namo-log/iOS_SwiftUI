@@ -9,7 +9,7 @@ import Alamofire
 
 final class ScheduleRepositoryImpl: ScheduleRepository {
 	func postSchedule(data: postScheduleRequest) async -> postScheduleResponse? {
-		return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.postScehdule(data: data))
+		return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.postSchedule(data: data))
 	}
 	
 	func getAllSchedule() async -> getScheduleResponse? {
