@@ -101,6 +101,7 @@
 		889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */; };
 		889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */; };
 		889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */; };
+		889EE0E82B8B234200F2FFB3 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */; };
 		88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1A2B6E867000E47C8B /* Auth.swift */; };
 		88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */; };
 		88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */; };
@@ -206,6 +207,7 @@
 		889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
 		889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceEndPoint.swift; sourceTree = "<group>"; };
+		889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 		88A7EF1A2B6E867000E47C8B /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Example_PetEndPoint.swift; path = Namo_SwiftUI/Data/API/EndPoint/example/Example_PetEndPoint.swift; sourceTree = SOURCE_ROOT; };
 		88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_PetRepository.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				884382D42B74D5EA00766503 /* Place.swift */,
 				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
 				8862E6372B839F760004DE4B /* ScheduleCategory.swift */,
+				889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -968,6 +971,7 @@
 				889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */,
 				88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */,
 				5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */,
+				889EE0E82B8B234200F2FFB3 /* NotificationSetting.swift in Sources */,
 				5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */,
 				8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */,
 				2CF445122B78EED100A8E514 /* CategoryInteractorImpl.swift in Sources */,
