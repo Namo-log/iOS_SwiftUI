@@ -104,6 +104,7 @@ struct DiaryMainView: View {
                 } else {
                     VStack(spacing: 20) {
                         ForEach(dummyDiary, id: \.self) { _ in
+                            DiaryDateItem()
                             DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다.")
                         }
@@ -115,12 +116,25 @@ struct DiaryMainView: View {
     }
 }
 
-struct ContentLengthPreference: PreferenceKey {
-   static var defaultValue: CGFloat { 0 }
-   
-   static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-      value = nextValue()
-   }
+// 다이어리 날짜 아이템
+struct DiaryDateItem: View {
+    var body: some View {
+        HStack(spacing: 18) {
+            Rectangle()
+                .fill(.mainText)
+                .frame(height: 1)
+            Text("2024.02.25")
+                .font(.pretendard(.bold, size: 15))
+                .foregroundStyle(.mainText)
+            Rectangle()
+                .fill(.mainText)
+                .frame(height: 1)
+            
+        }
+        .padding(.top, 10)
+        .padding(.leading, 35)
+        .padding(.trailing, 35)
+    }
 }
 
 // 다이어리 아이템
