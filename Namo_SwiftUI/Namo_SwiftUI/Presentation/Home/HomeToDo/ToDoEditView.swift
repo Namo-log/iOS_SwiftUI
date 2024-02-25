@@ -14,6 +14,7 @@ struct ToDoEditView: View {
     @EnvironmentObject var appState: AppState
     @Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
+    @Injected(\.placeInteractor) var placeInteractor
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -45,6 +46,7 @@ struct ToDoEditView: View {
         UINavigationBar.appearance().barTintColor = .white
         self.dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
         // schedule 받은 경우 해당 schedule -> Template 저장 / nil이면 기본값
+        // init으로 해당 객체를 직접 받기보다는, 전 화면에서 해당 함수를 호출하여 State에 추가해주는 것이 바람직해보입니다
         scheduleInteractor.setScheduleToTemplate(schedule: schedule)
     }
     
@@ -306,7 +308,19 @@ struct ToDoEditView: View {
             if self.appState.scheduleState.scheduleTemp.scheduleId != nil {
                 self.isRevise = true
             }
-
+            // 현재 장소 리스트에 Schedule의 장소를 추가
+            // 임시용으로, placeID가 추가된 후 추후에 수정이 필요합니다.
+            if self.isRevise {
+                let temp = self.appState.scheduleState.scheduleTemp
+                placeInteractor.appendPlaceList(place: Place(
+                    id: 0,
+                    x: temp.x,
+                    y: temp.y,
+                    name: temp.locationName,
+                    address: "임시용입니다",
+                    rodeAddress: "임시용입니다")
+                )
+            }
         })
     }
     

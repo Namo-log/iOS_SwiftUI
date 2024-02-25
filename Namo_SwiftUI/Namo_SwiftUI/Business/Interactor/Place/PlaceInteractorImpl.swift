@@ -37,5 +37,11 @@ struct PlaceInteractorImpl: PlaceInteractor {
         }
     }
     
+    /// placeState.placeList에 새로운 place를 추가합니다.
+    func appendPlaceList(place: Place) {
+        appState.placeState.placeList.append(place)
+        self.selectPlace(place: place)
+    }
+    
 }
 
