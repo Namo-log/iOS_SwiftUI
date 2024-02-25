@@ -76,7 +76,7 @@ enum NotificationSetting: CaseIterable {
 struct ToDoCreateView: View {
     
     @EnvironmentObject var appState: AppState
-    @Injected(\.scheduleInteractor) var schduleInteractor
+    @Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
     
     /// 시작 날짜 + 시각 Picker Show value
@@ -106,7 +106,7 @@ struct ToDoCreateView: View {
         UINavigationBar.appearance().barTintColor = .white
         self.dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
         // schedule 받은 경우 해당 schedule -> Template 저장 / nil이면 기본값
-        schduleInteractor.setScheduleToTemplate(schedule: schedule)
+        scheduleInteractor.setScheduleToTemplate(schedule: schedule)
     }
     
     var body: some View {
@@ -302,9 +302,9 @@ struct ToDoCreateView: View {
                                 // 저장
                                 Task {
                                     if self.isRevise {
-                                        print("여기에 수정 스케쥴추가")
+                                        await scheduleInteractor.patchSchedule()
                                     } else {
-                                        await schduleInteractor.postNewSchedule()
+                                        await scheduleInteractor.postNewSchedule()
                                     }
                                 }
                                 // 닫기

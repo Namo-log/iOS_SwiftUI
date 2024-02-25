@@ -15,4 +15,8 @@ final class ScheduleRepositoryImpl: ScheduleRepository {
 	func getAllSchedule() async -> getScheduleResponse? {
 		return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.getAllSchedule)
 	}
+    /// 유저의 개인 일정을 수정합니다
+    func patchSchedule(scheduleId: Int, data: postScheduleRequest) async -> postScheduleResponse? {
+        return await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.patchSchedule(scheduleId: scheduleId, data: data))
+    }
 }
