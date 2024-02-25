@@ -339,7 +339,9 @@ struct GroupCalendarView: View {
 								textOffset = -300.0
 							}
 						
-						Button(action: {}, label: {
+						Button(action: {
+							UIPasteboard.general.string = moim.groupCode
+						}, label: {
 							Image(.btnCopy)
 						})
 						.padding(.horizontal, 12)
