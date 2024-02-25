@@ -11,10 +11,13 @@ import SwiftUI
 
 struct DiaryMainView: View {
     
+    @State var currentDate: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
+    
     @State var showDatePicker: Bool = false
     @State var pickerCurrentYear: Int = Date().toYMD().year
     @State var pickerCurrentMonth: Int = Date().toYMD().month
-    @State var test: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
+    
+    @State var dummyDiary = [1,2]
     
     var body: some View {
         ZStack {
@@ -48,7 +51,7 @@ struct DiaryMainView: View {
                     },
                     rightButtonTitle: "확인",
                     rightButtonAction: {
-                        test = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
+                        currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
                     }
                 )
             }
@@ -59,7 +62,7 @@ struct DiaryMainView: View {
                         showDatePicker = true
                     } label: {
                         HStack {
-                            Text(test)
+                            Text(currentDate)
                                 .font(.pretendard(.bold, size: 22))
                         
                             Image(.icChevronBottomBlack)
@@ -94,13 +97,103 @@ struct DiaryMainView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
                 
-                Text("기록이 없습니다. 기록을 추가해 보세요!")
-                    .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
-                    .padding(.top, 24)
-                
+                if dummyDiary.isEmpty {
+                    Text("기록이 없습니다. 기록을 추가해 보세요!")
+                        .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
+                        .padding(.top, 24)
+                } else {
+                    VStack(spacing: 20) {
+                        ForEach(dummyDiary, id: \.self) { _ in
+                            DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
+                                      content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다.")
+                        }
+                    }
+                }
                 Spacer()
             }
         }
+    }
+}
+
+struct ContentLengthPreference: PreferenceKey {
+   static var defaultValue: CGFloat { 0 }
+   
+   static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+      value = nextValue()
+   }
+}
+
+// 다이어리 아이템
+struct DiaryItem: View {
+    let backgroundColor: Color
+    let scheduleName: String
+    let content: String
+    
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            Rectangle()
+                .fill(.textBackground)
+                .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+            
+            Rectangle()
+                .fill(backgroundColor)
+                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
+                .frame(width: 10)
+            
+            HStack(alignment: .top, spacing: 15) {
+                // 제목과 수정 버튼
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(scheduleName)
+                        .font(.pretendard(.bold, size: 15))
+                        .foregroundStyle(.mainText)
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: 1, height: 150)
+                    // 다이어리 수정 버튼
+                    HStack(alignment: .center, spacing: 3) {
+                        Image(.icEditDiary)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 20, height: 20)
+                        
+                        Text("수정")
+                            .font(.pretendard(.light, size: 12))
+                            .foregroundStyle(.mainText)
+                    }
+                    .onTapGesture {
+                        print("다이어리 수정 버튼 클릭")
+                    }
+                }
+                
+                // 내용과 사진
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(content)
+                        .font(.pretendard(.light, size: 14))
+                        .foregroundStyle(.mainText)
+                    
+                    // 사진 목록
+                    HStack(alignment: .top, spacing: 10) {
+                        Image(.dummy)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+                            .frame(width: 90, height: 90)
+                        Image(.dummy)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+                            .frame(width: 90, height: 90)
+                    }
+                }
+            }
+            .padding(.top, 16)
+            .padding(.leading, 20)
+            .padding(.trailing, 16)
+            .padding(.bottom, 16)
+        }
+        .frame(height: 225)
+        .padding(.leading, 25)
+        .padding(.trailing, 25)
     }
 }
 

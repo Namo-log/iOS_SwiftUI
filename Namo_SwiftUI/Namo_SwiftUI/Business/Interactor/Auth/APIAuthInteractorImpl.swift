@@ -48,6 +48,7 @@ class APIAuthInteractorImpl: AuthInteractor {
                             
                             DispatchQueue.main.async {
                                 self.appState.isLogin = true
+                                self.appState.isTabbarHidden = false
                             }
                             
                         } else {
@@ -84,6 +85,7 @@ class APIAuthInteractorImpl: AuthInteractor {
                             DispatchQueue.main.async {
                                 
                                 self.appState.isLogin = true
+                                self.appState.isTabbarHidden = false
                             }
            
                         } else {
