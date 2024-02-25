@@ -11,16 +11,20 @@ import Factory
 struct ToDoSelectPlaceView: View {
     
     @EnvironmentObject var appState: AppState
-    @State var draw: Bool = true
-
-    @State var searchText: String = ""
-    @State var showBtns: Bool = false
-    
-    @Binding var isShowSheet: Bool
-    @Binding var preMapDraw: Bool
-    
     @Injected(\.placeInteractor) var placeInteractor
     @Injected(\.scheduleInteractor) var scheduleInteractor
+    
+    /// 본 화면의 표시 여부 state
+    @Binding var isShowSheet: Bool
+    /// 이전 화면의 kakaoMap draw 여부 state
+    @Binding var preMapDraw: Bool
+    
+    /// KakaoMap draw State
+    @State var draw: Bool = true
+    /// 장소 검색 textField Text state
+    @State var searchText: String = ""
+    /// 취소/확인 버튼 show state
+    @State var showBtns: Bool = false
     
     
     var body: some View {
@@ -35,6 +39,7 @@ struct ToDoSelectPlaceView: View {
             .zIndex(0)
             
             VStack(alignment: .leading) {
+                //MARK: 뒤로 가기 버튼
                 CircleItemView {
                     Image(systemName: "arrow.left")
                         .renderingMode(.template)
@@ -46,7 +51,10 @@ struct ToDoSelectPlaceView: View {
                     placeInteractor.clearPlaces(isSave: false)
                     self.dismissThis()
                 }
+                
                 Spacer()
+                
+                //MARK: 취소/확인 버튼
                 if appState.placeState.selectedPlace != nil {
                     HStack {
                         
@@ -91,6 +99,7 @@ struct ToDoSelectPlaceView: View {
                     .padding(.bottom, 16)
                 } //: HStack
                
+                //MARK: 지도 아래 검색창 + 장소 리스트 뷰
                 placeListView(searchText: $searchText, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
                     .frame(height: 430)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
@@ -110,6 +119,7 @@ struct ToDoSelectPlaceView: View {
         }
     }
     
+    /// 장소 선택 화면 하단의 검색창 + 장소 리스트를 표시하는 뷰입니다.
     private struct placeListView: View {
         @Injected(\.placeInteractor) var placeInteractor
         @Binding var searchText: String
@@ -120,6 +130,7 @@ struct ToDoSelectPlaceView: View {
             ZStack {
                 Color.white.ignoresSafeArea(.all)
                 VStack(alignment: .leading) {
+                    //MARK: 검색 창
                     HStack {
                         VStack {
                             HStack {
@@ -152,6 +163,7 @@ struct ToDoSelectPlaceView: View {
                     .padding(.horizontal, 30)
                     .padding(.vertical, 20)
                     
+                    //MARK: 결과 리스트
                     ScrollView {
                         VStack(spacing: 0) {
                             ForEach($pinList, id: \.id) { place in
@@ -170,6 +182,7 @@ struct ToDoSelectPlaceView: View {
         }
     }
     
+    /// placeListView에 들어가는 item Cell 뷰입니다
     private struct placeListItemView: View {
         @Binding var place: Place
         @Binding var selectedPlace: Place?

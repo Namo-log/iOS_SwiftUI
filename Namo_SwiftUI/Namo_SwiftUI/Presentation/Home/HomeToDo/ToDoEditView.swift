@@ -8,7 +8,9 @@
 import SwiftUI
 import Factory
 
-
+/// 일정 추가/생성/삭제에서 표시되는 Edit 화면 입니다.
+/// 카테고리 선택 시 -> ToDoSelectCategoryView
+/// 장소 선택 시 -> ToDoSelectPlaceView
 struct ToDoEditView: View {
     
     @EnvironmentObject var appState: AppState
@@ -22,19 +24,15 @@ struct ToDoEditView: View {
     @State private var showEndTimePicker: Bool = false
     /// 알림 선택란 Show value
     @State private var showNotificationSetting: Bool = false
-    
-    // KakaoMapView draw State
+    /// KakaoMapView draw State
     @State var draw: Bool = false
-    
-    // 수정 화면일때 화면 변경 State
+    /// 수정 화면일때 화면 변경 State
     @State var isRevise: Bool = false
-    
+    /// 현재 화면 dismiss
     @Environment(\.dismiss) private var dismiss
-    
-    // ToDoSelectPlaceView 표시용
+    /// ToDoSelectPlaceView Show State
     @State var isShowSheet: Bool = false
-    
-    // 삭제 Alert 표시용
+    /// 삭제 Alert Show State
     @State var showAlert: Bool = false
 
     /// 날짜 포매터
@@ -53,7 +51,7 @@ struct ToDoEditView: View {
     var body: some View {
         
         ZStack(alignment: .top) {
-            
+            // MARK: 상단 삭제 원형 버튼
             if isRevise {
                 CircleItemView(content: {
                     Image("ic_delete_schedule")
@@ -68,13 +66,16 @@ struct ToDoEditView: View {
                 })
             }
             
+            // MARK: 메인 시트
             NavigationStack {
                 ScrollView {
                     VStack {
+                        // MARK: 일정 제목
                         TextField("일정 이름", text: $appState.scheduleState.scheduleTemp.name)
                             .font(.pretendard(.bold, size: 22))
                             .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
                         
+                        // MARK: 일정 선택내용 아이템 목록
                         VStack(alignment: .center, spacing: 20) {
                             ListItem(listTitle: "카테고리") {
                                 NavigationLink(destination: ToDoSelectCategoryView()) {
@@ -210,6 +211,7 @@ struct ToDoEditView: View {
                         }
                         .padding(.horizontal, 30)
                         
+                        // MARK: 카카오 맵 뷰
                         KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
                             .onAppear(perform: {
                                 self.draw = true
@@ -265,6 +267,7 @@ struct ToDoEditView: View {
             .shadow(radius: 10)
             .offset(y: 100)
             
+            // MARK: 삭제 Alert 창
             if showAlert {
                 NamoAlertView(
                     showAlert: $showAlert,
@@ -332,6 +335,7 @@ struct ToDoEditView: View {
         dismiss()
     }
     
+    /// 일정 생성/수정 화면의 각 아이템 리스트 아이템 뷰입니다.
     private struct ListItem<Content: View>: View {
         
         var listTitle: String
@@ -347,7 +351,7 @@ struct ToDoEditView: View {
         }
     }
     
-    
+    /// 일정 생성/수정 화면의 알림 주기 설정 버튼 뷰입니다
     private struct ColorToggleButton: View {
         
         @Binding var isOn: Bool

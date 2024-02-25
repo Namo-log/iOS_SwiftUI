@@ -9,25 +9,23 @@
 import SwiftUI
 import Factory
 
-struct ToDoCategory: Hashable {
-    var categoryId: Int
-    var name: String
-    var color: Color
-    var isSelected: Bool
-}
 
+/// 일정의 카테고리를 선택 시 표시되는 화면 입니다.
 struct ToDoSelectCategoryView: View {
+    
     @EnvironmentObject var appState: AppState
     @Injected(\.categoryInteractor) var categoryInteractor
-
-    @State private var categoryList: [ScheduleCategory] = [
-    ]
+    
+    /// 화면에 표시되기 위한 categoryList State
+    @State private var categoryList: [ScheduleCategory] = []
+    /// 현재화면 dismiss
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    //MARK: 카테고리 목록
                     ForEach(categoryList, id: \.self) { category in
                         HStack {
                             ColorCircleView(color: category.color, selectState: category.isSelected ?? false ? .checked : .available)
@@ -50,7 +48,8 @@ struct ToDoSelectCategoryView: View {
                             dismiss()
                         }
                     }
-                                
+                    
+                    //MARK: "카테고리 편집"
                     HStack {
                         Image(systemName: "square.grid.2x2")
                             .renderingMode(.template)
@@ -80,6 +79,7 @@ struct ToDoSelectCategoryView: View {
             }//: ScrollView
         }//: NavigationStack
         .onAppear {
+            // 카테고리 최신화 후, 카테고리 리스트에 반영
             Task {
                 await self.categoryInteractor.getCategories()
                 self.categoryList = self.appState.categoryState.categoryList.map { category in
