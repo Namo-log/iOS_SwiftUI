@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-// TODO: - 기록 화면 메인 UI 만들기
-
 struct DiaryMainView: View {
     
     @State var currentDate: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
@@ -138,6 +136,7 @@ struct DiaryDateItem: View {
 }
 
 // 다이어리 아이템
+// TODO: - 내용에 따라 동적 높이 설정... 어떻게 하지
 struct DiaryItem: View {
     let backgroundColor: Color
     let scheduleName: String
@@ -186,6 +185,7 @@ struct DiaryItem: View {
                         .foregroundStyle(.mainText)
                     
                     // 사진 목록
+                    // TODO: - 사진이 없으면 없애야 됨
                     HStack(alignment: .top, spacing: 10) {
                         Image(.dummy)
                             .resizable()
