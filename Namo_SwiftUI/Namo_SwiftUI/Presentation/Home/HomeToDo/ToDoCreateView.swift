@@ -354,6 +354,8 @@ struct ToDoCreateView: View {
                     rightButtonAction: {
                         Task {
                             // 삭제 후 dismiss
+                            await self.scheduleInteractor.deleteSchedule()
+                            dismiss()
                         }
                     }
                 )

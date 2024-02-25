@@ -221,6 +221,19 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         print(String(describing: result))
     }
     
+    /// 현재 수정하고 있는 스케쥴을 서버로 삭제 요청합니다.
+    func deleteSchedule() async {
+        let temp = appState.scheduleState.scheduleTemp
+        
+        guard let scheduleId = temp.scheduleId else {
+            print("ScheduleID not included")
+            return
+        }
+        
+        let result = await scheduleRepository.deleteSchedule(scheduleId: scheduleId, isMoim: false)
+        print(String(describing: result))
+    }
+    
     /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 ScheduleTemp로 저장합니다.
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
     func setScheduleToTemplate(schedule: Schedule?) {

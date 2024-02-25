@@ -26,5 +26,6 @@ protocol ScheduleInteractor {
     func setPlaceToScheduleTemp()
     func postNewSchedule() async
     func patchSchedule() async
+    func deleteSchedule() async
     func setScheduleToTemplate(schedule: Schedule?)
 }

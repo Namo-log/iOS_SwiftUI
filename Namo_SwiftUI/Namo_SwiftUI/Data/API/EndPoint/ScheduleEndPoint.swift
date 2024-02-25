@@ -11,6 +11,7 @@ enum ScheduleEndPoint {
     case getAllSchedule
 	case postSchedule(data: postScheduleRequest)
     case patchSchedule(scheduleId: Int, data: postScheduleRequest)
+    case deleteSchedule(scheduleId: Int, isMoim: Bool)
 }
 
 extension ScheduleEndPoint: EndPoint {
@@ -26,6 +27,8 @@ extension ScheduleEndPoint: EndPoint {
 			return ""
         case let .patchSchedule(scheduleId, _):
             return "/\(scheduleId)"
+        case let .deleteSchedule(scheduleId, isMoim):
+            return "/\(scheduleId)/\(isMoim ? 1 : 0)"
 		}
 	}
 	
@@ -37,16 +40,18 @@ extension ScheduleEndPoint: EndPoint {
 			return .post
         case .patchSchedule:
             return .patch
+        case .deleteSchedule:
+            return .delete
 		}
 	}
 	
 	var task: APITask {
-		switch self {
-        case .getAllSchedule:
+        switch self {
+        case .getAllSchedule, .deleteSchedule:
             return .requestPlain
         case let .postSchedule(data), let .patchSchedule(_, data):
-			return .requestJSONEncodable(parameters: data)
-		}
+            return .requestJSONEncodable(parameters: data)
+        }
 	}
 	
 	
