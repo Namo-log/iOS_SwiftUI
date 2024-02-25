@@ -29,6 +29,7 @@ struct GroupCalendarView: View {
 	@State var showGroupInfo: Bool = false
 	@State var groupName: String = ""
 	@State var newGroupName: String = ""
+	@FocusState var isGroupNameFoused: Bool
 	let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
 	
 	// calendar
@@ -82,11 +83,10 @@ struct GroupCalendarView: View {
 	
 	private var header: some View {
 		HStack {
-			// TODO: 임시 뒤로가기 버튼. 디자인 나오면 수정 예정
 			Button(action: {
 				dismiss()
 			}, label: {
-				Image(systemName: "arrow.left")
+				Image(.icBackArrowOrange)
 			})
 			.foregroundStyle(Color.black)
 			
@@ -245,10 +245,17 @@ struct GroupCalendarView: View {
 						
 						Spacer()
 						
-						TextField(groupName , text: $newGroupName)
+						TextField("", text: $newGroupName)
 							.font(.pretendard(.regular, size: 15))
 							.foregroundStyle(Color(.mainText))
 							.multilineTextAlignment(.trailing)
+							.focused($isGroupNameFoused)
+						
+						Button(action: {
+							isGroupNameFoused = true
+						}, label: {
+							Image(.icPencil)
+						})
 					}
 					.padding(.bottom, 20)
 					
@@ -330,6 +337,9 @@ struct GroupCalendarView: View {
 					.padding(.top, 25)
 			)
 		)
+		.onAppear {
+			newGroupName = groupName
+		}
 		.onDisappear {
 			newGroupName = groupName
 		}
