@@ -6,15 +6,21 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct AddDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     let info: ScheduleInfo
+    
     @State var placeholderText: String = "메모 입력"
     @State var memo = ""
     @State var typedCharacters = 0
     @State var characterLimit = 200
+    
+    @State var images: [UIImage] = [] // 보여질 사진 목록
+    @State var photosPickerItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
+    @State var photosLimit = 3 // 선택가능한 최대 사진 개수
     
     var backButton : some View {
         Button{
@@ -119,20 +125,40 @@ struct AddDiaryView: View {
                 } // HStack
                 .padding(.top, 10)
                 
-                HStack(alignment: .top, spacing: 20) {
-//                    Image(.dummy)
-//                        .resizable()
-//                        .frame(width: 100, height: 100)
-                    
-                    Button {
-                        print("사진 추가")
-                    } label: {
-                        Image(.btnAddImg)
-                            .resizable()
-                            .frame(width: 100, height: 100)
+                ScrollView(.horizontal) {
+                    HStack(alignment: .top, spacing: 20) {
+                        // images의 사진들을 하나씩 이미지뷰로 띄운다
+                        ForEach(0..<images.count, id: \.self) { i in
+                            Image(uiImage: images[i])
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .aspectRatio(contentMode: .fill)
+                        }
+                        
+                        // 사진 피커 -> 최대 3장까지 선택 가능
+                        PhotosPicker(selection: $photosPickerItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
+                            Image(.btnAddImg)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                        }
+                    } // HStack
+                    .padding(.top, 18)
+                    .onChange(of: photosPickerItems) { _ in
+                        Task {
+                            // 앞서 선택된 것들은 지우고
+                            images.removeAll()
+                            
+                            // 선택된 사진들 images에 추가
+                            for item in photosPickerItems {
+                                if let data = try? await item.loadTransferable(type: Data.self) {
+                                    if let image = UIImage(data: data) {
+                                        images.append(image)
+                                    }
+                                }
+                            }
+                        }
                     }
-                } // HStack
-                .padding(.top, 18)
+                } // ScrollView
             } // VStack
             .padding(.top, 12)
             .padding(.leading, 25)
