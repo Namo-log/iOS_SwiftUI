@@ -90,7 +90,7 @@ struct ToDoCreateView: View {
     @State var draw: Bool = false
     
     // 수정 화면일때 화면 변경 State
-    @State var isRevise: Bool = false
+    @State var isRevise: Bool = true
     
     @Environment(\.dismiss) private var dismiss
     
@@ -122,7 +122,7 @@ struct ToDoCreateView: View {
                         .resizable()
                         .frame(width: 30, height: 30)
                 })
-                .offset(y: 90)
+                .offset(y: 50)
                 .onTapGesture(perform: {
                     Task {
                         self.showAlert = true
@@ -325,7 +325,7 @@ struct ToDoCreateView: View {
                 topLeading: 15,
                 topTrailing: 15)))
             .shadow(radius: 10)
-            .offset(y: 150)
+            .offset(y: 100)
             
             if showAlert {
                 NamoAlertView(

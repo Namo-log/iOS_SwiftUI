@@ -30,7 +30,7 @@ struct ToDoSelectPlaceView: View {
             }).onDisappear(perform: {
                 self.draw = false
             })
-            .frame(height:580)
+            .frame(height:380)
             .backgroundStyle(.black)
             .zIndex(0)
             
@@ -92,7 +92,7 @@ struct ToDoSelectPlaceView: View {
                 } //: HStack
                
                 placeListView(searchText: $searchText, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
-                    .frame(height: 280)
+                    .frame(height: 430)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
             } //: Vstack
@@ -189,9 +189,13 @@ struct ToDoSelectPlaceView: View {
                 .padding(.all, 12)
                 Spacer()
                 if let selectedPlace = self.selectedPlace, place.id == selectedPlace.id {
-                    ColorCircleView(color: .mainOrange, selectState: .checked)
-                        .frame(width: 20, height: 20)
-                        .padding(.horizontal, 10)
+                    Image(.checkMark)
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 15, height: 15)
+                        .foregroundStyle(.mainOrange)
+                        .padding(.vertical, 25)
+                        .padding(.trailing, 20)
                 }
             }
             .background(.textBackground)
