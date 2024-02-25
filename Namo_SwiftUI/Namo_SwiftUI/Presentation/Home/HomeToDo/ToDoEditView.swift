@@ -228,7 +228,7 @@ struct ToDoEditView: View {
                         ToolbarItem(placement: .topBarLeading) {
                             Button(action: {
                                 // 닫기
-                                dismiss()
+                                dismissThis()
                             }, label: {
                                 Text("닫기")
                                     .font(.pretendard(.regular, size: 15))
@@ -247,7 +247,7 @@ struct ToDoEditView: View {
                                     }
                                 }
                                 // 닫기
-                                dismiss()
+                                dismissThis()
                             }, label: {
                                 Text("저장")
                                     .font(.pretendard(.regular, size: 15))
@@ -284,14 +284,14 @@ struct ToDoEditView: View {
                     ),
                     leftButtonTitle: "취소",
                     leftButtonAction: {
-                        // 자동 dismiss
+                        // 자동 Alert창 dismiss
                     },
                     rightButtonTitle: "삭제",
                     rightButtonAction: {
                         Task {
                             // 삭제 후 dismiss
                             await self.scheduleInteractor.deleteSchedule()
-                            dismiss()
+                            dismissThis()
                         }
                     }
                 )
@@ -306,7 +306,16 @@ struct ToDoEditView: View {
             if self.appState.scheduleState.scheduleTemp.scheduleId != nil {
                 self.isRevise = true
             }
+
         })
+    }
+    
+    /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.
+    private func dismissThis() {
+        scheduleInteractor.setScheduleToTemplate(schedule: nil)
+        placeInteractor.clearPlaces(isSave: false)
+        placeInteractor.selectPlace(place: nil)
+        dismiss()
     }
     
     private struct ListItem<Content: View>: View {
