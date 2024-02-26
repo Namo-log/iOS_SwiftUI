@@ -11,7 +11,7 @@ import Factory
 
 struct ScheduleInteractorImpl: ScheduleInteractor {
 	
-	
+    @Injected(\.appState) private var appState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
@@ -155,9 +155,100 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		}
 	}
 	
-	
-	
-	
-	
-	
+    /// 지도에서 선택한 selectedPlace의 정보를 scheduleTemp에 저장합니다
+    func setPlaceToScheduleTemp() {
+        if let place = appState.placeState.selectedPlace {
+            appState.scheduleState.scheduleTemp.locationName = place.name
+            appState.scheduleState.scheduleTemp.x = place.x
+            appState.scheduleState.scheduleTemp.y = place.y
+        }
+    }
+    
+    /// scheduleState.schuduleTemp의 내용을 추가하여 서버로 전송합니다.
+    func postNewSchedule() async {
+        let temp = appState.scheduleState.scheduleTemp
+        
+        let calendar = Calendar.current
+        let startDate = temp.startDate
+        let endDate = temp.endDate
+
+        let interval = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        
+        let postSchedule = postScheduleRequest(
+            name: temp.name,
+            startDate: Int(startDate.timeIntervalSince1970),
+            endDate: Int(endDate.timeIntervalSince1970),
+            interval: interval,
+            alarmDate: temp.alarmDate,
+            x: temp.x,
+            y: temp.y,
+            locationName: temp.locationName,
+            categoryId: temp.categoryId
+        )
+        
+        let result = await scheduleRepository.postSchedule(data: postSchedule)
+        print(String(describing: result))
+    }
+    
+    /// scheduleState.schuduleTemp의 내용을 추가하여 서버로 전송 - 기존 정보를 수정합니다.
+    func patchSchedule() async {
+        let temp = appState.scheduleState.scheduleTemp
+        
+        guard let scheduleId = temp.scheduleId else {
+            print("ScheduleID not included")
+            return
+        }
+        
+        let calendar = Calendar.current
+        let startDate = temp.startDate
+        let endDate = temp.endDate
+
+        let interval = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        
+        let postSchedule = postScheduleRequest(
+            name: temp.name,
+            startDate: Int(startDate.timeIntervalSince1970),
+            endDate: Int(endDate.timeIntervalSince1970),
+            interval: interval,
+            alarmDate: temp.alarmDate,
+            x: temp.x,
+            y: temp.y,
+            locationName: temp.locationName,
+            categoryId: temp.categoryId
+        )
+        
+        let result = await scheduleRepository.patchSchedule(scheduleId: scheduleId, data: postSchedule)
+        print(String(describing: result))
+    }
+    
+    /// 현재 수정하고 있는 스케쥴을 서버로 삭제 요청합니다.
+    func deleteSchedule() async {
+        let temp = appState.scheduleState.scheduleTemp
+        
+        guard let scheduleId = temp.scheduleId else {
+            print("ScheduleID not included")
+            return
+        }
+        
+        let result = await scheduleRepository.deleteSchedule(scheduleId: scheduleId, isMoim: false)
+        print(String(describing: result))
+    }
+    
+    /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 ScheduleTemp로 저장합니다.
+    /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
+    func setScheduleToTemplate(schedule: Schedule?) {
+        DispatchQueue.main.async {
+            appState.scheduleState.scheduleTemp = ScheduleTemplate(
+                scheduleId: schedule?.scheduleId,
+                name: schedule?.name,
+                categoryId: schedule?.categoryId,
+                startDate: schedule?.startDate,
+                endDate: schedule?.endDate,
+                alarmDate: schedule?.alarmDate,
+                x: schedule?.x,
+                y: schedule?.y,
+                locationName: schedule?.locationName
+            )
+        }
+    }
 }
