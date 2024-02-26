@@ -12,11 +12,8 @@ import KakaoSDKAuth
 import NaverThirdPartyLogin
 import AuthenticationServices
 
-// 예시로 넣어둔 AuthInteractor 구현체이며 실제 구현에 쓰일 예정입니다.
 class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationControllerPresentationContextProviding {
     
-    // Interactor는 AppState와 Repository를 주입받고 로직에 활용합니다.
-    // Interactor의 AppState는 View의 Interactor를 통해 직접 접근할 수는 없고 Interactor의 로직으로 조작합니다.
     @Injected(\.authRepository) private var authRepository
     @Injected(\.appState) private var appState: AppState
     
@@ -43,7 +40,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         
                         Task {
                             
-                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: "kakao")
+                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
                             
                             if let serverTokens = serverTokens {
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
@@ -82,7 +79,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         
                         Task {
                             
-                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: "kakao")
+                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
                             
                             if let serverTokens = serverTokens {
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
@@ -187,7 +184,7 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         
         Task {
             
-            let serverTokens = await authRepository.getServerToken(socialAccessToken: socialAccessToken, social: "naver")
+            let serverTokens = await authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.naver)
             
             if let serverTokens = serverTokens {
                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
