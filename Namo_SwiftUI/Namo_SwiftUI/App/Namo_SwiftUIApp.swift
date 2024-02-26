@@ -28,7 +28,7 @@ struct Namo_SwiftUIApp: App {
         // 네이버 로그인 세로모드 고정
         instance?.setOnlyPortraitSupportInIphone(true)
         
-        instance?.serviceUrlScheme = "com.mongmong.namo"
+        instance?.serviceUrlScheme = Bundle.main.bundleIdentifier
         instance?.consumerKey = SecretConstants.naverLoginConsumerKey
         instance?.consumerSecret = SecretConstants.naverLoginClinetSecret
         instance?.appName = "나모"
