@@ -8,11 +8,42 @@
 import SwiftUI
 
 struct SettingComponent: View {
+    
+    @State var title: String
+    @State var content: String?
+    @State var image: Image?
+    @State var action: (() -> Void)?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        HStack {
+            
+            Text(title)
+                .font(Font.pretendard(.bold, size: 15))
+                .foregroundStyle(.mainText)
+            
+            Spacer()
+            
+            if let content = content {
+                
+                Text(content)
+                    .font(Font.pretendard(.bold, size: 15))
+                    .foregroundStyle(.mainText)
+            } else if let image = image {
+                image
+            }
+        }
+        .padding(.top, 8)
+        .background(.white)
+        .onTapGesture {
+
+            guard let action = action else {return}
+            
+            action()
+        }
     }
 }
 
 #Preview {
-    SettingComponent()
+    SettingComponent(title: "버전 정보")
 }
