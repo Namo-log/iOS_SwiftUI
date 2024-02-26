@@ -15,8 +15,6 @@ struct OnboardingView: View {
     @State var onboardingSetences: [String] = ["소중한 나의 일정과 기록,\n 어떻게 관리하시나요?", "중요한 일정을 잊지 않도록\n 캘린더에 표시", "일정을 사진과 글로 기록하고\n 한 눈에 모아보세요", "그룹 캘린더에서 친구들 일정 확인 후\n 손쉽게 모임 일정을 잡고", "사진 공유와 금액 정산까지 효율적으로"]
     @State var goToLogin = false
     
-    @EnvironmentObject var appState: AppState
-    
     var body: some View {
         
         if !goToLogin {
@@ -60,7 +58,6 @@ struct OnboardingView: View {
                             Spacer()
                             
                             }
-
                         }
                 }
                 .tabViewStyle(PageTabViewStyle())
@@ -85,7 +82,6 @@ struct OnboardingView: View {
                     }
                     .padding(.bottom, 15)
                     
-                    
                 } else {
                     
                     VStack {
@@ -107,9 +103,6 @@ struct OnboardingView: View {
                     withAnimation(.easeInOut(duration: 0.25)) {
                         
                         if onboardingIndex == 5 {
-                            
-                            // 화면 이동 로직.
-                            // 화면 이동에 대한 플로우가 바뀌어서 아직 화면 이동 로직은 구현하지 않았습니다.
                             
                             UserDefaults.standard.set(true, forKey: "onboardingDone")
                             
