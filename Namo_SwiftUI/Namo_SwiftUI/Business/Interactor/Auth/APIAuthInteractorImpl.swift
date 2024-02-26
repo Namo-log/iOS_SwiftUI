@@ -165,9 +165,10 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             
         } else {
             
+            // MARK: 에러 핸들링 추후에 필요
             print(result?.code)
             print(result?.message)
-            print("로그아웃 실패. 재시도하세요.") // 에러 핸들링 추후에 필요
+            print("로그아웃 실패. 재시도하세요.")
         }
     }
 }
