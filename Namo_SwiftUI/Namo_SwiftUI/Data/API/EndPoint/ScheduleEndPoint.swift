@@ -8,8 +8,10 @@
 import Alamofire
 
 enum ScheduleEndPoint {
-	case postScehdule(data: postScheduleRequest)
-	case getAllSchedule
+    case getAllSchedule
+	case postSchedule(data: postScheduleRequest)
+    case patchSchedule(scheduleId: Int, data: postScheduleRequest)
+    case deleteSchedule(scheduleId: Int, isMoim: Bool)
 }
 
 extension ScheduleEndPoint: EndPoint {
@@ -19,29 +21,37 @@ extension ScheduleEndPoint: EndPoint {
 	
 	var path: String {
 		switch self {
-		case .postScehdule(let data):
+        case .getAllSchedule:
+            return "/all"
+		case .postSchedule:
 			return ""
-		case .getAllSchedule:
-			return "/all"
+        case let .patchSchedule(scheduleId, _):
+            return "/\(scheduleId)"
+        case let .deleteSchedule(scheduleId, isMoim):
+            return "/\(scheduleId)/\(isMoim ? 1 : 0)"
 		}
 	}
 	
-	var method: Alamofire.HTTPMethod {
+	var method: HTTPMethod {
 		switch self {
-		case .postScehdule(let data):
+        case .getAllSchedule:
+            return .get
+		case .postSchedule:
 			return .post
-		case .getAllSchedule:
-			return .get
+        case .patchSchedule:
+            return .patch
+        case .deleteSchedule:
+            return .delete
 		}
 	}
 	
 	var task: APITask {
-		switch self {
-		case .postScehdule(let data):
-			return .requestJSONEncodable(parameters: data)
-		case .getAllSchedule:
-			return .requestPlain
-		}
+        switch self {
+        case .getAllSchedule, .deleteSchedule:
+            return .requestPlain
+        case let .postSchedule(data), let .patchSchedule(_, data):
+            return .requestJSONEncodable(parameters: data)
+        }
 	}
 	
 	
