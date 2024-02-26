@@ -17,9 +17,9 @@ protocol AuthInteractor {
     // 네이버 로그인
     func naverLogin()
     
+    // 애플 로그인
+    func appleLogin()
+    
     // 로그아웃
     func logout() async
-    
-    // 예시로 쓰인 메소드입니다.
-    func example()
 }
