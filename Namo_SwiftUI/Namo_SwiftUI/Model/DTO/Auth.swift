@@ -21,3 +21,10 @@ struct ServerAccessToken: Encodable {
     
     let accessToken: String
 }
+
+struct AppleAccessToken: Encodable {
+    
+    let identityToken: String
+    let email: String
+    let username: String
+}
