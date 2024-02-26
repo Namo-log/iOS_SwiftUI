@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     
@@ -36,7 +37,9 @@ struct LoginView: View {
             
             VStack {
                 LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: 0xFFE812, btnImage: "ic_login_kakao") {
+                    
                     Task {
+                        
                         await authInteractor.kakaoLogin()
                     }
                 }
@@ -49,6 +52,7 @@ struct LoginView: View {
                 
                 LoginBtn(textContent: "Apple 로그인", textColor: .white, btnBackgroundColor: 0x000000, btnImage: "ic_login_apple"){
                     
+                    authInteractor.appleLogin()  
                 }
                 .padding(.top, 22)
             }
