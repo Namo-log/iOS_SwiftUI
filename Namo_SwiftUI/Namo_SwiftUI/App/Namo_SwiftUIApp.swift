@@ -41,7 +41,9 @@ struct Namo_SwiftUIApp: App {
                 .onOpenURL(perform: { url in
                     
                     if AuthApi.isKakaoTalkLoginUrl(url) {
+                        
                         AuthController.handleOpenUrl(url: url)
+         
                     } else {
                         instance?.receiveAccessToken(url)
                     }
