@@ -33,9 +33,6 @@ struct SplashView: View {
         }
         .onAppear {
             
-            self.onboardingDone = UserDefaults.standard.bool(forKey: "onboardingDone")
-            self.isLogin = UserDefaults.standard.bool(forKey: "isLogin")
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 isActive = true
             }
