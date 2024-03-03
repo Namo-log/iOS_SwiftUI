@@ -250,6 +250,7 @@ struct AddDiaryView: View {
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
                         print("기록 삭제")
+                        self.presentationMode.wrappedValue.dismiss()
                     }
             }
         } // ZStack
