@@ -213,6 +213,7 @@ struct AddDiaryView: View {
                 // 기록 저장 또는 기록 수정 버튼
                 Button {
                     print(isEditing ? "기록 수정" : "기록 저장")
+                    self.presentationMode.wrappedValue.dismiss()
                 } label: {
                     ZStack() {
                         Rectangle()
