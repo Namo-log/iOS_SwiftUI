@@ -8,7 +8,7 @@
 import Alamofire
 import Foundation
 import Factory
-//import SwiftKeychainWrapper
+import NaverThirdPartyLogin
 
 /// API Request의 Authentication을 관리합니다.
 class AuthManager: RequestInterceptor {
@@ -34,10 +34,11 @@ class AuthManager: RequestInterceptor {
             
             // 토큰이 없는 경우 isLogin = false -> 로그인 화면으로 이동
             DispatchQueue.main.async {
-                self.appState.isLogin = false
+                UserDefaults.standard.set(false, forKey: "isLogin")
+                NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
             }
             
-            completion(.failure(APIError.customError("키체인 토큰 조회 실패")))
+            completion(.failure(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
             return
         }
         
@@ -79,11 +80,12 @@ class AuthManager: RequestInterceptor {
             
             // 토큰이 없는 경우 isLogin = false -> 로그인 화면으로 이동
             DispatchQueue.main.async {
-                self.appState.isLogin = false
+                UserDefaults.standard.set(false, forKey: "isLogin")
+                NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
             }
             
             // 이것처럼 처리도 가능
-            completion(.doNotRetryWithError(APIError.customError("토큰 조회 실패")))
+            completion(.doNotRetryWithError(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
             return
         }
         
@@ -121,7 +123,8 @@ class AuthManager: RequestInterceptor {
                 
                 // 로그인 화면으로 이동
                 DispatchQueue.main.async {
-                    self.appState.isLogin = false
+                    UserDefaults.standard.set(false, forKey: "isLogin")
+                    NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
                 }
                 
                 // 이것도 가능

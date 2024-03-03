@@ -11,10 +11,16 @@ import Alamofire
 enum AuthEndPoint {
     
     // 소셜 로그인 토큰을 이용해 나모 서버에게 토큰을 요청
-    case fetchTokenKakao(socialAccessToken: SocialAccessToken)
+    case fetchToken(socialAccessToken: SocialAccessToken, social: SocialType)
     
     // 로그아웃
     case logout(serverAccessToken: ServerAccessToken)
+}
+
+enum SocialType {
+    
+    case kakao
+    case naver
 }
 
 extension AuthEndPoint: EndPoint {
@@ -26,8 +32,14 @@ extension AuthEndPoint: EndPoint {
     var path: String {
         
         switch self {
-        case .fetchTokenKakao(socialAccessToken: _):
-            return "/kakao/signup"
+        case .fetchToken(socialAccessToken: _, social: let social):
+            
+            switch social {
+            case SocialType.kakao:
+                return "/kakao/signup"
+            case SocialType.naver:
+                return "/naver/signup"
+            }
         case .logout(serverAccessToken: _):
             return "/logout"
         }
@@ -35,7 +47,7 @@ extension AuthEndPoint: EndPoint {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .fetchTokenKakao, .logout:
+        case .fetchToken, .logout:
             return .post
         }
     }
@@ -43,7 +55,7 @@ extension AuthEndPoint: EndPoint {
     var task: APITask {
         switch self {
             
-        case .fetchTokenKakao(socialAccessToken: let dto):
+        case .fetchToken(socialAccessToken: let dto, social: _):
             return .authRequestJSONEncodable(parameters: dto)
         case .logout(serverAccessToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
