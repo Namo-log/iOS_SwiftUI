@@ -25,5 +25,5 @@ class AppState: ObservableObject {
 	
     @Published var isLogin: Bool = false
 	
-	
+    @Published var isPersonalDiary: Bool = true
 }

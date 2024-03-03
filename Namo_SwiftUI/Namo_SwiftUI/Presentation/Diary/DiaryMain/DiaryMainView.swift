@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Factory
 
 struct DiaryMainView: View {
+    @Injected(\.appState) private var appState
     
     @State var currentDate: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
     
@@ -22,32 +24,30 @@ struct DiaryMainView: View {
     @State var dummyGroupDiary = [DiaryItem(backgroundColor: .pink, scheduleName: "데모데이",
                                             content: "앱 런칭 데모데이를 진행했다. 참여진 분들과 피드백도 주고 받고, 무엇보다 우리 팀이 열심히 제작한 나모 앱을 누군가에게 보여줄 수 있다는 점이 뿌듯했다 ! 부스 정리하고 회식까지 하니 정말 다 끝난느낌...")]
     
-    @State var isPersonal = true
-    
     // 개인 / 모임 토글
     private var toggleView: some View {
         Capsule()
             .foregroundColor(.mainGray)
             .frame(width: 152, height: 30)
-            .overlay(alignment: isPersonal ? .leading : .trailing, content: {
+            .overlay(alignment: appState.isPersonalDiary ? .leading : .trailing, content: {
                 Capsule()
                     .fill(.mainOrange)
                     .frame(width: 80, height: 26)
                     .overlay(
-                        Text(isPersonal ? "개인" : "모임")
+                        Text(appState.isPersonalDiary ? "개인" : "모임")
                             .font(.pretendard(.bold, size: 15))
                             .foregroundStyle(.white)
                     )
                     .padding(.leading, 2)
                     .padding(.trailing, 2)
             })
-            .overlay(alignment: isPersonal ? .trailing : .leading, content: {
-                Text(isPersonal ? "모임" : "개인")
+            .overlay(alignment: appState.isPersonalDiary ? .trailing : .leading, content: {
+                Text(appState.isPersonalDiary ? "모임" : "개인")
                     .font(.pretendard(.bold, size: 15))
                     .foregroundStyle(Color(.mainText))
-                    .padding(isPersonal ? .trailing : .leading, 24)
+                    .padding(appState.isPersonalDiary ? .trailing : .leading, 24)
                     .onTapGesture {
-                        isPersonal.toggle()
+                        appState.isPersonalDiary.toggle()
                     }
             })
     }
@@ -77,13 +77,13 @@ struct DiaryMainView: View {
                 .padding(.trailing, 20)
                 
                 // 기록 목록
-                if isPersonal ? dummyDiary.isEmpty : dummyGroupDiary.isEmpty {
+                if appState.isPersonalDiary ? dummyDiary.isEmpty : dummyGroupDiary.isEmpty {
                     Text("기록이 없습니다. 기록을 추가해 보세요!")
                         .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
                         .padding(.top, 24)
                 } else {
                     VStack(spacing: 20) {
-                        ForEach(isPersonal ? dummyDiary : dummyGroupDiary) { diary in
+                        ForEach(appState.isPersonalDiary ? dummyDiary : dummyGroupDiary) { diary in
                             DiaryDateItem()
                             diary
                         }
@@ -205,7 +205,6 @@ struct DiaryItem: View, Identifiable {
                                 .foregroundStyle(.mainText)
                         }
                     }
-//                    .foregroundStyle(/*@START_MENU_TOKEN@*/SecondaryContentStyle()/*@END_MENU_TOKEN@*/)
                 }
                 
                 // 내용과 사진

@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+
+import Factory
 import PhotosUI
 
 struct AddDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Injected(\.appState) private var appState
     
     let info: ScheduleInfo
     let isEditing: Bool
@@ -91,6 +94,7 @@ struct AddDiaryView: View {
                         .padding(.leading, 12)
                     } // HStack
                     
+                    // 메모 입력 부분
                     ZStack(alignment: .topLeading) {
                         Rectangle()
                             .fill(.textBackground)
@@ -131,6 +135,7 @@ struct AddDiaryView: View {
                     } // ZStack
                     .frame(height: 150)
                     
+                    // 글자수 체크
                     HStack() {
                         Spacer()
                         
@@ -140,6 +145,7 @@ struct AddDiaryView: View {
                     } // HStack
                     .padding(.top, 10)
                     
+                    // 사진 목록
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 20) {
                             // images의 사진들을 하나씩 이미지뷰로 띄운다
@@ -181,6 +187,30 @@ struct AddDiaryView: View {
                 
                 Spacer()
                 
+                // 모임 기록 보러가기 버튼
+                if !appState.isPersonalDiary {
+                    Button {
+                        print("모임 기록 보러가기")
+                    } label: {
+                        ZStack() {
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(.black, lineWidth: 1)
+                                .foregroundStyle(.white)
+                                .frame(width: 192, height: 40)
+                            HStack() {
+                                Image(.btnDiary)
+                                    .resizable()
+                                    .frame(width: 18, height: 18)
+                                Text("모임 기록 보러가기")
+                                    .foregroundStyle(.black)
+                                    .font(.pretendard(.light, size: 15))
+                            }
+                        }
+                    }
+                    .padding(.bottom, 25)
+                }
+                
+                // 기록 저장 또는 기록 수정 버튼
                 Button {
                     print(isEditing ? "기록 수정" : "기록 저장")
                 } label: {
@@ -227,5 +257,4 @@ struct AddDiaryView: View {
 
 #Preview {
     AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)
-//    AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: true)
 }
