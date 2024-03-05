@@ -8,7 +8,6 @@
 import SwiftUI
 
 import Factory
-import PhotosUI
 
 struct AddDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -21,11 +20,6 @@ struct AddDiaryView: View {
     @State var memo = ""
     @State var typedCharacters = 0
     @State var characterLimit = 200
-    
-    @State var images: [UIImage] = [] // 보여질 사진 목록
-    @State var photosPickerItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
-    @State var photosLimit = 3 // 선택가능한 최대 사진 개수
-    
     @State var isDeleting: Bool = false
     
     var backButton : some View {
@@ -56,43 +50,8 @@ struct AddDiaryView: View {
         ZStack() {
             VStack(alignment: .center) {
                 VStack(alignment: .leading) {
-                    HStack(alignment: .center, spacing: 0) {
-                        ZStack(alignment: .center) {
-                            Circle()
-                                .fill(.white)
-                                .frame(width: 80, height: 80)
-                                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15), radius: 7)
-                            
-                            VStack(alignment: .center, spacing: 0) {
-                                Text("JUNE")
-                                    .font(.pretendard(.bold, size: 15))
-                                    .foregroundStyle(.mainText)
-                                Text("28")
-                                    .font(.pretendard(.bold, size: 36))
-                                    .foregroundStyle(.mainText)
-                            }
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("날짜")
-                                .font(.pretendard(.bold, size: 15))
-                                .foregroundStyle(.mainText)
-                            Text("장소")
-                                .font(.pretendard(.bold, size: 15))
-                                .foregroundStyle(.mainText)
-                        }
-                        .padding(.leading, 25)
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(info.date)
-                                .font(.pretendard(.light, size: 15))
-                                .foregroundStyle(.mainText)
-                            Text(info.place)
-                                .font(.pretendard(.light, size: 15))
-                                .foregroundStyle(.mainText)
-                        }
-                        .padding(.leading, 12)
-                    } // HStack
+                    // 날짜와 장소 정보
+                    DatePlaceInfoView(date: info.date, place: info.place)
                     
                     // 메모 입력 부분
                     ZStack(alignment: .topLeading) {
@@ -146,40 +105,7 @@ struct AddDiaryView: View {
                     .padding(.top, 10)
                     
                     // 사진 목록
-                    ScrollView(.horizontal) {
-                        HStack(alignment: .top, spacing: 20) {
-                            // images의 사진들을 하나씩 이미지뷰로 띄운다
-                            ForEach(0..<images.count, id: \.self) { i in
-                                Image(uiImage: images[i])
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .aspectRatio(contentMode: .fill)
-                            }
-                            
-                            // 사진 피커 -> 최대 3장까지 선택 가능
-                            PhotosPicker(selection: $photosPickerItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
-                                Image(.btnAddImg)
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                            }
-                        } // HStack
-                        .padding(.top, 18)
-                        .onChange(of: photosPickerItems) { _ in
-                            Task {
-                                // 앞서 선택된 것들은 지우고
-                                images.removeAll()
-                                
-                                // 선택된 사진들 images에 추가
-                                for item in photosPickerItems {
-                                    if let data = try? await item.loadTransferable(type: Data.self) {
-                                        if let image = UIImage(data: data) {
-                                            images.append(image)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } // ScrollView
+                    PhotoPickerListView()
                 } // VStack
                 .padding(.top, 12)
                 .padding(.leading, 25)
@@ -191,6 +117,7 @@ struct AddDiaryView: View {
                 if !appState.isPersonalDiary {
                     Button {
                         print("모임 기록 보러가기")
+                        // TODO: - 화면 이동
                     } label: {
                         ZStack() {
                             RoundedRectangle(cornerRadius: 20)

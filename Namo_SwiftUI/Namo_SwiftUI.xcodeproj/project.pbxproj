@@ -107,6 +107,8 @@
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
 		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
 		A22F63432B8B31FC00BC39A2 /* AddDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63422B8B31FC00BC39A2 /* AddDiaryView.swift */; };
+		A22F63472B96CAD400BC39A2 /* DatePlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */; };
+		A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -200,6 +202,8 @@
 		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
 		A22F63422B8B31FC00BC39A2 /* AddDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiaryView.swift; sourceTree = "<group>"; };
+		A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePlaceInfoView.swift; sourceTree = "<group>"; };
+		A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +421,8 @@
 				88D6C9F42B60119C004742AD /* ColorCircleView.swift */,
 				2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */,
 				2CF445032B760A8100A8E514 /* NamoAlertView.swift */,
+				A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */,
+				A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -835,6 +841,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A22F63472B96CAD400BC39A2 /* DatePlaceInfoView.swift in Sources */,
 				2CFE00242B70A6EB0054C31B /* ScheduleDTO.swift in Sources */,
 				5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */,
 				2CFE00552B73658A0054C31B /* Schedule.swift in Sources */,
@@ -854,6 +861,7 @@
 				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				507C84DD2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
+				A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */,
 				882DB3602B6BBBDF00A2759E /* ToDoCreateViewModel.swift in Sources */,
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,

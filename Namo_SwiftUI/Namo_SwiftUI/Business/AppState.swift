@@ -25,5 +25,6 @@ class AppState: ObservableObject {
 	
     @Published var isLogin: Bool = false
 	
+    // TODO: - 회의한 것처럼 수정 필요
     @Published var isPersonalDiary: Bool = true
 }
