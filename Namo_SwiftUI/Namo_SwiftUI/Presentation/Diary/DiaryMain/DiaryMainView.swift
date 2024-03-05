@@ -91,7 +91,7 @@ struct DiaryMainView: View {
                 }
                 
                 // TODO: - 추후 일정 화면에서 연결해야 함
-                NavigationLink(destination: AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)) {
+                NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)) {
                   Text("기록 추가 임시 버튼")
                 }
                 
@@ -193,7 +193,7 @@ struct DiaryItem: View, Identifiable {
                         .frame(width: 1, height: 150)
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: true)) {
+                    NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: true)) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()

@@ -1,5 +1,5 @@
 //
-//  AddDiaryView.swift
+//  AddEditDiaryView.swift
 //  Namo_SwiftUI
 //
 //  Created by 서은수 on 2/25/24.
@@ -9,7 +9,8 @@ import SwiftUI
 
 import Factory
 
-struct AddDiaryView: View {
+// 개인 / 모임 기록 추가 및 수정 화면
+struct AddEditDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Injected(\.appState) private var appState
     
@@ -185,5 +186,5 @@ struct AddDiaryView: View {
 }
 
 #Preview {
-    AddDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)
+    AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)
 }
