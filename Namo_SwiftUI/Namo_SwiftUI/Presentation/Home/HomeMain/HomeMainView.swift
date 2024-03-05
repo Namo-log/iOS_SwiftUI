@@ -65,7 +65,9 @@ struct HomeMainView: View {
 	private var header: some View {
 		HStack {
 			Button(action: {
-				showDatePicker = true
+				withAnimation {
+					showDatePicker = true
+				}
 			}, label: {
 				HStack(spacing: 10) {
 					Text(

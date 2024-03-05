@@ -60,11 +60,15 @@ struct GroupMainView: View {
 			
 			Menu(content: {
 				Button("그룹 생성", action: {
-					showNewGroupAlert = true
+					withAnimation {
+						showNewGroupAlert = true
+					}
 				})
 				
 				Button("그룹 코드", action: {
-					showGroupCodeAlert = true
+					withAnimation {
+						showGroupCodeAlert = true
+					}
 				})
 			}, label: {
 				Image(.icMore)
@@ -88,6 +92,9 @@ struct GroupMainView: View {
 				
 				Spacer()
 			}
+		}
+		.refreshable {
+			self.myGroups = await moimInteractor.getGroups()
 		}
 	}
 	

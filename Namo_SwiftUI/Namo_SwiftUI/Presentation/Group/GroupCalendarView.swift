@@ -92,7 +92,9 @@ struct GroupCalendarView: View {
 			.foregroundStyle(Color.black)
 			
 			Button(action: {
-				showDatePicker = true
+				withAnimation {
+					showDatePicker = true
+				}
 			}, label: {
 				HStack(spacing: 10) {
 					Text(
@@ -111,7 +113,9 @@ struct GroupCalendarView: View {
 				.font(.pretendard(.bold, size: 20))
 			
 			Button(action: {
-				showGroupInfo = true
+				withAnimation {
+					showGroupInfo = true
+				}
 			}, label: {
 				Image(.icMoreVertical)
 			})

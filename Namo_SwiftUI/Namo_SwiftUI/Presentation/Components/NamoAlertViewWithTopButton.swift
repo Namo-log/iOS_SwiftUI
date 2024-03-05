@@ -26,6 +26,8 @@ import Factory
 	 )
  )
  
+ 24.03.05
+ - NamoAlertView를 띄우는 변수를 조절할 때 withAnimation을 감싸주세요
  */
 
 struct NamoAlertViewWithTopButton: View {
@@ -86,7 +88,9 @@ struct NamoAlertViewWithTopButton: View {
 			.shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 0)
 		}
 		.onAppear {
-			appState.isTabbarOpaque = true
+			withAnimation {
+				appState.isTabbarOpaque = true
+			}
 		}
     }
 	
