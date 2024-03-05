@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-import Factory
-
 // 개인 / 모임 기록 추가 및 수정 화면
 struct AddEditDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Injected(\.appState) private var appState
+    @EnvironmentObject var appState: AppState
     
     let info: ScheduleInfo
     let isEditing: Bool
@@ -21,31 +19,6 @@ struct AddEditDiaryView: View {
     @State var memo = ""
     @State var typedCharacters = 0
     @State var characterLimit = 200
-    @State var isDeleting: Bool = false
-    
-    var backButton : some View {
-        Button{
-            self.presentationMode.wrappedValue.dismiss()
-        } label: {
-            Image(.icBack)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 24, height: 14)
-        }
-        .disabled(isDeleting) // Alert 떴을 때 클릭 안 되게
-    }
-    
-    var trashButton : some View {
-        Button{
-            isDeleting = true
-        } label: {
-            Image(.btnTrash)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 30, height: 30)
-        }
-        .disabled(isDeleting) // Alert 떴을 때 클릭 안 되게
-    }
     
     var body: some View {
         ZStack() {
@@ -116,10 +89,7 @@ struct AddEditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    Button {
-                        print("모임 기록 보러가기")
-                        // TODO: - 화면 이동
-                    } label: {
+                    NavigationLink(destination: AddEditMoimDiaryView(info: info, isEditing: isEditing)) {
                         ZStack() {
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(.black, lineWidth: 1)
@@ -157,17 +127,20 @@ struct AddEditDiaryView: View {
                 }
             } // VStack
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: backButton, trailing: isEditing ? trashButton : nil)
+            .navigationBarItems(
+                leading: BackArrowView(),
+                trailing: isEditing ? TrashView() : nil
+            )
             .navigationTitle(info.scheduleName)
             .ignoresSafeArea(edges: .bottom)
             
             // 쓰레기통 클릭 시 Alert 띄우기
-            if isDeleting {
+            if appState.isDeletingDiary {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea(.all, edges: .all)
                 
                 NamoAlertView(
-                    showAlert: $isDeleting,
+                    showAlert: $appState.isDeletingDiary,
                     content: AnyView(
                         Text("기록을 정말 삭제하시겠어요?")
                             .font(.pretendard(.bold, size: 16))
