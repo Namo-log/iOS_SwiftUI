@@ -13,7 +13,6 @@ struct AddEditDiaryView: View {
     @EnvironmentObject var appState: AppState
     
     let info: ScheduleInfo
-    let isEditing: Bool
     
     @State var placeholderText: String = "메모 입력"
     @State var memo = ""
@@ -89,47 +88,19 @@ struct AddEditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    NavigationLink(destination: AddEditMoimDiaryView(info: info, isEditing: isEditing)) {
-                        ZStack() {
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(.black, lineWidth: 1)
-                                .foregroundStyle(.white)
-                                .frame(width: 192, height: 40)
-                            HStack() {
-                                Image(.btnDiary)
-                                    .resizable()
-                                    .frame(width: 18, height: 18)
-                                Text("모임 기록 보러가기")
-                                    .foregroundStyle(.black)
-                                    .font(.pretendard(.light, size: 15))
-                            }
-                        }
+                    NavigationLink(destination: AddEditMoimDiaryView(info: info)) {
+                        BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
                 }
                 
                 // 기록 저장 또는 기록 수정 버튼
-                Button {
-                    print(isEditing ? "기록 수정" : "기록 저장")
-                    self.presentationMode.wrappedValue.dismiss()
-                } label: {
-                    ZStack() {
-                        Rectangle()
-                            .fill(isEditing ? .white : .mainOrange)
-                            .frame(height: 60 + 10) // 하단의 Safe Area 영역 칠한 거 높이 10으로 가정
-                            .shadow(color: .black.opacity(0.25), radius: 7)
-                        
-                        Text(isEditing ? "기록 수정" : "기록 저장")
-                            .font(.pretendard(.bold, size: 15))
-                            .foregroundStyle(isEditing ? .mainOrange : .white)
-                            .padding(.bottom, 10) // Safe Area 칠한만큼
-                    }
-                }
+                EditSaveDiaryView()
             } // VStack
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: BackArrowView(),
-                trailing: isEditing ? TrashView() : nil
+                trailing: appState.isEditingDiary ? TrashView() : nil
             )
             .navigationTitle(info.scheduleName)
             .ignoresSafeArea(edges: .bottom)
@@ -159,5 +130,5 @@ struct AddEditDiaryView: View {
 }
 
 #Preview {
-    AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)
+    AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
 }

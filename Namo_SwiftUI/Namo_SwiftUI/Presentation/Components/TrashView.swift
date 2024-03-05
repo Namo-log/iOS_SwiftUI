@@ -15,7 +15,7 @@ struct TrashView: View {
         Button{
             appState.isDeletingDiary = true
         } label: {
-            Image(.btnTrash)
+            Image(.icTrash)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 30, height: 30)

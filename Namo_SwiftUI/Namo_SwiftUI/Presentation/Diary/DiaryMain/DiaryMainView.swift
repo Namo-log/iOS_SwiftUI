@@ -91,9 +91,12 @@ struct DiaryMainView: View {
                 }
                 
                 // TODO: - 추후 일정 화면에서 연결해야 함
-                NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: false)) {
-                  Text("기록 추가 임시 버튼")
+                NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                    Text("기록 추가 임시 버튼")
                 }
+                .simultaneousGesture(TapGesture().onEnded {
+                    appState.isEditingDiary = false
+                })
                 
                 Spacer()
             } // VStack
@@ -140,6 +143,7 @@ struct ScheduleInfo: Hashable {
     let scheduleName: String
     let date: String
     let place: String
+    let participants: Int = 6
 }
 
 // 다이어리 날짜 아이템
@@ -166,6 +170,8 @@ struct DiaryDateItem: View {
 // 다이어리 아이템
 // TODO: - 내용에 따라 동적 높이 설정... 어떻게 하지
 struct DiaryItem: View, Identifiable {
+    @EnvironmentObject var appState: AppState
+
     let id = UUID()
     let backgroundColor: Color
     let scheduleName: String
@@ -193,7 +199,7 @@ struct DiaryItem: View, Identifiable {
                         .frame(width: 1, height: 150)
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"), isEditing: true)) {
+                    NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()
@@ -205,6 +211,9 @@ struct DiaryItem: View, Identifiable {
                                 .foregroundStyle(.mainText)
                         }
                     }
+                    .simultaneousGesture(TapGesture().onEnded {
+                        appState.isEditingDiary = true
+                    })
                 }
                 
                 // 내용과 사진
