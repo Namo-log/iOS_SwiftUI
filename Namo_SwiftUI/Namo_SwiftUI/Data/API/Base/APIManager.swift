@@ -63,6 +63,20 @@ final class APIManager {
             return nil
         }
     }
+    
+    // BaseResponse 없는 메소드
+    func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+        do {
+            let request = await self.requestData(endPoint: endPoint)
+            let result = try request.result.get()
+            print("inferred DataType to be decoded : \(T.self)")
+            let decodedData = try result.decode(type: T.self, decoder: decoder)
+            return decodedData
+        } catch {
+            print("에러 발생: \(error)")
+            return nil
+        }
+    }
 }
 
 extension APIManager {
@@ -147,7 +161,49 @@ extension APIManager {
             encoder: JSONParameterEncoder.default,
             headers: endPoint.headers
           )
+          
+      case let .requestParametersExAPI(parameters, encoding):
+          return AF.request(
+            "\(endPoint.baseURL)\(endPoint.path)",
+            method: endPoint.method,
+            parameters: parameters,
+            encoding: encoding,
+            headers: endPoint.headers
+          )
       }
     }
 }
 
+extension APIManager {
+    func KakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil, completion: @escaping (KakaoMapResponseDTO?, Error?) -> Void) {
+        
+        var params: Parameters = [ "query" : query ]
+        
+        if let x = x { params["x"] = String(x) }
+        if let y = y { params["y"] = String(y) }
+        if let radius = radius { params["radius"] = radius }
+        if let page = page { params["page"] = page }
+        if let size = size { params["size"] = size }
+        
+        let headers: HTTPHeaders = [ "Authorization" : "KakaoAK \(SecretConstants.kakaoMapRESTAPIKey)"]
+        
+        AF.request(
+            "https://dapi.kakao.com/v2/local/search/keyword.json",
+            method: .get,
+            parameters: params,
+            encoding: URLEncoding.default,
+            headers: headers
+        )
+        .validate()
+        .responseDecodable(of: KakaoMapResponseDTO.self) { dataResponse in
+            switch dataResponse.result {
+            case .success(let success):
+                completion(success, nil)
+                print(success)
+            case .failure(let error):
+                print("에러난다:\(error)")
+                completion(nil, error)
+            }
+        }
+    }
+}

@@ -16,7 +16,7 @@ enum Tab {
 
 struct NamoHome: View {
 	@EnvironmentObject var appState: AppState
-	@State var currentTab: Tab = .home
+//	@State var currentTab: Tab = .home
 	
 	var body: some View {
 		NavigationStack {
@@ -24,7 +24,7 @@ struct NamoHome: View {
 				VStack(spacing: 0) {
 					Spacer(minLength: 0)
 					
-					switch currentTab {
+                    switch appState.currentTab {
 					case .home:
 						HomeMainView()
 					case .diary:
@@ -38,7 +38,7 @@ struct NamoHome: View {
 					Spacer(minLength: 0)
 				}
 				
-				NamoTabView(currentTab: $currentTab)
+                NamoTabView(currentTab: $appState.currentTab)
 					.hidden(appState.isTabbarHidden)
 					.overlay {
 						if appState.isTabbarOpaque && !appState.isTabbarHidden {

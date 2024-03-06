@@ -20,6 +20,7 @@ struct HomeMainView: View {
 	@State var datePickerCurrentDate: Date = Date()
 	@State var pickerCurrentYear: Int = Date().toYMD().year
 	@State var pickerCurrentMonth: Int = Date().toYMD().month
+    @State var isToDoSheetPresented: Bool = false
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 	
@@ -54,12 +55,21 @@ struct HomeMainView: View {
 				if showDatePicker {
 					datePicker
 				}
+			
+			if isToDoSheetPresented {
+				Color.black.opacity(0.3)
+					.ignoresSafeArea(.all, edges: .all)
+			}
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
 			self.calendarSchedule = await scheduleInteractor.setCalendar()
 			await categoryInteractor.getCategories()
 		}
+        .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
+            ToDoEditView(schedule: nil)
+                .background(ClearBackground())
+        })
 	}
 	
 	private var header: some View {
@@ -188,7 +198,9 @@ struct HomeMainView: View {
 		.frame(width: screenWidth, height: screenHeight * 0.47)
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
-			Button(action: {}, label: {
+			Button(action: {
+                self.isToDoSheetPresented = true
+            }, label: {
 				Image(.floatingAdd)
 					.padding(.bottom, 37)
 					.padding(.trailing, 25)

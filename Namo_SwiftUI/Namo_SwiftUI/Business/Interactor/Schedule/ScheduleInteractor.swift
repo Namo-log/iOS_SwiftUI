@@ -23,4 +23,9 @@ protocol ScheduleInteractor {
 	func getCurrentDay() -> String
 	func datesBetween(startDate: Date, endDate: Date) -> [Date]
 	func getScheduleTimeWithCurrentYMD(currentYMD: YearMonthDay, schedule: Schedule) -> String
+    func setPlaceToScheduleTemp()
+    func postNewSchedule() async
+    func patchSchedule() async
+    func deleteSchedule() async
+    func setScheduleToTemplate(schedule: Schedule?)
 }
