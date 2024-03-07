@@ -99,7 +99,7 @@ struct HomeMainView: View {
 			await categoryInteractor.getCategories()
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
-            ToDoEditView(schedule: nil)
+            ToDoEditView()
                 .background(ClearBackground())
         })
 	}
@@ -181,7 +181,10 @@ struct HomeMainView: View {
 				
 				if let schedules = calendarSchedule[focusDate!]?.compactMap({$0.schedule}) {
 					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+                        CalendarScheduleDetailItem(
+                            ymd: focusDate!,
+                            schedule: schedule,
+                            isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				}
 				else {
@@ -222,6 +225,7 @@ struct CalendarScheduleDetailItem: View {
 	let ymd: YearMonthDay
 	let schedule: Schedule
 	@EnvironmentObject var appState: AppState
+    @Binding var isToDoSheetPresented: Bool
 	
 	@Injected(\.scheduleInteractor) var scheduleInteractor
 	@Injected(\.categoryInteractor) var categoryInteractor
@@ -246,7 +250,10 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
 				
-				Button(action: {}, label: {
+				Button(action: {
+                    scheduleInteractor.setScheduleToTemplate(schedule: schedule)
+                    self.isToDoSheetPresented = true
+                }, label: {
 					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
 						.resizable()
 						.frame(width: 34, height: 34)
