@@ -38,14 +38,14 @@ struct ToDoEditView: View {
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
     
-    init(schedule: Schedule?) {
+    init() {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
         UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Pretendard-Bold", size: 15)!]
         UINavigationBar.appearance().barTintColor = .white
         self.dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
         // schedule 받은 경우 해당 schedule -> Template 저장 / nil이면 기본값
         // init으로 해당 객체를 직접 받기보다는, 전 화면에서 해당 함수를 호출하여 State에 추가해주는 것이 바람직해보입니다
-        scheduleInteractor.setScheduleToTemplate(schedule: schedule)
+//        scheduleInteractor.setScheduleToTemplate(schedule: schedule)
     }
     
     var body: some View {
@@ -388,6 +388,6 @@ struct ToDoEditView: View {
 
 
 #Preview {
-    ToDoEditView(schedule: nil)
+    ToDoEditView()
         .environmentObject(AppState())
 }

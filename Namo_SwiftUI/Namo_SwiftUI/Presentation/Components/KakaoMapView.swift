@@ -299,18 +299,19 @@ struct KakaoMapView: UIViewRepresentable {
             //bodyImage의 child로 들어갈 layout.
             let layout: GuiLayout = GuiLayout("layout")
             layout.arrangement = .horizontal    //가로배치
-            let button1: GuiButton = GuiButton(place?.name ?? "이름 없음")
-            button1.image = UIImage.vector3
-            button1.align.hAlign = .center
-            button1.align.vAlign = .middle
-            button1.imageSize = .init(width: 20, height: 20)
-            button1.padding = .init(left: 10, right: 5, top: 10, bottom: 10)
+//            let button1: GuiButton = GuiButton(place?.name ?? "이름 없음")
+//            button1.align.hAlign = .center
+//            button1.align.vAlign = .middle
+//            button1.padding = .init(left: 10, right: 5, top: 10, bottom: 10)
+//            button1.image = UIImage.vector3
+//            button1.imageSize = .init(width: 20, height: 20)
             
             let text = GuiText("text")
             let style = TextStyle()
             text.addText(text: "\(place?.name ?? "이름 없음")", style: style)
             //Text의 정렬. Layout의 크기는 child component들의 크기를 모두 합친 크기가 되는데, Layout상의 배치에 따라 공간의 여분이 있는 component는 align을 지정할 수 있다.
-            text.align = GuiAlignment(vAlign: .middle, hAlign: .left)   // 좌중단 정렬.
+            text.align = GuiAlignment(vAlign: .middle, hAlign: .center)   // 중앙 정렬.
+            text.padding = .init(left: 10, right: 10, top: 8, bottom: 8) // 텍스트에 10*8 패딩 적용
             
             //body image의 child component로 레이아웃을 넣는다.
             bodyImage.child = layout
@@ -320,7 +321,7 @@ struct KakaoMapView: UIViewRepresentable {
             
             // layout구성요소
             layout.addChild(text)
-            layout.addChild(button1)
+//            layout.addChild(button1)
             
             // InfoWindow가 표시될 위치
             infoWindow.position = position
