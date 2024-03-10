@@ -15,7 +15,7 @@ struct Moim: Decodable {
 	let moimUsers: [MoimUser]
 }
 
-struct MoimUser: Decodable {
+struct MoimUser: Decodable, Equatable {
 	let userId: Int
 	let userName: String
 	let color: Int
