@@ -19,7 +19,9 @@ public enum APITask {
     /// Parameters가 설정된 요청
     case requestParameters(parameters: Parameters, encoding: ParameterEncoding)
     /// 이미지를 업로드하는 요청
-    case uploadImages(imageDatas: [Data])
+    case uploadImages(imageDatas: [Data?])
+	/// body 데이터와 함께 이미지를 업로드하는 요청
+	case uploadImagesWithBody(imageDatas: [Data?], body: [String: Any])
     // 토큰 헤더를 포함하지 않는 인증 요청
     case authRequestJSONEncodable(parameters: Encodable)
     /// 외부 API 요청

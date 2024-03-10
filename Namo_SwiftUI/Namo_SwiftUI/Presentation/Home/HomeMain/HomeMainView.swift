@@ -25,74 +25,42 @@ struct HomeMainView: View {
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 	
 	var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                header
-                    .padding(.bottom, 22)
-                
-                weekday
-                    .padding(.bottom, 11)
-                
-                CalendarView(calendarController) { date in
-                    CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule)
-                }
-                .frame(width: screenWidth-20)
-                .padding(.leading, 14)
-                .padding(.trailing, 6)
-                .padding(.bottom, 20)
-                
-                if focusDate != nil {
-                    detailView
-                        .clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
-                        .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
-                } else {
-                    Spacer(minLength: 0)
-                        .frame(height: tabBarHeight)
-                }
-                
-            }
-            
-            if showDatePicker {
-                NamoAlertView(
-                    showAlert: $showDatePicker,
-                    content: AnyView(
-                        HStack(spacing: 0) {
-                            Picker("", selection: $pickerCurrentYear) {
-                                ForEach(2000...2099, id: \.self) {
-                                    Text("\(String($0))년")
-                                        .font(.pretendard(.regular, size: 23))
-                                }
-                            }
-                            .pickerStyle(.inline)
-                            
-                            Picker("", selection: $pickerCurrentMonth) {
-                                ForEach(1...12, id: \.self) {
-                                    Text("\(String($0))월")
-                                        .font(.pretendard(.regular, size: 23))
-                                }
-                            }
-                            .pickerStyle(.inline)
-                        }
-                            .frame(height: 154)
-                    ),
-                    leftButtonTitle: "취소",
-                    leftButtonAction: {
-                        pickerCurrentYear = calendarController.yearMonth.year
-                        pickerCurrentMonth = calendarController.yearMonth.month
-                    },
-                    rightButtonTitle: "확인",
-                    rightButtonAction: {
-                        calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
-                    }
-                )
-            }
-            
-            if isToDoSheetPresented {
-                Color.black.opacity(0.3)
-                    .ignoresSafeArea(.all, edges: .all)
-            }
-            
-        }
+		ZStack {
+			VStack(spacing: 0) {
+				header
+					.padding(.bottom, 22)
+				
+				weekday
+					.padding(.bottom, 11)
+				
+				CalendarView(calendarController) { date in
+					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule)
+				}
+				.frame(width: screenWidth-20)
+				.padding(.leading, 14)
+				.padding(.trailing, 6)
+				.padding(.bottom, 20)
+				
+				if focusDate != nil {
+					detailView
+						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
+						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
+				} else {
+					Spacer(minLength: 0)
+						.frame(height: tabBarHeight)
+				}
+				
+			}
+			
+				if showDatePicker {
+					datePicker
+				}
+			
+			if isToDoSheetPresented {
+				Color.black.opacity(0.3)
+					.ignoresSafeArea(.all, edges: .all)
+			}
+		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
 			self.calendarSchedule = await scheduleInteractor.setCalendar()
@@ -107,7 +75,9 @@ struct HomeMainView: View {
 	private var header: some View {
 		HStack {
 			Button(action: {
-				showDatePicker = true
+				withAnimation {
+					showDatePicker = true
+				}
 			}, label: {
 				HStack(spacing: 10) {
 					Text(
@@ -179,19 +149,46 @@ struct HomeMainView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?.compactMap({$0.schedule}) {
+				if let schedules = calendarSchedule[focusDate!]?
+					.compactMap(({$0.schedule}))
+					.filter({!$0.moimSchedule})
+				{
 					ForEach(schedules, id: \.self) { schedule in
                         CalendarScheduleDetailItem(
                             ymd: focusDate!,
                             schedule: schedule,
                             isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
-				}
-				else {
+				} else {
 					Text("등록된 개인 일정이 없습니다.")
 						.font(.pretendard(.medium, size: 14))
 						.foregroundStyle(Color(.mainText))
 				}
+				
+				HStack {
+					Text("모임 일정")
+						.font(.pretendard(.bold, size: 15))
+						.foregroundStyle(Color(.mainText))
+						.padding(.top, 20)
+						.padding(.bottom, 11)
+						.padding(.leading, 3)
+					
+					Spacer()
+				}
+				
+				if let schedules = calendarSchedule[focusDate!]?
+					.compactMap({$0.schedule})
+					.filter({$0.moimSchedule})
+				{
+					ForEach(schedules, id: \.self) { schedule in
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
+					}
+				} else {
+					Text("등록된 모임 일정이 없습니다.")
+						.font(.pretendard(.medium, size: 14))
+						.foregroundStyle(Color(.mainText))
+				}
+				
 			}
 			.frame(width: screenWidth-50)
 			.padding(.horizontal, 25)
@@ -214,61 +211,44 @@ struct HomeMainView: View {
 		}
 	}
 	
+	private var datePicker: some View {
+		NamoAlertView(
+			showAlert: $showDatePicker,
+			content: AnyView(
+				HStack(spacing: 0) {
+					Picker("", selection: $pickerCurrentYear) {
+						ForEach(2000...2099, id: \.self) {
+							Text("\(String($0))년")
+								.font(.pretendard(.regular, size: 23))
+						}
+					}
+					.pickerStyle(.inline)
+					
+					Picker("", selection: $pickerCurrentMonth) {
+						ForEach(1...12, id: \.self) {
+							Text("\(String($0))월")
+								.font(.pretendard(.regular, size: 23))
+						}
+					}
+					.pickerStyle(.inline)
+				}
+				.frame(height: 154)
+			),
+			leftButtonTitle: "취소",
+			leftButtonAction: {
+				pickerCurrentYear = calendarController.yearMonth.year
+				pickerCurrentMonth = calendarController.yearMonth.month
+			},
+			rightButtonTitle: "확인",
+			rightButtonAction: {
+				calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+			}
+		)
+	}
+	
 	
 }
 
 #Preview {
 	HomeMainView()
 }
-
-struct CalendarScheduleDetailItem: View {
-	let ymd: YearMonthDay
-	let schedule: Schedule
-	@EnvironmentObject var appState: AppState
-    @Binding var isToDoSheetPresented: Bool
-	
-	@Injected(\.scheduleInteractor) var scheduleInteractor
-	@Injected(\.categoryInteractor) var categoryInteractor
-	
-	
-	var body: some View {
-		if let paletteId = appState.categoryPalette[schedule.categoryId] {
-			HStack(spacing: 15) {
-				Rectangle()
-					.fill(categoryInteractor.getColorWithPaletteId(id: paletteId))
-					.frame(width: 30, height: 55)
-					.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
-				
-				VStack(alignment: .leading, spacing: 4) {
-					Text(scheduleInteractor.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
-						.font(.pretendard(.medium, size: 12))
-						.foregroundStyle(Color(.mainText))
-					
-					Text(schedule.name)
-						.font(.pretendard(.bold, size: 15))
-				}
-				
-				Spacer()
-				
-				Button(action: {
-                    scheduleInteractor.setScheduleToTemplate(schedule: schedule)
-                    self.isToDoSheetPresented = true
-                }, label: {
-					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
-						.resizable()
-						.frame(width: 34, height: 34)
-						.padding(.trailing, 11)
-				})
-				
-			}
-			.frame(width: screenWidth-50, height: 55)
-			.background(
-				RoundedRectangle(cornerRadius: 15)
-					.fill(Color(.textBackground))
-					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
-			)
-		}
-	}
-}
-
-

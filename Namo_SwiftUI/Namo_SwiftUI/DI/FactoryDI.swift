@@ -48,6 +48,16 @@ extension Container {
 		self { CategoryRepositoryImpl() }
 			.singleton
 	}
+	
+	var moimInteractor: Factory<MoimInteractor> {
+		self { MoimInteractorImpl() }
+			.singleton
+	}
+	
+	var moimRepository: Factory<MoimRepository> {
+		self { MoimRepositoryImpl() }
+			.singleton
+	}
     
     var placeInteractor: Factory<PlaceInteractor> {
         self { PlaceInteractorImpl() }
