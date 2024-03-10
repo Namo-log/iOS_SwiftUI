@@ -67,7 +67,7 @@ struct HomeMainView: View {
 			await categoryInteractor.getCategories()
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
-            ToDoEditView(schedule: nil)
+            ToDoEditView()
                 .background(ClearBackground())
         })
 	}
@@ -154,7 +154,10 @@ struct HomeMainView: View {
 					.filter({!$0.moimSchedule})
 				{
 					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+                        CalendarScheduleDetailItem(
+                            ymd: focusDate!,
+                            schedule: schedule,
+                            isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 개인 일정이 없습니다.")
@@ -178,7 +181,7 @@ struct HomeMainView: View {
 					.filter({$0.moimSchedule})
 				{
 					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 모임 일정이 없습니다.")
@@ -250,3 +253,57 @@ struct HomeMainView: View {
 	HomeMainView()
 }
 
+//<<<<<<< HEAD
+//=======
+//struct CalendarScheduleDetailItem: View {
+//	let ymd: YearMonthDay
+//	let schedule: Schedule
+//	@EnvironmentObject var appState: AppState
+//    @Binding var isToDoSheetPresented: Bool
+//	
+//	@Injected(\.scheduleInteractor) var scheduleInteractor
+//	@Injected(\.categoryInteractor) var categoryInteractor
+//	
+//	
+//	var body: some View {
+//		if let paletteId = appState.categoryPalette[schedule.categoryId] {
+//			HStack(spacing: 15) {
+//				Rectangle()
+//					.fill(categoryInteractor.getColorWithPaletteId(id: paletteId))
+//					.frame(width: 30, height: 55)
+//					.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
+//				
+//				VStack(alignment: .leading, spacing: 4) {
+//					Text(scheduleInteractor.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
+//						.font(.pretendard(.medium, size: 12))
+//						.foregroundStyle(Color(.mainText))
+//					
+//					Text(schedule.name)
+//						.font(.pretendard(.bold, size: 15))
+//				}
+//				
+//				Spacer()
+//				
+//				Button(action: {
+//                    scheduleInteractor.setScheduleToTemplate(schedule: schedule)
+//                    self.isToDoSheetPresented = true
+//                }, label: {
+//					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+//						.resizable()
+//						.frame(width: 34, height: 34)
+//						.padding(.trailing, 11)
+//				})
+//				
+//			}
+//			.frame(width: screenWidth-50, height: 55)
+//			.background(
+//				RoundedRectangle(cornerRadius: 15)
+//					.fill(Color(.textBackground))
+//					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
+//			)
+//		}
+//	}
+//}
+//
+//
+//>>>>>>> develop

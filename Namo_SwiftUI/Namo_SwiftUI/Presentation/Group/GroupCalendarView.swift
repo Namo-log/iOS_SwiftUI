@@ -36,6 +36,7 @@ struct GroupCalendarView: View {
 	// calendar
 	@State var focusDate: YearMonthDay? = nil
 	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
+	@State var isToDoSheetPresented: Bool = false
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 	
@@ -168,7 +169,7 @@ struct GroupCalendarView: View {
 					.filter({!$0.moimSchedule})
 				{
 					ForEach(schedules, id: \.self) {schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 개인 일정이 없습니다.")
@@ -192,7 +193,7 @@ struct GroupCalendarView: View {
 					.filter({$0.moimSchedule})
 				{
 					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule)
+						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 모임 일정이 없습니다.")

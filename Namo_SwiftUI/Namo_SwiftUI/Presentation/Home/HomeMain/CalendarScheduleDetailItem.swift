@@ -17,6 +17,8 @@ struct CalendarScheduleDetailItem: View {
 	@Injected(\.scheduleInteractor) var scheduleInteractor
 	@Injected(\.categoryInteractor) var categoryInteractor
 	
+	@Binding var isToDoSheetPresented: Bool
+	
 	
 	var body: some View {
 		if let paletteId = appState.categoryPalette[schedule.categoryId] {
