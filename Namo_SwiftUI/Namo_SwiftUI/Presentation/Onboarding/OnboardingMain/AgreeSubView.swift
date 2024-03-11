@@ -81,7 +81,10 @@ struct CheckItem: View {
                 }
                 .onTapGesture {
                     if let urlString = linkURL, let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.open(url)
+                        
+                        DispatchQueue.main.async {
+                            UIApplication.shared.open(url)
+                        }   
                     }
                 }
                 .disabled(linkURL == nil)

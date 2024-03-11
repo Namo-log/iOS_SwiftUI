@@ -8,4 +8,6 @@
 protocol ScheduleRepository {
 	func postSchedule(data: postScheduleRequest) async -> postScheduleResponse?
 	func getAllSchedule() async -> getScheduleResponse?
+    func patchSchedule(scheduleId: Int, data: postScheduleRequest) async -> postScheduleResponse?
+    func deleteSchedule(scheduleId: Int, isMoim: Bool) async -> String?
 }

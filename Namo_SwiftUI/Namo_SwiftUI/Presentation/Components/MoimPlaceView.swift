@@ -9,6 +9,8 @@ import SwiftUI
 
 // 모임 기록에서 장소 뷰
 struct MoimPlaceView: View {
+    @EnvironmentObject var appState: AppState
+
     var placeNumber: Int = 1
     
     var body: some View {
@@ -24,7 +26,11 @@ struct MoimPlaceView: View {
                         .font(.pretendard(.light, size: 15))
                         .foregroundStyle(.mainText)
                     Image(.rightChevronLight)
-                    
+                }
+                .onTapGesture {
+                    withAnimation {
+                        appState.showCalculateAlert = true
+                    }
                 }
             }
             .onTapGesture {

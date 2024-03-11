@@ -17,6 +17,7 @@ struct CategoryInteractorImpl: CategoryInteractor {
 		let categories = await categoryRepository.getAllCategory()
 		
 		DispatchQueue.main.async {
+            appState.categoryState.categoryList = categories?.map { return $0.toCategory() } ?? [] // 받아온 Categories categoryState의 categoryList에 저장
 			categories?.forEach {
 				appState.categoryPalette[$0.categoryId] = $0.paletteId
 			}

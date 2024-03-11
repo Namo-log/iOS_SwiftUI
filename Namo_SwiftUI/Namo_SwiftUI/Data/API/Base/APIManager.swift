@@ -40,7 +40,7 @@ final class APIManager {
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
 		}
-		
+//		print(String(data: result, encoding: .utf8))
 		do {
 			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
 			return decodedData.result
@@ -57,6 +57,20 @@ final class APIManager {
             let result = try request.result.get()
             print("inferred DataType to be decoded : \(T.self)")
             let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+            return decodedData
+        } catch {
+            print("에러 발생: \(error)")
+            return nil
+        }
+    }
+    
+    // BaseResponse 없는 메소드
+    func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+        do {
+            let request = await self.requestData(endPoint: endPoint)
+            let result = try request.result.get()
+            print("inferred DataType to be decoded : \(T.self)")
+            let decodedData = try result.decode(type: T.self, decoder: decoder)
             return decodedData
         } catch {
             print("에러 발생: \(error)")
@@ -118,10 +132,26 @@ extension APIManager {
       case let .uploadImages(images):
           return AF.upload(multipartFormData: { multipartFormData in
               for image in images {
-                  multipartFormData.append(image, withName: "images", fileName: "\(image).png", mimeType: "image/png")
+				  if let image = image {
+					  multipartFormData.append(image, withName: "img", fileName: "\(image).png", mimeType: "image/png")
+				  }
               }
-          }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
-          
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+		  
+	  case let .uploadImagesWithBody(images, body):
+		  return AF.upload(multipartFormData: { multipartFormData in
+			  for image in images {
+				  if let image = image {
+					  multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+				  }
+			  }
+			  
+			  for (key, value) in body {
+				  if let data = String(describing: value).data(using: .utf8) {
+					  multipartFormData.append(data, withName: key)
+				  }
+			  }
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
           
       case let .authRequestJSONEncodable(parameters):
           return AF.request(
@@ -131,7 +161,49 @@ extension APIManager {
             encoder: JSONParameterEncoder.default,
             headers: endPoint.headers
           )
+          
+      case let .requestParametersExAPI(parameters, encoding):
+          return AF.request(
+            "\(endPoint.baseURL)\(endPoint.path)",
+            method: endPoint.method,
+            parameters: parameters,
+            encoding: encoding,
+            headers: endPoint.headers
+          )
       }
     }
 }
 
+extension APIManager {
+    func KakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil, completion: @escaping (KakaoMapResponseDTO?, Error?) -> Void) {
+        
+        var params: Parameters = [ "query" : query ]
+        
+        if let x = x { params["x"] = String(x) }
+        if let y = y { params["y"] = String(y) }
+        if let radius = radius { params["radius"] = radius }
+        if let page = page { params["page"] = page }
+        if let size = size { params["size"] = size }
+        
+        let headers: HTTPHeaders = [ "Authorization" : "KakaoAK \(SecretConstants.kakaoMapRESTAPIKey)"]
+        
+        AF.request(
+            "https://dapi.kakao.com/v2/local/search/keyword.json",
+            method: .get,
+            parameters: params,
+            encoding: URLEncoding.default,
+            headers: headers
+        )
+        .validate()
+        .responseDecodable(of: KakaoMapResponseDTO.self) { dataResponse in
+            switch dataResponse.result {
+            case .success(let success):
+                completion(success, nil)
+                print(success)
+            case .failure(let error):
+                print("에러난다:\(error)")
+                completion(nil, error)
+            }
+        }
+    }
+}

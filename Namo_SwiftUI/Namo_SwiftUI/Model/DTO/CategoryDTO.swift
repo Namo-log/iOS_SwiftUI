@@ -25,3 +25,14 @@ struct postCategoryRequest: Encodable {
 struct postCategoryResponse: Decodable {
 	let id: Int
 }
+
+extension CategoryDTO {
+    func toCategory() -> ScheduleCategory {
+        return ScheduleCategory(
+            categoryId: self.categoryId,
+            name: self.name,
+            paletteId: self.paletteId,
+            isShare: self.isShare
+        )
+    }
+}

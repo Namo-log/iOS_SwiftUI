@@ -11,13 +11,15 @@ import Factory
 
 // 캘린더에 표시되는 아이템
 struct CalendarItem: View {
-	let date: YearMonthDay
-	
 	@EnvironmentObject var appState: AppState
 	@Injected(\.categoryInteractor) var categoryInteractor
 	
+	let date: YearMonthDay
+	
 	@Binding var focusDate: YearMonthDay?
 	@Binding var calendarSchedule: [YearMonthDay: [CalendarSchedule]]
+	
+	@State var shouldHideTabBar: Bool = true
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -243,10 +245,14 @@ struct CalendarItem: View {
 			withAnimation {
 				if focusDate == nil || focusDate != date {
 					focusDate = date
-					appState.isTabbarHidden = true
+					if shouldHideTabBar {
+						appState.isTabbarHidden = true
+					}
 				} else {
 					focusDate = nil
-					appState.isTabbarHidden = false
+					if shouldHideTabBar {
+						appState.isTabbarHidden = false
+					}
 				}
 			}
 		}

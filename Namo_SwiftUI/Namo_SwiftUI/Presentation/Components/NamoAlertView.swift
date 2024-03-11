@@ -8,6 +8,29 @@
 import SwiftUI
 import Factory
 
+/*
+ 사용 예시
+ NamoAlertView(
+	 showAlert: $showDatePicker,
+	 content: AnyView(
+		 HStack(spacing: 0) {
+ 
+		 }
+	 ),
+	 leftButtonTitle: "취소",
+	 leftButtonAction: {
+		 
+	 },
+	 rightButtonTitle: "확인",
+	 rightButtonAction: {
+		 
+	 }
+ )
+ 
+ 24.03.05
+ - NamoAlertView를 띄우는 변수를 조절할 때 withAnimation을 감싸주세요
+ */
+
 struct NamoAlertView: View {
 	@Injected(\.appState) var appState
 	
@@ -15,8 +38,8 @@ struct NamoAlertView: View {
 	let content: AnyView
 	let leftButtonTitle: String
 	let leftButtonAction: () -> Void
-	let rightButtonTitle: String?
-	let rightButtonAction: (() -> Void)?
+	var rightButtonTitle: String? = nil
+	var rightButtonAction: (() -> Void)? = {}
 	
     var body: some View {
 		ZStack {
@@ -42,7 +65,7 @@ struct NamoAlertView: View {
 					.cornerRadius(4)
 					
 					if let rightButtonTitle = rightButtonTitle,
-					   let rightButtonAction = rightButtonAction {
+					   let _ = rightButtonAction {
 						Button(action: rightAction, label: {
 							Text(rightButtonTitle)
 								.foregroundStyle(Color.white)
@@ -64,7 +87,9 @@ struct NamoAlertView: View {
 			
 		}
 		.onAppear {
-			appState.isTabbarOpaque = true
+			withAnimation {
+				appState.isTabbarOpaque = true
+			}
 		}
     }
 	
