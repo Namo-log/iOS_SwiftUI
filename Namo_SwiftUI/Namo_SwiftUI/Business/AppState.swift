@@ -42,7 +42,6 @@ class AppState: ObservableObject {
     @Published var isPersonalDiary: Bool = true
     @Published var isDeletingDiary: Bool = false
     @Published var isEditingDiary: Bool = false
-    @Published var showCalculateAlert: Bool = false
 
     // Schedule
     @Published var scheduleState: ScheduleState = ScheduleState(

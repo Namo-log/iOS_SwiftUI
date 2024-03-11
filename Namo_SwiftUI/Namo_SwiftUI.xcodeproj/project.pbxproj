@@ -120,16 +120,6 @@
 		88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2C2B6E89BD00E47C8B /* deletePetInfoDTO.swift */; };
 		88A7EF2F2B6E8AE400E47C8B /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */; };
 		88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F42B60119C004742AD /* ColorCircleView.swift */; };
-		88D6C9F82B6028B3004742AD /* ToDoCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */; };
-		A22F63432B8B31FC00BC39A2 /* AddEditDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63422B8B31FC00BC39A2 /* AddEditDiaryView.swift */; };
-		A22F63472B96CAD400BC39A2 /* DatePlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */; };
-		A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */; };
-		A22F634B2B96D31800BC39A2 /* AddEditMoimDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634A2B96D31800BC39A2 /* AddEditMoimDiaryView.swift */; };
-		A22F634D2B96D63200BC39A2 /* BackArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634C2B96D63200BC39A2 /* BackArrowView.swift */; };
-		A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634E2B96D85900BC39A2 /* TrashView.swift */; };
-		A22F63512B96E68900BC39A2 /* BlackBorderRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */; };
-		A22F63532B96F5FB00BC39A2 /* MoimPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63522B96F5FB00BC39A2 /* MoimPlaceView.swift */; };
-		A22F63552B96FC1000BC39A2 /* EditSaveDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */; };
 		88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6C9F72B6028B3004742AD /* ToDoEditView.swift */; };
 		88E3A02B2B7243A400B9F75C /* ToDoSelectCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */; };
 		88E3A02D2B726F6C00B9F75C /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */; };
@@ -138,6 +128,15 @@
 		88EFE45D2B87916B0085826B /* ClearBackgournd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE45C2B87916B0085826B /* ClearBackgournd.swift */; };
 		88EFE4602B87C7680085826B /* PlaceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE45F2B87C7680085826B /* PlaceInteractor.swift */; };
 		88EFE4622B87C7780085826B /* PlaceInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */; };
+		A22F63432B8B31FC00BC39A2 /* AddEditDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63422B8B31FC00BC39A2 /* AddEditDiaryView.swift */; };
+		A22F63472B96CAD400BC39A2 /* DatePlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */; };
+		A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */; };
+		A22F634B2B96D31800BC39A2 /* AddEditMoimDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634A2B96D31800BC39A2 /* AddEditMoimDiaryView.swift */; };
+		A22F634D2B96D63200BC39A2 /* BackArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634C2B96D63200BC39A2 /* BackArrowView.swift */; };
+		A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634E2B96D85900BC39A2 /* TrashView.swift */; };
+		A22F63512B96E68900BC39A2 /* BlackBorderRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */; };
+		A22F63552B96FC1000BC39A2 /* EditSaveDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */; };
+		A27CAD4B2B9F082B00E4E8EF /* MoimPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -244,16 +243,6 @@
 		88A7EF2C2B6E89BD00E47C8B /* deletePetInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deletePetInfoDTO.swift; sourceTree = "<group>"; };
 		88A7EF2E2B6E8AE400E47C8B /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		88D6C9F42B60119C004742AD /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
-		88D6C9F72B6028B3004742AD /* ToDoCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCreateView.swift; sourceTree = "<group>"; };
-		A22F63422B8B31FC00BC39A2 /* AddEditDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditDiaryView.swift; sourceTree = "<group>"; };
-		A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePlaceInfoView.swift; sourceTree = "<group>"; };
-		A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerListView.swift; sourceTree = "<group>"; };
-		A22F634A2B96D31800BC39A2 /* AddEditMoimDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMoimDiaryView.swift; sourceTree = "<group>"; };
-		A22F634C2B96D63200BC39A2 /* BackArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackArrowView.swift; sourceTree = "<group>"; };
-		A22F634E2B96D85900BC39A2 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
-		A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBorderRoundedView.swift; sourceTree = "<group>"; };
-		A22F63522B96F5FB00BC39A2 /* MoimPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimPlaceView.swift; sourceTree = "<group>"; };
-		A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSaveDiaryView.swift; sourceTree = "<group>"; };
 		88D6C9F72B6028B3004742AD /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		88E3A02A2B7243A400B9F75C /* ToDoSelectCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectCategoryView.swift; sourceTree = "<group>"; };
 		88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
@@ -262,6 +251,15 @@
 		88EFE45C2B87916B0085826B /* ClearBackgournd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearBackgournd.swift; sourceTree = "<group>"; };
 		88EFE45F2B87C7680085826B /* PlaceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInteractor.swift; sourceTree = "<group>"; };
 		88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInteractorImpl.swift; sourceTree = "<group>"; };
+		A22F63422B8B31FC00BC39A2 /* AddEditDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditDiaryView.swift; sourceTree = "<group>"; };
+		A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePlaceInfoView.swift; sourceTree = "<group>"; };
+		A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerListView.swift; sourceTree = "<group>"; };
+		A22F634A2B96D31800BC39A2 /* AddEditMoimDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMoimDiaryView.swift; sourceTree = "<group>"; };
+		A22F634C2B96D63200BC39A2 /* BackArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackArrowView.swift; sourceTree = "<group>"; };
+		A22F634E2B96D85900BC39A2 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
+		A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBorderRoundedView.swift; sourceTree = "<group>"; };
+		A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSaveDiaryView.swift; sourceTree = "<group>"; };
+		A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoimPlaceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -508,7 +506,6 @@
 				A22F634C2B96D63200BC39A2 /* BackArrowView.swift */,
 				A22F634E2B96D85900BC39A2 /* TrashView.swift */,
 				A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */,
-				A22F63522B96F5FB00BC39A2 /* MoimPlaceView.swift */,
 				A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */,
 				2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */,
 				88E48F7F2B827C2500B064A0 /* CircleItemView.swift */,
@@ -583,6 +580,7 @@
 				5021D8E22B594044009B4AD1 /* DiaryMainView.swift */,
 				A22F63422B8B31FC00BC39A2 /* AddEditDiaryView.swift */,
 				A22F634A2B96D31800BC39A2 /* AddEditMoimDiaryView.swift */,
+				A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */,
 			);
 			path = DiaryMain;
 			sourceTree = "<group>";
@@ -988,10 +986,10 @@
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
 				A22F634D2B96D63200BC39A2 /* BackArrowView.swift in Sources */,
 				A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */,
-				882DB3602B6BBBDF00A2759E /* ToDoCreateViewModel.swift in Sources */,
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,
 				8834AE012B67CB320024F724 /* APIManager.swift in Sources */,
+				A27CAD4B2B9F082B00E4E8EF /* MoimPlaceView.swift in Sources */,
 				2CF4450E2B78EDC300A8E514 /* CategoryRepositoryImpl.swift in Sources */,
 				2CF445142B7F373600A8E514 /* MoimInteractor.swift in Sources */,
 				2CFE00222B70A41C0054C31B /* ScheduleInteractorImpl.swift in Sources */,
@@ -1006,7 +1004,6 @@
 				2CF4451E2B80535C00A8E514 /* MoimRepository.swift in Sources */,
 				507C84DB2B6F37D200147C60 /* AuthRepository.swift in Sources */,
 				5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */,
-				A22F63532B96F5FB00BC39A2 /* MoimPlaceView.swift in Sources */,
 				2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */,
 				2C7232352B6DFEEF0097D669 /* ScheduleInteractor.swift in Sources */,
 				5021D8F02B5940C8009B4AD1 /* CustomMainView.swift in Sources */,

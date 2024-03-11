@@ -14,12 +14,12 @@ struct AddEditMoimDiaryView: View {
     
     let info: ScheduleInfo
     
-    @State var showParticipants: Bool = true
-    @State var showAddPlaceButton: Bool = true
-    @State var numOfPlace = 1
+    @State private var showParticipants: Bool = true
+    @State private var showAddPlaceButton: Bool = true
+    @State private var numOfPlace = 1
     
-    @State var showCalculateAlert: Bool = false
-    @State var totalCost: String = ""
+    @State private var showCalculateAlert: Bool = false
+    @State private var totalCost: String = ""
 
     let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
@@ -40,12 +40,12 @@ struct AddEditMoimDiaryView: View {
             title: "정산 페이지",
             leftButtonTitle: "닫기",
             leftButtonAction: {
-                appState.showCalculateAlert = false
+                showCalculateAlert = false
             },
             rightButtonTitle: "저장",
             rightButtonAction: {
                 // TODO: - 저장 기능 연결 필요
-                appState.showCalculateAlert = false
+                showCalculateAlert = false
                 return true
             },
             content: AnyView(
@@ -176,12 +176,10 @@ struct AddEditMoimDiaryView: View {
                             .padding(.top, 15)
                         }
                         
-                        // 장소
+                        // 장소 뷰
                         ForEach(0..<numOfPlace, id: \.self) { num in
-                            MoimPlaceView(placeNumber: num + 1)
-                                .padding(.bottom, 25)
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, placeNumber: num + 1)
                         }
-                        
                     } // VStack - leading
                     .padding(.top, 12)
                     .padding(.leading, 25)
@@ -191,6 +189,7 @@ struct AddEditMoimDiaryView: View {
                     if showAddPlaceButton {
                         Button {
                             if numOfPlace == 2 {
+                                print("2개다")
                                 showAddPlaceButton = false
                             }
                             
@@ -231,7 +230,7 @@ struct AddEditMoimDiaryView: View {
             }
             
             // 정산 Alert 뷰
-            if appState.showCalculateAlert {
+            if showCalculateAlert {
                 groupCalculateAlertView
             }
         } // ZStack
