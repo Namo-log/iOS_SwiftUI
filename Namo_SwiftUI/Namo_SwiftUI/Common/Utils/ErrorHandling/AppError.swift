@@ -28,3 +28,38 @@ enum AppError {
     /// 커스텀 에러
     case customError(title: String, message: String, localizedDescription: String?)
 }
+
+struct ErrorAlertContent {
+    /// Alert창 제목
+    var title: String
+    /// Alert창 내용 메세지
+    var message: String
+}
+
+extension AppError {
+    /// 에러 발생 원인
+    var localizedDescription: String {
+        switch self {
+        case .temporaryNetworkIssue(let description),
+                .networkError(let description),
+                .refreshTokenExpired(let description),
+                .customError(_, _, let description):
+            return description ?? "에러 발생"
+        }
+    }
+    
+    /// 에러 Alert 창 표시 내용
+    var content: ErrorAlertContent {
+        switch self {
+            
+        case .temporaryNetworkIssue:
+            return .init(title: "네트워크 에러", message: "네트워크 에러 발생 - 재시도 합니다.")
+        case .networkError:
+            return .init(title: "네트워크 에러", message: "일시적인 네트워크 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.")
+        case .refreshTokenExpired:
+            return .init(title: "로그인 만료", message: "로그인이 만료되었습니다.\n다시 로그인해주세요.")
+        case let .customError(title, message, _):
+            return .init(title: title, message: message)
+        }
+    }
+}
