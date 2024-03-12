@@ -15,7 +15,7 @@ struct CalendarSchedule: Hashable {
 }
 
 protocol ScheduleInteractor {
-	func setCalendar() async -> [YearMonthDay: [CalendarSchedule]] 
+	func setCalendar() async
 	func getSchedules() async -> [Schedule]
 	func setSchedules(_ schedules: [Schedule]) -> [YearMonthDay: [CalendarSchedule]]
 	func findPostion(_ schedules: [CalendarSchedule]) -> Int
