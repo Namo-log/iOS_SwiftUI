@@ -13,9 +13,9 @@ enum ErrorHandlingType {
     /// Error Alert만 표시하는 Error -> alert창 표시
     case showAlert
     /// 재시도 Error -> priint만
-    case retry
+//    case retry
     /// Error Alert와 함계 화면 변경 Error -> alert 창 확인 누르면 화면 변경
-    case showAlertAndNavigate
+//    case showAlertAndNavigate
 }
 
 enum AppError {
