@@ -7,10 +7,18 @@
 
 import Foundation
 import SwiftUI
+import os
 
 class ErrorHandler {
     // Singleton
     static let shared = ErrorHandler()
+    
+    /// ErrorHandler에서 사용하는 Logger입니다.
+    /// Error를 특정 타입의 로그로 남기는데 사용됩니다.
+    private let logger = Logger(
+            subsystem: Bundle.main.bundleIdentifier!,
+            category: String(describing: ErrorHandler.self)
+        )
     
     /// Namo 앱이 현재 표시중인 Window입니다.
     /// App에 연결된 Scene들 중에서 keyWindow를 찾아 return합니다.
@@ -54,7 +62,7 @@ class ErrorHandler {
         }
         
         // 에러 로그 출력
-        print("\(errorTypeEmoji) : \(error.localizedDescription)")
+        self.logger.error("\(errorTypeEmoji) : \(error.localizedDescription)")
         
         // UI 표시가 동반되는 에러인 경우
         if type == .showAlert {
