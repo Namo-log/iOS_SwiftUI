@@ -72,4 +72,31 @@ class ErrorHandler {
             }
         }
     }
+    
+    /// ErrorHandler의 API 에러 처리 함수입니다.
+    ///
+    /// - Parameters:
+    ///   - error: API 통신 도중 발생되는 error 타입입니다. error description에 해당 타입에 따라 추가 정보가 작성됩니다.
+    func handleAPIError(_ error: APIError) {
+
+        var description: String = ""
+        
+        switch error {
+        case .networkError:
+            description = "네트워크 에러입니다. 이유 불명"
+        case .badRequest(let string):
+            description = "잘못된 요청 : \(String(describing: string))"
+        case .serverError(let string):
+            description = "서버 내부 에러 : \(String(describing: string))"
+        case .parseError(let string):
+            description = "디코딩 에러 : \(string ?? "")"
+        case .unknown:
+            description = "알 수 없는 에러"
+        case .customError(let string):
+            description = string
+        }
+        
+        // UI에 표시하는 에러로 컨버팅하여 진행합니다.
+        self.handle(type: .showAlert, error: .networkError(localizedDescription: description))
+    }
 }
