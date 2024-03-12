@@ -48,9 +48,8 @@ class ErrorHandler {
     /// - Parameters:
     ///   - type: 에러가 처리되는 타입입니다. `.ignore`의 경우 UI표시 없이, `.showAlert`의 경우 UI표시와 함께 처리됩니다.
     ///   - error:에러의 타입입니다. 에러가 표시될 내용을 결정합니다. `localizeDescription`으로 시스템 로그에 남길 description을 작성합니다.
-    ///   - primaryAction: 첫번째 버튼에 사용할 Action입니다. `UIAlertAction`타입을 통해 작성합니다.
-    ///   - secondaryAction: 두번째 버튼에 사용할 Action입니다. primaryAction 없이 사용하지 않습니다.`UIAlertAction`타입을 통해 작성합니다.
-    func handle(type: ErrorHandlingType, error: AppError, primaryAction: UIAlertAction? = nil, secondaryAction: UIAlertAction? = nil) {
+    ///   - primaryAction: Alert에 추가될 버튼+action 입니다. `UIAlertAction`타입을 통해 작성합니다. 배열로 추가하여 여러 버튼을 작성 가능합니다. 미사용시 "확인" 기본 버튼이 작성됩니다.
+    func handle(type: ErrorHandlingType, error: AppError, actions: [UIAlertAction]? = nil) {
         // 에러 처리 타입에 따라 로그 앞 Emoji 추가
         var errorTypeEmoji: String {
             switch type {
@@ -68,18 +67,26 @@ class ErrorHandler {
         if type == .showAlert {
             DispatchQueue.main.async {
                 let alertController = UIAlertController(title: error.content.title, message: error.content.message, preferredStyle: .alert)
-                // primary 작성하지 않은 경우 "확인" 버튼이 디폴트로 작성됨
-                let primary = primaryAction ?? UIAlertAction(title: "확인", style: .default)
-                alertController.addAction(primary)
                 
-                if let secondary = secondaryAction {
-                    alertController.addAction(secondary)
+                // actions 작성하지 않은 경우 "확인" 버튼이 디폴트로 작성됨
+                guard let actions = actions else {
+                    let primary = UIAlertAction(title: "확인", style: .default)
+                    alertController.addAction(primary)
+                    self.rootController?.present(alertController, animated: true)
+                    return
                 }
+                
+                // alert에 action 추가
+                actions.forEach { action in
+                    alertController.addAction(action)
+                }
+                
                 // 현재 앱에 표시된 ViewController에 alertController 표시
                 self.rootController?.present(alertController, animated: true)
             }
         }
     }
+    
     
     /// ErrorHandler의 API 에러 처리 함수입니다.
     ///
