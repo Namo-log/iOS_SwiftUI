@@ -34,6 +34,9 @@ struct ToDoEditView: View {
     @State var isShowSheet: Bool = false
     /// 삭제 Alert Show State
     @State var showAlert: Bool = false
+    
+    /// 화면에 표시되기 위한 categoryList State
+    @State private var categoryList: [ScheduleCategory] = []
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -80,14 +83,18 @@ struct ToDoEditView: View {
                             ListItem(listTitle: "카테고리") {
                                 NavigationLink(destination: ToDoSelectCategoryView()) {
                                     HStack {
-                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.paletteId ?? -1))
+                                        
+                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first!.paletteId))
                                             .frame(width: 13, height: 13)
-                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.name ?? "카테고리 없음")
-                                            .font(.pretendard(.regular, size: 15))
+                                        
+                                        Text(appState.categoryState.categoryList.first!.name)
+                                            .font(Font.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
+                                        
                                         Image("vector3")
                                             .renderingMode(.template)
                                             .foregroundStyle(.mainText)
+                                        
                                     }
                                     .lineSpacing(12)
                                 }
@@ -104,7 +111,6 @@ struct ToDoEditView: View {
                                         }
                                     }
                             }
-                            
                             
                             if (showStartTimePicker) {
                                 DatePicker("StartTimePicker", selection: $appState.scheduleState.scheduleTemp.startDate)
@@ -130,8 +136,6 @@ struct ToDoEditView: View {
                                     .labelsHidden()
                                     .tint(.mainOrange)
                             }
-                            
-                            
                             
                             ListItem(listTitle: "알림") {
                                 HStack {
@@ -186,7 +190,6 @@ struct ToDoEditView: View {
                                             })
                                     }
                                 }
-                                
                             }
                             
                             ListItem(listTitle: "장소") {
@@ -301,8 +304,6 @@ struct ToDoEditView: View {
                     }
                 )
             }
-            
-            
         }
         .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
@@ -323,6 +324,21 @@ struct ToDoEditView: View {
                     address: "임시용입니다",
                     rodeAddress: "임시용입니다")
                 )
+            }
+            
+            Task {
+                await self.categoryInteractor.getCategories()
+                self.categoryList = self.appState.categoryState.categoryList.map { category in
+                    
+                    return ScheduleCategory(
+                        categoryId: category.categoryId,
+                        name: category.name,
+                        paletteId: category.paletteId,
+                        isShare: category.isShare,
+                        color: categoryInteractor.getColorWithPaletteId(id: category.paletteId),
+                        isSelected: self.appState.scheduleState.scheduleTemp.categoryId == category.categoryId ? true : false
+                    )
+                }
             }
         })
     }
@@ -384,8 +400,6 @@ struct ToDoEditView: View {
         return String(returnString.dropLast(2))
     }
 }
-
-
 
 #Preview {
     ToDoEditView()
