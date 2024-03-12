@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Error 처리 유형을 정의하는 enum입니다.
 enum ErrorHandlingType {
     /// 무시하는 Error -> print
     case ignore
@@ -18,6 +19,7 @@ enum ErrorHandlingType {
 //    case showAlertAndNavigate
 }
 
+/// App에서 발생하는 Error 유형을 정의하는 enum입니다.
 enum AppError {
     /// 임시 네트워크 이슈
     case temporaryNetworkIssue(localizedDescription: String?)
@@ -29,6 +31,7 @@ enum AppError {
     case customError(title: String, message: String, localizedDescription: String?)
 }
 
+/// Error Alert에 작성되는 내용을 정의하는 struct입니다.
 struct ErrorAlertContent {
     /// Alert창 제목
     var title: String
