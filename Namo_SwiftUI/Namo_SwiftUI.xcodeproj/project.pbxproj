@@ -50,7 +50,6 @@
 		2CFE00262B70BF3C0054C31B /* ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00252B70BF3C0054C31B /* ScheduleRepository.swift */; };
 		2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00272B70C2580054C31B /* ScheduleRepositoryImpl.swift */; };
 		2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */; };
-		2CFE003F2B71FE7E0054C31B /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE003E2B71FE7E0054C31B /* ErrorHandler.swift */; };
 		2CFE00552B73658A0054C31B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00542B73658A0054C31B /* Schedule.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
@@ -174,7 +173,6 @@
 		2CFE00252B70BF3C0054C31B /* ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepository.swift; sourceTree = "<group>"; };
 		2CFE00272B70C2580054C31B /* ScheduleRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepositoryImpl.swift; sourceTree = "<group>"; };
 		2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEndPoint.swift; sourceTree = "<group>"; };
-		2CFE003E2B71FE7E0054C31B /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		2CFE00542B73658A0054C31B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
@@ -510,7 +508,6 @@
 		5012A9E92B593C4400544AB0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				2CFE003E2B71FE7E0054C31B /* ErrorHandler.swift */,
 				2C57175D2B59FC0D00B0F3B3 /* Constants.swift */,
 				88EFE45C2B87916B0085826B /* ClearBackgournd.swift */,
 			);
@@ -980,7 +977,6 @@
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				88E3A02D2B726F6C00B9F75C /* KakaoMapView.swift in Sources */,
 				88E48F802B827C2500B064A0 /* CircleItemView.swift in Sources */,
-				2CFE003F2B71FE7E0054C31B /* ErrorHandler.swift in Sources */,
 				2CF4451C2B7FA0C300A8E514 /* GroupListItem.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
