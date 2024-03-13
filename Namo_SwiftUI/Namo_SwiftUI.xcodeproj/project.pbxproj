@@ -501,12 +501,9 @@
 				2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */,
 				88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */,
 				2CF445032B760A8100A8E514 /* NamoAlertView.swift */,
-				A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */,
 				A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */,
 				A22F634C2B96D63200BC39A2 /* BackArrowView.swift */,
 				A22F634E2B96D85900BC39A2 /* TrashView.swift */,
-				A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */,
-				A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */,
 				2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */,
 				88E48F7F2B827C2500B064A0 /* CircleItemView.swift */,
 			);
@@ -580,7 +577,10 @@
 				5021D8E22B594044009B4AD1 /* DiaryMainView.swift */,
 				A22F63422B8B31FC00BC39A2 /* AddEditDiaryView.swift */,
 				A22F634A2B96D31800BC39A2 /* AddEditMoimDiaryView.swift */,
+				A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */,
+				A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */,
 				A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */,
+				A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */,
 			);
 			path = DiaryMain;
 			sourceTree = "<group>";
