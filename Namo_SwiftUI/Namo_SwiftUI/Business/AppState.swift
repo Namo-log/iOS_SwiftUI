@@ -43,6 +43,13 @@ class ScheduleState: ObservableObject {
 	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
 }
 
+class MoimState: ObservableObject {
+	/// 전체 모임 리스트
+	@Published var moims: [Moim] = []
+	/// 유저가 현재 확인하고 있는 모임
+	@Published var currentMoim: Moim = Moim()
+}
+
 class AppState: ObservableObject {
 	
 	// Tabbar

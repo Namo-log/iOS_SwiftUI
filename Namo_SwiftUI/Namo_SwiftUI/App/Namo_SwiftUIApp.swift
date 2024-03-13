@@ -16,6 +16,7 @@ struct Namo_SwiftUIApp: App {
     // 앱의 최상위에서 appState를 선언하여 앱의 전역에서 쓰일 수 있도록 합니다.
     var appState = Container.shared.appState()
 	var scheduleState = Container.shared.scheduleState()
+	var moimState = Container.shared.moimState()
     
     let instance = NaverThirdPartyLoginConnection.getSharedInstance()
     
@@ -40,6 +41,7 @@ struct Namo_SwiftUIApp: App {
             SplashView()
                 .environmentObject(appState)
 				.environmentObject(scheduleState)
+				.environmentObject(moimState)
                 .onOpenURL(perform: { url in
                     
                     if AuthApi.isKakaoTalkLoginUrl(url) {

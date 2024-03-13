@@ -10,10 +10,9 @@ import PhotosUI
 import Factory
 
 struct GroupMainView: View {
+	@EnvironmentObject var moimState: MoimState
 	@Injected(\.moimInteractor) var moimInteractor
 	@Injected(\.moimRepository) var moimRepository
-	
-	@State var myGroups: [Moim] = []
 	
 	// New Group
 	@State var showNewGroupAlert: Bool = false
@@ -46,7 +45,7 @@ struct GroupMainView: View {
 		}
 		.onAppear {
 			Task {
-				self.myGroups = await moimInteractor.getGroups()
+				await moimInteractor.getGroups()
 			}
 		}
     }
@@ -82,10 +81,14 @@ struct GroupMainView: View {
 	private var groupList: some View {
 		ScrollView(.vertical) {
 			VStack(spacing: 20) {
-				ForEach(myGroups, id: \.groupId) { group in
-					NavigationLink(destination: GroupCalendarView(moim: group), label: {
-						GroupListItem(group: group)
+				ForEach(moimState.moims, id: \.groupId) { moim in
+					NavigationLink(destination: GroupCalendarView(), label: {
+						GroupListItem(moim: moim)
 							.tint(Color.black)
+					})
+					.simultaneousGesture(TapGesture().onEnded {
+						moimState.currentMoim = moim
+						print(moimState.currentMoim)
 					})
 					
 				}
@@ -94,7 +97,7 @@ struct GroupMainView: View {
 			}
 		}
 		.refreshable {
-			self.myGroups = await moimInteractor.getGroups()
+			await moimInteractor.getGroups()
 		}
 	}
 	
@@ -111,7 +114,7 @@ struct GroupMainView: View {
 				// response가 잘 들어왔으면, 그룹 목록 새로고침
 				if response != nil {
 					Task {
-						self.myGroups = await moimInteractor.getGroups()
+						await moimInteractor.getGroups()
 					}
 					return true
 				}
@@ -219,7 +222,7 @@ struct GroupMainView: View {
 				// 그룹 참여에 성공했으면, 그룹 목록 새로고침
 				if response {
 					Task {
-						self.myGroups = await moimInteractor.getGroups()
+						await moimInteractor.getGroups()
 					}
 					return true
 				}
