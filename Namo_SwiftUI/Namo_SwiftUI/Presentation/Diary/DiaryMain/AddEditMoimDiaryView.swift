@@ -216,10 +216,17 @@ struct AddEditMoimDiaryView: View {
                 NamoAlertView(
                     showAlert: $appState.isDeletingDiary,
                     content: AnyView(
-                        Text("기록을 정말 삭제하시겠어요?")
-                            .font(.pretendard(.bold, size: 16))
-                            .foregroundStyle(.mainText)
-                            .padding(.top, 24)
+                        VStack(alignment: .center, spacing: 10) {
+                            Text("모임 기록을 정말 삭제하시겠어요?")
+                                .font(.pretendard(.bold, size: 16))
+                                .foregroundStyle(.mainText)
+                                .padding(.top, 24)
+                            Text("삭제한 모임 기록은\n개인 기록 페이지에서도 삭제됩니다.")
+                                .font(.pretendard(.light, size: 14))
+                                .foregroundStyle(.mainText)
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding(.bottom, 5)
                     ),
                     leftButtonTitle: "취소",
                     leftButtonAction: {},
