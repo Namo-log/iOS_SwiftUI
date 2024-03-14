@@ -41,7 +41,7 @@ struct ToDoSelectCategoryView: View {
                             for index in categoryList.indices {
                                 if  categoryList[index].hashValue == category.hashValue {
                                     categoryList[index].isSelected = true
-                                    self.scheduleState.scheduleTemp.categoryId = category.categoryId
+                                    self.scheduleState.currentSchedule.categoryId = category.categoryId
                                 } else {
                                     categoryList[index].isSelected = false
                                 }
@@ -91,7 +91,7 @@ struct ToDoSelectCategoryView: View {
                         paletteId: category.paletteId,
                         isShare: category.isShare,
                         color: categoryInteractor.getColorWithPaletteId(id: category.paletteId),
-                        isSelected: self.scheduleState.scheduleTemp.categoryId == category.categoryId ? true : false
+                        isSelected: self.scheduleState.currentSchedule.categoryId == category.categoryId ? true : false
                     )
                     
                 }
