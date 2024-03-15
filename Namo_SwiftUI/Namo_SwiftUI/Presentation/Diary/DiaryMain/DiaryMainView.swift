@@ -20,9 +20,9 @@ struct DiaryMainView: View {
     @State var dummyDiary = [DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
                                        content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다."),
                              DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
-                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다.")]
+                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에")]
     @State var dummyGroupDiary = [DiaryItem(backgroundColor: .pink, scheduleName: "데모데이",
-                                            content: "앱 런칭 데모데이를 진행했다. 참여진 분들과 피드백도 주고 받고, 무엇보다 우리 팀이 열심히 제작한 나모 앱을 누군가에게 보여줄 수 있다는 점이 뿌듯했다 ! 부스 정리하고 회식까지 하니 정말 다 끝난느낌...")]
+                                            content: "앱 런칭 데모데이를 진행했다. 참여진 분들과 피드백도 주고 받고, 무엇보다 우리 팀이 열심히 제작한 나모 앱을 누군가에게 보여줄 수 있다는 점이 뿌듯했다 ! 부스 정리하고 회식까지 하니 정말 다 끝난느낌...dfsdfdfdfsdfsdfadsffs")]
     
     // 개인 / 모임 토글
     private var toggleView: some View {
@@ -53,89 +53,92 @@ struct DiaryMainView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack {
-                // 헤더
-                HStack {
-                    Button {
-                        showDatePicker = true
-                    } label: {
-                        HStack {
-                            Text(currentDate)
-                                .font(.pretendard(.bold, size: 22))
-                        
-                            Image(.icChevronBottomBlack)
+        ScrollView {
+            ZStack {
+                VStack {
+                    // 헤더
+                    HStack {
+                        Button {
+                            showDatePicker = true
+                        } label: {
+                            HStack {
+                                Text(currentDate)
+                                    .font(.pretendard(.bold, size: 22))
+                                
+                                Image(.icChevronBottomBlack)
+                            }
                         }
+                        .foregroundColor(.black)
+                        
+                        Spacer()
+                        
+                        toggleView
                     }
-                    .foregroundColor(.black)
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                    
+                    // 기록 목록
+                    if appState.isPersonalDiary ? dummyDiary.isEmpty : dummyGroupDiary.isEmpty {
+                        Text("기록이 없습니다. 기록을 추가해 보세요!")
+                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
+                            .padding(.top, 24)
+                    } else {
+                        VStack(spacing: 20) {
+                            ForEach(appState.isPersonalDiary ? dummyDiary : dummyGroupDiary) { diary in
+                                DiaryDateItem()
+                                diary
+                            }
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                    
+                    // TODO: - 추후 일정 화면에서 연결해야 함
+                    NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                        Text("기록 추가 임시 버튼")
+                    }
+                    .simultaneousGesture(TapGesture().onEnded {
+                        appState.isEditingDiary = false
+                    })
                     
                     Spacer()
-                    
-                    toggleView
-                }
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
+                } // VStack
                 
-                // 기록 목록
-                if appState.isPersonalDiary ? dummyDiary.isEmpty : dummyGroupDiary.isEmpty {
-                    Text("기록이 없습니다. 기록을 추가해 보세요!")
-                        .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
-                        .padding(.top, 24)
-                } else {
-                    VStack(spacing: 20) {
-                        ForEach(appState.isPersonalDiary ? dummyDiary : dummyGroupDiary) { diary in
-                            DiaryDateItem()
-                            diary
-                        }
-                    }
-                }
-                
-                // TODO: - 추후 일정 화면에서 연결해야 함
-                NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
-                    Text("기록 추가 임시 버튼")
-                }
-                .simultaneousGesture(TapGesture().onEnded {
-                    appState.isEditingDiary = false
-                })
-                
-                Spacer()
-            } // VStack
-            
-            if showDatePicker {
-                NamoAlertView(
-                    showAlert: $showDatePicker,
-                    content: AnyView(
-                        HStack(spacing: 0) {
-                            Picker("", selection: $pickerCurrentYear) {
-                                ForEach(2000...2099, id: \.self) {
-                                    Text("\(String($0))년")
-                                        .font(.pretendard(.regular, size: 23))
+                if showDatePicker {
+                    NamoAlertView(
+                        showAlert: $showDatePicker,
+                        content: AnyView(
+                            HStack(spacing: 0) {
+                                Picker("", selection: $pickerCurrentYear) {
+                                    ForEach(2000...2099, id: \.self) {
+                                        Text("\(String($0))년")
+                                            .font(.pretendard(.regular, size: 23))
+                                    }
                                 }
-                            }
-                            .pickerStyle(.inline)
-                            
-                            Picker("", selection: $pickerCurrentMonth) {
-                                ForEach(1...12, id: \.self) {
-                                    Text("\(String($0))월")
-                                        .font(.pretendard(.regular, size: 23))
+                                .pickerStyle(.inline)
+                                
+                                Picker("", selection: $pickerCurrentMonth) {
+                                    ForEach(1...12, id: \.self) {
+                                        Text("\(String($0))월")
+                                            .font(.pretendard(.regular, size: 23))
+                                    }
                                 }
+                                .pickerStyle(.inline)
                             }
-                            .pickerStyle(.inline)
+                                .frame(height: 154)
+                        ),
+                        leftButtonTitle: "취소",
+                        leftButtonAction: {
+                            pickerCurrentYear = Date().toYMD().year
+                            pickerCurrentMonth = Date().toYMD().month
+                        },
+                        rightButtonTitle: "확인",
+                        rightButtonAction: {
+                            currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
                         }
-                            .frame(height: 154)
-                    ),
-                    leftButtonTitle: "취소",
-                    leftButtonAction: {
-                        pickerCurrentYear = Date().toYMD().year
-                        pickerCurrentMonth = Date().toYMD().month
-                    },
-                    rightButtonTitle: "확인",
-                    rightButtonAction: {
-                        currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
-                    }
-                )
-            }
-        } // ZStack
+                    )
+                }
+            } // ZStack
+        }
     }
 }
 
@@ -194,9 +197,9 @@ struct DiaryItem: View, Identifiable {
                     Text(scheduleName)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.mainText)
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(width: 1, height: 150)
+                    
+                    // 세로 여백
+                    Spacer()
                     
                     // 다이어리 수정 버튼
                     NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
@@ -243,7 +246,6 @@ struct DiaryItem: View, Identifiable {
             .padding(.trailing, 16)
             .padding(.bottom, 16)
         }
-        .frame(height: 225)
         .padding(.leading, 25)
         .padding(.trailing, 25)
     }
