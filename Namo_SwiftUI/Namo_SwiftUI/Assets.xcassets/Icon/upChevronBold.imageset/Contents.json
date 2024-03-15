@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "upChevronBold.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
