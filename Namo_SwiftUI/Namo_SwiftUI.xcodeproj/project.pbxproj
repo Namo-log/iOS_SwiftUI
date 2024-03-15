@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1305292BA3CFFA0002175D /* RealmSchedule.swift */; };
+		2C13052C2BA3D4240002175D /* List+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052B2BA3D4240002175D /* List+.swift */; };
+		2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052D2BA3D9C90002175D /* RealmManager.swift */; };
 		2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717592B595C1200B0F3B3 /* NamoHome.swift */; };
 		2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */; };
 		2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175D2B59FC0D00B0F3B3 /* Constants.swift */; };
@@ -131,6 +134,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C1305292BA3CFFA0002175D /* RealmSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSchedule.swift; sourceTree = "<group>"; };
+		2C13052B2BA3D4240002175D /* List+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+.swift"; sourceTree = "<group>"; };
+		2C13052D2BA3D9C90002175D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		2C5717592B595C1200B0F3B3 /* NamoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoHome.swift; sourceTree = "<group>"; };
 		2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoTabView.swift; sourceTree = "<group>"; };
 		2C57175D2B59FC0D00B0F3B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -268,6 +274,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1305282BA3CFE90002175D /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				2C1305292BA3CFFA0002175D /* RealmSchedule.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		2C57177F2B5BF35D00B0F3B3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,12 +382,13 @@
 		5012A9DB2B59396000544AB0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2CFE00542B73658A0054C31B /* Schedule.swift */,
+				2C1305282BA3CFE90002175D /* Realm */,
 				8879A7DF2B6927E300794475 /* DTO */,
 				884382D42B74D5EA00766503 /* Place.swift */,
 				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
 				8862E6372B839F760004DE4B /* ScheduleCategory.swift */,
 				889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */,
+				2CFE00542B73658A0054C31B /* Schedule.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -493,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				504F8E9F2B75CB6400ADB867 /* KeyChainManager.swift */,
+				2C13052D2BA3D9C90002175D /* RealmManager.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -526,6 +542,7 @@
 				2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */,
 				2C5717E52B61306700B0F3B3 /* Date+.swift */,
 				8879A7E82B6A494D00794475 /* Data+.swift */,
+				2C13052B2BA3D4240002175D /* List+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -943,6 +960,7 @@
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
+				2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */,
 				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
 				2CF4451A2B7FA0A200A8E514 /* MoimDTO.swift in Sources */,
@@ -1026,10 +1044,12 @@
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
+				2C13052C2BA3D4240002175D /* List+.swift in Sources */,
 				8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */,
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */,
 				884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */,
+				2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

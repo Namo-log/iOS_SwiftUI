@@ -15,6 +15,8 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
+	let realm = RealmManager.shared
+	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
 	func setCalendar() async {
 		let data = await getSchedules()
