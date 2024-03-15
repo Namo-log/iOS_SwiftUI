@@ -14,7 +14,7 @@ struct PhotoPickerListView: View {
     
     @State var images: [UIImage] = []// 보여질 사진 목록
     @State var photosPickerItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
-    @State var photosLimit = 3 // 선택가능한 최대 사진 개수
+    let photosLimit = 3 // 선택가능한 최대 사진 개수
     
     var body: some View {
         ScrollView(.horizontal) {

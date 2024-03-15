@@ -243,7 +243,7 @@ struct AddEditMoimDiaryView: View {
         } // ZStack
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(
-            leading: BackArrowView(),
+            leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
             trailing: appState.isEditingDiary ? TrashView() : nil
         )
         .navigationTitle(info.scheduleName)
