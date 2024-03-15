@@ -93,7 +93,7 @@ struct DiaryMainView: View {
                     }
                     
                     // TODO: - 추후 일정 화면에서 연결해야 함
-                    NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
                         Text("기록 추가 임시 버튼")
                     }
                     .simultaneousGesture(TapGesture().onEnded {
@@ -171,7 +171,6 @@ struct DiaryDateItem: View {
 }
 
 // 다이어리 아이템
-// TODO: - 내용에 따라 동적 높이 설정... 어떻게 하지
 struct DiaryItem: View, Identifiable {
     @EnvironmentObject var appState: AppState
 
@@ -202,7 +201,7 @@ struct DiaryItem: View, Identifiable {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()

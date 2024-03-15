@@ -1,5 +1,5 @@
 //
-//  AddEditDiaryView.swift
+//  EditDiaryView.swift
 //  Namo_SwiftUI
 //
 //  Created by 서은수 on 2/25/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 // 개인 / 모임 기록 추가 및 수정 화면
-struct AddEditDiaryView: View {
+struct EditDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
     
@@ -88,7 +88,7 @@ struct AddEditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    NavigationLink(destination: AddEditMoimDiaryView(info: info)) {
+                    NavigationLink(destination: EditMoimDiaryView(info: info)) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
@@ -130,5 +130,5 @@ struct AddEditDiaryView: View {
 }
 
 #Preview {
-    AddEditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
+    EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
 }
