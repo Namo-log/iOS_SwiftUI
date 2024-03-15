@@ -17,6 +17,16 @@ extension Container {
         self { AppState() }
             .singleton
     }
+	
+	var scheduleState: Factory<ScheduleState> {
+		self { ScheduleState() }
+			.singleton
+	}
+	
+	var moimState: Factory<MoimState> {
+		self { MoimState() }
+			.singleton
+	}
     
     // 프로토콜 타입 지정 후 실제 구현체를 넣어준다는 의미입니다.
     var authInteractor: Factory<AuthInteractor> {

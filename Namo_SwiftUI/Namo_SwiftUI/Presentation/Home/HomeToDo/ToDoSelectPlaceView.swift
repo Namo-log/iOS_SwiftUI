@@ -77,7 +77,7 @@ struct ToDoSelectPlaceView: View {
                         }
                         Spacer(minLength: 20)
                         Button(action: {
-                            scheduleInteractor.setPlaceToScheduleTemp()
+                            scheduleInteractor.setPlaceToCurrentSchedule()
                             placeInteractor.clearPlaces(isSave: true)
                             self.dismissThis()
                         }) {

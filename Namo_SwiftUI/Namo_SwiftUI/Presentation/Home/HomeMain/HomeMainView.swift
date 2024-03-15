@@ -10,11 +10,11 @@ import SwiftUICalendar
 import Factory
 
 struct HomeMainView: View {
+	@EnvironmentObject var scheduleState: ScheduleState
 	@Injected(\.scheduleInteractor) var scheduleInteractor
 	@Injected(\.categoryInteractor) var categoryInteractor
 	@StateObject var calendarController = CalendarController()
 	
-	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
 	@State var focusDate: YearMonthDay? = nil
 	@State var showDatePicker: Bool = false
 	@State var datePickerCurrentDate: Date = Date()
@@ -34,7 +34,7 @@ struct HomeMainView: View {
 					.padding(.bottom, 11)
 				
 				CalendarView(calendarController) { date in
-					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule)
+					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $scheduleState.calendarSchedules)
 				}
 				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
@@ -63,7 +63,7 @@ struct HomeMainView: View {
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
-			self.calendarSchedule = await scheduleInteractor.setCalendar()
+			await scheduleInteractor.setCalendar()
 			await categoryInteractor.getCategories()
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
@@ -149,7 +149,7 @@ struct HomeMainView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?
+				if let schedules = scheduleState.calendarSchedules[focusDate!]?
 					.compactMap(({$0.schedule}))
 					.filter({!$0.moimSchedule})
 				{
@@ -176,7 +176,7 @@ struct HomeMainView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?
+				if let schedules = scheduleState.calendarSchedules[focusDate!]?
 					.compactMap({$0.schedule})
 					.filter({$0.moimSchedule})
 				{
