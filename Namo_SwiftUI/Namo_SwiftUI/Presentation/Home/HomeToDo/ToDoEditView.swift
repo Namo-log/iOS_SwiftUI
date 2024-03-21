@@ -37,9 +37,14 @@ struct ToDoEditView: View {
     
     /// 화면에 표시되기 위한 categoryList State
     @State private var categoryList: [ScheduleCategory] = []
+    
+    @State var showCategoryDeleteAlert: Bool = false
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
+    
+    /// NaivagionPath
+    @State private var path = NavigationPath()
     
     init() {
         // SwiftUI의 NavigationTitle는 Font가 적용되지 않습니다.
@@ -51,26 +56,51 @@ struct ToDoEditView: View {
 //        scheduleInteractor.setScheduleToTemplate(schedule: schedule)
     }
     
+    
+    
     var body: some View {
         
         ZStack(alignment: .top) {
             // MARK: 상단 삭제 원형 버튼
             if isRevise {
-                CircleItemView(content: {
-                    Image("ic_delete_schedule")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                })
-                .offset(y: 50)
-                .onTapGesture(perform: {
-                    Task {
-                        self.showAlert = true
+                
+                CategoryDeleteButton(image: "ic_delete_schedule", frame: 30) {
+                    self.showAlert = true
+                }
+            }
+            
+            // CategoryEditView의 카테고리 삭제 버튼
+            if appState.showCategoryDeleteBtn {
+                
+                // 카테고리 삭제 불가
+                if appState.categoryCantDelete {
+                    
+                    CategoryDeleteButton(image: "ic_cannot_delete", frame: 24) {
+                        
+                        withAnimation {
+                            self.appState.showCategoryCantDeleteToast = true
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                self.appState.showCategoryCantDeleteToast = false
+                            }
+                        }
+                        
                     }
-                })
+                    // 카테고리 삭제 가능
+                } else {
+                    
+                    CategoryDeleteButton(image: "ic_delete_schedule", frame: 30) {
+                        
+                        self.showCategoryDeleteAlert = true
+                        
+                    }
+                }
             }
             
             // MARK: 메인 시트
-            NavigationStack {
+            NavigationStack(path: $path) {
                 ScrollView {
                     VStack {
                         // MARK: 일정 제목
@@ -81,14 +111,18 @@ struct ToDoEditView: View {
                         // MARK: 일정 선택내용 아이템 목록
                         VStack(alignment: .center, spacing: 20) {
                             ListItem(listTitle: "카테고리") {
-                                NavigationLink(destination: ToDoSelectCategoryView()) {
+                                
+                                Button {
+                                    
+                                    path.append(CategoryViews.TodoSelectCategoryView)
+                                    
+                                } label: {
                                     HStack {
                                         
-                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first!.paletteId))
-                                            .frame(width: 13, height: 13)
-                                        
-                                        Text(appState.categoryState.categoryList.first!.name)
-                                            .font(Font.pretendard(.regular, size: 15))
+                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.paletteId ?? -1))
+                                                                                    .frame(width: 13, height: 13)
+                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.name ?? "카테고리 없음")
+                                            .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
                                         Image("vector3")
@@ -97,6 +131,12 @@ struct ToDoEditView: View {
                                         
                                     }
                                     .lineSpacing(12)
+                                }
+                                // MARK: 카테고리 편집 NavigationPath 경로
+                                .navigationDestination(for: CategoryViews.self) { id in
+                                    
+                                    CategoryPath.setCategoryPath(id: id, path: $path)
+                                
                                 }
                             }
                             .padding(.vertical, 14)
@@ -223,9 +263,7 @@ struct ToDoEditView: View {
                             })
                             .frame(width: 330, height:200)
                             .border(Color.init(hex: 0xD9D9D9), width: 1)
-                        
-                        
-                        
+             
                         Spacer()
                     }
                     .navigationTitle(self.isRevise ? "일정 편집" : "새 일정")
@@ -304,6 +342,49 @@ struct ToDoEditView: View {
                     }
                 )
             }
+            
+            // 카테고리 삭제 alert
+            if showCategoryDeleteAlert {
+                
+                NamoAlertView(
+                    showAlert: $showCategoryDeleteAlert,
+                    content: AnyView(
+                        VStack {
+                            Text("카테고리를 정말 삭제하시겠어요?")
+                                .font(.pretendard(.bold, size: 18))
+                                .foregroundStyle(.mainText)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 24)
+                                .padding(.bottom, 8)
+                            Text("삭제하더라도 카테고리에 \n포함된 일정은 사라지지 않습니다.")
+                                .font(.pretendard(.regular, size: 14))
+                                .foregroundStyle(.mainText)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                        }
+                            .frame(minHeight:114)
+                    ),
+                    leftButtonTitle: "취소",
+                    leftButtonAction: {
+                        self.showCategoryDeleteAlert = false
+                    },
+                    rightButtonTitle: "삭제",
+                    rightButtonAction: {
+                        Task {
+                            await self.categoryInteractor.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
+                            
+                            withAnimation {
+                                appState.showCategoryDeleteDoneToast = true
+                            }
+                            
+                            appState.showCategoryDeleteBtn = false
+                            appState.categoryCantDelete = false
+                            
+                            path.removeLast()
+                        }
+                    }
+                )
+            }
         }
         .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
@@ -328,17 +409,10 @@ struct ToDoEditView: View {
             
             Task {
                 await self.categoryInteractor.getCategories()
-                self.categoryList = self.appState.categoryState.categoryList.map { category in
-                    
-                    return ScheduleCategory(
-                        categoryId: category.categoryId,
-                        name: category.name,
-                        paletteId: category.paletteId,
-                        isShare: category.isShare,
-                        color: categoryInteractor.getColorWithPaletteId(id: category.paletteId),
-                        isSelected: self.appState.scheduleState.scheduleTemp.categoryId == category.categoryId ? true : false
-                    )
-                }
+                
+                self.categoryList = categoryInteractor.setCategories()
+            
+                self.appState.scheduleState.scheduleTemp.categoryId = self.categoryList.first?.categoryId ?? -1
             }
         })
     }
@@ -391,6 +465,26 @@ struct ToDoEditView: View {
                         .stroke(self.isOn ? .mainOrange : .mainText, lineWidth: self.isOn ? 2 : 1)
                     )
             }
+        }
+    }
+    
+    struct CategoryDeleteButton: View {
+        
+        let image: String
+        let frame: CGFloat
+        let action: () -> Void
+        
+        var body: some View {
+            
+            CircleItemView(content: {
+                Image(image)
+                    .resizable()
+                    .frame(width: frame, height: frame)
+            })
+            .offset(y: 50)
+            .onTapGesture(perform: {
+                action()
+            })
         }
     }
     
