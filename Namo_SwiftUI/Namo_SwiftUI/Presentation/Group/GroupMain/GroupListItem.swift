@@ -9,25 +9,25 @@ import SwiftUI
 import Kingfisher
 
 struct GroupListItem: View {
-	let group: Moim
+	let moim: Moim
 	
 	var body: some View {
 		HStack(spacing: 15) {
-			KFImage(URL(string: group.groupImgUrl ?? ""))
+			KFImage(URL(string: moim.groupImgUrl ?? ""))
 				.resizable()
 				.aspectRatio(contentMode: .fill)
 				.frame(width: 45, height: 45)
 				.clipShape(Circle())
 			
 			VStack(alignment: .leading, spacing: 10) {
-				Text("\(group.groupName ?? "")")
+				Text("\(moim.groupName ?? "")")
 					.font(.pretendard(.bold, size: 15))
 				
 				HStack(spacing: 10) {
-					Text("\(group.moimUsers.count)")
+					Text("\(moim.moimUsers.count)")
 						.font(.pretendard(.bold, size: 12))
 					
-					Text("\(group.moimUsers.map({$0.userName}).joined(separator: ", "))")
+					Text("\(moim.moimUsers.map({$0.userName}).joined(separator: ", "))")
 						.font(.pretendard(.regular, size: 12))
 				}
 			}

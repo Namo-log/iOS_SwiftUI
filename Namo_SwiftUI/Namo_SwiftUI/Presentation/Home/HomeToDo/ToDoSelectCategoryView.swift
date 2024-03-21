@@ -14,6 +14,7 @@ import Factory
 struct ToDoSelectCategoryView: View {
     
     @EnvironmentObject var appState: AppState
+	@EnvironmentObject var scheduleState: ScheduleState
     @Injected(\.categoryInteractor) var categoryInteractor
     
     /// 화면에 표시되기 위한 categoryList State
@@ -41,7 +42,7 @@ struct ToDoSelectCategoryView: View {
                         for index in categoryList.indices {
                             if  categoryList[index].hashValue == category.hashValue {
                                 categoryList[index].isSelected = true
-                                self.appState.scheduleState.scheduleTemp.categoryId = category.categoryId
+                                self.scheduleState.currentSchedule.categoryId = category.categoryId
                             } else {
                                 categoryList[index].isSelected = false
                             }

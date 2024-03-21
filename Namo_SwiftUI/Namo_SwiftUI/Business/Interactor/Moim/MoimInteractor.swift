@@ -6,7 +6,7 @@
 //
 
 protocol MoimInteractor {
-	func getGroups() async -> [Moim]
+	func getGroups() async
 	func changeMoimName(moimId: Int, newName: String) async -> Bool
 	func withdrawGroup(moimId: Int) async -> Bool
 }

@@ -13,6 +13,20 @@ struct Moim: Decodable {
 	let groupImgUrl: String?
 	let groupCode: String
 	let moimUsers: [MoimUser]
+	
+	init(
+		groupId: Int = -1,
+		groupName: String? = nil,
+		groupImgUrl: String? = nil,
+		groupCode: String = "",
+		moimUsers: [MoimUser] = []
+	) {
+		self.groupId = groupId
+		self.groupName = groupName
+		self.groupImgUrl = groupImgUrl
+		self.groupCode = groupCode
+		self.moimUsers = moimUsers
+	}
 }
 
 struct MoimUser: Decodable, Equatable {

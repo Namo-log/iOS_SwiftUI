@@ -12,6 +12,7 @@ struct CategoryInteractorImpl: CategoryInteractor {
 	
 	@Injected(\.categoryRepository) private var categoryRepository
 	@Injected(\.appState) private var appState
+    @Injected(\.scheduleState) private var scheduleState
 	
     /// 카테고리 호출 API 및 AppState에 저장
 	func getCategories() async {
@@ -30,7 +31,7 @@ struct CategoryInteractorImpl: CategoryInteractor {
         
         let categoryList = self.appState.categoryState.categoryList.map { category in
             
-            return ScheduleCategory(categoryId: category.categoryId, name: category.name, paletteId: category.paletteId, isShare: category.isShare, color: self.getColorWithPaletteId(id: category.paletteId), isSelected: self.appState.scheduleState.scheduleTemp.categoryId == category.categoryId ? true : false)
+            return ScheduleCategory(categoryId: category.categoryId, name: category.name, paletteId: category.paletteId, isShare: category.isShare, color: self.getColorWithPaletteId(id: category.paletteId), isSelected: self.scheduleState.currentSchedule.categoryId == category.categoryId ? true : false)
         }
         return categoryList
     }

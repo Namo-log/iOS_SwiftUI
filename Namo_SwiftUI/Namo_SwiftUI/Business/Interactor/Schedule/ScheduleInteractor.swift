@@ -15,7 +15,7 @@ struct CalendarSchedule: Hashable {
 }
 
 protocol ScheduleInteractor {
-	func setCalendar() async -> [YearMonthDay: [CalendarSchedule]] 
+	func setCalendar() async
 	func getSchedules() async -> [Schedule]
 	func setSchedules(_ schedules: [Schedule]) -> [YearMonthDay: [CalendarSchedule]]
 	func findPostion(_ schedules: [CalendarSchedule]) -> Int
@@ -23,9 +23,9 @@ protocol ScheduleInteractor {
 	func getCurrentDay() -> String
 	func datesBetween(startDate: Date, endDate: Date) -> [Date]
 	func getScheduleTimeWithCurrentYMD(currentYMD: YearMonthDay, schedule: Schedule) -> String
-    func setPlaceToScheduleTemp()
+    func setPlaceToCurrentSchedule()
     func postNewSchedule() async
     func patchSchedule() async
     func deleteSchedule() async
-    func setScheduleToTemplate(schedule: Schedule?)
+    func setScheduleToCurrentSchedule(schedule: Schedule?)
 }

@@ -12,15 +12,18 @@ import Factory
 struct ScheduleInteractorImpl: ScheduleInteractor {
 	
     @Injected(\.appState) private var appState
+	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
-	func setCalendar() async -> [YearMonthDay: [CalendarSchedule]] {
+	func setCalendar() async {
 		let data = await getSchedules()
 
 		let mappedSchedules = setSchedules(data)
 		
-		return mappedSchedules
+		DispatchQueue.main.async {
+			scheduleState.calendarSchedules = mappedSchedules
+		}
 	}
 	
 	// 2: 모든 스케쥴을 get하는 API call
@@ -155,18 +158,18 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		}
 	}
 	
-    /// 지도에서 선택한 selectedPlace의 정보를 scheduleTemp에 저장합니다
-    func setPlaceToScheduleTemp() {
+    /// 지도에서 선택한 selectedPlace의 정보를 currentSchedule에 저장합니다
+    func setPlaceToCurrentSchedule() {
         if let place = appState.placeState.selectedPlace {
-            appState.scheduleState.scheduleTemp.locationName = place.name
-            appState.scheduleState.scheduleTemp.x = place.x
-            appState.scheduleState.scheduleTemp.y = place.y
+            scheduleState.currentSchedule.locationName = place.name
+            scheduleState.currentSchedule.x = place.x
+            scheduleState.currentSchedule.y = place.y
         }
     }
     
-    /// scheduleState.schuduleTemp의 내용을 추가하여 서버로 전송합니다.
+    /// scheduleState.currentSchedule의 내용을 추가하여 서버로 전송합니다.
     func postNewSchedule() async {
-        let temp = appState.scheduleState.scheduleTemp
+        let temp = scheduleState.currentSchedule
         
         let calendar = Calendar.current
         let startDate = temp.startDate
@@ -190,9 +193,9 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         print(String(describing: result))
     }
     
-    /// scheduleState.schuduleTemp의 내용을 추가하여 서버로 전송 - 기존 정보를 수정합니다.
+    /// scheduleState.currentSchedule의 내용을 추가하여 서버로 전송 - 기존 정보를 수정합니다.
     func patchSchedule() async {
-        let temp = appState.scheduleState.scheduleTemp
+        let temp = scheduleState.currentSchedule
         
         guard let scheduleId = temp.scheduleId else {
             print("ScheduleID not included")
@@ -223,7 +226,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
     
     /// 현재 수정하고 있는 스케쥴을 서버로 삭제 요청합니다.
     func deleteSchedule() async {
-        let temp = appState.scheduleState.scheduleTemp
+        let temp = scheduleState.currentSchedule
         
         guard let scheduleId = temp.scheduleId else {
             print("ScheduleID not included")
@@ -234,11 +237,11 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         print(String(describing: result))
     }
     
-    /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 ScheduleTemp로 저장합니다.
+    /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 currentSchedule로 저장합니다.
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
-    func setScheduleToTemplate(schedule: Schedule?) {
+    func setScheduleToCurrentSchedule(schedule: Schedule?) {
         DispatchQueue.main.async {
-            appState.scheduleState.scheduleTemp = ScheduleTemplate(
+            scheduleState.currentSchedule = ScheduleTemplate(
                 scheduleId: schedule?.scheduleId,
                 name: schedule?.name,
                 categoryId: schedule?.categoryId,

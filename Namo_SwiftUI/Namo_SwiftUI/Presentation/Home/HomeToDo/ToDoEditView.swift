@@ -14,6 +14,7 @@ import Factory
 struct ToDoEditView: View {
     
     @EnvironmentObject var appState: AppState
+	@EnvironmentObject var scheduleState: ScheduleState
     @Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
     @Injected(\.placeInteractor) var placeInteractor
@@ -104,7 +105,7 @@ struct ToDoEditView: View {
                 ScrollView {
                     VStack {
                         // MARK: 일정 제목
-                        TextField("일정 이름", text: $appState.scheduleState.scheduleTemp.name)
+						TextField("일정 이름", text: $scheduleState.currentSchedule.name)
                             .font(.pretendard(.bold, size: 22))
                             .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
                         
@@ -118,10 +119,16 @@ struct ToDoEditView: View {
                                     
                                 } label: {
                                     HStack {
-                                        
-                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.paletteId ?? -1))
-                                                                                    .frame(width: 13, height: 13)
-                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.name ?? "카테고리 없음")
+//<<<<<<< HEAD
+//                                        
+//                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.paletteId ?? -1))
+//                                                                                    .frame(width: 13, height: 13)
+//                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.name ?? "카테고리 없음")
+//=======
+                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1))
+                                            .frame(width: 13, height: 13)
+                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음")
+//>>>>>>> develop
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
@@ -142,7 +149,7 @@ struct ToDoEditView: View {
                             .padding(.vertical, 14)
                             
                             ListItem(listTitle: "시작") {
-                                Text(dateFormatter.string(from: appState.scheduleState.scheduleTemp.startDate))
+                                Text(dateFormatter.string(from: scheduleState.currentSchedule.startDate))
                                     .font(.pretendard(.regular, size: 15))
                                     .foregroundStyle(.mainText)
                                     .onTapGesture {
@@ -153,14 +160,14 @@ struct ToDoEditView: View {
                             }
                             
                             if (showStartTimePicker) {
-                                DatePicker("StartTimePicker", selection: $appState.scheduleState.scheduleTemp.startDate)
+                                DatePicker("StartTimePicker", selection: $scheduleState.currentSchedule.startDate)
                                     .datePickerStyle(.graphical)
                                     .labelsHidden()
                                     .tint(.mainOrange)
                             }
                             
                             ListItem(listTitle: "종료") {
-                                Text(dateFormatter.string(from: appState.scheduleState.scheduleTemp.endDate))
+                                Text(dateFormatter.string(from: scheduleState.currentSchedule.endDate))
                                     .font(.pretendard(.regular, size: 15))
                                     .foregroundStyle(.mainText)
                                     .onTapGesture {
@@ -171,7 +178,7 @@ struct ToDoEditView: View {
                             }
                             
                             if (showEndTimePicker) {
-                                DatePicker("EndTimePicker", selection: $appState.scheduleState.scheduleTemp.endDate, in: appState.scheduleState.scheduleTemp.startDate...)
+                                DatePicker("EndTimePicker", selection: $scheduleState.currentSchedule.endDate, in: scheduleState.currentSchedule.startDate...)
                                     .datePickerStyle(.graphical)
                                     .labelsHidden()
                                     .tint(.mainOrange)
@@ -179,9 +186,9 @@ struct ToDoEditView: View {
                             
                             ListItem(listTitle: "알림") {
                                 HStack {
-                                    Text(appState.scheduleState.scheduleTemp.alarmDate.isEmpty
+                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
                                          ? "없음"
-                                         : notiListInString(appState.scheduleState.scheduleTemp.alarmDate.sorted(by: { $0 > $1 })
+                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
                                             .map { NotificationSetting.getValueFromInt($0) })
                                     )
                                     .font(.pretendard(.regular, size: 15))
@@ -211,20 +218,20 @@ struct ToDoEditView: View {
                                     ForEach(notificationsList, id: \.self) { item in
                                         ColorToggleButton(
                                             isOn: Binding(get: {
-                                                if item == .none { appState.scheduleState.scheduleTemp.alarmDate.isEmpty }
-                                                else { appState.scheduleState.scheduleTemp.alarmDate.contains(item.toInt) }
+                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
+                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
                                             },set: {_ in }),
                                             buttonText: item.toString,
                                             action: {
                                                 if item == .none {
-                                                    appState.scheduleState.scheduleTemp.alarmDate = []
+                                                    scheduleState.currentSchedule.alarmDate = []
                                                 }
                                                 else {
-                                                    if let index = appState.scheduleState.scheduleTemp.alarmDate.firstIndex(of: item.toInt) {
-                                                        appState.scheduleState.scheduleTemp.alarmDate.remove(at: index)
+                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
+                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
                                                     }
                                                     else {
-                                                        appState.scheduleState.scheduleTemp.alarmDate.append(item.toInt)
+                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
                                                     }
                                                 }
                                             })
@@ -240,7 +247,7 @@ struct ToDoEditView: View {
                                     }
                                 }, label: {
                                     HStack {
-                                        Text(appState.scheduleState.scheduleTemp.locationName.isEmpty ? "위치명" : appState.scheduleState.scheduleTemp.locationName)
+                                        Text(scheduleState.currentSchedule.locationName.isEmpty ? "위치명" : scheduleState.currentSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         Image("vector3")
@@ -390,13 +397,13 @@ struct ToDoEditView: View {
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear(perform: {
             // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때
-            if self.appState.scheduleState.scheduleTemp.scheduleId != nil {
+            if self.scheduleState.currentSchedule.scheduleId != nil {
                 self.isRevise = true
             }
             // 현재 장소 리스트에 Schedule의 장소를 추가
             // 임시용으로, placeID가 추가된 후 추후에 수정이 필요합니다.
             if self.isRevise {
-                let temp = self.appState.scheduleState.scheduleTemp
+                let temp = self.scheduleState.currentSchedule
                 placeInteractor.appendPlaceList(place: Place(
                     id: 0,
                     x: temp.x,
@@ -412,14 +419,14 @@ struct ToDoEditView: View {
                 
                 self.categoryList = categoryInteractor.setCategories()
             
-                self.appState.scheduleState.scheduleTemp.categoryId = self.categoryList.first?.categoryId ?? -1
+                self.scheduleState.currentSchedule.categoryId = self.categoryList.first?.categoryId ?? -1
             }
         })
     }
     
     /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.
     private func dismissThis() {
-        scheduleInteractor.setScheduleToTemplate(schedule: nil)
+        scheduleInteractor.setScheduleToCurrentSchedule(schedule: nil)
         placeInteractor.clearPlaces(isSave: false)
         placeInteractor.selectPlace(place: nil)
         dismiss()

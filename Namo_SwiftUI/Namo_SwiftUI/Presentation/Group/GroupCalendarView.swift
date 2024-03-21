@@ -15,9 +15,10 @@ struct GroupCalendarView: View {
 	@Injected(\.moimInteractor) var moimInteractor
 	@StateObject var calendarController = CalendarController()
 	@EnvironmentObject var appState: AppState
+	@EnvironmentObject var moimState: MoimState
 	@Environment(\.dismiss) var dismiss
 	
-	let moim: Moim
+//	let moim: Moim
 	
 	// datePicker
 	@State var showDatePicker: Bool = false
@@ -79,7 +80,7 @@ struct GroupCalendarView: View {
 		.ignoresSafeArea(edges: .bottom)
 		.toolbar(.hidden, for: .navigationBar)
 		.onAppear {
-			groupName = moim.groupName ?? ""
+			groupName = moimState.currentMoim.groupName ?? ""
 		}
     }
 	
@@ -261,7 +262,7 @@ struct GroupCalendarView: View {
 			leftButtonAction: {},
 			rightButtonTitle: "저장",
 			rightButtonAction: {
-				let result = await moimInteractor.changeMoimName(moimId: moim.groupId, newName: newGroupName)
+				let result = await moimInteractor.changeMoimName(moimId: moimState.currentMoim.groupId, newName: newGroupName)
 				// 변경 성공 시
 				if result {
 					groupName = newGroupName
@@ -298,14 +299,14 @@ struct GroupCalendarView: View {
 						
 						Spacer()
 						
-						Text("\(moim.moimUsers.count) 명")
+						Text("\(moimState.currentMoim.moimUsers.count) 명")
 							.font(.pretendard(.regular, size: 15))
 							.foregroundStyle(Color(.mainText))
 					}
 					.padding(.bottom, 30)
 					
 					LazyVGrid(columns: gridColumn) {
-						ForEach(moim.moimUsers, id: \.userId) { user in
+						ForEach(moimState.currentMoim.moimUsers, id: \.userId) { user in
 							HStack(spacing: 20) {
 								Circle()
 									.fill(categoryInteractor.getColorWithPaletteId(id: user.color))
@@ -330,7 +331,7 @@ struct GroupCalendarView: View {
 						Color.clear
 							.frame(maxWidth: .infinity)
 							.overlay {
-								Text("\(moim.groupCode)")
+								Text("\(moimState.currentMoim.groupCode)")
 									.font(.pretendard(.regular, size: 15))
 									.foregroundStyle(Color(.mainText))
 									.kerning(3)
@@ -345,7 +346,7 @@ struct GroupCalendarView: View {
 							}
 						
 						Button(action: {
-							UIPasteboard.general.string = moim.groupCode
+							UIPasteboard.general.string = moimState.currentMoim.groupCode
 						}, label: {
 							Image(.btnCopy)
 						})
@@ -359,7 +360,7 @@ struct GroupCalendarView: View {
 					
 					Button(action: {
 						Task {
-							let result = await moimInteractor.withdrawGroup(moimId: moim.groupId)
+							let result = await moimInteractor.withdrawGroup(moimId: moimState.currentMoim.groupId)
 							// 탈퇴 성공시 dismiss
 							if result {
 								appState.isTabbarOpaque = false
@@ -393,5 +394,5 @@ struct GroupCalendarView: View {
 }
 
 #Preview {
-	GroupCalendarView(moim: Moim(groupId: 1, groupName: "123", groupImgUrl: "", groupCode: "", moimUsers: []))
+	GroupCalendarView()
 }
