@@ -13,6 +13,7 @@ struct CategoryInteractorImpl: CategoryInteractor {
 	@Injected(\.categoryRepository) private var categoryRepository
 	@Injected(\.appState) private var appState
 	
+    /// 카테고리 호출 API 및 AppState에 저장
 	func getCategories() async {
 		let categories = await categoryRepository.getAllCategory()
 		
@@ -23,8 +24,58 @@ struct CategoryInteractorImpl: CategoryInteractor {
 			}
 		}
 	}
+    
+    /// AppState의 카테고리 리스트를 뷰에서 쓰일 형태로 변환
+    func setCategories() -> [ScheduleCategory] {
+        
+        let categoryList = self.appState.categoryState.categoryList.map { category in
+            
+            return ScheduleCategory(categoryId: category.categoryId, name: category.name, paletteId: category.paletteId, isShare: category.isShare, color: self.getColorWithPaletteId(id: category.paletteId), isSelected: self.appState.scheduleState.scheduleTemp.categoryId == category.categoryId ? true : false)
+        }
+        return categoryList
+    }
+    
+    // 카테고리 추가
+    func addCategory(data: postCategoryRequest) async {
+        
+        _ = await categoryRepository.postCategory(data: data)
+    }
+    
+    // 카테고리 수정
+    func editCategory(id: Int, data: postCategoryRequest) async {
+        
+        _ = await categoryRepository.patchCategory(id: id, data: data)
+    }
+    
+    // 카테고리 삭제
+    func removeCategory(id: Int) async {
+        _ = await categoryRepository.deleteCategory(id: id)
+    }
+    
+    // 카테고리 편집 토스트 메시지 조작
+    func showCategoryDoneToast() {
+        
+        if appState.showCategoryDeleteDoneToast {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                
+                withAnimation {
+                    appState.showCategoryDeleteDoneToast = false
+                }
+            }
+        }
+        
+        if appState.showCategoryEditDoneToast {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                
+                withAnimation {
+                    appState.showCategoryEditDoneToast = false
+                }
+            }
+        }
+    }
 	
 	// 기본 팔레트ID로 Color 가져오기
+    // 기존 10개에서 14개로 팔레트ID 추가
     func getColorWithPaletteId(id: Int) -> Color {
         switch id {
         case 1:
