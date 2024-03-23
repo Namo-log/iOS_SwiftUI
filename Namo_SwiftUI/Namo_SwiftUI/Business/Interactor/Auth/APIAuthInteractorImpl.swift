@@ -12,6 +12,13 @@ import KakaoSDKAuth
 import NaverThirdPartyLogin
 import AuthenticationServices
 
+enum socialLogin {
+    
+    case kakao
+    case naver
+    case apple
+}
+
 class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationControllerPresentationContextProviding {
     
     @Injected(\.authRepository) private var authRepository
@@ -48,6 +55,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 
                                 print("accessToken: \(serverTokens.accessToken)")
                                 print("refreshToken: \(serverTokens.refreshToken)")
+                                
+                                /// 현재 로그인한 소셜 미디어는 카카오
+                                self.appState.socialLogin = .kakao
                                 
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
@@ -87,6 +97,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 
                                 print("accessToken: \(serverTokens.accessToken)")
                                 print("refreshToken: \(serverTokens.refreshToken)")
+                                
+                                /// 현재 로그인한 소셜 미디어는 카카오
+                                self.appState.socialLogin = .kakao
                                 
                                 DispatchQueue.main.async {
                                     
@@ -132,7 +145,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
         
         let accessToken: String = KeyChainManager.readItem(key: "accessToken")!
         
-        let result: BaseResponse<Auth>? = await authRepository.removeToken(serverAccessToken: ServerAccessToken(accessToken: accessToken))
+        let result: BaseResponse<ServerTokenResponse>? = await authRepository.removeToken(serverAccessToken: ServerAccessToken(accessToken: accessToken))
         
         if result?.code == 200 {
 
@@ -144,22 +157,27 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             
             KeyChainManager.deleteItem(key: "accessToken")
             
-            // 카카오 로그아웃
-            if (AuthApi.hasToken()) {
-                UserApi.shared.logout{ error in
-                    
-                    if let error = error {
-                        print(error)
-                        print(error.localizedDescription)
-                    } else {
-                        print("카카오 로그아웃 성공")
+            /// 현재 소셜로그인이 카카오인 경우 카카오 로그아웃
+            if self.appState.socialLogin == .kakao {
+                
+                if (AuthApi.hasToken()) {
+                    UserApi.shared.logout{ error in
+                        
+                        if let error = error {
+                            print(error)
+                            print(error.localizedDescription)
+                        } else {
+                            print("카카오 로그아웃 성공")
+                        }
                     }
                 }
+                /// 현재 소셜 로그인이 네이버인 경우 네이버 로그아웃
+            } else if self.appState.socialLogin == .naver {
+                // 네이버 로그아웃
+                await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
+                
+                print("네이버 로그아웃 성공")
             }
-
-            // 네이버 로그아웃
-            await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
-            
         } else {
             
             // MARK: 에러 핸들링 추후에 필요
@@ -198,6 +216,9 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     self.appState.isTabbarHidden = false
                 }
+                
+                /// 현재 로그인한 소셜 미디어는 네이버
+                self.appState.socialLogin = .naver
 
             } else {
                 print("서버 토큰 에러")
@@ -226,9 +247,53 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {return}
         
-        print("Authentication successful: \(appleIDCredential.user)")
-        print("Authentication successful: \(String(data: appleIDCredential.identityToken!, encoding: .utf8))")
-        print("Authentication successful: \(String(data: appleIDCredential.authorizationCode!, encoding: .utf8))")
+        let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)!
+        
+        print("identityToken: \(identityToken)")
+        
+        var email: String = ""
+        var username: String = ""
+        
+        if let appleEmail = appleIDCredential.email {
+            email = appleEmail
+        } else {
+            email = ""
+        }
+        
+        if let appleFullName = appleIDCredential.fullName {
+            if let familyName = appleFullName.familyName, let givenName = appleFullName.givenName {
+                
+                username = familyName + givenName
+            }
+        } else {
+            username = ""
+        }
+        
+        let appleLoginDTO = AppleAccessToken(identityToken: identityToken, username: username, email: email)
+        
+        Task {
+            let namoServerTokens = await authRepository.getServerTokenApple(appleAccessToken: appleLoginDTO)
+            
+            if let serverTokens = namoServerTokens {
+                KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
+                KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
+                
+                print("accessToken: \(serverTokens.accessToken)")
+                print("refreshToken: \(serverTokens.refreshToken)")
+                
+                DispatchQueue.main.async {
+                    
+                    UserDefaults.standard.set(true, forKey: "isLogin")
+                    self.appState.isTabbarHidden = false
+                }
+                
+                /// 현재 로그인한 소셜 미디어는 애플
+                self.appState.socialLogin = .apple
+
+            } else {
+                print("서버 토큰 에러")
+            }
+        }
     }
     
     // 애플 로그인 실패
