@@ -128,7 +128,7 @@ struct CategoryEditView: View {
                         
                     } label: {
                         HStack {
-                            Image("Vector 2")
+                            Image("vector2")
                             Text("카테고리 설정")
                                 .font(Font.pretendard(.regular, size: 15))
                                 .foregroundStyle(.mainText)

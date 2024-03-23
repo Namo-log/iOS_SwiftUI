@@ -53,7 +53,7 @@ struct CategorySettingView: View {
                                     Text("기본 팔레트")
                                         .font(Font.pretendard(.regular, size: 15))
                                         .foregroundStyle(.mainText)
-                                    Image("Vector 1")
+                                    Image("vector1")
                                 }
                                 .padding(.trailing, 15)
                             }
@@ -90,7 +90,7 @@ struct CategorySettingView: View {
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
 
-                                        Image("Vector 1")
+                                        Image("vector1")
                                     }
                                     .padding(.horizontal, 15)
                                 )
@@ -125,7 +125,7 @@ struct CategorySettingView: View {
                         
                     } label: {
                         HStack {
-                            Image("Vector 2")
+                            Image("vector2")
                             Text("일정")
                                 .font(Font.pretendard(.regular, size: 15))
                                 .foregroundStyle(.mainText)
