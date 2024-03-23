@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 struct ScheduleCategory: Hashable {
-    let categoryId: Int
-    let name: String
-    let paletteId: Int
-    let isShare: Bool
+    var categoryId: Int
+    var name: String
+    var paletteId: Int
+    var isShare: Bool
     var color: Color?
     var isSelected: Bool?
 }
