@@ -380,8 +380,10 @@ struct ToDoEditView: View {
                         Task {
                             await self.categoryInteractor.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
                             
-                            withAnimation {
-                                appState.showCategoryDeleteDoneToast = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) {
+                                withAnimation {
+                                    appState.showCategoryDeleteDoneToast = true
+                                }
                             }
                             
                             appState.showCategoryDeleteBtn = false

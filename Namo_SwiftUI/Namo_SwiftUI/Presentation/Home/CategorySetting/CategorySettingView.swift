@@ -135,8 +135,6 @@ struct CategorySettingView: View {
             }
             .onAppear {
                 
-                categoryInteractor.showCategoryDoneToast()
-                
                 Task {
                     
                     await self.categoryInteractor.getCategories()
@@ -144,6 +142,7 @@ struct CategorySettingView: View {
                     self.categoryList = categoryInteractor.setCategories()
                 }
             }
+            
             
             VStack {
                 Spacer()
@@ -157,6 +156,12 @@ struct CategorySettingView: View {
                     
                     ToastView(toastMessage: "카테고리가 수정되었습니다.", bottomPadding: 150)
                 }
+            }
+            .onChange(of: appState.showCategoryEditDoneToast) { _ in
+                categoryInteractor.showCategoryDoneToast()
+            }
+            .onChange(of: appState.showCategoryDeleteDoneToast) { _ in
+                categoryInteractor.showCategoryDoneToast()
             }
         }
     }

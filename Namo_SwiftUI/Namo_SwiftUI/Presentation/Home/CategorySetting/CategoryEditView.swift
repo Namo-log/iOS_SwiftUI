@@ -170,10 +170,12 @@ struct CategoryEditView: View {
                                 
                             }
 
-                            withAnimation {
-                                appState.showCategoryEditDoneToast = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) {
+                                withAnimation {
+                                    appState.showCategoryEditDoneToast = true
+                                }
                             }
-
+                            
                             appState.showCategoryDeleteBtn = false
                             appState.categoryCantDelete = false
                            
