@@ -18,6 +18,9 @@ protocol AuthInteractor {
     // 애플 로그인
     func appleLogin()
     
+    // 회원 탈퇴
+    func withdrawMember() async
+    
     // 로그아웃
     func logout() async
 }

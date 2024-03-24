@@ -39,17 +39,17 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         
                         print("카카오 토큰(앱) 받아오기 성공")
                         
-                        guard let accessToken = oauthToken?.accessToken else { return }
+                        guard let kakaoAccessToken = oauthToken?.accessToken else { return }
                         
-                        print("카카오 accessToken: \(accessToken)")
+                        print("카카오 accessToken: \(kakaoAccessToken)")
                         
-                        let socialAccessToken = SocialAccessToken(accessToken: accessToken)
+                        let socialAccessToken = SocialAccessToken(accessToken: kakaoAccessToken)
                         
                         Task {
                             
-                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
+                            let namoServerTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
                             
-                            if let serverTokens = serverTokens {
+                            if let serverTokens = namoServerTokens {
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                                 
@@ -58,6 +58,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 
                                 /// 현재 로그인한 소셜 미디어는 카카오
                                 self.appState.socialLogin = .kakao
+                                
+                                KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
                                 
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
@@ -81,22 +83,24 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         
                         print("카카오 토큰(웹) 받아오기 성공")
                         
-                        guard let accessToken = oauthToken?.accessToken else { return }
+                        guard let kakaoAccessToken = oauthToken?.accessToken else { return }
                         
-                        print("카카오 accessToken: \(accessToken)")
+                        print("카카오 accessToken: \(kakaoAccessToken)")
                         
-                        let socialAccessToken = SocialAccessToken(accessToken: accessToken)
+                        let socialAccessToken = SocialAccessToken(accessToken: kakaoAccessToken)
                         
                         Task {
                             
-                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
+                            let namoServerTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
                             
-                            if let serverTokens = serverTokens {
+                            if let serverTokens = namoServerTokens {
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                                 
                                 print("accessToken: \(serverTokens.accessToken)")
                                 print("refreshToken: \(serverTokens.refreshToken)")
+                                
+                                KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
                                 
                                 /// 현재 로그인한 소셜 미디어는 카카오
                                 self.appState.socialLogin = .kakao
@@ -138,6 +142,47 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+    
+    // 회원 탈퇴
+    func withdrawMember() async {
+        let socialLogin = appState.socialLogin
+        
+        switch socialLogin {
+            
+        case .kakao:
+            let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberKakako(kakaoAccessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!)
+            
+            if result?.code == 200 {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.set(false, forKey: "isLogin")
+                    self.appState.isTabbarHidden = true
+                    self.appState.currentTab = .home
+                }
+            }
+            
+        case .naver:
+            let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberNaver(naverAccessToken: KeyChainManager.readItem(key: "naverAccessToken")!)
+            
+            if result?.code == 200 {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.set(false, forKey: "isLogin")
+                    self.appState.isTabbarHidden = true
+                    self.appState.currentTab = .home
+                }
+            }
+            
+        case .apple:
+            let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!)
+            
+            if result?.code == 200 {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.set(false, forKey: "isLogin")
+                    self.appState.isTabbarHidden = true
+                    self.appState.currentTab = .home
+                }
+            }
+        }
     }
     
     // 로그아웃
@@ -195,16 +240,18 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         
         print("네이버 로그인 성공")
         
-        let socialAccessToken = SocialAccessToken(
-            accessToken: NaverThirdPartyLoginConnection.getSharedInstance().accessToken)
+        let naverAccessToken = NaverThirdPartyLoginConnection.getSharedInstance().accessToken ?? ""
         
-        print("네이버 AccessToken: \(socialAccessToken)")
+//        let naverAccessToken = SocialAccessToken(
+//            accessToken: NaverThirdPartyLoginConnection.getSharedInstance().accessToken)
+        
+        print("네이버 AccessToken: \(naverAccessToken)")
         
         Task {
             
-            let serverTokens = await authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.naver)
+            let namoServerTokens = await authRepository.getServerToken(socialAccessToken: SocialAccessToken(accessToken: naverAccessToken), social: SocialType.naver)
             
-            if let serverTokens = serverTokens {
+            if let serverTokens = namoServerTokens {
                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                 
@@ -216,6 +263,8 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     self.appState.isTabbarHidden = false
                 }
+                
+                KeyChainManager.addItem(key: "naverAccessToken", value: naverAccessToken)
                 
                 /// 현재 로그인한 소셜 미디어는 네이버
                 self.appState.socialLogin = .naver
@@ -248,6 +297,8 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {return}
         
         let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)!
+        
+        let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)!
         
         print("identityToken: \(identityToken)")
         
@@ -286,6 +337,8 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     self.appState.isTabbarHidden = false
                 }
+                
+                KeyChainManager.addItem(key: "appleAuthorizationCode", value: authorizationCode)
                 
                 /// 현재 로그인한 소셜 미디어는 애플
                 self.appState.socialLogin = .apple
