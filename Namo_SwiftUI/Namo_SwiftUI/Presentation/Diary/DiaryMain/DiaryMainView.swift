@@ -6,23 +6,28 @@
 //
 
 import SwiftUI
+
 import Factory
+import Kingfisher
 
 struct DiaryMainView: View {
+    @EnvironmentObject var diaryState: DiaryState
     @Injected(\.appState) private var appState
+    @Injected(\.diaryInteractor) var diaryInteractor
     
     @State var currentDate: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
-    
     @State var showDatePicker: Bool = false
     @State var pickerCurrentYear: Int = Date().toYMD().year
     @State var pickerCurrentMonth: Int = Date().toYMD().month
+    var prevDate: Int = 0
     
-    @State var dummyDiary = [DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
-                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다."),
-                             DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
-                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에")]
-    @State var dummyGroupDiary = [DiaryItem(backgroundColor: .pink, scheduleName: "데모데이",
-                                            content: "앱 런칭 데모데이를 진행했다. 참여진 분들과 피드백도 주고 받고, 무엇보다 우리 팀이 열심히 제작한 나모 앱을 누군가에게 보여줄 수 있다는 점이 뿌듯했다 ! 부스 정리하고 회식까지 하니 정말 다 끝난느낌...dfsdfdfdfsdfsdfadsffs")]
+    //    @State var dummyDiary = [DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
+    //                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다."),
+    //                             DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
+    //                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에")]
+    //    @State var dummyGroupDiary = [DiaryItemView(backgroundColor: .pink, scheduleName: "데모데이", content: "앱 런칭 데모데이를 진행했다. 참여진 분들과 피드백도 주고 받고, 무엇보다 우리 팀이 열심히 제작한 나모 앱을 누군가에게 보여줄 수 있다는 점이 뿌듯했다 ! 부스 정리하고 회식까지 하니 정말 다 끝난느낌...dfsdfdfdfsdfsdfadsffs")]
+    
+    
     
     // 개인 / 모임 토글
     private var toggleView: some View {
@@ -53,44 +58,48 @@ struct DiaryMainView: View {
     }
     
     var body: some View {
-        ScrollView {
-            ZStack {
-                VStack {
-                    // 헤더
-                    HStack {
-                        Button {
-                            showDatePicker = true
-                        } label: {
-                            HStack {
-                                Text(currentDate)
-                                    .font(.pretendard(.bold, size: 22))
-                                
-                                Image(.icChevronBottomBlack)
-                            }
+        ZStack {
+            VStack {
+                // 헤더
+                HStack {
+                    Button {
+                        showDatePicker = true
+                    } label: {
+                        HStack {
+                            Text(currentDate)
+                                .font(.pretendard(.bold, size: 22))
+                            
+                            Image(.icChevronBottomBlack)
                         }
-                        .foregroundColor(.black)
-                        
-                        Spacer()
-                        
-                        toggleView
                     }
-                    .padding(.leading, 20)
-                    .padding(.trailing, 20)
+                    .foregroundColor(.black)
                     
+                    Spacer()
+                    
+                    toggleView
+                }
+                .padding(.leading, 20)
+                .padding(.trailing, 20)
+                
+                ScrollView {
                     // 기록 목록
-                    if appState.isPersonalDiary ? dummyDiary.isEmpty : dummyGroupDiary.isEmpty {
-                        Text("기록이 없습니다. 기록을 추가해 보세요!")
-                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
-                            .padding(.top, 24)
-                    } else {
-                        VStack(spacing: 20) {
-                            ForEach(appState.isPersonalDiary ? dummyDiary : dummyGroupDiary) { diary in
-                                DiaryDateItem()
-                                diary
+                    //                    if appState.isPersonalDiary {
+                    //                        Text("기록이 없습니다. 기록을 추가해 보세요!")
+                    //                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
+                    //                            .padding(.top, 24)
+                    //                    } else {
+                    VStack(spacing: 20) {
+                        ForEach(diaryState.monthDiaries, id: \.scheduleId) { diary in
+                            // 앞의 기록과 날짜가 다를 때만 날짜 뷰를 추가해야 함
+                            // 이 방법이 최선인가?
+                            if prevDate != diary.startDate {
+                                DiaryDateItemView(startDate: diary.startDate)
                             }
+                            DiaryItemView(backgroundColorId: diary.color, scheduleName: diary.name, content: diary.contents, urls: diary.urls ?? [])
                         }
-                        .fixedSize(horizontal: false, vertical: true)
                     }
+                    .fixedSize(horizontal: false, vertical: true)
+                    //                    }
                     
                     // TODO: - 추후 일정 화면에서 연결해야 함
                     NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
@@ -102,42 +111,51 @@ struct DiaryMainView: View {
                     
                     Spacer()
                 } // VStack
-                
-                if showDatePicker {
-                    NamoAlertView(
-                        showAlert: $showDatePicker,
-                        content: AnyView(
-                            HStack(spacing: 0) {
-                                Picker("", selection: $pickerCurrentYear) {
-                                    ForEach(2000...2099, id: \.self) {
-                                        Text("\(String($0))년")
-                                            .font(.pretendard(.regular, size: 23))
-                                    }
+            }
+            
+            if showDatePicker {
+                NamoAlertView(
+                    showAlert: $showDatePicker,
+                    content: AnyView(
+                        HStack(spacing: 0) {
+                            Picker("", selection: $pickerCurrentYear) {
+                                ForEach(2000...2099, id: \.self) {
+                                    Text("\(String($0))년")
+                                        .font(.pretendard(.regular, size: 23))
                                 }
-                                .pickerStyle(.inline)
-                                
-                                Picker("", selection: $pickerCurrentMonth) {
-                                    ForEach(1...12, id: \.self) {
-                                        Text("\(String($0))월")
-                                            .font(.pretendard(.regular, size: 23))
-                                    }
-                                }
-                                .pickerStyle(.inline)
                             }
-                                .frame(height: 154)
-                        ),
-                        leftButtonTitle: "취소",
-                        leftButtonAction: {
-                            pickerCurrentYear = Date().toYMD().year
-                            pickerCurrentMonth = Date().toYMD().month
-                        },
-                        rightButtonTitle: "확인",
-                        rightButtonAction: {
-                            currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
+                            .pickerStyle(.inline)
+                            
+                            Picker("", selection: $pickerCurrentMonth) {
+                                ForEach(1...12, id: \.self) {
+                                    Text("\(String($0))월")
+                                        .font(.pretendard(.regular, size: 23))
+                                }
+                            }
+                            .pickerStyle(.inline)
                         }
-                    )
-                }
-            } // ZStack
+                            .frame(height: 154)
+                    ),
+                    leftButtonTitle: "취소",
+                    leftButtonAction: {
+                        pickerCurrentYear = Date().toYMD().year
+                        pickerCurrentMonth = Date().toYMD().month
+                    },
+                    rightButtonTitle: "확인",
+                    rightButtonAction: {
+                        currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
+                        Task {
+                            // TODO: - 페이징 처리
+                            // TODO: - Date가 바뀔 때마다 하고 싶은데 여기 넣는 게 최선인가...
+                            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: 0, size: 3))
+                        }
+                    }
+                )
+            }
+        } // ZStack
+        .task {
+            // TODO: - 페이징 처리
+            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: 0, size: 3))
         }
     }
 }
@@ -150,13 +168,21 @@ struct ScheduleInfo: Hashable {
 }
 
 // 다이어리 날짜 아이템
-struct DiaryDateItem: View {
+struct DiaryDateItemView: View {
+    let dateFormatter = DateFormatter()
+    let startDate: Int
+    
+    init(startDate: Int) {
+        self.startDate = startDate
+        self.dateFormatter.dateFormat = "yyyy.MM.dd"
+    }
+    
     var body: some View {
         HStack(spacing: 18) {
             Rectangle()
                 .fill(.mainText)
                 .frame(height: 1)
-            Text("2024.02.25")
+            Text(dateFormatter.string(from: Date(timeIntervalSince1970: Double(startDate))))
                 .font(.pretendard(.bold, size: 15))
                 .foregroundStyle(.mainText)
             Rectangle()
@@ -171,13 +197,14 @@ struct DiaryDateItem: View {
 }
 
 // 다이어리 아이템
-struct DiaryItem: View, Identifiable {
+struct DiaryItemView: View {
     @EnvironmentObject var appState: AppState
-
-    let id = UUID()
-    let backgroundColor: Color
-    let scheduleName: String
-    let content: String
+    @Injected(\.categoryInteractor) var categoryInteractor
+    
+    var backgroundColorId: Int
+    var scheduleName: String
+    var content: String
+    var urls: [String]
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -186,7 +213,7 @@ struct DiaryItem: View, Identifiable {
                 .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
             
             Rectangle()
-                .fill(backgroundColor)
+                .fill(categoryInteractor.getColorWithPaletteId(id: backgroundColorId))
                 .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
                 .frame(width: 10)
             
@@ -225,18 +252,17 @@ struct DiaryItem: View, Identifiable {
                         .foregroundStyle(.mainText)
                     
                     // 사진 목록
-                    // TODO: - 사진이 없으면 없애야 됨
-                    HStack(alignment: .top, spacing: 10) {
-                        Image(.dummy)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
-                            .frame(width: 90, height: 90)
-                        Image(.dummy)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
-                            .frame(width: 90, height: 90)
+                    // TODO: - 이미지 있는 기록이 잘 뜨는지 테스트 못 해봄
+                    if !urls.isEmpty {
+                        HStack(alignment: .top, spacing: 10) {
+                            ForEach(urls, id: \.self) { url in
+                                KFImage(URL(string: url))
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 90, height: 90)
+                                    .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+                            }
+                        }
                     }
                 }
             }

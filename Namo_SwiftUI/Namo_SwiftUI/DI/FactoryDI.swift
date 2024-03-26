@@ -28,6 +28,11 @@ extension Container {
 			.singleton
 	}
     
+    var diaryState: Factory<DiaryState> {
+        self { DiaryState() }
+            .singleton
+    }
+    
     // 프로토콜 타입 지정 후 실제 구현체를 넣어준다는 의미입니다.
     var authInteractor: Factory<AuthInteractor> {
         self { APIAuthInteractorImpl() }
@@ -38,36 +43,36 @@ extension Container {
         self { APIAuthRepositoryImpl() }
             .singleton
     }
-	
-	var scheduleInteractor: Factory<ScheduleInteractor> {
-		self { ScheduleInteractorImpl() }
-			.singleton
-	}
-	
-	var scheduleRepository: Factory<ScheduleRepository> {
-		self { ScheduleRepositoryImpl() }
-			.singleton
-	}
-	
-	var categoryInteractor: Factory<CategoryInteractor> {
-		self { CategoryInteractorImpl() }
-			.singleton
-	}
-	
-	var categoryRepository: Factory<CategoryRepository> {
-		self { CategoryRepositoryImpl() }
-			.singleton
-	}
-	
-	var moimInteractor: Factory<MoimInteractor> {
-		self { MoimInteractorImpl() }
-			.singleton
-	}
-	
-	var moimRepository: Factory<MoimRepository> {
-		self { MoimRepositoryImpl() }
-			.singleton
-	}
+    
+    var scheduleInteractor: Factory<ScheduleInteractor> {
+        self { ScheduleInteractorImpl() }
+            .singleton
+    }
+    
+    var scheduleRepository: Factory<ScheduleRepository> {
+        self { ScheduleRepositoryImpl() }
+            .singleton
+    }
+    
+    var categoryInteractor: Factory<CategoryInteractor> {
+        self { CategoryInteractorImpl() }
+            .singleton
+    }
+    
+    var categoryRepository: Factory<CategoryRepository> {
+        self { CategoryRepositoryImpl() }
+            .singleton
+    }
+    
+    var moimInteractor: Factory<MoimInteractor> {
+        self { MoimInteractorImpl() }
+            .singleton
+    }
+    
+    var moimRepository: Factory<MoimRepository> {
+        self { MoimRepositoryImpl() }
+            .singleton
+    }
     
     var placeInteractor: Factory<PlaceInteractor> {
         self { PlaceInteractorImpl() }
@@ -76,6 +81,16 @@ extension Container {
     
     var placeRepository: Factory<PlaceRepository> {
         self { PlaceRepositoryImpl() }
+            .singleton
+    }
+    
+    var diaryInteractor: Factory<DiaryInteractor> {
+        self { DiaryInteractorImpl() }
+            .singleton
+    }
+    
+    var diaryRepository: Factory<DiaryRepository> {
+        self { DiaryRepositoryImpl() }
             .singleton
     }
 }

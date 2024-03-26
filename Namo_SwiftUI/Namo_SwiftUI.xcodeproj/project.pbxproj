@@ -142,6 +142,12 @@
 		A22F63512B96E68900BC39A2 /* BlackBorderRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */; };
 		A22F63552B96FC1000BC39A2 /* EditSaveDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */; };
 		A24F32432BA4103700014E06 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32422BA4103700014E06 /* DismissButton.swift */; };
+		A24F32582BA56F3500014E06 /* DiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32572BA56F3500014E06 /* DiaryDTO.swift */; };
+		A24F325B2BA56F7100014E06 /* DiaryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F325A2BA56F7100014E06 /* DiaryEndPoint.swift */; };
+		A24F325E2BA5710900014E06 /* DiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F325D2BA5710900014E06 /* DiaryRepository.swift */; };
+		A24F32602BA5713100014E06 /* DiaryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F325F2BA5713100014E06 /* DiaryRepositoryImpl.swift */; };
+		A24F32632BA5717C00014E06 /* DiaryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32622BA5717C00014E06 /* DiaryInteractor.swift */; };
+		A24F32652BA5718E00014E06 /* DiaryInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32642BA5718E00014E06 /* DiaryInteractorImpl.swift */; };
 		A27CAD4B2B9F082B00E4E8EF /* MoimPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */; };
 /* End PBXBuildFile section */
 
@@ -271,6 +277,12 @@
 		A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBorderRoundedView.swift; sourceTree = "<group>"; };
 		A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSaveDiaryView.swift; sourceTree = "<group>"; };
 		A24F32422BA4103700014E06 /* DismissButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		A24F32572BA56F3500014E06 /* DiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDTO.swift; sourceTree = "<group>"; };
+		A24F325A2BA56F7100014E06 /* DiaryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEndPoint.swift; sourceTree = "<group>"; };
+		A24F325D2BA5710900014E06 /* DiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepository.swift; sourceTree = "<group>"; };
+		A24F325F2BA5713100014E06 /* DiaryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepositoryImpl.swift; sourceTree = "<group>"; };
+		A24F32622BA5717C00014E06 /* DiaryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryInteractor.swift; sourceTree = "<group>"; };
+		A24F32642BA5718E00014E06 /* DiaryInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryInteractorImpl.swift; sourceTree = "<group>"; };
 		A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoimPlaceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -411,6 +423,7 @@
 		5012A9DC2B59399600544AB0 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				A24F325C2BA570EE00014E06 /* Diary */,
 				889EE0DF2B888EAE00F2FFB3 /* Place */,
 				507C84D32B6F378D00147C60 /* Auth */,
 				507C84D22B6F378800147C60 /* Schedule */,
@@ -628,6 +641,7 @@
 		507C84C02B6F346200147C60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				A24F32612BA5714E00014E06 /* Diary */,
 				88EFE45E2B87C75A0085826B /* Place */,
 				507C84C42B6F34E200147C60 /* Auth */,
 				507C84C32B6F34DA00147C60 /* Schedule */,
@@ -785,6 +799,7 @@
 				2CFE00232B70A6EB0054C31B /* ScheduleDTO.swift */,
 				2CF445092B78E3C700A8E514 /* CategoryDTO.swift */,
 				2CF445192B7FA0A200A8E514 /* MoimDTO.swift */,
+				A24F32572BA56F3500014E06 /* DiaryDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -792,6 +807,7 @@
 		8879A7E22B69280A00794475 /* EndPoint */ = {
 			isa = PBXGroup;
 			children = (
+				A24F32592BA56F5C00014E06 /* Diary */,
 				2CF445222B80548C00A8E514 /* Moim */,
 				2CF445212B80548300A8E514 /* Schedule */,
 				889EE0E42B88914D00F2FFB3 /* Place */,
@@ -884,6 +900,32 @@
 				88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */,
 			);
 			path = Place;
+			sourceTree = "<group>";
+		};
+		A24F32592BA56F5C00014E06 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				A24F325A2BA56F7100014E06 /* DiaryEndPoint.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		A24F325C2BA570EE00014E06 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				A24F325D2BA5710900014E06 /* DiaryRepository.swift */,
+				A24F325F2BA5713100014E06 /* DiaryRepositoryImpl.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		A24F32612BA5714E00014E06 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				A24F32622BA5717C00014E06 /* DiaryInteractor.swift */,
+				A24F32642BA5718E00014E06 /* DiaryInteractorImpl.swift */,
+			);
+			path = Diary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -994,10 +1036,13 @@
 				A22F63472B96CAD400BC39A2 /* DatePlaceInfoView.swift in Sources */,
 				2CFE00242B70A6EB0054C31B /* ScheduleDTO.swift in Sources */,
 				2CF445282B87628A00A8E514 /* CalendarScheduleDetailItem.swift in Sources */,
+				A24F32602BA5713100014E06 /* DiaryRepositoryImpl.swift in Sources */,
+				A24F32582BA56F3500014E06 /* DiaryDTO.swift in Sources */,
 				5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */,
 				A22F634B2B96D31800BC39A2 /* EditMoimDiaryView.swift in Sources */,
 				889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */,
 				2CFE00552B73658A0054C31B /* Schedule.swift in Sources */,
+				A24F325B2BA56F7100014E06 /* DiaryEndPoint.swift in Sources */,
 				88A7EF2B2B6E89B400E47C8B /* postPetInfoDTO.swift in Sources */,
 				2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */,
 				88A7EF242B6E896B00E47C8B /* Example_PetRepositoryImpl.swift in Sources */,
@@ -1032,6 +1077,7 @@
 				50299F2A2BA14843007CCDB7 /* CategoryEditView.swift in Sources */,
 				50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */,
 				8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */,
+				A24F32632BA5717C00014E06 /* DiaryInteractor.swift in Sources */,
 				8870C8572B7766F8001D083B /* ToDoSelectPlaceView.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
 				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
@@ -1059,6 +1105,7 @@
 				A22F63432B8B31FC00BC39A2 /* EditDiaryView.swift in Sources */,
 				507C84BF2B6F345E00147C60 /* AppState.swift in Sources */,
 				507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */,
+				A24F32652BA5718E00014E06 /* DiaryInteractorImpl.swift in Sources */,
 				A22F63552B96FC1000BC39A2 /* EditSaveDiaryView.swift in Sources */,
 				2CF445262B83516400A8E514 /* GroupCalendarView.swift in Sources */,
 				88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */,
@@ -1080,6 +1127,7 @@
 				50CFD34D2BA0E32D0033C0ED /* CategorySettingView.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,
 				889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */,
+				A24F325E2BA5710900014E06 /* DiaryRepository.swift in Sources */,
 				88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */,
 				2CF445242B8054A000A8E514 /* MoimEndPoint.swift in Sources */,
 				5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */,

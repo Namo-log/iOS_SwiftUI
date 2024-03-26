@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import Factory
 
 // 개인 / 모임 기록 추가 및 수정 화면
 struct EditDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var diaryState: DiaryState
+    @Injected(\.diaryInteractor) var diaryInteractor
     
     let info: ScheduleInfo
     
@@ -62,7 +65,7 @@ struct EditDiaryView: View {
                             .lineLimit(7)
                             .onChange(of: memo) { res in
                                 typedCharacters = memo.count
-                                memo = String(memo.prefix(characterLimit))
+                                diaryState.currentDiary.contents = String(memo.prefix(characterLimit))
                             }
                     } // ZStack
                     .frame(height: 150)
@@ -121,8 +124,11 @@ struct EditDiaryView: View {
                     leftButtonTitle: "취소",
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
-                        print("기록 삭제")
-                        self.presentationMode.wrappedValue.dismiss()
+                        Task {
+                            // TODO: - diaryId 값 연결
+                            let result = await diaryInteractor.deleteDiary(diaryId: 0)
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
                     }
             }
         } // ZStack

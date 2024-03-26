@@ -36,6 +36,7 @@ final class APIManager {
 		do {
 			let request = await self.requestData(endPoint: endPoint)
 			result = try request.result.get()
+            print(result)
 		} catch {
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil

@@ -6,15 +6,28 @@
 //
 
 import SwiftUI
+import Factory
 
 // 기록 수정 완료 버튼 또는 기록 저장 버튼
 struct EditSaveDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var diaryState: DiaryState
+    @Injected(\.diaryInteractor) var diaryInteractor
+    @State var pickedImages: [Data?] = []
     
     var body: some View {
         Button {
             print(appState.isEditingDiary ? "기록 수정" : "기록 저장")
+            if appState.isEditingDiary {
+                Task {
+//                    await diaryInteractor.changeDiary(scheduleId: "0", content: diaryState.currentDiary.contents, images: diaryState.currentDiary.urls)
+                }
+            } else {
+                Task {
+                    await diaryInteractor.createDiary(scheduleId: "1", content: diaryState.currentDiary.contents, images: pickedImages)
+                }
+            }
             self.presentationMode.wrappedValue.dismiss()
         } label: {
             ZStack() {
