@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+import Factory
+
 // 날짜와 장소 정보 뷰
 struct DatePlaceInfoView: View {
-    var date: String
+    @Injected(\.diaryInteractor) var diaryInteractor
+    
+    var date: Date
     var place: String
     
     var body: some View {
@@ -21,10 +25,10 @@ struct DatePlaceInfoView: View {
                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15), radius: 7)
                 
                 VStack(alignment: .center, spacing: 0) {
-                    Text("JUNE")
+                    Text(diaryInteractor.getMonthEngString(date: date) ?? "")
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.mainText)
-                    Text("28")
+                    Text(date.toDD())
                         .font(.pretendard(.bold, size: 36))
                         .foregroundStyle(.mainText)
                 }
@@ -41,7 +45,7 @@ struct DatePlaceInfoView: View {
             .padding(.leading, 25)
             
             VStack(alignment: .leading, spacing: 10) {
-                Text(date)
+                Text(date.toYMDEHM())
                     .font(.pretendard(.light, size: 15))
                     .foregroundStyle(.mainText)
                 Text(place)
@@ -51,8 +55,4 @@ struct DatePlaceInfoView: View {
             .padding(.leading, 12)
         } // HStack
     }
-}
-
-#Preview {
-    DatePlaceInfoView(date: "2023.03.05 (화)", place: "비전타워")
 }

@@ -28,6 +28,21 @@ struct DiaryInteractorImpl: DiaryInteractor {
         }
     }
     
+    /// Date를 받아서 해당 월을 String 값으로 바꿔줌
+    /// ex) 06 -> "JUNE"
+    func getMonthEngString(date: Date) -> String? {
+        // Date 객체에서 월만 문자열로 추출
+        let monthString = date.toMM()
+        
+        // 월 번호를 월 이름으로 변환
+        if let monthNumber = Int(monthString), monthNumber >= 1 && monthNumber <= 12 {
+            let monthName = DateFormatter().shortMonthSymbols[monthNumber - 1].uppercased()
+            return monthName
+        }
+        
+        return nil
+    }
+    
     /// 기록 변경
     func changeDiary(scheduleId: String, content: String, images: [Data?]) async -> Bool {
         return await diaryRepository.changeDiary(scheduleId: scheduleId, content: content, images: images)

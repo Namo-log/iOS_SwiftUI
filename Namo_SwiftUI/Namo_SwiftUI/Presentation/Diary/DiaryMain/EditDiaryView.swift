@@ -21,7 +21,7 @@ struct EditDiaryView: View {
     @State var memo = ""
     @State var typedCharacters = 0
     @State var characterLimit = 200
-    
+    // diaryInteractor.createDiary(scheduleId: schedule.scheduleId, content: s, images: <#T##[Data?]#>)
     var body: some View {
         ZStack() {
             VStack(alignment: .center) {
@@ -133,8 +133,4 @@ struct EditDiaryView: View {
             }
         } // ZStack
     }
-}
-
-#Preview {
-    EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
 }

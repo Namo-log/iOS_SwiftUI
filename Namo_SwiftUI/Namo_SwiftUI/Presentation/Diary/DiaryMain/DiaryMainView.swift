@@ -101,14 +101,6 @@ struct DiaryMainView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     //                    }
                     
-                    // TODO: - 추후 일정 화면에서 연결해야 함
-                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
-                        Text("기록 추가 임시 버튼")
-                    }
-                    .simultaneousGesture(TapGesture().onEnded {
-                        appState.isEditingDiary = false
-                    })
-                    
                     Spacer()
                 } // VStack
             }
@@ -162,27 +154,21 @@ struct DiaryMainView: View {
 
 struct ScheduleInfo: Hashable {
     let scheduleName: String
-    let date: String
+    let date: Date
     let place: String
     let participants: Int = 6
 }
 
 // 다이어리 날짜 아이템
 struct DiaryDateItemView: View {
-    let dateFormatter = DateFormatter()
     let startDate: Int
-    
-    init(startDate: Int) {
-        self.startDate = startDate
-        self.dateFormatter.dateFormat = "yyyy.MM.dd"
-    }
     
     var body: some View {
         HStack(spacing: 18) {
             Rectangle()
                 .fill(.mainText)
                 .frame(height: 1)
-            Text(dateFormatter.string(from: Date(timeIntervalSince1970: Double(startDate))))
+            Text(Date(timeIntervalSince1970: Double(startDate)).toYMDString())
                 .font(.pretendard(.bold, size: 15))
                 .foregroundStyle(.mainText)
             Rectangle()
@@ -228,7 +214,7 @@ struct DiaryItemView: View {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))) {
+                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: Date(), place: "가천대 AI관 404호"))) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()

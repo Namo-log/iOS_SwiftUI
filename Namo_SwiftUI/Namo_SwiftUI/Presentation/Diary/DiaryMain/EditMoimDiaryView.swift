@@ -250,7 +250,3 @@ struct EditMoimDiaryView: View {
         .ignoresSafeArea(edges: .bottom)
     }
 }
-
-#Preview {
-    EditMoimDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
-}

@@ -19,7 +19,6 @@ struct CalendarScheduleDetailItem: View {
 	
 	@Binding var isToDoSheetPresented: Bool
 	
-	
 	var body: some View {
 		if let paletteId = appState.categoryPalette[schedule.categoryId] {
 			HStack(spacing: 15) {
@@ -38,13 +37,16 @@ struct CalendarScheduleDetailItem: View {
 				}
 				
 				Spacer()
-				
-				Button(action: {}, label: {
-					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
-						.resizable()
-						.frame(width: 34, height: 34)
-						.padding(.trailing, 11)
-				})
+                
+                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName))) {
+                    Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+                        .resizable()
+                        .frame(width: 34, height: 34)
+                        .padding(.trailing, 11)
+                }
+                .simultaneousGesture(TapGesture().onEnded {
+                    appState.isEditingDiary = false
+                })
 				
 			}
 			.frame(width: screenWidth-50, height: 55)
