@@ -14,15 +14,20 @@ struct DiaryInteractorImpl: DiaryInteractor {
     @Injected(\.diaryState) private var diaryState
     
     /// 기록 생성
-    func createDiary(scheduleId: String, content: String, images: [Data?]) async {
+    func createDiary(scheduleId: Int, content: String, images: [Data?]) async {
+        print("기록 생성 요청")
+        print(scheduleId)
+        print(content)
+        print(images)
         let result = await diaryRepository.createDiary(scheduleId: scheduleId, content: content, images: images)
-        print("생성된 기록 id : \(result?.scheduleIdx ?? -1)")
+        print("scheduleId : \(scheduleId)")
     }
     
     /// 월간 기록 조회
     func getMonthDiary(request: GetDiaryRequestDTO) async {
         let diaries = await diaryRepository.getMonthDiary(request: request)?.content ?? []
         print("월간 기록 조회")
+        print(diaries)
         DispatchQueue.main.async {
             diaryState.monthDiaries = diaries
         }
@@ -44,7 +49,7 @@ struct DiaryInteractorImpl: DiaryInteractor {
     }
     
     /// 기록 변경
-    func changeDiary(scheduleId: String, content: String, images: [Data?]) async -> Bool {
+    func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool {
         return await diaryRepository.changeDiary(scheduleId: scheduleId, content: content, images: images)
     }
     

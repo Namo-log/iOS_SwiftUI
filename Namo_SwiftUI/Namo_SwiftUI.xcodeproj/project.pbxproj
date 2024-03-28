@@ -136,11 +136,9 @@
 		88EFE4622B87C7780085826B /* PlaceInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */; };
 		A22F63432B8B31FC00BC39A2 /* EditDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63422B8B31FC00BC39A2 /* EditDiaryView.swift */; };
 		A22F63472B96CAD400BC39A2 /* DatePlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */; };
-		A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */; };
 		A22F634B2B96D31800BC39A2 /* EditMoimDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634A2B96D31800BC39A2 /* EditMoimDiaryView.swift */; };
 		A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F634E2B96D85900BC39A2 /* TrashView.swift */; };
 		A22F63512B96E68900BC39A2 /* BlackBorderRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */; };
-		A22F63552B96FC1000BC39A2 /* EditSaveDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */; };
 		A24F32432BA4103700014E06 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32422BA4103700014E06 /* DismissButton.swift */; };
 		A24F32582BA56F3500014E06 /* DiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32572BA56F3500014E06 /* DiaryDTO.swift */; };
 		A24F325B2BA56F7100014E06 /* DiaryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F325A2BA56F7100014E06 /* DiaryEndPoint.swift */; };
@@ -271,11 +269,9 @@
 		88EFE4612B87C7780085826B /* PlaceInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInteractorImpl.swift; sourceTree = "<group>"; };
 		A22F63422B8B31FC00BC39A2 /* EditDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryView.swift; sourceTree = "<group>"; };
 		A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePlaceInfoView.swift; sourceTree = "<group>"; };
-		A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerListView.swift; sourceTree = "<group>"; };
 		A22F634A2B96D31800BC39A2 /* EditMoimDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMoimDiaryView.swift; sourceTree = "<group>"; };
 		A22F634E2B96D85900BC39A2 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
 		A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBorderRoundedView.swift; sourceTree = "<group>"; };
-		A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSaveDiaryView.swift; sourceTree = "<group>"; };
 		A24F32422BA4103700014E06 /* DismissButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		A24F32572BA56F3500014E06 /* DiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDTO.swift; sourceTree = "<group>"; };
 		A24F325A2BA56F7100014E06 /* DiaryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEndPoint.swift; sourceTree = "<group>"; };
@@ -527,7 +523,6 @@
 				2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */,
 				88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */,
 				2CF445032B760A8100A8E514 /* NamoAlertView.swift */,
-				A22F63482B96CD5500BC39A2 /* PhotoPickerListView.swift */,
 				A24F32422BA4103700014E06 /* DismissButton.swift */,
 				A22F634E2B96D85900BC39A2 /* TrashView.swift */,
 				2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */,
@@ -604,7 +599,6 @@
 				5021D8E22B594044009B4AD1 /* DiaryMainView.swift */,
 				A22F63422B8B31FC00BC39A2 /* EditDiaryView.swift */,
 				A22F634A2B96D31800BC39A2 /* EditMoimDiaryView.swift */,
-				A22F63542B96FC1000BC39A2 /* EditSaveDiaryView.swift */,
 				A22F63462B96CAD400BC39A2 /* DatePlaceInfoView.swift */,
 				A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */,
 				A22F63502B96E68900BC39A2 /* BlackBorderRoundedView.swift */,
@@ -1065,7 +1059,6 @@
 				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				507C84DD2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
-				A22F63492B96CD5500BC39A2 /* PhotoPickerListView.swift in Sources */,
 				2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */,
 				504F8EA02B75CB6400ADB867 /* KeyChainManager.swift in Sources */,
 				8834AE012B67CB320024F724 /* APIManager.swift in Sources */,
@@ -1106,7 +1099,6 @@
 				507C84BF2B6F345E00147C60 /* AppState.swift in Sources */,
 				507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */,
 				A24F32652BA5718E00014E06 /* DiaryInteractorImpl.swift in Sources */,
-				A22F63552B96FC1000BC39A2 /* EditSaveDiaryView.swift in Sources */,
 				2CF445262B83516400A8E514 /* GroupCalendarView.swift in Sources */,
 				88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */,
 				88EFE4622B87C7780085826B /* PlaceInteractorImpl.swift in Sources */,

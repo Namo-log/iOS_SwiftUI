@@ -45,6 +45,6 @@ struct GetDiaryResponseDTO: Decodable {
     var last: Bool
 }
 
-struct CreateDiaryResponseDTO: Decodable {
-    let scheduleIdx: Int
+struct CreateDiaryResponseDTO: Codable {
+    let scheduleId: Int
 }

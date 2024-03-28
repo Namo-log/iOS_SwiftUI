@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+
 import Factory
+import PhotosUI
 
 // 개인 / 모임 기록 추가 및 수정 화면
 struct EditDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
+    @EnvironmentObject var scheduleState: ScheduleState
+    
     @Injected(\.diaryInteractor) var diaryInteractor
     
     let info: ScheduleInfo
@@ -21,7 +25,12 @@ struct EditDiaryView: View {
     @State var memo = ""
     @State var typedCharacters = 0
     @State var characterLimit = 200
-    // diaryInteractor.createDiary(scheduleId: schedule.scheduleId, content: s, images: <#T##[Data?]#>)
+    
+    @State var pickedImagesData: [Data?] = []
+    @State var images: [UIImage] = [] // 보여질 사진 목록
+    @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
+    let photosLimit = 3 // 선택가능한 최대 사진 개수
+    
     var body: some View {
         ZStack() {
             VStack(alignment: .center) {
@@ -80,8 +89,9 @@ struct EditDiaryView: View {
                     } // HStack
                     .padding(.top, 10)
                     
+                    // TODO: - 사진 목록 diaryState에 연결
                     // 사진 목록
-                    PhotoPickerListView()
+                    PhotoPickerListView
                 } // VStack
                 .padding(.top, 12)
                 .padding(.leading, 25)
@@ -98,7 +108,7 @@ struct EditDiaryView: View {
                 }
                 
                 // 기록 저장 또는 기록 수정 버튼
-                EditSaveDiaryView()
+                EditSaveDiaryView
             } // VStack
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
@@ -132,5 +142,77 @@ struct EditDiaryView: View {
                     }
             }
         } // ZStack
+    }
+    
+    // 기록 수정 완료 버튼 또는 기록 저장 버튼
+    private var EditSaveDiaryView: some View {
+        Button {
+            print(appState.isEditingDiary ? "기록 수정" : "기록 저장")
+            if appState.isEditingDiary {
+                Task {
+//                    await diaryInteractor.changeDiary(scheduleId: 0, content: diaryState.currentDiary.contents, images: diaryState.currentDiary.urls)
+                }
+            } else {
+                Task {
+                    print(scheduleState.currentSchedule.scheduleId ?? -1)
+                    print(diaryState.currentDiary.contents)
+                    print(pickedImagesData)
+                    await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents, images: pickedImagesData)
+                }
+            }
+            self.presentationMode.wrappedValue.dismiss()
+        } label: {
+            ZStack() {
+                Rectangle()
+                    .fill(appState.isEditingDiary ? .white : .mainOrange)
+                    .frame(height: 60 + 10) // 하단의 Safe Area 영역 칠한 거 높이 10으로 가정
+                    .shadow(color: .black.opacity(0.25), radius: 7)
+                
+                Text(appState.isEditingDiary ? "기록 수정" : "기록 저장")
+                    .font(.pretendard(.bold, size: 15))
+                    .foregroundStyle(appState.isEditingDiary ? .mainOrange : .white)
+                    .padding(.bottom, 10) // Safe Area 칠한만큼
+            }
+        }
+    }
+    
+    // 사진 선택 리스트 뷰
+    private var PhotoPickerListView: some View {
+        ScrollView(.horizontal) {
+            HStack(alignment: .top, spacing: 20) {
+                // images의 사진들을 하나씩 이미지뷰로 띄운다
+                ForEach(0..<images.count, id: \.self) { i in
+                    Image(uiImage: images[i])
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .aspectRatio(contentMode: .fill)
+                }
+                
+                // 사진 피커 -> 최대 3장까지 선택 가능
+                PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
+                    Image(.btnAddImg)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                }
+            } // HStack
+            .padding(.top, 18)
+            .onChange(of: pickedImageItems) { _ in
+                Task {
+                    // 앞서 선택된 것들은 지우고
+                    pickedImagesData.removeAll()
+                    images.removeAll()
+                    
+                    // 선택된 사진들 images에 추가
+                    for item in pickedImageItems {
+                        if let data = try? await item.loadTransferable(type: Data.self) {
+                            pickedImagesData.append(data)
+                            if let image = UIImage(data: data) {
+                                images.append(image)
+                            }
+                        }
+                    }
+                }
+            }
+        } // ScrollView
     }
 }

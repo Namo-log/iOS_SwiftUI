@@ -205,7 +205,7 @@ struct EditMoimDiaryView: View {
                     }
                 } // ScrollView
                 
-                EditSaveDiaryView()
+//                EditSaveDiaryView()
             } // VStack - center
             
             // 쓰레기통 클릭 시 Alert 띄우기

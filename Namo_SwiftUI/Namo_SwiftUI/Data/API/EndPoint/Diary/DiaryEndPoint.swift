@@ -9,9 +9,9 @@ import Alamofire
 import Foundation
 
 enum DiaryEndPoint {
-    case createDiary(scheduleId: String, content: String, images: [Data?])
+    case createDiary(scheduleId: Int, content: String, images: [Data?])
     case getMonthDiary(request: GetDiaryRequestDTO)
-    case changeDiary(scheduleId: String, content: String, images: [Data?])
+    case changeDiary(scheduleId: Int, content: String, images: [Data?])
     case deleteDiary(diaryId: Int)
 }
 
@@ -50,7 +50,7 @@ extension DiaryEndPoint: EndPoint {
         switch self {
         case .createDiary(let scheduleId, let content, let images),
              .changeDiary(let scheduleId, let content, let images):
-            let body = ["scheduleId": scheduleId, "content": content]
+            let body = ["scheduleId": scheduleId, "content": content] as [String : Any]
             return .uploadImagesWithBody(imageDatas: images, body: body)
         case .getMonthDiary(let req):
             let params = ["page": req.page, "size": req.size]

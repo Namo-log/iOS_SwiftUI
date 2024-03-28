@@ -38,13 +38,14 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
                 
-                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName))) {
+                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName))) {
                     Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)
                         .padding(.trailing, 11)
                 }
                 .simultaneousGesture(TapGesture().onEnded {
+                    scheduleInteractor.setScheduleToCurrentSchedule(schedule: schedule)
                     appState.isEditingDiary = false
                 })
 				

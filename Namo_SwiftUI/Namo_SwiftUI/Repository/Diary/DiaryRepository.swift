@@ -8,8 +8,8 @@
 import Foundation
 
 protocol DiaryRepository {
-    func createDiary(scheduleId: String, content: String, images: [Data?]) async -> CreateDiaryResponseDTO?
+    func createDiary(scheduleId: Int, content: String, images: [Data?]) async -> CreateDiaryResponseDTO?
     func getMonthDiary(request: GetDiaryRequestDTO) async -> GetDiaryResponseDTO?
-    func changeDiary(scheduleId: String, content: String, images: [Data?]) async -> Bool
+    func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool
     func deleteDiary(diaryId: Int) async -> Bool
 }

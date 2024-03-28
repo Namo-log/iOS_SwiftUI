@@ -45,7 +45,7 @@ struct MoimPlaceView: View {
                 .padding(.top, 20)
                 
                 // 사진 선택 리스트
-                PhotoPickerListView()
+//                PhotoPickerListView
             }
             .padding(.bottom, 25)
             .offset(x: dragOffset.width, y: 0)

@@ -153,6 +153,7 @@ struct DiaryMainView: View {
 }
 
 struct ScheduleInfo: Hashable {
+    let scheduleId: Int
     let scheduleName: String
     let date: Date
     let place: String
@@ -214,7 +215,7 @@ struct DiaryItemView: View {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: Date(), place: "가천대 AI관 404호"))) {
+                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: 1, scheduleName: "코딩 스터디", date: Date(), place: "가천대 AI관 404호"))) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()
