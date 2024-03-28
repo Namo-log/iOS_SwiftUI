@@ -16,20 +16,20 @@ class RealmManager {
 	private init() {
 		let configuration = Realm.Configuration(
 			// 테이블 수정 시 스키마 버전 +1
-			schemaVersion: 1,
-			   migrationBlock: { migration, oldSchemaVersion in
-				   // migration 작업
-				   // migration은 특정 테이블 또는 속성을 Create 하는 경우는 작업 안하셔도 됩니다.
-				   // 기존 테이블을 Update or Delete하는 경우만 하시면 됩니다.
-				   
-				   //				 예시
-				   //				if oldSchemaVersion < 1 {
-				   //					migration.enumerateObjects(ofType: RealmSchedule.className()) { oldObject, newObject in
-				   //						newObject!["startDate"] = String()
-				   //					}
-				   //				}
-			   }
-		   )
+			schemaVersion: 1
+//			migrationBlock: { migration, oldSchemaVersion in
+//				// migration 작업
+//				// migration은 특정 테이블 또는 속성을 Create 하는 경우는 작업 안하셔도 됩니다.
+//				// 기존 테이블을 Update or Delete하는 경우만 하시면 됩니다.
+//				
+//				//	예시
+//				if oldSchemaVersion < 1 {
+//					migration.enumerateObjects(ofType: RealmSchedule.className()) { oldObject, newObject in
+//						newObject!["startDate"] = String()
+//					}
+//				}
+//			}
+		)
 		
 		self.realm = try! Realm(configuration: configuration)
 		print("Realm path: \(realm.configuration.fileURL!)")
@@ -44,7 +44,12 @@ class RealmManager {
 	 version: 1
 	 date: 24.03.15
 	 description:
-	   - RealmSchedule 테이블 생성
+	 - RealmSchedule 테이블 생성
+	 
+	 ================================================
+	 
+	 version: 2
+	 ...
 	 
 	 ================================================
 	 
