@@ -68,12 +68,12 @@ class RealmManager {
 	}
 	
 	/// 해당 타입의 데이터를 모두 가져옵니다.
-	func readObjects<T: Object>(_ objectType: T.Type) -> [T] {
+	func getObjects<T: Object>(_ objectType: T.Type) -> [T] {
 		return Array(realm.objects(objectType))
 	}
 	
 	/// 해당 pk의 데이터를 가져옵니다.
-	func readObject<T: Object>(_ objectType: T.Type, pk: Int) -> T? {
+	func getObject<T: Object>(_ objectType: T.Type, pk: Int) -> T? {
 		return realm.object(ofType: objectType, forPrimaryKey: pk)
 	}
 	
@@ -89,9 +89,21 @@ class RealmManager {
 		}
 	}
 	
+	/// 해당 타입의 데이터를 모두 삭제합니다.
+	func deleteObjects<T: Object>(_ objectType: T.Type) {
+		do {
+			try realm.write {
+				realm.delete(realm.objects(objectType))
+			}
+		} catch {
+			// TODO: error handler로 처리
+			print("데이터 삭제 에러")
+		}
+	}
+	
 	/// 해당 데이터를 업데이트합니다.(delete and write)
 	func updateObject<T: Object>(_ object: T, pk: Int) {
-		guard let oldObject = readObject(T.self, pk: pk) else {
+		guard let oldObject = getObject(T.self, pk: pk) else {
 			// TODO: error handler로 처리
 			print("해당 데이터가 없습니다.")
 			return

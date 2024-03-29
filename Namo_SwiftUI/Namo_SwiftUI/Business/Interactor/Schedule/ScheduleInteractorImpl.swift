@@ -15,32 +15,59 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
-	let realm = RealmManager.shared
-	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
 	func setCalendar() async {
-		let data = await getSchedules()
-
-		let mappedSchedules = setSchedules(data)
-		
+		// 네트워크를 통해 데이터 가져오기
+		let schedules = await getSchedulesViaNetwork()
+		// 받아온 데이터를 realm에 저장
+		saveSchedulesToRealm(schedules)
+		// 현재달 기준+-2달 필터링
+		let startDate = Date().addingMonth(-2).startOfMonth()
+		let endDate = Date().addingMonth(2).endOfMonth()
+		let filteredSchedules = schedules.filter({ schedule in
+			return schedule.endDate <= startDate.startOfMonth() && schedule.startDate >= endDate.endOfMonth()
+		})
+		// 해당 데이터 매핑해서 state로
+		let mappedSchedules = setSchedules(filteredSchedules)
 		DispatchQueue.main.async {
+			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
 			scheduleState.calendarSchedules = mappedSchedules
 		}
 	}
 	
-	// 2: 모든 스케쥴을 get하는 API call
-	func getSchedules() async -> [Schedule] {
+	// 2: 네트워크를 통해 일정 가져오기
+	func getSchedulesViaNetwork() async -> [Schedule] {
 		if let schedules = await scheduleRepository.getAllSchedule() {
 			return schedules.map({ $0.toSchedule() })
 		} else {
 			return []
 		}
-		
 	}
 	
-	// 3: 서버에서 받아온 스케쥴들을 View의 Model로 매핑
-	func setSchedules(_ schedules: [Schedule]) -> [YearMonthDay: [CalendarSchedule]] {
-		var schedulesDict: [YearMonthDay: [CalendarSchedule]] = [:]
+	// Realm을 통해 일정 가져오기
+	func getSchedulesViaRealm() async -> [Schedule] {
+		// TODO: Realm에 저장하고 불러오도록 구현
+		return []
+	}
+	
+	// 3: 일정들을 데이터를 Realm에 저장
+	func saveSchedulesToRealm(_ schedules: [Schedule]) {
+		let realm = RealmManager.shared
+		
+		if !schedules.isEmpty {
+			// 네트워크를 통해 정상적으로 스케쥴을 불러왔다면
+			// 기존 데이터는 모두 삭제
+			realm.deleteObjects(RealmSchedule.self)
+		}
+
+		schedules.forEach({
+			realm.writeObject($0.toRealmSchedule())
+		})
+	}
+	
+	// 4: 서버에서 받아온 스케쥴들을 View의 Model로 매핑
+	func setSchedules(_ schedules: [Schedule], calculatedSchedules: [YearMonthDay: [CalendarSchedule]] = [:]) -> [YearMonthDay: [CalendarSchedule]] {
+		var schedulesDict: [YearMonthDay: [CalendarSchedule]] = calculatedSchedules
 		
 		// 서버에서 받아온 스케쥴을 돌면서
 		schedules.forEach { schedule in
@@ -97,6 +124,46 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 			}  //: days forEach
 		} //: schedules forEach
 		return schedulesDict
+	}
+	
+	// 캘린더를 이전으로(과거) 스크롤하는 경우
+	func calendarScrollForward(_ to: YearMonth) {
+		print(to)
+		// 스크롤되는 달 -2달을 포함하지 않았다면 새로 계산해야함
+		if !scheduleState.calculatedYearMonth.contains(to.addMonth(value: -2)) {
+			print("dont have \(to.addMonth(value: -2))")
+			calculateSchedules(to)
+		}
+	}
+	
+	// 캘린더를 이후로(미래) 스크롤하는 경우
+	func calendarScrollBackward(_ to: YearMonth) {
+		print(to)
+		// 스크롤되는 달 +2달을 포함하지 않았다면 그 달 계산
+		if !scheduleState.calculatedYearMonth.contains(to.addMonth(value: 2)) {
+			//TODO: 전체 재계산이 아닌 페이징으로 변경
+			print("dont have \(to.addMonth(value: 2))")
+			calculateSchedules(to)
+			
+		}
+	}
+	
+	func calculateSchedules(_ yearMonth: YearMonth) {
+		let date = YearMonthDay(year: yearMonth.year, month: yearMonth.month, day: 1).toDate()
+		let startDate = date.addingMonth(-2).startOfMonth()
+		let endDate = date.addingMonth(2).endOfMonth()
+		
+		let realm = RealmManager.shared
+		let schedules = realm.getObjects(RealmSchedule.self).filter({ schedule in
+			return schedule.endDate <= startDate.startOfMonth() && schedule.startDate >= endDate.endOfMonth()
+		})
+		let mappedSchedules = setSchedules(schedules.map({$0.toSchedule()}))
+		DispatchQueue.main.async {
+			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
+			scheduleState.calendarSchedules = mappedSchedules
+			print(mappedSchedules)
+		}
+
 	}
 	
 	// 현재 스케쥴들을 확인하고, 추가될 스케쥴의 포지션을 구함
@@ -256,4 +323,19 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
             )
         }
     }
+	
+	/// 두 Date사이의 모든 YearMonth를 구합니다.
+	func yearMonthBetween(start: Date, end: Date) -> [YearMonth] {
+		var result: [YearMonth] = []
+		let calendar = Calendar.current
+		
+		var currentDate = start
+		while currentDate <= end {
+			let yearMonth = currentDate.toYM()
+			result.append(yearMonth)
+			currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate)!
+		}
+		
+		return result
+	}
 }

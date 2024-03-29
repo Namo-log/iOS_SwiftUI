@@ -66,6 +66,17 @@ struct HomeMainView: View {
 			await scheduleInteractor.setCalendar()
 			await categoryInteractor.getCategories()
 		}
+		.onChange(of: calendarController.yearMonth) { newYearMonth in
+			if calendarController.yearMonth.year <= newYearMonth.year {
+				if calendarController.yearMonth.month <= newYearMonth.month {
+					scheduleInteractor.calendarScrollBackward(newYearMonth)
+				} else {
+					scheduleInteractor.calendarScrollForward(newYearMonth)
+				}
+			} else {
+				scheduleInteractor.calendarScrollForward(newYearMonth)
+			}
+		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
             ToDoEditView()
                 .background(ClearBackground())

@@ -16,8 +16,12 @@ struct CalendarSchedule: Hashable {
 
 protocol ScheduleInteractor {
 	func setCalendar() async
-	func getSchedules() async -> [Schedule]
-	func setSchedules(_ schedules: [Schedule]) -> [YearMonthDay: [CalendarSchedule]]
+	func getSchedulesViaRealm() async -> [Schedule]
+	func getSchedulesViaNetwork() async -> [Schedule]
+	func setSchedules(_ schedules: [Schedule], calculatedSchedules: [YearMonthDay: [CalendarSchedule]]) -> [YearMonthDay: [CalendarSchedule]]
+	func calendarScrollForward(_ to: YearMonth)
+	func calendarScrollBackward(_ to: YearMonth)
+	func calculateSchedules(_ yearMonth: YearMonth)
 	func findPostion(_ schedules: [CalendarSchedule]) -> Int
 	func formatYearMonth(_ ym: YearMonth) -> String
 	func getCurrentDay() -> String
@@ -28,4 +32,5 @@ protocol ScheduleInteractor {
     func patchSchedule() async
     func deleteSchedule() async
     func setScheduleToCurrentSchedule(schedule: Schedule?)
+	func yearMonthBetween(start: Date, end: Date) -> [YearMonth]
 }

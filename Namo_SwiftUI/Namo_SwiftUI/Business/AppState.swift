@@ -22,6 +22,8 @@ class ScheduleState: ObservableObject {
 	
 	/// calendar에 보여지기 위한 스케쥴들
 	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
+	// 캘린더에 표시된(계산된) YearMonth를 저장
+	@Published var calculatedYearMonth: [YearMonth] = []
 }
 
 class MoimState: ObservableObject {
