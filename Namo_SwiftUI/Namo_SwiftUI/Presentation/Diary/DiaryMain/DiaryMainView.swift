@@ -95,7 +95,7 @@ struct DiaryMainView: View {
                             if prevDate != diary.startDate {
                                 DiaryDateItemView(startDate: diary.startDate)
                             }
-                            DiaryItemView(backgroundColorId: diary.color, scheduleName: diary.name, content: diary.contents, urls: diary.urls ?? [])
+                            DiaryItemView(diary: diary)
                         }
                     }
                     .fixedSize(horizontal: false, vertical: true)
@@ -157,7 +157,6 @@ struct ScheduleInfo: Hashable {
     let scheduleName: String
     let date: Date
     let place: String
-    let participants: Int = 6
 }
 
 // 다이어리 날짜 아이템
@@ -187,11 +186,7 @@ struct DiaryDateItemView: View {
 struct DiaryItemView: View {
     @EnvironmentObject var appState: AppState
     @Injected(\.categoryInteractor) var categoryInteractor
-    
-    var backgroundColorId: Int
-    var scheduleName: String
-    var content: String
-    var urls: [String]
+    var diary: Diary!
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -200,14 +195,14 @@ struct DiaryItemView: View {
                 .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
             
             Rectangle()
-                .fill(categoryInteractor.getColorWithPaletteId(id: backgroundColorId))
+                .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
                 .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
                 .frame(width: 10)
             
             HStack(alignment: .top, spacing: 15) {
                 // 제목과 수정 버튼
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(scheduleName)
+                    Text(diary.name)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.mainText)
                     
@@ -215,7 +210,7 @@ struct DiaryItemView: View {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: 1, scheduleName: "코딩 스터디", date: Date(), place: "가천대 AI관 404호"))) {
+                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName), memo: diary.contents)) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()
@@ -234,13 +229,13 @@ struct DiaryItemView: View {
                 
                 // 내용과 사진
                 VStack(alignment: .leading, spacing: 16) {
-                    Text(content)
+                    Text(diary.contents)
                         .font(.pretendard(.light, size: 14))
                         .foregroundStyle(.mainText)
                     
                     // 사진 목록
                     // TODO: - 이미지 있는 기록이 잘 뜨는지 테스트 못 해봄
-                    if !urls.isEmpty {
+                    if let urls = diary.urls {
                         HStack(alignment: .top, spacing: 10) {
                             ForEach(urls, id: \.self) { url in
                                 KFImage(URL(string: url))

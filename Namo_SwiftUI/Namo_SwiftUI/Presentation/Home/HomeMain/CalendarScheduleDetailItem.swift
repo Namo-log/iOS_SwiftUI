@@ -38,7 +38,7 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
                 
-                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName))) {
+                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName), memo: "")) {
                     Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)

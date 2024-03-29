@@ -22,8 +22,8 @@ final class DiaryRepositoryImpl: DiaryRepository {
         return response?.code == 200
     }
     
-    func deleteDiary(diaryId: Int) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.deleteDiary(diaryId: diaryId))
+    func deleteDiary(scheduleId: Int) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.deleteDiary(diaryId: scheduleId))
         return response?.code == 200
     }
 }

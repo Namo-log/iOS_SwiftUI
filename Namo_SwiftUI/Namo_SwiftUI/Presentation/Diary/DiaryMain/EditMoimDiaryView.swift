@@ -145,7 +145,7 @@ struct EditMoimDiaryView: View {
                         
                         // 참석자
                         HStack(alignment: .top) {
-                            Text("참석자 (\(info.participants))")
+                            Text("참석자 (5)")
                                 .font(.pretendard(.bold, size: 15))
                                 .foregroundStyle(.mainText)
                             Spacer()
@@ -160,9 +160,10 @@ struct EditMoimDiaryView: View {
                         .padding(.top, 25)
                         
                         // 참석자 동그라미 뷰
+                        // TODO: - 참석자값 어딘가에서 받아서 연결 필요
                         if showParticipants {
                             HStack(spacing: 10) {
-                                ForEach(0..<info.participants, id: \.self) { _ in
+                                ForEach(0..<5, id: \.self) { _ in
                                     Circle()
                                         .stroke(.textUnselected, lineWidth: 2)
                                         .frame(width: 42, height: 42)

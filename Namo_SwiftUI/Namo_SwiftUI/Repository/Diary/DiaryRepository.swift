@@ -11,5 +11,5 @@ protocol DiaryRepository {
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async -> CreateDiaryResponseDTO?
     func getMonthDiary(request: GetDiaryRequestDTO) async -> GetDiaryResponseDTO?
     func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool
-    func deleteDiary(diaryId: Int) async -> Bool
+    func deleteDiary(scheduleId: Int) async -> Bool
 }

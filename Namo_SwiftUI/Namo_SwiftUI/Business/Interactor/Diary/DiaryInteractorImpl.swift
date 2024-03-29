@@ -54,7 +54,7 @@ struct DiaryInteractorImpl: DiaryInteractor {
     }
     
     /// 기록 삭제
-    func deleteDiary(diaryId: Int) async -> Bool {
-        return await diaryRepository.deleteDiary(diaryId: diaryId)
+    func deleteDiary(scheduleId: Int) async -> Bool {
+        return await diaryRepository.deleteDiary(scheduleId: scheduleId)
     }
 }

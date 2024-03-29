@@ -20,9 +20,9 @@ struct EditDiaryView: View {
     @Injected(\.diaryInteractor) var diaryInteractor
     
     let info: ScheduleInfo
+    @State var memo: String
     
     @State var placeholderText: String = "메모 입력"
-    @State var memo = ""
     @State var typedCharacters = 0
     @State var characterLimit = 200
     
@@ -72,6 +72,9 @@ struct EditDiaryView: View {
                             .padding(.trailing, 16)
                             .scrollContentBackground(.hidden) // 컨텐츠 영역의 하얀 배경 제거
                             .lineLimit(7)
+                            .onAppear {
+                                typedCharacters = memo.count
+                            }
                             .onChange(of: memo) { res in
                                 typedCharacters = memo.count
                                 diaryState.currentDiary.contents = String(memo.prefix(characterLimit))
@@ -135,8 +138,7 @@ struct EditDiaryView: View {
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
                         Task {
-                            // TODO: - diaryId 값 연결
-                            let result = await diaryInteractor.deleteDiary(diaryId: 0)
+                            let result = await diaryInteractor.deleteDiary(scheduleId: info.scheduleId)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -150,7 +152,8 @@ struct EditDiaryView: View {
             print(appState.isEditingDiary ? "기록 수정" : "기록 저장")
             if appState.isEditingDiary {
                 Task {
-//                    await diaryInteractor.changeDiary(scheduleId: 0, content: diaryState.currentDiary.contents, images: diaryState.currentDiary.urls)
+                    // TODO: - 이미지 연결
+                    await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: [])
                 }
             } else {
                 Task {
