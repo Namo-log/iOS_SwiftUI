@@ -14,10 +14,14 @@ struct MoimInteractorImpl: MoimInteractor {
 	
 	// 모임 리스트 가져오기
 	func getGroups() async {
+		DispatchQueue.main.async {
+			appState.isLoading = true
+		}
 		let moims = await moimRepository.getMoimList() ?? []
 		
 		DispatchQueue.main.async {
 			moimState.moims = moims
+			appState.isLoading = false
 		}
 	}
 	

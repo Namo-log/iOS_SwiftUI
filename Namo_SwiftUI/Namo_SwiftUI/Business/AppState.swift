@@ -39,6 +39,7 @@ class MoimState: ObservableObject {
 }
 
 class AppState: ObservableObject {
+	@Published var isLoading: Bool = false
 	
 	// Tabbar
 	@Published var isTabbarHidden: Bool = false
