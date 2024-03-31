@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 enum Tab {
 	case home
@@ -16,6 +17,7 @@ enum Tab {
 
 struct NamoHome: View {
 	@EnvironmentObject var appState: AppState
+	@Injected(\.scheduleInteractor) var scheduleInteractor
 //	@State var currentTab: Tab = .home
 	
 	var body: some View {
@@ -48,6 +50,9 @@ struct NamoHome: View {
 
 			}
 			.ignoresSafeArea(edges: .bottom)
+			.task {
+				await scheduleInteractor.setCalendar()
+			}
 		}
 	}
 }

@@ -11,27 +11,19 @@ import RealmSwift
 class RealmManager {
 	static let shared = RealmManager()
 	
-	private let realm: Realm
-	
-	private init() {
+	// Realm객체 생성과 실제 트랜잭션은 같은 스레드에서 수행되어야 합니다.
+	// 따라서 Realm에선 매 트랜잭션 마다 새로운 인스턴스를 생성하는 것을 권장합니다.
+	private func getRealm() -> Realm {
 		let configuration = Realm.Configuration(
 			// 테이블 수정 시 스키마 버전 +1
 			schemaVersion: 1
-//			migrationBlock: { migration, oldSchemaVersion in
-//				// migration 작업
-//				// migration은 특정 테이블 또는 속성을 Create 하는 경우는 작업 안하셔도 됩니다.
-//				// 기존 테이블을 Update or Delete하는 경우만 하시면 됩니다.
-//				
-//				//	예시
-//				if oldSchemaVersion < 1 {
-//					migration.enumerateObjects(ofType: RealmSchedule.className()) { oldObject, newObject in
-//						newObject!["startDate"] = String()
-//					}
-//				}
-//			}
 		)
 		
-		self.realm = try! Realm(configuration: configuration)
+		return try! Realm(configuration: configuration)
+	}
+	
+	func getRealmPath() {
+		let realm = getRealm()
 		print("Realm path: \(realm.configuration.fileURL!)")
 	}
 	
@@ -57,6 +49,7 @@ class RealmManager {
 	
 	/// Realm에 해당 데이터를 저장합니다.
 	func writeObject<T: Object>(_ object: T) {
+		let realm = getRealm()
 		do {
 			try realm.write {
 				realm.add(object)
@@ -67,18 +60,36 @@ class RealmManager {
 		}
 	}
 	
+	/// Realm에 해당 데이터들을 저장합니다.
+	func writeObjects<T: Object>(_ objects: [T]) {
+		let realm = getRealm()
+		objects.forEach({ object in
+			do {
+				try realm.write {
+					realm.add(object)
+				}
+			} catch {
+				// TODO: error handler로 처리
+				print("데이터 저장 에러")
+			}
+		})
+	}
+	
 	/// 해당 타입의 데이터를 모두 가져옵니다.
 	func getObjects<T: Object>(_ objectType: T.Type) -> [T] {
+		let realm = getRealm()
 		return Array(realm.objects(objectType))
 	}
 	
 	/// 해당 pk의 데이터를 가져옵니다.
 	func getObject<T: Object>(_ objectType: T.Type, pk: Int) -> T? {
+		let realm = getRealm()
 		return realm.object(ofType: objectType, forPrimaryKey: pk)
 	}
 	
 	/// 해당 데이터를 삭제합니다.
 	func deleteObject<T: Object>(_ object: T) {
+		let realm = getRealm()
 		do {
 			try realm.write {
 				realm.delete(object)
@@ -91,6 +102,7 @@ class RealmManager {
 	
 	/// 해당 타입의 데이터를 모두 삭제합니다.
 	func deleteObjects<T: Object>(_ objectType: T.Type) {
+		let realm = getRealm()
 		do {
 			try realm.write {
 				realm.delete(realm.objects(objectType))
@@ -109,6 +121,7 @@ class RealmManager {
 			return
 		}
 		
+		let realm = getRealm()
 		do {
 			try realm.write {
 				deleteObject(oldObject)

@@ -21,6 +21,7 @@ struct HomeMainView: View {
 	@State var pickerCurrentYear: Int = Date().toYMD().year
 	@State var pickerCurrentMonth: Int = Date().toYMD().month
     @State var isToDoSheetPresented: Bool = false
+	@State var previousYearMonth: YearMonth = Date().toYM()
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 	
@@ -63,12 +64,12 @@ struct HomeMainView: View {
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
-			await scheduleInteractor.setCalendar()
+//			await scheduleInteractor.setCalendar()
 			await categoryInteractor.getCategories()
 		}
 		.onChange(of: calendarController.yearMonth) { newYearMonth in
-			if calendarController.yearMonth.year <= newYearMonth.year {
-				if calendarController.yearMonth.month <= newYearMonth.month {
+			if previousYearMonth.year <= newYearMonth.year {
+				if previousYearMonth.month <= newYearMonth.month {
 					scheduleInteractor.calendarScrollBackward(newYearMonth)
 				} else {
 					scheduleInteractor.calendarScrollForward(newYearMonth)
@@ -76,6 +77,8 @@ struct HomeMainView: View {
 			} else {
 				scheduleInteractor.calendarScrollForward(newYearMonth)
 			}
+			
+			previousYearMonth = newYearMonth
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
             ToDoEditView()
