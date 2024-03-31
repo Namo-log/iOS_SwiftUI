@@ -57,4 +57,21 @@ struct DiaryInteractorImpl: DiaryInteractor {
     func deleteDiary(scheduleId: Int) async -> Bool {
         return await diaryRepository.deleteDiary(scheduleId: scheduleId)
     }
+    
+    /// 날짜가 이전 다이어리와 달라지는 부분의 인덱스들을 반환
+    /// 기록 메인 화면에서 기록의 날짜 뷰를 띄울 때에 사용
+    func getDateIndicatorIndices(diaries: [Diary]) -> [Int] {
+        var indices: [Int] = []
+        var prev: String? = nil // 이전 다이어리의 날짜
+        
+        for idx in 0..<diaries.count {
+            let diary = diaries[idx]
+            if prev != Date(timeIntervalSince1970: Double(diary.startDate)).toYMDString() {
+                indices.append(idx) // 바뀌는 부분의 index 추가
+            }
+            prev = Date(timeIntervalSince1970: Double(diary.startDate)).toYMDString()
+        }
+        
+        return indices
+    }
 }

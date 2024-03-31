@@ -13,4 +13,5 @@ protocol DiaryInteractor {
     func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool
     func deleteDiary(scheduleId: Int) async -> Bool
     func getMonthEngString(date: Date) -> String?
+    func getDateIndicatorIndices(diaries: [Diary]) -> [Int]
 }
