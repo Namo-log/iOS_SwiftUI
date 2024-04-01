@@ -20,7 +20,7 @@ struct postScheduleRequest: Codable {
 }
 
 struct postScheduleResponse: Codable {
-	let scheduleIdx: Int
+	let scheduleId: Int
 }
 
 typealias getScheduleResponse = [ScheduleDTO]
