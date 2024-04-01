@@ -46,12 +46,6 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		}
 	}
 	
-	// Realm을 통해 일정 가져오기
-	func getSchedulesViaRealm() async -> [Schedule] {
-		// TODO: Realm에 저장하고 불러오도록 구현
-		return []
-	}
-	
 	// 3: 일정들을 데이터를 Realm에 저장
 	func saveSchedulesToRealm(_ schedules: [Schedule]) {
 		if !schedules.isEmpty {
@@ -61,9 +55,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 			// 기존 데이터는 모두 삭제
 			realm.deleteObjects(RealmSchedule.self)
 			
-			schedules.forEach({
-				realm.writeObject($0.toRealmSchedule())
-			})
+			realm.writeObjects(schedules.map({$0.toRealmSchedule()}))
 		}
 	}
 	

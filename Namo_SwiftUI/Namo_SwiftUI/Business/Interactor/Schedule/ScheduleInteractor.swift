@@ -16,7 +16,6 @@ struct CalendarSchedule: Hashable {
 
 protocol ScheduleInteractor {
 	func setCalendar(date: Date) async
-	func getSchedulesViaRealm() async -> [Schedule]
 	func getSchedulesViaNetwork() async -> [Schedule]
 	func setSchedules(_ schedules: [Schedule], calculatedSchedules: [YearMonthDay: [CalendarSchedule]]) -> [YearMonthDay: [CalendarSchedule]]
 	func calendarScrollForward(_ to: YearMonth)
