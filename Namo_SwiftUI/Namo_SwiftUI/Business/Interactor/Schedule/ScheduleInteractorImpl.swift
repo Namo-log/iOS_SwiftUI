@@ -18,7 +18,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 	let pagingCount = 4
 	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
-	func setCalendar() async {
+	func setCalendar(date: Date) async {
 		// 네트워크를 통해 데이터 가져오기
 		let schedules = await getSchedulesViaNetwork()
 		// 받아온 데이터를 realm에 저장
@@ -255,6 +255,12 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         )
         
         let result = await scheduleRepository.postSchedule(data: postSchedule)
+		if result != nil {
+			await setCalendar(date: startDate)
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
+			}
+		}
         print(String(describing: result))
     }
     

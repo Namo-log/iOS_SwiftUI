@@ -51,7 +51,7 @@ struct NamoHome: View {
 			}
 			.ignoresSafeArea(edges: .bottom)
 			.task {
-				await scheduleInteractor.setCalendar()
+				await scheduleInteractor.setCalendar(date: Date())
 			}
 		}
 	}

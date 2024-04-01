@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0F71462BBA42660073A8E3 /* NotificationName+.swift */; };
 		2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1305292BA3CFFA0002175D /* RealmSchedule.swift */; };
 		2C13052C2BA3D4240002175D /* List+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052B2BA3D4240002175D /* List+.swift */; };
 		2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052D2BA3D9C90002175D /* RealmManager.swift */; };
@@ -134,6 +135,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C0F71462BBA42660073A8E3 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
 		2C1305292BA3CFFA0002175D /* RealmSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSchedule.swift; sourceTree = "<group>"; };
 		2C13052B2BA3D4240002175D /* List+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+.swift"; sourceTree = "<group>"; };
 		2C13052D2BA3D9C90002175D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				2C5717E52B61306700B0F3B3 /* Date+.swift */,
 				8879A7E82B6A494D00794475 /* Data+.swift */,
 				2C13052B2BA3D4240002175D /* List+.swift */,
+				2C0F71462BBA42660073A8E3 /* NotificationName+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -960,6 +963,7 @@
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
+				2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */,
 				2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */,
 				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,

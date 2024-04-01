@@ -80,6 +80,12 @@ struct HomeMainView: View {
 			
 			previousYearMonth = newYearMonth
 		}
+		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { notification in
+			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
+				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
+				focusDate = date
+			}
+		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
             ToDoEditView()
                 .background(ClearBackground())
