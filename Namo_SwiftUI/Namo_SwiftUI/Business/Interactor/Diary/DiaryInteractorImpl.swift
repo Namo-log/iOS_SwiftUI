@@ -29,7 +29,11 @@ struct DiaryInteractorImpl: DiaryInteractor {
         print("월간 기록 조회")
         print(diaries)
         DispatchQueue.main.async {
-            diaryState.monthDiaries = diaries
+            if request.page == 0 {
+                diaryState.monthDiaries = diaries
+            } else {
+                diaryState.monthDiaries += diaries
+            }
         }
     }
     

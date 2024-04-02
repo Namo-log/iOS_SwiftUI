@@ -20,6 +20,8 @@ struct DiaryMainView: View {
     @State var pickerCurrentYear: Int = Date().toYMD().year
     @State var pickerCurrentMonth: Int = Date().toYMD().month
     @State var dateIndicatorIndices: [Int] = [] // 날짜 뷰가 보여야 하는(앞의 다이어리와 날짜가 다른) 기록의 인덱스들만 저장한 것
+    @State var page = 0
+    @State var size = 10
     
     //    @State var dummyDiary = [DiaryItem(backgroundColor: .mainOrange, scheduleName: "점심 약속",
     //                                       content: "팀 빌딩을 앞두고 PM들끼리 모였다! 네오가 주도하셨는데, 밥 먹고 이디야에 가서 아이디어 피드백을 주고받았다. 원래 막막했었는데 도움이 많이 되었다. 팀 빌딩... 지원이 많이많이 들어왔으면 좋겠다."),
@@ -88,13 +90,20 @@ struct DiaryMainView: View {
                     //                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
                     //                            .padding(.top, 24)
                     //                    } else {
-                    VStack(spacing: 20) {
+                    LazyVStack(spacing: 20) { // infinite scroll 구현을 위해 LazyVStack을 사용
                         ForEach(0..<diaryState.monthDiaries.count, id: \.self) { idx in
                             let diary = diaryState.monthDiaries[idx]
                             if dateIndicatorIndices.contains(idx) { // 해당되는 구간이면 날짜 뷰 보여주기
                                 DiaryDateItemView(startDate: diary.startDate) // 2024.03.27 날짜 뷰
                             }
                             DiaryItemView(diary: diary) // 그 아래 네모난 다이어리 뷰
+                                .onAppear {
+                                    // 다음 페이지 불러오기
+                                    if idx % size == 9 {
+                                        page += 1
+                                        print("페이지 추가 \(page)")
+                                    }
+                                }
                         }
                     }
                     .fixedSize(horizontal: false, vertical: true)
@@ -136,9 +145,9 @@ struct DiaryMainView: View {
                     rightButtonAction: {
                         currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
                         Task {
-                            // TODO: - 페이징 처리
-                            // TODO: - Date가 바뀔 때마다 하고 싶은데 여기 넣는 게 최선인가...
-                            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: 0, size: 5))
+                            page = 0
+                            // MARK: - Alert를 통해 년/월이 바뀔 때마다 조회하고 싶은데 이렇게 하는 게 최선인가
+                            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
                             dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
                         }
                     }
@@ -146,9 +155,16 @@ struct DiaryMainView: View {
             }
         } // ZStack
         .task {
-            // TODO: - 페이징 처리
-            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: 0, size: 5))
+            page = 0 // 페이지 초기화
+            print("\(page) 불러오기")
+            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
             dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
+        }
+        .onChange(of: page) { _ in // 페이지 바뀔 때마다 호출되는 부분
+            Task {
+                await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
+            }
         }
     }
 }
