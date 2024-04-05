@@ -146,6 +146,12 @@
 		A24F32602BA5713100014E06 /* DiaryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F325F2BA5713100014E06 /* DiaryRepositoryImpl.swift */; };
 		A24F32632BA5717C00014E06 /* DiaryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32622BA5717C00014E06 /* DiaryInteractor.swift */; };
 		A24F32652BA5718E00014E06 /* DiaryInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F32642BA5718E00014E06 /* DiaryInteractorImpl.swift */; };
+		A257FFC82BC079DD004F58DD /* MoimDiaryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFC72BC079DD004F58DD /* MoimDiaryInteractor.swift */; };
+		A257FFCA2BC079ED004F58DD /* MoimDiaryInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFC92BC079ED004F58DD /* MoimDiaryInteractorImpl.swift */; };
+		A257FFCC2BC07A4E004F58DD /* MoimDiaryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFCB2BC07A4E004F58DD /* MoimDiaryEndPoint.swift */; };
+		A257FFCE2BC085E1004F58DD /* MoimDiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFCD2BC085E1004F58DD /* MoimDiaryRepository.swift */; };
+		A257FFD02BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */; };
+		A257FFD22BC08E40004F58DD /* MoimDiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */; };
 		A27CAD4B2B9F082B00E4E8EF /* MoimPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */; };
 /* End PBXBuildFile section */
 
@@ -279,6 +285,12 @@
 		A24F325F2BA5713100014E06 /* DiaryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepositoryImpl.swift; sourceTree = "<group>"; };
 		A24F32622BA5717C00014E06 /* DiaryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryInteractor.swift; sourceTree = "<group>"; };
 		A24F32642BA5718E00014E06 /* DiaryInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryInteractorImpl.swift; sourceTree = "<group>"; };
+		A257FFC72BC079DD004F58DD /* MoimDiaryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryInteractor.swift; sourceTree = "<group>"; };
+		A257FFC92BC079ED004F58DD /* MoimDiaryInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryInteractorImpl.swift; sourceTree = "<group>"; };
+		A257FFCB2BC07A4E004F58DD /* MoimDiaryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryEndPoint.swift; sourceTree = "<group>"; };
+		A257FFCD2BC085E1004F58DD /* MoimDiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryRepository.swift; sourceTree = "<group>"; };
+		A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryRepositoryImpl.swift; sourceTree = "<group>"; };
+		A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryDTO.swift; sourceTree = "<group>"; };
 		A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoimPlaceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -794,6 +806,7 @@
 				2CF445092B78E3C700A8E514 /* CategoryDTO.swift */,
 				2CF445192B7FA0A200A8E514 /* MoimDTO.swift */,
 				A24F32572BA56F3500014E06 /* DiaryDTO.swift */,
+				A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -900,6 +913,7 @@
 			isa = PBXGroup;
 			children = (
 				A24F325A2BA56F7100014E06 /* DiaryEndPoint.swift */,
+				A257FFCB2BC07A4E004F58DD /* MoimDiaryEndPoint.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -909,6 +923,8 @@
 			children = (
 				A24F325D2BA5710900014E06 /* DiaryRepository.swift */,
 				A24F325F2BA5713100014E06 /* DiaryRepositoryImpl.swift */,
+				A257FFCD2BC085E1004F58DD /* MoimDiaryRepository.swift */,
+				A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -918,6 +934,8 @@
 			children = (
 				A24F32622BA5717C00014E06 /* DiaryInteractor.swift */,
 				A24F32642BA5718E00014E06 /* DiaryInteractorImpl.swift */,
+				A257FFC72BC079DD004F58DD /* MoimDiaryInteractor.swift */,
+				A257FFC92BC079ED004F58DD /* MoimDiaryInteractorImpl.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -1032,6 +1050,7 @@
 				2CF445282B87628A00A8E514 /* CalendarScheduleDetailItem.swift in Sources */,
 				A24F32602BA5713100014E06 /* DiaryRepositoryImpl.swift in Sources */,
 				A24F32582BA56F3500014E06 /* DiaryDTO.swift in Sources */,
+				A257FFD02BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift in Sources */,
 				5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */,
 				A22F634B2B96D31800BC39A2 /* EditMoimDiaryView.swift in Sources */,
 				889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */,
@@ -1047,14 +1066,17 @@
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
 				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				50299F282BA11BCB007CCDB7 /* CategoryAddView.swift in Sources */,
+				A257FFCC2BC07A4E004F58DD /* MoimDiaryEndPoint.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
 				A22F63512B96E68900BC39A2 /* BlackBorderRoundedView.swift in Sources */,
 				2CF4451A2B7FA0A200A8E514 /* MoimDTO.swift in Sources */,
 				88A7EF292B6E89A800E47C8B /* getPetInfoDTO.swift in Sources */,
 				88BDADE32BA0C5740055B69A /* ErrorHandler.swift in Sources */,
 				5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */,
+				A257FFC82BC079DD004F58DD /* MoimDiaryInteractor.swift in Sources */,
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
 				2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */,
+				A257FFCA2BC079ED004F58DD /* MoimDiaryInteractorImpl.swift in Sources */,
 				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
 				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				507C84DD2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift in Sources */,
@@ -1077,6 +1099,8 @@
 				50F8F9032B89D95B0037577C /* SettingView.swift in Sources */,
 				504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */,
 				2CF4451E2B80535C00A8E514 /* MoimRepository.swift in Sources */,
+				A257FFCE2BC085E1004F58DD /* MoimDiaryRepository.swift in Sources */,
+				A257FFD22BC08E40004F58DD /* MoimDiaryDTO.swift in Sources */,
 				507C84DB2B6F37D200147C60 /* AuthRepository.swift in Sources */,
 				5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */,
 				2C5717942B5BF71200B0F3B3 /* Font+.swift in Sources */,

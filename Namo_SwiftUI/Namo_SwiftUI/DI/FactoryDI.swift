@@ -93,4 +93,14 @@ extension Container {
         self { DiaryRepositoryImpl() }
             .singleton
     }
+    
+    var moimDiaryInteractor: Factory<MoimDiaryInteractor> {
+        self { MoimDiaryInteractorImpl() }
+            .singleton
+    }
+    
+    var moimDiaryRepository: Factory<MoimDiaryRepository> {
+        self { MoimDiaryRepositoryImpl() }
+            .singleton
+    }
 }
