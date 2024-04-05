@@ -22,7 +22,7 @@ struct ServerAccessToken: Encodable {
     let accessToken: String
 }
 
-struct AppleAccessToken: Encodable {
+struct AppleAccessToken: Codable {
     
     let identityToken: String
     let username: String

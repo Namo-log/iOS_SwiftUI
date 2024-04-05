@@ -85,11 +85,11 @@ extension AuthEndPoint: EndPoint {
         case .fetchTokenApple(appleAccessToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
         case .withdrawMemberKakao(kakaoAccessToken: let dto):
-            return .authRequestJSONEncodable(parameters: dto)
+            return .requestJSONEncodable(parameters: dto)
         case .withdrawMemberNaver(naverAccessToken: let dto):
-            return .authRequestJSONEncodable(parameters: dto)
+            return .requestJSONEncodable(parameters: dto)
         case .withdrawMemberApple(appleAuthorizationCode: let dto):
-            return .authRequestJSONEncodable(parameters: dto)
+            return .requestJSONEncodable(parameters: dto)
         case .logout(serverAccessToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
         }

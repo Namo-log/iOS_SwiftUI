@@ -13,6 +13,8 @@ struct SplashView: View {
     @AppStorage("onboardingDone") var onboardingDone: Bool = false
     @AppStorage("isLogin") var isLogin: Bool = false
     
+    var socialLogin: String?
+    
     var body: some View {
         ZStack {
             
@@ -36,11 +38,13 @@ struct SplashView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 isActive = true
             }
+            
+            UserDefaults.standard.set(socialLogin, forKey: "socialLogin")
         }
         .ignoresSafeArea()
     }
 }
 
 #Preview {
-    SplashView()
+    SplashView(socialLogin: "kakao")
 }

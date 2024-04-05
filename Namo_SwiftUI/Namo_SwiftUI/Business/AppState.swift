@@ -85,7 +85,6 @@ class AppState: ObservableObject {
     // 카테고리 삭제 불가 토글 보이기
     @Published var showCategoryCantDeleteToast: Bool = false
     
-    
     // 어떤 소셜로 로그인한 상태인지
     @Published var socialLogin: SocialLogin = .kakao
 }
