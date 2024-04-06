@@ -55,8 +55,7 @@ class RealmManager {
 				realm.add(object)
 			}
 		} catch {
-			// TODO: error handler로 처리
-			print("데이터 저장 에러")
+			ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 저장 에러"))
 		}
 	}
 	
@@ -69,8 +68,7 @@ class RealmManager {
 					realm.add(object)
 				}
 			} catch {
-				// TODO: error handler로 처리
-				print("데이터 저장 에러")
+				ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 저장 에러"))
 			}
 		})
 	}
@@ -95,8 +93,7 @@ class RealmManager {
 				realm.delete(object)
 			}
 		} catch {
-			// TODO: error handler로 처리
-			print("데이터 삭제 에러")
+			ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 삭제 에러"))
 		}
 	}
 	
@@ -108,16 +105,14 @@ class RealmManager {
 				realm.delete(realm.objects(objectType))
 			}
 		} catch {
-			// TODO: error handler로 처리
-			print("데이터 삭제 에러")
+			ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 삭제 에러"))
 		}
 	}
 	
 	/// 해당 데이터를 업데이트합니다.(delete and write)
 	func updateObject<T: Object>(_ object: T, pk: Int) {
 		guard let oldObject = getObject(T.self, pk: pk) else {
-			// TODO: error handler로 처리
-			print("해당 데이터가 없습니다.")
+			ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "해당 데이터가 없습니다."))
 			return
 		}
 		
@@ -128,8 +123,7 @@ class RealmManager {
 				writeObject(object)
 			}
 		} catch {
-			// TODO: error handler로 처리
-			print("데이터 업데이트 에러")
+			ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 업데이트 에러"))
 		}
 	}
 }
