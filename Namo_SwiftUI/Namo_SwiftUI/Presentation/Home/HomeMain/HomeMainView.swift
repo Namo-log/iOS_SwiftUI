@@ -34,13 +34,21 @@ struct HomeMainView: View {
 				weekday
 					.padding(.bottom, 11)
 				
-				CalendarView(calendarController) { date in
-					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $scheduleState.calendarSchedules)
+				GeometryReader { reader in
+					VStack {
+						CalendarView(calendarController) { date in
+							GeometryReader { geometry in
+								VStack(alignment: .leading) {
+									CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $scheduleState.calendarSchedules)
+								}
+								.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
+							}
+						}
+					}
 				}
-				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
-				.padding(.trailing, 6)
-				.padding(.bottom, 20)
+				.padding(.horizontal, 6)
+				.padding(.top, 3)
 				
 				if focusDate != nil {
 					detailView
