@@ -29,7 +29,7 @@ extension MoimDiaryEndPoint: EndPoint {
                 .deleteMoimDiaryPlace(let moimLocationId):
             return "/\(moimLocationId)"
         case .getMonthMoimDiary(let req):
-            return "/\(req.year),\(req.month)"
+            return "/month/\(req.year),\(req.month)"
         case .deleteMoimDiary(let moimMemoId):
             return "/all/\(moimMemoId)"
         }

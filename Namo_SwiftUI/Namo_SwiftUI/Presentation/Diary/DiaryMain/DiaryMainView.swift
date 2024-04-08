@@ -14,6 +14,7 @@ struct DiaryMainView: View {
     @EnvironmentObject var diaryState: DiaryState
     @Injected(\.appState) private var appState
     @Injected(\.diaryInteractor) var diaryInteractor
+    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
     @State var currentDate: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
     @State var showDatePicker: Bool = false
@@ -152,8 +153,13 @@ struct DiaryMainView: View {
                         currentDate = String(format: "%d.%02d", pickerCurrentYear, pickerCurrentMonth)
                         Task {
                             page = 0
-                            // MARK: - Alert를 통해 년/월이 바뀔 때마다 조회하고 싶은데 이렇게 하는 게 최선인가
-                            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                            if appState.isPersonalDiary {
+                                // MARK: - Alert를 통해 년/월이 바뀔 때마다 조회하고 싶은데 이렇게 하는 게 최선인가
+                                await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                            } else {
+                                // TODO: - API 테스트 필요
+                                await moimDiaryInteractor.getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                            }
                             dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
                         }
                     }
@@ -163,12 +169,20 @@ struct DiaryMainView: View {
         .task {
             page = 0 // 페이지 초기화
             print("\(page) 불러오기")
-            await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+            if appState.isPersonalDiary {
+                await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+            } else {
+                await moimDiaryInteractor.getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+            }
             dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
         }
         .onChange(of: page) { _ in // 페이지 바뀔 때마다 호출되는 부분
             Task {
-                await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                if appState.isPersonalDiary {
+                    await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                } else {
+                    await moimDiaryInteractor.getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+                }
                 dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
             }
         }
