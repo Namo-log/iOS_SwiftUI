@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Factory
 
 // 모임 기록 추가 및 수정 화면
 struct EditMoimDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
+    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
     let info: ScheduleInfo
     
@@ -179,7 +181,7 @@ struct EditMoimDiaryView: View {
                         
                         // 장소 뷰
                         ForEach(0..<numOfPlace, id: \.self) { num in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, placeNumber: num + 1)
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert)
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -233,6 +235,10 @@ struct EditMoimDiaryView: View {
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
                         print("기록 삭제")
+                        Task {
+                            // 모임 기록 삭제
+                            await moimDiaryInteractor.deleteMoimDiary(moimMemoId: 1)
+                        }
                         self.presentationMode.wrappedValue.dismiss()
                     }
             }

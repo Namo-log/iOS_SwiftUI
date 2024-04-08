@@ -30,6 +30,11 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
         return await moimDiaryRepository.deleteMoimDiaryPlace(moimLocationId: moimLocationId)
     }
     
+    /// 모임 메모 삭제
+    func deleteMoimDiary(moimMemoId: Int) async -> Bool {
+        return await moimDiaryRepository.deleteMoimDiary(moimMemoId: moimMemoId)
+    }
+    
     /// 월간 모임 메모 조회
     func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async {
         let diaries = await moimDiaryRepository.getMonthMoimDiary(req: req)?.content ?? []

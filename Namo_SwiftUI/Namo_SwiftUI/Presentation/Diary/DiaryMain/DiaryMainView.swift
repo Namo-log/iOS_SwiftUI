@@ -85,30 +85,36 @@ struct DiaryMainView: View {
                 
                 ScrollView {
                     // 기록 목록
-                    //                    if appState.isPersonalDiary {
-                    //                        Text("기록이 없습니다. 기록을 추가해 보세요!")
-                    //                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
-                    //                            .padding(.top, 24)
-                    //                    } else {
-                    LazyVStack(spacing: 20) { // infinite scroll 구현을 위해 LazyVStack을 사용
-                        ForEach(0..<diaryState.monthDiaries.count, id: \.self) { idx in
-                            let diary = diaryState.monthDiaries[idx]
-                            if dateIndicatorIndices.contains(idx) { // 해당되는 구간이면 날짜 뷰 보여주기
-                                DiaryDateItemView(startDate: diary.startDate) // 2024.03.27 날짜 뷰
-                            }
-                            DiaryItemView(diary: diary) // 그 아래 네모난 다이어리 뷰
-                                .onAppear {
-                                    // 다음 페이지 불러오기
-                                    if idx % size == 9 {
-                                        page += 1
-                                        print("페이지 추가 \(page)")
+                    if diaryState.monthDiaries.isEmpty {
+                        Text("기록이 없습니다. 기록을 추가해 보세요!")
+                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
+                            .padding(.top, 24)
+                    } else {
+                        if !appState.isPersonalDiary {
+                            // MARK: - 테스트를 위한 더미 데이터
+                            DiaryItemView(diary: Diary(scheduleId: 0, name: "더미", startDate: 1711907762, contents: "test", urls: nil, categoryId: 1, color: 1, placeName: "t"))
+                        } else {
+                            LazyVStack(spacing: 20) { // infinite scroll 구현을 위해 LazyVStack을 사용
+                                ForEach(0..<diaryState.monthDiaries.count, id: \.self) { idx in
+                                    let diary = diaryState.monthDiaries[idx]
+                                    if dateIndicatorIndices.contains(idx) { // 해당되는 구간이면 날짜 뷰 보여주기
+                                        DiaryDateItemView(startDate: diary.startDate) // 2024.03.27 날짜 뷰
                                     }
+                                    DiaryItemView(diary: diary) // 그 아래 네모난 다이어리 뷰
+                                        .onAppear {
+                                            // 다음 페이지 불러오기
+                                            if idx % size == 9 {
+                                                page += 1
+                                                print("페이지 추가 \(page)")
+                                            }
+                                        }
                                 }
+                            }
+                            .fixedSize(horizontal: false, vertical: true)
                         }
+                        
+                        Spacer()
                     }
-                    .fixedSize(horizontal: false, vertical: true)
-                    
-                    Spacer()
                 }
                 .padding(.bottom, 90)
             } // VStack

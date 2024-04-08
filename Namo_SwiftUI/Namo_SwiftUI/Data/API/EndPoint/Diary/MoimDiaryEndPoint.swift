@@ -12,6 +12,7 @@ enum MoimDiaryEndPoint {
     case createMoimDiaryPlace(moimScheduleId: Int, req: EditMoimDiaryPlaceReqDTO)
     case changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO)
     case deleteMoimDiaryPlace(moimLocationId: Int)
+    case deleteMoimDiary(moimMemoId: Int)
     case getMonthMoimDiary(request: GetMonthMoimDiaryReqDTO)
 }
 
@@ -29,6 +30,8 @@ extension MoimDiaryEndPoint: EndPoint {
             return "/\(moimLocationId)"
         case .getMonthMoimDiary(let req):
             return "/\(req.year),\(req.month)"
+        case .deleteMoimDiary(let moimMemoId):
+            return "/all/\(moimMemoId)"
         }
     }
     
@@ -38,7 +41,8 @@ extension MoimDiaryEndPoint: EndPoint {
             return .post
         case .changeMoimDiaryPlace:
             return .patch
-        case .deleteMoimDiaryPlace:
+        case .deleteMoimDiaryPlace,
+                .deleteMoimDiary:
             return .delete
         case .getMonthMoimDiary:
             return .get
@@ -53,7 +57,7 @@ extension MoimDiaryEndPoint: EndPoint {
         case .changeMoimDiaryPlace(_, let req):
             let body = ["name": req.name, "money": req.money, "participants": req.participants] as [String : Any]
             return .uploadImagesWithBody(imageDatas: req.imgs, body: body)
-        case .deleteMoimDiaryPlace:
+        case .deleteMoimDiaryPlace, .deleteMoimDiary:
             return .requestPlain
         case .getMonthMoimDiary(let req):
             let params = ["page": req.page, "size": req.size]
