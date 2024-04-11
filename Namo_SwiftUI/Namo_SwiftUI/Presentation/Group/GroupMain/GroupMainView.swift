@@ -92,7 +92,9 @@ struct GroupMainView: View {
 						})
 						.simultaneousGesture(TapGesture().onEnded {
 							moimState.currentMoim = moim
-							print(moimState.currentMoim)
+							Task {
+								await moimInteractor.getMoimSchedule(moimId: moim.groupId)
+							}
 						})
 						
 					}

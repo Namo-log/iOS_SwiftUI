@@ -34,7 +34,7 @@ struct HomeMainView: View {
 					.padding(.bottom, 11)
 				
 				CalendarView(calendarController) { date in
-					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $scheduleState.calendarSchedules)
+					CalendarItem(date: date, isMoimCalendar: false, focusDate: $focusDate)
 				}
 				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
@@ -120,7 +120,8 @@ struct HomeMainView: View {
 					Spacer()
 				}
 			}
-			.padding(.horizontal, 20)
+			.padding(.leading, 14)
+			.padding(.trailing, 6)
 		}
 		.frame(height: 30)
 		.background(
@@ -138,7 +139,7 @@ struct HomeMainView: View {
 			
 			
 			
-			ScrollView(.vertical) {
+			ScrollView(.vertical, showsIndicators: false) {
 				HStack {
 					Text("개인 일정")
 						.font(.pretendard(.bold, size: 15))
@@ -189,6 +190,8 @@ struct HomeMainView: View {
 						.foregroundStyle(Color(.mainText))
 				}
 				
+				Spacer()
+					.frame(height: 100)
 			}
 			.frame(width: screenWidth-50)
 			.padding(.horizontal, 25)

@@ -158,6 +158,22 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		}
 	}
 	
+	func getMoimScheduleTimeWithCurrentYMD(currentYMD: YearMonthDay, schedule: MoimSchedule) -> String {
+		if schedule.startDate.toYMD() == schedule.endDate.adjustDateIfMidNight().toYMD() {
+			// 같은 날이라면 그냥 시작시간-종료시간 표시
+			return "\(schedule.startDate.toHHmm()) - \(schedule.endDate.adjustDateIfMidNight().toHHmm())"
+		} else if currentYMD == schedule.startDate.toYMD() {
+			// 여러 일 지속 스케쥴의 시작일이라면
+			return "\(schedule.startDate.toHHmm()) - 23:59"
+		} else if currentYMD == schedule.endDate.toYMD() {
+			// 여러 일 지속 스케쥴의 종료일이라면
+			return "00:00 - \(schedule.endDate.adjustDateIfMidNight().toHHmm())"
+		} else {
+			// 여러 일 지속 스케쥴의 중간이라면
+			return "00:00 - 23:59"
+		}
+	}
+	
     /// 지도에서 선택한 selectedPlace의 정보를 currentSchedule에 저장합니다
     func setPlaceToCurrentSchedule() {
         if let place = appState.placeState.selectedPlace {
