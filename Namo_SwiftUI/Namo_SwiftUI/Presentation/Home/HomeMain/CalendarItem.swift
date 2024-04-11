@@ -51,7 +51,7 @@ struct CalendarItem: View {
 					calendarMoimScheduleItem(geometry: geometry, schedules: schedules)
 				}
 			}
-			.padding(.top, 2)
+			.padding(.top, 4)
 			.padding(.leading, 5)
 		}
 		.contentShape(Rectangle())

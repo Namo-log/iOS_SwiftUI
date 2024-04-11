@@ -49,14 +49,22 @@ struct GroupCalendarView: View {
 				
 				weekday
 					.padding(.bottom, 11)
-				
-				CalendarView(calendarController) { date in
-					CalendarItem(date: date, isMoimCalendar: true, focusDate: $focusDate, shouldHideTabBar: false)
+
+				GeometryReader { reader in
+					VStack {
+						CalendarView(calendarController) { date in
+							GeometryReader { geometry in
+								VStack(alignment: .leading) {
+									CalendarItem(date: date, isMoimCalendar: true, focusDate: $focusDate)
+								}
+								.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
+							}
+						}
+					}
 				}
-				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
-				.padding(.trailing, 6)
-				.padding(.bottom, 20)
+				.padding(.horizontal, 6)
+				.padding(.top, 3)
 				
 				if focusDate != nil {
 					detailView
