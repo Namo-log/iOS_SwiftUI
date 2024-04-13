@@ -114,6 +114,7 @@
 		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
 		8879A7E92B6A494D00794475 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E82B6A494D00794475 /* Data+.swift */; };
 		8879A7ED2B6A521B00794475 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7EC2B6A521B00794475 /* APITask.swift */; };
+		889C74152BCADCC0005937CB /* MoimScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */; };
 		889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */; };
 		889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */; };
 		889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */; };
@@ -247,6 +248,7 @@
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		8879A7E82B6A494D00794475 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8879A7EC2B6A521B00794475 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
+		889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimScheduleTemplate.swift; sourceTree = "<group>"; };
 		889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
 		889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceEndPoint.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				8879A7DF2B6927E300794475 /* DTO */,
 				884382D42B74D5EA00766503 /* Place.swift */,
 				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
+				889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */,
 				8862E6372B839F760004DE4B /* ScheduleCategory.swift */,
 				889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */,
 				2CFE00542B73658A0054C31B /* Schedule.swift */,
@@ -1027,6 +1030,7 @@
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
 				2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */,
+				889C74152BCADCC0005937CB /* MoimScheduleTemplate.swift in Sources */,
 				2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */,
 				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				50299F282BA11BCB007CCDB7 /* CategoryAddView.swift in Sources */,
