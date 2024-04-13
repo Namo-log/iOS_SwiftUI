@@ -10,6 +10,7 @@ import Foundation
 struct ServerTokenResponse: Codable {
     let accessToken: String
     let refreshToken: String
+    let newUser: Bool
 }
 
 struct SocialAccessToken: Encodable {
