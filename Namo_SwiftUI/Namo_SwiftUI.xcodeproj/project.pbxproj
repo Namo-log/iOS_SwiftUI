@@ -115,6 +115,7 @@
 		8879A7E92B6A494D00794475 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E82B6A494D00794475 /* Data+.swift */; };
 		8879A7ED2B6A521B00794475 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7EC2B6A521B00794475 /* APITask.swift */; };
 		889C74152BCADCC0005937CB /* MoimScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */; };
+		889C74182BCADD5C005937CB /* GroupToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889C74172BCADD5C005937CB /* GroupToDoEditView.swift */; };
 		889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */; };
 		889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */; };
 		889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */; };
@@ -249,6 +250,7 @@
 		8879A7E82B6A494D00794475 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8879A7EC2B6A521B00794475 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
 		889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimScheduleTemplate.swift; sourceTree = "<group>"; };
+		889C74172BCADD5C005937CB /* GroupToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupToDoEditView.swift; sourceTree = "<group>"; };
 		889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
 		889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceEndPoint.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 		5012A9E22B593A9E00544AB0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				889C74162BCADD4F005937CB /* GroupToDo */,
 				5021D8E82B594069009B4AD1 /* GroupMain */,
 				2CF445252B83516400A8E514 /* GroupCalendarView.swift */,
 			);
@@ -825,6 +828,14 @@
 			path = EndPoint;
 			sourceTree = "<group>";
 		};
+		889C74162BCADD4F005937CB /* GroupToDo */ = {
+			isa = PBXGroup;
+			children = (
+				889C74172BCADD5C005937CB /* GroupToDoEditView.swift */,
+			);
+			path = GroupToDo;
+			sourceTree = "<group>";
+		};
 		889EE0DF2B888EAE00F2FFB3 /* Place */ = {
 			isa = PBXGroup;
 			children = (
@@ -1078,6 +1089,7 @@
 				2CF4451C2B7FA0C300A8E514 /* GroupListItem.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
+				889C74182BCADD5C005937CB /* GroupToDoEditView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				88EFE4602B87C7680085826B /* PlaceInteractor.swift in Sources */,
 				2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */,
