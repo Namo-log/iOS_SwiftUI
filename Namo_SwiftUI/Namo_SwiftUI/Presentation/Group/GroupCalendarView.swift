@@ -36,7 +36,7 @@ struct GroupCalendarView: View {
 	
 	// calendar
 	@State var focusDate: YearMonthDay? = nil
-	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
+//	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
 	@State var isToDoSheetPresented: Bool = false
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -55,7 +55,7 @@ struct GroupCalendarView: View {
 						CalendarView(calendarController) { date in
 							GeometryReader { geometry in
 								VStack(alignment: .leading) {
-									CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule)
+									CalendarItem(date: date, isMoimCalendar: true, focusDate: $focusDate)
 								}
 								.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
 							}
@@ -162,7 +162,7 @@ struct GroupCalendarView: View {
 				.font(.pretendard(.bold, size: 22))
 				.padding(.vertical, 20)
 			
-			ScrollView(.vertical) {
+			ScrollView(.vertical, showsIndicators: false) {
 				HStack {
 					Text("개인 일정")
 						.font(.pretendard(.bold, size: 15))
@@ -173,12 +173,12 @@ struct GroupCalendarView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?
+				if let schedules = moimState.currentMoimSchedule[focusDate!]?
 					.compactMap(({$0.schedule}))
-					.filter({!$0.moimSchedule})
+					.filter({!$0.curMoimSchedule})
 				{
-					ForEach(schedules, id: \.self) {schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
+					ForEach(schedules, id: \.id) {schedule in
+						CalendarMoimScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 개인 일정이 없습니다.")
@@ -197,18 +197,21 @@ struct GroupCalendarView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?
+				if let schedules = moimState.currentMoimSchedule[focusDate!]?
 					.compactMap({$0.schedule})
-					.filter({$0.moimSchedule})
+					.filter({$0.curMoimSchedule})
 				{
-					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
+					ForEach(schedules, id: \.id) { schedule in
+						CalendarMoimScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 모임 일정이 없습니다.")
 						.font(.pretendard(.medium, size: 14))
 						.foregroundStyle(Color(.mainText))
 				}
+				
+				Spacer()
+					.frame(height: 100)
 			}
 			.frame(width: screenWidth-50)
 			.padding(.horizontal, 25)
@@ -224,7 +227,6 @@ struct GroupCalendarView: View {
 					.padding(.trailing, 25)
 			})
 		}
-
 	}
 	
 	private var datePicker: some View {

@@ -38,9 +38,11 @@ class MoimState: ObservableObject {
 	@Published var moims: [Moim] = []
 	/// 유저가 현재 확인하고 있는 모임
 	@Published var currentMoim: Moim = Moim()
+	@Published var currentMoimSchedule: [YearMonthDay: [CalendarMoimSchedule]] = [:]
 }
 
 class AppState: ObservableObject {
+	@Published var isLoading: Bool = false
 	
 	// Tabbar
 	@Published var isTabbarHidden: Bool = false

@@ -14,6 +14,7 @@ enum MoimEndPoint {
 	case changeMoimName(data: changeMoimNameRequest)
 	case participateMoim(groupCode: String)
 	case withdrawMoim(moimId: Int)
+	case getMoimSchedule(moimId: Int)
 }
 
 extension MoimEndPoint: EndPoint {
@@ -33,6 +34,8 @@ extension MoimEndPoint: EndPoint {
 			return "/participate/\(groupCode)"
 		case .withdrawMoim(let moimId):
 			return "/withdraw/\(moimId)"
+		case .getMoimSchedule(let moimId):
+			return "/schedule/\(moimId)/all"
 		}
 	}
 	
@@ -48,6 +51,8 @@ extension MoimEndPoint: EndPoint {
 			return .patch
 		case .withdrawMoim:
 			return .delete
+		case .getMoimSchedule:
+			return .get
 		}
 	}
 	
@@ -62,6 +67,8 @@ extension MoimEndPoint: EndPoint {
 		case .participateMoim:
 			return .requestPlain
 		case .withdrawMoim:
+			return .requestPlain
+		case .getMoimSchedule:
 			return .requestPlain
 		}
 	}

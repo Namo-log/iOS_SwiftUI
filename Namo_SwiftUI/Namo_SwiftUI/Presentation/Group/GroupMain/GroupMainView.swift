@@ -11,6 +11,7 @@ import Factory
 
 struct GroupMainView: View {
 	@EnvironmentObject var moimState: MoimState
+	@EnvironmentObject var appState: AppState
 	@Injected(\.moimInteractor) var moimInteractor
 	@Injected(\.moimRepository) var moimRepository
 	
@@ -81,16 +82,25 @@ struct GroupMainView: View {
 	private var groupList: some View {
 		ScrollView(.vertical) {
 			VStack(spacing: 20) {
-				ForEach(moimState.moims, id: \.groupId) { moim in
-					NavigationLink(destination: GroupCalendarView(), label: {
-						GroupListItem(moim: moim)
-							.tint(Color.black)
-					})
-					.simultaneousGesture(TapGesture().onEnded {
-						moimState.currentMoim = moim
-						print(moimState.currentMoim)
-					})
-					
+				if appState.isLoading {
+					ProgressView()
+				} else if !moimState.moims.isEmpty {
+					ForEach(moimState.moims, id: \.groupId) { moim in
+						NavigationLink(destination: GroupCalendarView(), label: {
+							GroupListItem(moim: moim)
+								.tint(Color.black)
+						})
+						.simultaneousGesture(TapGesture().onEnded {
+							moimState.currentMoim = moim
+							Task {
+								await moimInteractor.getMoimSchedule(moimId: moim.groupId)
+							}
+						})
+						
+					}
+				} else {
+					Text("그룹 리스트가 없습니다. 그룹을 추가해 보세요!")
+						.font(.pretendard(.regular, size: 15))
 				}
 				
 				Spacer()

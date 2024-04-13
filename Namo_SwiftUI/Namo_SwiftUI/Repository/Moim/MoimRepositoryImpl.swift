@@ -35,6 +35,9 @@ final class MoimRepositoryImpl: MoimRepository {
 		return response?.code == 200
 	}
 	
+	func getMoimSchedule(moimId: Int) async -> getMoimScheduleResponse? {
+		return await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimSchedule(moimId: moimId))
+	}
 	
 	
 }
