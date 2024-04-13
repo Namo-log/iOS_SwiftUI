@@ -13,4 +13,7 @@ protocol MoimInteractor {
     func postNewMoimSchedule() async
     func patchMoimSchedule() async
     func deleteMoimSchedule() async
+    func setPlaceToCurrentMoimSchedule()
+    func setScheduleToCurrentMoimSchedule(schedule: MoimSchedule?)
+    func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser])
 }

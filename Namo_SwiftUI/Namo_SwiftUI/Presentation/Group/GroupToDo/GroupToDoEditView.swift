@@ -18,6 +18,7 @@ struct GroupToDoEditView: View {
     @EnvironmentObject var moimState: MoimState
     @Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.placeInteractor) var placeInteractor
+    @Injected(\.moimInteractor) var moimInteractor
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -179,9 +180,9 @@ struct GroupToDoEditView: View {
                                 Task {
                                     
                                     if self.isRevise {
-                                        await scheduleInteractor.patchMoimSchedule()
+                                        await moimInteractor.patchMoimSchedule()
                                     } else {
-                                        await scheduleInteractor.postNewMoimSchedule()
+                                        await moimInteractor.postNewMoimSchedule()
                                     }
                                     // 닫기
                                     dismissThis()
@@ -234,7 +235,7 @@ struct GroupToDoEditView: View {
                         Task {
                             // 삭제 후 dismiss
 //                            await self.scheduleInteractor.deleteSchedule()
-                            await self.scheduleInteractor.deleteMoimSchedule()
+                            await self.moimInteractor.deleteMoimSchedule()
 //                            dismissThis()
                         }
                     }
@@ -325,6 +326,7 @@ struct GroupToDoEditView: View {
         
         @EnvironmentObject var moimState: MoimState
         @Injected(\.scheduleInteractor) var scheduleInteractor
+        @Injected(\.moimInteractor) var moimInteractor
         
         @Binding var showCheckParticipant: Bool
         @State var selectedUser: [MoimUser] = []
@@ -337,7 +339,7 @@ struct GroupToDoEditView: View {
                 leftButtonAction: {},
                 rightButtonTitle: "저장",
                 rightButtonAction: {
-                    scheduleInteractor.setSelectedUserListToCurrentMoimSchedule(list: selectedUser)
+                    moimInteractor.setSelectedUserListToCurrentMoimSchedule(list: selectedUser)
                     return true
                 },
                 content: AnyView(

@@ -39,7 +39,10 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
 				
-				Button(action: {}, label: {
+				Button(action: {
+                    scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
+                    self.isToDoSheetPresented = true
+                }, label: {
 					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
 						.resizable()
 						.frame(width: 34, height: 34)
@@ -64,6 +67,7 @@ struct CalendarMoimScheduleDetailItem: View {
 	
 	@Injected(\.scheduleInteractor) var scheduleInteractor
 	@Injected(\.categoryInteractor) var categoryInteractor
+    @Injected(\.moimInteractor) var moimInteractor
 	
 	@Binding var isToDoSheetPresented: Bool
 	
@@ -89,7 +93,10 @@ struct CalendarMoimScheduleDetailItem: View {
 			Spacer()
 			
 			if schedule.curMoimSchedule {
-				Button(action: {}, label: {
+				Button(action: {
+                    moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
+                    self.isToDoSheetPresented = true
+                }, label: {
 					Image(schedule.hasDiaryPlace ? .btnAddRecordOrange : .btnAddRecord)
 						.resizable()
 						.frame(width: 34, height: 34)

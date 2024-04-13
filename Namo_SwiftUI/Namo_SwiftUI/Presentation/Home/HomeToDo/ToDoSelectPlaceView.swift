@@ -63,12 +63,8 @@ struct ToDoSelectPlaceView: View {
                         
                         Spacer()
                         Button(action: {
-                            if self.isGroup {
-                                moimInteractor.setPlaceToCurrentMoimSchedule()
-                            } else {
-                                scheduleInteractor.setPlaceToCurrentSchedule()
-                            }
                             placeInteractor.selectPlace(place: nil)
+                            self.dismissThis()
                         }) {
                             Text("취소")
                                 .font(.pretendard(.bold, size: 15))
@@ -85,7 +81,12 @@ struct ToDoSelectPlaceView: View {
                         }
                         Spacer(minLength: 20)
                         Button(action: {
-                            scheduleInteractor.setPlaceToCurrentSchedule()
+                            if self.isGroup {
+                                print("모임에 잘 저장")
+                                moimInteractor.setPlaceToCurrentMoimSchedule()
+                            } else {
+                                scheduleInteractor.setPlaceToCurrentSchedule()
+                            }
                             placeInteractor.clearPlaces(isSave: true)
                             self.dismissThis()
                         }) {

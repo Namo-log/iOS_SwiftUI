@@ -222,4 +222,36 @@ struct MoimInteractorImpl: MoimInteractor {
         let result = await moimRepository.deleteMoimSchedule(scheduleId: scheduleId)
         print(String(describing: result))
     }
+    
+    /// 지도에서 선택한 selectedPlace의 정보를 currentMoimSchedule에 저장합니다
+    func setPlaceToCurrentMoimSchedule() {
+        if let place = appState.placeState.selectedPlace {
+            scheduleState.currentMoimSchedule.locationName = place.name
+            scheduleState.currentMoimSchedule.x = place.x
+            scheduleState.currentMoimSchedule.y = place.y
+        }
+    }
+    
+    /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 currentMoimSchedule로 저장합니다.
+    /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
+    func setScheduleToCurrentMoimSchedule(schedule: MoimSchedule?) {
+        
+        DispatchQueue.main.async {
+            scheduleState.currentMoimSchedule = MoimScheduleTemplate(
+                moimScheduleId: schedule?.moimScheduleId,
+                name: schedule?.name,
+                startDate: schedule?.startDate,
+                endDate: schedule?.endDate,
+                x: schedule?.x,
+                y: schedule?.y,
+                locationName: schedule?.locationName,
+                users: schedule?.users
+            )
+        }
+    }
+    
+    /// CheckParticipant에서 선택한 selectedUser들의 정보를 currentMoimSchedule에 저장합니다
+    func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser]) {
+        scheduleState.currentMoimSchedule.users = list
+    }
 }
