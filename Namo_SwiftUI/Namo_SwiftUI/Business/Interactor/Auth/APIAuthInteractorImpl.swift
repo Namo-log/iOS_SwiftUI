@@ -76,7 +76,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 
                             } else {
                                 
-                                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패"))
+                                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(카카오 로그인)"))
                                 
                             }
                         }
@@ -130,7 +130,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 }
                
                             } else {
-                                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패"))
+                                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(카카오 로그인)"))
                             }
                         }
                     }
@@ -178,9 +178,10 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-                    print("카카오 회원 탈퇴 500 서버 에러")
-                    print(result?.code)
-                    print(result?.message)
+//                    print("카카오 회원 탈퇴 500 서버 에러")
+//                    print(result?.code)
+//                    print(result?.message)
+                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카카오 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
                 
             } else if sociallogin == "naver" {
@@ -193,9 +194,10 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-                    print("네이버 회원 탈퇴 500 서버 에러")
-                    print(result?.code)
-                    print(result?.message)
+//                    print("네이버 회원 탈퇴 500 서버 에러")
+//                    print(result?.code)
+//                    print(result?.message)
+                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "네이버 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
                 
             } else if sociallogin == "apple" {
@@ -208,50 +210,13 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-                    print("애플 회원 탈퇴 500 서버 에러")
-                    print(result?.code)
-                    print(result?.message)
+//                    print("애플 회원 탈퇴 500 서버 에러")
+//                    print(result?.code)
+//                    print(result?.message)
+                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "애플 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
             }
         }
-        
-//        let socialLogin = appState.socialLogin
-//
-//        switch socialLogin {
-//            
-//        case .kakao:
-//            let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberKakako(kakaoAccessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!)
-//            
-//            if result?.code == 200 {
-//                DispatchQueue.main.async {
-//                    UserDefaults.standard.set(false, forKey: "isLogin")
-//                    self.appState.isTabbarHidden = true
-//                    self.appState.currentTab = .home
-//                }
-//            }
-//            
-//        case .naver:
-//            let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberNaver(naverAccessToken: KeyChainManager.readItem(key: "naverAccessToken")!)
-//            
-//            if result?.code == 200 {
-//                DispatchQueue.main.async {
-//                    UserDefaults.standard.set(false, forKey: "isLogin")
-//                    self.appState.isTabbarHidden = true
-//                    self.appState.currentTab = .home
-//                }
-//            }
-//            
-//        case .apple:
-//            let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!)
-//            
-//            if result?.code == 200 {
-//                DispatchQueue.main.async {
-//                    UserDefaults.standard.set(false, forKey: "isLogin")
-//                    self.appState.isTabbarHidden = true
-//                    self.appState.currentTab = .home
-//                }
-//            }
-//        }
     }
     
     // 로그아웃
@@ -297,10 +262,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
         } else {
             
             // MARK: 에러 핸들링 추후에 필요
-            print(result?.code)
-            print(result?.message)
-            
-            ErrorHandler.shared.handle(type: .showAlert, error: .networkError(localizedDescription: "로그아웃 실패. 재시도 필요"))
+            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "로그아웃 \(String(describing: result?.code)) 에러"))
         }
     }
 }
@@ -342,7 +304,8 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
 
             } else {
                 
-                
+                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(네이버 로그인)"))
+            
                 
             }
         }
