@@ -15,6 +15,10 @@ enum MoimEndPoint {
 	case participateMoim(groupCode: String)
 	case withdrawMoim(moimId: Int)
 	case getMoimSchedule(moimId: Int)
+    // Schedule
+    case postMoimSchedule(data: postMoimScheduleRequest)
+    case patchMoimSchedule(data: patchMoimScheduleRequest)
+    case deleteMoimSchedule(scheduleId: Int)
 }
 
 extension MoimEndPoint: EndPoint {
@@ -36,6 +40,10 @@ extension MoimEndPoint: EndPoint {
 			return "/withdraw/\(moimId)"
 		case .getMoimSchedule(let moimId):
 			return "/schedule/\(moimId)/all"
+        case .postMoimSchedule, .patchMoimSchedule:
+            return "/schedule"
+        case .deleteMoimSchedule(scheduleId: let scheduleId):
+            return "/\(scheduleId)"
 		}
 	}
 	
@@ -53,7 +61,13 @@ extension MoimEndPoint: EndPoint {
 			return .delete
 		case .getMoimSchedule:
 			return .get
-		}
+        case .postMoimSchedule:
+            return .post
+        case .patchMoimSchedule:
+            return .patch
+        case .deleteMoimSchedule:
+            return .delete
+        }
 	}
 	
 	var task: APITask {
@@ -70,6 +84,12 @@ extension MoimEndPoint: EndPoint {
 			return .requestPlain
 		case .getMoimSchedule:
 			return .requestPlain
+        case .postMoimSchedule(data: let data):
+            return .requestJSONEncodable(parameters: data)
+        case .patchMoimSchedule(data: let data):
+            return .requestJSONEncodable(parameters: data)
+        case .deleteMoimSchedule:
+            return .requestPlain
 		}
 	}
 	
