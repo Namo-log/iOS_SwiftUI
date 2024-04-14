@@ -11,22 +11,22 @@ struct AgreeSubView: View {
     
     @Binding var required1: Bool
     @Binding var required2: Bool
-    @Binding var optional1: Bool
-    @Binding var optional2: Bool
+//    @Binding var optional1: Bool
+//    @Binding var optional2: Bool
     
     var body: some View {
         
         VStack {
             HStack {
-                Image(required1 && required2 && optional1 && optional2 ? .isSelectedTrue : .isSelectedFalse)
+                Image(required1 && required2 ? .isSelectedTrue : .isSelectedFalse)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
                     .onTapGesture {
                         self.required1 = true
                         self.required2 = true
-                        self.optional1 = true
-                        self.optional2 = true
+//                        self.optional1 = true
+//                        self.optional2 = true
                     }
                 Text("전체 동의")
                     .padding(.leading)
@@ -44,8 +44,8 @@ struct AgreeSubView: View {
             CheckItem(toggleText: "(필수) 이용약관", linkURL: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", toggleValue: $required1)
             
             CheckItem(toggleText: "(필수) 개인정보 수집 및 이용", linkURL: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32", toggleValue: $required2)
-            CheckItem(toggleText: "(선택) 위치 서비스 이용 약관", linkURL: nil, toggleValue: $optional1)
-            CheckItem(toggleText: "(선택) 앱 푸시 알림 수신 동의", linkURL: nil, toggleValue: $optional2)
+//            CheckItem(toggleText: "(선택) 위치 서비스 이용 약관", linkURL: nil, toggleValue: $optional1)
+//            CheckItem(toggleText: "(선택) 앱 푸시 알림 수신 동의", linkURL: nil, toggleValue: $optional2)
         }
         .frame(width: screenWidth-90)
     }
@@ -97,5 +97,5 @@ struct CheckItem: View {
 }
 
 #Preview {
-    AgreeSubView(required1: .constant(false), required2: .constant(false), optional1: .constant(false), optional2: .constant(false))
+    AgreeSubView(required1: .constant(false), required2: .constant(false))
 }
