@@ -26,6 +26,18 @@ extension Date {
 		dateFormatter.dateFormat = "HH:mm"
 		return dateFormatter.string(from: self)
 	}
+    
+    func toMM() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM"
+        return dateFormatter.string(from: self)
+    }
+    
+    func toDD() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        return dateFormatter.string(from: self)
+    }
 	
 	// date를 YMD로 변환
 	func toYMD() -> YearMonthDay {
@@ -37,6 +49,20 @@ extension Date {
 			day: calendar.component(.day, from: self)
 		)
 	}
+    
+    /// date를 YMD 형식의 string으로 변환
+    func toYMDString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        return dateFormatter.string(from: self)
+    }
+    
+    /// date를 YMDEHM 형식의 string으로 변환 ex) "2022.06.28(화) 11:00"
+    func toYMDEHM() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd(E) HH:mm"
+        return dateFormatter.string(from: self)
+    }
 	
 	// date를 YM로 변환
 	func toYM() -> YearMonth {

@@ -46,7 +46,8 @@ class AuthManager: RequestInterceptor {
         
         // URLRequest 헤더 추가, return
         var urlRequest = urlRequest
-		urlRequest.headers.add(.authorization(accessToken))
+        urlRequest.headers.add(.authorization(accessToken))
+        print("JWT: \(accessToken)")
         
         completion(.success(urlRequest))
     }

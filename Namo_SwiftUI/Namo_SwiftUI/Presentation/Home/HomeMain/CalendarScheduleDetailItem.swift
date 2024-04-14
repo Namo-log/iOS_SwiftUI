@@ -19,7 +19,6 @@ struct CalendarScheduleDetailItem: View {
 	
 	@Binding var isToDoSheetPresented: Bool
 	
-	
 	var body: some View {
 		if let paletteId = appState.categoryPalette[schedule.categoryId] {
 			HStack(spacing: 5) {
@@ -39,17 +38,29 @@ struct CalendarScheduleDetailItem: View {
 				}
 				.padding(.leading, 10)
 				
-				Spacer(minLength: 0)
+				Spacer()
+                
+                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName), memo: "")) {
+                    Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+                        .resizable()
+                        .frame(width: 34, height: 34)
+                        .padding(.trailing, 11)
+                }
+                .simultaneousGesture(TapGesture().onEnded {
+                    scheduleInteractor.setScheduleToCurrentSchedule(schedule: schedule)
+                    appState.isEditingDiary = false
+                })
+// 				Spacer(minLength: 0)
 				
-				Button(action: {
-                    scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
-                    self.isToDoSheetPresented = true
-                }, label: {
-					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
-						.resizable()
-						.frame(width: 34, height: 34)
-						.padding(.trailing, 11)
-				})
+// 				Button(action: {
+//                     scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
+//                     self.isToDoSheetPresented = true
+//                 }, label: {
+// 					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+// 						.resizable()
+// 						.frame(width: 34, height: 34)
+// 						.padding(.trailing, 11)
+// 				})
 				
 			}
 			.frame(width: screenWidth-50, height: 55)

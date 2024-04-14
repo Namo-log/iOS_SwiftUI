@@ -36,6 +36,13 @@ class ScheduleState: ObservableObject {
 	@Published var calculatedYearMonth: [YearMonth] = []
 }
 
+class DiaryState: ObservableObject {
+    /// 상세 보기를 위해 선택된 하나의 기록
+    @Published var currentDiary: Diary = Diary()
+    /// 기록 메인 화면에 보여지기 위한 기록들
+    @Published var monthDiaries: [Diary] = []
+}
+
 class MoimState: ObservableObject {
 	/// 전체 모임 리스트
 	@Published var moims: [Moim] = []

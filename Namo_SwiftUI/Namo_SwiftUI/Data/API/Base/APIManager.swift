@@ -36,6 +36,7 @@ final class APIManager {
 		do {
 			let request = await self.requestData(endPoint: endPoint)
 			result = try request.result.get()
+            print(result)
 		} catch {
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
@@ -137,7 +138,7 @@ extension APIManager {
           return AF.upload(multipartFormData: { multipartFormData in
               for image in images {
 				  if let image = image {
-					  multipartFormData.append(image, withName: "img", fileName: "\(image).png", mimeType: "image/png")
+					  multipartFormData.append(image, withName: "imgs", fileName: "\(image).png", mimeType: "image/png")
 				  }
               }
 		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
@@ -146,7 +147,7 @@ extension APIManager {
 		  return AF.upload(multipartFormData: { multipartFormData in
 			  for image in images {
 				  if let image = image {
-					  multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+					  multipartFormData.append(image, withName: "imgs", fileName: "\(image).jpeg", mimeType: "image/jpeg")
 				  }
 			  }
 			  

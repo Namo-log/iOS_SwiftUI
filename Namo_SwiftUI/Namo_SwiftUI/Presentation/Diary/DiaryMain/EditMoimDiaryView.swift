@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Factory
 
 // 모임 기록 추가 및 수정 화면
 struct EditMoimDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
+    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
     let info: ScheduleInfo
     
@@ -145,7 +147,7 @@ struct EditMoimDiaryView: View {
                         
                         // 참석자
                         HStack(alignment: .top) {
-                            Text("참석자 (\(info.participants))")
+                            Text("참석자 (5)")
                                 .font(.pretendard(.bold, size: 15))
                                 .foregroundStyle(.mainText)
                             Spacer()
@@ -160,9 +162,10 @@ struct EditMoimDiaryView: View {
                         .padding(.top, 25)
                         
                         // 참석자 동그라미 뷰
+                        // TODO: - 참석자값 어딘가에서 받아서 연결 필요
                         if showParticipants {
                             HStack(spacing: 10) {
-                                ForEach(0..<info.participants, id: \.self) { _ in
+                                ForEach(0..<5, id: \.self) { _ in
                                     Circle()
                                         .stroke(.textUnselected, lineWidth: 2)
                                         .frame(width: 42, height: 42)
@@ -178,7 +181,7 @@ struct EditMoimDiaryView: View {
                         
                         // 장소 뷰
                         ForEach(0..<numOfPlace, id: \.self) { num in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, placeNumber: num + 1)
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert)
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -205,7 +208,7 @@ struct EditMoimDiaryView: View {
                     }
                 } // ScrollView
                 
-                EditSaveDiaryView()
+//                EditSaveDiaryView()
             } // VStack - center
             
             // 쓰레기통 클릭 시 Alert 띄우기
@@ -232,6 +235,10 @@ struct EditMoimDiaryView: View {
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
                         print("기록 삭제")
+                        Task {
+                            // 모임 기록 삭제
+                            await moimDiaryInteractor.deleteMoimDiary(moimMemoId: 1)
+                        }
                         self.presentationMode.wrappedValue.dismiss()
                     }
             }
@@ -249,8 +256,4 @@ struct EditMoimDiaryView: View {
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
     }
-}
-
-#Preview {
-    EditMoimDiaryView(info: ScheduleInfo(scheduleName: "코딩 스터디", date: "2022.06.28(화) 11:00", place: "가천대 AI관 404호"))
 }
