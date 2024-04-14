@@ -255,14 +255,19 @@ struct GroupCalendarView: View {
 			),
 			leftButtonTitle: "취소",
 			leftButtonAction: {
-				pickerCurrentYear = calendarController.yearMonth.year
-				pickerCurrentMonth = calendarController.yearMonth.month
 			},
 			rightButtonTitle: "확인",
 			rightButtonAction: {
-				calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				// scroll이 dismiss된 이후에 동작해야 animation이 활성화됩니다.
+				DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+					calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				}
 			}
 		)
+		.onAppear {
+			pickerCurrentYear = calendarController.yearMonth.year
+			pickerCurrentMonth = calendarController.yearMonth.month
+		}
 	}
 	
 	private var groupInfo: some View {
