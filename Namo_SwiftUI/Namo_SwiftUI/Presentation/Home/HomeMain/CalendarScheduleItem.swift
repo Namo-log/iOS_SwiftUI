@@ -8,14 +8,14 @@
 import SwiftUI
 
 enum CalendarScheduleItemype {
-	case onlyOneDay
-	case startDay
-	case midDay
-	case endDay
-	case startDayWithRightCorner
-	case midDayWithRightCorner
-	case midDayWithLeftCorner
-	case endDayWithLeftCorner
+	case onlyOneDay  // 하루 일정
+	case startDay  // 여러 일 지속 일정 중 시작일
+	case midDay  // 여러 일 지속 일정 중 중간
+	case endDay  // 여러 일 지속 일정 중 마지막일
+	case startDayWithRightCorner  // 시작일이지만, 주의 마지막으로 오른쪽 코너를 가지는 경우
+	case midDayWithRightCorner  // 중간이지만, 주의 마지막으로 오른쪽 코너를 가지는 경우
+	case midDayWithLeftCorner  // 중간이지만, 주의 처음으로 왼쪽 코너를 가지는 경우
+	case endDayWithLeftCorner  // 마지막날이지만, 주의 처음으로 왼쪽 코너를 가지는 경우
 }
 
 // 캘린더에 표시될 한 개의 스케쥴 아이템

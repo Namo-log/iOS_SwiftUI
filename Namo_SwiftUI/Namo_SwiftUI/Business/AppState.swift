@@ -25,10 +25,15 @@ struct PlaceState {
 }
 
 class ScheduleState: ObservableObject {
+    /// 개인 일정 생성/수정을 위한 스케줄 템플릿
 	@Published var currentSchedule: ScheduleTemplate = ScheduleTemplate()
+    /// 모임 일정 생성./수정을 위한 스케줄 템플릿
+    @Published var currentMoimSchedule: MoimScheduleTemplate = MoimScheduleTemplate()
 	
 	/// calendar에 보여지기 위한 스케쥴들
 	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
+	// 캘린더에 표시된(계산된) YearMonth를 저장
+	@Published var calculatedYearMonth: [YearMonth] = []
 }
 
 class MoimState: ObservableObject {
@@ -36,9 +41,11 @@ class MoimState: ObservableObject {
 	@Published var moims: [Moim] = []
 	/// 유저가 현재 확인하고 있는 모임
 	@Published var currentMoim: Moim = Moim()
+	@Published var currentMoimSchedule: [YearMonthDay: [CalendarMoimSchedule]] = [:]
 }
 
 class AppState: ObservableObject {
+	@Published var isLoading: Bool = false
 	
 	// Tabbar
 	@Published var isTabbarHidden: Bool = false
