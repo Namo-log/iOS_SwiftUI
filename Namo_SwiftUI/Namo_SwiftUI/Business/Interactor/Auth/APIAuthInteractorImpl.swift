@@ -71,6 +71,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
+                                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
                                     self?.appState.isTabbarHidden = false
                                 }
                                 
@@ -126,6 +127,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 DispatchQueue.main.async {
                                     
                                     UserDefaults.standard.set(true, forKey: "isLogin")
+                                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
                                     self.appState.isTabbarHidden = false
                                 }
                
@@ -295,12 +297,14 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                 DispatchQueue.main.async {
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
+                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
                     self.appState.isTabbarHidden = false
                 }
                 
                 KeyChainManager.addItem(key: "naverAccessToken", value: naverAccessToken)
                 
                 UserDefaults.standard.set("naver", forKey: "socialLogin")
+                
 
             } else {
                 
@@ -381,6 +385,7 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
                 DispatchQueue.main.async {
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
+                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
                     self.appState.isTabbarHidden = false
                 }
                 
