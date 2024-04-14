@@ -95,6 +95,7 @@ struct GroupCalendarView: View {
 	private var header: some View {
 		HStack {
 			Button(action: {
+				appState.isTabbarHidden = false
 				dismiss()
 			}, label: {
 				Image(.icBackArrowOrange)
