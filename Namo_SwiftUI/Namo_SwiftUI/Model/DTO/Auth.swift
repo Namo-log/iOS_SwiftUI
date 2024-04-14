@@ -30,6 +30,12 @@ struct AppleAccessToken: Codable {
     let email: String
 }
 
+struct TermRequest: Codable {
+    
+    let isCheckTermOfUse: Bool
+    let isCheckPersonalInformationCollection: Bool
+}
+
 enum SocialLogin {
     case kakao
     case naver
