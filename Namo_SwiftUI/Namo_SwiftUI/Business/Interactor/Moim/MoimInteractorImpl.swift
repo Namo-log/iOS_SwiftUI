@@ -13,6 +13,8 @@ struct MoimInteractorImpl: MoimInteractor {
 	@Injected(\.appState) var appState
 	@Injected(\.moimState) var moimState
 	
+	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
+	
 	// 모임 리스트 가져오기
 	func getGroups() async {
 		DispatchQueue.main.async {
@@ -38,7 +40,7 @@ struct MoimInteractorImpl: MoimInteractor {
 	
 	func getMoimSchedule(moimId: Int) async {
 		let schedules = await moimRepository.getMoimSchedule(moimId: moimId) ?? []
-		let mappedSchedules = setSchedule(schedules.map({$0.toMoimSchedule()}))
+		let mappedSchedules = setSchedule(schedules.map({$0.toMoimSchedule()}).sorted(by: {$0.startDate < $1.startDate}))
 		
 		await MainActor.run {
 			moimState.currentMoimSchedule = mappedSchedules

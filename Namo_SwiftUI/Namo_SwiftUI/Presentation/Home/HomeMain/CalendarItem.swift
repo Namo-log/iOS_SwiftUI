@@ -15,6 +15,7 @@ struct CalendarItem: View {
 	@EnvironmentObject var scheduleState: ScheduleState
 	@EnvironmentObject var moimState: MoimState
 	@Injected(\.categoryInteractor) var categoryInteractor
+	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	let date: YearMonthDay
 	
@@ -49,6 +50,24 @@ struct CalendarItem: View {
 					calendarScheduleItem(geometry: geometry, schedules: schedules)
 				} else if isMoimCalendar, let schedules = moimState.currentMoimSchedule[date]?.filter({ $0.position >= 0 && $0.position < MAX_SCHEDULE }) {
 					calendarMoimScheduleItem(geometry: geometry, schedules: schedules)
+				}
+			
+				if !isMoimCalendar && focusDate == nil, let count = scheduleState.calendarSchedules[date]?.count, count > MAX_SCHEDULE {
+					HStack {
+						Spacer()
+						Text("+\(count - MAX_SCHEDULE)")
+							.font(.pretendard(.semibold, size: 8))
+							.foregroundStyle(Color(.mainText))
+						Spacer()
+					}
+				} else if isMoimCalendar && focusDate == nil, let count = moimState.currentMoimSchedule[date]?.count, count > MAX_SCHEDULE {
+					HStack {
+						Spacer()
+						Text("+\(count - MAX_SCHEDULE)")
+							.font(.pretendard(.semibold, size: 8))
+							.foregroundStyle(Color(.mainText))
+						Spacer()
+					}
 				}
 			}
 			.padding(.top, 4)
