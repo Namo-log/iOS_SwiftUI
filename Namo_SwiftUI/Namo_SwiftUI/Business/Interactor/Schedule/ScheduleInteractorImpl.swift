@@ -16,6 +16,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
 	let pagingCount = 4
+	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
 	func setCalendar(date: Date) async {
@@ -30,7 +31,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 			return schedule.endDate >= startDate.startOfMonth() && schedule.startDate <= endDate.endOfMonth()
 		})
 		// 해당 데이터 매핑해서 state로
-		let mappedSchedules = setSchedules(filteredSchedules)
+		let mappedSchedules = setSchedules(filteredSchedules.sorted(by: {$0.startDate < $1.startDate}))
 		DispatchQueue.main.async {
 			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
 			scheduleState.calendarSchedules = mappedSchedules
@@ -147,7 +148,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		let schedules = realm.getObjects(RealmSchedule.self).filter({ schedule in
 			return schedule.endDate >= startDate.startOfMonth() && schedule.startDate <= endDate.endOfMonth()
 		})
-		let mappedSchedules = setSchedules(schedules.map({$0.toSchedule()}))
+		let mappedSchedules = setSchedules(schedules.map({$0.toSchedule()}).sorted(by: {$0.startDate < $1.startDate}))
 		DispatchQueue.main.async {
 			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
 			scheduleState.calendarSchedules = mappedSchedules

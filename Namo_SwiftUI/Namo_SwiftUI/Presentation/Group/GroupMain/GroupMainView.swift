@@ -107,7 +107,9 @@ struct GroupMainView: View {
 			}
 		}
 		.refreshable {
-			await moimInteractor.getGroups()
+			Task {
+				await moimInteractor.getGroups()
+			}
 		}
 	}
 	

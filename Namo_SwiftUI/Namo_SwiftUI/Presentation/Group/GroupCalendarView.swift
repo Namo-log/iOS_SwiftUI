@@ -28,6 +28,7 @@ struct GroupCalendarView: View {
 	
 	// groupInfo
 	@State var showGroupInfo: Bool = false
+	@State var showWithdrawConfirm: Bool = false
 	@State var groupName: String = ""
 	@State var newGroupName: String = ""
 	@FocusState var isGroupNameFoused: Bool
@@ -83,6 +84,10 @@ struct GroupCalendarView: View {
 			
 			if showGroupInfo {
 				groupInfo
+				
+				if showWithdrawConfirm {
+					withdrawConfirm
+				}
 			}
             
             
@@ -105,6 +110,7 @@ struct GroupCalendarView: View {
 	private var header: some View {
 		HStack {
 			Button(action: {
+				appState.isTabbarHidden = false
 				dismiss()
 			}, label: {
 				Image(.icBackArrowOrange)
@@ -266,14 +272,19 @@ struct GroupCalendarView: View {
 			),
 			leftButtonTitle: "취소",
 			leftButtonAction: {
-				pickerCurrentYear = calendarController.yearMonth.year
-				pickerCurrentMonth = calendarController.yearMonth.month
 			},
 			rightButtonTitle: "확인",
 			rightButtonAction: {
-				calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				// scroll이 dismiss된 이후에 동작해야 animation이 활성화됩니다.
+				DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+					calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				}
 			}
 		)
+		.onAppear {
+			pickerCurrentYear = calendarController.yearMonth.year
+			pickerCurrentMonth = calendarController.yearMonth.month
+		}
 	}
 	
 	private var groupInfo: some View {
@@ -381,14 +392,7 @@ struct GroupCalendarView: View {
 					.padding(.bottom, 31)
 					
 					Button(action: {
-						Task {
-							let result = await moimInteractor.withdrawGroup(moimId: moimState.currentMoim.groupId)
-							// 탈퇴 성공시 dismiss
-							if result {
-								appState.isTabbarOpaque = false
-								dismiss()
-							}
-						}
+						showWithdrawConfirm = true
 					}, label: {
 						Text("탈퇴하기")
 							.font(.pretendard(.regular, size: 15))
@@ -413,6 +417,26 @@ struct GroupCalendarView: View {
 			newGroupName = groupName
 		}
 	}
+	
+	private var withdrawConfirm: some View {
+		NamoAlertViewWithTitle(
+			showAlert: $showWithdrawConfirm,
+			title: "정말 그룹에서 탈퇴하시겠어요?",
+			message: "탈퇴하더라도\n이전 모임 일정은 사라지지 않습니다.",
+			rightButtonTitle: "확인",
+			rightButtonAction: {
+				Task {
+					let result = await moimInteractor.withdrawGroup(moimId: moimState.currentMoim.groupId)
+					// 탈퇴 성공시 dismiss
+					if result {
+						appState.isTabbarOpaque = false
+						dismiss()
+					}
+				}
+			}
+		)
+	}
+	
 }
 
 #Preview {
