@@ -10,4 +10,10 @@ protocol MoimInteractor {
 	func changeMoimName(moimId: Int, newName: String) async -> Bool
 	func withdrawGroup(moimId: Int) async -> Bool
 	func getMoimSchedule(moimId: Int) async
+    func postNewMoimSchedule() async
+    func patchMoimSchedule() async
+    func deleteMoimSchedule() async
+    func setPlaceToCurrentMoimSchedule()
+    func setScheduleToCurrentMoimSchedule(schedule: MoimSchedule?)
+    func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser])
 }

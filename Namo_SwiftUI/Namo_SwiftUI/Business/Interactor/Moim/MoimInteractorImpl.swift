@@ -12,6 +12,7 @@ struct MoimInteractorImpl: MoimInteractor {
 	@Injected(\.moimRepository) var moimRepository
 	@Injected(\.appState) var appState
 	@Injected(\.moimState) var moimState
+    @Injected(\.scheduleState) var scheduleState
 	
 	// 모임 리스트 가져오기
 	func getGroups() async {
@@ -136,4 +137,121 @@ struct MoimInteractorImpl: MoimInteractor {
 			return schedules.last!.position + 1
 		}
 	}
+    
+    /// scheduleState.currentMoimSchedule의 내용을 추가하여 서버로 전송합니다.
+    func postNewMoimSchedule() async {
+        let temp = scheduleState.currentMoimSchedule
+        print("Current TEMPLATE: \(temp)")
+        
+        let calendar = Calendar.current
+        let startDate = temp.startDate
+        let endDate = temp.endDate
+
+        let interval = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        
+        guard let moimId = temp.moimId else {
+            print("moimId Required")
+            return
+        }
+        
+        let postSchedule = postMoimScheduleRequest(
+            moimId: moimId,
+            name: temp.name,
+            startDate: Int(startDate.timeIntervalSince1970),
+            endDate: Int(endDate.timeIntervalSince1970),
+            interval: interval,
+            x: temp.x,
+            y: temp.y,
+            locationName: temp.locationName,
+            Users: temp.users.map{ $0.userId }
+        )
+        
+        let result = await moimRepository.postMoimSchedule(data: postSchedule)
+        print("API 요청 결과 : \(String(describing: result))")
+        
+        // TODO: 해당 부분 그룹 캘린더용으로 업데이트 필요
+//        if result != nil {
+////            await setCalendar(date: startDate) -> 그룹 캘린더 업데이트로 변경 필요
+//            DispatchQueue.main.async {
+//                NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
+//            }
+//        }
+        
+    }
+    
+    /// scheduleState.currentSchedule의 내용을 추가하여 서버로 전송 - 기존 정보를 수정합니다.
+    func patchMoimSchedule() async {
+        let temp = scheduleState.currentMoimSchedule
+        
+        guard let scheduleId = temp.moimScheduleId else {
+            print("ScheduleID not included")
+            return
+        }
+        
+        let calendar = Calendar.current
+        let startDate = temp.startDate
+        let endDate = temp.endDate
+
+        let interval = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        
+        let patchSchedule = patchMoimScheduleRequest(
+            moimScheduleId: scheduleId,
+            name: temp.name,
+            startDate: Int(startDate.timeIntervalSince1970),
+            endDate: Int(endDate.timeIntervalSince1970),
+            interval: interval,
+            x: temp.x,
+            y: temp.y,
+            locationName: temp.locationName,
+            Users: temp.users.map { $0.userId }
+        )
+        
+        let result = await moimRepository.patchMoimSchedule(scheduleId: scheduleId, data: patchSchedule)
+        print(String(describing: result))
+    }
+    
+    /// 현재 수정하고 있는 스케쥴을 서버로 삭제 요청합니다.
+    func deleteMoimSchedule() async {
+        let temp = scheduleState.currentMoimSchedule
+        
+        guard let scheduleId = temp.moimScheduleId else {
+            print("ScheduleID not included")
+            return
+        }
+        
+        let result = await moimRepository.deleteMoimSchedule(scheduleId: scheduleId)
+        print(String(describing: result))
+    }
+    
+    /// 지도에서 선택한 selectedPlace의 정보를 currentMoimSchedule에 저장합니다
+    func setPlaceToCurrentMoimSchedule() {
+        if let place = appState.placeState.selectedPlace {
+            scheduleState.currentMoimSchedule.locationName = place.name
+            scheduleState.currentMoimSchedule.x = place.x
+            scheduleState.currentMoimSchedule.y = place.y
+        }
+    }
+    
+    /// 홈 화면에서 선택한 Schedule을 Edit 화면에서 사용할 currentMoimSchedule로 저장합니다.
+    /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
+    func setScheduleToCurrentMoimSchedule(schedule: MoimSchedule?) {
+        
+        DispatchQueue.main.async {
+            scheduleState.currentMoimSchedule = MoimScheduleTemplate(
+                moimScheduleId: schedule?.moimScheduleId,
+                name: schedule?.name,
+                startDate: schedule?.startDate,
+                endDate: schedule?.endDate,
+                x: schedule?.x,
+                y: schedule?.y,
+                locationName: schedule?.locationName,
+                users: schedule?.users
+            )
+        }
+    }
+    
+    /// CheckParticipant에서 선택한 selectedUser들의 정보를 currentMoimSchedule에 저장합니다
+    func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser]) {
+        scheduleState.currentMoimSchedule.users = list
+    }
 }

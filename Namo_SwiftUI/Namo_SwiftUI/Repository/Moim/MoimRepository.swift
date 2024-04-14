@@ -14,4 +14,7 @@ protocol MoimRepository {
 	func participateMoim(groupCode: String) async -> Bool
 	func withdrawMoim(moimId: Int) async -> Bool
 	func getMoimSchedule(moimId: Int) async -> getMoimScheduleResponse?
+    func postMoimSchedule(data: postMoimScheduleRequest) async -> Int?
+    func patchMoimSchedule(scheduleId: Int, data: patchMoimScheduleRequest) async -> String?
+    func deleteMoimSchedule(scheduleId: Int) async -> String?
 }

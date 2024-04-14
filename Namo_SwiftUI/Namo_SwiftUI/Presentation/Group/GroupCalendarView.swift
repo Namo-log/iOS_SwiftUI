@@ -84,12 +84,22 @@ struct GroupCalendarView: View {
 			if showGroupInfo {
 				groupInfo
 			}
+            
+            
+            if isToDoSheetPresented {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea(.all, edges: .all)
+            }
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.toolbar(.hidden, for: .navigationBar)
 		.onAppear {
 			groupName = moimState.currentMoim.groupName ?? ""
 		}
+        .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
+            GroupToDoEditView()
+                .background(ClearBackground())
+        })
     }
 	
 	private var header: some View {
@@ -221,7 +231,9 @@ struct GroupCalendarView: View {
 		.frame(width: screenWidth, height: screenHeight * 0.47)
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
-			Button(action: {}, label: {
+			Button(action: {
+                self.isToDoSheetPresented = true
+            }, label: {
 				Image(.floatingAdd)
 					.padding(.bottom, 37)
 					.padding(.trailing, 25)

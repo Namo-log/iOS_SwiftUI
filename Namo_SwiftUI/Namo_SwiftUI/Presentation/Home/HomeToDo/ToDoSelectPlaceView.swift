@@ -13,6 +13,7 @@ struct ToDoSelectPlaceView: View {
     @EnvironmentObject var appState: AppState
     @Injected(\.placeInteractor) var placeInteractor
     @Injected(\.scheduleInteractor) var scheduleInteractor
+    @Injected(\.moimInteractor) var moimInteractor
     
     /// 본 화면의 표시 여부 state
     @Binding var isShowSheet: Bool
@@ -25,6 +26,8 @@ struct ToDoSelectPlaceView: View {
     @State var searchText: String = ""
     /// 취소/확인 버튼 show state
     @State var showBtns: Bool = false
+    /// 장소 선택 창이 모임 일정용인지
+    let isGroup: Bool
     
     
     var body: some View {
@@ -61,6 +64,7 @@ struct ToDoSelectPlaceView: View {
                         Spacer()
                         Button(action: {
                             placeInteractor.selectPlace(place: nil)
+                            self.dismissThis()
                         }) {
                             Text("취소")
                                 .font(.pretendard(.bold, size: 15))
@@ -77,7 +81,12 @@ struct ToDoSelectPlaceView: View {
                         }
                         Spacer(minLength: 20)
                         Button(action: {
-                            scheduleInteractor.setPlaceToCurrentSchedule()
+                            if self.isGroup {
+                                print("모임에 잘 저장")
+                                moimInteractor.setPlaceToCurrentMoimSchedule()
+                            } else {
+                                scheduleInteractor.setPlaceToCurrentSchedule()
+                            }
                             placeInteractor.clearPlaces(isSave: true)
                             self.dismissThis()
                         }) {

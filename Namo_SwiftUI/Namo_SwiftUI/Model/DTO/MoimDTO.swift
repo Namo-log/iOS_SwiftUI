@@ -101,3 +101,27 @@ extension MoimScheduleDTO {
 		)
 	}
 }
+
+struct postMoimScheduleRequest: Encodable {
+    let moimId: Int
+    let name: String
+    let startDate: Int
+    let endDate: Int
+    let interval: Int
+    let x: Double?
+    let y: Double?
+    let locationName: String
+    let Users: [Int]
+}
+
+struct patchMoimScheduleRequest: Encodable {
+    let moimScheduleId: Int
+    let name: String
+    let startDate: Int
+    let endDate: Int
+    let interval: Int
+    let x: Double?
+    let y: Double?
+    let locationName: String
+    let Users: [Int]
+}
