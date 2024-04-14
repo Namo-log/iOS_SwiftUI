@@ -8,6 +8,22 @@
 import SwiftUI
 import Factory
 
+/*
+ 사용 예시
+ NamoAlertViewWithTitle(
+	 showAlert: $showWithdrawConfirm,
+	 title: "정말 그룹에서 탈퇴하시겠어요?",
+	 message: "탈퇴하더라도\n이전 모임 일정은 사라지지 않습니다.",
+	 rightButtonTitle: "확인",
+	 rightButtonAction: {
+		
+	 }
+ )
+ 
+ 24.04.14
+ - NamoAlertView를 띄우는 변수를 조절할 때 withAnimation을 감싸주세요
+ */
+
 struct NamoAlertViewWithTitle: View {
 	@Injected(\.appState) var appState
 	
