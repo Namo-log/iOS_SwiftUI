@@ -12,6 +12,13 @@ import KakaoSDKAuth
 import NaverThirdPartyLogin
 import AuthenticationServices
 
+enum socialLogin {
+    
+    case kakao
+    case naver
+    case apple
+}
+
 class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationControllerPresentationContextProviding {
     
     @Injected(\.authRepository) private var authRepository
@@ -23,39 +30,55 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
         DispatchQueue.main.async {
             if (UserApi.isKakaoTalkLoginAvailable()) {
                 
-                UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                     
                     if let error = error {
                         print(error.localizedDescription)
-                        print("카카오 토큰(앱) 받아오기 실패")
+                        
+                        // 카카오와의 통신 오류: 알 수 없는 에러. 재시도
+                        Task {
+                            await self?.kakaoLogin()
+                        }
+                        
+                        print("카카오 토큰(앱) 받아오기 실패. 재시도")
+                        
                     } else {
                         
                         print("카카오 토큰(앱) 받아오기 성공")
                         
-                        guard let accessToken = oauthToken?.accessToken else { return }
+                        guard let kakaoAccessToken = oauthToken?.accessToken else { return }
                         
-                        print("카카오 accessToken: \(accessToken)")
+                        print("카카오 accessToken: \(kakaoAccessToken)")
                         
-                        let socialAccessToken = SocialAccessToken(accessToken: accessToken)
+                        let socialAccessToken = SocialAccessToken(accessToken: kakaoAccessToken)
                         
                         Task {
                             
-                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
+                            let namoServerTokens = await self?.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
                             
-                            if let serverTokens = serverTokens {
+                            if let serverTokens = namoServerTokens {
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                                 
                                 print("accessToken: \(serverTokens.accessToken)")
                                 print("refreshToken: \(serverTokens.refreshToken)")
                                 
+                                /// 현재 로그인한 소셜 미디어는 카카오
+//                                self.appState.socialLogin = .kakao
+                                UserDefaults.standard.set("kakao", forKey: "socialLogin")
+                                
+                                KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
+                                
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
-                                    self.appState.isTabbarHidden = false
+                                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                                    self?.appState.isTabbarHidden = false
                                 }
                                 
                             } else {
-                                print("서버 토큰 에러")
+                                
+                                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(카카오 로그인)"))
+                                
                             }
                         }
                     }
@@ -66,36 +89,50 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                     
                     if let error = error {
                         print(error)
-                        print("카카오 토큰(웹) 받아오기 실패")
+                        
+                        // 카카오와의 통신 오류: 알 수 없는 에러. 재시도
+                        Task {
+                            await self.kakaoLogin()
+                        }
+                        
+                        print("카카오 토큰(웹) 받아오기 실패. 재시도")
+                        
                     } else {
                         
                         print("카카오 토큰(웹) 받아오기 성공")
                         
-                        guard let accessToken = oauthToken?.accessToken else { return }
+                        guard let kakaoAccessToken = oauthToken?.accessToken else { return }
                         
-                        print("카카오 accessToken: \(accessToken)")
+                        print("카카오 accessToken: \(kakaoAccessToken)")
                         
-                        let socialAccessToken = SocialAccessToken(accessToken: accessToken)
+                        let socialAccessToken = SocialAccessToken(accessToken: kakaoAccessToken)
                         
                         Task {
                             
-                            let serverTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
+                            let namoServerTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
                             
-                            if let serverTokens = serverTokens {
+                            if let serverTokens = namoServerTokens {
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                                 
                                 print("accessToken: \(serverTokens.accessToken)")
                                 print("refreshToken: \(serverTokens.refreshToken)")
                                 
+                                KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
+                                
+                                /// 현재 로그인한 소셜 미디어는 카카오
+//                                self.appState.socialLogin = .kakao
+                                UserDefaults.standard.set("kakao", forKey: "socialLogin")
+                                
                                 DispatchQueue.main.async {
                                     
                                     UserDefaults.standard.set(true, forKey: "isLogin")
+                                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
                                     self.appState.isTabbarHidden = false
                                 }
                
                             } else {
-                                print("서버 토큰 에러")
+                                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(카카오 로그인)"))
                             }
                         }
                     }
@@ -127,12 +164,70 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
         authorizationController.performRequests()
     }
     
+    // 회원 탈퇴
+    func withdrawMember() async {
+        
+        if let sociallogin = UserDefaults.standard.string(forKey: "socialLogin") {
+            
+            if sociallogin == "kakao" {
+                
+                let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberKakako(kakaoAccessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!)
+    
+                if result?.code == 200 {
+                    DispatchQueue.main.async {
+                        UserDefaults.standard.set(false, forKey: "isLogin")
+                        self.appState.isTabbarHidden = true
+                        self.appState.currentTab = .home
+                    }
+                } else {
+//                    print("카카오 회원 탈퇴 500 서버 에러")
+//                    print(result?.code)
+//                    print(result?.message)
+                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카카오 회원 탈퇴 \(String(describing: result?.code)) 에러"))
+                }
+                
+            } else if sociallogin == "naver" {
+                let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberNaver(naverAccessToken: KeyChainManager.readItem(key: "naverAccessToken")!)
+                
+                if result?.code == 200 {
+                    DispatchQueue.main.async {
+                        UserDefaults.standard.set(false, forKey: "isLogin")
+                        self.appState.isTabbarHidden = true
+                        self.appState.currentTab = .home
+                    }
+                } else {
+//                    print("네이버 회원 탈퇴 500 서버 에러")
+//                    print(result?.code)
+//                    print(result?.message)
+                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "네이버 회원 탈퇴 \(String(describing: result?.code)) 에러"))
+                }
+                
+            } else if sociallogin == "apple" {
+                let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!)
+                
+                if result?.code == 200 {
+                    DispatchQueue.main.async {
+                        UserDefaults.standard.set(false, forKey: "isLogin")
+                        self.appState.isTabbarHidden = true
+                        self.appState.currentTab = .home
+                    }
+                } else {
+//                    print("애플 회원 탈퇴 500 서버 에러")
+//                    print(result?.code)
+//                    print(result?.message)
+                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "애플 회원 탈퇴 \(String(describing: result?.code)) 에러"))
+                }
+            }
+        }
+    }
+    
     // 로그아웃
     func logout() async {
         
         let accessToken: String = KeyChainManager.readItem(key: "accessToken")!
         
-        let result: BaseResponse<Auth>? = await authRepository.removeToken(serverAccessToken: ServerAccessToken(accessToken: accessToken))
+        // 나모 서버 로그아웃 처리
+        let result: BaseResponse<ServerTokenResponse>? = await authRepository.removeToken(serverAccessToken: ServerAccessToken(accessToken: accessToken))
         
         if result?.code == 200 {
 
@@ -144,28 +239,32 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             
             KeyChainManager.deleteItem(key: "accessToken")
             
-            // 카카오 로그아웃
-            if (AuthApi.hasToken()) {
-                UserApi.shared.logout{ error in
-                    
-                    if let error = error {
-                        print(error)
-                        print(error.localizedDescription)
-                    } else {
-                        print("카카오 로그아웃 성공")
+            if let sociallogin = UserDefaults.standard.string(forKey: "socialLogin") {
+                
+                // 현재 소셜 로그인이 카카오인 경우 카카오 로그아웃 처리
+                if sociallogin == "kakao" {
+                    if (AuthApi.hasToken()) {
+                        UserApi.shared.logout{ error in
+                            
+                            if let error = error {
+                                print(error)
+                                print(error.localizedDescription)
+                            } else {
+                                print("카카오 로그아웃 성공")
+                            }
+                        }
                     }
+                    // 현재 소셜 로그인이 네이버인 경우 네이버 로그아웃 처리
+                } else if sociallogin == "naver" {
+                    await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
+                    
+                    print("네이버 로그아웃 성공")
                 }
             }
-
-            // 네이버 로그아웃
-            await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
-            
         } else {
             
             // MARK: 에러 핸들링 추후에 필요
-            print(result?.code)
-            print(result?.message)
-            print("로그아웃 실패. 재시도하세요.")
+            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "로그아웃 \(String(describing: result?.code)) 에러"))
         }
     }
 }
@@ -177,16 +276,18 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         
         print("네이버 로그인 성공")
         
-        let socialAccessToken = SocialAccessToken(
-            accessToken: NaverThirdPartyLoginConnection.getSharedInstance().accessToken)
+        let naverAccessToken = NaverThirdPartyLoginConnection.getSharedInstance().accessToken ?? ""
         
-        print("네이버 AccessToken: \(socialAccessToken)")
+//        let naverAccessToken = SocialAccessToken(
+//            accessToken: NaverThirdPartyLoginConnection.getSharedInstance().accessToken)
+        
+        print("네이버 AccessToken: \(naverAccessToken)")
         
         Task {
             
-            let serverTokens = await authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.naver)
+            let namoServerTokens = await authRepository.getServerToken(socialAccessToken: SocialAccessToken(accessToken: naverAccessToken), social: SocialType.naver)
             
-            if let serverTokens = serverTokens {
+            if let serverTokens = namoServerTokens {
                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                 
@@ -196,11 +297,20 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                 DispatchQueue.main.async {
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
+                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
                     self.appState.isTabbarHidden = false
                 }
+                
+                KeyChainManager.addItem(key: "naverAccessToken", value: naverAccessToken)
+                
+                UserDefaults.standard.set("naver", forKey: "socialLogin")
+                
 
             } else {
-                print("서버 토큰 에러")
+                
+                ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(네이버 로그인)"))
+            
+                
             }
         }
     }
@@ -226,9 +336,69 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {return}
         
-        print("Authentication successful: \(appleIDCredential.user)")
-        print("Authentication successful: \(String(data: appleIDCredential.identityToken!, encoding: .utf8))")
-        print("Authentication successful: \(String(data: appleIDCredential.authorizationCode!, encoding: .utf8))")
+        let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)!
+        
+        let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)!
+        
+        print("identityToken: \(identityToken)")
+        print("email: \(appleIDCredential.email)")
+        print("username: \(appleIDCredential.fullName)")
+        
+        var email: String = ""
+        var username: String = ""
+        
+        if let appleEmail = appleIDCredential.email {
+            email = appleEmail
+        } else {
+            email = ""
+        }
+        
+        if let appleFullName = appleIDCredential.fullName {
+            if let familyName = appleFullName.familyName, let givenName = appleFullName.givenName {
+                
+                username = familyName + givenName
+            } else {
+                username = ""
+            }
+        } else {
+            username = ""
+        }
+        
+        let appleLoginDTO = AppleAccessToken(identityToken: identityToken, username: username, email: email)
+        
+        print("서버로 보내는 identityToken: \(identityToken)")
+        print("서버로 보내는 username: \(username)")
+        print("서버로 보내는 email: \(email)")
+        print("서버로 보내는 username: \(type(of: username))")
+        print("서버로 보내는 email: \(type(of: email))")
+        
+        Task {
+            let namoServerTokens = await authRepository.getServerTokenApple(appleAccessToken: appleLoginDTO)
+            
+            if let serverTokens = namoServerTokens {
+                KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
+                KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
+                
+                print("accessToken: \(serverTokens.accessToken)")
+                print("refreshToken: \(serverTokens.refreshToken)")
+                
+                DispatchQueue.main.async {
+                    
+                    UserDefaults.standard.set(true, forKey: "isLogin")
+                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                    self.appState.isTabbarHidden = false
+                }
+                
+                KeyChainManager.addItem(key: "appleAuthorizationCode", value: authorizationCode)
+                
+                /// 현재 로그인한 소셜 미디어는 애플
+//                self.appState.socialLogin = .apple
+                UserDefaults.standard.set("apple", forKey: "socialLogin")
+
+            } else {
+                print("서버 토큰 에러")
+            }
+        }
     }
     
     // 애플 로그인 실패

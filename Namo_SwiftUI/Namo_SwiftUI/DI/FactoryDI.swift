@@ -78,4 +78,15 @@ extension Container {
         self { PlaceRepositoryImpl() }
             .singleton
     }
+    
+    var userRepository: Factory<UserRepository> {
+        self { UserRepositoryImpl() }
+            .singleton
+    }
+    
+    var userInteractor: Factory<UserInteractor> {
+        self { UserInteractorImpl() }
+            .singleton
+    }
+    
 }
