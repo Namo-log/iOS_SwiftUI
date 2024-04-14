@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+final class UserRepositoryImpl: UserRepository {
+    
+    // 약관동의
+    func registerTermsAgreement<T:Decodable>(termAgreement: TermRequest) async -> BaseResponse<T>?  {
+        
+        return await APIManager.shared.performRequestBaseResponse(endPoint: UserEndPoint.agreementTemrs(termAgreement: termAgreement))
+    }
+}

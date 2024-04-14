@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+protocol UserInteractor {
+    
+    // 약관 동의
+    func registerTermsAgreement() async
+}

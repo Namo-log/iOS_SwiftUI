@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+protocol UserRepository {
+    
+    // 약관동의
+    func registerTermsAgreement<T:Decodable>(termAgreement: TermRequest) async -> BaseResponse<T>?
+}
