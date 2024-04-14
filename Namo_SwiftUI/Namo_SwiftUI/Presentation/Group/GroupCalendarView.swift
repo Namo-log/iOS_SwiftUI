@@ -28,6 +28,7 @@ struct GroupCalendarView: View {
 	
 	// groupInfo
 	@State var showGroupInfo: Bool = false
+	@State var showWithdrawConfirm: Bool = false
 	@State var groupName: String = ""
 	@State var newGroupName: String = ""
 	@FocusState var isGroupNameFoused: Bool
@@ -36,7 +37,7 @@ struct GroupCalendarView: View {
 	
 	// calendar
 	@State var focusDate: YearMonthDay? = nil
-	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
+//	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
 	@State var isToDoSheetPresented: Bool = false
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -49,14 +50,22 @@ struct GroupCalendarView: View {
 				
 				weekday
 					.padding(.bottom, 11)
-				
-				CalendarView(calendarController) { date in
-					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $calendarSchedule, shouldHideTabBar: false)
+
+				GeometryReader { reader in
+					VStack {
+						CalendarView(calendarController) { date in
+							GeometryReader { geometry in
+								VStack(alignment: .leading) {
+									CalendarItem(date: date, isMoimCalendar: true, focusDate: $focusDate)
+								}
+								.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
+							}
+						}
+					}
 				}
-				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
-				.padding(.trailing, 6)
-				.padding(.bottom, 20)
+				.padding(.horizontal, 6)
+				.padding(.top, 3)
 				
 				if focusDate != nil {
 					detailView
@@ -75,18 +84,33 @@ struct GroupCalendarView: View {
 			
 			if showGroupInfo {
 				groupInfo
+				
+				if showWithdrawConfirm {
+					withdrawConfirm
+				}
 			}
+            
+            
+            if isToDoSheetPresented {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea(.all, edges: .all)
+            }
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.toolbar(.hidden, for: .navigationBar)
 		.onAppear {
 			groupName = moimState.currentMoim.groupName ?? ""
 		}
+        .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
+            GroupToDoEditView()
+                .background(ClearBackground())
+        })
     }
 	
 	private var header: some View {
 		HStack {
 			Button(action: {
+				appState.isTabbarHidden = false
 				dismiss()
 			}, label: {
 				Image(.icBackArrowOrange)
@@ -154,7 +178,7 @@ struct GroupCalendarView: View {
 				.font(.pretendard(.bold, size: 22))
 				.padding(.vertical, 20)
 			
-			ScrollView(.vertical) {
+			ScrollView(.vertical, showsIndicators: false) {
 				HStack {
 					Text("개인 일정")
 						.font(.pretendard(.bold, size: 15))
@@ -165,12 +189,12 @@ struct GroupCalendarView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?
+				if let schedules = moimState.currentMoimSchedule[focusDate!]?
 					.compactMap(({$0.schedule}))
-					.filter({!$0.moimSchedule})
+					.filter({!$0.curMoimSchedule})
 				{
-					ForEach(schedules, id: \.self) {schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
+					ForEach(schedules, id: \.id) {schedule in
+						CalendarMoimScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 개인 일정이 없습니다.")
@@ -189,18 +213,21 @@ struct GroupCalendarView: View {
 					Spacer()
 				}
 				
-				if let schedules = calendarSchedule[focusDate!]?
+				if let schedules = moimState.currentMoimSchedule[focusDate!]?
 					.compactMap({$0.schedule})
-					.filter({$0.moimSchedule})
+					.filter({$0.curMoimSchedule})
 				{
-					ForEach(schedules, id: \.self) { schedule in
-						CalendarScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
+					ForEach(schedules, id: \.id) { schedule in
+						CalendarMoimScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
 					Text("등록된 모임 일정이 없습니다.")
 						.font(.pretendard(.medium, size: 14))
 						.foregroundStyle(Color(.mainText))
 				}
+				
+				Spacer()
+					.frame(height: 100)
 			}
 			.frame(width: screenWidth-50)
 			.padding(.horizontal, 25)
@@ -210,13 +237,14 @@ struct GroupCalendarView: View {
 		.frame(width: screenWidth, height: screenHeight * 0.47)
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
-			Button(action: {}, label: {
+			Button(action: {
+                self.isToDoSheetPresented = true
+            }, label: {
 				Image(.floatingAdd)
 					.padding(.bottom, 37)
 					.padding(.trailing, 25)
 			})
 		}
-
 	}
 	
 	private var datePicker: some View {
@@ -244,14 +272,19 @@ struct GroupCalendarView: View {
 			),
 			leftButtonTitle: "취소",
 			leftButtonAction: {
-				pickerCurrentYear = calendarController.yearMonth.year
-				pickerCurrentMonth = calendarController.yearMonth.month
 			},
 			rightButtonTitle: "확인",
 			rightButtonAction: {
-				calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				// scroll이 dismiss된 이후에 동작해야 animation이 활성화됩니다.
+				DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+					calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				}
 			}
 		)
+		.onAppear {
+			pickerCurrentYear = calendarController.yearMonth.year
+			pickerCurrentMonth = calendarController.yearMonth.month
+		}
 	}
 	
 	private var groupInfo: some View {
@@ -359,14 +392,7 @@ struct GroupCalendarView: View {
 					.padding(.bottom, 31)
 					
 					Button(action: {
-						Task {
-							let result = await moimInteractor.withdrawGroup(moimId: moimState.currentMoim.groupId)
-							// 탈퇴 성공시 dismiss
-							if result {
-								appState.isTabbarOpaque = false
-								dismiss()
-							}
-						}
+						showWithdrawConfirm = true
 					}, label: {
 						Text("탈퇴하기")
 							.font(.pretendard(.regular, size: 15))
@@ -391,6 +417,26 @@ struct GroupCalendarView: View {
 			newGroupName = groupName
 		}
 	}
+	
+	private var withdrawConfirm: some View {
+		NamoAlertViewWithTitle(
+			showAlert: $showWithdrawConfirm,
+			title: "정말 그룹에서 탈퇴하시겠어요?",
+			message: "탈퇴하더라도\n이전 모임 일정은 사라지지 않습니다.",
+			rightButtonTitle: "확인",
+			rightButtonAction: {
+				Task {
+					let result = await moimInteractor.withdrawGroup(moimId: moimState.currentMoim.groupId)
+					// 탈퇴 성공시 dismiss
+					if result {
+						appState.isTabbarOpaque = false
+						dismiss()
+					}
+				}
+			}
+		)
+	}
+	
 }
 
 #Preview {

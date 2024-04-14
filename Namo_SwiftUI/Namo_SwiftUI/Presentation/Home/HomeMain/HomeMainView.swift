@@ -21,6 +21,7 @@ struct HomeMainView: View {
 	@State var pickerCurrentYear: Int = Date().toYMD().year
 	@State var pickerCurrentMonth: Int = Date().toYMD().month
     @State var isToDoSheetPresented: Bool = false
+	@State var previousYearMonth: YearMonth = Date().toYM()
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 	
@@ -33,13 +34,21 @@ struct HomeMainView: View {
 				weekday
 					.padding(.bottom, 11)
 				
-				CalendarView(calendarController) { date in
-					CalendarItem(date: date, focusDate: $focusDate, calendarSchedule: $scheduleState.calendarSchedules)
+				GeometryReader { reader in
+					VStack {
+						CalendarView(calendarController) { date in
+							GeometryReader { geometry in
+								VStack(alignment: .leading) {
+									CalendarItem(date: date, isMoimCalendar: false, focusDate: $focusDate)
+								}
+								.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
+							}
+						}
+					}
 				}
-				.frame(width: screenWidth-20)
 				.padding(.leading, 14)
-				.padding(.trailing, 6)
-				.padding(.bottom, 20)
+				.padding(.horizontal, 6)
+				.padding(.top, 3)
 				
 				if focusDate != nil {
 					detailView
@@ -63,8 +72,27 @@ struct HomeMainView: View {
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
-			await scheduleInteractor.setCalendar()
+//			await scheduleInteractor.setCalendar()
 			await categoryInteractor.getCategories()
+		}
+		.onChange(of: calendarController.yearMonth) { newYearMonth in
+			if previousYearMonth.year <= newYearMonth.year {
+				if previousYearMonth.month <= newYearMonth.month {
+					scheduleInteractor.calendarScrollBackward(newYearMonth)
+				} else {
+					scheduleInteractor.calendarScrollForward(newYearMonth)
+				}
+			} else {
+				scheduleInteractor.calendarScrollForward(newYearMonth)
+			}
+			
+			previousYearMonth = newYearMonth
+		}
+		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { notification in
+			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
+				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
+				focusDate = date
+			}
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
             ToDoEditView()
@@ -120,7 +148,8 @@ struct HomeMainView: View {
 					Spacer()
 				}
 			}
-			.padding(.horizontal, 20)
+			.padding(.leading, 14)
+			.padding(.trailing, 6)
 		}
 		.frame(height: 30)
 		.background(
@@ -138,7 +167,7 @@ struct HomeMainView: View {
 			
 			
 			
-			ScrollView(.vertical) {
+			ScrollView(.vertical, showsIndicators: false) {
 				HStack {
 					Text("개인 일정")
 						.font(.pretendard(.bold, size: 15))
@@ -189,6 +218,8 @@ struct HomeMainView: View {
 						.foregroundStyle(Color(.mainText))
 				}
 				
+				Spacer()
+					.frame(height: 100)
 			}
 			.frame(width: screenWidth-50)
 			.padding(.horizontal, 25)
@@ -236,14 +267,19 @@ struct HomeMainView: View {
 			),
 			leftButtonTitle: "취소",
 			leftButtonAction: {
-				pickerCurrentYear = calendarController.yearMonth.year
-				pickerCurrentMonth = calendarController.yearMonth.month
 			},
 			rightButtonTitle: "확인",
 			rightButtonAction: {
-				calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				// scroll이 dismiss된 이후에 동작해야 animation이 활성화됩니다.
+				DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+					calendarController.scrollTo(YearMonth(year: pickerCurrentYear, month: pickerCurrentMonth))
+				}
 			}
 		)
+		.onAppear {
+			pickerCurrentYear = calendarController.yearMonth.year
+			pickerCurrentMonth = calendarController.yearMonth.month
+		}
 	}
 	
 	

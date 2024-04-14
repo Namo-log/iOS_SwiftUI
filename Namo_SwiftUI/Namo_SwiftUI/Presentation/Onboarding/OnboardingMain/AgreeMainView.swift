@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 // 약관 동의 화면
 
@@ -14,10 +15,12 @@ struct AgreeMainView: View {
     @State var allAgree: Bool = false
     @State var required1: Bool = false
     @State var required2: Bool = false
-    @State var optional1: Bool = false
-    @State var optional2: Bool = false
+//    @State var optional1: Bool = false
+//    @State var optional2: Bool = false
     
     @State var isActive: Bool = false
+    
+    @Injected(\.userInteractor) var userInteractor
  
     var body: some View {
  
@@ -33,13 +36,17 @@ struct AgreeMainView: View {
             
             Spacer()
             
-            AgreeSubView(required1: $required1, required2: $required2, optional1: $optional1, optional2: $optional2)
+            AgreeSubView(required1: $required1, required2: $required2)
 
             Spacer()
             
             Button {
                 
                 isActive.toggle()
+                
+                Task {
+                    await userInteractor.registerTermsAgreement()
+                }
                 
             } label: {
                 
@@ -65,6 +72,7 @@ struct AgreeMainView: View {
             .disabled(!(required1 && required2))
             .padding(.bottom, 25)
         }
+        .padding(.vertical, 30)
     }
 }
 

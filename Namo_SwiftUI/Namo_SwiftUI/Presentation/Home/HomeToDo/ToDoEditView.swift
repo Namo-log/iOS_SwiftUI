@@ -119,16 +119,9 @@ struct ToDoEditView: View {
                                     
                                 } label: {
                                     HStack {
-//<<<<<<< HEAD
-//                                        
-//                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.paletteId ?? -1))
-//                                                                                    .frame(width: 13, height: 13)
-//                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == appState.scheduleState.scheduleTemp.categoryId})?.name ?? "카테고리 없음")
-//=======
                                         ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1))
                                             .frame(width: 13, height: 13)
                                         Text(appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음")
-//>>>>>>> develop
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
@@ -395,7 +388,7 @@ struct ToDoEditView: View {
                 )
             }
         }
-        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw) : nil)
+        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isGroup: false) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear(perform: {
             // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때

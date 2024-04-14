@@ -12,6 +12,9 @@ struct SplashView: View {
     @State var isActive: Bool = false   // 다음 화면 활성화
     @AppStorage("onboardingDone") var onboardingDone: Bool = false
     @AppStorage("isLogin") var isLogin: Bool = false
+    @AppStorage("newUser") var newUser: Bool = true
+    
+    var socialLogin: String?
     
     var body: some View {
         ZStack {
@@ -20,8 +23,10 @@ struct SplashView: View {
                 OnboardingView()
             } else if onboardingDone && isActive && !isLogin {
                 LoginView()
-            } else if onboardingDone && isActive && isLogin {
+            } else if onboardingDone && isActive && isLogin && !newUser {
                 NamoHome()
+            } else if onboardingDone && isActive && isLogin && newUser {
+                AgreeMainView()
             } else {
                 ZStack {
                     
@@ -36,11 +41,13 @@ struct SplashView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 isActive = true
             }
+            
+            UserDefaults.standard.set(socialLogin, forKey: "socialLogin")
         }
         .ignoresSafeArea()
     }
 }
 
 #Preview {
-    SplashView()
+    SplashView(socialLogin: "kakao")
 }

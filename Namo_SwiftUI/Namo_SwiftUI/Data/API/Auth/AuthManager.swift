@@ -100,7 +100,7 @@ class AuthManager: RequestInterceptor {
                    parameters: parameters,
                    encoding: JSONEncoding.default)
         .validate()
-        .responseDecodable(of: Auth.self) { response in
+        .responseDecodable(of: ServerTokenResponse.self) { response in
             switch response.result {
             
             // 재발급 성공

@@ -107,7 +107,12 @@ struct SettingView: View {
                               leftButtonTitle: "취소",
                               leftButtonAction: {},
                               rightButtonTitle: "확인",
-                              rightButtonAction: {})
+                              rightButtonAction: 
+                                {
+                    Task {
+                        await authInteractor.withdrawMember()
+                    }
+                })
             }
         }
         .navigationTitle("설정")

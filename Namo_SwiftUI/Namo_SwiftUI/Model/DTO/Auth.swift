@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Auth: Codable {
+struct ServerTokenResponse: Codable {
     let accessToken: String
     let refreshToken: String
+    let newUser: Bool
 }
 
 struct SocialAccessToken: Encodable {
@@ -22,9 +23,21 @@ struct ServerAccessToken: Encodable {
     let accessToken: String
 }
 
-struct AppleAccessToken: Encodable {
+struct AppleAccessToken: Codable {
     
     let identityToken: String
-    let email: String
     let username: String
+    let email: String
+}
+
+struct TermRequest: Codable {
+    
+    let isCheckTermOfUse: Bool
+    let isCheckPersonalInformationCollection: Bool
+}
+
+enum SocialLogin {
+    case kakao
+    case naver
+    case apple
 }

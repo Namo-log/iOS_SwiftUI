@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0F71462BBA42660073A8E3 /* NotificationName+.swift */; };
+		2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1305292BA3CFFA0002175D /* RealmSchedule.swift */; };
+		2C13052C2BA3D4240002175D /* List+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052B2BA3D4240002175D /* List+.swift */; };
+		2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052D2BA3D9C90002175D /* RealmManager.swift */; };
+		2C3C75D72BCBC1C400312F26 /* NamoAlertViewWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C75D62BCBC1C400312F26 /* NamoAlertViewWithTitle.swift */; };
 		2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717592B595C1200B0F3B3 /* NamoHome.swift */; };
 		2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */; };
 		2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175D2B59FC0D00B0F3B3 /* Constants.swift */; };
@@ -84,6 +89,11 @@
 		508EC7B52B5A76C5006E5EEA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 508EC7B42B5A76C5006E5EEA /* Lottie */; };
 		508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508EC7B62B5A77C9006E5EEA /* LottieView.swift */; };
 		50926D9F2BA4A10E00C656F4 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50926D9E2BA4A10E00C656F4 /* ToastView.swift */; };
+		509D3C882BCA86D000E699CF /* UserEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509D3C872BCA86D000E699CF /* UserEndPoint.swift */; };
+		509D3C8B2BCA89A700E699CF /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509D3C8A2BCA89A700E699CF /* UserRepository.swift */; };
+		509D3C8D2BCA8ADA00E699CF /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509D3C8C2BCA8ADA00E699CF /* UserRepositoryImpl.swift */; };
+		509D3C902BCA8DCD00E699CF /* UserInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509D3C8F2BCA8DCD00E699CF /* UserInteractor.swift */; };
+		509D3C922BCA8DDD00E699CF /* UserInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509D3C912BCA8DDD00E699CF /* UserInteractorImpl.swift */; };
 		50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE93432B6F7C4D0005022E /* MemoRepositorySample.swift */; };
 		50BE93472B6F7CB50005022E /* MemoInteractorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE93462B6F7CB50005022E /* MemoInteractorSample.swift */; };
 		50CB10D72B5D3DB2000307E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB10D62B5D3DB2000307E4 /* LoginView.swift */; };
@@ -110,6 +120,8 @@
 		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
 		8879A7E92B6A494D00794475 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E82B6A494D00794475 /* Data+.swift */; };
 		8879A7ED2B6A521B00794475 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7EC2B6A521B00794475 /* APITask.swift */; };
+		889C74152BCADCC0005937CB /* MoimScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */; };
+		889C74182BCADD5C005937CB /* GroupToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889C74172BCADD5C005937CB /* GroupToDoEditView.swift */; };
 		889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */; };
 		889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */; };
 		889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */; };
@@ -156,6 +168,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C0F71462BBA42660073A8E3 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
+		2C1305292BA3CFFA0002175D /* RealmSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSchedule.swift; sourceTree = "<group>"; };
+		2C13052B2BA3D4240002175D /* List+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+.swift"; sourceTree = "<group>"; };
+		2C13052D2BA3D9C90002175D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		2C3C75D62BCBC1C400312F26 /* NamoAlertViewWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertViewWithTitle.swift; sourceTree = "<group>"; };
 		2C5717592B595C1200B0F3B3 /* NamoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoHome.swift; sourceTree = "<group>"; };
 		2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoTabView.swift; sourceTree = "<group>"; };
 		2C57175D2B59FC0D00B0F3B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -228,6 +245,11 @@
 		507C84DC2B6F37EF00147C60 /* APIAuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuthRepositoryImpl.swift; sourceTree = "<group>"; };
 		508EC7B62B5A77C9006E5EEA /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		50926D9E2BA4A10E00C656F4 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		509D3C872BCA86D000E699CF /* UserEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndPoint.swift; sourceTree = "<group>"; };
+		509D3C8A2BCA89A700E699CF /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		509D3C8C2BCA8ADA00E699CF /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
+		509D3C8F2BCA8DCD00E699CF /* UserInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInteractor.swift; sourceTree = "<group>"; };
+		509D3C912BCA8DDD00E699CF /* UserInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInteractorImpl.swift; sourceTree = "<group>"; };
 		50BE93432B6F7C4D0005022E /* MemoRepositorySample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRepositorySample.swift; sourceTree = "<group>"; };
 		50BE93462B6F7CB50005022E /* MemoInteractorSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoInteractorSample.swift; sourceTree = "<group>"; };
 		50CB10D62B5D3DB2000307E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -249,6 +271,8 @@
 		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		8879A7E82B6A494D00794475 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8879A7EC2B6A521B00794475 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
+		889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimScheduleTemplate.swift; sourceTree = "<group>"; };
+		889C74172BCADD5C005937CB /* GroupToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupToDoEditView.swift; sourceTree = "<group>"; };
 		889EE0E02B888EC100F2FFB3 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
 		889EE0E22B888ED100F2FFB3 /* PlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceEndPoint.swift; sourceTree = "<group>"; };
@@ -318,6 +342,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1305282BA3CFE90002175D /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				2C1305292BA3CFFA0002175D /* RealmSchedule.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		2C57177F2B5BF35D00B0F3B3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,12 +450,14 @@
 		5012A9DB2B59396000544AB0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2CFE00542B73658A0054C31B /* Schedule.swift */,
+				2C1305282BA3CFE90002175D /* Realm */,
 				8879A7DF2B6927E300794475 /* DTO */,
 				884382D42B74D5EA00766503 /* Place.swift */,
 				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
+				889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */,
 				8862E6372B839F760004DE4B /* ScheduleCategory.swift */,
 				889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */,
+				2CFE00542B73658A0054C31B /* Schedule.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -432,6 +466,7 @@
 			isa = PBXGroup;
 			children = (
 				A24F325C2BA570EE00014E06 /* Diary */,
+				509D3C892BCA899900E699CF /* User */,
 				889EE0DF2B888EAE00F2FFB3 /* Place */,
 				507C84D32B6F378D00147C60 /* Auth */,
 				507C84D22B6F378800147C60 /* Schedule */,
@@ -495,6 +530,7 @@
 		5012A9E22B593A9E00544AB0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				889C74162BCADD4F005937CB /* GroupToDo */,
 				5021D8E82B594069009B4AD1 /* GroupMain */,
 				2CF445252B83516400A8E514 /* GroupCalendarView.swift */,
 			);
@@ -540,6 +576,7 @@
 				2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */,
 				88E48F7F2B827C2500B064A0 /* CircleItemView.swift */,
 				50926D9E2BA4A10E00C656F4 /* ToastView.swift */,
+				2C3C75D62BCBC1C400312F26 /* NamoAlertViewWithTitle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -548,6 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				504F8E9F2B75CB6400ADB867 /* KeyChainManager.swift */,
+				2C13052D2BA3D9C90002175D /* RealmManager.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -581,6 +619,8 @@
 				2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */,
 				2C5717E52B61306700B0F3B3 /* Date+.swift */,
 				8879A7E82B6A494D00794475 /* Data+.swift */,
+				2C13052B2BA3D4240002175D /* List+.swift */,
+				2C0F71462BBA42660073A8E3 /* NotificationName+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -648,6 +688,7 @@
 			isa = PBXGroup;
 			children = (
 				A24F32612BA5714E00014E06 /* Diary */,
+				509D3C8E2BCA8DA700E699CF /* User */,
 				88EFE45E2B87C75A0085826B /* Place */,
 				507C84C42B6F34E200147C60 /* Auth */,
 				507C84C32B6F34DA00147C60 /* Schedule */,
@@ -740,6 +781,32 @@
 			path = OnboardingMain;
 			sourceTree = "<group>";
 		};
+		509D3C862BCA86AD00E699CF /* User */ = {
+			isa = PBXGroup;
+			children = (
+				509D3C872BCA86D000E699CF /* UserEndPoint.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		509D3C892BCA899900E699CF /* User */ = {
+			isa = PBXGroup;
+			children = (
+				509D3C8A2BCA89A700E699CF /* UserRepository.swift */,
+				509D3C8C2BCA8ADA00E699CF /* UserRepositoryImpl.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		509D3C8E2BCA8DA700E699CF /* User */ = {
+			isa = PBXGroup;
+			children = (
+				509D3C8F2BCA8DCD00E699CF /* UserInteractor.swift */,
+				509D3C912BCA8DDD00E699CF /* UserInteractorImpl.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		50BE93422B6F7C200005022E /* Memo */ = {
 			isa = PBXGroup;
 			children = (
@@ -815,6 +882,7 @@
 			isa = PBXGroup;
 			children = (
 				A24F32592BA56F5C00014E06 /* Diary */,
+				509D3C862BCA86AD00E699CF /* User */,
 				2CF445222B80548C00A8E514 /* Moim */,
 				2CF445212B80548300A8E514 /* Schedule */,
 				889EE0E42B88914D00F2FFB3 /* Place */,
@@ -823,6 +891,14 @@
 				88A7EF1E2B6E891E00E47C8B /* example */,
 			);
 			path = EndPoint;
+			sourceTree = "<group>";
+		};
+		889C74162BCADD4F005937CB /* GroupToDo */ = {
+			isa = PBXGroup;
+			children = (
+				889C74172BCADD5C005937CB /* GroupToDoEditView.swift */,
+			);
+			path = GroupToDo;
 			sourceTree = "<group>";
 		};
 		889EE0DF2B888EAE00F2FFB3 /* Place */ = {
@@ -1064,6 +1140,9 @@
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
+				2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */,
+				889C74152BCADCC0005937CB /* MoimScheduleTemplate.swift in Sources */,
+				2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */,
 				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				50299F282BA11BCB007CCDB7 /* CategoryAddView.swift in Sources */,
 				A257FFCC2BC07A4E004F58DD /* MoimDiaryEndPoint.swift in Sources */,
@@ -1075,6 +1154,7 @@
 				5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */,
 				A257FFC82BC079DD004F58DD /* MoimDiaryInteractor.swift in Sources */,
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
+				509D3C8D2BCA8ADA00E699CF /* UserRepositoryImpl.swift in Sources */,
 				2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */,
 				A257FFCA2BC079ED004F58DD /* MoimDiaryInteractorImpl.swift in Sources */,
 				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
@@ -1098,6 +1178,7 @@
 				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
 				50F8F9032B89D95B0037577C /* SettingView.swift in Sources */,
 				504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */,
+				509D3C922BCA8DDD00E699CF /* UserInteractorImpl.swift in Sources */,
 				2CF4451E2B80535C00A8E514 /* MoimRepository.swift in Sources */,
 				A257FFCE2BC085E1004F58DD /* MoimDiaryRepository.swift in Sources */,
 				A257FFD22BC08E40004F58DD /* MoimDiaryDTO.swift in Sources */,
@@ -1115,9 +1196,12 @@
 				2CF4451C2B7FA0C300A8E514 /* GroupListItem.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
+				509D3C882BCA86D000E699CF /* UserEndPoint.swift in Sources */,
+				889C74182BCADD5C005937CB /* GroupToDoEditView.swift in Sources */,
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				88EFE4602B87C7680085826B /* PlaceInteractor.swift in Sources */,
 				2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */,
+				509D3C8B2BCA89A700E699CF /* UserRepository.swift in Sources */,
 				8879A7E12B6927ED00794475 /* testDTO.swift in Sources */,
 				A22F63432B8B31FC00BC39A2 /* EditDiaryView.swift in Sources */,
 				507C84BF2B6F345E00147C60 /* AppState.swift in Sources */,
@@ -1151,6 +1235,7 @@
 				889EE0E82B8B234200F2FFB3 /* NotificationSetting.swift in Sources */,
 				5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */,
 				8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */,
+				509D3C902BCA8DCD00E699CF /* UserInteractor.swift in Sources */,
 				2CF445122B78EED100A8E514 /* CategoryInteractorImpl.swift in Sources */,
 				2CFE00262B70BF3C0054C31B /* ScheduleRepository.swift in Sources */,
 				507C84CD2B6F356C00147C60 /* AuthInteractor.swift in Sources */,
@@ -1160,16 +1245,19 @@
 				2CF445202B80536900A8E514 /* MoimRepositoryImpl.swift in Sources */,
 				2CF445082B78E22900A8E514 /* CategoryEndPoint.swift in Sources */,
 				88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */,
+				2C3C75D72BCBC1C400312F26 /* NamoAlertViewWithTitle.swift in Sources */,
 				88BDADE12BA0C56B0055B69A /* AppError.swift in Sources */,
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
+				2C13052C2BA3D4240002175D /* List+.swift in Sources */,
 				8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */,
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */,
 				88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */,
 				50926D9F2BA4A10E00C656F4 /* ToastView.swift in Sources */,
 				884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */,
+				2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
