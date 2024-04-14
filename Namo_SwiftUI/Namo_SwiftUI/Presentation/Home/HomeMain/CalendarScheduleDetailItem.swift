@@ -22,7 +22,7 @@ struct CalendarScheduleDetailItem: View {
 	
 	var body: some View {
 		if let paletteId = appState.categoryPalette[schedule.categoryId] {
-			HStack(spacing: 15) {
+			HStack(spacing: 5) {
 				Rectangle()
 					.fill(categoryInteractor.getColorWithPaletteId(id: paletteId))
 					.frame(width: 30, height: 55)
@@ -35,9 +35,11 @@ struct CalendarScheduleDetailItem: View {
 					
 					Text(schedule.name)
 						.font(.pretendard(.bold, size: 15))
+						.lineLimit(1)
 				}
+				.padding(.leading, 10)
 				
-				Spacer()
+				Spacer(minLength: 0)
 				
 				Button(action: {}, label: {
 					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
@@ -71,7 +73,7 @@ struct CalendarMoimScheduleDetailItem: View {
 		let color = schedule.curMoimSchedule ?
 		Color.mainOrange :
 		categoryInteractor.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
-		HStack(spacing: 15) {
+		HStack(spacing: 5) {
 			Rectangle()
 				.fill(color)
 				.frame(width: 30, height: 55)
@@ -84,9 +86,11 @@ struct CalendarMoimScheduleDetailItem: View {
 				
 				Text(schedule.name)
 					.font(.pretendard(.bold, size: 15))
+					.lineLimit(1)
 			}
+			.padding(.leading, 10)
 			
-			Spacer()
+			Spacer(minLength: 0)
 			
 			if schedule.curMoimSchedule {
 				Button(action: {}, label: {
