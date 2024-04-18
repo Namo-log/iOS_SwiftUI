@@ -22,8 +22,6 @@ struct CalendarItem: View {
 	let isMoimCalendar: Bool
 	@Binding var focusDate: YearMonthDay?
 	
-	@State var shouldHideTabBar: Bool = true
-	
 	var body: some View {
 		GeometryReader { geometry in
 			VStack(alignment: .leading, spacing: 4) {
@@ -46,7 +44,14 @@ struct CalendarItem: View {
 						)
 				}
 				
-				if !isMoimCalendar, let schedules = scheduleState.calendarSchedules[date]?.filter({ $0.position >= 0 && $0.position < MAX_SCHEDULE }) {
+				if !isMoimCalendar, let schedules = scheduleState.calendarSchedules[date]?.filter({
+					if focusDate == nil {
+						return $0.position >= 0 && $0.position < MAX_SCHEDULE
+					} else {
+						// 탭바 높이때문에 1개 덜 보이도록
+						return $0.position >= 0 && $0.position < MAX_SCHEDULE-1
+					}
+				}) {
 					calendarScheduleItem(geometry: geometry, schedules: schedules)
 				} else if isMoimCalendar, let schedules = moimState.currentMoimSchedule[date]?.filter({ $0.position >= 0 && $0.position < MAX_SCHEDULE }) {
 					calendarMoimScheduleItem(geometry: geometry, schedules: schedules)
@@ -78,14 +83,8 @@ struct CalendarItem: View {
 			withAnimation {
 				if focusDate == nil || focusDate != date {
 					focusDate = date
-					if shouldHideTabBar {
-						appState.isTabbarHidden = true
-					}
 				} else {
 					focusDate = nil
-					if shouldHideTabBar {
-						appState.isTabbarHidden = false
-					}
 				}
 			}
 		}

@@ -54,11 +54,12 @@ struct HomeMainView: View {
 					detailView
 						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
 						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
-				} else {
-					Spacer(minLength: 0)
-						.frame(height: tabBarHeight)
+					
 				}
 				
+				Spacer(minLength: 0)
+					.frame(height: tabBarHeight)
+					
 			}
 			
 				if showDatePicker {
@@ -229,7 +230,7 @@ struct HomeMainView: View {
 			Spacer(minLength: 0)
 			
 		}
-		.frame(width: screenWidth, height: screenHeight * 0.47)
+		.frame(width: screenWidth, height: screenHeight * 0.38)
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
 			Button(action: {

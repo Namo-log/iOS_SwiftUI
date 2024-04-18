@@ -71,10 +71,7 @@ struct GroupCalendarView: View {
 					detailView
 						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
 						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
-				} else {
-					Spacer(minLength: 0)
-						.frame(height: tabBarHeight)
-				}
+				} 
 				
 			}
 			
@@ -110,7 +107,6 @@ struct GroupCalendarView: View {
 	private var header: some View {
 		HStack {
 			Button(action: {
-				appState.isTabbarHidden = false
 				dismiss()
 			}, label: {
 				Image(.icBackArrowOrange)
