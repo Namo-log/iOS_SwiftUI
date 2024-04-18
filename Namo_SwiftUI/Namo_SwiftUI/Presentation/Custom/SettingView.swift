@@ -24,7 +24,7 @@ struct SettingView: View {
             
             VStack(spacing: 13){
                
-                SettingComponent(title: "버전 정보", content: "1.0.0")
+                SettingComponent(title: "버전 정보", content: "1.0.4(1)")
                 
                 customDivider
                 
