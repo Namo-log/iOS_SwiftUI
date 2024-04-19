@@ -101,6 +101,12 @@ struct GroupCalendarView: View {
 		.onAppear {
 			groupName = moimState.currentMoim.groupName ?? ""
 		}
+		.onReceive(NotificationCenter.default.publisher(for: .reloadGroupCalendarViaNetwork)) { notification in
+			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
+				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
+				focusDate = date
+			}
+		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
             GroupToDoEditView()
                 .background(ClearBackground())
