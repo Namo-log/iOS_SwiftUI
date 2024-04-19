@@ -111,13 +111,14 @@ struct GroupCalendarView: View {
     }
 	
 	private var header: some View {
-		HStack {
+		HStack(spacing: 0) {
 			Button(action: {
 				dismiss()
 			}, label: {
-				Image(.icBackArrowOrange)
+				Image(.icArrowOnlyHead)
 			})
 			.foregroundStyle(Color.black)
+			.padding(.trailing, 8)
 			
 			Button(action: {
 				withAnimation {
@@ -139,6 +140,7 @@ struct GroupCalendarView: View {
 			
 			Text("\(groupName)")
 				.font(.pretendard(.bold, size: 20))
+				.padding(.horizontal, 5)
 			
 			Button(action: {
 				withAnimation {
