@@ -43,6 +43,19 @@ struct GroupMainView: View {
 			if showGroupCodeAlert {
 				groupCodeAlertView
 			}
+			
+			if appState.showGroupWithdrawToast {
+				VStack {
+					Spacer()
+					
+					ToastView(toastMessage: "\(moimState.currentMoim.groupName ?? "") 그룹에서 탈퇴하셨습니다.", bottomPadding: 150)
+						.onAppear {
+							withAnimation {
+								moimInteractor.hideToast()
+							}
+						}
+				}
+			}
 		}
 		.onAppear {
 			Task {
