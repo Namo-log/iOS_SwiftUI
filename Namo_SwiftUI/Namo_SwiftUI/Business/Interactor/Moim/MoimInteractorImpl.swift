@@ -205,7 +205,7 @@ struct MoimInteractorImpl: MoimInteractor {
             x: temp.x,
             y: temp.y,
             locationName: temp.locationName,
-            Users: temp.users.map { $0.userId }
+            users: temp.users.map { $0.userId }
         )
         
         let result = await moimRepository.patchMoimSchedule(scheduleId: scheduleId, data: patchSchedule)
@@ -256,4 +256,12 @@ struct MoimInteractorImpl: MoimInteractor {
     func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser]) {
         scheduleState.currentMoimSchedule.users = list
     }
+	
+	func hideToast() {
+		if appState.showGroupWithdrawToast {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+				appState.showGroupWithdrawToast = false
+			}
+		}
+	}
 }

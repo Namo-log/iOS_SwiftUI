@@ -16,4 +16,5 @@ protocol MoimInteractor {
     func setPlaceToCurrentMoimSchedule()
     func setScheduleToCurrentMoimSchedule(schedule: MoimSchedule?)
     func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser])
+	func hideToast()
 }

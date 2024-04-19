@@ -101,4 +101,7 @@ class AppState: ObservableObject {
     
     // 어떤 소셜로 로그인한 상태인지
     @Published var socialLogin: SocialLogin = .kakao
+	
+	// 그룹 탈퇴 후 토스트
+	@Published var showGroupWithdrawToast: Bool = false
 }

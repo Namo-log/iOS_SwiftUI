@@ -436,6 +436,11 @@ struct GroupCalendarView: View {
 					// 탈퇴 성공시 dismiss
 					if result {
 						appState.isTabbarOpaque = false
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+							withAnimation {
+								appState.showGroupWithdrawToast = true
+							}
+						}
 						dismiss()
 					}
 				}
