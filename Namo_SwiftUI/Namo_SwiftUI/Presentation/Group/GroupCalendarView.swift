@@ -95,6 +95,19 @@ struct GroupCalendarView: View {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea(.all, edges: .all)
             }
+			
+			if moimState.showGroupCodeCopyToast {
+				VStack {
+					Spacer()
+					
+					ToastView(toastMessage: "그룹 코드가 복사되었습니다", bottomPadding: 150)
+						.onAppear {
+							withAnimation {
+								moimInteractor.hideToast()
+							}
+						}
+				}
+			}
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.toolbar(.hidden, for: .navigationBar)
@@ -388,6 +401,9 @@ struct GroupCalendarView: View {
 						
 						Button(action: {
 							UIPasteboard.general.string = moimState.currentMoim.groupCode
+							withAnimation {
+								moimState.showGroupCodeCopyToast = true
+							}
 						}, label: {
 							Image(.btnCopy)
 						})
@@ -440,7 +456,7 @@ struct GroupCalendarView: View {
 						appState.isTabbarOpaque = false
 						DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
 							withAnimation {
-								appState.showGroupWithdrawToast = true
+								moimState.showGroupWithdrawToast = true
 							}
 						}
 						dismiss()

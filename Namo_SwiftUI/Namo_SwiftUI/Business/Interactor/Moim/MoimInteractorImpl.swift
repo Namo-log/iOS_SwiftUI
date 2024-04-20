@@ -258,9 +258,15 @@ struct MoimInteractorImpl: MoimInteractor {
     }
 	
 	func hideToast() {
-		if appState.showGroupWithdrawToast {
+		if moimState.showGroupWithdrawToast {
 			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-				appState.showGroupWithdrawToast = false
+				moimState.showGroupWithdrawToast = false
+			}
+		}
+		
+		if moimState.showGroupCodeCopyToast {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+				moimState.showGroupCodeCopyToast = false
 			}
 		}
 	}
