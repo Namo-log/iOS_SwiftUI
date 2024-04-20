@@ -44,7 +44,7 @@ struct GroupMainView: View {
 				groupCodeAlertView
 			}
 			
-			if appState.showGroupWithdrawToast {
+			if moimState.showGroupWithdrawToast {
 				VStack {
 					Spacer()
 					
