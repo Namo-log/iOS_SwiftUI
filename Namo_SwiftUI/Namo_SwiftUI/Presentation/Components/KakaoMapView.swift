@@ -18,10 +18,12 @@ struct KakaoMapView: UIViewRepresentable {
     /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
     func makeUIView(context: Self.Context) -> KMViewContainer {
+		// 인증
+		SDKInitializer.InitSDK(appKey: SecretConstants.kakaoMapNativeAppKey)
         //need to correct view size
         let view: KMViewContainer = KMViewContainer(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         context.coordinator.createController(view)
-        context.coordinator.controller?.initEngine()
+        context.coordinator.controller?.prepareEngine()
         return view
     }
 
@@ -34,8 +36,7 @@ struct KakaoMapView: UIViewRepresentable {
         
         if draw {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // DispatchQueue가 있어야 엔진이 동작합니다
-                context.coordinator.controller?.startEngine()
-                context.coordinator.controller?.startRendering()
+				context.coordinator.controller?.activateEngine()
                 /// pinList 업데이트
                 context.coordinator.updatePois(pinList: pinList, selectedPlace: selectedPlace)
                 /// pin tracking - is it really needed?
@@ -43,8 +44,7 @@ struct KakaoMapView: UIViewRepresentable {
             }
         }
         else {
-            context.coordinator.controller?.stopRendering()
-            context.coordinator.controller?.stopEngine()
+			context.coordinator.controller?.pauseEngine()
             // KakaoMapCoordinator의 Observer 등록 해제
             NotificationCenter.default.removeObserver(context.coordinator)
         }
@@ -83,6 +83,8 @@ struct KakaoMapView: UIViewRepresentable {
         }
         
         deinit {
+			controller?.pauseEngine()
+			controller?.resetEngine()
             // Observer 등록 해제
             NotificationCenter.default.removeObserver(self)
         }
@@ -99,17 +101,22 @@ struct KakaoMapView: UIViewRepresentable {
             //지도(KakaoMap)를 그리기 위한 viewInfo를 생성
             let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", appName:"openmap", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 17)
             
-            //KakaoMap 추가.
-            if controller?.addView(mapviewInfo) == Result.OK {
-                print("OK") //추가 성공. 성공시 추가적으로 수행할 작업을 진행한다.
-                if let mapView = controller?.getView("mapview") as? KakaoMap {
-                    mapView.eventDelegate = self // EventDelegate 전달
-                    // map Layer 기본 설정
-                    createLabelLayer(mapView)
-                    createPoiStyle(mapView)
-                }
-            }
+			controller?.addView(mapviewInfo)
         }
+		
+		func addViewSucceeded(_ viewName: String, viewInfoName: String) {
+			print("kakaoMap - addViewSucceeded") //추가 성공. 성공시 추가적으로 수행할 작업을 진행한다.
+			if let mapView = controller?.getView("mapview") as? KakaoMap {
+				mapView.eventDelegate = self // EventDelegate 전달
+				// map Layer 기본 설정
+				createLabelLayer(mapView)
+				createPoiStyle(mapView)
+			}
+		}
+		
+		func addViewFailed(_ viewName: String, viewInfoName: String) {
+			print("kakaoMap - addViewFailed: viewName: \(viewName), viewInfoName: \(viewInfoName)")
+		}
         
         /// Place 선택 이벤트 Notification 처리 함수
         @objc func handlePlace(_ notification: Notification) {
