@@ -165,19 +165,19 @@ struct MoimInteractorImpl: MoimInteractor {
             x: temp.x,
             y: temp.y,
             locationName: temp.locationName,
-            Users: temp.users.map{ $0.userId }
+            users: temp.users.map{ $0.userId }
         )
         
         let result = await moimRepository.postMoimSchedule(data: postSchedule)
         print("API 요청 결과 : \(String(describing: result))")
         
         // TODO: 해당 부분 그룹 캘린더용으로 업데이트 필요
-//        if result != nil {
-////            await setCalendar(date: startDate) -> 그룹 캘린더 업데이트로 변경 필요
-//            DispatchQueue.main.async {
-//                NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
-//            }
-//        }
+        if result != nil {
+			await getMoimSchedule(moimId: moimState.currentMoim.groupId)
+            DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
+            }
+        }
         
     }
     
@@ -205,7 +205,7 @@ struct MoimInteractorImpl: MoimInteractor {
             x: temp.x,
             y: temp.y,
             locationName: temp.locationName,
-            Users: temp.users.map { $0.userId }
+            users: temp.users.map { $0.userId }
         )
         
         let result = await moimRepository.patchMoimSchedule(scheduleId: scheduleId, data: patchSchedule)
@@ -256,4 +256,18 @@ struct MoimInteractorImpl: MoimInteractor {
     func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser]) {
         scheduleState.currentMoimSchedule.users = list
     }
+	
+	func hideToast() {
+		if moimState.showGroupWithdrawToast {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+				moimState.showGroupWithdrawToast = false
+			}
+		}
+		
+		if moimState.showGroupCodeCopyToast {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+				moimState.showGroupCodeCopyToast = false
+			}
+		}
+	}
 }

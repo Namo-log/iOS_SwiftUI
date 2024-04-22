@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
 	static let reloadCalendarViaNetwork = Notification.Name("reloadCalendarViaNetwork")
+	static let reloadGroupCalendarViaNetwork = Notification.Name("reloadGroupCalendarViaNetwork")
 }
