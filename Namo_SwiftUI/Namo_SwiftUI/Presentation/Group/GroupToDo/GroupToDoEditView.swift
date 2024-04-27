@@ -178,7 +178,12 @@ struct GroupToDoEditView: View {
                             Button(action: {
                                 // 저장
                                 Task {
-                                    
+                                    let name = scheduleState.currentMoimSchedule.name
+                                    guard !name.isEmpty else {
+                                        print("@Log - \(scheduleState.currentMoimSchedule.name)")
+                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "입력 오류", message: "일정 제목은 공백일 수 없습니다.", localizedDescription: nil))
+                                        return
+                                    }
                                     if self.isRevise {
                                         await moimInteractor.patchMoimSchedule()
                                     } else {
