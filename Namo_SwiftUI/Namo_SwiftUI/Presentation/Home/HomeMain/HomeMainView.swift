@@ -73,7 +73,10 @@ struct HomeMainView: View {
 		.ignoresSafeArea(edges: .bottom)
 		.task {
 //			await scheduleInteractor.setCalendar()
-			await categoryInteractor.getCategories()
+            
+            if UserDefaults.standard.bool(forKey: "isLogin") {
+                await categoryInteractor.getCategories()
+            }
 		}
 		.onChange(of: calendarController.yearMonth) { newYearMonth in
 			if previousYearMonth.year <= newYearMonth.year {
