@@ -265,6 +265,8 @@ struct GroupToDoEditView: View {
             // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때
             if self.scheduleState.currentMoimSchedule.moimScheduleId != nil {
                 self.isRevise = true
+            } else { // 스케쥴 추가일 때
+                self.scheduleState.currentMoimSchedule.users = moimState.currentMoim.moimUsers
             }
             // 현재 장소 리스트에 Schedule의 장소를 추가
             // 임시용으로, placeID가 추가된 후 추후에 수정이 필요합니다.
