@@ -245,7 +245,8 @@ struct GroupToDoEditView: View {
             // MARK: 참석자 선택 창
             if showCheckParticipant {
                 CheckParticipant(
-                    showCheckParticipant: $showCheckParticipant
+                    showCheckParticipant: $showCheckParticipant,
+                    selectedUser: scheduleState.currentMoimSchedule.users
                 )
             }
             
@@ -329,7 +330,7 @@ struct GroupToDoEditView: View {
         @Injected(\.moimInteractor) var moimInteractor
         
         @Binding var showCheckParticipant: Bool
-        @State var selectedUser: [MoimUser] = []
+        @State var selectedUser: [MoimUser]
         
         var body: some View {
             NamoAlertViewWithTopButton(
