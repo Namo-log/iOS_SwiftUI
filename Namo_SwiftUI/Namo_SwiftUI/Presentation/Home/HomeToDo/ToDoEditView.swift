@@ -424,6 +424,7 @@ struct ToDoEditView: View {
                 self.scheduleState.currentSchedule.categoryId = self.categoryList.first?.categoryId ?? -1
             }
         })
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.

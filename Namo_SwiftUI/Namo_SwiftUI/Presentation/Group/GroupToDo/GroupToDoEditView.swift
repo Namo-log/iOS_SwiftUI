@@ -282,6 +282,7 @@ struct GroupToDoEditView: View {
                 )
             }
         })
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.
