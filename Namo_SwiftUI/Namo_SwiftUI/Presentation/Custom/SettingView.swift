@@ -96,7 +96,7 @@ struct SettingView: View {
                                         .foregroundStyle(.mainText)
                                         .frame(height: 22)
                                     
-                                    Text("지금까지의 정보가 모두 사라집니다.")
+                                    Text("지금까지의 정보는 \n3일 뒤 모두 사라집니다.")
                                         .font(Font.pretendard(.regular, size: 14))
                                         .foregroundStyle(.mainText)
                                         .frame(height: 20)
