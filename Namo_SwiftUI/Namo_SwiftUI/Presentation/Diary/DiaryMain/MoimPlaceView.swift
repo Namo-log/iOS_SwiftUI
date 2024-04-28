@@ -14,8 +14,8 @@ struct MoimPlaceView: View {
     @State private var isAddingViewVisible = false
     @Binding var numOfPlace: Int
     @Binding var showCalculateAlert: Bool
-    @Binding var activity: ActivityInfo
-    @Binding var clickedActivityId: UUID
+    @Binding var activity: LocationDTO
+    @Binding var clickedActivityId: Int
     
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
@@ -27,12 +27,12 @@ struct MoimPlaceView: View {
             VStack(spacing: 0) {
                 // 장소 레이블
                 HStack(alignment: .top, spacing: 0) {
-                    TextField("\(activity.locationName)", text: $activity.locationName)
+                    TextField("\(activity.name)", text: $activity.name)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.textPlaceholder)
                     Spacer()
                     HStack() {
-                        Text("총 \(activity.totalCost)원")
+                        Text("총 \(activity.money)원")
                             .font(.pretendard(.light, size: 15))
                             .foregroundStyle(.mainText)
                         Image(.rightChevronLight)
@@ -40,7 +40,7 @@ struct MoimPlaceView: View {
                     .onTapGesture {
                         withAnimation {
                             self.showCalculateAlert = true
-                            self.clickedActivityId = activity.id
+                            self.clickedActivityId = activity.moimMemoLocationId
                             print("모임 장소뷰에서~ \(clickedActivityId)")
                         }
                     }
@@ -73,7 +73,9 @@ struct MoimPlaceView: View {
                     }
             ) // gesture
             .onAppear {
-                activity.locationName = "활동 \(numOfPlace)"
+                if activity.name.isEmpty {
+                    activity.name = "활동 \(numOfPlace)"
+                }
             }
             
             if isAddingViewVisible {

@@ -52,6 +52,14 @@ struct LocationDTO: Decodable {
     var money: Int
     var participants: [Int]?
     var urls: [String]?
+    
+    init() {
+        self.moimMemoLocationId = 0
+        self.name = ""
+        self.money = 0
+        self.participants = []
+        self.urls = []
+    }
 }
 
 extension GetOneMoimDiaryResDTO {
