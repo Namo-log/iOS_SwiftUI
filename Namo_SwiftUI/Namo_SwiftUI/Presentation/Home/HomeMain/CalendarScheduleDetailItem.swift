@@ -40,7 +40,7 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
                 
-                NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName), memo: "")) {
+                NavigationLink(destination: EditDiaryView(memo: "", info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName))) {
                     Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)
@@ -108,15 +108,16 @@ struct CalendarMoimScheduleDetailItem: View {
 			Spacer(minLength: 0)
 			
 			if schedule.curMoimSchedule {
-				Button(action: {
+                NavigationLink(destination: EditMoimDiaryView(info: ScheduleInfo(scheduleId: schedule.moimScheduleId ?? 0, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName ?? ""), moimUser: schedule.users)) {
+                    Image(schedule.hasDiaryPlace ? .btnAddRecordOrange : .btnAddRecord)
+                        .resizable()
+                        .frame(width: 34, height: 34)
+                        .padding(.trailing, 11)
+                }
+                .simultaneousGesture(TapGesture().onEnded {
                     moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
-                    self.isToDoSheetPresented = true
-                }, label: {
-					Image(schedule.hasDiaryPlace ? .btnAddRecordOrange : .btnAddRecord)
-						.resizable()
-						.frame(width: 34, height: 34)
-						.padding(.trailing, 11)
-				})
+                    appState.isEditingDiary = false
+                })
 			} else {
 				Text(schedule.users.count == 1 ? schedule.users.first!.userName : "\(schedule.users.count)명")
 					.frame(width: 30, height: 30)

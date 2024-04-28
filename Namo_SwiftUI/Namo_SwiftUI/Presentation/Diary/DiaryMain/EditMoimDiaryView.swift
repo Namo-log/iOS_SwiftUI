@@ -138,7 +138,7 @@ struct EditMoimDiaryView: View {
                         
                         // 참석자
                         HStack(alignment: .top) {
-                            Text("참석자 (\(moimUser.count)")
+                            Text("참석자 (\(moimUser.count))")
                                 .font(.pretendard(.bold, size: 15))
                                 .foregroundStyle(.mainText)
                             Spacer()

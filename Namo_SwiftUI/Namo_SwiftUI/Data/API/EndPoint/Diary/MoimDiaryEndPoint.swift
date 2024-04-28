@@ -15,6 +15,7 @@ enum MoimDiaryEndPoint {
     case editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO)
     case deleteMoimDiary(moimMemoId: Int)
     case getMonthMoimDiary(request: GetMonthMoimDiaryReqDTO)
+    case getOneMoimDiary(moimScheduleId: Int)
 }
 
 extension MoimDiaryEndPoint: EndPoint {
@@ -31,6 +32,8 @@ extension MoimDiaryEndPoint: EndPoint {
             return "/\(moimLocationId)"
         case .getMonthMoimDiary(let req):
             return "/month/\(req.year),\(req.month)"
+        case .getOneMoimDiary(let moimScheduleId):
+            return "/\(moimScheduleId)"
         case .editMoimDiary(let scheduleId, _):
             return "/text/\(scheduleId)"
         case .deleteMoimDiary(let moimMemoId):
@@ -40,15 +43,14 @@ extension MoimDiaryEndPoint: EndPoint {
     
     var method: Alamofire.HTTPMethod {
         switch self {
+        case .getMonthMoimDiary, .getOneMoimDiary:
+            return .get
         case .createMoimDiaryPlace:
             return .post
         case .changeMoimDiaryPlace, .editMoimDiary:
             return .patch
-        case .deleteMoimDiaryPlace,
-                .deleteMoimDiary:
+        case .deleteMoimDiaryPlace, .deleteMoimDiary:
             return .delete
-        case .getMonthMoimDiary:
-            return .get
         }
     }
     
@@ -62,7 +64,7 @@ extension MoimDiaryEndPoint: EndPoint {
             return .uploadImagesWithBody(imageDatas: req.imgs, body: body)
         case .editMoimDiary(_, let req):
             return .requestJSONEncodable(parameters: req)
-        case .deleteMoimDiaryPlace, .deleteMoimDiary:
+        case .deleteMoimDiaryPlace, .deleteMoimDiary, .getOneMoimDiary:
             return .requestPlain
         case .getMonthMoimDiary(let req):
             let params = ["page": req.page, "size": req.size]

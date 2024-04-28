@@ -16,19 +16,19 @@ struct EditDiaryView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
     @EnvironmentObject var scheduleState: ScheduleState
-    
     @Injected(\.diaryInteractor) var diaryInteractor
+    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
-    let info: ScheduleInfo
     @State var memo: String
-    
     @State var placeholderText: String = "메모 입력"
     @State var typedCharacters = 0
     @State var characterLimit = 200
-    
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
+    
+    let info: ScheduleInfo
+    let moimMember: [MoimUser] = []
     let photosLimit = 3 // 선택가능한 최대 사진 개수
     
     var body: some View {
@@ -104,7 +104,7 @@ struct EditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    NavigationLink(destination: EditMoimDiaryView(info: info)) {
+                    NavigationLink(destination: EditMoimDiaryView(info: info, moimUser: diaryState.currentMoimDiaryInfo.toMoimUsers())) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
@@ -138,12 +138,21 @@ struct EditDiaryView: View {
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
                         Task {
-                            let result = await diaryInteractor.deleteDiary(scheduleId: info.scheduleId)
+                            let _ = await diaryInteractor.deleteDiary(scheduleId: info.scheduleId)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
             }
         } // ZStack
+        .onAppear {
+            /// 모임 기록 추가/수정 화면이면
+            if !appState.isPersonalDiary {
+                Task {
+                    /// 단건 모임 기록 API 호출해서 필요한 정보를 받아온다
+                    await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
+                }
+            }
+        }
     }
     
     // 기록 수정 완료 버튼 또는 기록 저장 버튼

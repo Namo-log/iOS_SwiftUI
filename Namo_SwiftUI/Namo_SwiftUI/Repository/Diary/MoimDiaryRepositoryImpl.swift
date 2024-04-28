@@ -37,7 +37,12 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
         return response?.code == 200
     }
     
-    func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async -> GetMoimDiaryResDTO? {
+    func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async -> GetMonthMoimDiaryResDTO? {
         return await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.getMonthMoimDiary(request: req))
+    }
+    
+    /// 단건 모임 메모 조회
+    func getOneMoimDiary(moimScheduleId: Int) async -> GetOneMoimDiaryResDTO? {
+        return await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.getOneMoimDiary(moimScheduleId: moimScheduleId))
     }
 }
