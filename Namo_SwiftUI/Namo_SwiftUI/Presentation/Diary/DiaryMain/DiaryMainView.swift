@@ -81,6 +81,7 @@ struct DiaryMainView: View {
                     
                     toggleView
                 }
+                .padding(.top, 13)
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
                 
