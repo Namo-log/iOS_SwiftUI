@@ -41,7 +41,7 @@ struct EditMoimDiaryView: View {
             rightButtonTitle: "저장",
             rightButtonAction: {
                 if let index = activities.firstIndex(where: { $0.moimMemoLocationId == clickedActivityId }) {
-                    activities[index].money += Int(cost) ?? 0
+                    activities[index].money = Int(cost) ?? 0
                 }
                 showCalculateAlert = false
                 return true
@@ -176,7 +176,7 @@ struct EditMoimDiaryView: View {
                         
                         // 장소 뷰
                         ForEach(0..<numOfPlace, id: \.self) { index in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activity: $activities[index], clickedActivityId: $clickedActivityId)
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activity: getSafeActivity(for: index), clickedActivityId: $clickedActivityId, cost: $cost)
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -260,10 +260,12 @@ struct EditMoimDiaryView: View {
                 Task {
                     // TODO: - 이미지 연결
                     for i in 0..<numOfPlace {
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
-                        print("활동 수정 API req: \(req)")
-                        print("활동 수정 API moimLocationId: \(diaryState.currentMoimDiaryInfo.getLocationIds()[i])")
-                        await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
+                        if activities.indices.contains(i) {
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                            print("활동 수정 API req: \(req)")
+                            print("활동 수정 API moimLocationId: \(diaryState.currentMoimDiaryInfo.getLocationIds()[i])")
+                            await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
+                        }
                     }
                 }
             } else {
@@ -292,4 +294,12 @@ struct EditMoimDiaryView: View {
         }
     }
     
+    func getSafeActivity(for index: Int) -> Binding<LocationDTO> {
+        if activities.indices.contains(index) {
+            return $activities[index]
+        } else {
+            // 배열의 범위를 벗어난 경우 대체 값을 반환
+            return .constant(LocationDTO(id: index * -1, name: "", money: 0, participants: [], urls: []))
+        }
+    }
 }

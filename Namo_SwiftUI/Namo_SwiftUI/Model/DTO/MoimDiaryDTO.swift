@@ -59,6 +59,14 @@ struct LocationDTO: Decodable {
         self.money = 0
         self.participants = []
         self.urls = []
+    } 
+    
+    init(id: Int, name: String, money: Int, participants: [Int], urls: [String]) {
+        self.moimMemoLocationId = id
+        self.name = name
+        self.money = money
+        self.participants = participants
+        self.urls = urls
     }
 }
 

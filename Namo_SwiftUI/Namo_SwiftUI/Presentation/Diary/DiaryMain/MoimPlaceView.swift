@@ -16,6 +16,7 @@ struct MoimPlaceView: View {
     @Binding var showCalculateAlert: Bool
     @Binding var activity: LocationDTO
     @Binding var clickedActivityId: Int
+    @Binding var cost: String
     
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
@@ -41,6 +42,7 @@ struct MoimPlaceView: View {
                         withAnimation {
                             self.showCalculateAlert = true
                             self.clickedActivityId = activity.moimMemoLocationId
+                            self.cost = String(activity.money)
                             print("모임 장소뷰에서~ \(clickedActivityId)")
                         }
                     }
