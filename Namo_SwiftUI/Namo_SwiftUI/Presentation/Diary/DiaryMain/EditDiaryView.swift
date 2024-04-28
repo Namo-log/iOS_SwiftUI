@@ -180,7 +180,7 @@ struct EditDiaryView: View {
                     print(scheduleState.currentSchedule.scheduleId ?? -1)
                     print(diaryState.currentDiary.contents)
                     print(pickedImagesData)
-                    await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents, images: pickedImagesData)
+                    await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
                 }
             }
             self.presentationMode.wrappedValue.dismiss()
