@@ -14,7 +14,8 @@ struct MoimPlaceView: View {
     @State private var isAddingViewVisible = false
     @Binding var numOfPlace: Int
     @Binding var showCalculateAlert: Bool
-    @Binding var activityText: String
+    @Binding var activity: ActivityInfo
+    @Binding var clickedActivityId: UUID
     
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
@@ -26,12 +27,12 @@ struct MoimPlaceView: View {
             VStack(spacing: 0) {
                 // 장소 레이블
                 HStack(alignment: .top, spacing: 0) {
-                    TextField("\(activityText)", text: $activityText)
+                    TextField("\(activity.locationName)", text: $activity.locationName)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.textPlaceholder)
                     Spacer()
                     HStack() {
-                        Text("총 0원")
+                        Text("총 \(activity.totalCost)원")
                             .font(.pretendard(.light, size: 15))
                             .foregroundStyle(.mainText)
                         Image(.rightChevronLight)
@@ -39,6 +40,8 @@ struct MoimPlaceView: View {
                     .onTapGesture {
                         withAnimation {
                             self.showCalculateAlert = true
+                            self.clickedActivityId = activity.id
+                            print("모임 장소뷰에서~ \(clickedActivityId)")
                         }
                     }
                 }
@@ -70,7 +73,7 @@ struct MoimPlaceView: View {
                     }
             ) // gesture
             .onAppear {
-                activityText = "활동 \(numOfPlace)"
+                activity.locationName = "활동 \(numOfPlace)"
             }
             
             if isAddingViewVisible {

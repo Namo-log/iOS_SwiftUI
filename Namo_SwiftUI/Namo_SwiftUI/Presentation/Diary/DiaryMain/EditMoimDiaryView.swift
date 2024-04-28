@@ -8,6 +8,14 @@
 import SwiftUI
 import Factory
 
+/// 활동 관련 정보를 담기 위한 클래스 정의
+class ActivityInfo: ObservableObject {
+    @Published var id = UUID()
+    @Published var locationName: String = ""
+    @Published var totalCost: Int = 0
+    @Published var image: [Data] = []
+}
+
 // 모임 기록 추가 및 수정 화면
 struct EditMoimDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -19,8 +27,9 @@ struct EditMoimDiaryView: View {
     @State private var showAddPlaceButton: Bool = true
     @State private var numOfPlace = 1
     @State private var showCalculateAlert: Bool = false
-    @State private var totalCost: String = ""
-    @State var activityTexts: [String] = Array(repeating: "", count: 3)
+    @State var clickedActivityId: UUID = UUID()
+    @State var activities = [ActivityInfo(), ActivityInfo(), ActivityInfo()]
+    @State var cost: String = ""
     
     let info: ScheduleInfo
     let moimUser: [MoimUser]
@@ -39,7 +48,9 @@ struct EditMoimDiaryView: View {
             },
             rightButtonTitle: "저장",
             rightButtonAction: {
-                // TODO: - 저장 기능 연결 필요
+                if let index = activities.firstIndex(where: { $0.id == clickedActivityId }) {
+                    activities[index].totalCost += Int(cost) ?? 0
+                }
                 showCalculateAlert = false
                 return true
             },
@@ -50,11 +61,11 @@ struct EditMoimDiaryView: View {
                             .font(.pretendard(.bold, size: 15))
                         Spacer()
                         HStack(spacing: 0) {
-                            TextField("금액 입력", text: $totalCost)
+                            TextField("금액 입력", text: $cost)
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.trailing)
                             
-                            if (totalCost != "") {
+                            if (cost != "") {
                                 Text(" 원")
                             }
                         }
@@ -95,7 +106,7 @@ struct EditMoimDiaryView: View {
                             Text("0 원")
                                 .font(.pretendard(.regular, size: 15))
                         } else {
-                            Text("\((Int(totalCost) ?? 0) / selectedUser.count) 원")
+                            Text("\((Int(cost) ?? 0) / selectedUser.count) 원")
                                 .font(.pretendard(.regular, size: 15))
                         }
                     }
@@ -173,7 +184,7 @@ struct EditMoimDiaryView: View {
                         
                         // 장소 뷰
                         ForEach(0..<numOfPlace, id: \.self) { index in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activityText: $activityTexts[index])
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activity: $activities[index], clickedActivityId: $clickedActivityId)
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -257,7 +268,7 @@ struct EditMoimDiaryView: View {
                 Task {
                     // TODO: - 이미지 연결
                     for i in 0..<numOfPlace {
-                        let req = EditMoimDiaryPlaceReqDTO(name: activityTexts[i], money: totalCost, participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].locationName, money: String(activities[i].totalCost), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
                         print("활동 수정 API req: \(req)")
                         print("활동 수정 API moimLocationId: \(diaryState.currentMoimDiaryInfo.getLocationIds()[i])")
                         await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
@@ -267,7 +278,7 @@ struct EditMoimDiaryView: View {
                 Task {
                     // TODO: - 이미지 연결
                     for i in 0..<numOfPlace {
-                        let req = EditMoimDiaryPlaceReqDTO(name: activityTexts[i], money: totalCost, participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].locationName, money: String(activities[i].totalCost), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
                         print("활동 추가 API req: \(req)")
                         await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
