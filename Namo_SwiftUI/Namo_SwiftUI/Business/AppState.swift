@@ -49,6 +49,12 @@ class MoimState: ObservableObject {
 	/// 유저가 현재 확인하고 있는 모임
 	@Published var currentMoim: Moim = Moim()
 	@Published var currentMoimSchedule: [YearMonthDay: [CalendarMoimSchedule]] = [:]
+	
+	// 그룹 탈퇴 후 토스트
+	@Published var showGroupWithdrawToast: Bool = false
+	
+	// 그룹 코드 복사 토스트
+	@Published var showGroupCodeCopyToast: Bool = false
 }
 
 class AppState: ObservableObject {

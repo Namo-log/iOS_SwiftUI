@@ -45,4 +45,26 @@ extension YearMonthDay {
 			return "토"
 		}
 	}
+	
+	static func < (lhs: Self, rhs: Self) -> Bool {
+		if lhs.year != rhs.year {
+			return lhs.year < rhs.year
+		} else if lhs.month != rhs.month {
+			return lhs.month < rhs.month
+		} else {
+			return lhs.day < rhs.day
+		}
+	}
+	
+	static func <= (lhs: Self, rhs: Self) -> Bool {
+		return lhs < rhs || lhs == rhs
+	}
+	
+	static func > (lhs: Self, rhs: Self) -> Bool {
+		return !(lhs <= rhs)
+	}
+	
+	static func >= (lhs: Self, rhs: Self) -> Bool {
+		return !(lhs < rhs)
+	}
 }

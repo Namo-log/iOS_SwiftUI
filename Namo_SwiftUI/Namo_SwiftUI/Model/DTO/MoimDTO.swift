@@ -111,7 +111,7 @@ struct postMoimScheduleRequest: Encodable {
     let x: Double?
     let y: Double?
     let locationName: String
-    let Users: [Int]
+    let users: [Int]
 }
 
 struct patchMoimScheduleRequest: Encodable {
@@ -123,5 +123,5 @@ struct patchMoimScheduleRequest: Encodable {
     let x: Double?
     let y: Double?
     let locationName: String
-    let Users: [Int]
+    let users: [Int]
 }

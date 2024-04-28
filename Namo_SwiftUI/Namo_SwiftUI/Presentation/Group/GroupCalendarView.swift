@@ -71,10 +71,7 @@ struct GroupCalendarView: View {
 					detailView
 						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
 						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
-				} else {
-					Spacer(minLength: 0)
-						.frame(height: tabBarHeight)
-				}
+				} 
 				
 			}
 			
@@ -95,11 +92,30 @@ struct GroupCalendarView: View {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea(.all, edges: .all)
             }
+			
+			if moimState.showGroupCodeCopyToast {
+				VStack {
+					Spacer()
+					
+					ToastView(toastMessage: "그룹 코드가 복사되었습니다", bottomPadding: 150)
+						.onAppear {
+							withAnimation {
+								moimInteractor.hideToast()
+							}
+						}
+				}
+			}
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.toolbar(.hidden, for: .navigationBar)
 		.onAppear {
 			groupName = moimState.currentMoim.groupName ?? ""
+		}
+		.onReceive(NotificationCenter.default.publisher(for: .reloadGroupCalendarViaNetwork)) { notification in
+			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
+				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
+				focusDate = date
+			}
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
             GroupToDoEditView()
@@ -108,14 +124,14 @@ struct GroupCalendarView: View {
     }
 	
 	private var header: some View {
-		HStack {
+		HStack(spacing: 0) {
 			Button(action: {
-				appState.isTabbarHidden = false
 				dismiss()
 			}, label: {
-				Image(.icBackArrowOrange)
+				Image(.icArrowOnlyHead)
 			})
 			.foregroundStyle(Color.black)
+			.padding(.trailing, 8)
 			
 			Button(action: {
 				withAnimation {
@@ -137,6 +153,7 @@ struct GroupCalendarView: View {
 			
 			Text("\(groupName)")
 				.font(.pretendard(.bold, size: 20))
+				.padding(.horizontal, 5)
 			
 			Button(action: {
 				withAnimation {
@@ -380,6 +397,9 @@ struct GroupCalendarView: View {
 						
 						Button(action: {
 							UIPasteboard.general.string = moimState.currentMoim.groupCode
+							withAnimation {
+								moimState.showGroupCodeCopyToast = true
+							}
 						}, label: {
 							Image(.btnCopy)
 						})
@@ -430,6 +450,11 @@ struct GroupCalendarView: View {
 					// 탈퇴 성공시 dismiss
 					if result {
 						appState.isTabbarOpaque = false
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+							withAnimation {
+								moimState.showGroupWithdrawToast = true
+							}
+						}
 						dismiss()
 					}
 				}
