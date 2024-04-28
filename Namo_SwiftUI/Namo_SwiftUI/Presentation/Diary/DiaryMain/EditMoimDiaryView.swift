@@ -178,7 +178,7 @@ struct EditMoimDiaryView: View {
                     .padding(.leading, 25)
                     .padding(.trailing, 25)
                     
-                    // 장소 추가 버튼
+                    // 활동 추가 버튼
                     if showAddPlaceButton {
                         Button {
                             if numOfPlace == 2 {
@@ -192,7 +192,7 @@ struct EditMoimDiaryView: View {
                                 }
                             }
                         } label: {
-                            BlackBorderRoundedView(text: "장소 추가", image: Image(.icMap), width: 136, height: 40)
+                            BlackBorderRoundedView(text: "활동 추가", image: Image(.icMap), width: 136, height: 40)
                                 .padding(.top, 25)
                         }
                     }
