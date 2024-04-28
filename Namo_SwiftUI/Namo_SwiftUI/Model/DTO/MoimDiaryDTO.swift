@@ -48,16 +48,22 @@ struct LocationDTO: Decodable {
     var moimMemoLocationId: Int
     var name: String
     var money: Int
-    var participants: [Int]
+    var participants: String
     var urls: [String]
 }
 
 extension GetOneMoimDiaryResDTO {
-    func toMoimUsers() -> [MoimUser] {
+    func getMoimUsers() -> [MoimUser] {
         return users.map {
             MoimUser(userId: $0.userId,
                      userName: $0.userName,
                      color: 0)
+        }
+    }
+    
+    func getLocationNames() -> [String] {
+        locationDtos.map {
+            $0.name
         }
     }
 }

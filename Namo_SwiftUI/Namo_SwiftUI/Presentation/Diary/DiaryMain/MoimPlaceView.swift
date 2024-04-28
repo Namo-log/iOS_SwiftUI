@@ -14,7 +14,7 @@ struct MoimPlaceView: View {
     @State private var isAddingViewVisible = false
     @Binding var numOfPlace: Int
     @Binding var showCalculateAlert: Bool
-    @State private var activityText = ""
+    @Binding var activityText: String
     
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록

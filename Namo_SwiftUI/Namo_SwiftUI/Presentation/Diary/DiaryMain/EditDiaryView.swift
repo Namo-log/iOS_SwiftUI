@@ -104,7 +104,12 @@ struct EditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    NavigationLink(destination: EditMoimDiaryView(info: info, moimUser: diaryState.currentMoimDiaryInfo.toMoimUsers())) {
+                    // 활동 정보 연결되면 아래 코드로 테스트
+//                    NavigationLink(destination: EditMoimDiaryView(activityTexts: diaryState.currentMoimDiaryInfo.locationDtos.map { $0.name }, info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
+//                        BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
+//                    }
+//                    .padding(.bottom, 25)
+                    NavigationLink(destination: EditMoimDiaryView(info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)

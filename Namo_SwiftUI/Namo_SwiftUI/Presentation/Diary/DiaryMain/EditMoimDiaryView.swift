@@ -19,6 +19,7 @@ struct EditMoimDiaryView: View {
     @State private var numOfPlace = 1
     @State private var showCalculateAlert: Bool = false
     @State private var totalCost: String = ""
+    @State var activityTexts: [String] = Array(repeating: "", count: 3)
     
     let info: ScheduleInfo
     let moimUser: [MoimUser]
@@ -170,8 +171,8 @@ struct EditMoimDiaryView: View {
                         }
                         
                         // 장소 뷰
-                        ForEach(0..<numOfPlace, id: \.self) { num in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert)
+                        ForEach(0..<numOfPlace, id: \.self) { index in
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activityText: $activityTexts[index])
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -254,16 +255,20 @@ struct EditMoimDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
-                    // TODO: - API 연결
-//                    await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: 0, req: EditMoimDiaryPlaceReqDTO(name: "", money: totalCost, participants: moimUseer.reduce(nil, { partialResult, user in
-//                        user.userName
-//                    }), imgs: <#T##[Data?]#>))
+//                    for i in 0..<numOfPlace {
+//                        let req = EditMoimDiaryPlaceReqDTO(name: activityTexts[i], money: totalCost, participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+//                        print("활동 수정 API req: \(req)")
+//                        await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: info., req: req)
+//                    }
                 }
             } else {
                 Task {
-                    // TODO: - API 연결
-//                    let req = EditMoimDiaryPlaceReqDTO(name: <#T##String#>, money: <#T##String#>, participants: moimUser., imgs: <#T##[Data?]#>)
-//                    await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                    // TODO: - 이미지 연결
+                    for i in 0..<numOfPlace {
+                        let req = EditMoimDiaryPlaceReqDTO(name: activityTexts[i], money: totalCost, participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                        print("활동 추가 API req: \(req)")
+                        await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                    }
                 }
             }
             self.presentationMode.wrappedValue.dismiss()
