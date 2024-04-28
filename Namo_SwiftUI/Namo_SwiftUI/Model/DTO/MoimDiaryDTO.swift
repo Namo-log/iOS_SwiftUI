@@ -28,12 +28,14 @@ typealias GetMonthMoimDiaryResDTO = GetDiaryResponseDTO
 
 /// 단건 모임 메모 조회 Res
 struct GetOneMoimDiaryResDTO: Decodable {
+    var name: String
     var startDate: Int
-    var locationName: String
-    var users: [UserDTO]
-    var locationDtos: [LocationDTO]
+    var locationName: String?
+    var users: [UserDTO]?
+    var locationDtos: [LocationDTO]?
     
     init() {
+        self.name = ""
         self.startDate = 0
         self.locationName = ""
         self.users = []
@@ -48,28 +50,28 @@ struct LocationDTO: Decodable {
     var moimMemoLocationId: Int
     var name: String
     var money: Int
-    var participants: String
-    var urls: [String]
+    var participants: [Int]?
+    var urls: [String]?
 }
 
 extension GetOneMoimDiaryResDTO {
     func getMoimUsers() -> [MoimUser] {
-        return users.map {
+        users?.map {
             MoimUser(userId: $0.userId,
                      userName: $0.userName,
                      color: 0)
-        }
+        } ?? []
     }
     
     func getLocationNames() -> [String] {
-        locationDtos.map {
+        locationDtos?.map {
             $0.name
-        }
+        } ?? []
     }
     
     func getLocationIds() -> [Int] {
-        locationDtos.map {
+        locationDtos?.map {
             $0.moimMemoLocationId
-        }
+        } ?? []
     }
 }

@@ -154,6 +154,8 @@ struct EditDiaryView: View {
             if !appState.isPersonalDiary {
                 Task {
                     /// 단건 모임 기록 API 호출해서 필요한 정보를 받아온다
+                    print(info.scheduleId)
+                    print(info.scheduleName)
                     await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 }
             }
