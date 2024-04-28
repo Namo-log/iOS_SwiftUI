@@ -12,6 +12,7 @@ import Factory
 struct EditMoimDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var diaryState: DiaryState
     @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
     @State private var showParticipants: Bool = true
@@ -255,11 +256,12 @@ struct EditMoimDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
-//                    for i in 0..<numOfPlace {
-//                        let req = EditMoimDiaryPlaceReqDTO(name: activityTexts[i], money: totalCost, participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
-//                        print("활동 수정 API req: \(req)")
-//                        await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: info., req: req)
-//                    }
+                    for i in 0..<numOfPlace {
+                        let req = EditMoimDiaryPlaceReqDTO(name: activityTexts[i], money: totalCost, participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                        print("활동 수정 API req: \(req)")
+                        print("활동 수정 API moimLocationId: \(diaryState.currentMoimDiaryInfo.getLocationIds()[i])")
+                        await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
+                    }
                 }
             } else {
                 Task {

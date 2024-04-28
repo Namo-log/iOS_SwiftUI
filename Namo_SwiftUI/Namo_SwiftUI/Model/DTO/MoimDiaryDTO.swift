@@ -66,4 +66,10 @@ extension GetOneMoimDiaryResDTO {
             $0.name
         }
     }
+    
+    func getLocationIds() -> [Int] {
+        locationDtos.map {
+            $0.moimMemoLocationId
+        }
+    }
 }
