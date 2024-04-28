@@ -247,7 +247,7 @@ struct DiaryItemView: View {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: EditDiaryView(info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName), memo: diary.contents)) {
+                    NavigationLink(destination: EditDiaryView(memo: diary.contents, info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName))) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()

@@ -107,7 +107,6 @@
 		8834ADF32B67BFFC0024F724 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF22B67BFFC0024F724 /* KakaoSDKAuth */; };
 		8834ADF52B67BFFC0024F724 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF42B67BFFC0024F724 /* KakaoSDKCommon */; };
 		8834ADF72B67BFFC0024F724 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 8834ADF62B67BFFC0024F724 /* KakaoSDKUser */; };
-		8834ADF92B67C0D10024F724 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADF82B67C0D10024F724 /* secret.swift */; };
 		8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADFC2B67CAE00024F724 /* EndPoint.swift */; };
 		8834ADFF2B67CB0C0024F724 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834ADFE2B67CB0C0024F724 /* APIError.swift */; };
 		8834AE012B67CB320024F724 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8834AE002B67CB320024F724 /* APIManager.swift */; };
@@ -165,6 +164,7 @@
 		A257FFD02BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */; };
 		A257FFD22BC08E40004F58DD /* MoimDiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */; };
 		A27CAD4B2B9F082B00E4E8EF /* MoimPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */; };
+		A2E67AD92BCFDEC200033758 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E67AD82BCFDEC200033758 /* secret.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -257,7 +257,6 @@
 		50CFD34C2BA0E32D0033C0ED /* CategorySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySettingView.swift; sourceTree = "<group>"; };
 		50E6E5482B89FC5F006CB20D /* SettingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingComponent.swift; sourceTree = "<group>"; };
 		50F8F9022B89D95B0037577C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		8834ADF82B67C0D10024F724 /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		8834ADFC2B67CAE00024F724 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		8834ADFE2B67CB0C0024F724 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		8834AE002B67CB320024F724 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -316,6 +315,7 @@
 		A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryRepositoryImpl.swift; sourceTree = "<group>"; };
 		A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryDTO.swift; sourceTree = "<group>"; };
 		A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoimPlaceView.swift; sourceTree = "<group>"; };
+		A2E67AD82BCFDEC200033758 /* secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -504,7 +504,7 @@
 				5012A9C02B5933CB00544AB0 /* SplashView.swift */,
 				2C5717592B595C1200B0F3B3 /* NamoHome.swift */,
 				2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */,
-				8834ADF82B67C0D10024F724 /* secret.swift */,
+				A2E67AD82BCFDEC200033758 /* secret.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1175,7 +1175,6 @@
 				A24F32632BA5717C00014E06 /* DiaryInteractor.swift in Sources */,
 				8870C8572B7766F8001D083B /* ToDoSelectPlaceView.swift in Sources */,
 				2C5717E22B5F7E7800B0F3B3 /* Color+.swift in Sources */,
-				8834ADF92B67C0D10024F724 /* secret.swift in Sources */,
 				50F8F9032B89D95B0037577C /* SettingView.swift in Sources */,
 				504F8EA32B75CC2400ADB867 /* AuthEndPoint.swift in Sources */,
 				509D3C922BCA8DDD00E699CF /* UserInteractorImpl.swift in Sources */,
@@ -1223,6 +1222,7 @@
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				884382D52B74D5EA00766503 /* Place.swift in Sources */,
 				2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */,
+				A2E67AD92BCFDEC200033758 /* secret.swift in Sources */,
 				2CF445102B78EEC400A8E514 /* CategoryInteractor.swift in Sources */,
 				50CFD34D2BA0E32D0033C0ED /* CategorySettingView.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,

@@ -14,24 +14,15 @@ struct EditMoimDiaryView: View {
     @EnvironmentObject var appState: AppState
     @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
-    let info: ScheduleInfo
-    
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
     @State private var numOfPlace = 1
-    
     @State private var showCalculateAlert: Bool = false
     @State private var totalCost: String = ""
-
-    let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
-    // TODO: dummy data입니다. 후에 데이터 전달 받아서 사용해주세요.
-    let moimUseer: [MoimUser] = [
-        MoimUser(userId: 1, userName: "연현", color: 3),
-        MoimUser(userId: 2, userName: "램프", color: 2),
-        MoimUser(userId: 3, userName: "고흐", color: 1),
-        MoimUser(userId: 4, userName: "코코아", color: 4)
-    ]
+    let info: ScheduleInfo
+    let moimUser: [MoimUser]
+    let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     @State var selectedUser: [MoimUser] = []
     
@@ -108,7 +99,7 @@ struct EditMoimDiaryView: View {
                     }
                     
                     LazyVGrid(columns: gridColumn) {
-                        ForEach(moimUseer, id: \.userId) { user in
+                        ForEach(moimUser, id: \.userId) { user in
                             HStack(spacing: 20) {
                                 Button(
                                     action: {
@@ -147,7 +138,7 @@ struct EditMoimDiaryView: View {
                         
                         // 참석자
                         HStack(alignment: .top) {
-                            Text("참석자 (5)")
+                            Text("참석자 (\(moimUser.count))")
                                 .font(.pretendard(.bold, size: 15))
                                 .foregroundStyle(.mainText)
                             Spacer()
@@ -162,15 +153,14 @@ struct EditMoimDiaryView: View {
                         .padding(.top, 25)
                         
                         // 참석자 동그라미 뷰
-                        // TODO: - 참석자값 어딘가에서 받아서 연결 필요
                         if showParticipants {
                             HStack(spacing: 10) {
-                                ForEach(0..<5, id: \.self) { _ in
+                                ForEach(moimUser, id: \.self) { user in
                                     Circle()
                                         .stroke(.textUnselected, lineWidth: 2)
                                         .frame(width: 42, height: 42)
                                         .overlay {
-                                            Text("은수")
+                                            Text(user.userName)
                                                 .font(.pretendard(.bold, size: 11))
                                                 .foregroundStyle(.textPlaceholder)
                                         }
@@ -188,7 +178,7 @@ struct EditMoimDiaryView: View {
                     .padding(.leading, 25)
                     .padding(.trailing, 25)
                     
-                    // 장소 추가 버튼
+                    // 활동 추가 버튼
                     if showAddPlaceButton {
                         Button {
                             if numOfPlace == 2 {
@@ -202,13 +192,13 @@ struct EditMoimDiaryView: View {
                                 }
                             }
                         } label: {
-                            BlackBorderRoundedView(text: "장소 추가", image: Image(.icMap), width: 136, height: 40)
+                            BlackBorderRoundedView(text: "활동 추가", image: Image(.icMap), width: 136, height: 40)
                                 .padding(.top, 25)
                         }
                     }
                 } // ScrollView
                 
-//                EditSaveDiaryView()
+                EditSaveDiaryView
             } // VStack - center
             
             // 쓰레기통 클릭 시 Alert 띄우기
@@ -256,4 +246,40 @@ struct EditMoimDiaryView: View {
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
     }
+    
+    // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
+    private var EditSaveDiaryView: some View {
+        Button {
+            print(appState.isEditingDiary ? "기록 수정" : "기록 저장")
+            if appState.isEditingDiary {
+                Task {
+                    // TODO: - 이미지 연결
+                    // TODO: - API 연결
+//                    await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: 0, req: EditMoimDiaryPlaceReqDTO(name: "", money: totalCost, participants: moimUseer.reduce(nil, { partialResult, user in
+//                        user.userName
+//                    }), imgs: <#T##[Data?]#>))
+                }
+            } else {
+                Task {
+                    // TODO: - API 연결
+//                    let req = EditMoimDiaryPlaceReqDTO(name: <#T##String#>, money: <#T##String#>, participants: moimUser., imgs: <#T##[Data?]#>)
+//                    await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                }
+            }
+            self.presentationMode.wrappedValue.dismiss()
+        } label: {
+            ZStack() {
+                Rectangle()
+                    .fill(appState.isEditingDiary ? .white : .mainOrange)
+                    .frame(height: 60 + 10) // 하단의 Safe Area 영역 칠한 거 높이 10으로 가정
+                    .shadow(color: .black.opacity(0.25), radius: 7)
+                
+                Text(appState.isEditingDiary ? "기록 수정" : "기록 저장")
+                    .font(.pretendard(.bold, size: 15))
+                    .foregroundStyle(appState.isEditingDiary ? .mainOrange : .white)
+                    .padding(.bottom, 10) // Safe Area 칠한만큼
+            }
+        }
+    }
+    
 }
