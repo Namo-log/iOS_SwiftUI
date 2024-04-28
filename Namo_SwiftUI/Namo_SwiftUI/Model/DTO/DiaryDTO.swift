@@ -48,3 +48,7 @@ struct GetDiaryResponseDTO: Decodable {
 struct CreateDiaryResponseDTO: Codable {
     let scheduleId: Int
 }
+
+struct ChangeMoimDiaryRequestDTO: Encodable {
+    let text: String
+}
