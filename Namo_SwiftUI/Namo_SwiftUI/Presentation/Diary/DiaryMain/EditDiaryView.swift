@@ -162,7 +162,13 @@ struct EditDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
-                    await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: [])
+                    if appState.isPersonalDiary {
+                        // 개인 기록 수정 API 호출
+                        await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: [])
+                    } else {
+                        // 모임 기록(에 대한 개인 메모) edit API 호출
+                        await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
+                    }
                 }
             } else {
                 Task {
