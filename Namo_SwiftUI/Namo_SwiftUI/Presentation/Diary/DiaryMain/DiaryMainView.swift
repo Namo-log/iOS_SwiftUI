@@ -12,7 +12,7 @@ import Kingfisher
 
 struct DiaryMainView: View {
     @EnvironmentObject var diaryState: DiaryState
-    @Injected(\.appState) private var appState
+	@EnvironmentObject private var appState: AppState
     @Injected(\.diaryInteractor) var diaryInteractor
     @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
