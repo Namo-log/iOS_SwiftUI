@@ -285,14 +285,21 @@ struct ToDoEditView: View {
                             Button(action: {
                                 // 저장
                                 Task {
+                                    let name = scheduleState.currentSchedule.name
+                                    guard !name.isEmpty else {
+                                        print("@Log - \(scheduleState.currentSchedule.name)")
+                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "입력 오류", message: "일정 제목은 공백일 수 없습니다.", localizedDescription: nil))
+                                        return
+                                    }
                                     if self.isRevise {
                                         await scheduleInteractor.patchSchedule()
                                     } else {
                                         await scheduleInteractor.postNewSchedule()
                                     }
+                                    // 닫기
+                                    dismissThis()
                                 }
-                                // 닫기
-                                dismissThis()
+                                
                             }, label: {
                                 Text("저장")
                                     .font(.pretendard(.regular, size: 15))
@@ -417,6 +424,7 @@ struct ToDoEditView: View {
                 self.scheduleState.currentSchedule.categoryId = self.categoryList.first?.categoryId ?? -1
             }
         })
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.
