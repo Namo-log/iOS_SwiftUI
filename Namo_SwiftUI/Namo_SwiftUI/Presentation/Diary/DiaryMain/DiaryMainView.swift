@@ -66,7 +66,9 @@ struct DiaryMainView: View {
                 // 헤더
                 HStack {
                     Button {
-                        showDatePicker = true
+						withAnimation {
+							showDatePicker = true
+						}
                     } label: {
                         HStack {
                             Text(currentDate)
