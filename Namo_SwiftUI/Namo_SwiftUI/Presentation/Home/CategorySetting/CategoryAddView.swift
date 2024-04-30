@@ -148,34 +148,49 @@ struct CategoryAddView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         
+                        // 카테고리 제목이 비어있을 경우
                         if categoryTitle == "" {
                             
+                            // 카테고리 제목 토스트 활성화
                             withAnimation {
                                 self.showTitleToast = true
                             }
                             
+                            // 2초뒤 카테고리 제목 토스트 비활성화
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 withAnimation {
                                     self.showTitleToast = false
                                 }
                             }
                             
+                        // 카테고리 색이 지정 안됐을 경우
                         } else if selectedPaletteId == 0 {
                             
+                            // 카테고리 색상 토스트 활성화
                             withAnimation {
                                 self.showColorToast = true
                             }
                             
+                            // 2초뒤 카테고리 색상 토스트 비활성화
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 withAnimation {
                                     self.showColorToast = false
                                 }
                             }
                         } else {
+                            
                             Task {
-                                await categoryInteractor.addCategory(data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+                                
+                                // 카테고리 생성 API 호출
+                                let result = await categoryInteractor.addCategory(data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+                                
+                                // 생성이 성공했을 경우에만
+                                if result {
+                                    
+                                    // 카테고리 생성 후 이전 화면으로 되돌아감
+                                    path.removeLast()
+                                }
                             }
-                            path.removeLast()
                         }
                     } label: {
                         Text("저장")
@@ -189,6 +204,7 @@ struct CategoryAddView: View {
                 
                 Spacer()
                 
+                // 카테고리 관련 토스트 뷰
                 if showTitleToast {
                     
                     ToastView(toastMessage: "카테고리 이름을 입력해주세요.", bottomPadding: 150)
