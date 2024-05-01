@@ -12,7 +12,7 @@ import Kingfisher
 
 struct DiaryMainView: View {
     @EnvironmentObject var diaryState: DiaryState
-    @Injected(\.appState) private var appState
+	@EnvironmentObject private var appState: AppState
     @Injected(\.diaryInteractor) var diaryInteractor
     @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
@@ -66,7 +66,9 @@ struct DiaryMainView: View {
                 // 헤더
                 HStack {
                     Button {
-                        showDatePicker = true
+						withAnimation {
+							showDatePicker = true
+						}
                     } label: {
                         HStack {
                             Text(currentDate)
