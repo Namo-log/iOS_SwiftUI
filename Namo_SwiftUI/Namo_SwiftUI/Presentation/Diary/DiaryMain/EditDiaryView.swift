@@ -156,6 +156,7 @@ struct EditDiaryView: View {
                 }
             }
         }
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     // 기록 수정 완료 버튼 또는 기록 저장 버튼
