@@ -40,7 +40,8 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
                 
-                NavigationLink(destination: EditDiaryView(memo: "", info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName))) {
+                // TODO: - memo 값 연결
+                NavigationLink(destination: EditDiaryView(memo: "", info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
                     Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)
@@ -108,7 +109,7 @@ struct CalendarMoimScheduleDetailItem: View {
 			Spacer(minLength: 0)
 			
 			if schedule.curMoimSchedule {
-                NavigationLink(destination: EditMoimDiaryView(info: ScheduleInfo(scheduleId: schedule.moimScheduleId ?? 0, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName ?? ""), moimUser: schedule.users)) {
+                NavigationLink(destination: EditMoimDiaryView(info: ScheduleInfo(scheduleId: schedule.moimScheduleId ?? 0, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName ?? "", categoryId: nil), moimUser: schedule.users)) {
                     Image(schedule.hasDiaryPlace ? .btnAddRecordOrange : .btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)
