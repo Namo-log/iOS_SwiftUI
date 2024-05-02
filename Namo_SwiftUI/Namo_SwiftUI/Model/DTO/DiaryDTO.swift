@@ -11,7 +11,7 @@ struct Diary: Decodable {
     var scheduleId: Int
     var name: String
     var startDate: Int
-    var contents: String
+    var contents: String?
     var urls: [String]?
     var categoryId: Int
     var color: Int

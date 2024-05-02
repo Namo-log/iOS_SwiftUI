@@ -17,6 +17,7 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
     
     func changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
         let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.changeMoimDiaryPlace(moimLocationId: moimLocationId, req: req))
+        print(response?.message)
         return response?.code == 200
     }
     

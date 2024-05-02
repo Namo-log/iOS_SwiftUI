@@ -12,13 +12,16 @@ import Factory
 struct EditMoimDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var diaryState: DiaryState
     @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
     @State private var numOfPlace = 1
     @State private var showCalculateAlert: Bool = false
-    @State private var totalCost: String = ""
+    @State var clickedActivityId: Int = -1
+    @State var activities = [LocationDTO(), LocationDTO(), LocationDTO()]
+    @State var cost: String = ""
     
     let info: ScheduleInfo
     let moimUser: [MoimUser]
@@ -37,7 +40,9 @@ struct EditMoimDiaryView: View {
             },
             rightButtonTitle: "저장",
             rightButtonAction: {
-                // TODO: - 저장 기능 연결 필요
+                if let index = activities.firstIndex(where: { $0.moimMemoLocationId == clickedActivityId }) {
+                    activities[index].money = Int(cost) ?? 0
+                }
                 showCalculateAlert = false
                 return true
             },
@@ -48,11 +53,11 @@ struct EditMoimDiaryView: View {
                             .font(.pretendard(.bold, size: 15))
                         Spacer()
                         HStack(spacing: 0) {
-                            TextField("금액 입력", text: $totalCost)
+                            TextField("금액 입력", text: $cost)
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.trailing)
                             
-                            if (totalCost != "") {
+                            if (cost != "") {
                                 Text(" 원")
                             }
                         }
@@ -93,7 +98,7 @@ struct EditMoimDiaryView: View {
                             Text("0 원")
                                 .font(.pretendard(.regular, size: 15))
                         } else {
-                            Text("\((Int(totalCost) ?? 0) / selectedUser.count) 원")
+                            Text("\((Int(cost) ?? 0) / selectedUser.count) 원")
                                 .font(.pretendard(.regular, size: 15))
                         }
                     }
@@ -170,8 +175,8 @@ struct EditMoimDiaryView: View {
                         }
                         
                         // 장소 뷰
-                        ForEach(0..<numOfPlace, id: \.self) { num in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert)
+                        ForEach(0..<numOfPlace, id: \.self) { index in
+                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activity: getSafeActivity(for: index), clickedActivityId: $clickedActivityId, cost: $cost)
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -254,16 +259,23 @@ struct EditMoimDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
-                    // TODO: - API 연결
-//                    await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: 0, req: EditMoimDiaryPlaceReqDTO(name: "", money: totalCost, participants: moimUseer.reduce(nil, { partialResult, user in
-//                        user.userName
-//                    }), imgs: <#T##[Data?]#>))
+                    for i in 0..<numOfPlace {
+                        if activities.indices.contains(i) {
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                            print("활동 수정 API req: \(req)")
+                            print("활동 수정 API moimLocationId: \(diaryState.currentMoimDiaryInfo.getLocationIds()[i])")
+                            await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
+                        }
+                    }
                 }
             } else {
                 Task {
-                    // TODO: - API 연결
-//                    let req = EditMoimDiaryPlaceReqDTO(name: <#T##String#>, money: <#T##String#>, participants: moimUser., imgs: <#T##[Data?]#>)
-//                    await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                    // TODO: - 이미지 연결
+                    for i in 0..<numOfPlace {
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
+                        print("활동 추가 API req: \(req)")
+                        await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                    }
                 }
             }
             self.presentationMode.wrappedValue.dismiss()
@@ -282,4 +294,12 @@ struct EditMoimDiaryView: View {
         }
     }
     
+    func getSafeActivity(for index: Int) -> Binding<LocationDTO> {
+        if activities.indices.contains(index) {
+            return $activities[index]
+        } else {
+            // 배열의 범위를 벗어난 경우 대체 값을 반환
+            return .constant(LocationDTO(id: index * -1, name: "", money: 0, participants: [], urls: []))
+        }
+    }
 }

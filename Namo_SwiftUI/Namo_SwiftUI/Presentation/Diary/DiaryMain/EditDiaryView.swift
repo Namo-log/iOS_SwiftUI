@@ -104,7 +104,8 @@ struct EditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    NavigationLink(destination: EditMoimDiaryView(info: info, moimUser: diaryState.currentMoimDiaryInfo.toMoimUsers())) {
+                    // 활동 정보 연결되면 아래 코드로 테스트
+                    NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.locationDtos ?? [], info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
@@ -149,6 +150,8 @@ struct EditDiaryView: View {
             if !appState.isPersonalDiary {
                 Task {
                     /// 단건 모임 기록 API 호출해서 필요한 정보를 받아온다
+                    print(info.scheduleId)
+                    print(info.scheduleName)
                     await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 }
             }
@@ -175,7 +178,7 @@ struct EditDiaryView: View {
                     print(scheduleState.currentSchedule.scheduleId ?? -1)
                     print(diaryState.currentDiary.contents)
                     print(pickedImagesData)
-                    await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents, images: pickedImagesData)
+                    await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
                 }
             }
             self.presentationMode.wrappedValue.dismiss()

@@ -178,7 +178,12 @@ struct GroupToDoEditView: View {
                             Button(action: {
                                 // 저장
                                 Task {
-                                    
+                                    let name = scheduleState.currentMoimSchedule.name
+                                    guard !name.isEmpty else {
+                                        print("@Log - \(scheduleState.currentMoimSchedule.name)")
+                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "입력 오류", message: "일정 제목은 공백일 수 없습니다.", localizedDescription: nil))
+                                        return
+                                    }
                                     if self.isRevise {
                                         await moimInteractor.patchMoimSchedule()
                                     } else {
@@ -245,7 +250,8 @@ struct GroupToDoEditView: View {
             // MARK: 참석자 선택 창
             if showCheckParticipant {
                 CheckParticipant(
-                    showCheckParticipant: $showCheckParticipant
+                    showCheckParticipant: $showCheckParticipant,
+                    selectedUser: scheduleState.currentMoimSchedule.users
                 )
             }
             
@@ -259,6 +265,8 @@ struct GroupToDoEditView: View {
             // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때
             if self.scheduleState.currentMoimSchedule.moimScheduleId != nil {
                 self.isRevise = true
+            } else { // 스케쥴 추가일 때
+                self.scheduleState.currentMoimSchedule.users = moimState.currentMoim.moimUsers
             }
             // 현재 장소 리스트에 Schedule의 장소를 추가
             // 임시용으로, placeID가 추가된 후 추후에 수정이 필요합니다.
@@ -274,6 +282,7 @@ struct GroupToDoEditView: View {
                 )
             }
         })
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.
@@ -329,7 +338,7 @@ struct GroupToDoEditView: View {
         @Injected(\.moimInteractor) var moimInteractor
         
         @Binding var showCheckParticipant: Bool
-        @State var selectedUser: [MoimUser] = []
+        @State var selectedUser: [MoimUser]
         
         var body: some View {
             NamoAlertViewWithTopButton(
