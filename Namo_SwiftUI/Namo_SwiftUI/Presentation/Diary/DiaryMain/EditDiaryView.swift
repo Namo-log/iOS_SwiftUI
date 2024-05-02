@@ -155,6 +155,14 @@ struct EditDiaryView: View {
                     print(info.scheduleName)
                     await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 }
+            } else { // 모임 일정에 대한 개인 기록이면
+                Task {
+                    // 기록 개별 조회 API 호출
+                    await diaryInteractor.getOneDiary(scheduleId: info.scheduleId)
+                    // memo 값 연결
+                    memo = diaryState.currentDiary.contents ?? ""
+                    // TODO: - diaryState.currentDiary.urls 값이랑 이미지 연결
+                }
             }
             print("====\(info)")
         }

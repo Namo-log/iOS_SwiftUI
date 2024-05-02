@@ -45,6 +45,12 @@ struct GetDiaryResponseDTO: Decodable {
     var last: Bool
 }
 
+/// 개별 기록 조회 API 응답
+struct GetOneDiaryResponseDTO: Decodable {
+    var contents: String?
+    var urls: [String]?
+}
+
 struct CreateDiaryResponseDTO: Codable {
     let scheduleId: Int
 }

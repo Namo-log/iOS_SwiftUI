@@ -12,10 +12,12 @@ import SwiftUICalendar
 struct CalendarScheduleDetailItem: View {
 	let ymd: YearMonthDay
 	let schedule: Schedule
-	@EnvironmentObject var appState: AppState
+    @EnvironmentObject var appState: AppState
+	@EnvironmentObject var diaryState: DiaryState
 	
 	@Injected(\.scheduleInteractor) var scheduleInteractor
-	@Injected(\.categoryInteractor) var categoryInteractor
+    @Injected(\.categoryInteractor) var categoryInteractor
+	@Injected(\.diaryInteractor) var diaryInteractor
 	
 	@Binding var isToDoSheetPresented: Bool
 	
@@ -41,7 +43,7 @@ struct CalendarScheduleDetailItem: View {
 				Spacer()
                 
                 // TODO: - memo 값 연결
-                NavigationLink(destination: EditDiaryView(memo: "", info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
+                NavigationLink(destination: EditDiaryView(memo: diaryState.currentDiary.contents ?? "", info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
                     Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)
@@ -70,7 +72,7 @@ struct CalendarScheduleDetailItem: View {
 					.fill(Color(.textBackground))
 					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 			)
-		}
+        }
 	}
 }
 

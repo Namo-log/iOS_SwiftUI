@@ -37,6 +37,17 @@ struct DiaryInteractorImpl: DiaryInteractor {
         }
     }
     
+    /// 기록 개별 조회
+    func getOneDiary(scheduleId: Int) async {
+        var diary = await diaryRepository.getOneDiary(scheduleId: scheduleId)
+        print("기록 개별 조회")
+        print(diary)
+        DispatchQueue.main.async {
+            diaryState.currentDiary.contents = diary?.contents
+            diaryState.currentDiary.urls = diary?.urls
+        }
+    }
+    
     /// Date를 받아서 해당 월을 String 값으로 바꿔줌
     /// ex) 06 -> "JUNE"
     func getMonthEngString(date: Date) -> String? {
