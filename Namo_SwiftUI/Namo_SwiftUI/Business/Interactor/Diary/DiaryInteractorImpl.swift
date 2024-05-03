@@ -25,7 +25,7 @@ struct DiaryInteractorImpl: DiaryInteractor {
     
     /// 월간 기록 조회
     func getMonthDiary(request: GetDiaryRequestDTO) async {
-        let diaries = await diaryRepository.getMonthDiary(request: request)?.content ?? []
+        var diaries = await diaryRepository.getMonthDiary(request: request)?.content ?? []
         print("월간 기록 조회")
         print(diaries)
         DispatchQueue.main.async {
@@ -34,6 +34,17 @@ struct DiaryInteractorImpl: DiaryInteractor {
             } else {
                 diaryState.monthDiaries += diaries
             }
+        }
+    }
+    
+    /// 기록 개별 조회
+    func getOneDiary(scheduleId: Int) async {
+        var diary = await diaryRepository.getOneDiary(scheduleId: scheduleId)
+        print("기록 개별 조회")
+        print(diary)
+        DispatchQueue.main.async {
+            diaryState.currentDiary.contents = diary?.contents
+            diaryState.currentDiary.urls = diary?.urls
         }
     }
     

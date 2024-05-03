@@ -10,6 +10,7 @@ import Foundation
 protocol DiaryInteractor {
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async
     func getMonthDiary(request: GetDiaryRequestDTO) async
+    func getOneDiary(scheduleId: Int) async
     func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool
     func deleteDiary(scheduleId: Int) async -> Bool
     func getMonthEngString(date: Date) -> String?

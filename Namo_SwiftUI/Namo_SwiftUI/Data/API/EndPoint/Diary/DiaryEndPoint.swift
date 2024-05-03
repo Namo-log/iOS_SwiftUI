@@ -11,6 +11,7 @@ import Foundation
 enum DiaryEndPoint {
     case createDiary(scheduleId: Int, content: String, images: [Data?])
     case getMonthDiary(request: GetDiaryRequestDTO)
+    case getOneDiary(scheduleId: Int)
     case changeDiary(scheduleId: Int, content: String, images: [Data?])
     case deleteDiary(diaryId: Int)
 }
@@ -26,6 +27,8 @@ extension DiaryEndPoint: EndPoint {
             return ""
         case .getMonthDiary(let req):
             return "/\(req.year),\(req.month)"
+        case .getOneDiary(let scheduleId):
+            return "/day/\(scheduleId)"
         case .changeDiary:
             return ""
         case .deleteDiary(let diaryId):
@@ -37,7 +40,7 @@ extension DiaryEndPoint: EndPoint {
         switch self {
         case .createDiary:
             return .post
-        case .getMonthDiary:
+        case .getMonthDiary, .getOneDiary:
             return .get
         case .changeDiary:
             return .patch
@@ -55,7 +58,7 @@ extension DiaryEndPoint: EndPoint {
         case .getMonthDiary(let req):
             let params = ["page": req.page, "size": req.size]
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
-        case .deleteDiary:
+        case .deleteDiary, .getOneDiary:
             return .requestPlain
         }
     }

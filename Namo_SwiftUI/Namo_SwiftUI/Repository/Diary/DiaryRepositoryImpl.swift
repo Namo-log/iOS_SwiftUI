@@ -17,6 +17,11 @@ final class DiaryRepositoryImpl: DiaryRepository {
         return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.getMonthDiary(request: request))
     }
     
+    /// 기록 개별 조회 API
+    func getOneDiary(scheduleId: Int) async -> GetOneDiaryResponseDTO? {
+        return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.getOneDiary(scheduleId: scheduleId))
+    }
+    
     func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool {
         let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, images: images))
         return response?.code == 200
