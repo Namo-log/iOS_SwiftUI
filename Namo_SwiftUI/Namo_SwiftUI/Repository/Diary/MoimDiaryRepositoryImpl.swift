@@ -17,11 +17,17 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
     
     func changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
         let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.changeMoimDiaryPlace(moimLocationId: moimLocationId, req: req))
+        print(response?.message)
         return response?.code == 200
     }
     
     func deleteMoimDiaryPlace(moimLocationId: Int) async -> Bool {
         let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiaryPlace(moimLocationId: moimLocationId))
+        return response?.code == 200
+    }
+    
+    func editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.editMoimDiary(scheduleId: scheduleId, req: req))
         return response?.code == 200
     }
     
@@ -32,7 +38,12 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
         return response?.code == 200
     }
     
-    func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async -> GetMoimDiaryResDTO? {
+    func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async -> GetMonthMoimDiaryResDTO? {
         return await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.getMonthMoimDiary(request: req))
+    }
+    
+    /// 단건 모임 메모 조회
+    func getOneMoimDiary(moimScheduleId: Int) async -> GetOneMoimDiaryResDTO? {
+        return await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.getOneMoimDiary(moimScheduleId: moimScheduleId))
     }
 }

@@ -16,19 +16,20 @@ struct EditDiaryView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
     @EnvironmentObject var scheduleState: ScheduleState
-    
+    @Injected(\.categoryInteractor) var categoryInteractor
     @Injected(\.diaryInteractor) var diaryInteractor
+    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
-    let info: ScheduleInfo
     @State var memo: String
-    
     @State var placeholderText: String = "메모 입력"
     @State var typedCharacters = 0
     @State var characterLimit = 200
-    
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
+    
+    let info: ScheduleInfo
+    let moimMember: [MoimUser] = []
     let photosLimit = 3 // 선택가능한 최대 사진 개수
     
     var body: some View {
@@ -45,7 +46,7 @@ struct EditDiaryView: View {
                             .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
                         
                         Rectangle()
-                            .fill(.pink)
+                            .fill(categoryInteractor.getColorWithPaletteId(id: appState.categoryPalette[info.categoryId ?? 0] ?? 0))
                             .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
                             .frame(width: 10)
                         
@@ -104,7 +105,8 @@ struct EditDiaryView: View {
                 
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
-                    NavigationLink(destination: EditMoimDiaryView(info: info)) {
+                    // 활동 정보 연결되면 아래 코드로 테스트
+                    NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.locationDtos ?? [], info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
@@ -138,12 +140,33 @@ struct EditDiaryView: View {
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
                         Task {
-                            let result = await diaryInteractor.deleteDiary(scheduleId: info.scheduleId)
+                            let _ = await diaryInteractor.deleteDiary(scheduleId: info.scheduleId)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
             }
         } // ZStack
+        .onAppear {
+            /// 모임 기록 추가/수정 화면이면
+            if !appState.isPersonalDiary {
+                Task {
+                    /// 단건 모임 기록 API 호출해서 필요한 정보를 받아온다
+                    print(info.scheduleId)
+                    print(info.scheduleName)
+                    await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
+                }
+            } else { // 모임 일정에 대한 개인 기록이면
+                Task {
+                    // 기록 개별 조회 API 호출
+                    await diaryInteractor.getOneDiary(scheduleId: info.scheduleId)
+                    // memo 값 연결
+                    memo = diaryState.currentDiary.contents ?? ""
+                    // TODO: - diaryState.currentDiary.urls 값이랑 이미지 연결
+                }
+            }
+            print("====\(info)")
+        }
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     // 기록 수정 완료 버튼 또는 기록 저장 버튼
@@ -153,14 +176,27 @@ struct EditDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
-                    await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: [])
+                    if appState.isPersonalDiary {
+                        // 개인 기록 수정 API 호출
+                        await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: [])
+                    } else {
+                        print("모임 기록(에 대한 개인 메모) edit API 호출")
+                        // 모임 기록(에 대한 개인 메모) edit API 호출
+                        await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
+                    }
                 }
             } else {
                 Task {
-                    print(scheduleState.currentSchedule.scheduleId ?? -1)
-                    print(diaryState.currentDiary.contents)
-                    print(pickedImagesData)
-                    await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents, images: pickedImagesData)
+                    if appState.isPersonalDiary {
+                        print(scheduleState.currentSchedule.scheduleId ?? -1)
+                        print(diaryState.currentDiary.contents)
+                        print(pickedImagesData)
+                        await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
+                    } else {
+                        print("모임 기록(에 대한 개인 메모) edit API 호출")
+                        // 모임 기록(에 대한 개인 메모) edit API 호출
+                        await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
+                    }
                 }
             }
             self.presentationMode.wrappedValue.dismiss()

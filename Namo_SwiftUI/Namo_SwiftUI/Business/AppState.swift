@@ -41,6 +41,8 @@ class DiaryState: ObservableObject {
     @Published var currentDiary: Diary = Diary()
     /// 기록 메인 화면에 보여지기 위한 기록들
     @Published var monthDiaries: [Diary] = []
+    /// 상세 보기를 위해 선택된 하나의 모임 기록
+    @Published var currentMoimDiaryInfo: GetOneMoimDiaryResDTO = GetOneMoimDiaryResDTO()
 }
 
 class MoimState: ObservableObject {

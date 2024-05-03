@@ -30,6 +30,11 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
         return await moimDiaryRepository.deleteMoimDiaryPlace(moimLocationId: moimLocationId)
     }
     
+    /// 모임 기록에 대한 개인 메모 추가/수정
+    func editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO) async -> Bool {
+        return await moimDiaryRepository.editMoimDiary(scheduleId: scheduleId, req: req)
+    }
+    
     /// 모임 메모 삭제
     func deleteMoimDiary(moimMemoId: Int) async -> Bool {
         return await moimDiaryRepository.deleteMoimDiary(moimMemoId: moimMemoId)
@@ -37,7 +42,7 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     
     /// 월간 모임 메모 조회
     func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async {
-        let diaries = await moimDiaryRepository.getMonthMoimDiary(req: req)?.content ?? []
+        var diaries = await moimDiaryRepository.getMonthMoimDiary(req: req)?.content ?? []
         print("월간 모임 기록 조회")
         print(diaries)
         DispatchQueue.main.async {
@@ -46,6 +51,14 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
             } else {
                 diaryState.monthDiaries += diaries
             }
+        }
+    }
+    
+    /// 단건 모임 메모 조회
+    func getOneMoimDiary(moimScheduleId: Int) async {
+        guard let res = await moimDiaryRepository.getOneMoimDiary(moimScheduleId: moimScheduleId) else { return }
+        DispatchQueue.main.async {
+            diaryState.currentMoimDiaryInfo = res
         }
     }
 }
