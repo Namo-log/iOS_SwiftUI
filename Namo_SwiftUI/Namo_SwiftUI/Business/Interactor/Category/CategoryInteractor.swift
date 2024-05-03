@@ -10,9 +10,9 @@ import SwiftUI
 protocol CategoryInteractor {
 	func getCategories() async
 	func getColorWithPaletteId(id: Int) -> Color
-    func addCategory(data: postCategoryRequest) async
-    func editCategory(id: Int, data: postCategoryRequest) async
-    func removeCategory(id: Int) async 
+    func addCategory(data: postCategoryRequest) async -> Bool
+    func editCategory(id: Int, data: postCategoryRequest) async -> Bool
+    func removeCategory(id: Int) async -> Bool
     func showCategoryDoneToast()
     func setCategories() -> [ScheduleCategory]
 }

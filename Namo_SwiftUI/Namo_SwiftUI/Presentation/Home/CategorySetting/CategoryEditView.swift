@@ -36,7 +36,10 @@ struct CategoryEditView: View {
         }
     }
     
+    // 카테고리 제목을 입력하지 않았을 경우 나타나는 토글창 여부
     @State private var showTitleToast = false
+    
+    // 카테고리 색을 지정하지 않았을 경우 나타나는 토글창 여부
     @State private var showColorToast = false
     
     @Binding var path: NavigationPath
@@ -140,46 +143,59 @@ struct CategoryEditView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         
+                        // 카테고리 제목이 비어있을 경우
                         if categoryTitle == "" {
                             
+                            // 카테고리 제목 토스트 활성화
                             withAnimation {
                                 self.showTitleToast = true
                             }
                             
+                            // 2초뒤 카테고리 제목 토스트 비활성화
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 withAnimation {
                                     self.showTitleToast = false
                                 }
                             }
                             
-                        } else if selectedPaletteId == 0 {
-                            
-                            withAnimation {
-                                self.showColorToast = true
-                            }
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                withAnimation {
-                                    self.showColorToast = false
-                                }
-                            }
+//                        } else if selectedPaletteId == 0 {
+//                            
+//                            withAnimation {
+//                                self.showColorToast = true
+//                            }
+//                            
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                                withAnimation {
+//                                    self.showColorToast = false
+//                                }
+//                            }
                             
                         } else {
+                            
+                            // 카테고리 수정 API 호출
                             Task {
-                                await categoryInteractor.editCategory(id: self.categoryList.first!.categoryId, data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
                                 
-                            }
-
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) {
-                                withAnimation {
-                                    appState.showCategoryEditDoneToast = true
+                                let result = await categoryInteractor.editCategory(id: self.categoryList.first!.categoryId, data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+                                
+                                // 수정이 성공했을 경우에만
+                                if result {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) {
+                                        withAnimation {
+                                            appState.showCategoryEditDoneToast = true
+                                        }
+                                    }
+                                    
+                                    // 카테고리 삭제 관련 State 비활성화
+                                    appState.showCategoryDeleteBtn = false
+                                    appState.categoryCantDelete = false
+                                    
+                                    // 카테고리 수정 후 이전 화면으로 되돌아감
+                                    path.removeLast()
+                                    
+                                } else {
+                                    
                                 }
                             }
-                            
-                            appState.showCategoryDeleteBtn = false
-                            appState.categoryCantDelete = false
-                           
-                            path.removeLast()
                         }
                         
                     } label: {
@@ -191,19 +207,21 @@ struct CategoryEditView: View {
             }
             .onAppear {
                 
+                // 수정할 기존 카테고리 항목들을 화면에 표시
                 self.categoryList = categoryInteractor.setCategories()
-                
-                appState.showCategoryDeleteBtn = true
-                
                 self.categoryTitle = self.categoryList.first!.name
                 self.selectedPaletteId = self.categoryList.first!.paletteId
                 self.isShare = self.categoryList.first!.isShare
+                
+                // 카테고리 삭제 버튼 활성화
+                appState.showCategoryDeleteBtn = true
             }
 
             VStack {
                 
                 Spacer()
                 
+                // 카테고리 관련 토스트 뷰
                 if showTitleToast {
                     
                     ToastView(toastMessage: "카테고리 이름을 입력해주세요.", bottomPadding: 150)

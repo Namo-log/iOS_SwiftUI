@@ -377,19 +377,28 @@ struct ToDoEditView: View {
                     },
                     rightButtonTitle: "삭제",
                     rightButtonAction: {
+                        
+                        // 카테고리 삭제 API 호출
                         Task {
-                            await self.categoryInteractor.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
+                        
+                            let result = await self.categoryInteractor.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) {
-                                withAnimation {
-                                    appState.showCategoryDeleteDoneToast = true
+                            // 삭제가 성공했을 경우에만
+                            if result {
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) {
+                                    withAnimation {
+                                        appState.showCategoryDeleteDoneToast = true
+                                    }
                                 }
+                                
+                                appState.showCategoryDeleteBtn = false
+                                appState.categoryCantDelete = false
+                                
+                                // 카테고리 삭제 후 이전 화면으로 되돌아감
+                                path.removeLast()
                             }
                             
-                            appState.showCategoryDeleteBtn = false
-                            appState.categoryCantDelete = false
-                            
-                            path.removeLast()
                         }
                     }
                 )
