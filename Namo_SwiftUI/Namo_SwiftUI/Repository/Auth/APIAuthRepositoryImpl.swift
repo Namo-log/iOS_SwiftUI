@@ -21,18 +21,19 @@ class APIAuthRepositoryImpl: AuthRepository {
     }
     
     // 카카오 회원 탈퇴
-    func withdrawMemberKakako<T>(kakaoAccessToken: String) async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberKakao(kakaoAccessToken: kakaoAccessToken))
+    func withdrawMemberKakao<T:Decodable>(kakaoAccessToken: WithDrawKakakoNaverRequestDTO) async -> BaseResponse<T>? {
+        return await APIManager.shared.performRequestBaseResponse(endPoint: AuthEndPoint.withdrawMemberKakao(kakaoAccessToken: kakaoAccessToken))
     }
     
     // 네이버 회원 탈퇴
-    func withdrawMemberNaver<T>(naverAccessToken: String) async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberNaver(naverAccessToken: naverAccessToken))
+    func withdrawMemberNaver<T:Decodable>(naverAccessToken: WithDrawKakakoNaverRequestDTO) async -> BaseResponse<T>? {
+        return await APIManager.shared.performRequestBaseResponse(endPoint: AuthEndPoint.withdrawMemberNaver(naverAccessToken: naverAccessToken))
     }
     
     // 애플 회원 탈퇴
-    func withdrawMemberApple<T>(appleAuthorizationCode: String) async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(appleAuthorizationCode: appleAuthorizationCode))
+    func withdrawMemberApple<T:Decodable>(appleAuthorizationCode: WithDrawAppleRequestDTO) async -> BaseResponse<T>? {
+        
+        return await APIManager.shared.performRequestBaseResponse(endPoint: AuthEndPoint.withdrawMemberApple(appleAuthorizationCode: appleAuthorizationCode))
     }
     
     // 로그아웃 메소드
