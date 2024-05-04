@@ -27,8 +27,6 @@ struct SplashView: View {
                 NamoHome()
             } else if onboardingDone && isActive && isLogin && newUser {
                 AgreeMainView()
-            } else if onboardingDone && isActive && !isLogin && newUser {
-                LoginView()
             } else {
                 ZStack {
                     
