@@ -160,7 +160,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             if sociallogin == "kakao" {
                 
                 let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberKakako(kakaoAccessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!)
-    
+                
                 if result?.code == 200 {
                     DispatchQueue.main.async {
                         UserDefaults.standard.set(false, forKey: "isLogin")
@@ -168,9 +168,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-//                    print("카카오 회원 탈퇴 500 서버 에러")
-//                    print(result?.code)
-//                    print(result?.message)
+                    print("카카오 회원 탈퇴 에러")
+                    print(result?.code)
+                    print(result?.message)
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카카오 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
                 
@@ -184,9 +184,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-//                    print("네이버 회원 탈퇴 500 서버 에러")
-//                    print(result?.code)
-//                    print(result?.message)
+                    print("네이버 회원 탈퇴 500 서버 에러")
+                    print(result?.code)
+                    print(result?.message)
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "네이버 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
                 
@@ -200,9 +200,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-//                    print("애플 회원 탈퇴 500 서버 에러")
-//                    print(result?.code)
-//                    print(result?.message)
+                    print("애플 회원 탈퇴 500 서버 에러")
+                    print(result?.code)
+                    print(result?.message)
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "애플 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
             }
@@ -239,13 +239,6 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 print(error.localizedDescription)
                             } else {
                                 
-                                let currentDateTime = Date()
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"  // 밀리초까지 포맷
-                                let timestamp = formatter.string(from: currentDateTime)
-                                
-                                print("메소드 호출 시점: \(timestamp)")
-                                
                                 print("카카오 로그아웃 성공")
                             }
                         }
@@ -254,25 +247,11 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 } else if sociallogin == "naver" {
                     await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
                     
-                    let currentDateTime = Date()
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"  // 밀리초까지 포맷
-                    let timestamp = formatter.string(from: currentDateTime)
-                    
-                    print("메소드 호출 시점: \(timestamp)")
-                    
                     print("네이버 로그아웃 성공")
                 
                 // 현재 소셜 로그인이 애플인 경우 로그아웃 처리
                 } else if sociallogin == "apple" {
-                    
-                    let currentDateTime = Date()
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"  // 밀리초까지 포맷
-                    let timestamp = formatter.string(from: currentDateTime)
-                    
-                    print("메소드 호출 시점: \(timestamp)")
-                    
+                
                     print("애플 로그아웃 성공")
                 }
             }
@@ -316,7 +295,6 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                 KeyChainManager.addItem(key: "naverAccessToken", value: naverAccessToken)
                 
                 UserDefaults.standard.set("naver", forKey: "socialLogin")
-                
 
             } else {
                 
