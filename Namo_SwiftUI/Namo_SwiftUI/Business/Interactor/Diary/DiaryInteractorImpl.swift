@@ -24,28 +24,22 @@ struct DiaryInteractorImpl: DiaryInteractor {
     }
     
     /// 월간 기록 조회
+	@MainActor
     func getMonthDiary(request: GetDiaryRequestDTO) async {
-        var diaries = await diaryRepository.getMonthDiary(request: request)?.content ?? []
-        print("월간 기록 조회")
-        print(diaries)
-        DispatchQueue.main.async {
-            if request.page == 0 {
-                diaryState.monthDiaries = diaries
-            } else {
-                diaryState.monthDiaries += diaries
-            }
-        }
+		var diaries = await diaryRepository.getMonthDiary(request: request)?.content ?? []
+		if request.page == 0 {
+			diaryState.monthDiaries = diaries
+		} else {
+			diaryState.monthDiaries += diaries
+		}
     }
     
     /// 기록 개별 조회
+	@MainActor
     func getOneDiary(scheduleId: Int) async {
-        var diary = await diaryRepository.getOneDiary(scheduleId: scheduleId)
-        print("기록 개별 조회")
-        print(diary)
-        DispatchQueue.main.async {
-            diaryState.currentDiary.contents = diary?.contents
-            diaryState.currentDiary.urls = diary?.urls
-        }
+        let diary = await diaryRepository.getOneDiary(scheduleId: scheduleId)
+		diaryState.currentDiary.contents = diary?.contents
+		diaryState.currentDiary.urls = diary?.urls
     }
     
     /// Date를 받아서 해당 월을 String 값으로 바꿔줌
