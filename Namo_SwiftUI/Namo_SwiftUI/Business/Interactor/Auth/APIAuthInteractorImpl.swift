@@ -338,7 +338,6 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
             
         } else {
             email = UserDefaults.standard.string(forKey: "appleLoginEmail") ?? ""
-            print(email)
         }
         
         if let appleFullName = appleIDCredential.fullName {
@@ -351,18 +350,16 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
             } else {
                 
                 username = UserDefaults.standard.string(forKey: "appleLoginUsername") ?? ""
-                print(username)
             }
         }
         
         let appleLoginDTO = AppleAccessToken(identityToken: identityToken, username: username, email: email)
         
-        print("서버로 보내는 identityToken: \(identityToken)")
-        print("서버로 보내는 username: \(username)")
-        print("서버로 보내는 email: \(email)")
-        print("서버로 보내는 username: \(type(of: username))")
-        print("서버로 보내는 email: \(type(of: email))")
-        
+//        print("서버로 보내는 identityToken: \(identityToken)")
+//        print("서버로 보내는 username: \(username)")
+//        print("서버로 보내는 email: \(email)")
+//        print("서버로 보내는 username: \(type(of: username))")
+//        print("서버로 보내는 email: \(type(of: email))")
         Task {
             
             let namoServerTokens = await authRepository.getServerTokenApple(appleAccessToken: appleLoginDTO)
