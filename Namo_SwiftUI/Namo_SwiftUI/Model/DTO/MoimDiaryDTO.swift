@@ -50,8 +50,8 @@ struct LocationDTO: Decodable {
     var moimMemoLocationId: Int
     var name: String
     var money: Int
-    var participants: [Int]?
-    var urls: [String]?
+    var participants: [Int]
+    var urls: [String]
     
     init() {
         self.moimMemoLocationId = 0

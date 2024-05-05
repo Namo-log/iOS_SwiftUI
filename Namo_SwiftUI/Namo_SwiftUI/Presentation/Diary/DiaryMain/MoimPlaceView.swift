@@ -12,16 +12,18 @@ import PhotosUI
 struct MoimPlaceView: View {
     @State private var dragOffset: CGSize = .zero
     @State private var isAddingViewVisible = false
-    @Binding var numOfPlace: Int
+    let index: Int
     @Binding var showCalculateAlert: Bool
     @Binding var activity: LocationDTO
-    @Binding var clickedActivityId: Int
     @Binding var cost: String
+	@Binding var currentCalculateIndex: Int
     
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
     let photosLimit = 3 // 선택가능한 최대 사진 개수
+	
+	let deleteAction: () -> Void
     
     var body: some View {
         HStack(spacing: 0) {
@@ -39,11 +41,10 @@ struct MoimPlaceView: View {
                         Image(.rightChevronLight)
                     }
                     .onTapGesture {
+						self.currentCalculateIndex = self.index
                         withAnimation {
                             self.showCalculateAlert = true
-                            self.clickedActivityId = activity.moimMemoLocationId
                             self.cost = String(activity.money)
-                            print("모임 장소뷰에서~ \(clickedActivityId)")
                         }
                     }
                 }
@@ -76,13 +77,13 @@ struct MoimPlaceView: View {
             ) // gesture
             .onAppear {
                 if activity.name.isEmpty {
-                    activity.name = "활동 \(numOfPlace)"
+                    activity.name = "활동 \(index+1)"
                 }
             }
             
             if isAddingViewVisible {
                 Button {
-                    self.numOfPlace -= 1
+                    deleteAction()
                     self.dragOffset = .zero
                 } label: {
                     Rectangle()
