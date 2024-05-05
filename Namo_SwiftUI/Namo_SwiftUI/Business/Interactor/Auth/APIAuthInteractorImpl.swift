@@ -333,19 +333,26 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         
         if let appleEmail = appleIDCredential.email {
             email = appleEmail
+            
+            UserDefaults.standard.set(appleEmail, forKey: "appleLoginEmail")
+            
         } else {
-            email = ""
+            email = UserDefaults.standard.string(forKey: "appleLoginEmail") ?? ""
+            print(email)
         }
         
         if let appleFullName = appleIDCredential.fullName {
             if let familyName = appleFullName.familyName, let givenName = appleFullName.givenName {
                 
                 username = familyName + givenName
+                
+                UserDefaults.standard.set(username, forKey: "appleLoginUsername")
+                
             } else {
-                username = ""
+                
+                username = UserDefaults.standard.string(forKey: "appleLoginUsername") ?? ""
+                print(username)
             }
-        } else {
-            username = ""
         }
         
         let appleLoginDTO = AppleAccessToken(identityToken: identityToken, username: username, email: email)
