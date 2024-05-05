@@ -17,7 +17,7 @@ enum UserEndPoint {
 extension UserEndPoint: EndPoint {
     
     var baseURL: String {
-        return "\(SecretConstants.baseURL)/user"
+        return "\(SecretConstants.baseURL)"
     }
     
     var path: String {

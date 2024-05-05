@@ -12,20 +12,20 @@ struct Moim: Decodable {
     var groupName: String?
     let groupImgUrl: String?
     let groupCode: String
-    let moimUsers: [MoimUser]
+    let groupUsers: [MoimUser]
     
     init(
         groupId: Int = -1,
         groupName: String? = nil,
         groupImgUrl: String? = nil,
         groupCode: String = "",
-        moimUsers: [MoimUser] = []
+		groupUsers: [MoimUser] = []
     ) {
         self.groupId = groupId
         self.groupName = groupName
         self.groupImgUrl = groupImgUrl
         self.groupCode = groupCode
-        self.moimUsers = moimUsers
+        self.groupUsers = groupUsers
     }
 }
 
@@ -69,13 +69,18 @@ struct MoimUser: Decodable, Equatable, Hashable {
 typealias getMoimListResponse = [Moim]
 typealias getMoimScheduleResponse = [MoimScheduleDTO]
 
+struct paricipateGroupResponse: Codable {
+	let groupId: Int
+	let code: String
+}
+
 struct createMoimResponse: Decodable {
-    let moimId: Int
+    let groupId: Int
 }
 
 struct changeMoimNameRequest: Encodable {
-    let moimId: Int
-    let moimName: String
+    let groupId: Int
+    let groupName: String
 }
 
 struct CalendarMoimSchedule: Decodable {
@@ -103,7 +108,7 @@ extension MoimScheduleDTO {
 }
 
 struct postMoimScheduleRequest: Encodable {
-    let moimId: Int
+    let groupId: Int
     let name: String
     let startDate: Int
     let endDate: Int

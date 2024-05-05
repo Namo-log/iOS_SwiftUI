@@ -31,7 +31,7 @@ struct MoimInteractorImpl: MoimInteractor {
 	
 	// 모임 이름 변경
 	func changeMoimName(moimId: Int, newName: String) async -> Bool {
-		return await moimRepository.changeMoimName(data: changeMoimNameRequest(moimId: moimId, moimName: newName))
+		return await moimRepository.changeMoimName(data: changeMoimNameRequest(groupId: moimId, groupName: newName))
 	}
 	
 	// 모임 탈퇴
@@ -157,7 +157,7 @@ struct MoimInteractorImpl: MoimInteractor {
         }
         
         let postSchedule = postMoimScheduleRequest(
-            moimId: moimId,
+			groupId: moimId,
             name: temp.name,
             startDate: Int(startDate.timeIntervalSince1970),
             endDate: Int(endDate.timeIntervalSince1970),

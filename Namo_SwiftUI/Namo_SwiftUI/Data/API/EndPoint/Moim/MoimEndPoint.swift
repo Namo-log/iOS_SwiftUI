@@ -23,7 +23,7 @@ enum MoimEndPoint {
 
 extension MoimEndPoint: EndPoint {
 	var baseURL: String {
-		return "\(SecretConstants.baseURL)/moims"
+		return "\(SecretConstants.baseURL)/groups"
 	}
 	
 	var path: String {
@@ -39,11 +39,11 @@ extension MoimEndPoint: EndPoint {
 		case .withdrawMoim(let moimId):
 			return "/withdraw/\(moimId)"
 		case .getMoimSchedule(let moimId):
-			return "/schedule/\(moimId)/all"
+			return "/schedules/\(moimId)/all"
         case .postMoimSchedule, .patchMoimSchedule:
-            return "/schedule"
+            return "/schedules"
         case .deleteMoimSchedule(scheduleId: let scheduleId):
-            return "/\(scheduleId)"
+            return "/schedules/\(scheduleId)"
 		}
 	}
 	

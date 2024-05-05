@@ -24,10 +24,10 @@ struct GroupListItem: View {
 					.font(.pretendard(.bold, size: 15))
 				
 				HStack(spacing: 10) {
-					Text("\(moim.moimUsers.count)")
+					Text("\(moim.groupUsers.count)")
 						.font(.pretendard(.bold, size: 12))
 					
-					Text("\(moim.moimUsers.map({$0.userName}).joined(separator: ", "))")
+					Text("\(moim.groupUsers.map({$0.userName}).joined(separator: ", "))")
 						.font(.pretendard(.regular, size: 12))
 				}
 			}

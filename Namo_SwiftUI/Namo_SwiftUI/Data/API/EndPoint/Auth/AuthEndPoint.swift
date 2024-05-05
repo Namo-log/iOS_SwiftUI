@@ -38,7 +38,7 @@ enum SocialType {
 extension AuthEndPoint: EndPoint {
     
     var baseURL: String {
-        return "\(SecretConstants.baseURL)/auth"
+        return "\(SecretConstants.baseURL)/auths"
     }
     
     var path: String {

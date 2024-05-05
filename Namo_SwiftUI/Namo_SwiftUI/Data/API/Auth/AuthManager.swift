@@ -46,7 +46,8 @@ class AuthManager: RequestInterceptor {
         
         // URLRequest 헤더 추가, return
         var urlRequest = urlRequest
-        urlRequest.headers.add(.authorization(accessToken))
+        urlRequest.headers.add(.authorization("Bearer \(accessToken)"))
+		print(urlRequest.headers)
         print("JWT: \(accessToken)")
         
         completion(.success(urlRequest))
@@ -70,7 +71,7 @@ class AuthManager: RequestInterceptor {
         }
         
         // 해당 경로로 accessToken 재발급 요청
-        guard let url = URL(string: SecretConstants.baseURL+"/auth/reissuance") else { return }
+        guard let url = URL(string: SecretConstants.baseURL+"/auths/reissuance") else { return }
         
         guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
               let refreshToken = KeyChainManager.readItem(key: "refreshToken")
