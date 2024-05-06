@@ -349,14 +349,14 @@ struct GroupCalendarView: View {
 						
 						Spacer()
 						
-						Text("\(moimState.currentMoim.moimUsers.count) 명")
+						Text("\(moimState.currentMoim.groupUsers.count) 명")
 							.font(.pretendard(.regular, size: 15))
 							.foregroundStyle(Color(.mainText))
 					}
 					.padding(.bottom, 30)
 					
 					LazyVGrid(columns: gridColumn) {
-						ForEach(moimState.currentMoim.moimUsers, id: \.userId) { user in
+						ForEach(moimState.currentMoim.groupUsers, id: \.userId) { user in
 							HStack(spacing: 20) {
 								Circle()
 									.fill(categoryInteractor.getColorWithPaletteId(id: user.color))

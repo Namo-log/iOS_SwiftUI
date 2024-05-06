@@ -18,7 +18,7 @@ enum DiaryEndPoint {
 
 extension DiaryEndPoint: EndPoint {
     var baseURL: String {
-        return "\(SecretConstants.baseURL)/schedules/diary"
+        return "\(SecretConstants.baseURL)/schedules/diaries"
     }
     
     var path: String {
@@ -28,7 +28,7 @@ extension DiaryEndPoint: EndPoint {
         case .getMonthDiary(let req):
             return "/\(req.year),\(req.month)"
         case .getOneDiary(let scheduleId):
-            return "/day/\(scheduleId)"
+            return "/\(scheduleId)"
         case .changeDiary:
             return ""
         case .deleteDiary(let diaryId):

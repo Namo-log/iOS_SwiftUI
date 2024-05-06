@@ -20,7 +20,7 @@ enum MoimDiaryEndPoint {
 
 extension MoimDiaryEndPoint: EndPoint {
     var baseURL: String {
-        return "\(SecretConstants.baseURL)/moims/schedule/memo"
+        return "\(SecretConstants.baseURL)/group/diaries"
     }
     
     var path: String {

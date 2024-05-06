@@ -23,7 +23,7 @@ final class MoimRepositoryImpl: MoimRepository {
 	}
 	
 	func participateMoim(groupCode: String) async -> Bool {
-		let response: BaseResponse<Int>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimEndPoint.participateMoim(groupCode: groupCode))
+		let response: BaseResponse<paricipateGroupResponse>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimEndPoint.participateMoim(groupCode: groupCode))
 		
 		return response?.code == 200
 	}
