@@ -120,7 +120,7 @@ struct CalendarMoimScheduleDetailItem: View {
                 }
                 .simultaneousGesture(TapGesture().onEnded {
                     moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
-                    appState.isEditingDiary = false
+                    appState.isEditingDiary = schedule.hasDiaryPlace
 					Task {
 						await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: schedule.moimScheduleId ?? 0)
 					}
