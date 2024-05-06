@@ -84,6 +84,7 @@ struct CalendarMoimScheduleDetailItem: View {
 	@Injected(\.scheduleInteractor) var scheduleInteractor
 	@Injected(\.categoryInteractor) var categoryInteractor
     @Injected(\.moimInteractor) var moimInteractor
+	@Injected(\.moimDiaryInteractor) var moimDiaryInteractor
 	
 	@Binding var isToDoSheetPresented: Bool
 	
@@ -120,6 +121,9 @@ struct CalendarMoimScheduleDetailItem: View {
                 .simultaneousGesture(TapGesture().onEnded {
                     moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
                     appState.isEditingDiary = false
+					Task {
+						await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: schedule.moimScheduleId ?? 0)
+					}
                 })
 			} else {
 				Text(schedule.users.count == 1 ? schedule.users.first!.userName : "\(schedule.users.count)명")
