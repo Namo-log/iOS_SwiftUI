@@ -357,7 +357,7 @@ struct GroupCalendarView: View {
 					}
 					.padding(.bottom, 30)
 					
-					LazyVGrid(columns: gridColumn) {
+					LazyVGrid(columns: gridColumn, spacing: 20) {
 						ForEach(moimState.currentMoim.groupUsers, id: \.userId) { user in
 							HStack(spacing: 20) {
 								Circle()
