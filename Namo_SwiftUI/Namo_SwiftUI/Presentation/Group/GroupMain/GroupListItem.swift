@@ -29,10 +29,11 @@ struct GroupListItem: View {
 					
 					Text("\(moim.groupUsers.map({$0.userName}).joined(separator: ", "))")
 						.font(.pretendard(.regular, size: 12))
+						.lineLimit(1)
 				}
 			}
 			
-			Spacer(minLength: 100)
+			Spacer(minLength: 0)
 		}
 		.padding(.horizontal, 15)
 		.frame(width: screenWidth-50, height: 70)
