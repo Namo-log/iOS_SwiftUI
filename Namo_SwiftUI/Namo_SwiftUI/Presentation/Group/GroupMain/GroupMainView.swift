@@ -276,6 +276,9 @@ struct GroupMainView: View {
 				.padding(.bottom, 52)
 			)
 		)
+		.onDisappear {
+			groupCode = ""
+		}
 	}
 }
 
