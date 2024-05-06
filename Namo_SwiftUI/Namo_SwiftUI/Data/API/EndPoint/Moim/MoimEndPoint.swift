@@ -23,27 +23,27 @@ enum MoimEndPoint {
 
 extension MoimEndPoint: EndPoint {
 	var baseURL: String {
-		return "\(SecretConstants.baseURL)/groups"
+		return "\(SecretConstants.baseURL)"
 	}
 	
 	var path: String {
 		switch self {
 		case .createMoim:
-			return ""
+			return "/groups"
 		case .getMoimList:
-			return ""
+			return "/groups"
 		case .changeMoimName:
-			return "/name"
+			return "/groups/name"
 		case .participateMoim(let groupCode):
-			return "/participate/\(groupCode)"
+			return "/groups/participate/\(groupCode)"
 		case .withdrawMoim(let moimId):
-			return "/withdraw/\(moimId)"
+			return "/groups/withdraw/\(moimId)"
 		case .getMoimSchedule(let moimId):
-			return "/schedules/\(moimId)/all"
+			return "/group/schedules/\(moimId)/all"
         case .postMoimSchedule, .patchMoimSchedule:
-            return "/schedules"
+            return "/group/schedules"
         case .deleteMoimSchedule(scheduleId: let scheduleId):
-            return "/schedules/\(scheduleId)"
+            return "/group/schedules/\(scheduleId)"
 		}
 	}
 	

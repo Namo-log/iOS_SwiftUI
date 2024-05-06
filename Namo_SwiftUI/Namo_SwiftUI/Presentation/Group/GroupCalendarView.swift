@@ -37,7 +37,6 @@ struct GroupCalendarView: View {
 	
 	// calendar
 	@State var focusDate: YearMonthDay? = nil
-//	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
 	@State var isToDoSheetPresented: Bool = false
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -50,7 +49,7 @@ struct GroupCalendarView: View {
 				
 				weekday
 					.padding(.bottom, 11)
-
+				
 				GeometryReader { reader in
 					VStack {
 						CalendarView(calendarController) { date in
@@ -71,7 +70,10 @@ struct GroupCalendarView: View {
 					detailView
 						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
 						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
-				} 
+				} else {
+					Spacer(minLength: 0)
+						.frame(height: 30)
+				}
 				
 			}
 			
