@@ -51,7 +51,9 @@ struct NamoHome: View {
 			}
 			.ignoresSafeArea(edges: .bottom)
 			.task {
-				await scheduleInteractor.setCalendar(date: Date())
+                if UserDefaults.standard.bool(forKey: "isLogin") {
+                    await scheduleInteractor.setCalendar(date: Date())
+                }
 			}
 		}
 	}

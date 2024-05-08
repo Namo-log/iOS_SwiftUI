@@ -33,14 +33,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                     
                     if let error = error {
-                        print(error.localizedDescription)
-                        
-                        // 카카오와의 통신 오류: 알 수 없는 에러. 재시도
-                        Task {
-                            await self?.kakaoLogin()
-                        }
-                        
-                        print("카카오 토큰(앱) 받아오기 실패. 재시도")
+
+                        print("카카오 토큰(앱) 받아오기 실패", error.localizedDescription)
                         
                     } else {
                         
@@ -88,14 +82,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
                     
                     if let error = error {
-                        print(error)
                         
-                        // 카카오와의 통신 오류: 알 수 없는 에러. 재시도
-                        Task {
-                            await self.kakaoLogin()
-                        }
-                        
-                        print("카카오 토큰(웹) 받아오기 실패. 재시도")
+                        print("카카오 토큰(웹) 받아오기 실패", error.localizedDescription)
                         
                     } else {
                         
@@ -171,8 +159,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             
             if sociallogin == "kakao" {
                 
-                let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberKakako(kakaoAccessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!)
-    
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao(kakaoAccessToken: WithDrawKakakoNaverRequestDTO(accessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!))
+                
                 if result?.code == 200 {
                     DispatchQueue.main.async {
                         UserDefaults.standard.set(false, forKey: "isLogin")
@@ -180,14 +168,12 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-//                    print("카카오 회원 탈퇴 500 서버 에러")
-//                    print(result?.code)
-//                    print(result?.message)
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카카오 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
                 
             } else if sociallogin == "naver" {
-                let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberNaver(naverAccessToken: KeyChainManager.readItem(key: "naverAccessToken")!)
+                
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver(naverAccessToken: WithDrawKakakoNaverRequestDTO(accessToken: KeyChainManager.readItem(key: "naverAccessToken")!))
                 
                 if result?.code == 200 {
                     DispatchQueue.main.async {
@@ -196,14 +182,13 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-//                    print("네이버 회원 탈퇴 500 서버 에러")
-//                    print(result?.code)
-//                    print(result?.message)
+
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "네이버 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
                 
             } else if sociallogin == "apple" {
-                let result: BaseResponse<ServerTokenResponse>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!)
+                
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: WithDrawAppleRequestDTO(authorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!))
                 
                 if result?.code == 200 {
                     DispatchQueue.main.async {
@@ -212,9 +197,6 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         self.appState.currentTab = .home
                     }
                 } else {
-//                    print("애플 회원 탈퇴 500 서버 에러")
-//                    print(result?.code)
-//                    print(result?.message)
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "애플 회원 탈퇴 \(String(describing: result?.code)) 에러"))
                 }
             }
@@ -250,15 +232,21 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 print(error)
                                 print(error.localizedDescription)
                             } else {
+                                
                                 print("카카오 로그아웃 성공")
                             }
                         }
                     }
-                    // 현재 소셜 로그인이 네이버인 경우 네이버 로그아웃 처리
+                // 현재 소셜 로그인이 네이버인 경우 네이버 로그아웃 처리
                 } else if sociallogin == "naver" {
                     await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
                     
                     print("네이버 로그아웃 성공")
+                
+                // 현재 소셜 로그인이 애플인 경우 로그아웃 처리
+                } else if sociallogin == "apple" {
+                
+                    print("애플 로그아웃 성공")
                 }
             }
         } else {
@@ -277,9 +265,6 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         print("네이버 로그인 성공")
         
         let naverAccessToken = NaverThirdPartyLoginConnection.getSharedInstance().accessToken ?? ""
-        
-//        let naverAccessToken = SocialAccessToken(
-//            accessToken: NaverThirdPartyLoginConnection.getSharedInstance().accessToken)
         
         print("네이버 AccessToken: \(naverAccessToken)")
         
@@ -304,13 +289,10 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                 KeyChainManager.addItem(key: "naverAccessToken", value: naverAccessToken)
                 
                 UserDefaults.standard.set("naver", forKey: "socialLogin")
-                
 
             } else {
                 
                 ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "인증 오류", message: "일시적인 인증 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "나모서버에서 토큰 받아오기 실패(네이버 로그인)"))
-            
-                
             }
         }
     }
@@ -340,6 +322,8 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         
         let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)!
         
+        print("authorizationCode: \(authorizationCode)")
+        
         print("identityToken: \(identityToken)")
         print("email: \(appleIDCredential.email)")
         print("username: \(appleIDCredential.fullName)")
@@ -349,30 +333,35 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         
         if let appleEmail = appleIDCredential.email {
             email = appleEmail
+            
+            UserDefaults.standard.set(appleEmail, forKey: "appleLoginEmail")
+            
         } else {
-            email = ""
+            email = UserDefaults.standard.string(forKey: "appleLoginEmail") ?? ""
         }
         
         if let appleFullName = appleIDCredential.fullName {
             if let familyName = appleFullName.familyName, let givenName = appleFullName.givenName {
                 
                 username = familyName + givenName
+                
+                UserDefaults.standard.set(username, forKey: "appleLoginUsername")
+                
             } else {
-                username = ""
+                
+                username = UserDefaults.standard.string(forKey: "appleLoginUsername") ?? ""
             }
-        } else {
-            username = ""
         }
         
         let appleLoginDTO = AppleAccessToken(identityToken: identityToken, username: username, email: email)
         
-        print("서버로 보내는 identityToken: \(identityToken)")
-        print("서버로 보내는 username: \(username)")
-        print("서버로 보내는 email: \(email)")
-        print("서버로 보내는 username: \(type(of: username))")
-        print("서버로 보내는 email: \(type(of: email))")
-        
+//        print("서버로 보내는 identityToken: \(identityToken)")
+//        print("서버로 보내는 username: \(username)")
+//        print("서버로 보내는 email: \(email)")
+//        print("서버로 보내는 username: \(type(of: username))")
+//        print("서버로 보내는 email: \(type(of: email))")
         Task {
+            
             let namoServerTokens = await authRepository.getServerTokenApple(appleAccessToken: appleLoginDTO)
             
             if let serverTokens = namoServerTokens {
@@ -392,8 +381,9 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
                 KeyChainManager.addItem(key: "appleAuthorizationCode", value: authorizationCode)
                 
                 /// 현재 로그인한 소셜 미디어는 애플
-//                self.appState.socialLogin = .apple
                 UserDefaults.standard.set("apple", forKey: "socialLogin")
+                
+                print("애플 로그인 성공")
 
             } else {
                 print("서버 토큰 에러")
