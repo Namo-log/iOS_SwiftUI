@@ -238,7 +238,7 @@ struct DiaryItemView: View {
                     
                     // 다이어리 수정 버튼
                     // TODO: - categoryId 연결안됨
-                    NavigationLink(destination: EditDiaryView(memo: diary.contents ?? "", info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
+                    NavigationLink(destination: EditDiaryView(memo: diary.contents ?? "", urls: diary.urls ?? [], info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
                         HStack(alignment: .center, spacing: 3) {
                             Image(.icEditDiary)
                                 .resizable()
