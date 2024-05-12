@@ -93,7 +93,7 @@ struct GroupMainView: View {
 	}
 	
 	private var groupList: some View {
-		ScrollView(.vertical) {
+		ScrollView(.vertical, showsIndicators: false) {
 			VStack(spacing: 20) {
 				if appState.isLoading {
 					ProgressView()
@@ -117,6 +117,7 @@ struct GroupMainView: View {
 				}
 				
 				Spacer()
+					.frame(height: 100)
 			}
 		}
 		.refreshable {
