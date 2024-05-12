@@ -36,7 +36,7 @@ struct ScheduleDTO: Codable {
 	let y: Double?
 	let locationName: String
 	let categoryId: Int
-	let hasDiary: Bool
+	let hasDiary: Bool?
 	let moimSchedule: Bool
 }
 
