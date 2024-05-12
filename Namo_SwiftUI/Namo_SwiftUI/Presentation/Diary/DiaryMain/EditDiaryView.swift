@@ -110,6 +110,7 @@ struct EditDiaryView: View {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
+
                 }
                 
                 // 기록 저장 또는 기록 수정 버튼

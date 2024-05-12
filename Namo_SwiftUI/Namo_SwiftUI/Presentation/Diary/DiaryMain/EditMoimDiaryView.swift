@@ -17,10 +17,9 @@ struct EditMoimDiaryView: View {
     
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
-    @State private var numOfPlace = 1
     @State private var showCalculateAlert: Bool = false
-    @State var clickedActivityId: Int = -1
-    @State var activities = [LocationDTO(), LocationDTO(), LocationDTO()]
+    @State var activities = [LocationDTO()]
+	@State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
     
     let info: ScheduleInfo
@@ -28,6 +27,9 @@ struct EditMoimDiaryView: View {
     let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     @State var selectedUser: [MoimUser] = []
+	
+	// 삭제된 활동 API call 하기 위해 저장
+	@State var deleteActivities: [LocationDTO] = []
     
     // 모임 정산 Alert
     var groupCalculateAlertView: some View {
@@ -40,9 +42,10 @@ struct EditMoimDiaryView: View {
             },
             rightButtonTitle: "저장",
             rightButtonAction: {
-                if let index = activities.firstIndex(where: { $0.moimMemoLocationId == clickedActivityId }) {
-                    activities[index].money = Int(cost) ?? 0
-                }
+				activities[currentCalculateIndex].money = Int(cost) ?? 0
+				activities[currentCalculateIndex].participants = selectedUser.map({$0.userId})
+				cost = ""
+				selectedUser.removeAll()
                 showCalculateAlert = false
                 return true
             },
@@ -175,8 +178,10 @@ struct EditMoimDiaryView: View {
                         }
                         
                         // 장소 뷰
-                        ForEach(0..<numOfPlace, id: \.self) { index in
-                            MoimPlaceView(numOfPlace: $numOfPlace, showCalculateAlert: $showCalculateAlert, activity: getSafeActivity(for: index), clickedActivityId: $clickedActivityId, cost: $cost)
+						ForEach(0..<activities.count, id: \.self) { index in
+							MoimPlaceView(index: index, showCalculateAlert: $showCalculateAlert, activity: getSafeActivity(for: index), cost: $cost, currentCalculateIndex: $currentCalculateIndex, deleteAction: {
+								deleteActivities.append(activities.remove(at: index))
+							})
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -186,14 +191,13 @@ struct EditMoimDiaryView: View {
                     // 활동 추가 버튼
                     if showAddPlaceButton {
                         Button {
-                            if numOfPlace == 2 {
-                                print("2개다")
+							if activities.count == 2 {
                                 showAddPlaceButton = false
                             }
                             
-                            if numOfPlace < 3 {
+                            if activities.count < 3 {
                                 withAnimation(.easeIn(duration: 0.2)) {
-                                    numOfPlace += 1
+									activities.append(LocationDTO())
                                 }
                             }
                         } label: {
@@ -250,41 +254,51 @@ struct EditMoimDiaryView: View {
         )
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
+		.task {
+			self.activities = diaryState.currentMoimDiaryInfo.locationDtos ?? []
+		}
     }
     
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
     private var EditSaveDiaryView: some View {
         Button {
-            print(appState.isEditingDiary ? "기록 수정" : "기록 저장")
             if appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
-                    for i in 0..<numOfPlace {
+					// 활동 편집
+					for i in 0..<activities.count {
                         if activities.indices.contains(i) {
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
-                            print("활동 수정 API req: \(req)")
-                            print("활동 수정 API moimLocationId: \(diaryState.currentMoimDiaryInfo.getLocationIds()[i])")
-                            await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
+							let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: [])
+                            let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
                         }
                     }
-					
-					DispatchQueue.main.async {
-						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+
+					// 활동 삭제
+					for activity in deleteActivities {
+						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimMemoLocationId)
 					}
+                  DispatchQueue.main.async {
+						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+          }
                 }
             } else {
                 Task {
                     // TODO: - 이미지 연결
-                    for i in 0..<numOfPlace {
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: [])
-                        print("활동 추가 API req: \(req)")
-                        await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+					// 활동 추가
+                    for i in 0..<activities.count {
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: [])
+						let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
-					
-					
-					DispatchQueue.main.async {
-						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+
+					// 활동 삭제
+					for activity in deleteActivities {
+						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimMemoLocationId)
+
 					}
+                  
+          DispatchQueue.main.async {
+					  NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+           }
                 }
             }
 			

@@ -46,9 +46,6 @@ final class APIManager {
 //            print(String(data: result, encoding: .utf8))
 			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
             
-            print(decodedData.code)
-            print(decodedData.message)
-            
 			return decodedData.result
 		} catch {
 			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))

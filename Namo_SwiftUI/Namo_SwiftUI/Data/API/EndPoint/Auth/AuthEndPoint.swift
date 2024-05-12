@@ -17,13 +17,13 @@ enum AuthEndPoint {
     case fetchTokenApple(appleAccessToken: AppleAccessToken)
     
     // 카카오 회원 탈퇴
-    case withdrawMemberKakao(kakaoAccessToken: String)
+    case withdrawMemberKakao(kakaoAccessToken: WithDrawKakakoNaverRequestDTO)
     
     // 네이버 회원 탈퇴
-    case withdrawMemberNaver(naverAccessToken: String)
+    case withdrawMemberNaver(naverAccessToken: WithDrawKakakoNaverRequestDTO)
     
     // 애플 회원 탈퇴
-    case withdrawMemberApple(appleAuthorizationCode: String)
+    case withdrawMemberApple(appleAuthorizationCode: WithDrawAppleRequestDTO)
     
     // 로그아웃
     case logout(serverAccessToken: ServerAccessToken)
