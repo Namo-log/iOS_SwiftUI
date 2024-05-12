@@ -92,12 +92,27 @@ struct GroupMainView: View {
 		.padding(.horizontal, 20)
 	}
 	
+	private var noGroup: some View {
+		VStack(spacing: 45) {
+			Spacer()
+			
+			Image(.noGroup)
+			
+			Text("그룹 리스트가 없습니다\n그룹을 추가해 보세요!")
+				.font(.pretendard(.light, size: 15))
+				.lineLimit(2)
+				.multilineTextAlignment(.center)
+				.foregroundStyle(Color.mainText)
+			
+		}
+	}
+	
 	private var groupList: some View {
 		ScrollView(.vertical, showsIndicators: false) {
 			VStack(spacing: 20) {
 				if appState.isLoading {
 					ProgressView()
-				} else if !moimState.moims.isEmpty {
+				} else if moimState.moims.isEmpty {
 					ForEach(moimState.moims, id: \.groupId) { moim in
 						NavigationLink(destination: GroupCalendarView(), label: {
 							GroupListItem(moim: moim)
@@ -112,8 +127,7 @@ struct GroupMainView: View {
 						
 					}
 				} else {
-					Text("그룹 리스트가 없습니다. 그룹을 추가해 보세요!")
-						.font(.pretendard(.regular, size: 15))
+					noGroup
 				}
 				
 				Spacer()
