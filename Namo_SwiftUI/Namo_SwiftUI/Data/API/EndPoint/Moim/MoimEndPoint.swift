@@ -73,7 +73,7 @@ extension MoimEndPoint: EndPoint {
 	var task: APITask {
 		switch self {
 		case .createMoim(let groupName, let image):
-			return .uploadImagesWithBody(imageDatas: [image], body: ["groupName": groupName])
+			return .uploadImagesWithBody(imageDatas: [image], body: ["groupName": groupName], imageKeyName: "img")
 		case .getMoimList:
 			return .requestPlain
 		case .changeMoimName(let data):
