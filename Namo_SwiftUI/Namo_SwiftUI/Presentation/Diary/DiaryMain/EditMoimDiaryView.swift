@@ -267,6 +267,10 @@ struct EditMoimDiaryView: View {
                             await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
                         }
                     }
+					
+					DispatchQueue.main.async {
+						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+					}
                 }
             } else {
                 Task {
@@ -276,8 +280,14 @@ struct EditMoimDiaryView: View {
                         print("활동 추가 API req: \(req)")
                         await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
+					
+					
+					DispatchQueue.main.async {
+						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+					}
                 }
             }
+			
             self.presentationMode.wrappedValue.dismiss()
         } label: {
             ZStack() {

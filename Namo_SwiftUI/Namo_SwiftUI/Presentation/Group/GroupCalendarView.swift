@@ -114,6 +114,9 @@ struct GroupCalendarView: View {
 			groupName = moimState.currentMoim.groupName ?? ""
 		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadGroupCalendarViaNetwork)) { notification in
+			Task {
+				await moimInteractor.getMoimSchedule(moimId: moimState.currentMoim.groupId)
+			}
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
 				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
 				focusDate = date

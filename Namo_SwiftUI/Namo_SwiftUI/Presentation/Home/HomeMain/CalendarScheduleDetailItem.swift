@@ -72,6 +72,10 @@ struct CalendarScheduleDetailItem: View {
 					.fill(Color(.textBackground))
 					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 			)
+			.onTapGesture {
+				scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
+				self.isToDoSheetPresented = true
+			}
         }
 	}
 }
@@ -140,6 +144,12 @@ struct CalendarMoimScheduleDetailItem: View {
 				.fill(Color(.textBackground))
 				.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 		)
+		.onTapGesture {
+			if self.schedule.curMoimSchedule {
+				moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
+				self.isToDoSheetPresented = true
+			}
+		}
 	}
 }
 
