@@ -16,11 +16,19 @@ struct DiaryInteractorImpl: DiaryInteractor {
     /// 기록 생성
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async {
         print("기록 생성 요청")
-        print(scheduleId)
-        print(content)
-        print(images)
         let result = await diaryRepository.createDiary(scheduleId: scheduleId, content: content, images: images)
-        print("scheduleId : \(scheduleId)")
+		if result != nil {
+			// 기록 저장에 성공하고 Realm에 해당 item이 있는 경우
+			// TODO: 페이징 구현 후 적용
+//			if let schedule = RealmManager.shared.getObject(RealmSchedule.self, pk: scheduleId) {
+//				schedule.hasDiary = true
+//				print(schedule)
+//				RealmManager.shared.updateObject(schedule, pk: scheduleId)
+//			}
+			await MainActor.run {
+				NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil)
+			}
+		}
     }
     
     /// 월간 기록 조회

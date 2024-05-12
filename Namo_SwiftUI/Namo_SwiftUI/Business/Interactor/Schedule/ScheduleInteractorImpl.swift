@@ -265,8 +265,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         )
         
         let result = await scheduleRepository.postSchedule(data: postSchedule)
-		if result != nil {
-			await setCalendar(date: startDate)
+		if result != nil {	
 			DispatchQueue.main.async {
 				NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
 			}

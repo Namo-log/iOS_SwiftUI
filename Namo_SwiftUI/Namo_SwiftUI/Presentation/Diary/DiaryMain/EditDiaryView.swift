@@ -188,14 +188,11 @@ struct EditDiaryView: View {
             } else {
                 Task {
                     if appState.isPersonalDiary {
-                        print(scheduleState.currentSchedule.scheduleId ?? -1)
-                        print(diaryState.currentDiary.contents)
-                        print(pickedImagesData)
                         await diaryInteractor.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
                     } else {
                         print("모임 기록(에 대한 개인 메모) edit API 호출")
                         // 모임 기록(에 대한 개인 메모) edit API 호출
-                        await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
+                        let result = await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
                 }
             }
