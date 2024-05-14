@@ -90,7 +90,7 @@ extension Container {
     }
     
     var diaryRepository: Factory<DiaryRepository> {
-        self { DiaryRepositoryImplTest() }
+        self { DiaryRepositoryImpl() }
             .singleton
     }
     
