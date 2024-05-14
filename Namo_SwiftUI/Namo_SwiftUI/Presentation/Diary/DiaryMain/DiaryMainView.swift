@@ -269,7 +269,7 @@ struct DiaryItemView: View {
                                 KFImage(URL(string: url))
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(width: 90, height: 90)
+                                    .frame(width: 70, height: 70)
                                     .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
                             }
                         }
