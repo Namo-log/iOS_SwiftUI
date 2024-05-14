@@ -32,29 +32,29 @@ struct GetOneMoimDiaryResDTO: Decodable {
     var startDate: Int
     var locationName: String?
     var users: [UserDTO]?
-    var locationDtos: [LocationDTO]?
+    var moimActivityDtos: [ActivityDTO]?
     
     init() {
         self.name = ""
         self.startDate = 0
         self.locationName = ""
         self.users = []
-        self.locationDtos = []
+        self.moimActivityDtos = []
     }
 }
 struct UserDTO: Decodable {
     var userId: Int
     var userName: String
 }
-struct LocationDTO: Decodable {
-    var moimMemoLocationId: Int
+struct ActivityDTO: Decodable {
+    var moimActivityId: Int
     var name: String
     var money: Int
     var participants: [Int]
     var urls: [String]
     
     init() {
-        self.moimMemoLocationId = 0
+        self.moimActivityId = 0
         self.name = ""
         self.money = 0
         self.participants = []
@@ -62,7 +62,7 @@ struct LocationDTO: Decodable {
     } 
     
     init(id: Int, name: String, money: Int, participants: [Int], urls: [String]) {
-        self.moimMemoLocationId = id
+        self.moimActivityId = id
         self.name = name
         self.money = money
         self.participants = participants
@@ -79,15 +79,15 @@ extension GetOneMoimDiaryResDTO {
         } ?? []
     }
     
-    func getLocationNames() -> [String] {
-        locationDtos?.map {
+    func getActivityNames() -> [String] {
+        moimActivityDtos?.map {
             $0.name
         } ?? []
     }
     
-    func getLocationIds() -> [Int] {
-        locationDtos?.map {
-            $0.moimMemoLocationId
+    func getActivityIdList() -> [Int] {
+        moimActivityDtos?.map {
+            $0.moimActivityId
         } ?? []
     }
 }

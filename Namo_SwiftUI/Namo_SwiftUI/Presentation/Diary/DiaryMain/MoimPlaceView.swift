@@ -14,7 +14,7 @@ struct MoimPlaceView: View {
     @State private var isAddingViewVisible = false
     let index: Int
     @Binding var showCalculateAlert: Bool
-    @Binding var activity: LocationDTO
+    @Binding var activity: ActivityDTO
     @Binding var cost: String
 	@Binding var currentCalculateIndex: Int
     

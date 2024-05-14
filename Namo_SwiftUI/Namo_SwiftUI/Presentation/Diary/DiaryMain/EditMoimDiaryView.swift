@@ -18,7 +18,7 @@ struct EditMoimDiaryView: View {
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
     @State private var showCalculateAlert: Bool = false
-    @State var activities = [LocationDTO()]
+    @State var activities = [ActivityDTO()]
 	@State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
     
@@ -29,7 +29,7 @@ struct EditMoimDiaryView: View {
     @State var selectedUser: [MoimUser] = []
 	
 	// 삭제된 활동 API call 하기 위해 저장
-	@State var deleteActivities: [LocationDTO] = []
+	@State var deleteActivities: [ActivityDTO] = []
     
     // 모임 정산 Alert
     var groupCalculateAlertView: some View {
@@ -197,7 +197,7 @@ struct EditMoimDiaryView: View {
                             
                             if activities.count < 3 {
                                 withAnimation(.easeIn(duration: 0.2)) {
-									activities.append(LocationDTO())
+									activities.append(ActivityDTO())
                                 }
                             }
                         } label: {
@@ -255,7 +255,7 @@ struct EditMoimDiaryView: View {
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
 		.task {
-			self.activities = diaryState.currentMoimDiaryInfo.locationDtos ?? []
+			self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
 		}
     }
     
@@ -269,13 +269,14 @@ struct EditMoimDiaryView: View {
 					for i in 0..<activities.count {
                         if activities.indices.contains(i) {
 							let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: [])
-                            let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getLocationIds()[i], req: req)
+                            await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
+                            let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getActivityIdList()[i], req: req)
                         }
                     }
 					
 					// 활동 삭제
 					for activity in deleteActivities {
-						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimMemoLocationId)
+						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
 					}
                 }
             } else {
@@ -289,7 +290,7 @@ struct EditMoimDiaryView: View {
 					
 					// 활동 삭제
 					for activity in deleteActivities {
-						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimMemoLocationId)
+						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
 					}
                 }
             }
@@ -309,12 +310,12 @@ struct EditMoimDiaryView: View {
         }
     }
     
-    func getSafeActivity(for index: Int) -> Binding<LocationDTO> {
+    func getSafeActivity(for index: Int) -> Binding<ActivityDTO> {
         if activities.indices.contains(index) {
             return $activities[index]
         } else {
             // 배열의 범위를 벗어난 경우 대체 값을 반환
-            return .constant(LocationDTO(id: index * -1, name: "", money: 0, participants: [], urls: []))
+            return .constant(ActivityDTO(id: index * -1, name: "", money: 0, participants: [], urls: []))
         }
     }
 }
