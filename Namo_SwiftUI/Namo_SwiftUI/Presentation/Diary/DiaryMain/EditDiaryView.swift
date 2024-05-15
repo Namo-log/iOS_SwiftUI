@@ -229,11 +229,13 @@ struct EditDiaryView: View {
                         .aspectRatio(contentMode: .fill)
                 }
                 
-                // 사진 피커 -> 최대 3장까지 선택 가능
-                PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
-                    Image(.btnAddImg)
-                        .resizable()
-                        .frame(width: 100, height: 100)
+                if appState.isPersonalDiary {
+                    // 사진 피커 -> 최대 3장까지 선택 가능
+                    PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
+                        Image(.btnAddImg)
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                    }
                 }
             } // HStack
             .padding(.top, 18)

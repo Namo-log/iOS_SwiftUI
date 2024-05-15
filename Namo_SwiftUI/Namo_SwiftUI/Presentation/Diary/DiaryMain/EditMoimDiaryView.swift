@@ -181,7 +181,7 @@ struct EditMoimDiaryView: View {
                             MoimPlaceView(showCalculateAlert: $showCalculateAlert,
                                           activity: $activities[index],
                                           name: $activities[index].name,
-                                          index: index,
+                                          currentCalculateIndex: $currentCalculateIndex, index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
                             })

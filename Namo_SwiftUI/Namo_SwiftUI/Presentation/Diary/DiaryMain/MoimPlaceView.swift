@@ -15,6 +15,7 @@ struct MoimPlaceView: View {
     @Binding var showCalculateAlert: Bool
     @Binding var activity: ActivityDTO
     @Binding var name: String
+    @Binding var currentCalculateIndex: Int
     @State var pickedImagesData: [Data?] = []
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
@@ -39,6 +40,7 @@ struct MoimPlaceView: View {
                         Image(.rightChevronLight)
                     }
                     .onTapGesture {
+                        self.currentCalculateIndex = self.index
                         withAnimation {
                             self.showCalculateAlert = true
                         }
