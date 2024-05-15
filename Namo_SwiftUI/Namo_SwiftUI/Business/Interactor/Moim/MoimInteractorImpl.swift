@@ -61,11 +61,18 @@ struct MoimInteractorImpl: MoimInteractor {
 			// 일정 지속기간 중 모든 day를 구함
 			let days = datesBetween(startDate: startDate, endDate: endDate)
 			
-			// 우선 시작날 캘린더에 표시될 postion을 구함(그 뒤 day들은 이 postion을 쭉 이어감)
-			let currentPosition = findPostion(schedulesDict[startYMD] ?? [])
+			// 우선 시작날 캘린더에 표시될 postion을 구함
+			// 그 뒤 day들은 이 postion을 쭉 이어감. 단 주가 바뀌고 해당 postion의 위쪽이 비어있다면 올라감
+			var currentPosition = findPostion(schedulesDict[startYMD] ?? [])
 			
 			// 일정 지속기간동안 매일
 			days.forEach { day in
+				// 만약 주가 바뀌면(일요일) position 다시 계산
+				if day.isSunday() {
+					currentPosition = findPostion(schedulesDict[day.toYMD()] ?? [])
+				}
+				
+				
 				let currentYMD = day.toYMD()
 				
 				// schedulesDict에 해당 날짜에 data가 nil이 아니라면 = 해당 날짜에 이미 스케쥴이 있다면
