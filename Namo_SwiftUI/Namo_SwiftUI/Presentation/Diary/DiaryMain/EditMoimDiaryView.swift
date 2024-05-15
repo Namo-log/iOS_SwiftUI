@@ -21,6 +21,7 @@ struct EditMoimDiaryView: View {
     @State var activities = [ActivityDTO()]
 	@State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
+    @State var images: [Data?] = []
     
     let info: ScheduleInfo
     let moimUser: [MoimUser]
@@ -181,7 +182,9 @@ struct EditMoimDiaryView: View {
                             MoimPlaceView(showCalculateAlert: $showCalculateAlert,
                                           activity: $activities[index],
                                           name: $activities[index].name,
-                                          currentCalculateIndex: $currentCalculateIndex, index: index,
+                                          currentCalculateIndex: $currentCalculateIndex,
+                                          pickedImagesData: $images,
+                                          index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
                             })
@@ -259,6 +262,7 @@ struct EditMoimDiaryView: View {
         .ignoresSafeArea(edges: .bottom)
         .onAppear {
             Task {
+                await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
             }
         }
@@ -267,48 +271,50 @@ struct EditMoimDiaryView: View {
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
     private var EditSaveDiaryView: some View {
         Button {
-            if !appState.isEditingDiary {
+            if appState.isEditingDiary {
                 Task {
-                    // TODO: - 이미지 연결
-					// 활동 편집
-                    await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
-
-					for i in 0..<activities.count {
+                    // 활동 편집
+                    print(images)
+                    for i in 0..<activities.count {
                         if activities.indices.contains(i) {
                             let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activities[i].getDataList())
-                            let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: images)
+                            if !idList.isEmpty {
+                                let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
+                            } else {
+                                let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                            }
                         }
                     }
-
-					// 활동 삭제
-					for activity in deleteActivities {
-						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
-					}
-                  DispatchQueue.main.async {
-						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
-          }
+                    
+                    // 활동 삭제
+                    for activity in deleteActivities {
+                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
+                    }
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+                    }
                 }
             } else {
                 Task {
-                    // TODO: - 이미지 연결
-					// 활동 추가
+                    // 활동 추가
                     for i in 0..<activities.count {
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activities[i].getDataList())
-						let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                        print(images)
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: images)
+                        let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
-
-					// 활동 삭제
-					for activity in deleteActivities {
-						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
-					}
-                  
-          DispatchQueue.main.async {
-					  NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
-           }
+                    
+                    // 활동 삭제
+                    for activity in deleteActivities {
+                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+                    }
                 }
             }
-			
+            
             self.presentationMode.wrappedValue.dismiss()
         } label: {
             ZStack() {
@@ -322,15 +328,6 @@ struct EditMoimDiaryView: View {
                     .foregroundStyle(appState.isEditingDiary ? .mainOrange : .white)
                     .padding(.bottom, 10) // Safe Area 칠한만큼
             }
-        }
-    }
-    
-    func getSafeActivity(for index: Int) -> Binding<ActivityDTO> {
-        if activities.indices.contains(index) {
-            return $activities[index]
-        } else {
-            // 배열의 범위를 벗어난 경우 대체 값을 반환
-            return .constant(ActivityDTO(id: index * -1, name: "", money: 0, participants: [], urls: []))
         }
     }
 }

@@ -121,6 +121,7 @@ struct EditDiaryView: View {
                 // 기록 저장 또는 기록 수정 버튼
                 EditSaveDiaryView
             } // VStack
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
@@ -168,6 +169,16 @@ struct EditDiaryView: View {
                     // memo 값 연결
                     memo = diaryState.currentDiary.contents ?? ""
                     // TODO: - diaryState.currentDiary.urls 값이랑 이미지 연결
+                    for url in diaryState.currentDiary.urls ?? [] {
+                        guard let url = URL(string: url) else { return }
+                        
+                        DispatchQueue.global().async {
+                            guard let data = try? Data(contentsOf: url) else { return }
+                            images.append(UIImage(data: data)!)
+                            print(images.description)
+                        }
+                    }
+//                    images = diaryState.currentDiary.urls
                 }
             }
             print("====\(info)")
@@ -257,6 +268,7 @@ struct EditDiaryView: View {
                 }
             }
             .onAppear {
+                images.removeAll()
                 // urls에 있는 이미지 주소를 images 배열에 UIImage로 추가하여 뷰에 연결
                 for url in urls {
                     guard let url = URL(string: url) else { return }

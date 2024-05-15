@@ -13,10 +13,14 @@ struct MoimPlaceView: View {
     @State private var dragOffset: CGSize = .zero
     @State private var isAddingViewVisible = false
     @Binding var showCalculateAlert: Bool
-    @Binding var activity: ActivityDTO
+    @Binding var activity: ActivityDTO {
+      didSet {
+        print("@CHANGED - \(activity)")
+      }
+    }
     @Binding var name: String
     @Binding var currentCalculateIndex: Int
-    @State var pickedImagesData: [Data?] = []
+    @Binding var pickedImagesData: [Data?]
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
     
@@ -135,7 +139,8 @@ struct MoimPlaceView: View {
                     // 앞서 선택된 것들은 지우고
                     pickedImagesData.removeAll()
                     images.removeAll()
-                    activity.toUrlString(dataList: pickedImagesData)
+                    
+//                    activity.toUrlString(dataList: pickedImagesData)
 
                     // 선택된 사진들 images에 추가
                     for item in pickedImageItems {
@@ -143,7 +148,7 @@ struct MoimPlaceView: View {
                             pickedImagesData.append(data)
                             if let image = UIImage(data: data) {
                                 images.append(image)
-                                activity.toUrlString(dataList: pickedImagesData)
+//                                activity.toUrlString(dataList: pickedImagesData)
                             }
                         }
                     }

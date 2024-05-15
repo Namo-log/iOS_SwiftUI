@@ -106,20 +106,12 @@ extension ActivityDTO {
         return dataList
     }
     
-    mutating func toUrlString(dataList: [Data?]) {
-        
-        urls = dataList.compactMap { data in
-            guard let data = data else { return nil }
-            // Data를 String으로 변환
-            guard let urlString = String(data: data, encoding: .utf8) else {
-                return nil
-            }
-            // 변환된 문자열이 유효한 URL인지 확인
-            guard URL(string: urlString) != nil else {
-                return nil
-            }
-            return urlString
-        }
-
-    }
+//    mutating func toUrlString(dataList: [Data?]) {
+//        for data in dataList {
+//            urls.append(String(decoding: data!, as: UTF8.self))
+//        }
+////        print("얜데")
+////        print(urls)
+//
+//    }
 }
