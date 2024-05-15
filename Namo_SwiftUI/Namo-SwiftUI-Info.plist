@@ -9,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakaoc67dfbcc5d7f1af4dccefc8cb7a4380d</string>
+				<string>kakaof93adc495008867d60b89ca44203ebc8</string>
 			</array>
 		</dict>
 		<dict>
@@ -23,6 +23,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>KAKAO_APP_KEY</key>
+	<string>c67dfbcc5d7f1af4dccefc8cb7a4380d</string>
+	<key>KAKAO_PHASE</key>
+	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>
@@ -47,9 +51,5 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Thin.otf</string>
 	</array>
-	<key>KAKAO_APP_KEY</key>
-	<string>c67dfbcc5d7f1af4dccefc8cb7a4380d</string>
-	<key>KAKAO_PHASE</key>
-	<string></string>
 </dict>
 </plist>

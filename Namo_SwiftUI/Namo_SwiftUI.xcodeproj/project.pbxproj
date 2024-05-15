@@ -57,6 +57,7 @@
 		2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00272B70C2580054C31B /* ScheduleRepositoryImpl.swift */; };
 		2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */; };
 		2CFE00552B73658A0054C31B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00542B73658A0054C31B /* Schedule.swift */; };
+		4756B7A02BF4D59100518E10 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756B79F2BF4D59100518E10 /* secret.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
 		5012A9C32B5933CC00544AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012A9C22B5933CC00544AB0 /* Assets.xcassets */; };
@@ -165,7 +166,6 @@
 		A257FFD02BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */; };
 		A257FFD22BC08E40004F58DD /* MoimDiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */; };
 		A27CAD4B2B9F082B00E4E8EF /* MoimPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */; };
-		A2E67AD92BCFDEC200033758 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E67AD82BCFDEC200033758 /* secret.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +218,7 @@
 		2CFE00272B70C2580054C31B /* ScheduleRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepositoryImpl.swift; sourceTree = "<group>"; };
 		2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		2CFE00542B73658A0054C31B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		4756B79F2BF4D59100518E10 /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
 		5012A9C02B5933CB00544AB0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -317,7 +318,6 @@
 		A257FFCF2BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryRepositoryImpl.swift; sourceTree = "<group>"; };
 		A257FFD12BC08E40004F58DD /* MoimDiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryDTO.swift; sourceTree = "<group>"; };
 		A27CAD4A2B9F082B00E4E8EF /* MoimPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoimPlaceView.swift; sourceTree = "<group>"; };
-		A2E67AD82BCFDEC200033758 /* secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -506,7 +506,7 @@
 				5012A9C02B5933CB00544AB0 /* SplashView.swift */,
 				2C5717592B595C1200B0F3B3 /* NamoHome.swift */,
 				2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */,
-				A2E67AD82BCFDEC200033758 /* secret.swift */,
+				4756B79F2BF4D59100518E10 /* secret.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1226,7 +1226,6 @@
 				504A313E2B5BE96F007888B7 /* AgreeMainView.swift in Sources */,
 				884382D52B74D5EA00766503 /* Place.swift in Sources */,
 				2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */,
-				A2E67AD92BCFDEC200033758 /* secret.swift in Sources */,
 				2CF445102B78EEC400A8E514 /* CategoryInteractor.swift in Sources */,
 				50CFD34D2BA0E32D0033C0ED /* CategorySettingView.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,
@@ -1250,6 +1249,7 @@
 				2CF445082B78E22900A8E514 /* CategoryEndPoint.swift in Sources */,
 				88A7EF1B2B6E867000E47C8B /* Auth.swift in Sources */,
 				2C3C75D72BCBC1C400312F26 /* NamoAlertViewWithTitle.swift in Sources */,
+				4756B7A02BF4D59100518E10 /* secret.swift in Sources */,
 				88BDADE12BA0C56B0055B69A /* AppError.swift in Sources */,
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
