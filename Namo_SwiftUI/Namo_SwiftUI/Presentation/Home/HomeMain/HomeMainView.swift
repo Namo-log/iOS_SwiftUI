@@ -75,7 +75,10 @@ struct HomeMainView: View {
 		.ignoresSafeArea(edges: .bottom)
 		.task {
 //			await scheduleInteractor.setCalendar()
-			await categoryInteractor.getCategories()
+            
+            if UserDefaults.standard.bool(forKey: "isLogin") {
+                await categoryInteractor.getCategories()
+            }
 		}
 		.onChange(of: calendarController.yearMonth) { newYearMonth in
 			if previousYearMonth.year <= newYearMonth.year {
@@ -92,8 +95,15 @@ struct HomeMainView: View {
 		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { notification in
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
+				Task {
+					await scheduleInteractor.setCalendar(date: date.toDate())
+				}
 				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
 				focusDate = date
+			} else {
+				Task {
+					await scheduleInteractor.setCalendar(date: focusDate?.toDate() ?? Date())
+				}
 			}
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {
@@ -241,6 +251,7 @@ struct HomeMainView: View {
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
 			Button(action: {
+                scheduleInteractor.setDateAndTimesToCurrentSchedule(focusDate: focusDate)
                 self.isToDoSheetPresented = true
             }, label: {
 				Image(.floatingAdd)

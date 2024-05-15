@@ -280,11 +280,14 @@ struct EditMoimDiaryView: View {
                             let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
                         }
                     }
-					
+
 					// 활동 삭제
 					for activity in deleteActivities {
 						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
 					}
+                  DispatchQueue.main.async {
+						NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+          }
                 }
             } else {
                 Task {
@@ -294,13 +297,18 @@ struct EditMoimDiaryView: View {
                         let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activities[i].getDataList())
 						let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
-					
+
 					// 활동 삭제
 					for activity in deleteActivities {
 						let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
 					}
+                  
+          DispatchQueue.main.async {
+					  NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+           }
                 }
             }
+			
             self.presentationMode.wrappedValue.dismiss()
         } label: {
             ZStack() {

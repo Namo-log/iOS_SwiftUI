@@ -34,9 +34,10 @@ struct ScheduleDTO: Codable {
 	let interval: Int
 	let x: Double?
 	let y: Double?
-	let locationName: String
+	let locationName: String?
+    let kakaoLocationId: Int?
 	let categoryId: Int
-	let hasDiary: Bool
+	let hasDiary: Bool?
 	let moimSchedule: Bool
 }
 
@@ -51,7 +52,7 @@ extension ScheduleDTO {
 			interval: interval,
 			x: x,
 			y: y,
-			locationName: locationName,
+            locationName: locationName ?? "",
 			categoryId: categoryId,
 			hasDiary: hasDiary,
 			moimSchedule: moimSchedule

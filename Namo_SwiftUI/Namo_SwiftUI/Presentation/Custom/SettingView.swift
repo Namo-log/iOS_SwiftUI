@@ -24,7 +24,7 @@ struct SettingView: View {
             
             VStack(spacing: 13){
                
-                SettingComponent(title: "버전 정보", content: "1.0.0")
+                SettingComponent(title: "버전 정보", content: "1.0.5(1)")
                 
                 customDivider
                 
@@ -94,15 +94,18 @@ struct SettingView: View {
                                     Text("정말 계정을 삭제하시겠어요?")
                                         .font(Font.pretendard(.bold, size: 16))
                                         .foregroundStyle(.mainText)
-                                        .frame(height: 22)
                                     
-                                    Text("지금까지의 정보가 모두 사라집니다.")
-                                        .font(Font.pretendard(.regular, size: 14))
-                                        .foregroundStyle(.mainText)
-                                        .frame(height: 20)
+                                    VStack {
+                                        Text("지금까지의 정보는")
+                                            .font(Font.pretendard(.regular, size: 14))
+                                            .foregroundStyle(.mainText)
+                                        
+                                        Text("3일 뒤 모두 사라집니다.")
+                                            .font(Font.pretendard(.regular, size: 14))
+                                            .foregroundStyle(.mainText)
+                                    }
                                 }
-                                .frame(height: 66)
-                                .offset(y: 8)
+                                .padding(.top, 24)
                               ),
                               leftButtonTitle: "취소",
                               leftButtonAction: {},

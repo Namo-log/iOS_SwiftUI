@@ -16,7 +16,7 @@ class RealmManager {
 	private func getRealm() -> Realm {
 		let configuration = Realm.Configuration(
 			// 테이블 수정 시 스키마 버전 +1
-			schemaVersion: 1
+			schemaVersion: 2
 		)
 		
 		return try! Realm(configuration: configuration)
@@ -41,7 +41,9 @@ class RealmManager {
 	 ================================================
 	 
 	 version: 2
-	 ...
+	 date: 24.05.13
+	 description:
+	 - RealmSchedule의 hasDiary속성 Optional로 변경
 	 
 	 ================================================
 	 

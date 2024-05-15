@@ -31,7 +31,7 @@ struct CalendarItem: View {
 						.foregroundStyle(Color.white)
 						.background(
 							Circle()
-								.fill((date.isFocusYearMonth ?? false) ? Color(.mainOrange) : Color(.textUnselected))
+								.fill((date.isFocusYearMonth ?? false) ? Color(.mainOrange) : Color(.mainOrange).opacity(0.5))
 								.frame(width: 18, height: 18)
 						)
 					

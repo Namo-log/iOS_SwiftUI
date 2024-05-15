@@ -57,7 +57,6 @@
 		2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00272B70C2580054C31B /* ScheduleRepositoryImpl.swift */; };
 		2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */; };
 		2CFE00552B73658A0054C31B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE00542B73658A0054C31B /* Schedule.swift */; };
-		471E8DCC2BDE54990070B18B /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471E8DCB2BDE54990070B18B /* secret.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
 		5012A9C32B5933CC00544AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012A9C22B5933CC00544AB0 /* Assets.xcassets */; };
@@ -219,7 +218,6 @@
 		2CFE00272B70C2580054C31B /* ScheduleRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepositoryImpl.swift; sourceTree = "<group>"; };
 		2CFE00292B70D7C30054C31B /* ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		2CFE00542B73658A0054C31B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
-		471E8DCB2BDE54990070B18B /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
 		5012A9C02B5933CB00544AB0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
