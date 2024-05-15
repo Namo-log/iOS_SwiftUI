@@ -112,7 +112,7 @@ struct GroupMainView: View {
 			VStack(spacing: 20) {
 				if appState.isLoading {
 					ProgressView()
-				} else if moimState.moims.isEmpty {
+				} else if !moimState.moims.isEmpty {
 					ForEach(moimState.moims, id: \.groupId) { moim in
 						NavigationLink(destination: GroupCalendarView(), label: {
 							GroupListItem(moim: moim)
