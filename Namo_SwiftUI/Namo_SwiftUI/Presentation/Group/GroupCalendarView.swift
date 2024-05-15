@@ -260,6 +260,7 @@ struct GroupCalendarView: View {
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
 			Button(action: {
+                scheduleInteractor.setDateAndTimesToCurrentMoimSchedule(focusDate: focusDate)
                 self.isToDoSheetPresented = true
             }, label: {
 				Image(.floatingAdd)

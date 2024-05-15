@@ -355,7 +355,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		return result
 	}
     
-    /// 현재 focusDate를 추가하는 일정 템플릿의 날짜로 설정합니다
+    /// 현재 focusDate를 추가하는 개인 일정 템플릿의 날짜로 설정합니다
     func setDateAndTimesToCurrentSchedule(focusDate: YearMonthDay?) {
         if let focusDate = focusDate?.toDate() {
             let calendar = Calendar.current
@@ -368,6 +368,23 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
             let endDate = calendar.date(from: dateComponents)
             scheduleState.currentSchedule.startDate = startDate ?? focusDate
             scheduleState.currentSchedule.endDate = endDate ?? focusDate
+        }
+    }
+    
+    
+    /// 현재 focusDate를 추가하는 모임 일정 템플릿의 날짜로 설정합니다
+    func setDateAndTimesToCurrentMoimSchedule(focusDate: YearMonthDay?) {
+        if let focusDate = focusDate?.toDate() {
+            let calendar = Calendar.current
+            var dateComponents = calendar.dateComponents([.year, .month, .day], from: focusDate)
+            
+            dateComponents.hour = 8
+            let startDate = calendar.date(from: dateComponents)
+            
+            dateComponents.hour = 9
+            let endDate = calendar.date(from: dateComponents)
+            scheduleState.currentMoimSchedule.startDate = startDate ?? focusDate
+            scheduleState.currentMoimSchedule.endDate = endDate ?? focusDate
         }
     }
 }

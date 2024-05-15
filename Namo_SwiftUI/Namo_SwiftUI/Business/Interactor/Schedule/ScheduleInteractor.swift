@@ -34,4 +34,5 @@ protocol ScheduleInteractor {
     func setScheduleToCurrentSchedule(schedule: Schedule?)
 	func yearMonthBetween(start: Date, end: Date) -> [YearMonth]
     func setDateAndTimesToCurrentSchedule(focusDate: YearMonthDay?)
+    func setDateAndTimesToCurrentMoimSchedule(focusDate: YearMonthDay?)
 }
