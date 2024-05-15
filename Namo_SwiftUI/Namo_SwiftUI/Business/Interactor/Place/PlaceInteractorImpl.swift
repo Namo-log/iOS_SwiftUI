@@ -14,11 +14,17 @@ struct PlaceInteractorImpl: PlaceInteractor {
     @Injected(\.placeRepository) private var placeRepository
     
     /// KakaoMapAPI를 통해 해당 쿼리에 맞는 결과를 placeList에 페칭합니다.
-    func getPlaceList(query: String) async {
+    func fetchPlaceList(query: String) async {
         let result = await placeRepository.getKakaoMapPlaces(query: query)
         DispatchQueue.main.async {
             appState.placeState.placeList = result?.documents.map { $0.toPlace() } ?? []
         }
+    }
+    
+    /// KakaoMapAPI를 통해 해당 쿼리에 맞는 결과를 list로 반환합니다.
+    func getPlaceList(query: String) async -> [Place]?  {
+        let result = await placeRepository.getKakaoMapPlaces(query: query)
+        return result?.documents.map { $0.toPlace() }
     }
     
     /// placeState의 selectPlace를 새로운 place로 변경합니다.

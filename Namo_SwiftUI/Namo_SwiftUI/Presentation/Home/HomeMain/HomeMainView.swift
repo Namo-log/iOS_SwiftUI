@@ -251,6 +251,7 @@ struct HomeMainView: View {
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
 			Button(action: {
+                scheduleInteractor.setDateAndTimesToCurrentSchedule(focusDate: focusDate)
                 self.isToDoSheetPresented = true
             }, label: {
 				Image(.floatingAdd)
