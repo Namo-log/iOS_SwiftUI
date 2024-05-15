@@ -16,7 +16,7 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     
     /// 모임 메모 장소 생성
     func createMoimDiaryPlace(moimScheduleId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
-        print("모임 기록 생성 요청")
+        print("모임 기록 생성 요청 \(req)")
         return await moimDiaryRepository.createMoimDiaryPlace(moimScheduleId: moimScheduleId, req: req)
     }
     

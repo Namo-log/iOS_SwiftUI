@@ -26,7 +26,7 @@ extension DiaryEndPoint: EndPoint {
         case .createDiary(_, _, _):
             return ""
         case .getMonthDiary(let req):
-            return "/\(req.year),\(req.month)"
+            return "/month/\(req.year),\(req.month)"
         case .getOneDiary(let scheduleId):
             return "/\(scheduleId)"
         case .changeDiary:

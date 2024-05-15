@@ -12,17 +12,20 @@ import PhotosUI
 struct MoimPlaceView: View {
     @State private var dragOffset: CGSize = .zero
     @State private var isAddingViewVisible = false
-    let index: Int
     @Binding var showCalculateAlert: Bool
-    @Binding var activity: LocationDTO
-    @Binding var cost: String
-	@Binding var currentCalculateIndex: Int
-    
-    @State var pickedImagesData: [Data?] = []
+    @Binding var activity: ActivityDTO {
+      didSet {
+        print("@CHANGED - \(activity)")
+      }
+    }
+    @Binding var name: String
+    @Binding var currentCalculateIndex: Int
+    @Binding var pickedImagesData: [Data?]
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
+    
+    let index: Int
     let photosLimit = 3 // 선택가능한 최대 사진 개수
-	
 	let deleteAction: () -> Void
     
     var body: some View {
@@ -30,7 +33,7 @@ struct MoimPlaceView: View {
             VStack(spacing: 0) {
                 // 장소 레이블
                 HStack(alignment: .top, spacing: 0) {
-                    TextField("\(activity.name)", text: $activity.name)
+                    TextField("\(activity.name)", text: $name)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.textPlaceholder)
                     Spacer()
@@ -41,10 +44,9 @@ struct MoimPlaceView: View {
                         Image(.rightChevronLight)
                     }
                     .onTapGesture {
-						self.currentCalculateIndex = self.index
+                        self.currentCalculateIndex = self.index
                         withAnimation {
                             self.showCalculateAlert = true
-                            self.cost = String(activity.money)
                         }
                     }
                 }
@@ -97,6 +99,19 @@ struct MoimPlaceView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            print("여기다~~")
+            print(activity)
+            for url in activity.urls {
+                guard let url = URL(string: url) else { return }
+                
+                DispatchQueue.global().async {
+                    guard let data = try? Data(contentsOf: url) else { return }
+                    images.append(UIImage(data: data)!)
+                    print(images.description)
+                }
+            }
+        })
     }
     
     // 사진 선택 리스트 뷰
@@ -125,12 +140,15 @@ struct MoimPlaceView: View {
                     pickedImagesData.removeAll()
                     images.removeAll()
                     
+//                    activity.toUrlString(dataList: pickedImagesData)
+
                     // 선택된 사진들 images에 추가
                     for item in pickedImageItems {
                         if let data = try? await item.loadTransferable(type: Data.self) {
                             pickedImagesData.append(data)
                             if let image = UIImage(data: data) {
                                 images.append(image)
+//                                activity.toUrlString(dataList: pickedImagesData)
                             }
                         }
                     }

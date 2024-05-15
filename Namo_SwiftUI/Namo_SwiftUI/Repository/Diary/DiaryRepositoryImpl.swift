@@ -35,9 +35,13 @@ final class DiaryRepositoryImpl: DiaryRepository {
 
 //
 //final class DiaryRepositoryImplTest: DiaryRepository {
-//    func createDiary(scheduleId: Int, content: String, images: [Data?]) async -> CreateDiaryResponseDTO? {
-////        return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.createDiary(scheduleId: scheduleId, content: content, images: images))
-//        return CreateDiaryResponseDTO(scheduleId: 468)
+//    func getOneDiary(scheduleId: Int) async -> GetOneDiaryResponseDTO? {
+//        return GetOneDiaryResponseDTO(contents: "eewfewfsdfsdiufhdshkdshfkdjdfjhkfjdhkjdjfshjkdljfhjk", urls: ["https://www.juso.go.kr/img/content/know_addr_4.png", "https://i.pinimg.com/236x/c3/56/b9/c356b9bfff383d3dfd12066dc3220fa0.jpg"])
+//    }
+//    
+//    func createDiary(scheduleId: Int, content: String, imgs: [Data?]) async -> CreateDiaryResponseDTO? {
+//        return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.createDiary(scheduleId: scheduleId, content: content, imgs: imgs))
+////        return CreateDiaryResponseDTO(scheduleId: 468)
 //    }
 //    
 //    func getMonthDiary(request: GetDiaryRequestDTO) async -> GetDiaryResponseDTO? {
@@ -45,12 +49,12 @@ final class DiaryRepositoryImpl: DiaryRepository {
 //        return GetDiaryResponseDTO(content: [Diary(scheduleId: 1, name: "test", startDate: 0, contents: "eewfewfsdfsdiufhdshkdshfkdjdfjhkfjdhkjdjfshjkdljfhjk", urls: ["https://www.juso.go.kr/img/content/know_addr_4.png", "https://i.pinimg.com/236x/c3/56/b9/c356b9bfff383d3dfd12066dc3220fa0.jpg"], color: 1)], currentPage: 0, size: 5, first: true, last: true)
 //    }
 //    
-//    func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool {
-//        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, images: images))
+//    func changeDiary(scheduleId: Int, content: String, imgs: [Data?]) async -> Bool {
+//        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, imgs: imgs))
 //        return response?.code == 200
 //    }
 //    
-//    func deleteDiary(diaryId: Int) async -> Bool {
+//    func deleteDiary(scheduleId diaryId: Int) async -> Bool {
 //        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.deleteDiary(diaryId: diaryId))
 //        return response?.code == 200
 //    }

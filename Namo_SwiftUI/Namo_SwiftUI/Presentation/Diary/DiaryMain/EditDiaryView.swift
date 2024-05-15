@@ -28,6 +28,7 @@ struct EditDiaryView: View {
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
     
+    let urls: [String]
     let info: ScheduleInfo
     let moimMember: [MoimUser] = []
     let photosLimit = 3 // 선택가능한 최대 사진 개수
@@ -106,16 +107,21 @@ struct EditDiaryView: View {
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
                     // 활동 정보 연결되면 아래 코드로 테스트
-                    NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.locationDtos ?? [], info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
+                    NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.moimActivityDtos ?? [], info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
-
+                    .simultaneousGesture(TapGesture().onEnded{
+                        Task {
+                            await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
+                        }
+                    })
                 }
                 
                 // 기록 저장 또는 기록 수정 버튼
                 EditSaveDiaryView
             } // VStack
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
@@ -163,6 +169,16 @@ struct EditDiaryView: View {
                     // memo 값 연결
                     memo = diaryState.currentDiary.contents ?? ""
                     // TODO: - diaryState.currentDiary.urls 값이랑 이미지 연결
+                    for url in diaryState.currentDiary.urls ?? [] {
+                        guard let url = URL(string: url) else { return }
+                        
+                        DispatchQueue.global().async {
+                            guard let data = try? Data(contentsOf: url) else { return }
+                            images.append(UIImage(data: data)!)
+                            print(images.description)
+                        }
+                    }
+//                    images = diaryState.currentDiary.urls
                 }
             }
             print("====\(info)")
@@ -176,10 +192,9 @@ struct EditDiaryView: View {
             print(appState.isEditingDiary ? "기록 수정" : "기록 저장")
             if appState.isEditingDiary {
                 Task {
-                    // TODO: - 이미지 연결
                     if appState.isPersonalDiary {
                         // 개인 기록 수정 API 호출
-                        await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: [])
+                        await diaryInteractor.changeDiary(scheduleId: info.scheduleId, content: memo, images: pickedImagesData)
                     } else {
                         print("모임 기록(에 대한 개인 메모) edit API 호출")
                         // 모임 기록(에 대한 개인 메모) edit API 호출
@@ -225,11 +240,13 @@ struct EditDiaryView: View {
                         .aspectRatio(contentMode: .fill)
                 }
                 
-                // 사진 피커 -> 최대 3장까지 선택 가능
-                PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
-                    Image(.btnAddImg)
-                        .resizable()
-                        .frame(width: 100, height: 100)
+                if appState.isPersonalDiary {
+                    // 사진 피커 -> 최대 3장까지 선택 가능
+                    PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
+                        Image(.btnAddImg)
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                    }
                 }
             } // HStack
             .padding(.top, 18)
@@ -250,6 +267,19 @@ struct EditDiaryView: View {
                     }
                 }
             }
-        } // ScrollView
+            .onAppear {
+                images.removeAll()
+                // urls에 있는 이미지 주소를 images 배열에 UIImage로 추가하여 뷰에 연결
+                for url in urls {
+                    guard let url = URL(string: url) else { return }
+                    
+                    DispatchQueue.global().async {
+                        guard let data = try? Data(contentsOf: url) else { return }
+                        images.append(UIImage(data: data)!)
+                        print(images.description)
+                    }
+                }
+            } // ScrollView
+        }
     }
 }
