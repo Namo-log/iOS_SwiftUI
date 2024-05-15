@@ -44,7 +44,6 @@ struct EditMoimDiaryView: View {
             rightButtonAction: {
 				activities[currentCalculateIndex].money = Int(cost) ?? 0
 				activities[currentCalculateIndex].participants = selectedUser.map({$0.userId})
-				cost = ""
 				selectedUser.removeAll()
                 showCalculateAlert = false
                 return true
@@ -179,9 +178,13 @@ struct EditMoimDiaryView: View {
                         
                         // 장소 뷰
 						ForEach(0..<activities.count, id: \.self) { index in
-							MoimPlaceView(index: index, showCalculateAlert: $showCalculateAlert, activity: getSafeActivity(for: index), cost: $cost, currentCalculateIndex: $currentCalculateIndex, deleteAction: {
-								deleteActivities.append(activities.remove(at: index))
-							})
+                            MoimPlaceView(showCalculateAlert: $showCalculateAlert,
+                                          activity: $activities[index],
+                                          name: $activities[index].name,
+                                          index: index,
+                                          deleteAction: {
+                                deleteActivities.append(activities.remove(at: index))
+                            })
                         }
                     } // VStack - leading
                     .padding(.top, 12)
@@ -254,23 +257,27 @@ struct EditMoimDiaryView: View {
         )
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
-		.task {
-			self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
-		}
+        .onAppear {
+            Task {
+                self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
+            }
+        }
     }
     
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
     private var EditSaveDiaryView: some View {
         Button {
-            if appState.isEditingDiary {
+            if !appState.isEditingDiary {
                 Task {
                     // TODO: - 이미지 연결
 					// 활동 편집
+                    await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
+
 					for i in 0..<activities.count {
                         if activities.indices.contains(i) {
-							let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: [])
-                            await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
-                            let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: diaryState.currentMoimDiaryInfo.getActivityIdList()[i], req: req)
+                            let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activities[i].getDataList())
+                            let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
                         }
                     }
 					
@@ -284,7 +291,7 @@ struct EditMoimDiaryView: View {
                     // TODO: - 이미지 연결
 					// 활동 추가
                     for i in 0..<activities.count {
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: [])
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activities[i].getDataList())
 						let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
 					

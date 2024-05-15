@@ -5,7 +5,7 @@
 //  Created by 서은수 on 4/6/24.
 //
 
-import Foundation
+import SwiftUI
 
 /// 모임 메모 장소 생성 & 수정 Req
 struct EditMoimDiaryPlaceReqDTO: Encodable {
@@ -89,5 +89,37 @@ extension GetOneMoimDiaryResDTO {
         moimActivityDtos?.map {
             $0.moimActivityId
         } ?? []
+    }
+}
+
+extension ActivityDTO {
+    func getDataList() -> [Data] {
+        var dataList: [Data] = []
+        for url in urls {
+            guard let url = URL(string: url) else { return [] }
+            
+            DispatchQueue.global().async {
+                guard let data = try? Data(contentsOf: url) else { return }
+                dataList.append(data)
+            }
+        }
+        return dataList
+    }
+    
+    mutating func toUrlString(dataList: [Data?]) {
+        
+        urls = dataList.compactMap { data in
+            guard let data = data else { return nil }
+            // Data를 String으로 변환
+            guard let urlString = String(data: data, encoding: .utf8) else {
+                return nil
+            }
+            // 변환된 문자열이 유효한 URL인지 확인
+            guard URL(string: urlString) != nil else {
+                return nil
+            }
+            return urlString
+        }
+
     }
 }
