@@ -173,7 +173,6 @@ struct MoimInteractorImpl: MoimInteractor {
         
         // TODO: 해당 부분 그룹 캘린더용으로 업데이트 필요
         if result != nil {
-			await getMoimSchedule(moimId: moimState.currentMoim.groupId)
             DispatchQueue.main.async {
 				NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
             }
@@ -209,6 +208,12 @@ struct MoimInteractorImpl: MoimInteractor {
         )
         
         let result = await moimRepository.patchMoimSchedule(scheduleId: scheduleId, data: patchSchedule)
+		if result != nil {
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: ["date": temp.startDate.toYMD()])
+			}
+		}
+		
         print(String(describing: result))
     }
     

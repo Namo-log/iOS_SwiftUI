@@ -19,7 +19,7 @@ class RealmSchedule: Object {
 	@Persisted var y: Double?
 	@Persisted var locationName: String
 	@Persisted var categoryId: Int
-	@Persisted var hasDiary: Bool
+	@Persisted var hasDiary: Bool?
 	@Persisted var moimSchedule: Bool
 }
 

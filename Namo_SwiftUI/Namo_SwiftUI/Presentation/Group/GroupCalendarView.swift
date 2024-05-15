@@ -37,7 +37,6 @@ struct GroupCalendarView: View {
 	
 	// calendar
 	@State var focusDate: YearMonthDay? = nil
-//	@State var calendarSchedule: [YearMonthDay: [CalendarSchedule]] = [:]
 	@State var isToDoSheetPresented: Bool = false
 	
 	let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -50,7 +49,7 @@ struct GroupCalendarView: View {
 				
 				weekday
 					.padding(.bottom, 11)
-
+				
 				GeometryReader { reader in
 					VStack {
 						CalendarView(calendarController) { date in
@@ -71,7 +70,10 @@ struct GroupCalendarView: View {
 					detailView
 						.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
 						.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
-				} 
+				} else {
+					Spacer(minLength: 0)
+						.frame(height: 30)
+				}
 				
 			}
 			
@@ -112,6 +114,9 @@ struct GroupCalendarView: View {
 			groupName = moimState.currentMoim.groupName ?? ""
 		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadGroupCalendarViaNetwork)) { notification in
+			Task {
+				await moimInteractor.getMoimSchedule(moimId: moimState.currentMoim.groupId)
+			}
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
 				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
 				focusDate = date
@@ -355,7 +360,7 @@ struct GroupCalendarView: View {
 					}
 					.padding(.bottom, 30)
 					
-					LazyVGrid(columns: gridColumn) {
+					LazyVGrid(columns: gridColumn, spacing: 20) {
 						ForEach(moimState.currentMoim.groupUsers, id: \.userId) { user in
 							HStack(spacing: 20) {
 								Circle()

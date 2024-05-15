@@ -87,9 +87,18 @@ struct DiaryMainView: View {
                 ScrollView {
                     // 기록 목록
                     if diaryState.monthDiaries.isEmpty {
-                        Text("기록이 없습니다. 기록을 추가해 보세요!")
-                            .font(.pretendard(.light, size: 15)) // Weight 400 -> .light
-                            .padding(.top, 24)
+						VStack(spacing: 45) {
+							Spacer()
+							
+							Image(.noDiary)
+							
+							Text("기록이 없습니다. 기록을 추가해 보세요!")
+								.font(.pretendard(.light, size: 15))
+								.lineLimit(2)
+								.multilineTextAlignment(.center)
+								.foregroundStyle(Color.mainText)
+							
+						}
                     } else {
                         LazyVStack(spacing: 20) { // infinite scroll 구현을 위해 LazyVStack을 사용
                             ForEach(0..<diaryState.monthDiaries.count, id: \.self) { idx in

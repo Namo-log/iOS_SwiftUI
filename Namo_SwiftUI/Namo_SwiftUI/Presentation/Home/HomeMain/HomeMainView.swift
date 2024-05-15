@@ -95,8 +95,15 @@ struct HomeMainView: View {
 		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { notification in
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
+				Task {
+					await scheduleInteractor.setCalendar(date: date.toDate())
+				}
 				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
 				focusDate = date
+			} else {
+				Task {
+					await scheduleInteractor.setCalendar(date: focusDate?.toDate() ?? Date())
+				}
 			}
 		}
         .fullScreenCover(isPresented: $isToDoSheetPresented, content: {

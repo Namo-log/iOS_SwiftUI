@@ -132,20 +132,20 @@ extension APIManager {
             interceptor: AuthManager()
           )
           
-      case let .uploadImages(images):
+      case let .uploadImages(images, imageKeyName):
           return AF.upload(multipartFormData: { multipartFormData in
               for image in images {
 				  if let image = image {
-					  multipartFormData.append(image, withName: "imgs", fileName: "\(image).png", mimeType: "image/png")
+					  multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).png", mimeType: "image/png")
 				  }
               }
 		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
 		  
-	  case let .uploadImagesWithBody(images, body):
+	  case let .uploadImagesWithBody(images, body, imageKeyName):
 		  return AF.upload(multipartFormData: { multipartFormData in
 			  for image in images {
 				  if let image = image {
-					  multipartFormData.append(image, withName: "imgs", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+					  multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
 				  }
 			  }
 			  
