@@ -254,16 +254,17 @@ struct ToDoEditView: View {
                         }
                         .padding(.horizontal, 30)
                         
-                        // MARK: 카카오 맵 뷰
-                        KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
-                            .onAppear(perform: {
-                                self.draw = true
-                            }).onDisappear(perform: {
-                                self.draw = false
-                            })
-                            .frame(width: 330, height:200)
-                            .border(Color.init(hex: 0xD9D9D9), width: 1)
-             
+                        if !((scheduleState.currentSchedule.x == 0.0 && scheduleState.currentSchedule.y == 0.0) || scheduleState.currentSchedule.locationName == "") {
+                            // MARK: 카카오 맵 뷰
+                            KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
+                                .onAppear(perform: {
+                                    self.draw = true
+                                }).onDisappear(perform: {
+                                    self.draw = false
+                                })
+                                .frame(width: 330, height:200)
+                                .border(Color.init(hex: 0xD9D9D9), width: 1)
+                        }
                         Spacer()
                     }
                     .navigationTitle(self.isRevise ? "일정 편집" : "새 일정")
