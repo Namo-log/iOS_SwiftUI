@@ -92,4 +92,10 @@ extension Date {
 		return calendar.date(byAdding: .month, value: value, to: self)!
 		
 	}
+	
+	func isSunday() -> Bool {
+		let calendar = Calendar.current
+		let components = calendar.dateComponents([.weekday], from: self)
+		return components.weekday == 1 // 일요일
+	}
 }
