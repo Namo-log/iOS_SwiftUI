@@ -415,15 +415,14 @@ struct ToDoEditView: View {
             // 현재 장소 리스트에 Schedule의 장소를 추가
             // 임시용으로, placeID가 추가된 후 추후에 수정이 필요합니다.
             if self.isRevise {
-                let temp = self.scheduleState.currentSchedule
-                placeInteractor.appendPlaceList(place: Place(
-                    id: 0,
-                    x: temp.x,
-                    y: temp.y,
-                    name: temp.locationName,
-                    address: "임시용입니다",
-                    rodeAddress: "임시용입니다")
-                )
+                Task {
+                    let temp = self.scheduleState.currentSchedule
+                    let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                    if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
+                        placeInteractor.appendPlaceList(place: target)
+                        placeInteractor.selectPlace(place: target)
+                    }
+                }
             }
             
             Task {

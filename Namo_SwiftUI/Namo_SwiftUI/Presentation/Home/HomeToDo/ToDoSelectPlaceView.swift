@@ -155,7 +155,7 @@ struct ToDoSelectPlaceView: View {
                         
                         Button(action: {
                             Task {
-                                await placeInteractor.getPlaceList(query:searchText)
+                                await placeInteractor.fetchPlaceList(query:searchText)
                             }
                         }) {
                             Text("검색")

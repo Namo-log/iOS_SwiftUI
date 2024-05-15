@@ -6,7 +6,8 @@
 //
 
 protocol PlaceInteractor {
-    func getPlaceList(query: String) async 
+    func fetchPlaceList(query: String) async 
+    func getPlaceList(query: String) async -> [Place]?
     func selectPlace(place: Place?)
     func clearPlaces(isSave: Bool)
     func appendPlaceList(place: Place)
