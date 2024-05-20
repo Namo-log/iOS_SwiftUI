@@ -76,7 +76,7 @@ struct CheckItem: View {
                     
                     Spacer()
                     
-                    Image(.vector3)
+					Image(.arrowBasic)
                         .hidden(linkURL == nil)
                 }
                 .onTapGesture {
