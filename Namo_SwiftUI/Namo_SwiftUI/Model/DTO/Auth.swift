@@ -7,10 +7,20 @@
 
 import Foundation
 
-struct ServerTokenResponse: Codable {
+
+/// 약관동의 여부 구조체
+struct Term: Decodable {
+    
+    let content: String
+    let check: Bool
+}
+
+/// 로그인 응답 DTO
+struct ServerTokenResponse: Decodable {
     let accessToken: String
     let refreshToken: String
     let newUser: Bool
+    let terms: [Term]
 }
 
 struct SocialAccessToken: Encodable {
@@ -30,6 +40,7 @@ struct AppleAccessToken: Codable {
     let email: String
 }
 
+/// 약관동의 요청 DTO
 struct TermRequest: Codable {
     
     let isCheckTermOfUse: Bool
