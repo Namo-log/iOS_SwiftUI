@@ -9,12 +9,15 @@ import Foundation
 import Alamofire
 
 enum AuthEndPoint {
+
+    // 카카오 로그인
+    case signInKakao(kakaoToken: SocialSignInRequestDTO)
     
-    // 소셜 로그인 토큰을 이용해 나모 서버에게 토큰을 요청(카카오, 네이버)
-    case fetchToken(socialAccessToken: SocialAccessToken, social: SocialType)
-    
-    // 애플 소셜 로그인
-    case fetchTokenApple(appleAccessToken: AppleAccessToken)
+    // 네이버 로그인
+    case signInNaver(naverToken: SocialSignInRequestDTO)
+
+    // 애플 로그인
+    case signInApple(appleToken: AppleSignInRequestDTO)
     
     // 카카오 회원 탈퇴
     case withdrawMemberKakao(kakaoAccessToken: WithDrawKakakoNaverRequestDTO)
@@ -26,13 +29,7 @@ enum AuthEndPoint {
     case withdrawMemberApple(appleAuthorizationCode: WithDrawAppleRequestDTO)
     
     // 로그아웃
-    case logout(serverAccessToken: ServerAccessToken)
-}
-
-enum SocialType {
-    
-    case kakao
-    case naver
+    case logout(serverAccessToken: LogoutRequestDTO)
 }
 
 extension AuthEndPoint: EndPoint {
@@ -44,16 +41,14 @@ extension AuthEndPoint: EndPoint {
     var path: String {
         
         switch self {
-        case .fetchToken(socialAccessToken: _, social: let social):
             
-            switch social {
-            case SocialType.kakao:
-                return "/kakao/signup"
-            case SocialType.naver:
-                return "/naver/signup"
-            }
+        case .signInKakao:
+            return "/kakao/signup"
             
-        case .fetchTokenApple(appleAccessToken: _):
+        case .signInNaver:
+            return "/naver/signup"
+            
+        case .signInApple:
             return "/apple/signup"
             
         case .withdrawMemberKakao(kakaoAccessToken: _):
@@ -72,7 +67,7 @@ extension AuthEndPoint: EndPoint {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .fetchToken, .fetchTokenApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout:
+        case .signInKakao, .signInNaver, .signInApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout:
             return .post
         }
     }
@@ -80,10 +75,12 @@ extension AuthEndPoint: EndPoint {
     var task: APITask {
         switch self {
             
-        case .fetchToken(socialAccessToken: let dto, social: _):
-            return .authRequestJSONEncodable(parameters: dto)
-        case .fetchTokenApple(appleAccessToken: let dto):
-            return .authRequestJSONEncodable(parameters: dto)
+        case .signInKakao(kakaoToken: let dto):
+            return .requestJSONEncodable(parameters: dto)
+        case .signInNaver(naverToken: let dto):
+            return .requestJSONEncodable(parameters: dto)
+        case .signInApple(appleToken: let dto):
+            return .requestJSONEncodable(parameters: dto)
         case .withdrawMemberKakao(kakaoAccessToken: let dto):
             return .requestJSONEncodable(parameters: dto)
         case .withdrawMemberNaver(naverAccessToken: let dto):

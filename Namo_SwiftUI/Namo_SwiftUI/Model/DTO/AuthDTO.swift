@@ -16,26 +16,31 @@ struct Term: Decodable {
 }
 
 /// 로그인 응답 DTO
-struct ServerTokenResponse: Decodable {
+struct SignInResponseDTO: Decodable {
     let accessToken: String
     let refreshToken: String
     let newUser: Bool
     let terms: [Term]
 }
 
-struct SocialAccessToken: Encodable {
+// 카카오, 네이버 로그인 요청 DTO
+struct SocialSignInRequestDTO: Encodable {
+    
+    let accessToken: String
+    let refreshToken: String
+}
+
+// 로그아웃 요청 DTO
+struct LogoutRequestDTO: Encodable {
     
     let accessToken: String
 }
 
-struct ServerAccessToken: Encodable {
-    
-    let accessToken: String
-}
-
-struct AppleAccessToken: Codable {
+// 애플 로그인 요청 DTO
+struct AppleSignInRequestDTO: Codable {
     
     let identityToken: String
+    let authorizaionCode: String
     let username: String
     let email: String
 }

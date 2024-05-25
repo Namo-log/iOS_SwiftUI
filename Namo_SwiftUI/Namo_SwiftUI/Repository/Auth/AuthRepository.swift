@@ -9,14 +9,17 @@ import Foundation
 
 protocol AuthRepository {
     
-    // 카카오, 네이버 소셜 로그인. 나모 서버로부터 토큰을 발급받는 메소드
-    func getServerToken(socialAccessToken: SocialAccessToken, social: SocialType) async -> ServerTokenResponse?
+    // 카카오 소셜 로그인. 오버로드
+    func signIn(kakaoToken: SocialSignInRequestDTO) async  -> SignInResponseDTO?
     
-    // 애플 소셜 로그인. 나모 서버로부터 토큰을 발급받는 메소드
-    func getServerTokenApple(appleAccessToken: AppleAccessToken) async -> ServerTokenResponse?
+    // 네이버 소셜 로그인. 오버로드
+    func signIn(naverToken: SocialSignInRequestDTO) async -> SignInResponseDTO?
+    
+    // 애플 소셜 로그인. 오버로드
+    func signIn(appleToken: AppleSignInRequestDTO) async -> SignInResponseDTO?
     
     // 로그아웃. 토큰 삭제
-    func removeToken<T:Decodable>(serverAccessToken: ServerAccessToken) async -> BaseResponse<T>?
+    func removeToken<T:Decodable>(serverAccessToken: LogoutRequestDTO) async -> BaseResponse<T>?
     
     // 카카오 회원 탈퇴
     func withdrawMemberKakao<T:Decodable>(kakaoAccessToken: WithDrawKakakoNaverRequestDTO) async -> BaseResponse<T>?
