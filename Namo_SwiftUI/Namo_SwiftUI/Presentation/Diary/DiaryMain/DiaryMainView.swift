@@ -84,44 +84,45 @@ struct DiaryMainView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
                 
-                ScrollView {
-                    // 기록 목록
-                    if diaryState.monthDiaries.isEmpty {
-						VStack(spacing: 45) {
-							Spacer()
-							
-							Image(.noDiary)
-							
-							Text("기록이 없습니다. 기록을 추가해 보세요!")
-								.font(.pretendard(.light, size: 15))
-								.lineLimit(2)
-								.multilineTextAlignment(.center)
-								.foregroundStyle(Color.mainText)
-							
+				if diaryState.monthDiaries.isEmpty {
+					VStack(spacing: 45) {
+						Image(.noDiary)
+						
+						Text("기록이 없습니다.\n일정에 기록을 남겨보세요!")
+							.font(.pretendard(.light, size: 15))
+							.lineLimit(2)
+							.multilineTextAlignment(.center)
+							.foregroundStyle(Color.mainText)
+						
+						Spacer()
+						
+					}
+					.padding(.top, 149)
+				} else {
+					ScrollView {
+						// 기록 목록
+						LazyVStack(spacing: 20) { // infinite scroll 구현을 위해 LazyVStack을 사용
+							ForEach(0..<diaryState.monthDiaries.count, id: \.self) { idx in
+								let diary = diaryState.monthDiaries[idx]
+								if dateIndicatorIndices.contains(idx) { // 해당되는 구간이면 날짜 뷰 보여주기
+									DiaryDateItemView(startDate: diary.startDate) // 2024.03.27 날짜 뷰
+								}
+								DiaryItemView(diary: diary) // 그 아래 네모난 다이어리 뷰
+									.onAppear {
+										// 다음 페이지 불러오기
+										if idx % size == 9 {
+											page += 1
+											print("페이지 추가 \(page)")
+										}
+									}
+							}
 						}
-                    } else {
-                        LazyVStack(spacing: 20) { // infinite scroll 구현을 위해 LazyVStack을 사용
-                            ForEach(0..<diaryState.monthDiaries.count, id: \.self) { idx in
-                                let diary = diaryState.monthDiaries[idx]
-                                if dateIndicatorIndices.contains(idx) { // 해당되는 구간이면 날짜 뷰 보여주기
-                                    DiaryDateItemView(startDate: diary.startDate) // 2024.03.27 날짜 뷰
-                                }
-                                DiaryItemView(diary: diary) // 그 아래 네모난 다이어리 뷰
-                                    .onAppear {
-                                        // 다음 페이지 불러오기
-                                        if idx % size == 9 {
-                                            page += 1
-                                            print("페이지 추가 \(page)")
-                                        }
-                                    }
-                            }
-                        }
-                        .fixedSize(horizontal: false, vertical: true)
-                        
-                        Spacer()
-                    }
-                }
-                .padding(.bottom, 90)
+						.fixedSize(horizontal: false, vertical: true)
+						
+						Spacer()
+					}
+					.padding(.bottom, 90)
+				}
             } // VStack
             
             if showDatePicker {

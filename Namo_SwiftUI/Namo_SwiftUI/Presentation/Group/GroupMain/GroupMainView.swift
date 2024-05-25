@@ -94,8 +94,6 @@ struct GroupMainView: View {
 	
 	private var noGroup: some View {
 		VStack(spacing: 45) {
-			Spacer()
-			
 			Image(.noGroup)
 			
 			Text("그룹 리스트가 없습니다\n그룹을 추가해 보세요!")
@@ -104,41 +102,78 @@ struct GroupMainView: View {
 				.multilineTextAlignment(.center)
 				.foregroundStyle(Color.mainText)
 			
+			Spacer()
+			
 		}
+		.padding(.top, 151)
 	}
 	
 	private var groupList: some View {
-		ScrollView(.vertical, showsIndicators: false) {
-			VStack(spacing: 20) {
-				if appState.isLoading {
-					ProgressView()
-				} else if !moimState.moims.isEmpty {
-					ForEach(moimState.moims, id: \.groupId) { moim in
-						NavigationLink(destination: GroupCalendarView(), label: {
-							GroupListItem(moim: moim)
-								.tint(Color.black)
-						})
-						.simultaneousGesture(TapGesture().onEnded {
-							moimState.currentMoim = moim
-							Task {
-								await moimInteractor.getMoimSchedule(moimId: moim.groupId)
-							}
-						})
-						
-					}
-				} else {
-					noGroup
-				}
-				
+		VStack(spacing: 0) {
+			if appState.isLoading {
+				ProgressView()
 				Spacer()
-					.frame(height: 100)
+			} else if moimState.moims.isEmpty {
+				noGroup
+			} else {
+				ScrollView(.vertical, showsIndicators: false) {
+					VStack(spacing: 20) {
+						ForEach(moimState.moims, id: \.groupId) { moim in
+							NavigationLink(destination: GroupCalendarView(), label: {
+								GroupListItem(moim: moim)
+									.tint(Color.black)
+							})
+							.simultaneousGesture(TapGesture().onEnded {
+								moimState.currentMoim = moim
+								Task {
+									await moimInteractor.getMoimSchedule(moimId: moim.groupId)
+								}
+							})
+							
+						}
+						
+						Spacer()
+							.frame(height: 100)
+					}
+				}
+				.refreshable {
+					Task {
+						await moimInteractor.getGroups()
+					}
+				}
 			}
 		}
-		.refreshable {
-			Task {
-				await moimInteractor.getGroups()
-			}
-		}
+//		ScrollView(.vertical, showsIndicators: false) {
+//			VStack(spacing: 20) {
+//				if appState.isLoading {
+//					ProgressView()
+//				} else if !moimState.moims.isEmpty {
+//					ForEach(moimState.moims, id: \.groupId) { moim in
+//						NavigationLink(destination: GroupCalendarView(), label: {
+//							GroupListItem(moim: moim)
+//								.tint(Color.black)
+//						})
+//						.simultaneousGesture(TapGesture().onEnded {
+//							moimState.currentMoim = moim
+//							Task {
+//								await moimInteractor.getMoimSchedule(moimId: moim.groupId)
+//							}
+//						})
+//						
+//					}
+//				} else {
+//					noGroup
+//				}
+//				
+//				Spacer()
+//					.frame(height: 100)
+//			}
+//		}
+//		.refreshable {
+//			Task {
+//				await moimInteractor.getGroups()
+//			}
+//		}
 	}
 	
 	private var newGroupAlertView: some View {

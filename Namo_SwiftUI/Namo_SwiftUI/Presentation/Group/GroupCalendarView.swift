@@ -213,15 +213,24 @@ struct GroupCalendarView: View {
 				
 				if let schedules = moimState.currentMoimSchedule[focusDate!]?
 					.compactMap(({$0.schedule}))
-					.filter({!$0.curMoimSchedule})
+					.filter({!$0.curMoimSchedule}),
+				   !schedules.isEmpty
 				{
 					ForEach(schedules, id: \.id) {schedule in
 						CalendarMoimScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
-					Text("등록된 개인 일정이 없습니다.")
-						.font(.pretendard(.medium, size: 14))
-						.foregroundStyle(Color(.mainText))
+					HStack(spacing: 12) {
+						Rectangle()
+							.fill(Color.textPlaceholder)
+							.frame(width: 3, height: 21)
+						
+						Text("등록된 개인 일정이 없습니다.")
+							.font(.pretendard(.medium, size: 14))
+							.foregroundStyle(Color(.textDisabled))
+						
+						Spacer()
+					}
 				}
 				
 				HStack {
@@ -237,15 +246,24 @@ struct GroupCalendarView: View {
 				
 				if let schedules = moimState.currentMoimSchedule[focusDate!]?
 					.compactMap({$0.schedule})
-					.filter({$0.curMoimSchedule})
+					.filter({$0.curMoimSchedule}),
+				   !schedules.isEmpty
 				{
 					ForEach(schedules, id: \.id) { schedule in
 						CalendarMoimScheduleDetailItem(ymd: focusDate!, schedule: schedule, isToDoSheetPresented: self.$isToDoSheetPresented)
 					}
 				} else {
-					Text("등록된 모임 일정이 없습니다.")
-						.font(.pretendard(.medium, size: 14))
-						.foregroundStyle(Color(.mainText))
+					HStack(spacing: 12) {
+						Rectangle()
+							.fill(Color.textPlaceholder)
+							.frame(width: 3, height: 21)
+						
+						Text("등록된 모임 일정이 없습니다.")
+							.font(.pretendard(.medium, size: 14))
+							.foregroundStyle(Color(.textDisabled))
+						
+						Spacer()
+					}
 				}
 				
 				Spacer()

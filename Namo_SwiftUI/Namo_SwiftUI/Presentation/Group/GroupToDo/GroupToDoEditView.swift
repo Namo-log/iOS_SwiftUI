@@ -79,7 +79,7 @@ struct GroupToDoEditView: View {
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
-                                        Image("vector3")
+										Image(.arrowBasic)
                                             .renderingMode(.template)
                                             .foregroundStyle(.mainText)
                                         
@@ -136,7 +136,7 @@ struct GroupToDoEditView: View {
                                         Text(scheduleState.currentMoimSchedule.locationName.isEmpty ? "위치명" : scheduleState.currentMoimSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
-                                        Image("vector3")
+										Image(.arrowBasic)
                                             .renderingMode(.template)
                                             .foregroundStyle(.mainText)
                                     }
