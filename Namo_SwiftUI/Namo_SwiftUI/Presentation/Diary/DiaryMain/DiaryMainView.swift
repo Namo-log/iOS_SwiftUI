@@ -267,9 +267,11 @@ struct DiaryItemView: View {
                 
                 // 내용과 사진
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(diary.contents ?? "")
+                    Text(diary.contents?.replacingOccurrences(of: "\n", with: " ") ?? "")
                         .font(.pretendard(.light, size: 14))
                         .foregroundStyle(.mainText)
+                        .lineLimit(5)
+                        .truncationMode(.tail)
                     
                     // 사진 목록
                     // TODO: - 이미지 있는 기록이 잘 뜨는지 테스트 못 해봄
