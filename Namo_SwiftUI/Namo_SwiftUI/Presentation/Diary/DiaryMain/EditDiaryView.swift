@@ -79,6 +79,7 @@ struct EditDiaryView: View {
                             }
                             .onChange(of: memo) { res in
                                 typedCharacters = memo.count
+                                memo = String(memo.prefix(characterLimit))
                                 diaryState.currentDiary.contents = String(memo.prefix(characterLimit))
                             }
                     } // ZStack
