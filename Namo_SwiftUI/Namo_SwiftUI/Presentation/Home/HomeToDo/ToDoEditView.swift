@@ -245,7 +245,7 @@ struct ToDoEditView: View {
                                     }
                                 }, label: {
                                     HStack {
-                                        Text(scheduleState.currentSchedule.locationName.isEmpty ? "위치명" : scheduleState.currentSchedule.locationName)
+                                        Text(scheduleState.currentSchedule.locationName.isEmpty ? "없음" : scheduleState.currentSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
 										Image(.arrowBasic)

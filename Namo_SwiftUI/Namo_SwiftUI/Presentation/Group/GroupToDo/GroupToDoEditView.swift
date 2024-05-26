@@ -134,7 +134,7 @@ struct GroupToDoEditView: View {
                                     }
                                 }, label: {
                                     HStack {
-                                        Text(scheduleState.currentMoimSchedule.locationName.isEmpty ? "위치명" : scheduleState.currentMoimSchedule.locationName)
+                                        Text(scheduleState.currentMoimSchedule.locationName.isEmpty ? "없음" : scheduleState.currentMoimSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
 										Image(.arrowBasic)
@@ -148,16 +148,17 @@ struct GroupToDoEditView: View {
                         }
                         .padding(.horizontal, 30)
                         
-                        // MARK: 카카오 맵 뷰
-                        KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
-                            .onAppear(perform: {
-                                self.draw = true
-                            }).onDisappear(perform: {
-                                self.draw = false
-                            })
-                            .frame(width: 330, height:200)
-                            .border(Color.init(hex: 0xD9D9D9), width: 1)
-             
+                        if !((scheduleState.currentMoimSchedule.x == 0.0 && scheduleState.currentMoimSchedule.y == 0.0) || scheduleState.currentMoimSchedule.locationName == "") {
+                            // MARK: 카카오 맵 뷰
+                            KakaoMapView(draw: $draw, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
+                                .onAppear(perform: {
+                                    self.draw = true
+                                }).onDisappear(perform: {
+                                    self.draw = false
+                                })
+                                .frame(width: 330, height:200)
+                                .border(Color.init(hex: 0xD9D9D9), width: 1)
+                        }
                         Spacer()
                     }
                     .navigationTitle(self.isRevise ? "일정 편집" : "새 일정")
