@@ -164,7 +164,6 @@ struct DiaryMainView: View {
             }
         } // ZStack
         .task {
-			appState.isPersonalDiary = true
 			await loadDiaries()
         }
         .onChange(of: page) { _ in // 페이지 바뀔 때마다 호출되는 부분
