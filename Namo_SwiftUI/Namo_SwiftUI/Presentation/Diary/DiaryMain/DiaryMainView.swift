@@ -244,7 +244,7 @@ struct DiaryItemView: View {
             Rectangle()
                 .fill(categoryInteractor.getColorWithPaletteId(id: 9))
                 .frame(width: 10)
-                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
+                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft])) // 이거!!
             
             HStack(alignment: .top, spacing: 25) {
                 // 제목과 수정 버튼
