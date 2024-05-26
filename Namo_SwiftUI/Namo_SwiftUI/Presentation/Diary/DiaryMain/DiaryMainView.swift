@@ -230,13 +230,14 @@ struct DiaryItemView: View {
             Rectangle()
                 .fill(.textBackground)
                 .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
             
             Rectangle()
-                .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
-                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
+                .fill(categoryInteractor.getColorWithPaletteId(id: 9))
                 .frame(width: 10)
+                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
             
-            HStack(alignment: .top, spacing: 15) {
+            HStack(alignment: .top, spacing: 25) {
                 // 제목과 수정 버튼
                 VStack(alignment: .leading, spacing: 0) {
                     Text(diary.name)
@@ -248,7 +249,7 @@ struct DiaryItemView: View {
                     
                     // 다이어리 수정 버튼
                     NavigationLink(destination: EditDiaryView(memo: diary.contents ?? "", urls: diary.urls ?? [], info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
-                        HStack(alignment: .center, spacing: 3) {
+                        HStack(alignment: .center, spacing: 5) {
                             Image(.icEditDiary)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -265,7 +266,7 @@ struct DiaryItemView: View {
                 }
                 
                 // 내용과 사진
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text(diary.contents ?? "")
                         .font(.pretendard(.light, size: 14))
                         .foregroundStyle(.mainText)
