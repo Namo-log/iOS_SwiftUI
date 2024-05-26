@@ -40,6 +40,9 @@ struct ToDoEditView: View {
     @State private var categoryList: [ScheduleCategory] = []
     
     @State var showCategoryDeleteAlert: Bool = false
+    
+    @State var categoryColor: Color = .mainOrange
+    @State var categoryName: String = "카테고리 없음"
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -119,9 +122,9 @@ struct ToDoEditView: View {
                                     
                                 } label: {
                                     HStack {
-                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1))
+                                        ColorCircleView(color: self.categoryColor)
                                             .frame(width: 13, height: 13)
-                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음")
+                                        Text(self.categoryName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
@@ -430,7 +433,9 @@ struct ToDoEditView: View {
                 
                 self.categoryList = categoryInteractor.setCategories()
             
-                self.scheduleState.currentSchedule.categoryId = self.categoryList.first?.categoryId ?? -1
+                self.categoryColor = categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1)
+                
+                self.categoryName = appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음"
             }
         })
         .onAppear (perform : UIApplication.shared.hideKeyboard)
