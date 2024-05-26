@@ -196,6 +196,16 @@ struct ScheduleInfo: Hashable {
     let categoryId: Int?
 }
 
+extension ScheduleInfo {
+    func getSchedulePlace() -> String {
+        if place.isEmpty {
+            return "없음"
+        } else {
+            return place
+        }
+    }
+}
+
 // 다이어리 날짜 아이템
 struct DiaryDateItemView: View {
     let startDate: Int

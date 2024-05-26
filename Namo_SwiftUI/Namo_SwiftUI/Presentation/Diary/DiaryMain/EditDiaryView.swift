@@ -38,7 +38,7 @@ struct EditDiaryView: View {
             VStack(alignment: .center) {
                 VStack(alignment: .leading) {
                     // 날짜와 장소 정보
-                    DatePlaceInfoView(date: info.date, place: info.place)
+                    DatePlaceInfoView(date: info.date, place: info.getSchedulePlace())
                     
                     // 메모 입력 부분
                     ZStack(alignment: .topLeading) {
