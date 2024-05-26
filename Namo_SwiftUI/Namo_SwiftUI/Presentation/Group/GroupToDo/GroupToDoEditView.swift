@@ -36,6 +36,7 @@ struct GroupToDoEditView: View {
     @State var showAlert: Bool = false
     /// 참석자 선택 창 Show State
     @State var showCheckParticipant: Bool = false
+    @State var currPlace: Place?
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -256,7 +257,7 @@ struct GroupToDoEditView: View {
             }
             
         }
-        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isGroup: true) : nil)
+        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isRevise: isRevise, tempPlace: currPlace, isGroup: true) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear(perform: {
             // 템플릿에 모임Id 주입
@@ -269,17 +270,19 @@ struct GroupToDoEditView: View {
                 self.scheduleState.currentMoimSchedule.users = moimState.currentMoim.groupUsers
             }
             // 현재 장소 리스트에 Schedule의 장소를 추가
-            // 임시용으로, placeID가 추가된 후 추후에 수정이 필요합니다.
             if self.isRevise {
-                let temp = self.scheduleState.currentMoimSchedule
-                placeInteractor.appendPlaceList(place: Place(
-                    id: 0,
-                    x: temp.x,
-                    y: temp.y,
-                    name: temp.locationName,
-                    address: "임시용입니다",
-                    rodeAddress: "임시용입니다")
-                )
+                
+                Task {
+                    let temp = self.scheduleState.currentMoimSchedule
+                    
+                    let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                    
+                    if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
+                        placeInteractor.appendPlaceList(place: target)
+                        placeInteractor.selectPlace(place: target)
+                        currPlace = target
+                    }
+                }
             }
         })
         .onAppear (perform : UIApplication.shared.hideKeyboard)

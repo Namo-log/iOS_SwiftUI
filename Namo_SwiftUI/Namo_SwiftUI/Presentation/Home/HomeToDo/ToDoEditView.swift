@@ -43,6 +43,8 @@ struct ToDoEditView: View {
     
     @State var categoryColor: Color = .mainOrange
     @State var categoryName: String = "카테고리 없음"
+    
+    @State var currPlace: Place?
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -408,7 +410,7 @@ struct ToDoEditView: View {
                 )
             }
         }
-        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isGroup: false) : nil)
+        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isRevise: isRevise, tempPlace: currPlace, isGroup: false) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear(perform: {
             // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때
@@ -420,10 +422,13 @@ struct ToDoEditView: View {
             if self.isRevise {
                 Task {
                     let temp = self.scheduleState.currentSchedule
+                    
                     let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                    
                     if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
                         placeInteractor.appendPlaceList(place: target)
                         placeInteractor.selectPlace(place: target)
+                        currPlace = target
                     }
                 }
             }
