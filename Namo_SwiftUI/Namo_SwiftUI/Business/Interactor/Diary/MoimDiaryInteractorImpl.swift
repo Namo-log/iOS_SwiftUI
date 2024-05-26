@@ -61,4 +61,12 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
             diaryState.currentMoimDiaryInfo = res
         }
     }
+    
+    /// 모임 메모 상세 조회
+    func getOneMoimDiaryDetail(moimScheduleId: Int) async {
+        guard let res = await moimDiaryRepository.getOneMoimDiaryDetail(moimScheduleId: moimScheduleId) else { return }
+        DispatchQueue.main.async {
+            diaryState.currentDiary = res
+        }
+    }
 }

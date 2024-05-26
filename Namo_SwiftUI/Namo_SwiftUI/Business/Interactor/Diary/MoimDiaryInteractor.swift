@@ -16,4 +16,5 @@ protocol MoimDiaryInteractor {
     func deleteMoimDiary(moimMemoId: Int) async -> Bool
     func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async
     func getOneMoimDiary(moimScheduleId: Int ) async
+    func getOneMoimDiaryDetail(moimScheduleId: Int ) async
 }
