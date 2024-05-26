@@ -275,6 +275,7 @@ struct EditDiaryView: View {
                     
                     DispatchQueue.global().async {
                         guard let data = try? Data(contentsOf: url) else { return }
+                        pickedImagesData.append(data)
                         images.append(UIImage(data: data)!)
                         print(images.description)
                     }
