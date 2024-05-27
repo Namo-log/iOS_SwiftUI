@@ -27,7 +27,16 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     
     /// 모임 메모 장소 삭제
     func deleteMoimDiaryPlace(moimLocationId: Int) async -> Bool {
-        return await moimDiaryRepository.deleteMoimDiaryPlace(moimLocationId: moimLocationId)
+        if await moimDiaryRepository.deleteMoimDiaryPlace(moimLocationId: moimLocationId) {
+            DispatchQueue.main.async {
+                diaryState.currentMoimDiaryInfo.moimActivityDtos = diaryState.currentMoimDiaryInfo.moimActivityDtos?.filter {
+                    $0.moimActivityId != moimLocationId
+                }
+            }
+            print("이거 제발 \(diaryState.currentMoimDiaryInfo.moimActivityDtos)")
+            return true
+        }
+        return false
     }
     
     /// 모임 기록에 대한 개인 메모 추가/수정

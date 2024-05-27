@@ -236,13 +236,13 @@ struct DiaryItemView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-                Rectangle()
-                    .fill(.textBackground)
-                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
-                
-                Rectangle()
-                    .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
-                    .frame(width: 10)
+            Rectangle()
+                .fill(.textBackground)
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
+            
+            Rectangle()
+                .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
+                .frame(width: 10)
             
             HStack(alignment: .top, spacing: 25) {
                 // 제목과 수정 버튼

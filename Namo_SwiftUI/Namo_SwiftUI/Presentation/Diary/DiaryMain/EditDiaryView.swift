@@ -108,7 +108,7 @@ struct EditDiaryView: View {
                 // 모임 기록 보러가기 버튼
                 if !appState.isPersonalDiary {
                     // 활동 정보 연결되면 아래 코드로 테스트
-                    NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.moimActivityDtos ?? [], info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
+                    NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.moimActivityDtos ?? [], images: pickedImagesData, info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
@@ -154,36 +154,24 @@ struct EditDiaryView: View {
                     }
             }
         } // ZStack
-        .onAppear {
-            /// 모임 기록 추가/수정 화면이면
-            if !appState.isPersonalDiary {
-                Task {
-                    /// 단건 모임 기록 API 호출해서 필요한 정보를 받아온다
-                    print(info.scheduleId)
-                    print(info.scheduleName)
-                    await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
-                }
-            } else { // 모임 일정에 대한 개인 기록이면
-                Task {
-                    // 기록 개별 조회 API 호출
-                    await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
-                    // memo 값 연결
-                    memo = diaryState.currentDiary.contents ?? ""
-                    // TODO: - diaryState.currentDiary.urls 값이랑 이미지 연결
-                    for url in diaryState.currentDiary.urls ?? [] {
-                        guard let url = URL(string: url) else { return }
-                        
-                        DispatchQueue.global().async {
-                            guard let data = try? Data(contentsOf: url) else { return }
-                            images.append(UIImage(data: data)!)
-                            print(images.description)
-                        }
-                    }
-//                    images = diaryState.currentDiary.urls
-                }
-            }
-            print("====\(info)")
-        }
+//        .onAppear {
+//            Task {
+//                // 기록 개별 조회 API 호출
+//                await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
+//                // memo 값 연결
+//                memo = diaryState.currentDiary.contents ?? ""
+//                for url in diaryState.currentDiary.urls ?? [] {
+//                    guard let url = URL(string: url) else { return }
+//                    
+//                    DispatchQueue.global().async {
+//                        guard let data = try? Data(contentsOf: url) else { return }
+//                        images.append(UIImage(data: data)!)
+//                        print(images.description)
+//                    }
+//                }
+////                    images = diaryState.currentDiary.urls
+//            }
+//        }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
@@ -209,7 +197,7 @@ struct EditDiaryView: View {
                     } else {
                         print("모임 기록(에 대한 개인 메모) edit API 호출")
                         // 모임 기록(에 대한 개인 메모) edit API 호출
-                        let result = await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
+                        await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
                 }
             }
@@ -270,15 +258,21 @@ struct EditDiaryView: View {
             }
             .onAppear {
                 images.removeAll()
-                // urls에 있는 이미지 주소를 images 배열에 UIImage로 추가하여 뷰에 연결
-                for url in urls {
-                    guard let url = URL(string: url) else { return }
-                    
-                    DispatchQueue.global().async {
-                        guard let data = try? Data(contentsOf: url) else { return }
-                        pickedImagesData.append(data)
-                        images.append(UIImage(data: data)!)
-                        print(images.description)
+                
+                Task {
+                    // 기록 개별 조회 API 호출
+                    await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
+                    // memo 값 연결
+                    memo = diaryState.currentDiary.contents ?? ""
+                    for url in diaryState.currentDiary.urls ?? [] {
+                        guard let url = URL(string: url) else { return }
+                        
+                        DispatchQueue.global().async {
+                            guard let data = try? Data(contentsOf: url) else { return }
+                            pickedImagesData.append(data)
+                            images.append(UIImage(data: data)!)
+                            print(images.description)
+                        }
                     }
                 }
             } // ScrollView

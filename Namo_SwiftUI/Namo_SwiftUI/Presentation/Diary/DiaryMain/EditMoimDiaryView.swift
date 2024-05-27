@@ -279,11 +279,11 @@ struct EditMoimDiaryView: View {
                     for i in 0..<activities.count {
                         if activities.indices.contains(i) {
                             let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: images)
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: images)
                             if !idList.isEmpty {
-                                let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
+                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
                             } else {
-                                let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                                let res = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                             }
                         }
                     }
