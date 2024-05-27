@@ -11,6 +11,7 @@ import Factory
 struct ToDoSelectPlaceView: View {
     
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var scheduleState: ScheduleState
     @Injected(\.placeInteractor) var placeInteractor
     @Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.moimInteractor) var moimInteractor
@@ -19,6 +20,8 @@ struct ToDoSelectPlaceView: View {
     @Binding var isShowSheet: Bool
     /// 이전 화면의 kakaoMap draw 여부 state
     @Binding var preMapDraw: Bool
+    /// 장소의 추가/수정 여부
+    @State var isRevise: Bool
     
     /// KakaoMap draw State
     @State var draw: Bool = true
@@ -26,6 +29,8 @@ struct ToDoSelectPlaceView: View {
     @State var searchText: String = ""
     /// 취소/확인 버튼 show state
     @State var showBtns: Bool = false
+    /// 임시 저장용 Place
+    @State var tempPlace: Place?
     /// 장소 선택 창이 모임 일정용인지
     let isGroup: Bool
     
@@ -51,7 +56,14 @@ struct ToDoSelectPlaceView: View {
                 }
                 .padding(.all, 12)
                 .onTapGesture {
-                    placeInteractor.clearPlaces(isSave: false)
+                    if !isRevise {
+                        if let tempPlace = self.tempPlace {
+                            placeInteractor.appendPlaceList(place: tempPlace)
+                        } else {
+                            placeInteractor.selectPlace(place: nil)
+                            placeInteractor.clearPlaces(isSave: false)
+                        }
+                    }
                     self.dismissThis()
                 }
                 
@@ -63,7 +75,13 @@ struct ToDoSelectPlaceView: View {
                         
                         Spacer()
                         Button(action: {
-                            placeInteractor.selectPlace(place: nil)
+                            if !isRevise {
+                                if let tempPlace = self.tempPlace {
+                                    placeInteractor.selectPlace(place: tempPlace)
+                                } else {
+                                    placeInteractor.selectPlace(place: nil)
+                                }
+                            }
                             self.dismissThis()
                         }) {
                             Text("취소")
@@ -109,7 +127,7 @@ struct ToDoSelectPlaceView: View {
                 } //: HStack
                
                 //MARK: 지도 아래 검색창 + 장소 리스트 뷰
-                placeListView(searchText: $searchText, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace)
+                placeListView(searchText: $searchText, pinList: $appState.placeState.placeList, selectedPlace: $appState.placeState.selectedPlace, isRevise: $isRevise)
                     .frame(height: 430)
                     .clipShape(.rect(cornerRadius: 15, style: .continuous))
                     .shadow(radius: 12)
@@ -118,6 +136,29 @@ struct ToDoSelectPlaceView: View {
         }
         .background(.white)
         .transition(.move(edge: .trailing))
+        .onAppear(perform: {
+            Task {
+                if isRevise {
+                    if isGroup {
+                        let temp = self.scheduleState.currentMoimSchedule
+                        let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                        if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
+                            placeInteractor.clearPlaces(isSave: false)
+                            placeInteractor.appendPlaceList(place: target)
+                            placeInteractor.selectPlace(place: target)
+                        }
+                    } else {
+                        let temp = self.scheduleState.currentSchedule
+                        let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                        if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
+                            placeInteractor.clearPlaces(isSave: false)
+                            placeInteractor.appendPlaceList(place: target)
+                            placeInteractor.selectPlace(place: target)
+                        }
+                    }
+                }
+            }
+        })
     }
     
     /// 현재 SelectPlace 화면을 dismiss하고, 표시될 ToDoEditView의 draw를 준비합니다.
@@ -134,6 +175,7 @@ struct ToDoSelectPlaceView: View {
         @Binding var searchText: String
         @Binding var pinList: [Place]
         @Binding var selectedPlace: Place?
+        @Binding var isRevise: Bool
         
         var body: some View {
             ZStack {
@@ -176,7 +218,7 @@ struct ToDoSelectPlaceView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             ForEach($pinList, id: \.id) { place in
-                                placeListItemView(place: place, selectedPlace: $selectedPlace)
+                                placeListItemView(place: place, selectedPlace: $selectedPlace, isRevise: $isRevise)
                                     .shadow(radius: 3)
                                     .padding(.vertical, 10)
                                     .padding(.horizontal, 20)
@@ -195,6 +237,7 @@ struct ToDoSelectPlaceView: View {
     private struct placeListItemView: View {
         @Binding var place: Place
         @Binding var selectedPlace: Place?
+        @Binding var isRevise: Bool
         
         var body: some View {
             HStack {
@@ -223,6 +266,7 @@ struct ToDoSelectPlaceView: View {
             .background(.textBackground)
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
             .onTapGesture {
+                isRevise = false
                 NotificationCenter.default.post(name: NSNotification.Name("SendPlace"), object: nil, userInfo: ["place":place])
             }
         }

@@ -40,6 +40,11 @@ struct ToDoEditView: View {
     @State private var categoryList: [ScheduleCategory] = []
     
     @State var showCategoryDeleteAlert: Bool = false
+    
+    @State var categoryColor: Color = .mainOrange
+    @State var categoryName: String = "카테고리 없음"
+    
+    @State var currPlace: Place?
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -119,9 +124,9 @@ struct ToDoEditView: View {
                                     
                                 } label: {
                                     HStack {
-                                        ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1))
+                                        ColorCircleView(color: self.categoryColor)
                                             .frame(width: 13, height: 13)
-                                        Text(appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음")
+                                        Text(self.categoryName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
@@ -148,6 +153,8 @@ struct ToDoEditView: View {
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
                                             self.showStartTimePicker.toggle()
+                                            self.showEndTimePicker = false
+                                            self.showNotificationSetting = false
                                         }
                                     }
                             }
@@ -165,7 +172,9 @@ struct ToDoEditView: View {
                                     .foregroundStyle(.mainText)
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
+                                            self.showStartTimePicker = false
                                             self.showEndTimePicker.toggle()
+                                            self.showNotificationSetting = false
                                         }
                                     }
                             }
@@ -177,60 +186,63 @@ struct ToDoEditView: View {
                                     .tint(.mainOrange)
                             }
                             
-                            ListItem(listTitle: "알림") {
-                                HStack {
-                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
-                                         ? "없음"
-                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
-                                            .map { NotificationSetting.getValueFromInt($0) })
-                                    )
-                                    .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
-                                    
-                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
-                                        .renderingMode(.template)
-                                        .foregroundStyle(.mainText)
-                                }
-                                .lineSpacing(12)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        self.showNotificationSetting.toggle()
-                                    }
-                                }
-                            }
-                            
-                            if (showNotificationSetting) {
-                                let notificationsList = NotificationSetting.allCases
-                                
-                                let rows = [
-                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
-                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
-                                ]
-                                
-                                LazyHGrid(rows: rows) {
-                                    ForEach(notificationsList, id: \.self) { item in
-                                        ColorToggleButton(
-                                            isOn: Binding(get: {
-                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
-                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
-                                            },set: {_ in }),
-                                            buttonText: item.toString,
-                                            action: {
-                                                if item == .none {
-                                                    scheduleState.currentSchedule.alarmDate = []
-                                                }
-                                                else {
-                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
-                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
-                                                    }
-                                                    else {
-                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
-                                                    }
-                                                }
-                                            })
-                                    }
-                                }
-                            }
+                            // MARK: 알림 기능 추가되면 해제
+//                            ListItem(listTitle: "알림") {
+//                                HStack {
+//                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
+//                                         ? "없음"
+//                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
+//                                            .map { NotificationSetting.getValueFromInt($0) })
+//                                    )
+//                                    .font(.pretendard(.regular, size: 15))
+//                                    .foregroundStyle(.mainText)
+//                                    
+//                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
+//                                        .renderingMode(.template)
+//                                        .foregroundStyle(.mainText)
+//                                }
+//                                .lineSpacing(12)
+//                                .onTapGesture {
+//                                    withAnimation(.easeInOut(duration: 0.3)) {                            
+//                                        self.showStartTimePicker = false
+//                                        self.showEndTimePicker = false
+//                                        self.showNotificationSetting.toggle()
+//                                    }
+//                                }
+//                            }
+//                            if (showNotificationSetting) {
+//                            
+//                                let notificationsList = NotificationSetting.allCases
+//                                
+//                                let rows = [
+//                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
+//                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
+//                                ]
+//                                
+//                                LazyHGrid(rows: rows) {
+//                                    ForEach(notificationsList, id: \.self) { item in
+//                                        ColorToggleButton(
+//                                            isOn: Binding(get: {
+//                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
+//                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
+//                                            },set: {_ in }),
+//                                            buttonText: item.toString,
+//                                            action: {
+//                                                if item == .none {
+//                                                    scheduleState.currentSchedule.alarmDate = []
+//                                                }
+//                                                else {
+//                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
+//                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
+//                                                    }
+//                                                    else {
+//                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
+//                                                    }
+//                                                }
+//                                            })
+//                                    }
+//                                }
+//                            }
                             
                             ListItem(listTitle: "장소") {
                                 Button(action: {
@@ -240,7 +252,7 @@ struct ToDoEditView: View {
                                     }
                                 }, label: {
                                     HStack {
-                                        Text(scheduleState.currentSchedule.locationName.isEmpty ? "위치명" : scheduleState.currentSchedule.locationName)
+                                        Text(scheduleState.currentSchedule.locationName.isEmpty ? "없음" : scheduleState.currentSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
 										Image(.arrowBasic)
@@ -405,7 +417,7 @@ struct ToDoEditView: View {
                 )
             }
         }
-        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isGroup: false) : nil)
+        .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isRevise: isRevise, tempPlace: currPlace, isGroup: false) : nil)
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear(perform: {
             // 밖에서 주입 받은 스케쥴 == 스케쥴 수정일 때
@@ -417,10 +429,13 @@ struct ToDoEditView: View {
             if self.isRevise {
                 Task {
                     let temp = self.scheduleState.currentSchedule
+                    
                     let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                    
                     if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
                         placeInteractor.appendPlaceList(place: target)
                         placeInteractor.selectPlace(place: target)
+                        currPlace = target
                     }
                 }
             }
@@ -430,7 +445,9 @@ struct ToDoEditView: View {
                 
                 self.categoryList = categoryInteractor.setCategories()
             
-                self.scheduleState.currentSchedule.categoryId = self.categoryList.first?.categoryId ?? -1
+                self.categoryColor = categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1)
+                
+                self.categoryName = appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음"
             }
         })
         .onAppear (perform : UIApplication.shared.hideKeyboard)
