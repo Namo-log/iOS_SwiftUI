@@ -21,7 +21,7 @@ struct EditMoimDiaryView: View {
     @State var activities = [ActivityDTO()]
 	@State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
-    @State var images: [Data?] = []
+    @State var activityImages: [[Data?]] = [[], [], []]
     
     let info: ScheduleInfo
     let moimUser: [MoimUser]
@@ -183,7 +183,7 @@ struct EditMoimDiaryView: View {
                                           activity: $activities[index],
                                           name: $activities[index].name,
                                           currentCalculateIndex: $currentCalculateIndex,
-                                          pickedImagesData: $images,
+                                          pickedImagesData: $activityImages[index],
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
@@ -203,7 +203,7 @@ struct EditMoimDiaryView: View {
                             
                             if activities.count < 3 {
                                 withAnimation(.easeIn(duration: 0.2)) {
-									activities.append(ActivityDTO())
+									activities.append(ActivityDTO(id: 0, name: "", money: 0, participants: [], urls: []))
                                 }
                             }
                         } label: {
@@ -275,16 +275,19 @@ struct EditMoimDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // 활동 편집
-                    print(images)
                     for i in 0..<activities.count {
                         if activities.indices.contains(i) {
-                            let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: images)
-                            // TODO: - 이게 활동 변경인지 생성인지 구분해서 넣어줘야 됨 지금 이 if문으로는 구분이 안 되고 그래서 계속 에러남
-                            if !idList.isEmpty {
-                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
-                            } else {
+                            let moimActivityId = activities[i].moimActivityId
+                            print("@@0528 moimActivityId \(moimActivityId)")
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: activityImages[i])
+                            if moimActivityId == 0 {
                                 let res = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                                print("@@0528 생성")
+                                print("@@0528 생성 req \(req)")
+                            } else {
+                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: moimActivityId, req: req)
+                                print("@@0528 수정")
+                                print("@@0528 수정 req \(req)")
                             }
                         }
                     }
@@ -301,8 +304,8 @@ struct EditMoimDiaryView: View {
                 Task {
                     // 활동 추가
                     for i in 0..<activities.count {
-                        print(images)
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: images)
+                        print(activityImages)
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activityImages[i])
                         let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
                     

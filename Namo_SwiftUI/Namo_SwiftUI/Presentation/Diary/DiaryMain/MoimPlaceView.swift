@@ -105,13 +105,11 @@ struct MoimPlaceView: View {
             }
         }
         .onAppear(perform: {
-            print("여기다~~")
-            print(activity)
             for url in activity.urls {
                 guard let url = URL(string: url) else { return }
-                
                 DispatchQueue.global().async {
                     guard let data = try? Data(contentsOf: url) else { return }
+                    pickedImagesData.append(data)
                     images.append(UIImage(data: data)!)
                     print(images.description)
                 }
