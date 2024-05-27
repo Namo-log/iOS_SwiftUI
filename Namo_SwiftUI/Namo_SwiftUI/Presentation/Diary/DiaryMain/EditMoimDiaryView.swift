@@ -280,6 +280,7 @@ struct EditMoimDiaryView: View {
                         if activities.indices.contains(i) {
                             let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
                             let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: images)
+                            // TODO: - 이게 활동 변경인지 생성인지 구분해서 넣어줘야 됨 지금 이 if문으로는 구분이 안 되고 그래서 계속 에러남
                             if !idList.isEmpty {
                                 let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
                             } else {

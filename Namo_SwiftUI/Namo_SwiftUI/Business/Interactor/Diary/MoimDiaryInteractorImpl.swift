@@ -33,7 +33,6 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
                     $0.moimActivityId != moimLocationId
                 }
             }
-            print("이거 제발 \(diaryState.currentMoimDiaryInfo.moimActivityDtos)")
             return true
         }
         return false

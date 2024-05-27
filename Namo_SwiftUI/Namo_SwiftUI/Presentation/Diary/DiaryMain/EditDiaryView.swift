@@ -259,20 +259,14 @@ struct EditDiaryView: View {
             .onAppear {
                 images.removeAll()
                 
-                Task {
-                    // 기록 개별 조회 API 호출
-                    await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
-                    // memo 값 연결
-                    memo = diaryState.currentDiary.contents ?? ""
-                    for url in diaryState.currentDiary.urls ?? [] {
-                        guard let url = URL(string: url) else { return }
-                        
-                        DispatchQueue.global().async {
-                            guard let data = try? Data(contentsOf: url) else { return }
-                            pickedImagesData.append(data)
-                            images.append(UIImage(data: data)!)
-                            print(images.description)
-                        }
+                for url in urls {
+                    guard let url = URL(string: url) else { return }
+                    
+                    DispatchQueue.global().async {
+                        guard let data = try? Data(contentsOf: url) else { return }
+                        pickedImagesData.append(data)
+                        images.append(UIImage(data: data)!)
+                        print(images.description)
                     }
                 }
             } // ScrollView
