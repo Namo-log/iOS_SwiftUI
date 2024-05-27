@@ -42,30 +42,18 @@ struct CalendarScheduleDetailItem: View {
 				
 				Spacer()
                 
-				if let hasDiary = schedule.hasDiary {
+                if let hasDiary = schedule.hasDiary {
                     NavigationLink(destination: EditDiaryView(memo: diaryState.currentDiary.contents ?? "", urls: [], info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
-						Image(hasDiary ? .btnAddRecordOrange : .btnAddRecord)
-							.resizable()
-							.frame(width: 34, height: 34)
-							.padding(.trailing, 11)
-					}
-					.simultaneousGesture(TapGesture().onEnded {
-						scheduleInteractor.setScheduleToCurrentSchedule(schedule: schedule)
-						appState.isEditingDiary = false
-					})
-				}
-// 				Spacer(minLength: 0)
-				
-// 				Button(action: {
-//                     scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
-//                     self.isToDoSheetPresented = true
-//                 }, label: {
-// 					Image(schedule.hasDiary ? .btnAddRecordOrange : .btnAddRecord)
-// 						.resizable()
-// 						.frame(width: 34, height: 34)
-// 						.padding(.trailing, 11)
-// 				})
-				
+                        Image(hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+                            .resizable()
+                            .frame(width: 34, height: 34)
+                            .padding(.trailing, 11)
+                    }
+                    .simultaneousGesture(TapGesture().onEnded {
+                        scheduleInteractor.setScheduleToCurrentSchedule(schedule: schedule)
+                        appState.isEditingDiary = false
+                    })
+                }
 			}
 			.frame(width: screenWidth-50, height: 55)
 			.background(

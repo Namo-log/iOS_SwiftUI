@@ -16,4 +16,5 @@ protocol MoimDiaryRepository {
     func deleteMoimDiary(moimMemoId: Int) async -> Bool
     func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async -> GetMonthMoimDiaryResDTO?
     func getOneMoimDiary(moimScheduleId: Int) async -> GetOneMoimDiaryResDTO?
+    func getOneMoimDiaryDetail(moimScheduleId: Int) async -> Diary?
 }

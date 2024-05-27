@@ -71,6 +71,7 @@ struct DiaryInteractorImpl: DiaryInteractor {
     }
     
     /// 기록 삭제
+    @discardableResult
     func deleteDiary(scheduleId: Int) async -> Bool {
         return await diaryRepository.deleteDiary(scheduleId: scheduleId)
     }

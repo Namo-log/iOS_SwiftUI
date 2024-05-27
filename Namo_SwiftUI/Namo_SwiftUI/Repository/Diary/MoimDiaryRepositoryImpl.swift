@@ -46,4 +46,10 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
     func getOneMoimDiary(moimScheduleId: Int) async -> GetOneMoimDiaryResDTO? {
         return await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.getOneMoimDiary(moimScheduleId: moimScheduleId))
     }
+    
+    func getOneMoimDiaryDetail(moimScheduleId: Int) async -> Diary? {
+        return await APIManager.shared.performRequest(
+            endPoint: MoimDiaryEndPoint.getOneMoimDiaryDetail(moimScheduleId: moimScheduleId)
+        )
+    }
 }
