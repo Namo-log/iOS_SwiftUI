@@ -97,6 +97,7 @@ struct GroupToDoEditView: View {
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
                                             self.showStartTimePicker.toggle()
+                                            self.showEndTimePicker = false
                                         }
                                     }
                             }
@@ -114,7 +115,8 @@ struct GroupToDoEditView: View {
                                     .foregroundStyle(.mainText)
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
-                                            self.showEndTimePicker.toggle()
+                                            self.showStartTimePicker = false
+                                            self.showEndTimePicker.toggle()                                         
                                         }
                                     }
                             }
