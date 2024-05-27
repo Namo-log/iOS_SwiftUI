@@ -153,6 +153,8 @@ struct ToDoEditView: View {
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
                                             self.showStartTimePicker.toggle()
+                                            self.showEndTimePicker = false
+                                            self.showNotificationSetting = false
                                         }
                                     }
                             }
@@ -170,7 +172,9 @@ struct ToDoEditView: View {
                                     .foregroundStyle(.mainText)
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
+                                            self.showStartTimePicker = false
                                             self.showEndTimePicker.toggle()
+                                            self.showNotificationSetting = false
                                         }
                                     }
                             }
@@ -198,7 +202,9 @@ struct ToDoEditView: View {
                                 }
                                 .lineSpacing(12)
                                 .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                    withAnimation(.easeInOut(duration: 0.3)) {                            
+                                        self.showStartTimePicker = false
+                                        self.showEndTimePicker = false
                                         self.showNotificationSetting.toggle()
                                     }
                                 }
