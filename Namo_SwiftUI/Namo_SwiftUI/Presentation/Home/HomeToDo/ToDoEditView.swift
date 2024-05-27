@@ -186,62 +186,63 @@ struct ToDoEditView: View {
                                     .tint(.mainOrange)
                             }
                             
-                            ListItem(listTitle: "알림") {
-                                HStack {
-                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
-                                         ? "없음"
-                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
-                                            .map { NotificationSetting.getValueFromInt($0) })
-                                    )
-                                    .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
-                                    
-                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
-                                        .renderingMode(.template)
-                                        .foregroundStyle(.mainText)
-                                }
-                                .lineSpacing(12)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.3)) {                            
-                                        self.showStartTimePicker = false
-                                        self.showEndTimePicker = false
-                                        self.showNotificationSetting.toggle()
-                                    }
-                                }
-                            }
-                            
-                            if (showNotificationSetting) {
-                                let notificationsList = NotificationSetting.allCases
-                                
-                                let rows = [
-                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
-                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
-                                ]
-                                
-                                LazyHGrid(rows: rows) {
-                                    ForEach(notificationsList, id: \.self) { item in
-                                        ColorToggleButton(
-                                            isOn: Binding(get: {
-                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
-                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
-                                            },set: {_ in }),
-                                            buttonText: item.toString,
-                                            action: {
-                                                if item == .none {
-                                                    scheduleState.currentSchedule.alarmDate = []
-                                                }
-                                                else {
-                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
-                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
-                                                    }
-                                                    else {
-                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
-                                                    }
-                                                }
-                                            })
-                                    }
-                                }
-                            }
+                            // MARK: 알림 기능 추가되면 해제
+//                            ListItem(listTitle: "알림") {
+//                                HStack {
+//                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
+//                                         ? "없음"
+//                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
+//                                            .map { NotificationSetting.getValueFromInt($0) })
+//                                    )
+//                                    .font(.pretendard(.regular, size: 15))
+//                                    .foregroundStyle(.mainText)
+//                                    
+//                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
+//                                        .renderingMode(.template)
+//                                        .foregroundStyle(.mainText)
+//                                }
+//                                .lineSpacing(12)
+//                                .onTapGesture {
+//                                    withAnimation(.easeInOut(duration: 0.3)) {                            
+//                                        self.showStartTimePicker = false
+//                                        self.showEndTimePicker = false
+//                                        self.showNotificationSetting.toggle()
+//                                    }
+//                                }
+//                            }
+//                            if (showNotificationSetting) {
+//                            
+//                                let notificationsList = NotificationSetting.allCases
+//                                
+//                                let rows = [
+//                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
+//                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
+//                                ]
+//                                
+//                                LazyHGrid(rows: rows) {
+//                                    ForEach(notificationsList, id: \.self) { item in
+//                                        ColorToggleButton(
+//                                            isOn: Binding(get: {
+//                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
+//                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
+//                                            },set: {_ in }),
+//                                            buttonText: item.toString,
+//                                            action: {
+//                                                if item == .none {
+//                                                    scheduleState.currentSchedule.alarmDate = []
+//                                                }
+//                                                else {
+//                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
+//                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
+//                                                    }
+//                                                    else {
+//                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
+//                                                    }
+//                                                }
+//                                            })
+//                                    }
+//                                }
+//                            }
                             
                             ListItem(listTitle: "장소") {
                                 Button(action: {
