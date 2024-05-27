@@ -236,15 +236,13 @@ struct DiaryItemView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(.textBackground)
-                .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
-                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
-            
-            Rectangle()
-                .fill(categoryInteractor.getColorWithPaletteId(id: 9))
-                .frame(width: 10)
-                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft])) // 이거!!
+                Rectangle()
+                    .fill(.textBackground)
+                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
+                
+                Rectangle()
+                    .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
+                    .frame(width: 10)
             
             HStack(alignment: .top, spacing: 25) {
                 // 제목과 수정 버튼
@@ -302,6 +300,7 @@ struct DiaryItemView: View {
             .padding(.trailing, 16)
             .padding(.bottom, 16)
         }
+        .clipShape(RoundedCorners(radius: 11, corners: [.allCorners]))
         .padding(.leading, 25)
         .padding(.trailing, 25)
     }
