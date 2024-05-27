@@ -33,9 +33,14 @@ struct MoimPlaceView: View {
             VStack(spacing: 0) {
                 // 장소 레이블
                 HStack(alignment: .top, spacing: 0) {
-                    TextField("\(activity.name)", text: $name)
-                        .font(.pretendard(.bold, size: 15))
-                        .foregroundStyle(.textPlaceholder)
+                    TextField(
+                        "\(activity.name)",
+                        text: $name,
+                        prompt: Text("활동 \(index+1)").foregroundColor(.textPlaceholder)
+                    )
+                    .font(.pretendard(.bold, size: 15))
+                    .foregroundStyle(.mainText)
+                    
                     Spacer()
                     HStack() {
                         Text("총 \(activity.money)원")
@@ -79,7 +84,7 @@ struct MoimPlaceView: View {
             ) // gesture
             .onAppear {
                 if activity.name.isEmpty {
-                    activity.name = "활동 \(index+1)"
+                    activity.name = ""
                 }
             }
             

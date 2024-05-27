@@ -164,7 +164,6 @@ struct DiaryMainView: View {
             }
         } // ZStack
         .task {
-			appState.isPersonalDiary = true
 			await loadDiaries()
         }
         .onChange(of: page) { _ in // 페이지 바뀔 때마다 호출되는 부분
@@ -194,6 +193,16 @@ struct ScheduleInfo: Hashable {
     let date: Date
     let place: String
     let categoryId: Int?
+}
+
+extension ScheduleInfo {
+    func getSchedulePlace() -> String {
+        if place.isEmpty {
+            return "없음"
+        } else {
+            return place
+        }
+    }
 }
 
 // 다이어리 날짜 아이템
@@ -229,14 +238,13 @@ struct DiaryItemView: View {
         ZStack(alignment: .topLeading) {
             Rectangle()
                 .fill(.textBackground)
-                .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
             
             Rectangle()
                 .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
-                .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
                 .frame(width: 10)
             
-            HStack(alignment: .top, spacing: 15) {
+            HStack(alignment: .top, spacing: 25) {
                 // 제목과 수정 버튼
                 VStack(alignment: .leading, spacing: 0) {
                     Text(diary.name)
@@ -247,9 +255,8 @@ struct DiaryItemView: View {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    // TODO: - categoryId 연결안됨
                     NavigationLink(destination: EditDiaryView(memo: diary.contents ?? "", urls: diary.urls ?? [], info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
-                        HStack(alignment: .center, spacing: 3) {
+                        HStack(alignment: .center, spacing: 5) {
                             Image(.icEditDiary)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -266,10 +273,12 @@ struct DiaryItemView: View {
                 }
                 
                 // 내용과 사진
-                VStack(alignment: .leading, spacing: 16) {
-                    Text(diary.contents ?? "")
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(diary.contents?.replacingOccurrences(of: "\n", with: " ") ?? "")
                         .font(.pretendard(.light, size: 14))
                         .foregroundStyle(.mainText)
+                        .lineLimit(5)
+                        .truncationMode(.tail)
                     
                     // 사진 목록
                     // TODO: - 이미지 있는 기록이 잘 뜨는지 테스트 못 해봄
@@ -291,6 +300,7 @@ struct DiaryItemView: View {
             .padding(.trailing, 16)
             .padding(.bottom, 16)
         }
+        .clipShape(RoundedCorners(radius: 11, corners: [.allCorners]))
         .padding(.leading, 25)
         .padding(.trailing, 25)
     }

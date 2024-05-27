@@ -35,6 +35,13 @@ struct Namo_SwiftUIApp: App {
         instance?.consumerKey = SecretConstants.naverLoginConsumerKey
         instance?.consumerSecret = SecretConstants.naverLoginClinetSecret
         instance?.appName = "나모"
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some Scene {

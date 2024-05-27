@@ -266,6 +266,7 @@ struct EditMoimDiaryView: View {
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
             }
         }
+        .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
@@ -278,11 +279,12 @@ struct EditMoimDiaryView: View {
                     for i in 0..<activities.count {
                         if activities.indices.contains(i) {
                             let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: images)
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: images)
+                            // TODO: - 이게 활동 변경인지 생성인지 구분해서 넣어줘야 됨 지금 이 if문으로는 구분이 안 되고 그래서 계속 에러남
                             if !idList.isEmpty {
-                                let _ = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
+                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
                             } else {
-                                let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                                let res = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                             }
                         }
                     }
