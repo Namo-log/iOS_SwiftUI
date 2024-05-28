@@ -44,8 +44,8 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     }
     
     /// 모임 메모 삭제
-    func deleteMoimDiary(moimMemoId: Int) async -> Bool {
-        return await moimDiaryRepository.deleteMoimDiary(moimMemoId: moimMemoId)
+    func deleteMoimDiary(moimScheduleId: Int) async -> Bool {
+        return await moimDiaryRepository.deleteMoimDiary(moimScheduleId: moimScheduleId)
     }
     
     /// 월간 모임 메모 조회

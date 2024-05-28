@@ -239,12 +239,12 @@ struct EditMoimDiaryView: View {
                     leftButtonTitle: "취소",
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
-                        print("기록 삭제")
+                        print("모임 기록 삭제")
                         Task {
                             // 모임 기록 삭제
-                            await moimDiaryInteractor.deleteMoimDiary(moimMemoId: 1)
+                            await moimDiaryInteractor.deleteMoimDiary(moimScheduleId: info.scheduleId)
+                            self.presentationMode.wrappedValue.dismiss()
                         }
-                        self.presentationMode.wrappedValue.dismiss()
                     }
             }
             

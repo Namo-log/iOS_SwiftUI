@@ -31,8 +31,8 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
         return response?.code == 200
     }
     
-    func deleteMoimDiary(moimMemoId: Int) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiary(moimMemoId: moimMemoId))
+    func deleteMoimDiary(moimScheduleId: Int) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiary(moimScheduleId: moimScheduleId))
         print("모임 기록 삭제 완료")
         print(response)
         return response?.code == 200

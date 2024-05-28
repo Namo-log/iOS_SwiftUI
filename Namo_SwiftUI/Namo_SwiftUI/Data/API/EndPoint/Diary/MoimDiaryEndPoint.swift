@@ -13,7 +13,7 @@ enum MoimDiaryEndPoint {
     case changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO)
     case deleteMoimDiaryPlace(moimLocationId: Int)
     case editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO)
-    case deleteMoimDiary(moimMemoId: Int)
+    case deleteMoimDiary(moimScheduleId: Int)
     case getMonthMoimDiary(request: GetMonthMoimDiaryReqDTO)
     case getOneMoimDiary(moimScheduleId: Int)
     case getOneMoimDiaryDetail(moimScheduleId: Int)
@@ -37,8 +37,8 @@ extension MoimDiaryEndPoint: EndPoint {
             return "/\(moimScheduleId)"
         case .editMoimDiary(let scheduleId, _):
             return "/text/\(scheduleId)"
-        case .deleteMoimDiary(let moimMemoId):
-            return "/all/\(moimMemoId)"
+        case .deleteMoimDiary(let moimScheduleId):
+            return "/all/\(moimScheduleId)"
         case .getOneMoimDiaryDetail(let moimScheduleId):
             return "/detail/\(moimScheduleId)"
         }
