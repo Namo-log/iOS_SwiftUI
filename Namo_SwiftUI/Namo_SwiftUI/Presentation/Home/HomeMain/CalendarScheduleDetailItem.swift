@@ -17,7 +17,6 @@ struct CalendarScheduleDetailItem: View {
 	
 	@Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
-	@Injected(\.diaryInteractor) var diaryInteractor
 	
 	@Binding var isToDoSheetPresented: Bool
 	
@@ -43,7 +42,7 @@ struct CalendarScheduleDetailItem: View {
 				Spacer()
                 
                 if let hasDiary = schedule.hasDiary {
-                    NavigationLink(destination: EditDiaryView(memo: diaryState.currentDiary.contents ?? "", urls: [], info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
+                    NavigationLink(destination: EditDiaryView(memo: diaryState.currentDiary.contents ?? "", urls: diaryState.currentDiary.urls ?? [], info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
                         Image(hasDiary ? .btnAddRecordOrange : .btnAddRecord)
                             .resizable()
                             .frame(width: 34, height: 34)
@@ -51,7 +50,8 @@ struct CalendarScheduleDetailItem: View {
                     }
                     .simultaneousGesture(TapGesture().onEnded {
                         scheduleInteractor.setScheduleToCurrentSchedule(schedule: schedule)
-                        appState.isEditingDiary = false
+                        appState.isPersonalDiary = !schedule.moimSchedule
+                        appState.isEditingDiary = hasDiary
                     })
                 }
 			}
@@ -114,9 +114,6 @@ struct CalendarMoimScheduleDetailItem: View {
                 .simultaneousGesture(TapGesture().onEnded {
                     moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
                     appState.isEditingDiary = schedule.hasDiaryPlace
-					Task {
-						await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: schedule.moimScheduleId ?? 0)
-					}
                 })
 			} else {
 				Text(schedule.users.count == 1 ? schedule.users.first!.userName : "\(schedule.users.count)명")

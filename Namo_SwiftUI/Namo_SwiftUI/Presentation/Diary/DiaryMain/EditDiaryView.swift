@@ -111,11 +111,6 @@ struct EditDiaryView: View {
                         BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
-                    .simultaneousGesture(TapGesture().onEnded{
-                        Task {
-                            await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
-                        }
-                    })
                 }
                 
                 // 기록 저장 또는 기록 수정 버튼
@@ -153,24 +148,32 @@ struct EditDiaryView: View {
                     }
             }
         } // ZStack
-//        .onAppear {
-//            Task {
-//                // 기록 개별 조회 API 호출
-//                await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
-//                // memo 값 연결
-//                memo = diaryState.currentDiary.contents ?? ""
-//                for url in diaryState.currentDiary.urls ?? [] {
-//                    guard let url = URL(string: url) else { return }
-//                    
-//                    DispatchQueue.global().async {
-//                        guard let data = try? Data(contentsOf: url) else { return }
-//                        images.append(UIImage(data: data)!)
-//                        print(images.description)
-//                    }
-//                }
-////                    images = diaryState.currentDiary.urls
-//            }
-//        }
+        .onAppear {
+            images.removeAll()
+            Task {
+                if appState.isPersonalDiary {
+                    await diaryInteractor.getOneDiary(scheduleId: info.scheduleId)
+                } else {
+                    await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
+                }
+                // memo 값 연결
+                memo = diaryState.currentDiary.contents ?? ""
+                
+                print("@@@0528 editdiaryview \(diaryState.currentDiary)")
+                for url in diaryState.currentDiary.urls ?? [] {
+                    guard let url = URL(string: url) else { return }
+                    
+                    DispatchQueue.global().async {
+                        guard let data = try? Data(contentsOf: url) else { return }
+                        images.append(UIImage(data: data)!)
+                        print(images.description)
+                    }
+                }
+                print("@@@0528 개인, 캘린더에서 \(memo)")
+                print("@@@0528 memo \(memo)")
+                print("@@@0528 images \(images)")
+            }
+        }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
@@ -255,20 +258,20 @@ struct EditDiaryView: View {
                     }
                 }
             }
-            .onAppear {
-                images.removeAll()
-                
-                for url in urls {
-                    guard let url = URL(string: url) else { return }
-                    
-                    DispatchQueue.global().async {
-                        guard let data = try? Data(contentsOf: url) else { return }
-                        pickedImagesData.append(data)
-                        images.append(UIImage(data: data)!)
-                        print(images.description)
-                    }
-                }
-            } // ScrollView
+//            .onAppear {
+//                images.removeAll()
+//                
+//                for url in urls {
+//                    guard let url = URL(string: url) else { return }
+//                    
+//                    DispatchQueue.global().async {
+//                        guard let data = try? Data(contentsOf: url) else { return }
+//                        pickedImagesData.append(data)
+//                        images.append(UIImage(data: data)!)
+//                        print(images.description)
+//                    }
+//                }
+//            } // ScrollView
         }
     }
 }
