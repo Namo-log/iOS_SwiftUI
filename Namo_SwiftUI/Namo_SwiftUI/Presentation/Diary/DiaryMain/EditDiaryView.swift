@@ -44,11 +44,9 @@ struct EditDiaryView: View {
                     ZStack(alignment: .topLeading) {
                         Rectangle()
                             .fill(.textBackground)
-                            .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
                         
                         Rectangle()
                             .fill(categoryInteractor.getColorWithPaletteId(id: appState.categoryPalette[info.categoryId ?? 0] ?? 0))
-                            .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .bottomLeft]))
                             .frame(width: 10)
                         
                         // Place Holder
@@ -84,6 +82,7 @@ struct EditDiaryView: View {
                             }
                     } // ZStack
                     .frame(height: 150)
+                    .clipShape(RoundedCorners(radius: 11, corners: [.allCorners]))
                     
                     // 글자수 체크
                     HStack() {
