@@ -165,10 +165,14 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             
             if sociallogin == "kakao" {
                 
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao(kakaoAccessToken: WithDrawKakakoNaverRequestDTO(accessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!))
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao()
                 
                 if result?.code == 200 {
+                    
+                    print("카카오 회원탈퇴 성공")
+                    
                     DispatchQueue.main.async {
+                        
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         self.appState.isTabbarHidden = true
                         self.appState.currentTab = .home
@@ -179,7 +183,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 
             } else if sociallogin == "naver" {
                 
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver(naverAccessToken: WithDrawKakakoNaverRequestDTO(accessToken: KeyChainManager.readItem(key: "naverAccessToken")!))
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver()
+                
+                print("네이버 회원탈퇴 성공")
                 
                 if result?.code == 200 {
                     DispatchQueue.main.async {
@@ -194,9 +200,12 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 
             } else if sociallogin == "apple" {
                 
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: WithDrawAppleRequestDTO(authorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!))
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple()
                 
                 if result?.code == 200 {
+                    
+                    print("애플 회원탈퇴 성공")
+                    
                     DispatchQueue.main.async {
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         self.appState.isTabbarHidden = true

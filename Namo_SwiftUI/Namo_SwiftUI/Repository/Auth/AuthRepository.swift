@@ -22,11 +22,11 @@ protocol AuthRepository {
     func removeToken<T:Decodable>(serverAccessToken: LogoutRequestDTO) async -> BaseResponse<T>?
     
     // 카카오 회원 탈퇴
-    func withdrawMemberKakao<T:Decodable>(kakaoAccessToken: WithDrawKakakoNaverRequestDTO) async -> BaseResponse<T>?
+    func withdrawMemberKakao<T:Decodable>() async -> BaseResponse<T>?
     
     // 네이버 회원 탈퇴
-    func withdrawMemberNaver<T:Decodable>(naverAccessToken: WithDrawKakakoNaverRequestDTO) async -> BaseResponse<T>?
+    func withdrawMemberNaver<T:Decodable>() async -> BaseResponse<T>?
     
     // 애플 회원 탈퇴
-    func withdrawMemberApple<T:Decodable>(appleAuthorizationCode: WithDrawAppleRequestDTO) async -> BaseResponse<T>?
+    func withdrawMemberApple<T:Decodable>() async -> BaseResponse<T>?
 }

@@ -51,21 +51,3 @@ struct TermRequest: Codable {
     let isCheckTermOfUse: Bool
     let isCheckPersonalInformationCollection: Bool
 }
-
-enum SocialLogin {
-    case kakao
-    case naver
-    case apple
-}
-
-// 카카오 및 네이버 탈퇴 요청 DTO
-struct WithDrawKakakoNaverRequestDTO: Encodable {
-    
-    let accessToken: String
-}
-
-// 애플 탈퇴 요청 DTO
-struct WithDrawAppleRequestDTO: Encodable {
-    
-    let authorizationCode: String
-}
