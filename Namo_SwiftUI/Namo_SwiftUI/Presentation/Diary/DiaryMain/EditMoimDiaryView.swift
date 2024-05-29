@@ -19,7 +19,7 @@ struct EditMoimDiaryView: View {
     @State private var showAddPlaceButton: Bool = true
     @State private var showCalculateAlert: Bool = false
     @State var activities = [ActivityDTO()]
-	@State var currentCalculateIndex: Int = 0
+    @State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
     @State var activityImages: [[Data?]] = [[], [], []]
     
@@ -28,6 +28,7 @@ struct EditMoimDiaryView: View {
     let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     @State var selectedUser: [MoimUser] = []
+    @State var finalUserIdList: [String] = ["", "", ""] // API 호출 시 최종적으로 들어가는 정산 참여자 id
 	
 	// 삭제된 활동 API call 하기 위해 저장
 	@State var deleteActivities: [ActivityDTO] = []
@@ -45,6 +46,7 @@ struct EditMoimDiaryView: View {
             rightButtonAction: {
 				activities[currentCalculateIndex].money = Int(cost) ?? 0
 				activities[currentCalculateIndex].participants = selectedUser.map({$0.userId})
+                finalUserIdList[currentCalculateIndex] = selectedUser.map { String($0.userId) }.joined(separator: ",")
                 showCalculateAlert = false
                 return true
             },
@@ -186,6 +188,7 @@ struct EditMoimDiaryView: View {
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
+                                finalUserIdList.remove(at: index)
                             })
                         }
                     } // VStack - leading
@@ -295,13 +298,13 @@ struct EditMoimDiaryView: View {
                         if activities.indices.contains(i) {
                             let moimActivityId = activities[i].moimActivityId
                             print("@@0528 moimActivityId \(moimActivityId)")
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: activityImages[i])
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: activityImages[i])
                             if moimActivityId == 0 {
                                 let res = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                                 print("@@0528 생성")
                                 print("@@0528 생성 req \(req)")
                             } else {
-                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: moimActivityId, req: req)
+                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
                                 print("@@0528 수정")
                                 print("@@0528 수정 req \(req)")
                             }
@@ -310,7 +313,7 @@ struct EditMoimDiaryView: View {
                     
                     // 활동 삭제
                     for activity in deleteActivities {
-                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
+                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
                     }
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
@@ -327,7 +330,7 @@ struct EditMoimDiaryView: View {
                     
                     // 활동 삭제
                     for activity in deleteActivities {
-                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
+                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
                     }
                     
                     DispatchQueue.main.async {
