@@ -53,6 +53,7 @@ struct MoimPlaceView: View {
                         withAnimation {
                             self.showCalculateAlert = true
                         }
+                        NotificationCenter.default.post(name: NSNotification.Name("UpdateCalculateInfo"), object: nil, userInfo: ["currentCalculateIndex":currentCalculateIndex])
                     }
                 }
                 .padding(.top, 20)

@@ -45,7 +45,6 @@ struct EditMoimDiaryView: View {
             rightButtonAction: {
 				activities[currentCalculateIndex].money = Int(cost) ?? 0
 				activities[currentCalculateIndex].participants = selectedUser.map({$0.userId})
-				selectedUser.removeAll()
                 showCalculateAlert = false
                 return true
             },
@@ -111,13 +110,13 @@ struct EditMoimDiaryView: View {
                             HStack(spacing: 20) {
                                 Button(
                                     action: {
-                                        if selectedUser.contains(where: {$0 == user}) {
-                                            selectedUser.removeAll(where: {$0 == user})
+                                        if selectedUser.contains(where: {$0.userId == user.userId}) {
+                                            selectedUser.removeAll(where: {$0.userId == user.userId})
                                         } else {
                                             selectedUser.append(user)
                                         }
                                     }, label: {
-                                        Image(selectedUser.contains(where: {$0 == user}) ? .isSelectedTrue : .isSelectedFalse)
+                                        Image(selectedUser.contains(where: {$0.userId == user.userId}) ? .isSelectedTrue : .isSelectedFalse)
                                             .resizable()
                                             .frame(width: 20, height: 20)
                                     }
@@ -267,6 +266,22 @@ struct EditMoimDiaryView: View {
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("UpdateCalculateInfo"))) { noti in
+            if let userInfo = noti.userInfo, let currentCalculateIndex = userInfo["currentCalculateIndex"] as? Int {
+                Task {
+                    if currentCalculateIndex < activities.count {
+                        self.cost = String(activities[currentCalculateIndex].money)
+                        self.selectedUser.removeAll()
+                        for i in activities[currentCalculateIndex].participants {
+                            self.selectedUser.append(MoimUser(userId: i, userName: "", color: 0))
+                        }
+                    } else {
+                        self.cost = "0"
+                        self.selectedUser = []
+                    }
+                }
+            }
+        }
     }
     
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
