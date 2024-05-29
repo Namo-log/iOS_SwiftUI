@@ -261,6 +261,7 @@ struct EditMoimDiaryView: View {
         .ignoresSafeArea(edges: .bottom)
         .onAppear {
             Task {
+                self.activities.removeAll()
                 await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
             }
