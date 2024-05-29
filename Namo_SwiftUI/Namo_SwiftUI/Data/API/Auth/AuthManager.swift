@@ -38,7 +38,7 @@ class AuthManager: RequestInterceptor {
                 NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
             }
             
-            completion(.failure(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
+            completion(.failure(APIError.customError("[AuthManager] 키체인 토큰 조회 실패. 로그인이 필요합니다. (adapt)")))
             return
         }
         
@@ -85,7 +85,7 @@ class AuthManager: RequestInterceptor {
             }
             
             // 이것처럼 처리도 가능
-            completion(.doNotRetryWithError(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
+            completion(.doNotRetryWithError(APIError.customError("[AuthManager] 키체인 토큰 조회 실패. 로그인이 필요합니다.(retry)")))
             return
         }
         
@@ -100,7 +100,7 @@ class AuthManager: RequestInterceptor {
                    parameters: parameters,
                    encoding: JSONEncoding.default)
         .validate()
-        .responseDecodable(of: ServerTokenResponse.self) { response in
+        .responseDecodable(of: SignInResponseDTO.self) { response in
             switch response.result {
             
             // 재발급 성공

@@ -27,7 +27,7 @@ struct SignInResponseDTO: Decodable {
 struct SocialSignInRequestDTO: Encodable {
     
     let accessToken: String
-    let refreshToken: String
+    let socialRefreshToken: String
 }
 
 // 로그아웃 요청 DTO
@@ -40,7 +40,7 @@ struct LogoutRequestDTO: Encodable {
 struct AppleSignInRequestDTO: Codable {
     
     let identityToken: String
-    let authorizaionCode: String
+    let authorizationCode: String
     let username: String
     let email: String
 }

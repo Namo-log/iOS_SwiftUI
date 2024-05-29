@@ -44,7 +44,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         Task {
           
                             /// 나모 서버에 카카오 토큰을 보내고 서버의 access, refresh 토큰 받아오기
-                            let namoServerTokens = await self?.authRepository.signIn(kakaoToken: SocialSignInRequestDTO(accessToken: kakaoAccessToken, refreshToken: kakaoRefreshToken))
+                            let namoServerTokens = await self?.authRepository.signIn(kakaoToken: SocialSignInRequestDTO(accessToken: kakaoAccessToken, socialRefreshToken: kakaoRefreshToken))
                             
                             /// 토큰이 존재한다면
                             if let serverTokens = namoServerTokens {
@@ -98,7 +98,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         Task {
  
                             /// 나모 서버에 카카오 토큰을 보내고 서버의 access, refresh 토큰 받아오기
-                            let namoServerTokens = await self.authRepository.signIn(kakaoToken: SocialSignInRequestDTO(accessToken: kakaoAccessToken, refreshToken: kakaoRefreshToken))
+                            let namoServerTokens = await self.authRepository.signIn(kakaoToken: SocialSignInRequestDTO(accessToken: kakaoAccessToken, socialRefreshToken: kakaoRefreshToken))
+                            
+                            print("[Interactor] namoServerTokens: \(namoServerTokens)")
                             
                             /// 토큰이 존재한다면
                             if let serverTokens = namoServerTokens {
@@ -277,7 +279,7 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         Task {
             
             /// 나모 서버에 네이버 토큰을 보내고 서버의 access, refresh 토큰 받아오기
-            let namoServerTokens = await authRepository.signIn(naverToken: SocialSignInRequestDTO(accessToken: naverAccessToken, refreshToken: naverRefreshToken))
+            let namoServerTokens = await authRepository.signIn(naverToken: SocialSignInRequestDTO(accessToken: naverAccessToken, socialRefreshToken: naverRefreshToken))
             
             /// 서버로부터 토큰을 정상적으로 받아온다면
             if let serverTokens = namoServerTokens {
@@ -366,12 +368,21 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
             }
         }
         
-        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizaionCode: authorizationCode, username: username, email: email)
+//        print("유저 네임: \()")
+        
+        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode, username: username, email: email)
 
+        print("보내는 identityToken: \(identityToken)")
+        print("보내는 authorizationCode: \(authorizationCode)")
+        print("보내는 username: \(username)")
+        print("보내는 email: \(email)")
+        
         Task {
             
             /// 나모 서버로부터 애플 토큰을 보내고 서버의 토큰을 받음
             let namoServerTokens = await authRepository.signIn(appleToken: appleLoginDTO)
+            
+            print("보낸 appleToken: \(appleLoginDTO)")
             
             /// 서버의 토큰을 제대로 받았을 때
             if let serverTokens = namoServerTokens {

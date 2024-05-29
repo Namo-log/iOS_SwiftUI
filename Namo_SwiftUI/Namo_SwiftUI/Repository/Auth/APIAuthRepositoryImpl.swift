@@ -11,6 +11,8 @@ class APIAuthRepositoryImpl: AuthRepository {
     
     // 카카오 소셜 로그인. 오버로드
     func signIn(kakaoToken: SocialSignInRequestDTO) async -> SignInResponseDTO? {
+        
+        print("[Repository] kakako SignIn Called")
         return await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInKakao(kakaoToken: kakaoToken))
     }
     

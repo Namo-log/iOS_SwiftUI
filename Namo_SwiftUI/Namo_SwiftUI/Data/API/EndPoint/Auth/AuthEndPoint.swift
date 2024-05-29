@@ -76,11 +76,11 @@ extension AuthEndPoint: EndPoint {
         switch self {
             
         case .signInKakao(kakaoToken: let dto):
-            return .requestJSONEncodable(parameters: dto)
+            return .authRequestJSONEncodable(parameters: dto)
         case .signInNaver(naverToken: let dto):
-            return .requestJSONEncodable(parameters: dto)
+            return .authRequestJSONEncodable(parameters: dto)
         case .signInApple(appleToken: let dto):
-            return .requestJSONEncodable(parameters: dto)
+            return .authRequestJSONEncodable(parameters: dto)
         case .withdrawMemberKakao(kakaoAccessToken: let dto):
             return .requestJSONEncodable(parameters: dto)
         case .withdrawMemberNaver(naverAccessToken: let dto):
