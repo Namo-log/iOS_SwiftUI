@@ -35,7 +35,7 @@ struct LoginView: View {
             
             Spacer()
             
-            VStack {
+            VStack(spacing: 0) {
                 LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: 0xFFE812, btnImage: "ic_login_kakao") {
                     
                     Task {
