@@ -12,13 +12,6 @@ import KakaoSDKAuth
 import NaverThirdPartyLogin
 import AuthenticationServices
 
-enum socialLogin {
-    
-    case kakao
-    case naver
-    case apple
-}
-
 class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationControllerPresentationContextProviding {
     
     @Injected(\.authRepository) private var authRepository
@@ -42,15 +35,21 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         
                         guard let kakaoAccessToken = oauthToken?.accessToken else { return }
                         
+                        guard let kakaoRefreshToken = oauthToken?.refreshToken else { return }
+                        
                         print("카카오 accessToken: \(kakaoAccessToken)")
-                        
-                        let socialAccessToken = SocialAccessToken(accessToken: kakaoAccessToken)
-                        
+                        print("카카오 refreshToken: \(kakaoRefreshToken)")
+
+
                         Task {
+          
+                            /// 나모 서버에 카카오 토큰을 보내고 서버의 access, refresh 토큰 받아오기
+                            let namoServerTokens = await self?.authRepository.signIn(kakaoToken: SocialSignInRequestDTO(accessToken: kakaoAccessToken, socialRefreshToken: kakaoRefreshToken))
                             
-                            let namoServerTokens = await self?.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
-                            
+                            /// 토큰이 존재한다면
                             if let serverTokens = namoServerTokens {
+                                
+                                /// 나모 서버의 토큰을 키체인에 저장
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                                 
@@ -58,10 +57,11 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 print("refreshToken: \(serverTokens.refreshToken)")
                                 
                                 /// 현재 로그인한 소셜 미디어는 카카오
-//                                self.appState.socialLogin = .kakao
                                 UserDefaults.standard.set("kakao", forKey: "socialLogin")
                                 
+                                // 카카오 소셜 토큰을 키체인에 저장
                                 KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
+                                KeyChainManager.addItem(key: "kakaoRefreshToken", value: kakaoRefreshToken)
                                 
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
@@ -90,16 +90,22 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                         print("카카오 토큰(웹) 받아오기 성공")
                         
                         guard let kakaoAccessToken = oauthToken?.accessToken else { return }
+                        guard let kakaoRefreshToken = oauthToken?.refreshToken else { return }
                         
                         print("카카오 accessToken: \(kakaoAccessToken)")
-                        
-                        let socialAccessToken = SocialAccessToken(accessToken: kakaoAccessToken)
+                        print("카카오 refreshToken: \(kakaoRefreshToken)")
                         
                         Task {
+ 
+                            /// 나모 서버에 카카오 토큰을 보내고 서버의 access, refresh 토큰 받아오기
+                            let namoServerTokens = await self.authRepository.signIn(kakaoToken: SocialSignInRequestDTO(accessToken: kakaoAccessToken, socialRefreshToken: kakaoRefreshToken))
                             
-                            let namoServerTokens = await self.authRepository.getServerToken(socialAccessToken: socialAccessToken, social: SocialType.kakao)
+                            print("[Interactor] namoServerTokens: \(namoServerTokens)")
                             
+                            /// 토큰이 존재한다면
                             if let serverTokens = namoServerTokens {
+                                
+                                // 나모 서버의 토큰을 키체인에 저장
                                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                                 
@@ -107,9 +113,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 print("refreshToken: \(serverTokens.refreshToken)")
                                 
                                 KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
+                                KeyChainManager.addItem(key: "kakaoRefreshToken", value: kakaoRefreshToken)
                                 
                                 /// 현재 로그인한 소셜 미디어는 카카오
-//                                self.appState.socialLogin = .kakao
                                 UserDefaults.standard.set("kakao", forKey: "socialLogin")
                                 
                                 DispatchQueue.main.async {
@@ -159,10 +165,14 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
             
             if sociallogin == "kakao" {
                 
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao(kakaoAccessToken: WithDrawKakakoNaverRequestDTO(accessToken: KeyChainManager.readItem(key: "kakaoAccessToken")!))
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao()
                 
                 if result?.code == 200 {
+                    
+                    print("카카오 회원탈퇴 성공")
+                    
                     DispatchQueue.main.async {
+                        
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         self.appState.isTabbarHidden = true
                         self.appState.currentTab = .home
@@ -173,7 +183,9 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 
             } else if sociallogin == "naver" {
                 
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver(naverAccessToken: WithDrawKakakoNaverRequestDTO(accessToken: KeyChainManager.readItem(key: "naverAccessToken")!))
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver()
+                
+                print("네이버 회원탈퇴 성공")
                 
                 if result?.code == 200 {
                     DispatchQueue.main.async {
@@ -188,9 +200,12 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 
             } else if sociallogin == "apple" {
                 
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple(appleAuthorizationCode: WithDrawAppleRequestDTO(authorizationCode: KeyChainManager.readItem(key: "appleAuthorizationCode")!))
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple()
                 
                 if result?.code == 200 {
+                    
+                    print("애플 회원탈퇴 성공")
+                    
                     DispatchQueue.main.async {
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         self.appState.isTabbarHidden = true
@@ -209,7 +224,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
         let accessToken: String = KeyChainManager.readItem(key: "accessToken")!
         
         // 나모 서버 로그아웃 처리
-        let result: BaseResponse<ServerTokenResponse>? = await authRepository.removeToken(serverAccessToken: ServerAccessToken(accessToken: accessToken))
+        let result: BaseResponse<SignInResponseDTO>? = await authRepository.removeToken(serverAccessToken: LogoutRequestDTO(accessToken: accessToken))
         
         if result?.code == 200 {
 
@@ -265,19 +280,28 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
         print("네이버 로그인 성공")
         
         let naverAccessToken = NaverThirdPartyLoginConnection.getSharedInstance().accessToken ?? ""
+        let naverRefreshToken = NaverThirdPartyLoginConnection.getSharedInstance().refreshToken ?? ""
         
         print("네이버 AccessToken: \(naverAccessToken)")
+        print("네이버 RefreshToken: \(naverRefreshToken)")
         
         Task {
             
-            let namoServerTokens = await authRepository.getServerToken(socialAccessToken: SocialAccessToken(accessToken: naverAccessToken), social: SocialType.naver)
+            /// 나모 서버에 네이버 토큰을 보내고 서버의 access, refresh 토큰 받아오기
+            let namoServerTokens = await authRepository.signIn(naverToken: SocialSignInRequestDTO(accessToken: naverAccessToken, socialRefreshToken: naverRefreshToken))
             
+            /// 서버로부터 토큰을 정상적으로 받아온다면
             if let serverTokens = namoServerTokens {
+                
+                /// 토큰을 키체인에 저장
                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                 
                 print("accessToken: \(serverTokens.accessToken)")
                 print("refreshToken: \(serverTokens.refreshToken)")
+                
+                /// 현재 로그인한 소셜은 네이버
+                UserDefaults.standard.set("naver", forKey: "socialLogin")
                 
                 DispatchQueue.main.async {
                     
@@ -286,9 +310,9 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                     self.appState.isTabbarHidden = false
                 }
                 
+                /// 소셜 토큰을 키체인에 저장
                 KeyChainManager.addItem(key: "naverAccessToken", value: naverAccessToken)
-                
-                UserDefaults.standard.set("naver", forKey: "socialLogin")
+                KeyChainManager.addItem(key: "naverRefreshToken", value: naverRefreshToken)
 
             } else {
                 
@@ -322,9 +346,9 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
         
         let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)!
         
-        print("authorizationCode: \(authorizationCode)")
         
         print("identityToken: \(identityToken)")
+        print("authorizationCode: \(authorizationCode)")
         print("email: \(appleIDCredential.email)")
         print("username: \(appleIDCredential.fullName)")
         
@@ -353,23 +377,34 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
             }
         }
         
-        let appleLoginDTO = AppleAccessToken(identityToken: identityToken, username: username, email: email)
+//        print("유저 네임: \()")
         
-//        print("서버로 보내는 identityToken: \(identityToken)")
-//        print("서버로 보내는 username: \(username)")
-//        print("서버로 보내는 email: \(email)")
-//        print("서버로 보내는 username: \(type(of: username))")
-//        print("서버로 보내는 email: \(type(of: email))")
+        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode, username: username, email: email)
+
+        print("보내는 identityToken: \(identityToken)")
+        print("보내는 authorizationCode: \(authorizationCode)")
+        print("보내는 username: \(username)")
+        print("보내는 email: \(email)")
+        
         Task {
             
-            let namoServerTokens = await authRepository.getServerTokenApple(appleAccessToken: appleLoginDTO)
+            /// 나모 서버로부터 애플 토큰을 보내고 서버의 토큰을 받음
+            let namoServerTokens = await authRepository.signIn(appleToken: appleLoginDTO)
             
+            print("보낸 appleToken: \(appleLoginDTO)")
+            
+            /// 서버의 토큰을 제대로 받았을 때
             if let serverTokens = namoServerTokens {
+                
+                /// 키체인에 서버의 토큰을 저장
                 KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
                 KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
                 
                 print("accessToken: \(serverTokens.accessToken)")
                 print("refreshToken: \(serverTokens.refreshToken)")
+                
+                /// 현재 로그인한 소셜 미디어는 애플
+                UserDefaults.standard.set("apple", forKey: "socialLogin")
                 
                 DispatchQueue.main.async {
                     
@@ -379,10 +414,7 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
                 }
                 
                 KeyChainManager.addItem(key: "appleAuthorizationCode", value: authorizationCode)
-                
-                /// 현재 로그인한 소셜 미디어는 애플
-                UserDefaults.standard.set("apple", forKey: "socialLogin")
-                
+
                 print("애플 로그인 성공")
 
             } else {

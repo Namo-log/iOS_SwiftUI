@@ -35,19 +35,24 @@ final class APIManager {
 		var result: Data = .init()
 		do {
 			let request = await self.requestData(endPoint: endPoint)
+            
 			result = try request.result.get()
+            
             print(result)
+            
 		} catch {
+            
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
 		}
-//		print(String(data: result, encoding: .utf8))
+
 		do {
-//            print(String(data: result, encoding: .utf8))
+
 			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
             
 			return decodedData.result
 		} catch {
+
 			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
 			return nil
 		}

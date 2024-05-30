@@ -9,30 +9,27 @@ import Foundation
 import Alamofire
 
 enum AuthEndPoint {
+
+    // 카카오 로그인
+    case signInKakao(kakaoToken: SocialSignInRequestDTO)
     
-    // 소셜 로그인 토큰을 이용해 나모 서버에게 토큰을 요청(카카오, 네이버)
-    case fetchToken(socialAccessToken: SocialAccessToken, social: SocialType)
-    
-    // 애플 소셜 로그인
-    case fetchTokenApple(appleAccessToken: AppleAccessToken)
+    // 네이버 로그인
+    case signInNaver(naverToken: SocialSignInRequestDTO)
+
+    // 애플 로그인
+    case signInApple(appleToken: AppleSignInRequestDTO)
     
     // 카카오 회원 탈퇴
-    case withdrawMemberKakao(kakaoAccessToken: WithDrawKakakoNaverRequestDTO)
+    case withdrawMemberKakao
     
     // 네이버 회원 탈퇴
-    case withdrawMemberNaver(naverAccessToken: WithDrawKakakoNaverRequestDTO)
+    case withdrawMemberNaver
     
     // 애플 회원 탈퇴
-    case withdrawMemberApple(appleAuthorizationCode: WithDrawAppleRequestDTO)
+    case withdrawMemberApple
     
     // 로그아웃
-    case logout(serverAccessToken: ServerAccessToken)
-}
-
-enum SocialType {
-    
-    case kakao
-    case naver
+    case logout(serverAccessToken: LogoutRequestDTO)
 }
 
 extension AuthEndPoint: EndPoint {
@@ -44,25 +41,23 @@ extension AuthEndPoint: EndPoint {
     var path: String {
         
         switch self {
-        case .fetchToken(socialAccessToken: _, social: let social):
             
-            switch social {
-            case SocialType.kakao:
-                return "/kakao/signup"
-            case SocialType.naver:
-                return "/naver/signup"
-            }
+        case .signInKakao:
+            return "/kakao/signup"
             
-        case .fetchTokenApple(appleAccessToken: _):
+        case .signInNaver:
+            return "/naver/signup"
+            
+        case .signInApple:
             return "/apple/signup"
             
-        case .withdrawMemberKakao(kakaoAccessToken: _):
+        case .withdrawMemberKakao:
             return "/kakao/delete"
             
-        case .withdrawMemberNaver(naverAccessToken: _):
+        case .withdrawMemberNaver:
             return "/naver/delete"
             
-        case .withdrawMemberApple(appleAuthorizationCode: _):
+        case .withdrawMemberApple:
             return "/apple/delete"
             
         case .logout(serverAccessToken: _):
@@ -72,7 +67,7 @@ extension AuthEndPoint: EndPoint {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .fetchToken, .fetchTokenApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout:
+        case .signInKakao, .signInNaver, .signInApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout:
             return .post
         }
     }
@@ -80,18 +75,31 @@ extension AuthEndPoint: EndPoint {
     var task: APITask {
         switch self {
             
-        case .fetchToken(socialAccessToken: let dto, social: _):
+        case .signInKakao(kakaoToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
-        case .fetchTokenApple(appleAccessToken: let dto):
+        case .signInNaver(naverToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
-        case .withdrawMemberKakao(kakaoAccessToken: let dto):
-            return .requestJSONEncodable(parameters: dto)
-        case .withdrawMemberNaver(naverAccessToken: let dto):
-            return .requestJSONEncodable(parameters: dto)
-        case .withdrawMemberApple(appleAuthorizationCode: let dto):
-            return .requestJSONEncodable(parameters: dto)
+        case .signInApple(appleToken: let dto):
+            return .authRequestJSONEncodable(parameters: dto)
+        case .withdrawMemberKakao:
+            return .requestPlain
+        case .withdrawMemberNaver:
+            return .requestPlain
+        case .withdrawMemberApple:
+            return .requestPlain
         case .logout(serverAccessToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
+        }
+    }
+    
+    var headers: HTTPHeaders? {
+        
+        switch self {
+            
+        case .withdrawMemberApple, .withdrawMemberKakao, .withdrawMemberNaver:
+            return nil
+        default:
+            return ["Content-Type": "application/json"]
         }
     }
 }
