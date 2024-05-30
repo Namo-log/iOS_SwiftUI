@@ -21,16 +21,16 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     }
     
     /// 모임 메모 장소 수정
-    func changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
-        return await moimDiaryRepository.changeMoimDiaryPlace(moimLocationId: moimLocationId, req: req)
+    func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
+        return await moimDiaryRepository.changeMoimDiaryPlace(activityId: activityId, req: req)
     }
     
     /// 모임 메모 장소 삭제
-    func deleteMoimDiaryPlace(moimLocationId: Int) async -> Bool {
-        if await moimDiaryRepository.deleteMoimDiaryPlace(moimLocationId: moimLocationId) {
+    func deleteMoimDiaryPlace(activityId: Int) async -> Bool {
+        if await moimDiaryRepository.deleteMoimDiaryPlace(activityId: activityId) {
             DispatchQueue.main.async {
                 diaryState.currentMoimDiaryInfo.moimActivityDtos = diaryState.currentMoimDiaryInfo.moimActivityDtos?.filter {
-                    $0.moimActivityId != moimLocationId
+                    $0.moimActivityId != activityId
                 }
             }
             return true
@@ -44,8 +44,8 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     }
     
     /// 모임 메모 삭제
-    func deleteMoimDiary(moimMemoId: Int) async -> Bool {
-        return await moimDiaryRepository.deleteMoimDiary(moimMemoId: moimMemoId)
+    func deleteMoimDiary(moimScheduleId: Int) async -> Bool {
+        return await moimDiaryRepository.deleteMoimDiary(moimScheduleId: moimScheduleId)
     }
     
     /// 월간 모임 메모 조회

@@ -15,14 +15,14 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
         return response?.code == 200
     }
     
-    func changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.changeMoimDiaryPlace(moimLocationId: moimLocationId, req: req))
+    func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.changeMoimDiaryPlace(activityId: activityId, req: req))
         print(response?.message)
         return response?.code == 200
     }
     
-    func deleteMoimDiaryPlace(moimLocationId: Int) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiaryPlace(moimLocationId: moimLocationId))
+    func deleteMoimDiaryPlace(activityId: Int) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiaryPlace(activityId: activityId))
         return response?.code == 200
     }
     
@@ -31,8 +31,8 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
         return response?.code == 200
     }
     
-    func deleteMoimDiary(moimMemoId: Int) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiary(moimMemoId: moimMemoId))
+    func deleteMoimDiary(moimScheduleId: Int) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: MoimDiaryEndPoint.deleteMoimDiary(moimScheduleId: moimScheduleId))
         print("모임 기록 삭제 완료")
         print(response)
         return response?.code == 200

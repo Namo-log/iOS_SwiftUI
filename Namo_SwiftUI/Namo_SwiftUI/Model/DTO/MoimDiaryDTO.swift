@@ -91,27 +91,3 @@ extension GetOneMoimDiaryResDTO {
         } ?? []
     }
 }
-
-extension ActivityDTO {
-    func getDataList() -> [Data] {
-        var dataList: [Data] = []
-        for url in urls {
-            guard let url = URL(string: url) else { return [] }
-            
-            DispatchQueue.global().async {
-                guard let data = try? Data(contentsOf: url) else { return }
-                dataList.append(data)
-            }
-        }
-        return dataList
-    }
-    
-//    mutating func toUrlString(dataList: [Data?]) {
-//        for data in dataList {
-//            urls.append(String(decoding: data!, as: UTF8.self))
-//        }
-////        print("얜데")
-////        print(urls)
-//
-//    }
-}
