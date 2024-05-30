@@ -30,7 +30,7 @@ struct LoginView: View {
                 }
                 .padding(.bottom, 30)
                 
-                Image(.appLogoSquare2)
+                Image("loginLogo")
             }
             
             Spacer()
