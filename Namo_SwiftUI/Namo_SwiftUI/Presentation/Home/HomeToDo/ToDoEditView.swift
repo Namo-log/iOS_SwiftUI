@@ -14,7 +14,7 @@ import Factory
 struct ToDoEditView: View {
     
     @EnvironmentObject var appState: AppState
-	@EnvironmentObject var scheduleState: ScheduleState
+    @EnvironmentObject var scheduleState: ScheduleState
     @Injected(\.scheduleInteractor) var scheduleInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
     @Injected(\.placeInteractor) var placeInteractor
@@ -66,7 +66,7 @@ struct ToDoEditView: View {
     
     var body: some View {
         
-        ZStack(alignment: .top) {
+        ZStack(alignment: .top) { 
             // MARK: 상단 삭제 원형 버튼
             if isRevise {
                 
@@ -110,7 +110,7 @@ struct ToDoEditView: View {
                 ScrollView {
                     VStack {
                         // MARK: 일정 제목
-						TextField("일정 이름", text: $scheduleState.currentSchedule.name)
+                        TextField("일정 이름", text: $scheduleState.currentSchedule.name)
                             .font(.pretendard(.bold, size: 22))
                             .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
                         
@@ -130,7 +130,7 @@ struct ToDoEditView: View {
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
                                         
-										Image(.arrowBasic)
+                                        Image(.arrowBasic)
                                             .renderingMode(.template)
                                             .foregroundStyle(.mainText)
                                         
@@ -141,7 +141,7 @@ struct ToDoEditView: View {
                                 .navigationDestination(for: CategoryViews.self) { id in
                                     
                                     CategoryPath.setCategoryPath(id: id, path: $path)
-                                
+                                    
                                 }
                             }
                             .padding(.vertical, 14)
@@ -187,62 +187,62 @@ struct ToDoEditView: View {
                             }
                             
                             // MARK: 알림 기능 추가되면 해제
-//                            ListItem(listTitle: "알림") {
-//                                HStack {
-//                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
-//                                         ? "없음"
-//                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
-//                                            .map { NotificationSetting.getValueFromInt($0) })
-//                                    )
-//                                    .font(.pretendard(.regular, size: 15))
-//                                    .foregroundStyle(.mainText)
-//                                    
-//                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
-//                                        .renderingMode(.template)
-//                                        .foregroundStyle(.mainText)
-//                                }
-//                                .lineSpacing(12)
-//                                .onTapGesture {
-//                                    withAnimation(.easeInOut(duration: 0.3)) {                            
-//                                        self.showStartTimePicker = false
-//                                        self.showEndTimePicker = false
-//                                        self.showNotificationSetting.toggle()
-//                                    }
-//                                }
-//                            }
-//                            if (showNotificationSetting) {
-//                            
-//                                let notificationsList = NotificationSetting.allCases
-//                                
-//                                let rows = [
-//                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
-//                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
-//                                ]
-//                                
-//                                LazyHGrid(rows: rows) {
-//                                    ForEach(notificationsList, id: \.self) { item in
-//                                        ColorToggleButton(
-//                                            isOn: Binding(get: {
-//                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
-//                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
-//                                            },set: {_ in }),
-//                                            buttonText: item.toString,
-//                                            action: {
-//                                                if item == .none {
-//                                                    scheduleState.currentSchedule.alarmDate = []
-//                                                }
-//                                                else {
-//                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
-//                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
-//                                                    }
-//                                                    else {
-//                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
-//                                                    }
-//                                                }
-//                                            })
-//                                    }
-//                                }
-//                            }
+                            //                            ListItem(listTitle: "알림") {
+                            //                                HStack {
+                            //                                    Text(scheduleState.currentSchedule.alarmDate.isEmpty
+                            //                                         ? "없음"
+                            //                                         : notiListInString(scheduleState.currentSchedule.alarmDate.sorted(by: { $0 > $1 })
+                            //                                            .map { NotificationSetting.getValueFromInt($0) })
+                            //                                    )
+                            //                                    .font(.pretendard(.regular, size: 15))
+                            //                                    .foregroundStyle(.mainText)
+                            //
+                            //                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
+                            //                                        .renderingMode(.template)
+                            //                                        .foregroundStyle(.mainText)
+                            //                                }
+                            //                                .lineSpacing(12)
+                            //                                .onTapGesture {
+                            //                                    withAnimation(.easeInOut(duration: 0.3)) {
+                            //                                        self.showStartTimePicker = false
+                            //                                        self.showEndTimePicker = false
+                            //                                        self.showNotificationSetting.toggle()
+                            //                                    }
+                            //                                }
+                            //                            }
+                            //                            if (showNotificationSetting) {
+                            //
+                            //                                let notificationsList = NotificationSetting.allCases
+                            //
+                            //                                let rows = [
+                            //                                    GridItem(.fixed(35), spacing: 15, alignment: .topLeading),
+                            //                                    GridItem(.fixed(35), spacing: 15, alignment: .bottomTrailing)
+                            //                                ]
+                            //
+                            //                                LazyHGrid(rows: rows) {
+                            //                                    ForEach(notificationsList, id: \.self) { item in
+                            //                                        ColorToggleButton(
+                            //                                            isOn: Binding(get: {
+                            //                                                if item == .none { scheduleState.currentSchedule.alarmDate.isEmpty }
+                            //                                                else { scheduleState.currentSchedule.alarmDate.contains(item.toInt) }
+                            //                                            },set: {_ in }),
+                            //                                            buttonText: item.toString,
+                            //                                            action: {
+                            //                                                if item == .none {
+                            //                                                    scheduleState.currentSchedule.alarmDate = []
+                            //                                                }
+                            //                                                else {
+                            //                                                    if let index = scheduleState.currentSchedule.alarmDate.firstIndex(of: item.toInt) {
+                            //                                                        scheduleState.currentSchedule.alarmDate.remove(at: index)
+                            //                                                    }
+                            //                                                    else {
+                            //                                                        scheduleState.currentSchedule.alarmDate.append(item.toInt)
+                            //                                                    }
+                            //                                                }
+                            //                                            })
+                            //                                    }
+                            //                                }
+                            //                            }
                             
                             ListItem(listTitle: "장소") {
                                 Button(action: {
@@ -255,7 +255,7 @@ struct ToDoEditView: View {
                                         Text(scheduleState.currentSchedule.locationName.isEmpty ? "없음" : scheduleState.currentSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
                                             .foregroundStyle(.mainText)
-										Image(.arrowBasic)
+                                        Image(.arrowBasic)
                                             .renderingMode(.template)
                                             .foregroundStyle(.mainText)
                                     }
@@ -393,7 +393,7 @@ struct ToDoEditView: View {
                         
                         // 카테고리 삭제 API 호출
                         Task {
-                        
+                            
                             let result = await self.categoryInteractor.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
                             
                             // 삭제가 성공했을 경우에만
@@ -444,12 +444,13 @@ struct ToDoEditView: View {
                 await self.categoryInteractor.getCategories()
                 
                 self.categoryList = categoryInteractor.setCategories()
-            
-                self.categoryColor = categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1)
                 
-                self.categoryName = appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음"
+                self.setCategory()
             }
         })
+        .onChange(of: path) { newPath in
+            self.setCategory()
+        }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
     }
     
@@ -459,6 +460,12 @@ struct ToDoEditView: View {
         placeInteractor.clearPlaces(isSave: false)
         placeInteractor.selectPlace(place: nil)
         dismiss()
+    }
+    
+    private func setCategory() {
+        self.categoryColor = categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1)
+        
+        self.categoryName = appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음"
     }
     
     /// 일정 생성/수정 화면의 각 아이템 리스트 아이템 뷰입니다.
@@ -529,9 +536,4 @@ struct ToDoEditView: View {
         let returnString = notifications.reduce(into: ""){ $0 += $1.toString+", " }
         return String(returnString.dropLast(2))
     }
-}
-
-#Preview {
-    ToDoEditView()
-        .environmentObject(AppState())
 }
