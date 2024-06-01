@@ -191,6 +191,7 @@ struct EditDiaryView: View {
                         // 모임 기록(에 대한 개인 메모) edit API 호출
                         await moimDiaryInteractor.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
+					NotificationCenter.default.post(name: .reloadDiaryViaNetwork, object: nil)
                 }
             } else {
                 Task {
