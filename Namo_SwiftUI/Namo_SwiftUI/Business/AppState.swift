@@ -34,6 +34,9 @@ class ScheduleState: ObservableObject {
 	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
 	// 캘린더에 표시된(계산된) YearMonth를 저장
 	@Published var calculatedYearMonth: [YearMonth] = []
+    
+    /// 현재 스케쥴이 개인인지 모임인지
+    @Published var isGroup: Bool = false
 }
 
 class DiaryState: ObservableObject {

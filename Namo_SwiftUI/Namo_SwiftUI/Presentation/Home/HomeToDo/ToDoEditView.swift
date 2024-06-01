@@ -16,6 +16,7 @@ struct ToDoEditView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var scheduleState: ScheduleState
     @Injected(\.scheduleInteractor) var scheduleInteractor
+    @Injected(\.moimInteractor) var moimInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
     @Injected(\.placeInteractor) var placeInteractor
     
@@ -261,6 +262,7 @@ struct ToDoEditView: View {
                                     }
                                     .lineSpacing(12)
                                 })
+                                .disabled(self.scheduleState.isGroup)
                             }
                             .padding(.vertical, 14)
                         }
@@ -304,16 +306,25 @@ struct ToDoEditView: View {
                                         ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "입력 오류", message: "일정 제목은 공백일 수 없습니다.", localizedDescription: nil))
                                         return
                                     }
-                                    if self.isRevise {
-                                        await scheduleInteractor.patchSchedule()
+                                    
+                                    if self.scheduleState.isGroup {
+                                        if self.isRevise {
+                                            await moimInteractor.patchMoimScheduleCategory(date: scheduleState.currentSchedule.startDate)
+                                        }
                                     } else {
-                                        await scheduleInteractor.postNewSchedule()
+                                        if self.isRevise {
+                                            await scheduleInteractor.patchSchedule()
+                                        } else {
+                                            await scheduleInteractor.postNewSchedule()
+                                        }
                                     }
+                                    
                                     // 닫기
                                     dismissThis()
                                 }
                                 
-                            }, label: {
+                            },
+                                   label: {
                                 Text("저장")
                                     .font(.pretendard(.regular, size: 15))
                             })
@@ -459,6 +470,7 @@ struct ToDoEditView: View {
         scheduleInteractor.setScheduleToCurrentSchedule(schedule: nil)
         placeInteractor.clearPlaces(isSave: false)
         placeInteractor.selectPlace(place: nil)
+        scheduleState.isGroup = false
         dismiss()
     }
     

@@ -130,3 +130,8 @@ struct patchMoimScheduleRequest: Encodable {
     let locationName: String
     let users: [Int]
 }
+
+struct patchMoimScheduleCategoryRequest: Codable {
+    let moimScheduleId: Int
+    let categoryId: Int
+}

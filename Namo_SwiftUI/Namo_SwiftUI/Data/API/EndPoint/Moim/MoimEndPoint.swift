@@ -19,6 +19,7 @@ enum MoimEndPoint {
     case postMoimSchedule(data: postMoimScheduleRequest)
     case patchMoimSchedule(data: patchMoimScheduleRequest)
     case deleteMoimSchedule(scheduleId: Int)
+    case patchMoimScheduleCategory(data: patchMoimScheduleCategoryRequest)
 }
 
 extension MoimEndPoint: EndPoint {
@@ -42,6 +43,8 @@ extension MoimEndPoint: EndPoint {
 			return "/group/schedules/\(moimId)/all"
         case .postMoimSchedule, .patchMoimSchedule:
             return "/group/schedules"
+        case .patchMoimScheduleCategory:
+            return "/group/schedules/category"
         case .deleteMoimSchedule(scheduleId: let scheduleId):
             return "/group/schedules/\(scheduleId)"
 		}
@@ -65,6 +68,8 @@ extension MoimEndPoint: EndPoint {
             return .post
         case .patchMoimSchedule:
             return .patch
+        case .patchMoimScheduleCategory:
+            return .patch
         case .deleteMoimSchedule:
             return .delete
         }
@@ -87,6 +92,8 @@ extension MoimEndPoint: EndPoint {
         case .postMoimSchedule(data: let data):
             return .requestJSONEncodable(parameters: data)
         case .patchMoimSchedule(data: let data):
+            return .requestJSONEncodable(parameters: data)
+        case .patchMoimScheduleCategory(data: let data):
             return .requestJSONEncodable(parameters: data)
         case .deleteMoimSchedule:
             return .requestPlain

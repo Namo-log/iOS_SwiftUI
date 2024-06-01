@@ -16,5 +16,6 @@ protocol MoimRepository {
 	func getMoimSchedule(moimId: Int) async -> getMoimScheduleResponse?
     func postMoimSchedule(data: postMoimScheduleRequest) async -> Int?
     func patchMoimSchedule(scheduleId: Int, data: patchMoimScheduleRequest) async -> String?
+    func patchMoimScheduleCategory(data: patchMoimScheduleCategoryRequest) async -> Int? 
     func deleteMoimSchedule(scheduleId: Int) async -> String?
 }
