@@ -163,16 +163,19 @@ struct DiaryMainView: View {
                 )
             }
         } // ZStack
-        .onAppear {
-            Task {
-                await loadDiaries()
-            }
-        }
+        .task {
+			await loadDiaries()
+		}
         .onChange(of: page) { _ in // 페이지 바뀔 때마다 호출되는 부분
             Task {
                 await loadDiaries(resetPage: false)
             }
         }
+		.onReceive(NotificationCenter.default.publisher(for: .reloadDiaryViaNetwork)) { _ in
+			Task {
+				await loadDiaries()
+			}
+		}
     }
 	
 	private func loadDiaries(resetPage: Bool = true) async {
