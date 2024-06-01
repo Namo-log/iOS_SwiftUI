@@ -19,15 +19,16 @@ struct EditMoimDiaryView: View {
     @State private var showAddPlaceButton: Bool = true
     @State private var showCalculateAlert: Bool = false
     @State var activities = [ActivityDTO()]
-	@State var currentCalculateIndex: Int = 0
+    @State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
-    @State var images: [Data?] = []
+    @State var activityImages: [[Data?]] = [[], [], []]
     
     let info: ScheduleInfo
     let moimUser: [MoimUser]
     let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     @State var selectedUser: [MoimUser] = []
+    @State var finalUserIdList: [String] = ["", "", ""] // API 호출 시 최종적으로 들어가는 정산 참여자 id
 	
 	// 삭제된 활동 API call 하기 위해 저장
 	@State var deleteActivities: [ActivityDTO] = []
@@ -45,7 +46,7 @@ struct EditMoimDiaryView: View {
             rightButtonAction: {
 				activities[currentCalculateIndex].money = Int(cost) ?? 0
 				activities[currentCalculateIndex].participants = selectedUser.map({$0.userId})
-				selectedUser.removeAll()
+                finalUserIdList[currentCalculateIndex] = selectedUser.map { String($0.userId) }.joined(separator: ",")
                 showCalculateAlert = false
                 return true
             },
@@ -111,13 +112,13 @@ struct EditMoimDiaryView: View {
                             HStack(spacing: 20) {
                                 Button(
                                     action: {
-                                        if selectedUser.contains(where: {$0 == user}) {
-                                            selectedUser.removeAll(where: {$0 == user})
+                                        if selectedUser.contains(where: {$0.userId == user.userId}) {
+                                            selectedUser.removeAll(where: {$0.userId == user.userId})
                                         } else {
                                             selectedUser.append(user)
                                         }
                                     }, label: {
-                                        Image(selectedUser.contains(where: {$0 == user}) ? .isSelectedTrue : .isSelectedFalse)
+                                        Image(selectedUser.contains(where: {$0.userId == user.userId}) ? .isSelectedTrue : .isSelectedFalse)
                                             .resizable()
                                             .frame(width: 20, height: 20)
                                     }
@@ -183,10 +184,11 @@ struct EditMoimDiaryView: View {
                                           activity: $activities[index],
                                           name: $activities[index].name,
                                           currentCalculateIndex: $currentCalculateIndex,
-                                          pickedImagesData: $images,
+                                          pickedImagesData: $activityImages[index],
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
+                                finalUserIdList.remove(at: index)
                             })
                         }
                     } // VStack - leading
@@ -203,7 +205,7 @@ struct EditMoimDiaryView: View {
                             
                             if activities.count < 3 {
                                 withAnimation(.easeIn(duration: 0.2)) {
-									activities.append(ActivityDTO())
+									activities.append(ActivityDTO(id: 0, name: "", money: 0, participants: [], urls: []))
                                 }
                             }
                         } label: {
@@ -239,12 +241,12 @@ struct EditMoimDiaryView: View {
                     leftButtonTitle: "취소",
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
-                        print("기록 삭제")
+                        print("모임 기록 삭제")
                         Task {
                             // 모임 기록 삭제
-                            await moimDiaryInteractor.deleteMoimDiary(moimMemoId: 1)
+                            await moimDiaryInteractor.deleteMoimDiary(moimScheduleId: info.scheduleId)
+                            self.presentationMode.wrappedValue.dismiss()
                         }
-                        self.presentationMode.wrappedValue.dismiss()
                     }
             }
             
@@ -262,11 +264,28 @@ struct EditMoimDiaryView: View {
         .ignoresSafeArea(edges: .bottom)
         .onAppear {
             Task {
+                self.activities.removeAll()
                 await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("UpdateCalculateInfo"))) { noti in
+            if let userInfo = noti.userInfo, let currentCalculateIndex = userInfo["currentCalculateIndex"] as? Int {
+                Task {
+                    if currentCalculateIndex < activities.count {
+                        self.cost = String(activities[currentCalculateIndex].money)
+                        self.selectedUser.removeAll()
+                        for i in activities[currentCalculateIndex].participants {
+                            self.selectedUser.append(MoimUser(userId: i, userName: "", color: 0))
+                        }
+                    } else {
+                        self.cost = "0"
+                        self.selectedUser = []
+                    }
+                }
+            }
+        }
     }
     
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
@@ -275,23 +294,26 @@ struct EditMoimDiaryView: View {
             if appState.isEditingDiary {
                 Task {
                     // 활동 편집
-                    print(images)
                     for i in 0..<activities.count {
                         if activities.indices.contains(i) {
-                            let idList = diaryState.currentMoimDiaryInfo.getActivityIdList()
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: moimUser.map { String($0.userId) }.joined(separator: ","), imgs: images)
-                            // TODO: - 이게 활동 변경인지 생성인지 구분해서 넣어줘야 됨 지금 이 if문으로는 구분이 안 되고 그래서 계속 에러남
-                            if !idList.isEmpty {
-                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(moimLocationId: idList[i], req: req)
-                            } else {
+                            let moimActivityId = activities[i].moimActivityId
+                            print("@@0528 moimActivityId \(moimActivityId)")
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: activityImages[i])
+                            if moimActivityId == 0 {
                                 let res = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                                print("@@0528 생성")
+                                print("@@0528 생성 req \(req)")
+                            } else {
+                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
+                                print("@@0528 수정")
+                                print("@@0528 수정 req \(req)")
                             }
                         }
                     }
                     
                     // 활동 삭제
                     for activity in deleteActivities {
-                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
+                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
                     }
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
@@ -301,14 +323,14 @@ struct EditMoimDiaryView: View {
                 Task {
                     // 활동 추가
                     for i in 0..<activities.count {
-                        print(images)
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: images)
+                        print(activityImages)
+                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activityImages[i])
                         let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
                     
                     // 활동 삭제
                     for activity in deleteActivities {
-                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(moimLocationId: activity.moimActivityId)
+                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
                     }
                     
                     DispatchQueue.main.async {

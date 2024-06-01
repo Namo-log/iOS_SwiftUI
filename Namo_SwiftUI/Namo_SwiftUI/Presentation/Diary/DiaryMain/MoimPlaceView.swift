@@ -53,6 +53,7 @@ struct MoimPlaceView: View {
                         withAnimation {
                             self.showCalculateAlert = true
                         }
+                        NotificationCenter.default.post(name: NSNotification.Name("UpdateCalculateInfo"), object: nil, userInfo: ["currentCalculateIndex":currentCalculateIndex])
                     }
                 }
                 .padding(.top, 20)
@@ -105,13 +106,11 @@ struct MoimPlaceView: View {
             }
         }
         .onAppear(perform: {
-            print("여기다~~")
-            print(activity)
             for url in activity.urls {
                 guard let url = URL(string: url) else { return }
-                
                 DispatchQueue.global().async {
                     guard let data = try? Data(contentsOf: url) else { return }
+                    pickedImagesData.append(data)
                     images.append(UIImage(data: data)!)
                     print(images.description)
                 }

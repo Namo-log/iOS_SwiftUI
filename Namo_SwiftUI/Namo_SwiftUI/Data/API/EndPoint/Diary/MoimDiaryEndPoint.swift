@@ -10,10 +10,10 @@ import Foundation
 
 enum MoimDiaryEndPoint {
     case createMoimDiaryPlace(moimScheduleId: Int, req: EditMoimDiaryPlaceReqDTO)
-    case changeMoimDiaryPlace(moimLocationId: Int, req: EditMoimDiaryPlaceReqDTO)
-    case deleteMoimDiaryPlace(moimLocationId: Int)
+    case changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO)
+    case deleteMoimDiaryPlace(activityId: Int)
     case editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO)
-    case deleteMoimDiary(moimMemoId: Int)
+    case deleteMoimDiary(moimScheduleId: Int)
     case getMonthMoimDiary(request: GetMonthMoimDiaryReqDTO)
     case getOneMoimDiary(moimScheduleId: Int)
     case getOneMoimDiaryDetail(moimScheduleId: Int)
@@ -28,17 +28,17 @@ extension MoimDiaryEndPoint: EndPoint {
         switch self {
         case .createMoimDiaryPlace(let moimScheduleId, _):
             return "/\(moimScheduleId)"
-        case .changeMoimDiaryPlace(let moimLocationId, _),
-                .deleteMoimDiaryPlace(let moimLocationId):
-            return "/\(moimLocationId)"
+        case .changeMoimDiaryPlace(let activityId, _),
+                .deleteMoimDiaryPlace(let activityId):
+            return "/\(activityId)"
         case .getMonthMoimDiary(let req):
             return "/month/\(req.year),\(req.month)"
         case .getOneMoimDiary(let moimScheduleId):
             return "/\(moimScheduleId)"
         case .editMoimDiary(let scheduleId, _):
             return "/text/\(scheduleId)"
-        case .deleteMoimDiary(let moimMemoId):
-            return "/all/\(moimMemoId)"
+        case .deleteMoimDiary(let moimScheduleId):
+            return "/all/\(moimScheduleId)"
         case .getOneMoimDiaryDetail(let moimScheduleId):
             return "/detail/\(moimScheduleId)"
         }
