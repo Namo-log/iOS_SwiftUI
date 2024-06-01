@@ -346,6 +346,23 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 			scheduleState.isCurrentScheduleIsGroup = schedule?.moimSchedule ?? false
         }
     }
+    
+    /// MoimSchedule을 currentMoimSchedule로 저장합니다.
+    /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
+    func setScheduleToCurrentMoimSchedule(schedule: Schedule?, users: [MoimUser]?) {
+        DispatchQueue.main.async {
+            scheduleState.currentMoimSchedule = .init(
+                moimScheduleId: schedule?.scheduleId,
+                name: schedule?.name,
+                startDate: schedule?.startDate,
+                endDate: schedule?.endDate,
+                x: schedule?.x,
+                y: schedule?.y,
+                locationName: schedule?.locationName,
+                users: users
+            )
+        }
+    }
 	
 	/// 두 Date사이의 모든 YearMonth를 구합니다.
 	func yearMonthBetween(start: Date, end: Date) -> [YearMonth] {

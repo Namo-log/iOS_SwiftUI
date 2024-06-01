@@ -282,4 +282,20 @@ struct MoimInteractorImpl: MoimInteractor {
 			}
 		}
 	}
+    
+    func patchMoimScheduleCategory(date: Date) async {
+        guard let scheduleId = scheduleState.currentSchedule.scheduleId else {
+            print("currentSchedule.scheduleId nessesary")
+            return
+        }
+        
+        let result = await moimRepository.patchMoimScheduleCategory(data: .init(
+            moimScheduleId: scheduleId,
+            categoryId: scheduleState.currentSchedule.categoryId
+        ))
+        
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil, userInfo: ["date": date.toYMD()])
+        }
+    }
 }

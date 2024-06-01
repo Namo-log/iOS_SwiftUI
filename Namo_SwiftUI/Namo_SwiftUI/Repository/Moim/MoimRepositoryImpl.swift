@@ -50,4 +50,8 @@ final class MoimRepositoryImpl: MoimRepository {
     func deleteMoimSchedule(scheduleId: Int) async -> String? {
         return await APIManager.shared.performRequest(endPoint: MoimEndPoint.deleteMoimSchedule(scheduleId: scheduleId))
     }
+    
+    func patchMoimScheduleCategory(data: patchMoimScheduleCategoryRequest) async -> Int? {
+        return await APIManager.shared.performRequest(endPoint: MoimEndPoint.patchMoimScheduleCategory(data: data))
+    }
 }

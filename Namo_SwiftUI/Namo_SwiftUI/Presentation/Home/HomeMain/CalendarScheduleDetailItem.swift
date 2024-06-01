@@ -13,6 +13,7 @@ struct CalendarScheduleDetailItem: View {
 	let ymd: YearMonthDay
 	let schedule: Schedule
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var scheduleState: ScheduleState
 	@EnvironmentObject var diaryState: DiaryState
 	
 	@Injected(\.scheduleInteractor) var scheduleInteractor
@@ -63,6 +64,7 @@ struct CalendarScheduleDetailItem: View {
 			)
 			.onTapGesture {
 				scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
+                scheduleState.isGroup = schedule.moimSchedule
 				self.isToDoSheetPresented = true
 			}
         }
