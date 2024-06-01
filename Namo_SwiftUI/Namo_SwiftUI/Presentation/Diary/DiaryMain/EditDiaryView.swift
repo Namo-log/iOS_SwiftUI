@@ -20,6 +20,7 @@ struct EditDiaryView: View {
     @Injected(\.diaryInteractor) var diaryInteractor
     @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
     
+    @State var isFromCalendar: Bool
     @State var memo: String
     @State var placeholderText: String = "메모 입력"
     @State var typedCharacters = 0
@@ -149,29 +150,28 @@ struct EditDiaryView: View {
             }
         } // ZStack
         .onAppear {
-            images.removeAll()
-            Task {
-                if appState.isPersonalDiary {
-                    await diaryInteractor.getOneDiary(scheduleId: info.scheduleId)
-                } else {
-                    await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
-                }
-                // memo 값 연결
-                memo = diaryState.currentDiary.contents ?? ""
-                
-                print("@@@0528 editdiaryview \(diaryState.currentDiary)")
-                for url in diaryState.currentDiary.urls ?? [] {
-                    guard let url = URL(string: url) else { return }
+            if isFromCalendar {
+                // 아래의 작업은 캘린더에서 이 화면으로 넘어올 때만 필요해서 해당 불값을 추가함...
+                images.removeAll()
+                Task {
+                    if appState.isPersonalDiary {
+                        await diaryInteractor.getOneDiary(scheduleId: info.scheduleId)
+                    } else {
+                        await moimDiaryInteractor.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
+                    }
+                    // memo 값 연결
+                    memo = diaryState.currentDiary.contents ?? ""
                     
-                    DispatchQueue.global().async {
-                        guard let data = try? Data(contentsOf: url) else { return }
-                        images.append(UIImage(data: data)!)
-                        print(images.description)
+                    for url in diaryState.currentDiary.urls ?? [] {
+                        guard let url = URL(string: url) else { return }
+                        
+                        DispatchQueue.global().async {
+                            guard let data = try? Data(contentsOf: url) else { return }
+                            images.append(UIImage(data: data)!)
+                            print(images.description)
+                        }
                     }
                 }
-                print("@@@0528 개인, 캘린더에서 \(memo)")
-                print("@@@0528 memo \(memo)")
-                print("@@@0528 images \(images)")
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
@@ -242,6 +242,20 @@ struct EditDiaryView: View {
                 }
             } // HStack
             .padding(.top, 18)
+            .onAppear {
+                pickedImagesData.removeAll()
+                images.removeAll()
+                
+                for url in urls {
+                    guard let url = URL(string: url) else { return }
+                    
+                    DispatchQueue.global().async {
+                        guard let data = try? Data(contentsOf: url) else { return }
+                        pickedImagesData.append(data)
+                        images.append(UIImage(data: data)!)
+                    }
+                }
+            }
             .onChange(of: pickedImageItems) { _ in
                 Task {
                     // 앞서 선택된 것들은 지우고
@@ -259,20 +273,6 @@ struct EditDiaryView: View {
                     }
                 }
             }
-//            .onAppear {
-//                images.removeAll()
-//                
-//                for url in urls {
-//                    guard let url = URL(string: url) else { return }
-//                    
-//                    DispatchQueue.global().async {
-//                        guard let data = try? Data(contentsOf: url) else { return }
-//                        pickedImagesData.append(data)
-//                        images.append(UIImage(data: data)!)
-//                        print(images.description)
-//                    }
-//                }
-//            } // ScrollView
         }
     }
 }
