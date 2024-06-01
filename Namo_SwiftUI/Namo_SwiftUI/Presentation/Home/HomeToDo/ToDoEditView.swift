@@ -114,6 +114,8 @@ struct ToDoEditView: View {
                         TextField("일정 이름", text: $scheduleState.currentSchedule.name)
                             .font(.pretendard(.bold, size: 22))
                             .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
+							.disabled(scheduleState.isCurrentScheduleIsGroup)
+							.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
                         
                         // MARK: 일정 선택내용 아이템 목록
                         VStack(alignment: .center, spacing: 20) {
@@ -150,13 +152,15 @@ struct ToDoEditView: View {
                             ListItem(listTitle: "시작") {
                                 Text(dateFormatter.string(from: scheduleState.currentSchedule.startDate))
                                     .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
+									.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
                                     .onTapGesture {
-                                        withAnimation(.easeInOut(duration: 0.3)) {
-                                            self.showStartTimePicker.toggle()
-                                            self.showEndTimePicker = false
-                                            self.showNotificationSetting = false
-                                        }
+										if !scheduleState.isCurrentScheduleIsGroup {
+											withAnimation(.easeInOut(duration: 0.3)) {
+												self.showStartTimePicker.toggle()
+												self.showEndTimePicker = false
+												self.showNotificationSetting = false
+											}
+										}
                                     }
                             }
                             
@@ -170,13 +174,15 @@ struct ToDoEditView: View {
                             ListItem(listTitle: "종료") {
                                 Text(dateFormatter.string(from: scheduleState.currentSchedule.endDate))
                                     .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
+									.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
                                     .onTapGesture {
-                                        withAnimation(.easeInOut(duration: 0.3)) {
-                                            self.showStartTimePicker = false
-                                            self.showEndTimePicker.toggle()
-                                            self.showNotificationSetting = false
-                                        }
+										if !scheduleState.isCurrentScheduleIsGroup {
+											withAnimation(.easeInOut(duration: 0.3)) {
+												self.showStartTimePicker = false
+												self.showEndTimePicker.toggle()
+												self.showNotificationSetting = false
+											}
+										}
                                     }
                             }
                             
@@ -255,14 +261,16 @@ struct ToDoEditView: View {
                                     HStack {
                                         Text(scheduleState.currentSchedule.locationName.isEmpty ? "없음" : scheduleState.currentSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
-                                            .foregroundStyle(.mainText)
-                                        Image(.arrowBasic)
-                                            .renderingMode(.template)
-                                            .foregroundStyle(.mainText)
+											.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
+										if !scheduleState.isCurrentScheduleIsGroup {
+											Image(.arrowBasic)
+												.renderingMode(.template)
+												.foregroundStyle(.mainText)
+										}
                                     }
                                     .lineSpacing(12)
                                 })
-                                .disabled(self.scheduleState.isGroup)
+								.disabled(scheduleState.isCurrentScheduleIsGroup)
                             }
                             .padding(.vertical, 14)
                         }
@@ -281,7 +289,7 @@ struct ToDoEditView: View {
                         }
                         Spacer()
                     }
-                    .navigationTitle(self.isRevise ? "일정 편집" : "새 일정")
+					.navigationTitle(self.isRevise ? (scheduleState.isCurrentScheduleIsGroup ? "모임 일정 편집" : "일정 편집") : "새 일정")
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationBarBackButtonHidden(true)
                     .toolbar {

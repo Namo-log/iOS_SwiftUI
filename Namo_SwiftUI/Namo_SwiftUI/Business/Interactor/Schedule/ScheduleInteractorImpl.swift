@@ -343,6 +343,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
                 y: schedule?.y,
                 locationName: schedule?.locationName
             )
+			scheduleState.isCurrentScheduleIsGroup = schedule?.moimSchedule ?? false
         }
     }
     

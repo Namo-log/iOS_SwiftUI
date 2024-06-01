@@ -29,6 +29,8 @@ class ScheduleState: ObservableObject {
 	@Published var currentSchedule: ScheduleTemplate = ScheduleTemplate()
     /// 모임 일정 생성./수정을 위한 스케줄 템플릿
     @Published var currentMoimSchedule: MoimScheduleTemplate = MoimScheduleTemplate()
+	/// 현재 스케쥴 템플릿이 그룹 스케쥴인지 아닌지
+	@Published var isCurrentScheduleIsGroup: Bool = false
 	
 	/// calendar에 보여지기 위한 스케쥴들
 	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
