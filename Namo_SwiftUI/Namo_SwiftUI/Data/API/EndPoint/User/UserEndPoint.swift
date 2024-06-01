@@ -25,7 +25,7 @@ extension UserEndPoint: EndPoint {
         switch self {
             
         case .agreementTemrs:
-            return "/term"
+            return "/terms"
         }
     }
     
