@@ -10,6 +10,7 @@ import Factory
 import KakaoSDKCommon
 import KakaoSDKAuth
 import NaverThirdPartyLogin
+import Firebase
 
 @main
 struct Namo_SwiftUIApp: App {
@@ -42,6 +43,8 @@ struct Namo_SwiftUIApp: App {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+		
+		FirebaseApp.configure()
     }
     
     var body: some Scene {
