@@ -1,0 +1,96 @@
+{
+  "originHash" : "9e6bc30675b5a733fff5aae48003a01db68ecc4afbf84ff750213f4fa8ed3588",
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire",
+      "state" : {
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
+      }
+    },
+    {
+      "identity" : "factory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hmlongco/Factory",
+      "state" : {
+        "revision" : "587995f7d5cc667951d635fbf6b4252324ba0439",
+        "version" : "2.3.2"
+      }
+    },
+    {
+      "identity" : "kakao-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kakao/kakao-ios-sdk",
+      "state" : {
+        "revision" : "ab226a7a3625d64e73a52aa3800595dab810156b",
+        "version" : "2.22.1"
+      }
+    },
+    {
+      "identity" : "kakaomapssdk-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git",
+      "state" : {
+        "revision" : "c1571d411caca22ad6e3e76a593e0b95b3586fb7",
+        "version" : "2.10.4"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher",
+      "state" : {
+        "revision" : "5b92f029fab2cce44386d28588098b5be0824ef5",
+        "version" : "7.11.0"
+      }
+    },
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-ios",
+      "state" : {
+        "revision" : "769b88d83a42ca8d5572b020c96f47e3690b3796",
+        "version" : "4.4.3"
+      }
+    },
+    {
+      "identity" : "naveridlogin-ios-sp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kyungkoo/naveridlogin-ios-sp.git",
+      "state" : {
+        "revision" : "85b08cf3be9bfd84df09437c64bc621c93336770",
+        "version" : "4.1.5"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "4d815c6e6883bfdcb67cf755d0f0f29a4b399ea7",
+        "version" : "14.5.2"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift",
+      "state" : {
+        "branch" : "master",
+        "revision" : "3a9586b62042a4e010f3d3439b67a4779017fe07"
+      }
+    },
+    {
+      "identity" : "swiftuicalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GGJJack/SwiftUICalendar",
+      "state" : {
+        "revision" : "7ecd220909bc25529e35e2addb513a20abbfec82",
+        "version" : "0.1.14"
+      }
+    }
+  ],
+  "version" : 3
+}
