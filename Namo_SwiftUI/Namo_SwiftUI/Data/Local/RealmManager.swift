@@ -54,7 +54,7 @@ class RealmManager {
 		let realm = getRealm()
 		do {
 			try realm.write {
-				realm.add(object)
+				realm.add(object, update: .modified)
 			}
 		} catch {
 			ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 저장 에러"))
@@ -67,7 +67,7 @@ class RealmManager {
 		objects.forEach({ object in
 			do {
 				try realm.write {
-					realm.add(object)
+					realm.add(object, update: .modified)
 				}
 			} catch {
 				ErrorHandler.shared.handle(type: .ignore, error: AppError.customError(title: "", message: "", localizedDescription: "데이터 저장 에러"))
