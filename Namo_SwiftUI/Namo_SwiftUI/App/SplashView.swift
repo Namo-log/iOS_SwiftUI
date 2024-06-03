@@ -53,7 +53,7 @@ struct SplashView: View {
 			Task {
 				do {
 					if let minimumVersion = try await RemoteConfigManager().getMinimumVersion() {
-						let checkUpdate = checkUpdateRequired(minimumVersion: "2.0.0", currentVersion: version)
+						let checkUpdate = checkUpdateRequired(minimumVersion: minimumVersion, currentVersion: version)
 						showUpdateRequired = checkUpdate
 					}
 				} catch {
