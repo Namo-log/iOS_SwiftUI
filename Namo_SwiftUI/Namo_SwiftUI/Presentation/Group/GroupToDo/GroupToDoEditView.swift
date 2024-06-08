@@ -37,6 +37,9 @@ struct GroupToDoEditView: View {
     /// 참석자 선택 창 Show State
     @State var showCheckParticipant: Bool = false
     @State var currPlace: Place?
+	
+	/// 일정 공백시  띄울 toast 변수
+	@State private var showToastTitleEmpty: Bool = false
 
     /// 날짜 포매터
     private let dateFormatter = DateFormatter()
@@ -184,8 +187,17 @@ struct GroupToDoEditView: View {
                                 Task {
                                     let name = scheduleState.currentMoimSchedule.name
                                     guard !name.isEmpty else {
-                                        print("@Log - \(scheduleState.currentMoimSchedule.name)")
-                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "입력 오류", message: "일정 제목은 공백일 수 없습니다.", localizedDescription: nil))
+										await MainActor.run {
+											withAnimation {
+												self.showToastTitleEmpty = true
+											}
+										}
+										
+										DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+											withAnimation {
+												self.showToastTitleEmpty = false
+											}
+										}
                                         return
                                     }
                                     if self.isRevise {
@@ -258,6 +270,14 @@ struct GroupToDoEditView: View {
                     selectedUser: scheduleState.currentMoimSchedule.users
                 )
             }
+			
+			VStack {
+				Spacer()
+				
+				if showToastTitleEmpty {
+					ToastView(toastMessage: "일정 제목은 공백일 수 없습니다.", bottomPadding: 150)
+				}
+			}
             
         }
         .overlay(isShowSheet ? ToDoSelectPlaceView(isShowSheet: $isShowSheet, preMapDraw: $draw, isRevise: isRevise, tempPlace: currPlace, isGroup: true) : nil)
