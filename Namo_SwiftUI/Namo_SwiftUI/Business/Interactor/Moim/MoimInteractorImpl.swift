@@ -234,6 +234,9 @@ struct MoimInteractorImpl: MoimInteractor {
         }
         
         let result = await moimRepository.deleteMoimSchedule(scheduleId: scheduleId)
+		await MainActor.run {
+			NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil)
+		}
         print(String(describing: result))
     }
     

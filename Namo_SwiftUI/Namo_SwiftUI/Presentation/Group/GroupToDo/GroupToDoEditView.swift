@@ -257,7 +257,7 @@ struct GroupToDoEditView: View {
                             // 삭제 후 dismiss
 //                            await self.scheduleInteractor.deleteSchedule()
                             await self.moimInteractor.deleteMoimSchedule()
-//                            dismissThis()
+                            dismissThis()
                         }
                     }
                 )
