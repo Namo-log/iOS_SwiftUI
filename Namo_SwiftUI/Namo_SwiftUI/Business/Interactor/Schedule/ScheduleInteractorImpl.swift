@@ -325,6 +325,9 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
         }
         
         let result = await scheduleRepository.deleteSchedule(scheduleId: scheduleId, isMoim: false)
+		await MainActor.run {
+			NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil)
+		}
         print(String(describing: result))
     }
     
