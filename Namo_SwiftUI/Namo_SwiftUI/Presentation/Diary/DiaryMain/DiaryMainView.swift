@@ -249,12 +249,13 @@ struct DiaryItemView: View {
                 .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
                 .frame(width: 10)
             
-            HStack(alignment: .top, spacing: 25) {
+            HStack(alignment: .top, spacing: 12) {
                 // 제목과 수정 버튼
                 VStack(alignment: .leading, spacing: 0) {
                     Text(diary.name)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.mainText)
+						.lineLimit(2)
                     
                     // 세로 여백
                     Spacer()
@@ -276,6 +277,7 @@ struct DiaryItemView: View {
                         appState.isEditingDiary = true
                     })
                 }
+				.frame(width: 62)
                 
                 // 내용과 사진
                 VStack(alignment: .leading, spacing: 12) {
