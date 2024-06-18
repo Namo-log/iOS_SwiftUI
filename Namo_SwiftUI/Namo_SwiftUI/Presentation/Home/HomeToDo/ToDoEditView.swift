@@ -483,6 +483,13 @@ struct ToDoEditView: View {
             Task {
                 await self.categoryInteractor.getCategories()
                 
+                if self.isRevise {
+                    
+                    self.scheduleState.currentSchedule.categoryId = scheduleState.currentSchedule.categoryId
+                } else {
+                    self.scheduleState.currentSchedule.categoryId = appState.categoryState.categoryList.first?.categoryId ?? -1
+                }
+                
                 self.categoryList = categoryInteractor.setCategories()
                 
                 self.setCategory()
