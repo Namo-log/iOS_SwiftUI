@@ -30,6 +30,10 @@ enum AuthEndPoint {
     
     // 로그아웃
     case logout(serverAccessToken: LogoutRequestDTO)
+    
+    // 토큰 재발급
+    case reissuanceToken(token: TokenReissuanceRequestDTO)
+    
 }
 
 extension AuthEndPoint: EndPoint {
@@ -62,12 +66,15 @@ extension AuthEndPoint: EndPoint {
             
         case .logout(serverAccessToken: _):
             return "/logout"
+            
+        case .reissuanceToken:
+            return "/reissuance"
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .signInKakao, .signInNaver, .signInApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout:
+        case .signInKakao, .signInNaver, .signInApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout, .reissuanceToken:
             return .post
         }
     }
@@ -89,6 +96,8 @@ extension AuthEndPoint: EndPoint {
             return .requestPlain
         case .logout(serverAccessToken: let dto):
             return .authRequestJSONEncodable(parameters: dto)
+        case .reissuanceToken(token: let dto):
+            return .requestJSONEncodable(parameters: dto)
         }
     }
     
