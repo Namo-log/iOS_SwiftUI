@@ -51,3 +51,17 @@ struct TermRequest: Codable {
     let isCheckTermOfUse: Bool
     let isCheckPersonalInformationCollection: Bool
 }
+
+// 토큰 재발급 요청 DTO
+struct TokenReissuanceRequestDTO: Encodable {
+    
+    let accessToken: String
+    let refreshToken: String
+}
+
+// 토큰 재발급 응답 DTO
+struct TokenReissuanceResponseDTO: Decodable {
+    
+    let accessToken: String
+    let refreshToken: String
+}
