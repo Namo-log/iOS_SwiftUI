@@ -10,7 +10,6 @@ import SwiftUI
 
 struct DiaryInteractorImpl: DiaryInteractor {
     @Injected(\.diaryRepository) var diaryRepository
-    @Injected(\.appState) private var appState
     @Injected(\.diaryState) private var diaryState
     
     /// 기록 생성

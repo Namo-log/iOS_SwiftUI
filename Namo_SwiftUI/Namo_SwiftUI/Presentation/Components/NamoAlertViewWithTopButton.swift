@@ -31,7 +31,6 @@ import Factory
  */
 
 struct NamoAlertViewWithTopButton: View {
-	@Injected(\.appState) var appState
 	
 	@Binding var showAlert: Bool
 	let title: String
@@ -46,7 +45,7 @@ struct NamoAlertViewWithTopButton: View {
 			Color.black.opacity(0.5)
 				.edgesIgnoringSafeArea(.all)
 				.onTapGesture {
-					appState.isTabbarOpaque = false
+					AppState.shared.isTabbarOpaque = false
 					showAlert = false
 				}
 			
@@ -89,13 +88,13 @@ struct NamoAlertViewWithTopButton: View {
 		}
 		.onAppear {
 			withAnimation {
-				appState.isTabbarOpaque = true
+				AppState.shared.isTabbarOpaque = true
 			}
 		}
     }
 	
 	private func leftAction() {
-		appState.isTabbarOpaque = false
+		AppState.shared.isTabbarOpaque = false
 		showAlert = false
 		leftButtonAction()
 	}
@@ -105,7 +104,7 @@ struct NamoAlertViewWithTopButton: View {
 		
 		if isSuccess {
 			DispatchQueue.main.async {
-				self.appState.isTabbarOpaque = false
+				AppState.shared.isTabbarOpaque = false
 				self.showAlert = false
 			}
 		}

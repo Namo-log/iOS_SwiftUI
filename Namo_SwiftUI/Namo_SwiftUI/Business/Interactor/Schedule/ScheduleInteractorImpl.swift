@@ -11,7 +11,6 @@ import Factory
 
 struct ScheduleInteractorImpl: ScheduleInteractor {
 	
-    @Injected(\.appState) private var appState
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
@@ -241,7 +240,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 	
     /// 지도에서 선택한 selectedPlace의 정보를 currentSchedule에 저장합니다
     func setPlaceToCurrentSchedule() {
-        if let place = appState.placeState.selectedPlace {
+		if let place = AppState.shared.placeState.selectedPlace {
             scheduleState.currentSchedule.locationName = place.name
             scheduleState.currentSchedule.x = place.x
             scheduleState.currentSchedule.y = place.y

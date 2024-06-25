@@ -65,6 +65,8 @@ class MoimState: ObservableObject {
 }
 
 class AppState: ObservableObject {
+	static var shared = AppState()
+	
 	@Published var isLoading: Bool = false
 	
 	// Tabbar

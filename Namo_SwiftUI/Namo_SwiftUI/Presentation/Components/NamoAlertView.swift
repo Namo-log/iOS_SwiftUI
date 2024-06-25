@@ -32,7 +32,6 @@ import Factory
  */
 
 struct NamoAlertView: View {
-	@Injected(\.appState) var appState
 	
 	@Binding var showAlert: Bool
 	let content: AnyView
@@ -46,8 +45,8 @@ struct NamoAlertView: View {
 			Color.black.opacity(0.5)
 				.edgesIgnoringSafeArea(.all)
 				.onTapGesture {
-					appState.isTabbarOpaque = false
-					showAlert = false	
+					AppState.shared.isTabbarOpaque = false
+					showAlert = false
 				}
 			
 			VStack(spacing: 16) {
@@ -88,19 +87,19 @@ struct NamoAlertView: View {
 		}
 		.onAppear {
 			withAnimation {
-				appState.isTabbarOpaque = true
+				AppState.shared.isTabbarOpaque = true
 			}
 		}
     }
 	
 	private func leftAction() {
-		appState.isTabbarOpaque = false
+		AppState.shared.isTabbarOpaque = false
 		showAlert = false
 		leftButtonAction()
 	}
 	
 	private func rightAction() {
-		appState.isTabbarOpaque = false
+		AppState.shared.isTabbarOpaque = false
 		showAlert = false
 		rightButtonAction!()
 	}
