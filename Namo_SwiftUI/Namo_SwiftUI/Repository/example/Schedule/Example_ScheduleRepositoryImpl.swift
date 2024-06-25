@@ -12,15 +12,15 @@ import Alamofire
 final class Example_ScheduleRepositoryImpl: Example_ScheduleRepository {
     
     func fetchSchedule(id: Int) async -> testGetDeDTO? {
-        return await APIManager.shared.performRequest(endPoint: Example_ScheduleEndPoint.getSchedule(id: id))
+        return await APIManager.shared.performRequestOld(endPoint: Example_ScheduleEndPoint.getSchedule(id: id))
     }
     
     func postSchedule(data: testEnDTO) async -> testDeDTO? {
-        return await APIManager.shared.performRequest(endPoint: Example_ScheduleEndPoint.postScehdule(dto: data))
+        return await APIManager.shared.performRequestOld(endPoint: Example_ScheduleEndPoint.postScehdule(dto: data))
     }
     
     func test() async -> testDecodeDTO? {
-        return await APIManager.shared.performRequest(endPoint: Example_ScheduleEndPoint.test)
+        return await APIManager.shared.performRequestOld(endPoint: Example_ScheduleEndPoint.test)
     }
 }
 
