@@ -9,7 +9,6 @@ import SwiftUI
 import Factory
 
 struct NamoAlertViewWithOneButton: View {
-	@Injected(\.appState) var appState
 	
 	@Binding var showAlert: Bool
 	let title: String
@@ -22,7 +21,7 @@ struct NamoAlertViewWithOneButton: View {
 			Color.black.opacity(0.5)
 				.edgesIgnoringSafeArea(.all)
 				.onTapGesture {
-					appState.isTabbarOpaque = false
+					AppState.shared.isTabbarOpaque = false
 					showAlert = false
 				}
 			
@@ -42,7 +41,7 @@ struct NamoAlertViewWithOneButton: View {
 				}
 				
 				Button(action: {
-					appState.isTabbarOpaque = false
+					AppState.shared.isTabbarOpaque = false
 					showAlert = false
 					buttonAction()
 				}, label: {
@@ -64,7 +63,7 @@ struct NamoAlertViewWithOneButton: View {
 		}
 		.onAppear {
 			withAnimation {
-				appState.isTabbarOpaque = true
+				AppState.shared.isTabbarOpaque = true
 			}
 		}
 	}

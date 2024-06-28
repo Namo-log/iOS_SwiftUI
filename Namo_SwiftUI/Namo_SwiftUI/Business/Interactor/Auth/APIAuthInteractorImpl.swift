@@ -15,7 +15,6 @@ import AuthenticationServices
 class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationControllerPresentationContextProviding {
     
     @Injected(\.authRepository) private var authRepository
-    @Injected(\.appState) private var appState: AppState
     
     // 카카오 로그인
     func kakaoLogin() async {
@@ -66,7 +65,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
                                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                                    self?.appState.isTabbarHidden = false
+									AppState.shared.isTabbarHidden = false
                                 }
                                 
                             } else {
@@ -122,7 +121,7 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                                     
                                     UserDefaults.standard.set(true, forKey: "isLogin")
                                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                                    self.appState.isTabbarHidden = false
+									AppState.shared.isTabbarHidden = false
                                 }
                
                             } else {
@@ -174,8 +173,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                     DispatchQueue.main.async {
                         
                         UserDefaults.standard.set(false, forKey: "isLogin")
-                        self.appState.isTabbarHidden = true
-                        self.appState.currentTab = .home
+						AppState.shared.isTabbarHidden = true
+						AppState.shared.currentTab = .home
                     }
                 } else {
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카카오 회원 탈퇴 \(String(describing: result?.code)) 에러"))
@@ -190,8 +189,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                 if result?.code == 200 {
                     DispatchQueue.main.async {
                         UserDefaults.standard.set(false, forKey: "isLogin")
-                        self.appState.isTabbarHidden = true
-                        self.appState.currentTab = .home
+						AppState.shared.isTabbarHidden = true
+						AppState.shared.currentTab = .home
                     }
                 } else {
 
@@ -208,8 +207,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
                     
                     DispatchQueue.main.async {
                         UserDefaults.standard.set(false, forKey: "isLogin")
-                        self.appState.isTabbarHidden = true
-                        self.appState.currentTab = .home
+						AppState.shared.isTabbarHidden = true
+						AppState.shared.currentTab = .home
                     }
                 } else {
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "애플 회원 탈퇴 \(String(describing: result?.code)) 에러"))
@@ -230,8 +229,8 @@ class APIAuthInteractorImpl: NSObject, AuthInteractor, ASAuthorizationController
 
             DispatchQueue.main.async {
                 UserDefaults.standard.set(false, forKey: "isLogin")
-                self.appState.isTabbarHidden = true
-                self.appState.currentTab = .home
+				AppState.shared.isTabbarHidden = true
+				AppState.shared.currentTab = .home
             }
             
             KeyChainManager.deleteItem(key: "accessToken")
@@ -307,7 +306,7 @@ extension APIAuthInteractorImpl: NaverThirdPartyLoginConnectionDelegate {
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                    self.appState.isTabbarHidden = false
+					AppState.shared.isTabbarHidden = false
                 }
                 
                 /// 소셜 토큰을 키체인에 저장
@@ -410,7 +409,7 @@ extension APIAuthInteractorImpl: ASAuthorizationControllerDelegate, ASWebAuthent
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                    self.appState.isTabbarHidden = false
+					AppState.shared.isTabbarHidden = false
                 }
                 
                 KeyChainManager.addItem(key: "appleAuthorizationCode", value: authorizationCode)

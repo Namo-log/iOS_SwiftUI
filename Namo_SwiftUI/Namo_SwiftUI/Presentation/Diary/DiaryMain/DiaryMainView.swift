@@ -126,7 +126,7 @@ struct DiaryMainView: View {
             } // VStack
             
             if showDatePicker {
-                NamoAlertView(
+                AlertViewOld(
                     showAlert: $showDatePicker,
                     content: AnyView(
                         HStack(spacing: 0) {

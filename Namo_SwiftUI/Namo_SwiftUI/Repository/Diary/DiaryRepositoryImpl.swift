@@ -10,25 +10,25 @@ import Alamofire
 
 final class DiaryRepositoryImpl: DiaryRepository {
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async -> CreateDiaryResponseDTO? {
-        return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.createDiary(scheduleId: scheduleId, content: content, images: images))
+        return await APIManager.shared.performRequestOld(endPoint: DiaryEndPoint.createDiary(scheduleId: scheduleId, content: content, images: images))
     }
     
     func getMonthDiary(request: GetDiaryRequestDTO) async -> GetDiaryResponseDTO? {
-        return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.getMonthDiary(request: request))
+        return await APIManager.shared.performRequestOld(endPoint: DiaryEndPoint.getMonthDiary(request: request))
     }
     
     /// 기록 개별 조회 API
     func getOneDiary(scheduleId: Int) async -> GetOneDiaryResponseDTO? {
-        return await APIManager.shared.performRequest(endPoint: DiaryEndPoint.getOneDiary(scheduleId: scheduleId))
+        return await APIManager.shared.performRequestOld(endPoint: DiaryEndPoint.getOneDiary(scheduleId: scheduleId))
     }
     
     func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, images: images))
+        let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, images: images))
         return response?.code == 200
     }
     
     func deleteDiary(scheduleId: Int) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequestBaseResponse(endPoint: DiaryEndPoint.deleteDiary(diaryId: scheduleId))
+        let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: DiaryEndPoint.deleteDiary(diaryId: scheduleId))
         return response?.code == 200
     }
 }

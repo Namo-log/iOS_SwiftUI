@@ -65,6 +65,8 @@ class MoimState: ObservableObject {
 }
 
 class AppState: ObservableObject {
+	static var shared = AppState()
+	
 	@Published var isLoading: Bool = false
 	
 	// Tabbar
@@ -74,8 +76,9 @@ class AppState: ObservableObject {
     @Published var currentTab: Tab = .home
 	
 	// Alert
-	@Published var showAlert: Bool = false
-	@Published var alertMessage: String = ""
+	@Published var alertType: AlertType? = nil
+	// alert가 2개 겹치는 경우 사용
+	@Published var secondaryAlertType: AlertType? = nil
     
 	// Category(key - categoryId, value - paletteId)
 	@Published var categoryPalette: [Int: Int] = [:]

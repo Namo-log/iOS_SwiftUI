@@ -15,7 +15,8 @@ import Firebase
 @main
 struct Namo_SwiftUIApp: App {
     // 앱의 최상위에서 appState를 선언하여 앱의 전역에서 쓰일 수 있도록 합니다.
-    var appState = Container.shared.appState()
+//    var appState = Container.shared.appState()
+	@StateObject var appState = AppState.shared
 	var scheduleState = Container.shared.scheduleState()
     var moimState = Container.shared.moimState()
 	var diaryState = Container.shared.diaryState()

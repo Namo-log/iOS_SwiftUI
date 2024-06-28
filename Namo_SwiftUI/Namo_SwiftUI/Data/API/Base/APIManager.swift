@@ -98,21 +98,14 @@ final class APIManager {
     }
     
     
-    /// 네트워크 요청을 수행하고 결과를 디코딩하여 반환합니다.
-    ///
-    /// - Parameters:
-    ///   - endPoint: 네트워크 요청을 정의하는 Endpoint
-    ///   - decoder: 사용할 디코더. 기본값은 `JSONDecoder()`입니다.
-    /// - Returns: 디코딩된 결과 데이터 `T: Decodable`
-    func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+    // 이전에 사용하는 performRequest.
+	// 리팩토링 시 제거 필요
+    func performRequestOld<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
 		var result: Data = .init()
 		do {
 			let request = await self.requestData(endPoint: endPoint)
             
 			result = try request.result.get()
-            
-            print(result)
-            
 		} catch {
             
 			ErrorHandler.shared.handleAPIError(.networkError)
@@ -131,18 +124,35 @@ final class APIManager {
 		}
     }
     
-    // BaseResponse를 반환하는 메소드
-    func performRequestBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
-        do {
-            let request = await self.requestData(endPoint: endPoint)
-            let result = try request.result.get()
-            print("inferred DataType to be decoded : \(T.self)")
-            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
-            return decodedData
-        } catch {
-            print("에러 발생: \(error)")
-            return nil
-        }
+	/// 네트워크 요청을 수행하고 결과를 디코딩하여 반환합니다.
+	///
+	/// - Parameters:
+	///   - endPoint: 네트워크 요청을 정의하는 Endpoint
+	///   - decoder: 사용할 디코더. 기본값은 `JSONDecoder()`입니다.
+	/// - Returns: 디코딩된 Response
+    func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
+		var result: Data = .init()
+		do {
+			let request = await self.requestData(endPoint: endPoint)
+			
+			result = try request.result.get()
+		} catch {
+			
+			ErrorHandler.shared.handleAPIError(.networkError)
+			return nil
+		}
+
+		do {
+
+			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+			
+			return decodedData
+		} catch {
+
+			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
+			return nil
+		}
+
     }
     
     // BaseResponse 없는 메소드

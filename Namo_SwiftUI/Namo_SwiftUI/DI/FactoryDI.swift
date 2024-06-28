@@ -13,10 +13,10 @@ extension Container {
     // 예시로 넣어둔 Factory 컨테이너 요소들이며 실제 구현에 쓰일 예정입니다.
     // 구현체들에 주입될 요소들입니다.
     
-    var appState: Factory<AppState> {
-        self { AppState() }
-            .singleton
-    }
+//    var appState: Factory<AppState> {
+//        self { AppState() }
+//            .singleton
+//    }
 	
 	var scheduleState: Factory<ScheduleState> {
 		self { ScheduleState() }

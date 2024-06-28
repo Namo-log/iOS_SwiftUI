@@ -13,8 +13,6 @@ import NaverThirdPartyLogin
 /// API Request의 Authentication을 관리합니다.
 class AuthManager: RequestInterceptor {
     
-    @Injected(\.appState) private var appState: AppState
-    
     /// 요청 실패 시 재시도 횟수입니다.
     private var retryLimit = 2
     

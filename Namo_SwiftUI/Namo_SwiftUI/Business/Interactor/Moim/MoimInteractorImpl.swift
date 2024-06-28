@@ -10,7 +10,7 @@ import SwiftUICalendar
 
 struct MoimInteractorImpl: MoimInteractor {
 	@Injected(\.moimRepository) var moimRepository
-	@Injected(\.appState) var appState
+//	@Injected(\.appState) var appState
 	@Injected(\.moimState) var moimState
     @Injected(\.scheduleState) var scheduleState
 	
@@ -19,13 +19,13 @@ struct MoimInteractorImpl: MoimInteractor {
 	// 모임 리스트 가져오기
 	func getGroups() async {
 		DispatchQueue.main.async {
-			appState.isLoading = true
+			AppState.shared.isLoading = true
 		}
 		let moims = await moimRepository.getMoimList() ?? []
 		
 		DispatchQueue.main.async {
 			moimState.moims = moims
-			appState.isLoading = false
+			AppState.shared.isLoading = false
 		}
 	}
 	
@@ -242,7 +242,7 @@ struct MoimInteractorImpl: MoimInteractor {
     
     /// 지도에서 선택한 selectedPlace의 정보를 currentMoimSchedule에 저장합니다
     func setPlaceToCurrentMoimSchedule() {
-        if let place = appState.placeState.selectedPlace {
+		if let place = AppState.shared.placeState.selectedPlace {
             scheduleState.currentMoimSchedule.locationName = place.name
             scheduleState.currentMoimSchedule.x = place.x
             scheduleState.currentMoimSchedule.y = place.y

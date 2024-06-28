@@ -36,10 +36,6 @@ struct GroupMainView: View {
 			}
 			.padding(.top, 16.5)
 			
-			if showNewGroupAlert {
-				newGroupAlertView
-			}
-			
 			if showGroupCodeAlert {
 				groupCodeAlertView
 			}
@@ -62,6 +58,44 @@ struct GroupMainView: View {
 				await moimInteractor.getGroups()
 			}
 		}
+		.onChange(of: pickedItem) { item in
+			if item == nil {
+				print("image load failed")
+				return
+			}
+			
+			Task {
+				if let image = try? await item?.loadTransferable(type: Data.self) {
+					let compressedImage = UIImage(data: image)?.jpegData(compressionQuality: 0.2)
+					pickedImage = compressedImage
+					
+					AppState.shared.alertType = .alertWithTopButton(
+						title: "새 그룹",
+						leftButtonTitle: "닫기",
+						leftButtonAction: {
+							AppState.shared.alertType = nil
+						},
+						rightButtonTitle: "완료",
+						rightButtonAction: {
+							Task {
+								let response = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
+								
+								// response가 잘 들어왔으면, 그룹 목록 새로고침
+								if response != nil {
+									await moimInteractor.getGroups()
+								}
+								await MainActor.run {
+									AppState.shared.alertType = nil
+								}
+							}
+						},
+						content: AnyView(newGroupAlertView)
+					)
+				} else {
+					print("image load failed")
+				}
+			}
+		}
     }
 	
 	private var header: some View {
@@ -74,7 +108,28 @@ struct GroupMainView: View {
 			Menu(content: {
 				Button("그룹 생성", action: {
 					withAnimation {
-						showNewGroupAlert = true
+						AppState.shared.alertType = .alertWithTopButton(
+							title: "새 그룹",
+							leftButtonTitle: "닫기",
+							leftButtonAction: {
+								AppState.shared.alertType = nil
+							},
+							rightButtonTitle: "완료",
+							rightButtonAction: {
+								Task {
+									let response = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
+									
+									// response가 잘 들어왔으면, 그룹 목록 새로고침
+									if response != nil {
+										await moimInteractor.getGroups()
+									}
+									await MainActor.run {
+										AppState.shared.alertType = nil
+									}
+								}
+							},
+							content: AnyView(newGroupAlertView)
+						)
 					}
 				})
 				
@@ -143,140 +198,75 @@ struct GroupMainView: View {
 				}
 			}
 		}
-//		ScrollView(.vertical, showsIndicators: false) {
-//			VStack(spacing: 20) {
-//				if appState.isLoading {
-//					ProgressView()
-//				} else if !moimState.moims.isEmpty {
-//					ForEach(moimState.moims, id: \.groupId) { moim in
-//						NavigationLink(destination: GroupCalendarView(), label: {
-//							GroupListItem(moim: moim)
-//								.tint(Color.black)
-//						})
-//						.simultaneousGesture(TapGesture().onEnded {
-//							moimState.currentMoim = moim
-//							Task {
-//								await moimInteractor.getMoimSchedule(moimId: moim.groupId)
-//							}
-//						})
-//						
-//					}
-//				} else {
-//					noGroup
-//				}
-//				
-//				Spacer()
-//					.frame(height: 100)
-//			}
-//		}
-//		.refreshable {
-//			Task {
-//				await moimInteractor.getGroups()
-//			}
-//		}
 	}
 	
 	private var newGroupAlertView: some View {
-		NamoAlertViewWithTopButton(
-			showAlert: $showNewGroupAlert,
-			title: "새 그룹",
-			leftButtonTitle: "닫기",
-			leftButtonAction: {},
-			rightButtonTitle: "완료",
-			rightButtonAction: {
-				let response = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
+		VStack(spacing: 0) {
+			HStack {
+				Text("그룹명")
+					.font(.pretendard(.bold, size: 15))
 				
-				// response가 잘 들어왔으면, 그룹 목록 새로고침
-				if response != nil {
-					Task {
-						await moimInteractor.getGroups()
+				Spacer()
+				
+				TextField("입력", text: $groupName)
+					.font(.pretendard(.regular, size: 15))
+					.frame(width: 150)
+					.overlay(alignment: .bottom) {
+						Rectangle()
+							.frame(width: 150, height: 1)
+							.foregroundStyle(Color(.mainText))
+							.offset(y: 5)
 					}
-					return true
+					
+			}
+			.padding(.bottom, 30)
+			
+			HStack(alignment: .top) {
+				VStack(alignment: .leading, spacing: 10) {
+					Text("커버 이미지")
+						.font(.pretendard(.bold, size: 15))
+					
+					Text("추후 변경 불가")
+						.font(.pretendard(.regular, size: 15))
 				}
 				
-				return false
-			},
-			content: AnyView(
-				VStack(spacing: 0) {
-					HStack {
-						Text("그룹명")
-							.font(.pretendard(.bold, size: 15))
-						
-						Spacer()
-						
-						TextField("입력", text: $groupName)
-							.font(.pretendard(.regular, size: 15))
-							.frame(width: 150)
-							.overlay(alignment: .bottom) {
-								Rectangle()
-									.frame(width: 150, height: 1)
-									.foregroundStyle(Color(.mainText))
-									.offset(y: 5)
-							}
-							
+				Spacer()
+				
+				PhotosPicker(selection: $pickedItem, matching: .images, label: {
+					if let imageData = pickedImage,
+					   let uiImage = UIImage(data: imageData) {
+						Image(uiImage: uiImage)
+							.resizable()
+							.aspectRatio(contentMode: .fill)
+							.frame(width: 60, height: 60)
+							.clipShape(RoundedRectangle(cornerRadius: 5))
+					} else {
+						Image(.icGroup)
 					}
-					.padding(.bottom, 30)
-					
-					HStack(alignment: .top) {
-						VStack(alignment: .leading, spacing: 10) {
-							Text("커버 이미지")
-								.font(.pretendard(.bold, size: 15))
-							
-							Text("추후 변경 불가")
-								.font(.pretendard(.regular, size: 15))
-						}
-						
-						Spacer()
-						
-						PhotosPicker(selection: $pickedItem, matching: .images, label: {
-							if let imageData = pickedImage,
-							   let uiImage = UIImage(data: imageData) {
-								Image(uiImage: uiImage)
-									.resizable()
-									.aspectRatio(contentMode: .fill)
-									.frame(width: 60, height: 60)
-									.clipShape(RoundedRectangle(cornerRadius: 5))
-							} else {
-								Image(.icGroup)
-							}
-						})
-						.onChange(of: pickedItem) { item in
-							if item == nil {return}
-							
-							Task {
-								if let image = try? await item?.loadTransferable(type: Data.self) {
-									let compressedImage = UIImage(data: image)?.jpegData(compressionQuality: 0.2)
-									pickedImage = compressedImage
-								} else {
-									print("image load failed")
-								}
-							}
-						}
-						
-					}
-					.padding(.bottom, 20)
-					
-					HStack(spacing: 0) {
-						Text("그룹 코드")
-							.font(.pretendard(.bold, size: 15))
-							.padding(.leading, 29)
-						
-						Spacer()
-						
-						Text("-")
-							.font(.pretendard(.regular, size: 15))
-							.padding(.trailing, 73)
-					}
-					.frame(height: 40)
-					.frame(maxWidth: .infinity)
-					.background(Color(.mainGray))
-					.cornerRadius(5)
-					
-				}
-					.padding(.top, 27)
-					.padding(.bottom, 22)
-			)
-		)
+				})
+				
+			}
+			.padding(.bottom, 20)
+			
+			HStack(spacing: 0) {
+				Text("그룹 코드")
+					.font(.pretendard(.bold, size: 15))
+					.padding(.leading, 29)
+				
+				Spacer()
+				
+				Text("-")
+					.font(.pretendard(.regular, size: 15))
+					.padding(.trailing, 73)
+			}
+			.frame(height: 40)
+			.frame(maxWidth: .infinity)
+			.background(Color(.mainGray))
+			.cornerRadius(5)
+			
+		}
+		.padding(.top, 27)
+		.padding(.bottom, 22)
 		.onDisappear {
 			groupName = ""
 			pickedItem = nil

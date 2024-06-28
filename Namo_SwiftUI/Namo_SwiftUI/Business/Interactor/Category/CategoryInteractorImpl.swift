@@ -11,7 +11,6 @@ import SwiftUI
 struct CategoryInteractorImpl: CategoryInteractor {
 	
 	@Injected(\.categoryRepository) private var categoryRepository
-	@Injected(\.appState) private var appState
     @Injected(\.scheduleState) private var scheduleState
 	
     /// 카테고리 호출 API 및 AppState에 저장
@@ -19,9 +18,9 @@ struct CategoryInteractorImpl: CategoryInteractor {
 		let categories = await categoryRepository.getAllCategory()
 		
 		DispatchQueue.main.async {
-            appState.categoryState.categoryList = categories?.map { return $0.toCategory() } ?? [] // 받아온 Categories categoryState의 categoryList에 저장
+			AppState.shared.categoryState.categoryList = categories?.map { return $0.toCategory() } ?? [] // 받아온 Categories categoryState의 categoryList에 저장
 			categories?.forEach {
-				appState.categoryPalette[$0.categoryId] = $0.paletteId
+				AppState.shared.categoryPalette[$0.categoryId] = $0.paletteId
 			}
 		}
 	}
@@ -29,7 +28,7 @@ struct CategoryInteractorImpl: CategoryInteractor {
     /// AppState의 카테고리 리스트를 뷰에서 쓰일 형태로 변환
     func setCategories() -> [ScheduleCategory] {
         
-        let categoryList = self.appState.categoryState.categoryList.map { category in
+		let categoryList = AppState.shared.categoryState.categoryList.map { category in
             
             return ScheduleCategory(categoryId: category.categoryId, name: category.name, paletteId: category.paletteId, isShare: category.isShare, color: self.getColorWithPaletteId(id: category.paletteId), isSelected: self.scheduleState.currentSchedule.categoryId == category.categoryId ? true : false)
         }
@@ -82,20 +81,20 @@ struct CategoryInteractorImpl: CategoryInteractor {
     // 카테고리 편집 토스트 메시지 조작
     func showCategoryDoneToast() {
         
-        if appState.showCategoryDeleteDoneToast {
+		if AppState.shared.showCategoryDeleteDoneToast {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 
                 withAnimation {
-                    appState.showCategoryDeleteDoneToast = false
+					AppState.shared.showCategoryDeleteDoneToast = false
                 }
             }
         }
         
-        if appState.showCategoryEditDoneToast {
+		if AppState.shared.showCategoryEditDoneToast {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 
                 withAnimation {
-                    appState.showCategoryEditDoneToast = false
+					AppState.shared.showCategoryEditDoneToast = false
                 }
             }
         }

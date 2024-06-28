@@ -10,7 +10,6 @@ import SwiftUI
 
 /// 모임 기록 API
 struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
-    @Injected(\.appState) private var appState
     @Injected(\.diaryState) private var diaryState
     @Injected(\.moimDiaryRepository) var moimDiaryRepository
     

@@ -18,6 +18,10 @@
 		2C2749A22C0C242A00ECBA71 /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2749A12C0C242A00ECBA71 /* RemoteConfigManager.swift */; };
 		2C2749A42C0C34FF00ECBA71 /* NamoAlertViewWithOneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2749A32C0C34FF00ECBA71 /* NamoAlertViewWithOneButton.swift */; };
 		2C3C75D72BCBC1C400312F26 /* NamoAlertViewWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C75D62BCBC1C400312F26 /* NamoAlertViewWithTitle.swift */; };
+		2C455B152C2B13FA00D856E4 /* NamoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C455B142C2B13FA00D856E4 /* NamoAlertView.swift */; };
+		2C455B182C2D42BE00D856E4 /* AlertViewWithTitleAndMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C455B172C2D42BE00D856E4 /* AlertViewWithTitleAndMessage.swift */; };
+		2C455B1A2C2D477800D856E4 /* AlertViewWithTopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C455B192C2D477800D856E4 /* AlertViewWithTopButton.swift */; };
+		2C455B1C2C2D4A1400D856E4 /* AlertViewWithContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C455B1B2C2D4A1400D856E4 /* AlertViewWithContent.swift */; };
 		2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717592B595C1200B0F3B3 /* NamoHome.swift */; };
 		2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */; };
 		2C57175E2B59FC0D00B0F3B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57175D2B59FC0D00B0F3B3 /* Constants.swift */; };
@@ -38,7 +42,7 @@
 		2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */; };
 		2C7232352B6DFEEF0097D669 /* ScheduleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */; };
 		2C80ECD72BD572C1002F38A7 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 2C80ECD62BD572C1002F38A7 /* KakaoMapsSDK-SPM */; };
-		2CF445042B760A8100A8E514 /* NamoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445032B760A8100A8E514 /* NamoAlertView.swift */; };
+		2CF445042B760A8100A8E514 /* AlertViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445032B760A8100A8E514 /* AlertViewOld.swift */; };
 		2CF445082B78E22900A8E514 /* CategoryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445072B78E22900A8E514 /* CategoryEndPoint.swift */; };
 		2CF4450A2B78E3C700A8E514 /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF445092B78E3C700A8E514 /* CategoryDTO.swift */; };
 		2CF4450C2B78E95000A8E514 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4450B2B78E95000A8E514 /* CategoryRepository.swift */; };
@@ -73,8 +77,6 @@
 		5012A9D42B59389F00544AB0 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D32B59389F00544AB0 /* Realm */; };
 		5012A9D62B59389F00544AB0 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D52B59389F00544AB0 /* RealmSwift */; };
 		5012A9D92B59391600544AB0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D82B59391600544AB0 /* Kingfisher */; };
-		5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8D42B593F27009B4AD1 /* Example_ScheduleRepository.swift */; };
-		5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8D82B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift */; };
 		5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */; };
 		5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8E22B594044009B4AD1 /* DiaryMainView.swift */; };
 		5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8E92B59407C009B4AD1 /* GroupMainView.swift */; };
@@ -123,7 +125,6 @@
 		8870C8572B7766F8001D083B /* ToDoSelectPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */; };
 		8879A7DE2B691BC900794475 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7DD2B691BC900794475 /* AuthManager.swift */; };
 		8879A7E12B6927ED00794475 /* testDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E02B6927ED00794475 /* testDTO.swift */; };
-		8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */; };
 		8879A7E92B6A494D00794475 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7E82B6A494D00794475 /* Data+.swift */; };
 		8879A7ED2B6A521B00794475 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879A7EC2B6A521B00794475 /* APITask.swift */; };
 		8886466B2BDD7A1D007DD805 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8886466A2BDD7A1D007DD805 /* UIApplication+.swift */; };
@@ -134,10 +135,6 @@
 		889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */; };
 		889EE0E82B8B234200F2FFB3 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */; };
 		88A7EF1B2B6E867000E47C8B /* AuthDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1A2B6E867000E47C8B /* AuthDTO.swift */; };
-		88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */; };
-		88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */; };
-		88A7EF242B6E896B00E47C8B /* Example_PetRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF232B6E896B00E47C8B /* Example_PetRepositoryImpl.swift */; };
-		88A7EF262B6E897F00E47C8B /* Example_PetRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF252B6E897F00E47C8B /* Example_PetRepositoryTest.swift */; };
 		88A7EF292B6E89A800E47C8B /* getPetInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF282B6E89A800E47C8B /* getPetInfoDTO.swift */; };
 		88A7EF2B2B6E89B400E47C8B /* postPetInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2A2B6E89B400E47C8B /* postPetInfoDTO.swift */; };
 		88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7EF2C2B6E89BD00E47C8B /* deletePetInfoDTO.swift */; };
@@ -183,6 +180,10 @@
 		2C2749A12C0C242A00ECBA71 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
 		2C2749A32C0C34FF00ECBA71 /* NamoAlertViewWithOneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertViewWithOneButton.swift; sourceTree = "<group>"; };
 		2C3C75D62BCBC1C400312F26 /* NamoAlertViewWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertViewWithTitle.swift; sourceTree = "<group>"; };
+		2C455B142C2B13FA00D856E4 /* NamoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertView.swift; sourceTree = "<group>"; };
+		2C455B172C2D42BE00D856E4 /* AlertViewWithTitleAndMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewWithTitleAndMessage.swift; sourceTree = "<group>"; };
+		2C455B192C2D477800D856E4 /* AlertViewWithTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewWithTopButton.swift; sourceTree = "<group>"; };
+		2C455B1B2C2D4A1400D856E4 /* AlertViewWithContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewWithContent.swift; sourceTree = "<group>"; };
 		2C5717592B595C1200B0F3B3 /* NamoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoHome.swift; sourceTree = "<group>"; };
 		2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoTabView.swift; sourceTree = "<group>"; };
 		2C57175D2B59FC0D00B0F3B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -202,7 +203,7 @@
 		2C5717E52B61306700B0F3B3 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		2C7232342B6DFEEF0097D669 /* ScheduleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractor.swift; sourceTree = "<group>"; };
-		2CF445032B760A8100A8E514 /* NamoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertView.swift; sourceTree = "<group>"; };
+		2CF445032B760A8100A8E514 /* AlertViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewOld.swift; sourceTree = "<group>"; };
 		2CF445072B78E22900A8E514 /* CategoryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEndPoint.swift; sourceTree = "<group>"; };
 		2CF445092B78E3C700A8E514 /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
 		2CF4450B2B78E95000A8E514 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
@@ -233,8 +234,6 @@
 		5012A9C02B5933CB00544AB0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		5012A9C22B5933CC00544AB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5012A9C52B5933CC00544AB0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5021D8D42B593F27009B4AD1 /* Example_ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleRepository.swift; sourceTree = "<group>"; };
-		5021D8D82B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleRepositoryImpl.swift; sourceTree = "<group>"; };
 		5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		5021D8E22B594044009B4AD1 /* DiaryMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryMainView.swift; sourceTree = "<group>"; };
 		5021D8E92B59407C009B4AD1 /* GroupMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMainView.swift; sourceTree = "<group>"; };
@@ -278,7 +277,6 @@
 		8870C8562B7766F8001D083B /* ToDoSelectPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSelectPlaceView.swift; sourceTree = "<group>"; };
 		8879A7DD2B691BC900794475 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8879A7E02B6927ED00794475 /* testDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDTO.swift; sourceTree = "<group>"; };
-		8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_ScheduleEndPoint.swift; sourceTree = "<group>"; };
 		8879A7E82B6A494D00794475 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8879A7EC2B6A521B00794475 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
 		8886466A2BDD7A1D007DD805 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -289,10 +287,6 @@
 		889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceEndPoint.swift; sourceTree = "<group>"; };
 		889EE0E72B8B234200F2FFB3 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 		88A7EF1A2B6E867000E47C8B /* AuthDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTO.swift; sourceTree = "<group>"; };
-		88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Example_PetEndPoint.swift; path = Namo_SwiftUI/Data/API/EndPoint/example/Example_PetEndPoint.swift; sourceTree = SOURCE_ROOT; };
-		88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_PetRepository.swift; sourceTree = "<group>"; };
-		88A7EF232B6E896B00E47C8B /* Example_PetRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_PetRepositoryImpl.swift; sourceTree = "<group>"; };
-		88A7EF252B6E897F00E47C8B /* Example_PetRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_PetRepositoryTest.swift; sourceTree = "<group>"; };
 		88A7EF282B6E89A800E47C8B /* getPetInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getPetInfoDTO.swift; sourceTree = "<group>"; };
 		88A7EF2A2B6E89B400E47C8B /* postPetInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postPetInfoDTO.swift; sourceTree = "<group>"; };
 		88A7EF2C2B6E89BD00E47C8B /* deletePetInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deletePetInfoDTO.swift; sourceTree = "<group>"; };
@@ -362,6 +356,16 @@
 				2C1305292BA3CFFA0002175D /* RealmSchedule.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		2C455B162C2D429900D856E4 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				2C455B172C2D42BE00D856E4 /* AlertViewWithTitleAndMessage.swift */,
+				2C455B192C2D477800D856E4 /* AlertViewWithTopButton.swift */,
+				2C455B1B2C2D4A1400D856E4 /* AlertViewWithContent.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		2C57177F2B5BF35D00B0F3B3 /* Fonts */ = {
@@ -488,7 +492,6 @@
 				50BE93422B6F7C200005022E /* Memo */,
 				507C84D12B6F376D00147C60 /* Moim */,
 				507C84D02B6F371900147C60 /* Category */,
-				88A7EF1F2B6E894400E47C8B /* example */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				5012A9C02B5933CB00544AB0 /* SplashView.swift */,
 				2C5717592B595C1200B0F3B3 /* NamoHome.swift */,
 				2C57175B2B59F7B500B0F3B3 /* NamoTabView.swift */,
+				2C455B142C2B13FA00D856E4 /* NamoAlertView.swift */,
 				4756B79F2BF4D59100518E10 /* secret.swift */,
 			);
 			path = App;
@@ -581,11 +585,12 @@
 		5012A9E62B593BD000544AB0 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2C455B162C2D429900D856E4 /* Alert */,
 				508EC7B62B5A77C9006E5EEA /* LottieView.swift */,
 				88D6C9F42B60119C004742AD /* ColorCircleView.swift */,
 				2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */,
 				88E3A02C2B726F6C00B9F75C /* KakaoMapView.swift */,
-				2CF445032B760A8100A8E514 /* NamoAlertView.swift */,
+				2CF445032B760A8100A8E514 /* AlertViewOld.swift */,
 				A24F32422BA4103700014E06 /* DismissButton.swift */,
 				A22F634E2B96D85900BC39A2 /* TrashView.swift */,
 				2CF445172B7F482000A8E514 /* NamoAlertViewWithTopButton.swift */,
@@ -641,15 +646,6 @@
 				8886466A2BDD7A1D007DD805 /* UIApplication+.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		5021D8D62B593F2F009B4AD1 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				5021D8D42B593F27009B4AD1 /* Example_ScheduleRepository.swift */,
-				5021D8D82B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift */,
-			);
-			path = Schedule;
 			sourceTree = "<group>";
 		};
 		5021D8DC2B593F88009B4AD1 /* HomeMain */ = {
@@ -906,7 +902,6 @@
 				889EE0E42B88914D00F2FFB3 /* Place */,
 				2CF445062B78E21B00A8E514 /* Category */,
 				504F8EA12B75CC1800ADB867 /* Auth */,
-				88A7EF1E2B6E891E00E47C8B /* example */,
 			);
 			path = EndPoint;
 			sourceTree = "<group>";
@@ -934,34 +929,6 @@
 				889EE0E52B88915700F2FFB3 /* PlaceEndPoint.swift */,
 			);
 			path = Place;
-			sourceTree = "<group>";
-		};
-		88A7EF1E2B6E891E00E47C8B /* example */ = {
-			isa = PBXGroup;
-			children = (
-				8879A7E52B69285700794475 /* Example_ScheduleEndPoint.swift */,
-				88A7EF1C2B6E88F400E47C8B /* Example_PetEndPoint.swift */,
-			);
-			path = example;
-			sourceTree = "<group>";
-		};
-		88A7EF1F2B6E894400E47C8B /* example */ = {
-			isa = PBXGroup;
-			children = (
-				5021D8D62B593F2F009B4AD1 /* Schedule */,
-				88A7EF202B6E894C00E47C8B /* PetInfo */,
-			);
-			path = example;
-			sourceTree = "<group>";
-		};
-		88A7EF202B6E894C00E47C8B /* PetInfo */ = {
-			isa = PBXGroup;
-			children = (
-				88A7EF212B6E895900E47C8B /* Example_PetRepository.swift */,
-				88A7EF232B6E896B00E47C8B /* Example_PetRepositoryImpl.swift */,
-				88A7EF252B6E897F00E47C8B /* Example_PetRepositoryTest.swift */,
-			);
-			path = PetInfo;
 			sourceTree = "<group>";
 		};
 		88A7EF272B6E899400E47C8B /* example */ = {
@@ -1150,16 +1117,14 @@
 				A24F32602BA5713100014E06 /* DiaryRepositoryImpl.swift in Sources */,
 				A24F32582BA56F3500014E06 /* DiaryDTO.swift in Sources */,
 				A257FFD02BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift in Sources */,
-				5021D8D52B593F27009B4AD1 /* Example_ScheduleRepository.swift in Sources */,
 				A22F634B2B96D31800BC39A2 /* EditMoimDiaryView.swift in Sources */,
 				889EE0E12B888EC100F2FFB3 /* PlaceRepository.swift in Sources */,
 				2CFE00552B73658A0054C31B /* Schedule.swift in Sources */,
 				A24F325B2BA56F7100014E06 /* DiaryEndPoint.swift in Sources */,
 				88A7EF2B2B6E89B400E47C8B /* postPetInfoDTO.swift in Sources */,
 				2C57175A2B595C1200B0F3B3 /* NamoHome.swift in Sources */,
-				88A7EF242B6E896B00E47C8B /* Example_PetRepositoryImpl.swift in Sources */,
 				88E48F7E2B820FFD00B064A0 /* ScheduleTemplate.swift in Sources */,
-				2CF445042B760A8100A8E514 /* NamoAlertView.swift in Sources */,
+				2CF445042B760A8100A8E514 /* AlertViewOld.swift in Sources */,
 				2C57175C2B59F7B500B0F3B3 /* NamoTabView.swift in Sources */,
 				2CFE00202B6F50890054C31B /* CalendarScheduleItem.swift in Sources */,
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
@@ -1170,11 +1135,11 @@
 				50299F282BA11BCB007CCDB7 /* CategoryAddView.swift in Sources */,
 				A257FFCC2BC07A4E004F58DD /* MoimDiaryEndPoint.swift in Sources */,
 				5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */,
+				2C455B1C2C2D4A1400D856E4 /* AlertViewWithContent.swift in Sources */,
 				A22F63512B96E68900BC39A2 /* BlackBorderRoundedView.swift in Sources */,
 				2CF4451A2B7FA0A200A8E514 /* MoimDTO.swift in Sources */,
 				88A7EF292B6E89A800E47C8B /* getPetInfoDTO.swift in Sources */,
 				88BDADE32BA0C5740055B69A /* ErrorHandler.swift in Sources */,
-				5021D8D92B593F4D009B4AD1 /* Example_ScheduleRepositoryImpl.swift in Sources */,
 				A257FFC82BC079DD004F58DD /* MoimDiaryInteractor.swift in Sources */,
 				5021D8F42B594279009B4AD1 /* OnboardingView.swift in Sources */,
 				509D3C8D2BCA8ADA00E699CF /* UserRepositoryImpl.swift in Sources */,
@@ -1216,6 +1181,7 @@
 				8834ADFD2B67CAE00024F724 /* EndPoint.swift in Sources */,
 				88E3A02D2B726F6C00B9F75C /* KakaoMapView.swift in Sources */,
 				88E48F802B827C2500B064A0 /* CircleItemView.swift in Sources */,
+				2C455B1A2C2D477800D856E4 /* AlertViewWithTopButton.swift in Sources */,
 				2C2749A22C0C242A00ECBA71 /* RemoteConfigManager.swift in Sources */,
 				2CF4451C2B7FA0C300A8E514 /* GroupListItem.swift in Sources */,
 				88D6C9F82B6028B3004742AD /* ToDoEditView.swift in Sources */,
@@ -1233,7 +1199,6 @@
 				507C84CF2B6F35B100147C60 /* APIAuthInteractorImpl.swift in Sources */,
 				A24F32652BA5718E00014E06 /* DiaryInteractorImpl.swift in Sources */,
 				2CF445262B83516400A8E514 /* GroupCalendarView.swift in Sources */,
-				88A7EF1D2B6E88F400E47C8B /* Example_PetEndPoint.swift in Sources */,
 				88EFE4622B87C7780085826B /* PlaceInteractorImpl.swift in Sources */,
 				50299F262BA0FE73007CCDB7 /* CategorySettingPath.swift in Sources */,
 				5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */,
@@ -1241,7 +1206,7 @@
 				50CB10D92B5D5A6E000307E4 /* AgreeSubView.swift in Sources */,
 				2CF445182B7F482000A8E514 /* NamoAlertViewWithTopButton.swift in Sources */,
 				50BE93472B6F7CB50005022E /* MemoInteractorSample.swift in Sources */,
-				88A7EF262B6E897F00E47C8B /* Example_PetRepositoryTest.swift in Sources */,
+				2C455B182C2D42BE00D856E4 /* AlertViewWithTitleAndMessage.swift in Sources */,
 				2C5717E62B61306700B0F3B3 /* Date+.swift in Sources */,
 				A24F32432BA4103700014E06 /* DismissButton.swift in Sources */,
 				88A7EF2F2B6E8AE400E47C8B /* BaseResponse.swift in Sources */,
@@ -1256,6 +1221,7 @@
 				88A7EF2D2B6E89BD00E47C8B /* deletePetInfoDTO.swift in Sources */,
 				2CF445242B8054A000A8E514 /* MoimEndPoint.swift in Sources */,
 				5021D8EA2B59407C009B4AD1 /* GroupMainView.swift in Sources */,
+				2C455B152C2B13FA00D856E4 /* NamoAlertView.swift in Sources */,
 				50E6E5492B89FC5F006CB20D /* SettingComponent.swift in Sources */,
 				889EE0E82B8B234200F2FFB3 /* NotificationSetting.swift in Sources */,
 				5021D9002B5942D1009B4AD1 /* FactoryDI.swift in Sources */,
@@ -1277,10 +1243,8 @@
 				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
 				2C13052C2BA3D4240002175D /* List+.swift in Sources */,
-				8879A7E62B69285700794475 /* Example_ScheduleEndPoint.swift in Sources */,
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */,
-				88A7EF222B6E895900E47C8B /* Example_PetRepository.swift in Sources */,
 				50926D9F2BA4A10E00C656F4 /* ToastView.swift in Sources */,
 				884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */,
 				2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */,

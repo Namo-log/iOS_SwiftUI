@@ -31,23 +31,22 @@ import Factory
  - NamoAlertView를 띄우는 변수를 조절할 때 withAnimation을 감싸주세요
  */
 
-struct NamoAlertView: View {
-	@Injected(\.appState) var appState
+struct AlertViewOld: View {
 	
 	@Binding var showAlert: Bool
 	let content: AnyView
-	let leftButtonTitle: String
-	let leftButtonAction: () -> Void
-	var rightButtonTitle: String? = nil
-	var rightButtonAction: (() -> Void)? = {}
+	var leftButtonTitle: String?
+	var leftButtonAction: () -> Void = {}
+	let rightButtonTitle: String
+	let rightButtonAction: () -> Void
 	
     var body: some View {
 		ZStack {
 			Color.black.opacity(0.5)
 				.edgesIgnoringSafeArea(.all)
 				.onTapGesture {
-					appState.isTabbarOpaque = false
-					showAlert = false	
+					AppState.shared.isTabbarOpaque = false
+					showAlert = false
 				}
 			
 			VStack(spacing: 16) {
@@ -55,26 +54,26 @@ struct NamoAlertView: View {
 					.padding(.horizontal, 16)
 				
 				HStack(spacing: 8) {
-					Button(action: leftAction, label: {
-						Text(leftButtonTitle)
-							.foregroundStyle(Color(.mainText))
-							.frame(width: screenWidth/2 - 50, height: 43)
-							.font(.pretendard(.bold, size: 16))
-					})
-					.background(Color(.mainGray))
-					.cornerRadius(4)
-					
-					if let rightButtonTitle = rightButtonTitle,
-					   let _ = rightButtonAction {
-						Button(action: rightAction, label: {
-							Text(rightButtonTitle)
-								.foregroundStyle(Color.white)
+					if let leftButtonTitle = leftButtonTitle {
+						Button(action: leftButtonAction, label: {
+							Text(leftButtonTitle)
+								.foregroundStyle(Color(.mainText))
 								.frame(width: screenWidth/2 - 50, height: 43)
 								.font(.pretendard(.bold, size: 16))
 						})
-						.background(Color(.mainOrange))
+						.background(Color(.mainGray))
 						.cornerRadius(4)
 					}
+					
+					
+					Button(action: rightButtonAction, label: {
+						Text(rightButtonTitle)
+							.foregroundStyle(Color.white)
+							.frame(width: screenWidth/2 - 50, height: 43)
+							.font(.pretendard(.bold, size: 16))
+					})
+					.background(Color(.mainOrange))
+					.cornerRadius(4)
 				}
 				.padding(.bottom, 16)
 				.padding(.horizontal, 16)
@@ -88,20 +87,8 @@ struct NamoAlertView: View {
 		}
 		.onAppear {
 			withAnimation {
-				appState.isTabbarOpaque = true
+				AppState.shared.isTabbarOpaque = true
 			}
 		}
     }
-	
-	private func leftAction() {
-		appState.isTabbarOpaque = false
-		showAlert = false
-		leftButtonAction()
-	}
-	
-	private func rightAction() {
-		appState.isTabbarOpaque = false
-		showAlert = false
-		rightButtonAction!()
-	}
 }

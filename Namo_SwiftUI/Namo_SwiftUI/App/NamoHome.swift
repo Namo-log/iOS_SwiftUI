@@ -18,7 +18,6 @@ enum Tab {
 struct NamoHome: View {
 	@EnvironmentObject var appState: AppState
 	@Injected(\.scheduleInteractor) var scheduleInteractor
-//	@State var currentTab: Tab = .home
 	
 	var body: some View {
 		NavigationStack {
@@ -47,6 +46,10 @@ struct NamoHome: View {
 							Color.black.opacity(0.5)
 						}
 					}
+				
+				if appState.alertType != nil {
+					NamoAlertView()
+				}
 
 			}
 			.ignoresSafeArea(edges: .bottom)

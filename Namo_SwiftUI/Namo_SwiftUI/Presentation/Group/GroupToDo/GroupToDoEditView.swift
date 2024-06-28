@@ -229,7 +229,7 @@ struct GroupToDoEditView: View {
             
             // MARK: 삭제 Alert 창
             if showAlert {
-                NamoAlertView(
+                AlertViewOld(
                     showAlert: $showAlert,
                     content: AnyView(
                         VStack {

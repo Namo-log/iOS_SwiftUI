@@ -68,7 +68,7 @@ struct SettingView: View {
             .padding(.top, 30)
             
             if showLogoutAlert {
-                NamoAlertView(showAlert: $showLogoutAlert,
+                AlertViewOld(showAlert: $showLogoutAlert,
                               content: AnyView(
                                 VStack(spacing: 0) {
                                     Text("로그아웃 하시겠어요?")
@@ -88,7 +88,7 @@ struct SettingView: View {
                                 }
                             })
             } else if showDeleteAccountAlert  {
-                NamoAlertView(showAlert: $showDeleteAccountAlert,
+                AlertViewOld(showAlert: $showDeleteAccountAlert,
                               content: AnyView(
                                 VStack(spacing: 8) {
                                     Text("정말 계정을 삭제하시겠어요?")

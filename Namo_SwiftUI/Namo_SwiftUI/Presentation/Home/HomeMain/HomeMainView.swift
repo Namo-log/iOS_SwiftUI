@@ -280,7 +280,7 @@ struct HomeMainView: View {
 	}
 	
 	private var datePicker: some View {
-		NamoAlertView(
+		AlertViewOld(
 			showAlert: $showDatePicker,
 			content: AnyView(
 				HStack(spacing: 0) {
