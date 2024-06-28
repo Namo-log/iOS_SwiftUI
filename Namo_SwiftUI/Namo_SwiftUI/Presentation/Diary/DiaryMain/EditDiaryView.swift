@@ -131,7 +131,7 @@ struct EditDiaryView: View {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea(.all, edges: .all)
                 
-                NamoAlertView(
+                AlertViewOld(
                     showAlert: $appState.isDeletingDiary,
                     content: AnyView(
                         Text("기록을 정말 삭제하시겠어요?")

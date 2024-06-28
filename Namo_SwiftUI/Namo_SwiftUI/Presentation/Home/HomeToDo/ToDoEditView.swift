@@ -362,7 +362,7 @@ struct ToDoEditView: View {
             
             // MARK: 삭제 Alert 창
             if showAlert {
-                NamoAlertView(
+                AlertViewOld(
                     showAlert: $showAlert,
                     content: AnyView(
                         VStack {
@@ -398,7 +398,7 @@ struct ToDoEditView: View {
             // 카테고리 삭제 alert
             if showCategoryDeleteAlert {
                 
-                NamoAlertView(
+                AlertViewOld(
                     showAlert: $showCategoryDeleteAlert,
                     content: AnyView(
                         VStack {

@@ -223,7 +223,7 @@ struct EditMoimDiaryView: View {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea(.all, edges: .all)
                 
-                NamoAlertView(
+                AlertViewOld(
                     showAlert: $appState.isDeletingDiary,
                     content: AnyView(
                         VStack(alignment: .center, spacing: 10) {
