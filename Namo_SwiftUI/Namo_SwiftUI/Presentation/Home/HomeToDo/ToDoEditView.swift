@@ -388,7 +388,7 @@ struct ToDoEditView: View {
                     rightButtonAction: {
                         Task {
                             // 삭제 후 dismiss
-                            await self.scheduleInteractor.deleteSchedule()
+							await self.scheduleInteractor.deleteSchedule(isMoim: scheduleState.isCurrentScheduleIsGroup)
                             dismissThis()
                         }
                     }
