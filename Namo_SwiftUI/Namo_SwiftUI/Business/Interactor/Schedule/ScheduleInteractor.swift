@@ -30,7 +30,7 @@ protocol ScheduleInteractor {
     func setPlaceToCurrentSchedule()
     func postNewSchedule() async
     func patchSchedule() async
-    func deleteSchedule() async
+	func deleteSchedule(isMoim: Bool) async
     func setScheduleToCurrentSchedule(schedule: Schedule?)
     func setScheduleToCurrentMoimSchedule(schedule: Schedule?, users: [MoimUser]?)
 	func yearMonthBetween(start: Date, end: Date) -> [YearMonth]

@@ -316,7 +316,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
     }
     
     /// 현재 수정하고 있는 스케쥴을 서버로 삭제 요청합니다.
-    func deleteSchedule() async {
+	func deleteSchedule(isMoim: Bool) async {
         let temp = scheduleState.currentSchedule
         
         guard let scheduleId = temp.scheduleId else {
@@ -324,7 +324,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
             return
         }
         
-        let result = await scheduleRepository.deleteSchedule(scheduleId: scheduleId, isMoim: false)
+        let result = await scheduleRepository.deleteSchedule(scheduleId: scheduleId, isMoim: isMoim)
 		await MainActor.run {
 			NotificationCenter.default.post(name: .reloadCalendarViaNetwork, object: nil)
 		}
