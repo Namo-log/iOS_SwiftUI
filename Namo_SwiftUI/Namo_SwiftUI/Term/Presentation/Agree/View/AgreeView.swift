@@ -1,5 +1,5 @@
 //
-//  AgreeMainView.swift
+//  AgreeView.swift
 //  Namo_SwiftUI
 //
 //  Created by 고성민 on 1/20/24.
@@ -10,18 +10,10 @@ import Factory
 
 // 약관 동의 화면
 
-struct AgreeMainView: View {
+struct AgreeView: View {
     
-    @State var allAgree: Bool = false
-    @State var required1: Bool = false
-    @State var required2: Bool = false
-//    @State var optional1: Bool = false
-//    @State var optional2: Bool = false
-    
-    @State var isActive: Bool = false
-    
-    @Injected(\.userInteractor) var userInteractor
- 
+    @StateObject var agreeVM: AgreeViewModel = .init()
+
     var body: some View {
  
         VStack {
@@ -36,21 +28,20 @@ struct AgreeMainView: View {
             
             Spacer()
             
-            AgreeSubView(required1: $required1, required2: $required2)
+             AgreeSubView(agreeVM: agreeVM)
 
             Spacer()
             
             Button {
                 
-                isActive.toggle()
+                agreeVM.state.goToNext.toggle()
                 
-                Task {
-                    await userInteractor.registerTermsAgreement()
-                }
+                // 약관동의 요청
+                agreeVM.action(.onTapAgreeBtn)
                 
             } label: {
                 
-                if required1 && required2 {
+                if agreeVM.state.required1 && agreeVM.state.required2 {
                     
                     Text("확인")
                         .foregroundStyle(.white)
@@ -69,7 +60,7 @@ struct AgreeMainView: View {
                         .cornerRadius(15)
                 }
             }
-            .disabled(!(required1 && required2))
+            .disabled(!(agreeVM.state.required1 && agreeVM.state.required2))
             .padding(.bottom, 25)
         }
         .padding(.vertical, 30)
@@ -77,5 +68,5 @@ struct AgreeMainView: View {
 }
 
 #Preview {
-    AgreeMainView()
+    AgreeView()
 }
