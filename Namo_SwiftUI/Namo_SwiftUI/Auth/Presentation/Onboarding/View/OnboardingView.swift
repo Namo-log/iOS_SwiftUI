@@ -11,13 +11,13 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    @State var onboardingIndex = 1
     let onboardingSetences: [String] = ["소중한 나의 일정과 기록,\n 어떻게 관리하시나요?", "중요한 일정을 잊지 않도록\n 캘린더에 표시", "일정을 사진과 글로 기록하고\n 한 눈에 모아보세요", "그룹 캘린더에서 친구들 일정 확인 후\n 손쉽게 모임 일정을 잡고", "사진 공유와 금액 정산까지 효율적으로"]
-    @State var goToLogin = false
+    
+    @StateObject var onboardingVM: OnboardingViewModel = .init()
     
     var body: some View {
         
-        if !goToLogin {
+        if !onboardingVM.state.goToLogin {
             
             VStack {
                 
@@ -25,14 +25,14 @@ struct OnboardingView: View {
                     ForEach(1..<6, id: \.self) {index in
                         
                         Circle()
-                            .fill(onboardingIndex == index ? Color.mainOrange : Color.textUnselected)
+                            .fill(onboardingVM.state.onboardingIndex == index ? Color.mainOrange : Color.textUnselected)
                             .frame(width: 10, height: 10)
                             .padding(8)
                     }
                 }
                 .padding(.top, 50)
                 
-                TabView(selection: $onboardingIndex) {
+                TabView(selection: $onboardingVM.state.onboardingIndex) {
                     
                     ForEach(1..<6, id: \.self) { index in
                         
@@ -46,12 +46,12 @@ struct OnboardingView: View {
                             Spacer()
                         
                             
-                            LottieView(fileName: "onboarding\(onboardingIndex)")
-                                            .frame(width: onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50,
-                                                   height: onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50)
-                                            .id(onboardingIndex)
+                            LottieView(fileName: "onboarding\(onboardingVM.state.onboardingIndex)")
+                                            .frame(width: onboardingVM.state.onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50,
+                                                   height: onboardingVM.state.onboardingIndex == 2 ? screenWidth - 90 : screenWidth - 50)
+                                            .id(onboardingVM.state.onboardingIndex)
 
-                                            .padding(.bottom, onboardingIndex == 2 ? 20 : 0)
+                                            .padding(.bottom, onboardingVM.state.onboardingIndex == 2 ? 20 : 0)
                                             .padding(.top, -60)
                                             .tag(index)
                             
@@ -63,7 +63,7 @@ struct OnboardingView: View {
                 .tabViewStyle(PageTabViewStyle())
                 .padding(.top, 35)
                 
-                if onboardingIndex != 5 {
+                if onboardingVM.state.onboardingIndex != 5 {
                     
                     HStack {
                         Spacer()
@@ -71,13 +71,13 @@ struct OnboardingView: View {
                         Button {
 
                             withAnimation(.easeInOut(duration: 0.5)) {
-                                onboardingIndex = 5
+                                onboardingVM.state.onboardingIndex = 5
                             }
                         } label: {
 
                             Image(.btnSkip)
                         }
-                        .hidden(onboardingIndex == 5)
+                        .hidden(onboardingVM.state.onboardingIndex == 5)
                         .padding(.trailing, 35)
                     }
                     .padding(.bottom, 15)
@@ -102,20 +102,13 @@ struct OnboardingView: View {
 
                     withAnimation(.easeInOut(duration: 0.25)) {
                         
-                        if onboardingIndex == 5 {
-                            
-                            UserDefaults.standard.set(true, forKey: "onboardingDone")
-                            
-                            goToLogin = true
-                            
-                        } else {
-                            onboardingIndex += 1
-                        }
+                        onboardingVM.onTapNextBtn()
+                        
                     }
 
                 } label: {
                     
-                    if onboardingIndex == 5 {
+                    if onboardingVM.state.onboardingIndex == 5 {
                         
                         Text("시작하기")
                             .foregroundStyle(.white)
