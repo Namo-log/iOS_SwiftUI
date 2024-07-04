@@ -13,6 +13,8 @@ import AuthenticationServices
 
 final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextProviding {
     
+    let appState: AppState = AppState.shared
+    
     private let authRepository: AuthRepository
     
     override init() {
@@ -71,6 +73,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
                                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                                    self?.appState.isTabbarOpaque = false
                                     AppState.shared.isTabbarHidden = false
                                 }
                                 
@@ -131,6 +134,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                                     // 로그인 완료 -> 홈 화면으로 이동
                                     UserDefaults.standard.set(true, forKey: "isLogin")
                                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                                    self.appState.isTabbarOpaque = false
                                     AppState.shared.isTabbarHidden = false
                                 }
                                 
@@ -321,6 +325,7 @@ extension AuthUseCase: NaverThirdPartyLoginConnectionDelegate {
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                    self.appState.isTabbarOpaque = false
                     AppState.shared.isTabbarHidden = false
                 }
                 
@@ -421,6 +426,7 @@ extension AuthUseCase: ASAuthorizationControllerDelegate, ASWebAuthenticationPre
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                    self.appState.isTabbarOpaque = false
                     AppState.shared.isTabbarHidden = false
                 }
                 

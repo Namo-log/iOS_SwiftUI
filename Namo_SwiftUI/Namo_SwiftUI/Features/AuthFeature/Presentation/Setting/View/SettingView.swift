@@ -10,13 +10,10 @@ import Factory
 
 struct SettingView: View {
     
+    @StateObject var settingVM: SettingViewModel = .init()
     @EnvironmentObject var appState: AppState
-    
-    @State var showLogoutAlert: Bool = false
-    @State var showDeleteAccountAlert: Bool = false
-    @State private var isBackBtnDisabled = false
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         
         ZStack {
@@ -51,14 +48,14 @@ struct SettingView: View {
                 
                 SettingComponent(title: "로그아웃", action: {
                     
-                    showLogoutAlert = true
+                    settingVM.state.showLogoutAlert = true
                 })
                 
                 customDivider
                 
                 SettingComponent(title: "회원탈퇴", action: {
                     
-                    showDeleteAccountAlert = true
+                    settingVM.state.showDeleteAccountAlert = true
                 })
                 
                 Spacer()
@@ -66,8 +63,8 @@ struct SettingView: View {
             .padding(.horizontal, 16)
             .padding(.top, 30)
             
-            if showLogoutAlert {
-                AlertViewOld(showAlert: $showLogoutAlert,
+            if settingVM.state.showLogoutAlert {
+                AlertViewOld(showAlert: $settingVM.state.showLogoutAlert,
                               content: AnyView(
                                 VStack(spacing: 0) {
                                     Text("로그아웃 하시겠어요?")
@@ -79,15 +76,15 @@ struct SettingView: View {
                                 .offset(y: 8)
                               ),
                               leftButtonTitle: "취소",
-                              leftButtonAction: {},
+                              leftButtonAction: {
+                    settingVM.state.showLogoutAlert = false
+                },
                               rightButtonTitle: "확인",
                               rightButtonAction: {
-                                Task {
-                                    await authInteractor.logout()
-                                }
+                    settingVM.action(.onTapLogoutBtn)
                             })
-            } else if showDeleteAccountAlert  {
-                AlertViewOld(showAlert: $showDeleteAccountAlert,
+            } else if settingVM.state.showDeleteAccountAlert  {
+                AlertViewOld(showAlert: $settingVM.state.showDeleteAccountAlert,
                               content: AnyView(
                                 VStack(spacing: 8) {
                                     Text("정말 계정을 삭제하시겠어요?")
@@ -107,13 +104,13 @@ struct SettingView: View {
                                 .padding(.top, 24)
                               ),
                               leftButtonTitle: "취소",
-                              leftButtonAction: {},
+                              leftButtonAction: {
+                    settingVM.state.showDeleteAccountAlert = false
+                },
                               rightButtonTitle: "확인",
                               rightButtonAction: 
                                 {
-                    Task {
-                        await authInteractor.withdrawMember()
-                    }
+                    settingVM.action(.onTapDeleteAccountBtn)
                 })
             }
         }
@@ -124,29 +121,23 @@ struct SettingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     dismiss()
+                    appState.isTabbarOpaque = false
                 } label: {
                     Image("Arrow")
                         .padding(.leading, 15)
                 }
-                .disabled(isBackBtnDisabled)
+                .disabled(settingVM.state.isBackBtnDisabled)
             }
         }
-        .onChange(of: showLogoutAlert) { newValue in
+        .onChange(of: settingVM.state.showLogoutAlert) { newValue in
             
-            if !newValue {isBackBtnDisabled = false
-            } else {
-                isBackBtnDisabled = true
-            }
+            settingVM.action(.onChangeShowAlert(value: newValue))
         }
-        .onChange(of: showDeleteAccountAlert) { newValue in
+        .onChange(of: settingVM.state.showDeleteAccountAlert) { newValue in
             
-            if !newValue {
-                isBackBtnDisabled = false
-            } else {
-                isBackBtnDisabled = true
-            }
+            settingVM.action(.onChangeShowAlert(value: newValue))
         }
-        }
+        .background(CustomNavigationBar(backgroundColor: settingVM.state.navigationBarColor))
     }
     
     var customDivider: some View {
@@ -154,6 +145,8 @@ struct SettingView: View {
             .frame(height: 1)
             .foregroundStyle(.textPlaceholder)
     }
+}
+
 
 
 #Preview {

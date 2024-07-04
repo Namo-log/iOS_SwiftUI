@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SettingComponent: View {
     
-    @State var title: String
-    @State var content: String?
-    @State var image: Image?
-    @State var action: (() -> Void)?
+    var title: String
+    var content: String?
+    var image: Image?
+    var action: (() -> Void)?
     
     var body: some View {
         
