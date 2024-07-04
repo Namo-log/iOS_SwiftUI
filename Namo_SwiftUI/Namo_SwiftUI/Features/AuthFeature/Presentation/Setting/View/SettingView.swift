@@ -11,7 +11,6 @@ import Factory
 struct SettingView: View {
     
     @EnvironmentObject var appState: AppState
-    @Injected(\.authInteractor) var authInteractor
     
     @State var showLogoutAlert: Bool = false
     @State var showDeleteAccountAlert: Bool = false

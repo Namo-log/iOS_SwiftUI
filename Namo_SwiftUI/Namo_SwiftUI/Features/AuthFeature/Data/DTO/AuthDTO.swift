@@ -9,7 +9,7 @@ import Foundation
 
 
 /// 약관동의 여부 구조체
-struct Term: Decodable {
+struct TermDTO: Decodable {
     
     let content: String
     let check: Bool
@@ -20,7 +20,7 @@ struct SignInResponseDTO: Decodable {
     let accessToken: String
     let refreshToken: String
     let newUser: Bool
-    let terms: [Term]
+    let terms: [TermDTO]
 }
 
 // 카카오, 네이버 로그인 요청 DTO
@@ -43,13 +43,6 @@ struct AppleSignInRequestDTO: Codable {
     let authorizationCode: String
     let username: String
     let email: String
-}
-
-/// 약관동의 요청 DTO
-struct TermRequest: Codable {
-    
-    let isCheckTermOfUse: Bool
-    let isCheckPersonalInformationCollection: Bool
 }
 
 // 토큰 재발급 요청 DTO
