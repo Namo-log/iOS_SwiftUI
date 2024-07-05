@@ -11,7 +11,6 @@ import Factory
 struct CustomMainView: View {
     
     @EnvironmentObject var appState: AppState
-    @Injected(\.authInteractor) var authInteractor
     @Injected(\.categoryInteractor) var categoryInteractor
     
     let categories: [String] = ["팔레트", "폰트", "MY"]

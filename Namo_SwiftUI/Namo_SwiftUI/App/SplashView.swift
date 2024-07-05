@@ -28,7 +28,7 @@ struct SplashView: View {
             } else if onboardingDone && isActive && didGetRemoteConfig && !showUpdateRequired && isLogin && !newUser {
                 NamoHome()          // 나모 홈 화면
             } else if onboardingDone && isActive && didGetRemoteConfig && !showUpdateRequired && isLogin && newUser {
-                AgreeMainView()     // 약관동의 화면
+                AgreeView()     // 약관동의 화면
             } else {
                 ZStack {            // 스플래시 화면
                     

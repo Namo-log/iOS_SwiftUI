@@ -33,17 +33,6 @@ extension Container {
             .singleton
     }
     
-    // 프로토콜 타입 지정 후 실제 구현체를 넣어준다는 의미입니다.
-    var authInteractor: Factory<AuthInteractor> {
-        self { APIAuthInteractorImpl() }
-            .singleton
-    }
-    
-    var authRepository: Factory<AuthRepository> {
-        self { APIAuthRepositoryImpl() }
-            .singleton
-    }
-    
     var scheduleInteractor: Factory<ScheduleInteractor> {
         self { ScheduleInteractorImpl() }
             .singleton
@@ -103,15 +92,4 @@ extension Container {
         self { MoimDiaryRepositoryImpl() }
             .singleton
     }
-  
-    var userRepository: Factory<UserRepository> {
-        self { UserRepositoryImpl() }
-            .singleton
-    }
-    
-    var userInteractor: Factory<UserInteractor> {
-        self { UserInteractorImpl() }
-            .singleton
-    }
-    
 }
