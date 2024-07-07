@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import SwiftUICalendar
 
 struct CategoryState {
@@ -68,6 +69,9 @@ class AppState: ObservableObject {
 	static var shared = AppState()
 	
 	@Published var isLoading: Bool = false
+	
+	// Navigation
+	@Published var navigationPath = NavigationPath()
 	
 	// Tabbar
 	@Published var isTabbarHidden: Bool = false

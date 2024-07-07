@@ -20,7 +20,7 @@ struct NamoHome: View {
 	@Injected(\.scheduleInteractor) var scheduleInteractor
 	
 	var body: some View {
-		NavigationStack {
+		NavigationStack(path: $appState.navigationPath) {
 			ZStack(alignment: .bottom) {
 				VStack(spacing: 0) {
 					Spacer(minLength: 0)
