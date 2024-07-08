@@ -6,14 +6,13 @@
 //
 
 import Foundation
+import Factory
 
 final class TermUseCase {
     
-    private let termRepository: TermRepository
-    
-    init() {
-        self.termRepository = TermRepositoryImpl()
-    }
+    static let shared = TermUseCase()
+
+    @Injected(\.termRepository) var termRepository
     
     func registerTermsAgreement() async {
         
