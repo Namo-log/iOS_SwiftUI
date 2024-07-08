@@ -80,19 +80,6 @@ struct HomeMainView: View {
                 await categoryInteractor.getCategories()
             }
 		}
-		.onChange(of: calendarController.yearMonth) { newYearMonth in
-			if previousYearMonth.year <= newYearMonth.year {
-				if previousYearMonth.month <= newYearMonth.month {
-					scheduleInteractor.calendarScrollBackward(newYearMonth)
-				} else {
-					scheduleInteractor.calendarScrollForward(newYearMonth)
-				}
-			} else {
-				scheduleInteractor.calendarScrollForward(newYearMonth)
-			}
-			
-			previousYearMonth = newYearMonth
-		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { notification in
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
 				Task {

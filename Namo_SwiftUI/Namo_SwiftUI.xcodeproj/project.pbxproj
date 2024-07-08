@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0F71462BBA42660073A8E3 /* NotificationName+.swift */; };
-		2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1305292BA3CFFA0002175D /* RealmSchedule.swift */; };
-		2C13052C2BA3D4240002175D /* List+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052B2BA3D4240002175D /* List+.swift */; };
 		2C13052E2BA3D9C90002175D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13052D2BA3D9C90002175D /* RealmManager.swift */; };
 		2C27499C2C0C178700ECBA71 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2C27499B2C0C178700ECBA71 /* FirebaseAnalytics */; };
 		2C27499E2C0C178700ECBA71 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2C27499D2C0C178700ECBA71 /* FirebaseCrashlytics */; };
@@ -86,8 +84,6 @@
 		5012A9C62B5933CC00544AB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012A9C52B5933CC00544AB0 /* Preview Assets.xcassets */; };
 		5012A9CE2B59382200544AB0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9CD2B59382200544AB0 /* Alamofire */; };
 		5012A9D12B59382F00544AB0 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D02B59382F00544AB0 /* Factory */; };
-		5012A9D42B59389F00544AB0 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D32B59389F00544AB0 /* Realm */; };
-		5012A9D62B59389F00544AB0 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D52B59389F00544AB0 /* RealmSwift */; };
 		5012A9D92B59391600544AB0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5012A9D82B59391600544AB0 /* Kingfisher */; };
 		5021D8E02B593FC5009B4AD1 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8DF2B593FC5009B4AD1 /* HomeMainView.swift */; };
 		5021D8E32B594044009B4AD1 /* DiaryMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021D8E22B594044009B4AD1 /* DiaryMainView.swift */; };
@@ -178,8 +174,6 @@
 
 /* Begin PBXFileReference section */
 		2C0F71462BBA42660073A8E3 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
-		2C1305292BA3CFFA0002175D /* RealmSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSchedule.swift; sourceTree = "<group>"; };
-		2C13052B2BA3D4240002175D /* List+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+.swift"; sourceTree = "<group>"; };
 		2C13052D2BA3D9C90002175D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		2C2749A12C0C242A00ECBA71 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
 		2C2749A32C0C34FF00ECBA71 /* NamoAlertViewWithOneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertViewWithOneButton.swift; sourceTree = "<group>"; };
@@ -339,9 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C27499C2C0C178700ECBA71 /* FirebaseAnalytics in Frameworks */,
-				5012A9D62B59389F00544AB0 /* RealmSwift in Frameworks */,
 				8834ADF12B67BFFC0024F724 /* KakaoSDK in Frameworks */,
-				5012A9D42B59389F00544AB0 /* Realm in Frameworks */,
 				8834ADF52B67BFFC0024F724 /* KakaoSDKCommon in Frameworks */,
 				5012A9CE2B59382200544AB0 /* Alamofire in Frameworks */,
 				5012A9D12B59382F00544AB0 /* Factory in Frameworks */,
@@ -363,7 +355,6 @@
 		2C1305282BA3CFE90002175D /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				2C1305292BA3CFFA0002175D /* RealmSchedule.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -908,7 +899,6 @@
 				2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */,
 				2C5717E52B61306700B0F3B3 /* Date+.swift */,
 				8879A7E82B6A494D00794475 /* Data+.swift */,
-				2C13052B2BA3D4240002175D /* List+.swift */,
 				2C0F71462BBA42660073A8E3 /* NotificationName+.swift */,
 				8886466A2BDD7A1D007DD805 /* UIApplication+.swift */,
 			);
@@ -1227,8 +1217,6 @@
 			packageProductDependencies = (
 				5012A9CD2B59382200544AB0 /* Alamofire */,
 				5012A9D02B59382F00544AB0 /* Factory */,
-				5012A9D32B59389F00544AB0 /* Realm */,
-				5012A9D52B59389F00544AB0 /* RealmSwift */,
 				5012A9D82B59391600544AB0 /* Kingfisher */,
 				508EC7B42B5A76C5006E5EEA /* Lottie */,
 				2C57177D2B5BE9E800B0F3B3 /* SwiftUICalendar */,
@@ -1273,7 +1261,6 @@
 			packageReferences = (
 				5012A9CC2B59382200544AB0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				5012A9CF2B59382F00544AB0 /* XCRemoteSwiftPackageReference "Factory" */,
-				5012A9D22B59389F00544AB0 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				5012A9D72B59391600544AB0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				508EC7B32B5A76C5006E5EEA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				2C57177C2B5BE9E800B0F3B3 /* XCRemoteSwiftPackageReference "SwiftUICalendar" */,
@@ -1340,7 +1327,6 @@
 				2CFE00282B70C2580054C31B /* ScheduleRepositoryImpl.swift in Sources */,
 				2C0F71472BBA42660073A8E3 /* NotificationName+.swift in Sources */,
 				889C74152BCADCC0005937CB /* MoimScheduleTemplate.swift in Sources */,
-				2C13052A2BA3CFFA0002175D /* RealmSchedule.swift in Sources */,
 				8862E6382B839F760004DE4B /* ScheduleCategory.swift in Sources */,
 				50299F282BA11BCB007CCDB7 /* CategoryAddView.swift in Sources */,
 				A257FFCC2BC07A4E004F58DD /* MoimDiaryEndPoint.swift in Sources */,
@@ -1454,7 +1440,6 @@
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
-				2C13052C2BA3D4240002175D /* List+.swift in Sources */,
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */,
 				50926D9F2BA4A10E00C656F4 /* ToastView.swift in Sources */,
@@ -1719,14 +1704,6 @@
 				minimumVersion = 2.3.1;
 			};
 		};
-		5012A9D22B59389F00544AB0 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		5012A9D72B59391600544AB0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -1804,16 +1781,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5012A9CF2B59382F00544AB0 /* XCRemoteSwiftPackageReference "Factory" */;
 			productName = Factory;
-		};
-		5012A9D32B59389F00544AB0 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5012A9D22B59389F00544AB0 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		5012A9D52B59389F00544AB0 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5012A9D22B59389F00544AB0 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
 		};
 		5012A9D82B59391600544AB0 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

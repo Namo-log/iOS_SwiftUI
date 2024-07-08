@@ -18,9 +18,6 @@ protocol ScheduleInteractor {
 	func setCalendar(date: Date) async
 	func getSchedulesViaNetwork() async -> [Schedule]
 	func setSchedules(_ schedules: [Schedule], calculatedSchedules: [YearMonthDay: [CalendarSchedule]]) -> [YearMonthDay: [CalendarSchedule]]
-	func calendarScrollForward(_ to: YearMonth)
-	func calendarScrollBackward(_ to: YearMonth)
-	func calculateSchedules(_ yearMonth: YearMonth)
 	func findPostion(_ schedules: [CalendarSchedule]) -> Int
 	func formatYearMonth(_ ym: YearMonth) -> String
 	func getCurrentDay() -> String
