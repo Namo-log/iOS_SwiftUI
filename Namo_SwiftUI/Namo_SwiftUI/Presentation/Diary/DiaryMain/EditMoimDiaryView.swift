@@ -13,7 +13,7 @@ struct EditMoimDiaryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
-    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
+    let moimDiaryUseCase = MoimDiaryUseCase.shared
     
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
@@ -244,7 +244,7 @@ struct EditMoimDiaryView: View {
                         print("모임 기록 삭제")
                         Task {
                             // 모임 기록 삭제
-                            await moimDiaryInteractor.deleteMoimDiary(moimScheduleId: info.scheduleId)
+                            await moimDiaryUseCase.deleteMoimDiary(moimScheduleId: info.scheduleId)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -265,7 +265,7 @@ struct EditMoimDiaryView: View {
         .onAppear {
             Task {
                 self.activities.removeAll()
-                await moimDiaryInteractor.getOneMoimDiary(moimScheduleId: info.scheduleId)
+                await moimDiaryUseCase.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
             }
         }
@@ -300,11 +300,11 @@ struct EditMoimDiaryView: View {
                             print("@@0528 moimActivityId \(moimActivityId)")
                             let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: activityImages[i])
                             if moimActivityId == 0 {
-                                let res = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                                let res = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                                 print("@@0528 생성")
                                 print("@@0528 생성 req \(req)")
                             } else {
-                                let res = await moimDiaryInteractor.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
+                                let res = await moimDiaryUseCase.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
                                 print("@@0528 수정")
                                 print("@@0528 수정 req \(req)")
                             }
@@ -313,7 +313,7 @@ struct EditMoimDiaryView: View {
                     
                     // 활동 삭제
                     for activity in deleteActivities {
-                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
+                        let _ = await moimDiaryUseCase.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
                     }
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
@@ -325,12 +325,12 @@ struct EditMoimDiaryView: View {
                     for i in 0..<activities.count {
                         print(activityImages)
                         let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activityImages[i])
-                        let _ = await moimDiaryInteractor.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                        let _ = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                     }
                     
                     // 활동 삭제
                     for activity in deleteActivities {
-                        let _ = await moimDiaryInteractor.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
+                        let _ = await moimDiaryUseCase.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
                     }
                     
                     DispatchQueue.main.async {

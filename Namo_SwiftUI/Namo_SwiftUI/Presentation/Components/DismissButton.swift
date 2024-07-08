@@ -12,15 +12,15 @@ import Factory
 struct DismissButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var scheduleState: ScheduleState
-    @Injected(\.scheduleInteractor) var scheduleInteractor
+	let scheduleUseCase = ScheduleUseCase.shared
     @Binding var isDeletingDiary: Bool
     
     var body: some View {
         Button{
             self.presentationMode.wrappedValue.dismiss()
 //            scheduleState.currentSchedule = 
-            scheduleInteractor.setScheduleToCurrentSchedule(schedule: nil)
-            scheduleInteractor.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+			scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+			scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
         } label: {
             Image(.icBack)
                 .resizable()

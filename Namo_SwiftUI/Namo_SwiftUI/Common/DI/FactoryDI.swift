@@ -33,18 +33,8 @@ extension Container {
             .singleton
     }
     
-    var scheduleInteractor: Factory<ScheduleInteractor> {
-        self { ScheduleInteractorImpl() }
-            .singleton
-    }
-    
     var scheduleRepository: Factory<ScheduleRepository> {
         self { ScheduleRepositoryImpl() }
-            .singleton
-    }
-    
-    var categoryInteractor: Factory<CategoryInteractor> {
-        self { CategoryInteractorImpl() }
             .singleton
     }
     
@@ -53,18 +43,8 @@ extension Container {
             .singleton
     }
     
-    var moimInteractor: Factory<MoimInteractor> {
-        self { MoimInteractorImpl() }
-            .singleton
-    }
-    
     var moimRepository: Factory<MoimRepository> {
         self { MoimRepositoryImpl() }
-            .singleton
-    }
-    
-    var placeInteractor: Factory<PlaceInteractor> {
-        self { PlaceInteractorImpl() }
             .singleton
     }
     
@@ -73,18 +53,8 @@ extension Container {
             .singleton
     }
     
-    var diaryInteractor: Factory<DiaryInteractor> {
-        self { DiaryInteractorImpl() }
-            .singleton
-    }
-    
     var diaryRepository: Factory<DiaryRepository> {
         self { DiaryRepositoryImpl() }
-            .singleton
-    }
-    
-    var moimDiaryInteractor: Factory<MoimDiaryInteractor> {
-        self { MoimDiaryInteractorImpl() }
             .singleton
     }
     

@@ -11,7 +11,7 @@ import Factory
 
 // 날짜와 장소 정보 뷰
 struct DatePlaceInfoView: View {
-    @Injected(\.diaryInteractor) var diaryInteractor
+    let diaryUseCase = DiaryUseCase.shared
     
     var date: Date
     var place: String
@@ -25,7 +25,7 @@ struct DatePlaceInfoView: View {
                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15), radius: 7)
                 
                 VStack(alignment: .center, spacing: 0) {
-                    Text(diaryInteractor.getMonthEngString(date: date) ?? "")
+                    Text(diaryUseCase.getMonthEngString(date: date) ?? "")
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(.mainText)
                     Text(date.toDD())

@@ -10,9 +10,9 @@ import Factory
 import SwiftUICalendar
 
 struct GroupCalendarView: View {
-	@Injected(\.scheduleInteractor) var scheduleInteractor
-	@Injected(\.categoryInteractor) var categoryInteractor
-	@Injected(\.moimInteractor) var moimInteractor
+	let scheduleUseCase = ScheduleUseCase.shared
+	let categoryUseCase = CategoryUseCase.shared
+	let moimUseCase = MoimUseCase.shared
 	@StateObject var calendarController = CalendarController()
 	@EnvironmentObject var appState: AppState
 	@EnvironmentObject var moimState: MoimState
@@ -102,7 +102,7 @@ struct GroupCalendarView: View {
 					ToastView(toastMessage: "그룹 코드가 복사되었습니다", bottomPadding: 150)
 						.onAppear {
 							withAnimation {
-								moimInteractor.hideToast()
+								moimUseCase.hideToast()
 							}
 						}
 				}
@@ -115,7 +115,7 @@ struct GroupCalendarView: View {
 		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadGroupCalendarViaNetwork)) { notification in
 			Task {
-				await moimInteractor.getMoimSchedule(moimId: moimState.currentMoim.groupId)
+				await moimUseCase.getMoimSchedule(moimId: moimState.currentMoim.groupId)
 			}
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
 				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
@@ -145,7 +145,7 @@ struct GroupCalendarView: View {
 			}, label: {
 				HStack(spacing: 10) {
 					Text(
-						scheduleInteractor.formatYearMonth(calendarController.yearMonth)
+						scheduleUseCase.formatYearMonth(calendarController.yearMonth)
 					)
 					.font(.pretendard(.bold, size: 22))
 					
@@ -278,7 +278,7 @@ struct GroupCalendarView: View {
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
 			Button(action: {
-                scheduleInteractor.setDateAndTimesToCurrentMoimSchedule(focusDate: focusDate)
+                scheduleUseCase.setDateAndTimesToCurrentMoimSchedule(focusDate: focusDate)
                 self.isToDoSheetPresented = true
             }, label: {
 				Image(.floatingAdd)
@@ -336,7 +336,7 @@ struct GroupCalendarView: View {
 			leftButtonAction: {},
 			rightButtonTitle: "저장",
 			rightButtonAction: {
-				let result = await moimInteractor.changeMoimName(moimId: moimState.currentMoim.groupId, newName: newGroupName)
+				let result = await moimUseCase.changeMoimName(moimId: moimState.currentMoim.groupId, newName: newGroupName)
 				// 변경 성공 시
 				if result {
 					groupName = newGroupName
@@ -383,7 +383,7 @@ struct GroupCalendarView: View {
 						ForEach(moimState.currentMoim.groupUsers, id: \.userId) { user in
 							HStack(spacing: 20) {
 								Circle()
-									.fill(categoryInteractor.getColorWithPaletteId(id: user.color))
+									.fill(categoryUseCase.getColorWithPaletteId(id: user.color))
 									.frame(width: 20, height: 20)
 								
 								Text("\(user.userName)")
@@ -470,7 +470,7 @@ struct GroupCalendarView: View {
 			rightButtonTitle: "확인",
 			rightButtonAction: {
 				Task {
-					let result = await moimInteractor.withdrawGroup(moimId: moimState.currentMoim.groupId)
+					let result = await moimUseCase.withdrawGroup(moimId: moimState.currentMoim.groupId)
 					// 탈퇴 성공시 dismiss
 					if result {
 						appState.isTabbarOpaque = false

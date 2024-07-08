@@ -14,7 +14,7 @@ struct CalendarItem: View {
 	@EnvironmentObject var appState: AppState
 	@EnvironmentObject var scheduleState: ScheduleState
 	@EnvironmentObject var moimState: MoimState
-	@Injected(\.categoryInteractor) var categoryInteractor
+	let categoryUseCase = CategoryUseCase.shared
 	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	let date: YearMonthDay
@@ -94,7 +94,7 @@ struct CalendarItem: View {
 		VStack(alignment: .leading, spacing: focusDate == nil ? 4 : 2) {
 			ForEach(schedules.indices, id: \.self) { index in
 				if let schedule = schedules[index].schedule {
-					let color = categoryInteractor.getColorWithPaletteId(id: appState.categoryPalette[schedule.categoryId] ?? 0)
+					let color = categoryUseCase.getColorWithPaletteId(id: appState.categoryPalette[schedule.categoryId] ?? 0)
 					// 캘린더 펼친 상태
 					if focusDate == nil {
 						// 현재 날이 시작일이라면
@@ -291,7 +291,7 @@ struct CalendarItem: View {
 				if let schedule = schedules[index].schedule {
 					let color = schedule.curMoimSchedule ?
 					Color.mainOrange :
-					categoryInteractor.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
+					categoryUseCase.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
 					// 캘린더 펼친 상태
 					if focusDate == nil {
 						// 현재 날이 시작일이라면

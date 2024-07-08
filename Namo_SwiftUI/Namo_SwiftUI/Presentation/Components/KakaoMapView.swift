@@ -74,7 +74,7 @@ struct KakaoMapView: UIViewRepresentable {
         var selectedPlace: Place?
         
         /// appState의 placeState와 상호작용하기 위한 Interactor입니다
-        @Injected(\.placeInteractor) var placeInteractor
+		let placeUseCase = PlaceUseCase.shared
         
         override init() {
             super.init()
@@ -122,7 +122,7 @@ struct KakaoMapView: UIViewRepresentable {
         @objc func handlePlace(_ notification: Notification) {
             if let userInfo = notification.userInfo,
                let place = userInfo["place"] as? Place {
-                placeInteractor.selectPlace(place: place)
+				placeUseCase.selectPlace(place: place)
             }
         }
         
@@ -201,7 +201,7 @@ struct KakaoMapView: UIViewRepresentable {
             // pinList에서 해당 poiID에 해당하는 Place 확인
             if let place = pinList.first(where: { $0.id == Int(poiID) }) {
                 // appState의 selectedPlace 변경
-                placeInteractor.selectPlace(place: place)
+				placeUseCase.selectPlace(place: place)
             }
         }
         

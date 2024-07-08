@@ -1,5 +1,5 @@
 //
-//  MoimInteractorImpl.swift
+//  MoimUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 정현우 on 2/16/24.
@@ -8,7 +8,8 @@ import Foundation
 import Factory
 import SwiftUICalendar
 
-struct MoimInteractorImpl: MoimInteractor {
+final class MoimUseCase {
+	static let shared = MoimUseCase()
 	@Injected(\.moimRepository) var moimRepository
 //	@Injected(\.appState) var appState
 	@Injected(\.moimState) var moimState
@@ -24,7 +25,7 @@ struct MoimInteractorImpl: MoimInteractor {
 		let moims = await moimRepository.getMoimList() ?? []
 		
 		DispatchQueue.main.async {
-			moimState.moims = moims
+			self.moimState.moims = moims
 			AppState.shared.isLoading = false
 		}
 	}
@@ -254,7 +255,7 @@ struct MoimInteractorImpl: MoimInteractor {
     func setScheduleToCurrentMoimSchedule(schedule: MoimSchedule?) {
         
         DispatchQueue.main.async {
-            scheduleState.currentMoimSchedule = MoimScheduleTemplate(
+			self.scheduleState.currentMoimSchedule = MoimScheduleTemplate(
                 moimScheduleId: schedule?.moimScheduleId,
                 name: schedule?.name,
                 startDate: schedule?.startDate,
@@ -275,13 +276,13 @@ struct MoimInteractorImpl: MoimInteractor {
 	func hideToast() {
 		if moimState.showGroupWithdrawToast {
 			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-				moimState.showGroupWithdrawToast = false
+				self.moimState.showGroupWithdrawToast = false
 			}
 		}
 		
 		if moimState.showGroupCodeCopyToast {
 			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-				moimState.showGroupCodeCopyToast = false
+				self.moimState.showGroupCodeCopyToast = false
 			}
 		}
 	}

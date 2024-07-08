@@ -17,7 +17,7 @@ enum Tab {
 
 struct NamoHome: View {
 	@EnvironmentObject var appState: AppState
-	@Injected(\.scheduleInteractor) var scheduleInteractor
+	let scheduleUseCase = ScheduleUseCase.shared
 	
 	var body: some View {
 		NavigationStack(path: $appState.navigationPath) {
@@ -55,7 +55,7 @@ struct NamoHome: View {
 			.ignoresSafeArea(edges: .bottom)
 			.task {
                 if UserDefaults.standard.bool(forKey: "isLogin") {
-                    await scheduleInteractor.setCalendar(date: Date())
+                    await scheduleUseCase.setCalendar(date: Date())
                 }
 			}
 		}

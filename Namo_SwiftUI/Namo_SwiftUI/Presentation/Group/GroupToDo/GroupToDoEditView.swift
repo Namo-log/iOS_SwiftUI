@@ -16,9 +16,9 @@ struct GroupToDoEditView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var scheduleState: ScheduleState
     @EnvironmentObject var moimState: MoimState
-    @Injected(\.scheduleInteractor) var scheduleInteractor
-    @Injected(\.placeInteractor) var placeInteractor
-    @Injected(\.moimInteractor) var moimInteractor
+    let scheduleUseCase = ScheduleUseCase.shared
+    let placeUseCase = PlaceUseCase.shared
+    let moimUseCase = MoimUseCase.shared
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -201,9 +201,9 @@ struct GroupToDoEditView: View {
                                         return
                                     }
                                     if self.isRevise {
-                                        await moimInteractor.patchMoimSchedule()
+                                        await moimUseCase.patchMoimSchedule()
                                     } else {
-                                        await moimInteractor.postNewMoimSchedule()
+                                        await moimUseCase.postNewMoimSchedule()
                                     }
                                     // 닫기
                                     dismissThis()
@@ -255,8 +255,8 @@ struct GroupToDoEditView: View {
                     rightButtonAction: {
                         Task {
                             // 삭제 후 dismiss
-//                            await self.scheduleInteractor.deleteSchedule()
-                            await self.moimInteractor.deleteMoimSchedule()
+//                            await self.scheduleUseCase.deleteSchedule()
+                            await self.moimUseCase.deleteMoimSchedule()
                             dismissThis()
                         }
                     }
@@ -298,11 +298,11 @@ struct GroupToDoEditView: View {
                 Task {
                     let temp = self.scheduleState.currentMoimSchedule
                     
-                    let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                    let result = await placeUseCase.getPlaceList(query: temp.locationName)
                     
                     if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
-                        placeInteractor.appendPlaceList(place: target)
-                        placeInteractor.selectPlace(place: target)
+                        placeUseCase.appendPlaceList(place: target)
+                        placeUseCase.selectPlace(place: target)
                         currPlace = target
                     }
                 }
@@ -315,8 +315,8 @@ struct GroupToDoEditView: View {
     private func dismissThis() {
         self.scheduleState.currentMoimSchedule = MoimScheduleTemplate()
         // 대충 여기 모임 스케쥴 템플릿 초기화
-        placeInteractor.clearPlaces(isSave: false)
-        placeInteractor.selectPlace(place: nil)
+        placeUseCase.clearPlaces(isSave: false)
+        placeUseCase.selectPlace(place: nil)
         dismiss()
     }
     
@@ -360,8 +360,8 @@ struct GroupToDoEditView: View {
     struct CheckParticipant: View {
         
         @EnvironmentObject var moimState: MoimState
-        @Injected(\.scheduleInteractor) var scheduleInteractor
-        @Injected(\.moimInteractor) var moimInteractor
+        let scheduleUseCase = ScheduleUseCase.shared
+        let moimUseCase = MoimUseCase.shared
         
         @Binding var showCheckParticipant: Bool
         @State var selectedUser: [MoimUser]
@@ -374,7 +374,7 @@ struct GroupToDoEditView: View {
                 leftButtonAction: {},
                 rightButtonTitle: "저장",
                 rightButtonAction: {
-                    moimInteractor.setSelectedUserListToCurrentMoimSchedule(list: selectedUser)
+                    moimUseCase.setSelectedUserListToCurrentMoimSchedule(list: selectedUser)
                     return true
                 },
                 content: AnyView(

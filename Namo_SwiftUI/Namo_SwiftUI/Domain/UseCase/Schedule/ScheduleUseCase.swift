@@ -1,5 +1,5 @@
 //
-//  ScheduleInteractorImpl.swift
+//  ScheduleUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 정현우 on 2/5/24.
@@ -9,8 +9,8 @@ import SwiftUICalendar
 import SwiftUI
 import Factory
 
-struct ScheduleInteractorImpl: ScheduleInteractor {
-	
+final class ScheduleUseCase {
+	static let shared = ScheduleUseCase()
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
@@ -21,19 +21,11 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 	func setCalendar(date: Date) async {
 		// 네트워크를 통해 데이터 가져오기
 		let schedules = await getSchedulesViaNetwork()
-		// 받아온 데이터를 realm에 저장
-		saveSchedulesToRealm(schedules)
-		// 현재달 기준+-pagingCount달 필터링
-		let startDate = Date().addingMonth(-pagingCount).startOfMonth()
-		let endDate = Date().addingMonth(pagingCount).endOfMonth()
-		let filteredSchedules = schedules.filter({ schedule in
-			return schedule.endDate >= startDate.startOfMonth() && schedule.startDate <= endDate.endOfMonth()
-		})
 		// 해당 데이터 매핑해서 state로
-		let mappedSchedules = setSchedules(filteredSchedules.sorted(by: {$0.startDate < $1.startDate}))
+		let mappedSchedules = setSchedules(schedules.sorted(by: {$0.startDate < $1.startDate}))
 		DispatchQueue.main.async {
-			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
-			scheduleState.calendarSchedules = mappedSchedules
+//			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
+			self.scheduleState.calendarSchedules = mappedSchedules
 		}
 	}
 	
@@ -43,19 +35,6 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 			return schedules.map({ $0.toSchedule() })
 		} else {
 			return []
-		}
-	}
-	
-	// 3: 일정들을 데이터를 Realm에 저장
-	func saveSchedulesToRealm(_ schedules: [Schedule]) {
-		if !schedules.isEmpty {
-			let realm = RealmManager.shared
-			
-			// 네트워크를 통해 정상적으로 스케쥴을 불러왔다면
-			// 기존 데이터는 모두 삭제
-			realm.deleteObjects(RealmSchedule.self)
-			
-			realm.writeObjects(schedules.map({$0.toRealmSchedule()}))
 		}
 	}
 	
@@ -125,41 +104,6 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		} //: schedules forEach
 		return schedulesDict
 	}
-	
-	// 캘린더를 이전으로(과거) 스크롤하는 경우
-	func calendarScrollForward(_ to: YearMonth) {
-		// 스크롤되는 달 -pagingCount/2달을 포함하지 않았다면 새로 계산해야함
-		if !scheduleState.calculatedYearMonth.contains(to.addMonth(value: -pagingCount/2)) {
-			calculateSchedules(to)
-		}
-	}
-	
-	// 캘린더를 이후로(미래) 스크롤하는 경우
-	func calendarScrollBackward(_ to: YearMonth) {
-		// 스크롤되는 달 +pagingCount/2달을 포함하지 않았다면 그 달 계산
-		if !scheduleState.calculatedYearMonth.contains(to.addMonth(value: pagingCount/2)) {
-			//TODO: 전체 재계산이 아닌 페이징으로 변경
-			calculateSchedules(to)
-			
-		}
-	}
-	
-	func calculateSchedules(_ yearMonth: YearMonth) {
-		let date = YearMonthDay(year: yearMonth.year, month: yearMonth.month, day: 1).toDate()
-		let startDate = date.addingMonth(-pagingCount).startOfMonth()
-		let endDate = date.addingMonth(pagingCount).endOfMonth()
-		
-		let realm = RealmManager.shared
-		let schedules = realm.getObjects(RealmSchedule.self).filter({ schedule in
-			return schedule.endDate >= startDate.startOfMonth() && schedule.startDate <= endDate.endOfMonth()
-		})
-		let mappedSchedules = setSchedules(schedules.map({$0.toSchedule()}).sorted(by: {$0.startDate < $1.startDate}))
-		DispatchQueue.main.async {
-			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
-			scheduleState.calendarSchedules = mappedSchedules
-		}
-	}
-	
 	// 현재 스케쥴들을 확인하고, 추가될 스케쥴의 포지션을 구함
 	func findPostion(_ schedules: [CalendarSchedule]) -> Int {
 		
@@ -334,7 +278,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
     func setScheduleToCurrentSchedule(schedule: Schedule?) {
         DispatchQueue.main.async {
-            scheduleState.currentSchedule = ScheduleTemplate(
+			self.scheduleState.currentSchedule = ScheduleTemplate(
                 scheduleId: schedule?.scheduleId,
                 name: schedule?.name,
                 categoryId: schedule?.categoryId,
@@ -345,7 +289,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
                 y: schedule?.y,
                 locationName: schedule?.locationName
             )
-			scheduleState.isCurrentScheduleIsGroup = schedule?.moimSchedule ?? false
+			self.scheduleState.isCurrentScheduleIsGroup = schedule?.moimSchedule ?? false
         }
     }
     
@@ -353,7 +297,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
     func setScheduleToCurrentMoimSchedule(schedule: Schedule?, users: [MoimUser]?) {
         DispatchQueue.main.async {
-            scheduleState.currentMoimSchedule = .init(
+			self.scheduleState.currentMoimSchedule = .init(
                 moimScheduleId: schedule?.scheduleId,
                 name: schedule?.name,
                 startDate: schedule?.startDate,

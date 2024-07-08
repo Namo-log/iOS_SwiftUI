@@ -15,7 +15,7 @@ struct ToDoSelectCategoryView: View {
     
     @EnvironmentObject var appState: AppState
 	@EnvironmentObject var scheduleState: ScheduleState
-    @Injected(\.categoryInteractor) var categoryInteractor
+    let categoryUseCase = CategoryUseCase.shared
     
     /// 화면에 표시되기 위한 categoryList State
     @State private var categoryList: [ScheduleCategory] = []
@@ -94,7 +94,7 @@ struct ToDoSelectCategoryView: View {
         }//: ScrollView
         .onAppear {
             
-            self.categoryList = self.categoryInteractor.setCategories()
+            self.categoryList = self.categoryUseCase.setCategories()
         }
     }
 }

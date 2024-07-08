@@ -20,7 +20,7 @@ struct ColorItem: Hashable {
 
 struct CategoryAddView: View {
     
-    @Injected(\.categoryInteractor) var categoryInteractor
+	let categoryUseCase = CategoryUseCase.shared
     
     // 새 카테고리 제목
     @State private var categoryTitle: String = ""
@@ -77,7 +77,7 @@ struct CategoryAddView: View {
                         
                         ForEach(basicColorItems.prefix(4)) { item in
                             
-                            ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: item.id), selectState: item.state)
+                            ColorCircleView(color: categoryUseCase.getColorWithPaletteId(id: item.id), selectState: item.state)
                                 .frame(width: 25, height: 25)
                                 .onTapGesture {
                                     self.selectedPaletteId = item.id
@@ -104,7 +104,7 @@ struct CategoryAddView: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(basicColorItems.dropFirst(4)) { item in
                             
-                            ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: item.id), selectState: item.state)
+                            ColorCircleView(color: categoryUseCase.getColorWithPaletteId(id: item.id), selectState: item.state)
                                 .frame(width: 25, height: 25)
                                 .onTapGesture {
                                     self.selectedPaletteId = item.id
@@ -182,7 +182,7 @@ struct CategoryAddView: View {
                             Task {
                                 
                                 // 카테고리 생성 API 호출
-                                let result = await categoryInteractor.addCategory(data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+                                let result = await categoryUseCase.addCategory(data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
                                 
                                 // 생성이 성공했을 경우에만
                                 if result {

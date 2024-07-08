@@ -12,7 +12,7 @@ struct CategorySettingView: View {
     
     @EnvironmentObject var appState: AppState
     
-    @Injected(\.categoryInteractor) var categoryInteractor
+	let categoryUseCase = CategoryUseCase.shared
     
     @State private var categoryList: [ScheduleCategory] = []
     
@@ -137,9 +137,9 @@ struct CategorySettingView: View {
                 
                 Task {
                     
-                    await self.categoryInteractor.getCategories()
+                    await self.categoryUseCase.getCategories()
                     
-                    self.categoryList = categoryInteractor.setCategories()
+                    self.categoryList = categoryUseCase.setCategories()
                 }
             }
             
@@ -158,10 +158,10 @@ struct CategorySettingView: View {
                 }
             }
             .onChange(of: appState.showCategoryEditDoneToast) { _ in
-                categoryInteractor.showCategoryDoneToast()
+				categoryUseCase.showCategoryDoneToast()
             }
             .onChange(of: appState.showCategoryDeleteDoneToast) { _ in
-                categoryInteractor.showCategoryDoneToast()
+				categoryUseCase.showCategoryDoneToast()
             }
         }
     }

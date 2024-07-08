@@ -16,8 +16,8 @@ struct CalendarScheduleDetailItem: View {
     @EnvironmentObject var scheduleState: ScheduleState
 	@EnvironmentObject var diaryState: DiaryState
 	
-	@Injected(\.scheduleInteractor) var scheduleInteractor
-    @Injected(\.categoryInteractor) var categoryInteractor
+	let scheduleUseCase = ScheduleUseCase.shared
+    let categoryUseCase = CategoryUseCase.shared
 	
 	@Binding var isToDoSheetPresented: Bool
 	
@@ -25,12 +25,12 @@ struct CalendarScheduleDetailItem: View {
 		if let paletteId = appState.categoryPalette[schedule.categoryId] {
 			HStack(spacing: 5) {
 				Rectangle()
-					.fill(categoryInteractor.getColorWithPaletteId(id: paletteId))
+					.fill(categoryUseCase.getColorWithPaletteId(id: paletteId))
 					.frame(width: 30, height: 55)
 					.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
 				
 				VStack(alignment: .leading, spacing: 4) {
-					Text(scheduleInteractor.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
+					Text(scheduleUseCase.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
 						.font(.pretendard(.medium, size: 12))
 						.foregroundStyle(Color(.mainText))
 					
@@ -50,7 +50,7 @@ struct CalendarScheduleDetailItem: View {
                             .padding(.trailing, 11)
                     }
                     .simultaneousGesture(TapGesture().onEnded {
-                        scheduleInteractor.setScheduleToCurrentSchedule(schedule: schedule)
+                        scheduleUseCase.setScheduleToCurrentSchedule(schedule: schedule)
                         appState.isPersonalDiary = !schedule.moimSchedule
                         appState.isEditingDiary = hasDiary
                     })
@@ -63,7 +63,7 @@ struct CalendarScheduleDetailItem: View {
 					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 			)
 			.onTapGesture {
-				scheduleInteractor.setScheduleToCurrentSchedule(schedule: self.schedule)
+				scheduleUseCase.setScheduleToCurrentSchedule(schedule: self.schedule)
                 scheduleState.isGroup = schedule.moimSchedule
 				self.isToDoSheetPresented = true
 			}
@@ -76,17 +76,17 @@ struct CalendarMoimScheduleDetailItem: View {
 	let schedule: MoimSchedule
 	@EnvironmentObject var appState: AppState
 	
-	@Injected(\.scheduleInteractor) var scheduleInteractor
-	@Injected(\.categoryInteractor) var categoryInteractor
-    @Injected(\.moimInteractor) var moimInteractor
-	@Injected(\.moimDiaryInteractor) var moimDiaryInteractor
+	let scheduleUseCase = ScheduleUseCase.shared
+	let categoryUseCase = CategoryUseCase.shared
+    let moimUseCase = MoimUseCase.shared
+	let moimDiaryUseCase = MoimDiaryUseCase.shared
 	
 	@Binding var isToDoSheetPresented: Bool
 	
 	var body: some View {
 		let color = schedule.curMoimSchedule ?
 		Color.mainOrange :
-		categoryInteractor.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
+		categoryUseCase.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
 		HStack(spacing: 5) {
 			Rectangle()
 				.fill(color)
@@ -94,7 +94,7 @@ struct CalendarMoimScheduleDetailItem: View {
 				.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
 			
 			VStack(alignment: .leading, spacing: 4) {
-				Text(scheduleInteractor.getMoimScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
+				Text(scheduleUseCase.getMoimScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
 					.font(.pretendard(.medium, size: 12))
 					.foregroundStyle(Color(.mainText))
 				
@@ -114,7 +114,7 @@ struct CalendarMoimScheduleDetailItem: View {
                         .padding(.trailing, 11)
                 }
                 .simultaneousGesture(TapGesture().onEnded {
-                    moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
+                    moimUseCase.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
                     appState.isEditingDiary = schedule.hasDiaryPlace
                 })
 			} else {
@@ -138,7 +138,7 @@ struct CalendarMoimScheduleDetailItem: View {
 		)
 		.onTapGesture {
 			if self.schedule.curMoimSchedule {
-				moimInteractor.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
+				moimUseCase.setScheduleToCurrentMoimSchedule(schedule: self.schedule)
 				self.isToDoSheetPresented = true
 			}
 		}

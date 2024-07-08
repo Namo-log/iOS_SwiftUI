@@ -15,10 +15,10 @@ struct ToDoEditView: View {
     
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var scheduleState: ScheduleState
-    @Injected(\.scheduleInteractor) var scheduleInteractor
-    @Injected(\.moimInteractor) var moimInteractor
-    @Injected(\.categoryInteractor) var categoryInteractor
-    @Injected(\.placeInteractor) var placeInteractor
+    let scheduleUseCase = ScheduleUseCase.shared
+    let moimUseCase = MoimUseCase.shared
+    let categoryUseCase = CategoryUseCase.shared
+    let placeUseCase = PlaceUseCase.shared
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -64,7 +64,7 @@ struct ToDoEditView: View {
         self.dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
         // schedule 받은 경우 해당 schedule -> Template 저장 / nil이면 기본값
         // init으로 해당 객체를 직접 받기보다는, 전 화면에서 해당 함수를 호출하여 State에 추가해주는 것이 바람직해보입니다
-//        scheduleInteractor.setScheduleToTemplate(schedule: schedule)
+//        scheduleUseCase.setScheduleToTemplate(schedule: schedule)
     }
     
     
@@ -330,13 +330,13 @@ struct ToDoEditView: View {
                                     
                                     if self.scheduleState.isGroup {
                                         if self.isRevise {
-                                            await moimInteractor.patchMoimScheduleCategory(date: scheduleState.currentSchedule.startDate)
+                                            await moimUseCase.patchMoimScheduleCategory(date: scheduleState.currentSchedule.startDate)
                                         }
                                     } else {
                                         if self.isRevise {
-                                            await scheduleInteractor.patchSchedule()
+                                            await scheduleUseCase.patchSchedule()
                                         } else {
-                                            await scheduleInteractor.postNewSchedule()
+                                            await scheduleUseCase.postNewSchedule()
                                         }
                                     }
                                     
@@ -388,7 +388,7 @@ struct ToDoEditView: View {
                     rightButtonAction: {
                         Task {
                             // 삭제 후 dismiss
-							await self.scheduleInteractor.deleteSchedule(isMoim: scheduleState.isCurrentScheduleIsGroup)
+							await self.scheduleUseCase.deleteSchedule(isMoim: scheduleState.isCurrentScheduleIsGroup)
                             dismissThis()
                         }
                     }
@@ -426,7 +426,7 @@ struct ToDoEditView: View {
                         // 카테고리 삭제 API 호출
                         Task {
                             
-                            let result = await self.categoryInteractor.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
+                            let result = await self.categoryUseCase.removeCategory(id: self.appState.categoryState.categoryList.first?.categoryId ?? -1)
                             
                             // 삭제가 성공했을 경우에만
                             if result {
@@ -470,18 +470,18 @@ struct ToDoEditView: View {
                 Task {
                     let temp = self.scheduleState.currentSchedule
                     
-                    let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                    let result = await placeUseCase.getPlaceList(query: temp.locationName)
                     
                     if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
-                        placeInteractor.appendPlaceList(place: target)
-                        placeInteractor.selectPlace(place: target)
+                        placeUseCase.appendPlaceList(place: target)
+                        placeUseCase.selectPlace(place: target)
                         currPlace = target
                     }
                 }
             }
             
             Task {
-                await self.categoryInteractor.getCategories()
+                await self.categoryUseCase.getCategories()
                 
                 if self.isRevise {
                     
@@ -490,7 +490,7 @@ struct ToDoEditView: View {
                     self.scheduleState.currentSchedule.categoryId = appState.categoryState.categoryList.first?.categoryId ?? -1
                 }
                 
-                self.categoryList = categoryInteractor.setCategories()
+                self.categoryList = categoryUseCase.setCategories()
                 
                 self.setCategory()
             }
@@ -503,15 +503,15 @@ struct ToDoEditView: View {
     
     /// 현재 ToDoEditView를 종로하고, Temp와 PlaceList를 clear합니다.
     private func dismissThis() {
-        scheduleInteractor.setScheduleToCurrentSchedule(schedule: nil)
-        placeInteractor.clearPlaces(isSave: false)
-        placeInteractor.selectPlace(place: nil)
+        scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+        placeUseCase.clearPlaces(isSave: false)
+        placeUseCase.selectPlace(place: nil)
         scheduleState.isGroup = false
         dismiss()
     }
     
     private func setCategory() {
-        self.categoryColor = categoryInteractor.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1)
+        self.categoryColor = categoryUseCase.getColorWithPaletteId(id: appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.paletteId ?? -1)
         
         self.categoryName = appState.categoryState.categoryList.first(where: {$0.categoryId == scheduleState.currentSchedule.categoryId})?.name ?? "카테고리 없음"
     }

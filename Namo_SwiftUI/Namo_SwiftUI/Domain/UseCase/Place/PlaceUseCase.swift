@@ -1,5 +1,5 @@
 //
-//  PlaceInteractorImpl.swift
+//  PlaceUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 박민서 on 2/23/24.
@@ -8,7 +8,8 @@
 import Factory
 import SwiftUI
 
-struct PlaceInteractorImpl: PlaceInteractor {
+final class PlaceUseCase {
+	static let shared = PlaceUseCase()
     @Injected(\.placeRepository) private var placeRepository
     
     /// KakaoMapAPI를 통해 해당 쿼리에 맞는 결과를 placeList에 페칭합니다.
