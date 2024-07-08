@@ -9,7 +9,7 @@ import Foundation
 
 class AgreeViewModel: ObservableObject {
     
-    private let termUseCase: TermUseCase
+    private let termUseCase = TermUseCase.shared
     
     struct State {
         
@@ -26,10 +26,8 @@ class AgreeViewModel: ObservableObject {
     // 매개변수 기본값
     // .init()은 State()랑 같은 의미
     init(
-        termUseCase: TermUseCase = .init(),
         state: State = .init()
     ) {
-        self.termUseCase = termUseCase
         self.state = state
     }
     
