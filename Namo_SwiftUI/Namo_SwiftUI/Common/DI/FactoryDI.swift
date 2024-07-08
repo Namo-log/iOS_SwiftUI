@@ -67,4 +67,9 @@ extension Container {
         self { TermRepositoryImpl() }
             .singleton
     }
+    
+    var authRepository: Factory<AuthRepository> {
+        self { AuthRepositoryImpl() }
+            .singleton
+    }
 }
