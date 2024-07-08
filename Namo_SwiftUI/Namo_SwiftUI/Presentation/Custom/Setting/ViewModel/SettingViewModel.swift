@@ -10,7 +10,7 @@ import SwiftUI
 
 class SettingViewModel: ObservableObject {
     
-    private let authUseCase: AuthUseCase
+    private let authUseCase = AuthUseCase.shared
     
     struct State {
         
@@ -23,10 +23,8 @@ class SettingViewModel: ObservableObject {
     @Published var state: State
     
     init(
-        authUseCase: AuthUseCase = .init(),
         state: State = .init()
     ) {
-        self.authUseCase = authUseCase
         self.state = state
     }
     

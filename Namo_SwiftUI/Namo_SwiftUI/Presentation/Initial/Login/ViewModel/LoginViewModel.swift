@@ -9,13 +9,7 @@ import Foundation
 
 class LoginViewModel: ObservableObject {
     
-    private let authUseCase: AuthUseCase
-
-    init(
-        authUseCase: AuthUseCase = .init()
-    ) {
-        self.authUseCase = authUseCase
-    }
+    private let authUseCase = AuthUseCase.shared
     
     enum Action {
         case loginKakao
@@ -43,6 +37,5 @@ class LoginViewModel: ObservableObject {
     // 네이버 로그인
     func naverLogin() { authUseCase.naverLogin() }
     // 애플 로그인
-    func appleLogin() { authUseCase.appleLogin()
-}
+    func appleLogin() { authUseCase.appleLogin() }
 }

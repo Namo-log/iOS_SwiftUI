@@ -10,16 +10,13 @@ import KakaoSDKAuth
 import KakaoSDKUser
 import NaverThirdPartyLogin
 import AuthenticationServices
+import Factory
 
 final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextProviding {
     
-    let appState: AppState = AppState.shared
+    static let shared = AuthUseCase()
     
-    private let authRepository: AuthRepository
-    
-    override init() {
-        self.authRepository = AuthRepositoryImpl()
-    }
+    @Injected(\.authRepository) var authRepository
     
     // 카카오 로그인
     func kakaoLogin() async {
@@ -73,7 +70,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                                 DispatchQueue.main.async {
                                     UserDefaults.standard.set(true, forKey: "isLogin")
                                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                                    self?.appState.isTabbarOpaque = false
+                                    AppState.shared.isTabbarOpaque = false
                                     AppState.shared.isTabbarHidden = false
                                 }
                                 
@@ -134,7 +131,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                                     // 로그인 완료 -> 홈 화면으로 이동
                                     UserDefaults.standard.set(true, forKey: "isLogin")
                                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                                    self.appState.isTabbarOpaque = false
+                                    AppState.shared.isTabbarOpaque = false
                                     AppState.shared.isTabbarHidden = false
                                 }
                                 
@@ -325,7 +322,7 @@ extension AuthUseCase: NaverThirdPartyLoginConnectionDelegate {
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                    self.appState.isTabbarOpaque = false
+                    AppState.shared.isTabbarOpaque = false
                     AppState.shared.isTabbarHidden = false
                 }
                 
@@ -426,7 +423,7 @@ extension AuthUseCase: ASAuthorizationControllerDelegate, ASWebAuthenticationPre
                     
                     UserDefaults.standard.set(true, forKey: "isLogin")
                     UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                    self.appState.isTabbarOpaque = false
+                    AppState.shared.isTabbarOpaque = false
                     AppState.shared.isTabbarHidden = false
                 }
                 

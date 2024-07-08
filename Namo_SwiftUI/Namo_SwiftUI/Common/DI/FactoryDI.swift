@@ -62,4 +62,14 @@ extension Container {
         self { MoimDiaryRepositoryImpl() }
             .singleton
     }
+    
+    var termRepository: Factory<TermRepository> {
+        self { TermRepositoryImpl() }
+            .singleton
+    }
+    
+    var authRepository: Factory<AuthRepository> {
+        self { AuthRepositoryImpl() }
+            .singleton
+    }
 }
