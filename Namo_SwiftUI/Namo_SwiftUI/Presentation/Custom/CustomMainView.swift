@@ -11,7 +11,7 @@ import Factory
 struct CustomMainView: View {
     
     @EnvironmentObject var appState: AppState
-    @Injected(\.categoryInteractor) var categoryInteractor
+    let categoryUseCase = CategoryUseCase.shared
     
     let categories: [String] = ["팔레트", "폰트", "MY"]
     @State private var selectedItem: String = "팔레트"
@@ -123,7 +123,7 @@ struct CustomMainView: View {
                             ForEach(1...10, id: \.self) { id in
                                 
                                 Circle()
-                                    .fill(categoryInteractor.getColorWithPaletteId(id: id))
+                                    .fill(categoryUseCase.getColorWithPaletteId(id: id))
                                     .frame(width: 25, height: 25)
                                     .onTapGesture {
                                         // 추후에 추가될 코드

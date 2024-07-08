@@ -21,3 +21,8 @@ struct Schedule: Hashable {
 	let hasDiary: Bool?
 	let moimSchedule: Bool
 }
+
+struct CalendarSchedule: Hashable {
+	let position: Int
+	let schedule: Schedule?
+}

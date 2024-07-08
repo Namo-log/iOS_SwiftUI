@@ -1,5 +1,5 @@
 //
-//  ScheduleInteractorImpl.swift
+//  ScheduleUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 정현우 on 2/5/24.
@@ -9,8 +9,8 @@ import SwiftUICalendar
 import SwiftUI
 import Factory
 
-struct ScheduleInteractorImpl: ScheduleInteractor {
-	
+final class ScheduleUseCase {
+	static let shared = ScheduleUseCase()
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
@@ -25,7 +25,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
 		let mappedSchedules = setSchedules(schedules.sorted(by: {$0.startDate < $1.startDate}))
 		DispatchQueue.main.async {
 //			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
-			scheduleState.calendarSchedules = mappedSchedules
+			self.scheduleState.calendarSchedules = mappedSchedules
 		}
 	}
 	
@@ -278,7 +278,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
     func setScheduleToCurrentSchedule(schedule: Schedule?) {
         DispatchQueue.main.async {
-            scheduleState.currentSchedule = ScheduleTemplate(
+			self.scheduleState.currentSchedule = ScheduleTemplate(
                 scheduleId: schedule?.scheduleId,
                 name: schedule?.name,
                 categoryId: schedule?.categoryId,
@@ -289,7 +289,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
                 y: schedule?.y,
                 locationName: schedule?.locationName
             )
-			scheduleState.isCurrentScheduleIsGroup = schedule?.moimSchedule ?? false
+			self.scheduleState.isCurrentScheduleIsGroup = schedule?.moimSchedule ?? false
         }
     }
     
@@ -297,7 +297,7 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
     func setScheduleToCurrentMoimSchedule(schedule: Schedule?, users: [MoimUser]?) {
         DispatchQueue.main.async {
-            scheduleState.currentMoimSchedule = .init(
+			self.scheduleState.currentMoimSchedule = .init(
                 moimScheduleId: schedule?.scheduleId,
                 name: schedule?.name,
                 startDate: schedule?.startDate,

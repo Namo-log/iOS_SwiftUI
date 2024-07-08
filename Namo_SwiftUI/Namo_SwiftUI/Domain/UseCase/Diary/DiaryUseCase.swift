@@ -1,5 +1,5 @@
 //
-//  DiaryInteractorImpl.swift
+//  DiaryUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 서은수 on 3/16/24.
@@ -8,7 +8,8 @@
 import Factory
 import SwiftUI
 
-struct DiaryInteractorImpl: DiaryInteractor {
+final class DiaryUseCase {
+	static let shared = DiaryUseCase()
     @Injected(\.diaryRepository) var diaryRepository
     @Injected(\.diaryState) private var diaryState
     

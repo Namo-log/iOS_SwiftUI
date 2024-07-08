@@ -12,9 +12,9 @@ struct ToDoSelectPlaceView: View {
     
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var scheduleState: ScheduleState
-    @Injected(\.placeInteractor) var placeInteractor
-    @Injected(\.scheduleInteractor) var scheduleInteractor
-    @Injected(\.moimInteractor) var moimInteractor
+    let placeUseCase = PlaceUseCase.shared
+    let scheduleUseCase = ScheduleUseCase.shared
+    let moimUseCase = MoimUseCase.shared
     
     /// 본 화면의 표시 여부 state
     @Binding var isShowSheet: Bool
@@ -58,10 +58,10 @@ struct ToDoSelectPlaceView: View {
                 .onTapGesture {
                     if !isRevise {
                         if let tempPlace = self.tempPlace {
-                            placeInteractor.appendPlaceList(place: tempPlace)
+                            placeUseCase.appendPlaceList(place: tempPlace)
                         } else {
-                            placeInteractor.selectPlace(place: nil)
-                            placeInteractor.clearPlaces(isSave: false)
+                            placeUseCase.selectPlace(place: nil)
+                            placeUseCase.clearPlaces(isSave: false)
                         }
                     }
                     self.dismissThis()
@@ -77,9 +77,9 @@ struct ToDoSelectPlaceView: View {
                         Button(action: {
                             if !isRevise {
                                 if let tempPlace = self.tempPlace {
-                                    placeInteractor.selectPlace(place: tempPlace)
+                                    placeUseCase.selectPlace(place: tempPlace)
                                 } else {
-                                    placeInteractor.selectPlace(place: nil)
+                                    placeUseCase.selectPlace(place: nil)
                                 }
                             }
                             self.dismissThis()
@@ -101,11 +101,11 @@ struct ToDoSelectPlaceView: View {
                         Button(action: {
                             if self.isGroup {
                                 print("모임에 잘 저장")
-                                moimInteractor.setPlaceToCurrentMoimSchedule()
+                                moimUseCase.setPlaceToCurrentMoimSchedule()
                             } else {
-                                scheduleInteractor.setPlaceToCurrentSchedule()
+                                scheduleUseCase.setPlaceToCurrentSchedule()
                             }
-                            placeInteractor.clearPlaces(isSave: true)
+                            placeUseCase.clearPlaces(isSave: true)
                             self.dismissThis()
                         }) {
                             Text("확인")
@@ -141,19 +141,19 @@ struct ToDoSelectPlaceView: View {
                 if isRevise {
                     if isGroup {
                         let temp = self.scheduleState.currentMoimSchedule
-                        let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                        let result = await placeUseCase.getPlaceList(query: temp.locationName)
                         if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
-                            placeInteractor.clearPlaces(isSave: false)
-                            placeInteractor.appendPlaceList(place: target)
-                            placeInteractor.selectPlace(place: target)
+                            placeUseCase.clearPlaces(isSave: false)
+                            placeUseCase.appendPlaceList(place: target)
+                            placeUseCase.selectPlace(place: target)
                         }
                     } else {
                         let temp = self.scheduleState.currentSchedule
-                        let result = await placeInteractor.getPlaceList(query: temp.locationName)
+                        let result = await placeUseCase.getPlaceList(query: temp.locationName)
                         if let target = result?.first(where: { $0.x == temp.x && $0.y == temp.y }) {
-                            placeInteractor.clearPlaces(isSave: false)
-                            placeInteractor.appendPlaceList(place: target)
-                            placeInteractor.selectPlace(place: target)
+                            placeUseCase.clearPlaces(isSave: false)
+                            placeUseCase.appendPlaceList(place: target)
+                            placeUseCase.selectPlace(place: target)
                         }
                     }
                 }
@@ -171,7 +171,7 @@ struct ToDoSelectPlaceView: View {
     
     /// 장소 선택 화면 하단의 검색창 + 장소 리스트를 표시하는 뷰입니다.
     private struct placeListView: View {
-        @Injected(\.placeInteractor) var placeInteractor
+        let placeUseCase = PlaceUseCase.shared
         @Binding var searchText: String
         @Binding var pinList: [Place]
         @Binding var selectedPlace: Place?
@@ -197,7 +197,7 @@ struct ToDoSelectPlaceView: View {
                         
                         Button(action: {
                             Task {
-                                await placeInteractor.fetchPlaceList(query:searchText)
+                                await placeUseCase.fetchPlaceList(query:searchText)
                             }
                         }) {
                             Text("검색")

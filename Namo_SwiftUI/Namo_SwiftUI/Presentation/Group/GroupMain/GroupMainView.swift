@@ -12,7 +12,7 @@ import Factory
 struct GroupMainView: View {
 	@EnvironmentObject var moimState: MoimState
 	@EnvironmentObject var appState: AppState
-	@Injected(\.moimInteractor) var moimInteractor
+	let moimUseCase = MoimUseCase.shared
 	@Injected(\.moimRepository) var moimRepository
 	
 	// New Group
@@ -47,7 +47,7 @@ struct GroupMainView: View {
 					ToastView(toastMessage: "\(moimState.currentMoim.groupName ?? "") 그룹에서 탈퇴하셨습니다.", bottomPadding: 150)
 						.onAppear {
 							withAnimation {
-								moimInteractor.hideToast()
+								moimUseCase.hideToast()
 							}
 						}
 				}
@@ -55,7 +55,7 @@ struct GroupMainView: View {
 		}
 		.onAppear {
 			Task {
-				await moimInteractor.getGroups()
+				await moimUseCase.getGroups()
 			}
 		}
 		.onChange(of: pickedItem) { item in
@@ -82,7 +82,7 @@ struct GroupMainView: View {
 								
 								// response가 잘 들어왔으면, 그룹 목록 새로고침
 								if response != nil {
-									await moimInteractor.getGroups()
+									await moimUseCase.getGroups()
 								}
 								await MainActor.run {
 									AppState.shared.alertType = nil
@@ -121,7 +121,7 @@ struct GroupMainView: View {
 									
 									// response가 잘 들어왔으면, 그룹 목록 새로고침
 									if response != nil {
-										await moimInteractor.getGroups()
+										await moimUseCase.getGroups()
 									}
 									await MainActor.run {
 										AppState.shared.alertType = nil
@@ -181,7 +181,7 @@ struct GroupMainView: View {
 							.simultaneousGesture(TapGesture().onEnded {
 								moimState.currentMoim = moim
 								Task {
-									await moimInteractor.getMoimSchedule(moimId: moim.groupId)
+									await moimUseCase.getMoimSchedule(moimId: moim.groupId)
 								}
 							})
 							
@@ -193,7 +193,7 @@ struct GroupMainView: View {
 				}
 				.refreshable {
 					Task {
-						await moimInteractor.getGroups()
+						await moimUseCase.getGroups()
 					}
 				}
 			}
@@ -287,7 +287,7 @@ struct GroupMainView: View {
 				// 그룹 참여에 성공했으면, 그룹 목록 새로고침
 				if response {
 					Task {
-						await moimInteractor.getGroups()
+						await moimUseCase.getGroups()
 					}
 					return true
 				}

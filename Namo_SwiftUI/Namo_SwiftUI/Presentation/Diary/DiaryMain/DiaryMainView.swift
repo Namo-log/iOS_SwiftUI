@@ -13,8 +13,8 @@ import Kingfisher
 struct DiaryMainView: View {
     @EnvironmentObject var diaryState: DiaryState
 	@EnvironmentObject private var appState: AppState
-    @Injected(\.diaryInteractor) var diaryInteractor
-    @Injected(\.moimDiaryInteractor) var moimDiaryInteractor
+    let diaryUseCase = DiaryUseCase.shared
+    let moimDiaryUseCase = MoimDiaryUseCase.shared
     
     @State var currentDate: String = String(format: "%d.%02d", Date().toYMD().year, Date().toYMD().month)
     @State var showDatePicker: Bool = false
@@ -184,11 +184,11 @@ struct DiaryMainView: View {
 		}
 		
 		if appState.isPersonalDiary {
-			await diaryInteractor.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+			await diaryUseCase.getMonthDiary(request: GetDiaryRequestDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
 		} else {
-			await moimDiaryInteractor.getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
+			await moimDiaryUseCase.getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO(year: pickerCurrentYear, month: pickerCurrentMonth, page: page, size: size))
 		}
-		dateIndicatorIndices = diaryInteractor.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
+		dateIndicatorIndices = diaryUseCase.getDateIndicatorIndices(diaries: diaryState.monthDiaries)
 	}
 }
 
@@ -236,7 +236,7 @@ struct DiaryDateItemView: View {
 // 다이어리 아이템
 struct DiaryItemView: View {
     @EnvironmentObject var appState: AppState
-    @Injected(\.categoryInteractor) var categoryInteractor
+    let categoryUseCase = CategoryUseCase.shared
     var diary: Diary!
     
     var body: some View {
@@ -246,7 +246,7 @@ struct DiaryItemView: View {
                 .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
             
             Rectangle()
-                .fill(categoryInteractor.getColorWithPaletteId(id: diary.color))
+                .fill(categoryUseCase.getColorWithPaletteId(id: diary.color))
                 .frame(width: 10)
             
             HStack(alignment: .top, spacing: 12) {

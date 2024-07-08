@@ -1,5 +1,5 @@
 //
-//  MoimDiaryInteractorImpl.swift
+//  MoimDiaryUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 서은수 on 4/6/24.
@@ -9,7 +9,8 @@ import Factory
 import SwiftUI
 
 /// 모임 기록 API
-struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
+final class MoimDiaryUseCase {
+	static let shared = MoimDiaryUseCase()
     @Injected(\.diaryState) private var diaryState
     @Injected(\.moimDiaryRepository) var moimDiaryRepository
     
@@ -28,7 +29,7 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     func deleteMoimDiaryPlace(activityId: Int) async -> Bool {
         if await moimDiaryRepository.deleteMoimDiaryPlace(activityId: activityId) {
             DispatchQueue.main.async {
-                diaryState.currentMoimDiaryInfo.moimActivityDtos = diaryState.currentMoimDiaryInfo.moimActivityDtos?.filter {
+				self.diaryState.currentMoimDiaryInfo.moimActivityDtos = self.diaryState.currentMoimDiaryInfo.moimActivityDtos?.filter {
                     $0.moimActivityId != activityId
                 }
             }
@@ -48,32 +49,28 @@ struct MoimDiaryInteractorImpl: MoimDiaryInteractor {
     }
     
     /// 월간 모임 메모 조회
+	@MainActor
     func getMonthMoimDiary(req: GetMonthMoimDiaryReqDTO) async {
         var diaries = await moimDiaryRepository.getMonthMoimDiary(req: req)?.content ?? []
         print("월간 모임 기록 조회")
-        print(diaries)
-        DispatchQueue.main.async {
-            if req.page == 0 {
-                diaryState.monthDiaries = diaries
-            } else {
-                diaryState.monthDiaries += diaries
-            }
-        }
+		if req.page == 0 {
+			self.diaryState.monthDiaries = diaries
+		} else {
+			self.diaryState.monthDiaries += diaries
+		}
     }
     
     /// 단건 모임 메모 조회
+	@MainActor
     func getOneMoimDiary(moimScheduleId: Int) async {
         guard let res = await moimDiaryRepository.getOneMoimDiary(moimScheduleId: moimScheduleId) else { return }
-        DispatchQueue.main.async {
-            diaryState.currentMoimDiaryInfo = res
-        }
+		diaryState.currentMoimDiaryInfo = res
     }
     
     /// 모임 메모 상세 조회
+	@MainActor
     func getOneMoimDiaryDetail(moimScheduleId: Int) async {
         guard let res = await moimDiaryRepository.getOneMoimDiaryDetail(moimScheduleId: moimScheduleId) else { return }
-        DispatchQueue.main.async {
-            diaryState.currentDiary = res
-        }
+		diaryState.currentDiary = res
     }
 }

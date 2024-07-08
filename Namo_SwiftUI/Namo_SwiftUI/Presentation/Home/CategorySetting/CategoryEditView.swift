@@ -14,7 +14,7 @@ struct CategoryEditView: View {
     
     @State private var categoryList: [ScheduleCategory] = []
     
-    @Injected(\.categoryInteractor) var categoryInteractor
+	let categoryUseCase = CategoryUseCase.shared
     
     let columns: [GridItem] = Array(repeating: .init(.fixed(25), spacing: 15),  count: 5)
     
@@ -67,7 +67,7 @@ struct CategoryEditView: View {
                         
                         ForEach(basicColorItems.prefix(4)) { item in
                             
-                            ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: item.id), selectState: item.state)
+                            ColorCircleView(color: categoryUseCase.getColorWithPaletteId(id: item.id), selectState: item.state)
                                 .frame(width: 25, height: 25)
                                 .onTapGesture {
                                     self.selectedPaletteId = item.id
@@ -94,7 +94,7 @@ struct CategoryEditView: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(basicColorItems.dropFirst(4)) { item in
                             
-                            ColorCircleView(color: categoryInteractor.getColorWithPaletteId(id: item.id), selectState: item.state)
+                            ColorCircleView(color: categoryUseCase.getColorWithPaletteId(id: item.id), selectState: item.state)
                                 .frame(width: 25, height: 25)
                                 .onTapGesture {
                                     self.selectedPaletteId = item.id
@@ -175,7 +175,7 @@ struct CategoryEditView: View {
                             // 카테고리 수정 API 호출
                             Task {
                                 
-                                let result = await categoryInteractor.editCategory(id: self.categoryList.first!.categoryId, data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+                                let result = await categoryUseCase.editCategory(id: self.categoryList.first!.categoryId, data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
                                 
                                 // 수정이 성공했을 경우에만
                                 if result {
@@ -208,7 +208,7 @@ struct CategoryEditView: View {
             .onAppear {
                 
                 // 수정할 기존 카테고리 항목들을 화면에 표시
-                self.categoryList = categoryInteractor.setCategories()
+                self.categoryList = categoryUseCase.setCategories()
                 self.categoryTitle = self.categoryList.first!.name
                 self.selectedPaletteId = self.categoryList.first!.paletteId
                 self.isShare = self.categoryList.first!.isShare

@@ -11,8 +11,8 @@ import Factory
 
 struct HomeMainView: View {
 	@EnvironmentObject var scheduleState: ScheduleState
-	@Injected(\.scheduleInteractor) var scheduleInteractor
-	@Injected(\.categoryInteractor) var categoryInteractor
+	let scheduleUseCase = ScheduleUseCase.shared
+	let categoryUseCase = CategoryUseCase.shared
 	@StateObject var calendarController = CalendarController()
 	
 	@State var focusDate: YearMonthDay? = nil
@@ -74,22 +74,22 @@ struct HomeMainView: View {
 		}
 		.ignoresSafeArea(edges: .bottom)
 		.task {
-//			await scheduleInteractor.setCalendar()
+//			await scheduleUseCase.setCalendar()
             
             if UserDefaults.standard.bool(forKey: "isLogin") {
-                await categoryInteractor.getCategories()
+                await categoryUseCase.getCategories()
             }
 		}
 		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { notification in
 			if let userInfo = notification.userInfo, let date = userInfo["date"] as? YearMonthDay {
 				Task {
-					await scheduleInteractor.setCalendar(date: date.toDate())
+					await scheduleUseCase.setCalendar(date: date.toDate())
 				}
 				calendarController.scrollTo(YearMonth(year: date.year, month: date.month))
 				focusDate = date
 			} else {
 				Task {
-					await scheduleInteractor.setCalendar(date: focusDate?.toDate() ?? Date())
+					await scheduleUseCase.setCalendar(date: focusDate?.toDate() ?? Date())
 				}
 			}
 		}
@@ -108,7 +108,7 @@ struct HomeMainView: View {
 			}, label: {
 				HStack(spacing: 10) {
 					Text(
-						scheduleInteractor.formatYearMonth(calendarController.yearMonth)
+						scheduleUseCase.formatYearMonth(calendarController.yearMonth)
 					)
 					.font(.pretendard(.bold, size: 22))
 					
@@ -119,7 +119,7 @@ struct HomeMainView: View {
 
 			Spacer()
 			
-			Text(scheduleInteractor.getCurrentDay())
+			Text(scheduleUseCase.getCurrentDay())
 				.font(.pretendard(.semibold, size: 16))
 				.background(
 					RoundedRectangle(cornerRadius: 5)
@@ -256,7 +256,7 @@ struct HomeMainView: View {
 		.background(Color.white)
 		.overlay(alignment: .bottomTrailing) {
 			Button(action: {
-                scheduleInteractor.setDateAndTimesToCurrentSchedule(focusDate: focusDate)
+                scheduleUseCase.setDateAndTimesToCurrentSchedule(focusDate: focusDate)
                 self.isToDoSheetPresented = true
             }, label: {
 				Image(.floatingAdd)

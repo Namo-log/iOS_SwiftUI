@@ -55,7 +55,7 @@ struct AlertViewOld: View {
 				
 				HStack(spacing: 8) {
 					if let leftButtonTitle = leftButtonTitle {
-						Button(action: leftButtonAction, label: {
+						Button(action: leftAciton, label: {
 							Text(leftButtonTitle)
 								.foregroundStyle(Color(.mainText))
 								.frame(width: screenWidth/2 - 50, height: 43)
@@ -66,7 +66,7 @@ struct AlertViewOld: View {
 					}
 					
 					
-					Button(action: rightButtonAction, label: {
+					Button(action: rightAction, label: {
 						Text(rightButtonTitle)
 							.foregroundStyle(Color.white)
 							.frame(width: screenWidth/2 - 50, height: 43)
@@ -91,4 +91,16 @@ struct AlertViewOld: View {
 			}
 		}
     }
+	
+	func leftAciton() {
+		leftButtonAction()
+		AppState.shared.isTabbarOpaque = false
+		showAlert = false
+	}
+	
+	func rightAction() {
+		rightButtonAction()
+		AppState.shared.isTabbarOpaque = false
+		showAlert = false
+	}
 }

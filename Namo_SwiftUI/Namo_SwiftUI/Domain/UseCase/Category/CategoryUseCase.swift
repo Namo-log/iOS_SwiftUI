@@ -1,5 +1,5 @@
 //
-//  CategoryInteractorImpl.swift
+//  CategoryUseCase.swift
 //  Namo_SwiftUI
 //
 //  Created by 정현우 on 2/11/24.
@@ -8,8 +8,8 @@
 import Factory
 import SwiftUI
 
-struct CategoryInteractorImpl: CategoryInteractor {
-	
+final class CategoryUseCase {
+	static let shared = CategoryUseCase()
 	@Injected(\.categoryRepository) private var categoryRepository
     @Injected(\.scheduleState) private var scheduleState
 	
