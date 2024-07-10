@@ -119,13 +119,14 @@ final class MoimUseCase {
 	// 시작일과 종료일 사이 Date 리턴
 	func datesBetween(startDate: Date, endDate: Date) -> [Date] {
 		var dates: [Date] = []
-		var currentDate = startDate
+		var currentYMD = startDate.toYMD()
+		let endYMD = endDate.toYMD()
 
-		let calendar = Calendar.current
-		while currentDate <= endDate {
-			dates.append(currentDate)
-			currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+		while currentYMD <= endYMD {
+			dates.append(currentYMD.toDate())
+			currentYMD = currentYMD.addDay(value: 1)
 		}
+		
 		return dates
 	}
 	
