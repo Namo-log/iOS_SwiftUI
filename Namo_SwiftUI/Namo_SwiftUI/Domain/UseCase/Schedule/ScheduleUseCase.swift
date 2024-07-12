@@ -14,19 +14,16 @@ final class ScheduleUseCase {
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.scheduleRepository) private var scheduleRepository
 	
-	let pagingCount = 4
 	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	// 1: 캘린더 데이터를 세팅하기 위해 View에서 호출하는 함수
-	func setCalendar(date: Date) async {
+	func setCalendar() async -> [YearMonthDay: [CalendarSchedule]] {
 		// 네트워크를 통해 데이터 가져오기
 		let schedules = await getSchedulesViaNetwork()
 		// 해당 데이터 매핑해서 state로
 		let mappedSchedules = setSchedules(schedules.sorted(by: {$0.startDate < $1.startDate}))
-		DispatchQueue.main.async {
-//			scheduleState.calculatedYearMonth = yearMonthBetween(start: startDate, end: endDate)
-			self.scheduleState.calendarSchedules = mappedSchedules
-		}
+		
+		return mappedSchedules
 	}
 	
 	// 2: 네트워크를 통해 일정 가져오기
@@ -325,20 +322,22 @@ final class ScheduleUseCase {
 		return result
 	}
     
-    /// 현재 focusDate를 추가하는 개인 일정 템플릿의 날짜로 설정합니다
-    func setDateAndTimesToCurrentSchedule(focusDate: YearMonthDay?) {
+    /// 현재 focusDate를 기준으로 생성할 일정의 startDate와 endDate 반환
+	func newScheduleDate(focusDate: YearMonthDay?) -> (Date, Date)? {
         if let focusDate = focusDate?.toDate() {
             let calendar = Calendar.current
             var dateComponents = calendar.dateComponents([.year, .month, .day], from: focusDate)
             
             dateComponents.hour = 8
-            let startDate = calendar.date(from: dateComponents)
+            let startDate = calendar.date(from: dateComponents) ?? focusDate
             
             dateComponents.hour = 9
-            let endDate = calendar.date(from: dateComponents)
-            scheduleState.currentSchedule.startDate = startDate ?? focusDate
-            scheduleState.currentSchedule.endDate = endDate ?? focusDate
-        }
+            let endDate = calendar.date(from: dateComponents) ?? focusDate
+			
+			return (startDate, endDate)
+		} else {
+			return nil
+		}
     }
     
     
