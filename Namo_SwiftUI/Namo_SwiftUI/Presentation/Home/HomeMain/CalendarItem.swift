@@ -12,12 +12,12 @@ import Factory
 // 캘린더에 표시되는 아이템
 struct CalendarItem: View {
 	@EnvironmentObject var appState: AppState
-	@EnvironmentObject var scheduleState: ScheduleState
 	@EnvironmentObject var moimState: MoimState
 	let categoryUseCase = CategoryUseCase.shared
 	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	let date: YearMonthDay
+	let schedule: [CalendarSchedule]
 	
 	let isMoimCalendar: Bool
 	@Binding var focusDate: YearMonthDay?
@@ -44,23 +44,24 @@ struct CalendarItem: View {
 						)
 				}
 				
-				if !isMoimCalendar, let schedules = scheduleState.calendarSchedules[date]?.filter({
-					if focusDate == nil {
-						return $0.position >= 0 && $0.position < MAX_SCHEDULE
-					} else {
-						// 탭바 높이때문에 1개 덜 보이도록
-						return $0.position >= 0 && $0.position < MAX_SCHEDULE-1
-					}
-				}) {
+				if !isMoimCalendar {
+					let schedules = schedule.filter({
+					   if focusDate == nil {
+						   return $0.position >= 0 && $0.position < MAX_SCHEDULE
+					   } else {
+						   // 탭바 높이때문에 1개 덜 보이도록
+						   return $0.position >= 0 && $0.position < MAX_SCHEDULE-1
+					   }
+				   })
 					calendarScheduleItem(geometry: geometry, schedules: schedules)
 				} else if isMoimCalendar, let schedules = moimState.currentMoimSchedule[date]?.filter({ $0.position >= 0 && $0.position < MAX_SCHEDULE }) {
 					calendarMoimScheduleItem(geometry: geometry, schedules: schedules)
 				}
 			
-				if !isMoimCalendar && focusDate == nil, let count = scheduleState.calendarSchedules[date]?.count, count > MAX_SCHEDULE {
+				if !isMoimCalendar && focusDate == nil, schedule.count > MAX_SCHEDULE {
 					HStack {
 						Spacer()
-						Text("+\(count - MAX_SCHEDULE)")
+						Text("+\(schedule.count - MAX_SCHEDULE)")
 							.font(.pretendard(.semibold, size: 8))
 							.foregroundStyle(Color(.mainText))
 						Spacer()

@@ -55,7 +55,7 @@ struct GroupCalendarView: View {
 						CalendarView(calendarController) { date in
 							GeometryReader { geometry in
 								VStack(alignment: .leading) {
-									CalendarItem(date: date, isMoimCalendar: true, focusDate: $focusDate)
+									CalendarItem(date: date, schedule: [], isMoimCalendar: true, focusDate: $focusDate)
 								}
 								.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
 							}

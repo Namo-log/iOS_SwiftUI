@@ -15,11 +15,8 @@ struct CalendarScheduleDetailItem: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var scheduleState: ScheduleState
 	@EnvironmentObject var diaryState: DiaryState
-	
-	let scheduleUseCase = ScheduleUseCase.shared
+	@ObservedObject var homeMainVM: HomeMainViewModel
     let categoryUseCase = CategoryUseCase.shared
-	
-	@Binding var isToDoSheetPresented: Bool
 	
 	var body: some View {
 		if let paletteId = appState.categoryPalette[schedule.categoryId] {
@@ -30,7 +27,7 @@ struct CalendarScheduleDetailItem: View {
 					.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
 				
 				VStack(alignment: .leading, spacing: 4) {
-					Text(scheduleUseCase.getScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
+					Text(schedule.getScheduleTimeWithCurrentYMD(currentYMD: ymd))
 						.font(.pretendard(.medium, size: 12))
 						.foregroundStyle(Color(.mainText))
 					
@@ -43,17 +40,14 @@ struct CalendarScheduleDetailItem: View {
 				Spacer()
                 
                 if let hasDiary = schedule.hasDiary {
-                    NavigationLink(destination: EditDiaryView(isFromCalendar: true, memo: diaryState.currentDiary.contents ?? "", urls: diaryState.currentDiary.urls ?? [], info: ScheduleInfo(scheduleId: schedule.scheduleId, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName, categoryId: schedule.categoryId))) {
-                        Image(hasDiary ? .btnAddRecordOrange : .btnAddRecord)
-                            .resizable()
-                            .frame(width: 34, height: 34)
-                            .padding(.trailing, 11)
-                    }
-                    .simultaneousGesture(TapGesture().onEnded {
-                        scheduleUseCase.setScheduleToCurrentSchedule(schedule: schedule)
-                        appState.isPersonalDiary = !schedule.moimSchedule
-                        appState.isEditingDiary = hasDiary
-                    })
+					Button(action: {
+						homeMainVM.action(.scheduleDiaryEditButtonTapped(schedule: schedule))
+					}, label: {
+						Image(hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+							.resizable()
+							.frame(width: 34, height: 34)
+							.padding(.trailing, 11)
+					})
                 }
 			}
 			.frame(width: screenWidth-50, height: 55)
@@ -63,9 +57,7 @@ struct CalendarScheduleDetailItem: View {
 					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 			)
 			.onTapGesture {
-				scheduleUseCase.setScheduleToCurrentSchedule(schedule: self.schedule)
-                scheduleState.isGroup = schedule.moimSchedule
-				self.isToDoSheetPresented = true
+				homeMainVM.action(.scheduleEditButtonTapped(schedule: schedule))
 			}
         }
 	}
