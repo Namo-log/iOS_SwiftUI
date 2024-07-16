@@ -53,9 +53,9 @@ class DiaryState: ObservableObject {
 
 class MoimState: ObservableObject {
 	/// 전체 모임 리스트
-	@Published var moims: [Moim] = []
+	@Published var moims: [GroupInfo] = []
 	/// 유저가 현재 확인하고 있는 모임
-	@Published var currentMoim: Moim = Moim()
+	@Published var currentMoim: GroupInfo = GroupInfo()
 	@Published var currentMoimSchedule: [YearMonthDay: [CalendarMoimSchedule]] = [:]
 	
 	// 그룹 탈퇴 후 토스트

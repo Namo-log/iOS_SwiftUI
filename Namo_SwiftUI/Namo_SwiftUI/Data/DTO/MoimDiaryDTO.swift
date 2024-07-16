@@ -71,9 +71,9 @@ struct ActivityDTO: Decodable {
 }
 
 extension GetOneMoimDiaryResDTO {
-    func getMoimUsers() -> [MoimUser] {
+    func getMoimUsers() -> [GroupUser] {
         users?.map {
-            MoimUser(userId: $0.userId,
+            GroupUser(userId: $0.userId,
                      userName: $0.userName,
                      color: 0)
         } ?? []

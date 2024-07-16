@@ -13,7 +13,7 @@ class GroupMainViewModel: ObservableObject {
 	
 	struct State {
 		// 그룹 리스트
-		var groups: [Moim] = []
+		var groups: [GroupInfo] = []
 		// 그룹 생성 alert 보이게
 		var showCreateGroupAlert: Bool = false
 		// 그룹 생성 시 이름
@@ -40,7 +40,7 @@ class GroupMainViewModel: ObservableObject {
 		// 그룹 리스트 새로고침
 		case refreshGroupList
 		// 그룹 선택
-		case selectGroup(group: Moim)
+		case selectGroup(group: GroupInfo)
 		// 그룹 생성 시 이미지 선택
 		case groupImagePicked
 	}
@@ -153,7 +153,7 @@ class GroupMainViewModel: ObservableObject {
 		}
 	}
 	
-	private func selectGroup(group: Moim) async {
+	private func selectGroup(group: GroupInfo) async {
 		await MainActor.run {
 			moimState.currentMoim = group
 			AppState.shared.navigationPath.append(GroupViewType.detail)

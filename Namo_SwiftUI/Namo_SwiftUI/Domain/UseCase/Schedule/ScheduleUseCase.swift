@@ -292,7 +292,7 @@ final class ScheduleUseCase {
     
     /// MoimSchedule을 currentMoimSchedule로 저장합니다.
     /// nil로 입력 받는 경우 모두 기본값으로 생성합니다.
-    func setScheduleToCurrentMoimSchedule(schedule: Schedule?, users: [MoimUser]?) {
+    func setScheduleToCurrentMoimSchedule(schedule: Schedule?, users: [GroupUser]?) {
         DispatchQueue.main.async {
 			self.scheduleState.currentMoimSchedule = .init(
                 moimScheduleId: schedule?.scheduleId,

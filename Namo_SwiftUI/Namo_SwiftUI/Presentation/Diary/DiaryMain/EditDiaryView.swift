@@ -31,7 +31,7 @@ struct EditDiaryView: View {
     
     let urls: [String]
     let info: ScheduleInfo
-    let moimMember: [MoimUser] = []
+    let moimMember: [GroupUser] = []
     let photosLimit = 3 // 선택가능한 최대 사진 개수
     
     var body: some View {

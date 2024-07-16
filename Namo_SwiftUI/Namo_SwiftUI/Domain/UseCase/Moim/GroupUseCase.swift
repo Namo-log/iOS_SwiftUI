@@ -17,7 +17,7 @@ final class GroupUseCase {
 	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	// 모임 리스트 가져오기
-	func getGroups() async -> [Moim] {
+	func getGroups() async -> [GroupInfo] {
 		return await moimRepository.getMoimList()?.result ?? []
 	}
 	
@@ -272,7 +272,7 @@ final class GroupUseCase {
     }
     
     /// CheckParticipant에서 선택한 selectedUser들의 정보를 currentMoimSchedule에 저장합니다
-    func setSelectedUserListToCurrentMoimSchedule(list: [MoimUser]) {
+    func setSelectedUserListToCurrentMoimSchedule(list: [GroupUser]) {
         scheduleState.currentMoimSchedule.users = list
     }
 	

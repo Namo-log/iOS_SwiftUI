@@ -364,7 +364,7 @@ struct GroupToDoEditView: View {
         let moimUseCase = GroupUseCase.shared
         
         @Binding var showCheckParticipant: Bool
-        @State var selectedUser: [MoimUser]
+        @State var selectedUser: [GroupUser]
         
         var body: some View {
             NamoAlertViewWithTopButton(
@@ -413,7 +413,7 @@ struct GroupToDoEditView: View {
     }
     
     /// 유저 리스트 값을 문자열로 반환해주는 함수 입니다.
-    private func usersInString(_ users: [MoimUser]) -> String {
+    private func usersInString(_ users: [GroupUser]) -> String {
         guard users.count > 0 else { return "없음" }
          
         var userNames = users.count > 4

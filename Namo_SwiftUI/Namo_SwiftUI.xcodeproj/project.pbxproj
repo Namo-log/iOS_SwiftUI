@@ -36,6 +36,8 @@
 		2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */; };
 		2C5717E62B61306700B0F3B3 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E52B61306700B0F3B3 /* Date+.swift */; };
 		2C5717EA2B67A80000B0F3B3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */; };
+		2C610FB12C46BE1C00925949 /* GroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C610FB02C46BE1C00925949 /* GroupUser.swift */; };
+		2C610FB32C46BE6500925949 /* GroupInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C610FB22C46BE6500925949 /* GroupInfo.swift */; };
 		2C80ECD72BD572C1002F38A7 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 2C80ECD62BD572C1002F38A7 /* KakaoMapsSDK-SPM */; };
 		2CA8D30A2C3EB19E00D50540 /* HomeMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA8D3092C3EB19E00D50540 /* HomeMainViewModel.swift */; };
 		2CA8D30C2C4006F600D50540 /* YearMonth+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA8D30B2C4006F600D50540 /* YearMonth+.swift */; };
@@ -191,6 +193,8 @@
 		2C5717E32B60F4B000B0F3B3 /* YearMonthDay+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonthDay+.swift"; sourceTree = "<group>"; };
 		2C5717E52B61306700B0F3B3 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		2C5717E92B67A80000B0F3B3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
+		2C610FB02C46BE1C00925949 /* GroupUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupUser.swift; sourceTree = "<group>"; };
+		2C610FB22C46BE6500925949 /* GroupInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfo.swift; sourceTree = "<group>"; };
 		2CA8D3092C3EB19E00D50540 /* HomeMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainViewModel.swift; sourceTree = "<group>"; };
 		2CA8D30B2C4006F600D50540 /* YearMonth+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonth+.swift"; sourceTree = "<group>"; };
 		2CA8D30E2C4122B300D50540 /* Schedule+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+.swift"; sourceTree = "<group>"; };
@@ -360,6 +364,15 @@
 				2C5717812B5BF56100B0F3B3 /* Pretendard-Thin.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		2C610FAF2C46BE0F00925949 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				2C610FB02C46BE1C00925949 /* GroupUser.swift */,
+				2C610FB22C46BE6500925949 /* GroupInfo.swift */,
+			);
+			path = Group;
 			sourceTree = "<group>";
 		};
 		2CF445062B78E21B00A8E514 /* Category */ = {
@@ -605,6 +618,7 @@
 		5012A9DB2B59396000544AB0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2C610FAF2C46BE0F00925949 /* Group */,
 				884382D42B74D5EA00766503 /* Place.swift */,
 				88E48F7D2B820FFD00B064A0 /* ScheduleTemplate.swift */,
 				889C74142BCADCC0005937CB /* MoimScheduleTemplate.swift */,
@@ -1189,6 +1203,7 @@
 				2C5717E42B60F4B000B0F3B3 /* YearMonthDay+.swift in Sources */,
 				A257FFCA2BC079ED004F58DD /* MoimDiaryUseCase.swift in Sources */,
 				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
+				2C610FB12C46BE1C00925949 /* GroupUser.swift in Sources */,
 				47EA5C8F2C3C12D300142A10 /* secret.swift in Sources */,
 				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				47CB0C592C33BD8900B71D2E /* OnboardingViewModel.swift in Sources */,
@@ -1283,6 +1298,7 @@
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */,
 				50926D9F2BA4A10E00C656F4 /* ToastView.swift in Sources */,
+				2C610FB32C46BE6500925949 /* GroupInfo.swift in Sources */,
 				2CA8D3272C44C53600D50540 /* GroupMainViewModel.swift in Sources */,
 				884382D32B74C69D00766503 /* KakaoMapDTO.swift in Sources */,
 			);
