@@ -9,23 +9,17 @@ import SwiftUI
 import PhotosUI
 import Factory
 
+enum GroupViewType: Hashable {
+	// TODO: detail view model 구현 후 init으로 전달로 리팩토링
+//	case detail(currentGroup: Moim)
+	case detail
+}
+
 struct GroupMainView: View {
 	@EnvironmentObject var moimState: MoimState
 	@EnvironmentObject var appState: AppState
-	let moimUseCase = MoimUseCase.shared
-	@Injected(\.moimRepository) var moimRepository
-	
-	// New Group
-	@State var showNewGroupAlert: Bool = false
-	@State var groupName: String = ""
-	
-	// Group Code
-	@State var showGroupCodeAlert: Bool = false
-	@State var groupCode: String = ""
-	
-	// photo picker
-	@State var pickedItem: PhotosPickerItem?
-	@State var pickedImage: Data?
+	let moimUseCase = GroupUseCase.shared
+	@StateObject var groupMainVM = GroupMainViewModel()
 	
     var body: some View {
 		ZStack {
@@ -36,8 +30,24 @@ struct GroupMainView: View {
 			}
 			.padding(.top, 16.5)
 			
-			if showGroupCodeAlert {
-				groupCodeAlertView
+			// TODO: AppState.shared.alertType으로는 content view의 state 변경이 안됨. 개선 필요
+			if groupMainVM.state.showCreateGroupAlert {
+				NamoAlertViewWithTopButton(
+					showAlert: $groupMainVM.state.showCreateGroupAlert,
+					title: "새 그룹",
+					leftButtonTitle: "닫기",
+					leftButtonAction: {
+						groupMainVM.action(.closeNewGroupAlert)
+					},
+					rightButtonTitle: "완료",
+					rightButtonAction: {
+						guard groupMainVM.state.groupName != "" else { return false }
+						
+						groupMainVM.action(.createGroup)
+						return true
+					},
+					content: AnyView(newGroupAlertView)
+				)
 			}
 			
 			if moimState.showGroupWithdrawToast {
@@ -54,49 +64,15 @@ struct GroupMainView: View {
 			}
 		}
 		.onAppear {
-			Task {
-				await moimUseCase.getGroups()
+			groupMainVM.action(.viewDidAppear)
+		}
+		.navigationDestination(for: GroupViewType.self) { viewType in
+			switch viewType {
+			case .detail:
+				GroupCalendarView()
 			}
 		}
-		.onChange(of: pickedItem) { item in
-			if item == nil {
-				print("image load failed")
-				return
-			}
-			
-			Task {
-				if let image = try? await item?.loadTransferable(type: Data.self) {
-					let compressedImage = UIImage(data: image)?.jpegData(compressionQuality: 0.2)
-					pickedImage = compressedImage
-					
-					AppState.shared.alertType = .alertWithTopButton(
-						title: "새 그룹",
-						leftButtonTitle: "닫기",
-						leftButtonAction: {
-							AppState.shared.alertType = nil
-						},
-						rightButtonTitle: "완료",
-						rightButtonAction: {
-							Task {
-								let response = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
-								
-								// response가 잘 들어왔으면, 그룹 목록 새로고침
-								if response != nil {
-									await moimUseCase.getGroups()
-								}
-								await MainActor.run {
-									AppState.shared.alertType = nil
-								}
-							}
-						},
-						content: AnyView(newGroupAlertView)
-					)
-				} else {
-					print("image load failed")
-				}
-			}
-		}
-    }
+	}
 	
 	private var header: some View {
 		HStack {
@@ -108,34 +84,36 @@ struct GroupMainView: View {
 			Menu(content: {
 				Button("그룹 생성", action: {
 					withAnimation {
-						AppState.shared.alertType = .alertWithTopButton(
-							title: "새 그룹",
-							leftButtonTitle: "닫기",
-							leftButtonAction: {
-								AppState.shared.alertType = nil
-							},
-							rightButtonTitle: "완료",
-							rightButtonAction: {
-								Task {
-									let response = await moimRepository.createMoim(groupName: groupName, image: pickedImage)
-									
-									// response가 잘 들어왔으면, 그룹 목록 새로고침
-									if response != nil {
-										await moimUseCase.getGroups()
-									}
-									await MainActor.run {
-										AppState.shared.alertType = nil
-									}
-								}
-							},
-							content: AnyView(newGroupAlertView)
-						)
+//						AppState.shared.alertType = .alertWithTopButton(
+//							title: "새 그룹",
+//							leftButtonTitle: "닫기",
+//							leftButtonAction: {
+//								groupMainVM.action(.closeNewGroupAlert)
+//							},
+//							rightButtonTitle: "완료",
+//							rightButtonAction: {
+//								groupMainVM.action(.createGroup)
+//							},
+//							content: AnyView(newGroupAlertView)
+//						)
+						groupMainVM.state.showCreateGroupAlert = true
 					}
 				})
 				
 				Button("그룹 코드", action: {
 					withAnimation {
-						showGroupCodeAlert = true
+						AppState.shared.alertType = .alertWithTopButton(
+							title: "그룹 코드",
+							leftButtonTitle: "닫기",
+							leftButtonAction: {
+								groupMainVM.action(.closeGroupCodeAlert)
+							},
+							rightButtonTitle: "저장",
+							rightButtonAction: {
+								groupMainVM.action(.participateGroup)
+							},
+							content: AnyView(groupCodeAlertView)
+						)
 					}
 				})
 			}, label: {
@@ -168,23 +146,17 @@ struct GroupMainView: View {
 			if appState.isLoading {
 				ProgressView()
 				Spacer()
-			} else if moimState.moims.isEmpty {
+			} else if groupMainVM.state.groups.isEmpty {
 				noGroup
 			} else {
 				ScrollView(.vertical, showsIndicators: false) {
 					VStack(spacing: 20) {
-						ForEach(moimState.moims, id: \.groupId) { moim in
-							NavigationLink(destination: GroupCalendarView(), label: {
-								GroupListItem(moim: moim)
-									.tint(Color.black)
-							})
-							.simultaneousGesture(TapGesture().onEnded {
-								moimState.currentMoim = moim
-								Task {
-									await moimUseCase.getMoimSchedule(moimId: moim.groupId)
+						ForEach(groupMainVM.state.groups, id: \.groupId) { moim in
+							GroupListItem(moim: moim)
+								.tint(Color.black)
+								.onTapGesture {
+									groupMainVM.action(.selectGroup(group: moim))
 								}
-							})
-							
 						}
 						
 						Spacer()
@@ -208,7 +180,7 @@ struct GroupMainView: View {
 				
 				Spacer()
 				
-				TextField("입력", text: $groupName)
+				TextField("입력", text: $groupMainVM.state.groupName)
 					.font(.pretendard(.regular, size: 15))
 					.frame(width: 150)
 					.overlay(alignment: .bottom) {
@@ -232,8 +204,8 @@ struct GroupMainView: View {
 				
 				Spacer()
 				
-				PhotosPicker(selection: $pickedItem, matching: .images, label: {
-					if let imageData = pickedImage,
+				PhotosPicker(selection: $groupMainVM.state.pickedItem, matching: .images, label: {
+					if let imageData = groupMainVM.state.groupImage,
 					   let uiImage = UIImage(data: imageData) {
 						Image(uiImage: uiImage)
 							.resizable()
@@ -268,56 +240,35 @@ struct GroupMainView: View {
 		.padding(.top, 27)
 		.padding(.bottom, 22)
 		.onDisappear {
-			groupName = ""
-			pickedItem = nil
-			pickedImage = nil
+			groupMainVM.action(.closeNewGroupAlert)
+		}
+		.onChange(of: groupMainVM.state.pickedItem) { item in
+			groupMainVM.action(.groupImagePicked)
 		}
 	}
 	
 	private var groupCodeAlertView: some View {
-		NamoAlertViewWithTopButton(
-			showAlert: $showGroupCodeAlert,
-			title: "그룹 코드",
-			leftButtonTitle: "닫기",
-			leftButtonAction: {},
-			rightButtonTitle: "저장",
-			rightButtonAction: {
-				let response = await moimRepository.participateMoim(groupCode: groupCode)
-				
-				// 그룹 참여에 성공했으면, 그룹 목록 새로고침
-				if response {
-					Task {
-						await moimUseCase.getGroups()
-					}
-					return true
+		HStack {
+			Text("그룹 코드")
+				.font(.pretendard(.bold, size: 15))
+			
+			Spacer()
+			
+			TextField("입력", text: $groupMainVM.state.groupCode)
+				.font(.pretendard(.regular, size: 15))
+				.frame(width: 150)
+				.overlay(alignment: .bottom) {
+					Rectangle()
+						.frame(width: 150, height: 1)
+						.foregroundStyle(Color(.mainText))
+						.offset(y: 5)
 				}
 				
-				return false
-			},
-			content: AnyView(
-				HStack {
-					Text("그룹 코드")
-						.font(.pretendard(.bold, size: 15))
-					
-					Spacer()
-					
-					TextField("입력", text: $groupCode)
-						.font(.pretendard(.regular, size: 15))
-						.frame(width: 150)
-						.overlay(alignment: .bottom) {
-							Rectangle()
-								.frame(width: 150, height: 1)
-								.foregroundStyle(Color(.mainText))
-								.offset(y: 5)
-						}
-						
-				}
-				.padding(.top, 47)
-				.padding(.bottom, 52)
-			)
-		)
+		}
+		.padding(.top, 47)
+		.padding(.bottom, 52)
 		.onDisappear {
-			groupCode = ""
+			groupMainVM.action(.closeGroupCodeAlert)
 		}
 	}
 }

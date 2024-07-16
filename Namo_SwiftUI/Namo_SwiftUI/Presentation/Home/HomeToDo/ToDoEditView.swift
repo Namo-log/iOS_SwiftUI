@@ -16,7 +16,7 @@ struct ToDoEditView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var scheduleState: ScheduleState
     let scheduleUseCase = ScheduleUseCase.shared
-    let moimUseCase = MoimUseCase.shared
+    let moimUseCase = GroupUseCase.shared
     let categoryUseCase = CategoryUseCase.shared
     let placeUseCase = PlaceUseCase.shared
     

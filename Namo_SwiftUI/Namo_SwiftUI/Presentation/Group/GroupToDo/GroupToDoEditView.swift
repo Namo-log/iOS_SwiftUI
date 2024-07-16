@@ -18,7 +18,7 @@ struct GroupToDoEditView: View {
     @EnvironmentObject var moimState: MoimState
     let scheduleUseCase = ScheduleUseCase.shared
     let placeUseCase = PlaceUseCase.shared
-    let moimUseCase = MoimUseCase.shared
+    let moimUseCase = GroupUseCase.shared
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -361,7 +361,7 @@ struct GroupToDoEditView: View {
         
         @EnvironmentObject var moimState: MoimState
         let scheduleUseCase = ScheduleUseCase.shared
-        let moimUseCase = MoimUseCase.shared
+        let moimUseCase = GroupUseCase.shared
         
         @Binding var showCheckParticipant: Bool
         @State var selectedUser: [MoimUser]

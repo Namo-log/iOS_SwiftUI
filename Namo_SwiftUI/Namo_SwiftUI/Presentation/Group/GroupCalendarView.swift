@@ -12,7 +12,7 @@ import SwiftUICalendar
 struct GroupCalendarView: View {
 	let scheduleUseCase = ScheduleUseCase.shared
 	let categoryUseCase = CategoryUseCase.shared
-	let moimUseCase = MoimUseCase.shared
+	let moimUseCase = GroupUseCase.shared
 	@StateObject var calendarController = CalendarController()
 	@EnvironmentObject var appState: AppState
 	@EnvironmentObject var moimState: MoimState

@@ -8,40 +8,42 @@ import Foundation
 import Factory
 import SwiftUICalendar
 
-final class MoimUseCase {
-	static let shared = MoimUseCase()
+final class GroupUseCase {
+	static let shared = GroupUseCase()
 	@Injected(\.moimRepository) var moimRepository
-//	@Injected(\.appState) var appState
 	@Injected(\.moimState) var moimState
     @Injected(\.scheduleState) var scheduleState
 	
 	let MAX_SCHEDULE = screenHeight < 800 ? 3 : 4
 	
 	// 모임 리스트 가져오기
-	func getGroups() async {
-		DispatchQueue.main.async {
-			AppState.shared.isLoading = true
-		}
-		let moims = await moimRepository.getMoimList() ?? []
-		
-		DispatchQueue.main.async {
-			self.moimState.moims = moims
-			AppState.shared.isLoading = false
-		}
+	func getGroups() async -> [Moim] {
+		return await moimRepository.getMoimList()?.result ?? []
 	}
 	
 	// 모임 이름 변경
 	func changeMoimName(moimId: Int, newName: String) async -> Bool {
-		return await moimRepository.changeMoimName(data: changeMoimNameRequest(groupId: moimId, groupName: newName))
+		return await moimRepository.changeMoimName(data: changeMoimNameRequest(groupId: moimId, groupName: newName))?.code == 200
 	}
 	
 	// 모임 탈퇴
 	func withdrawGroup(moimId: Int) async -> Bool {
-		return await moimRepository.withdrawMoim(moimId: moimId)
+		return await moimRepository.withdrawMoim(moimId: moimId)?.code == 200
 	}
 	
+	// 모임 생성
+	func createGroup(groupName: String, image: Data?) async -> Bool {
+		return await moimRepository.createMoim(groupName: groupName, image: image)?.code == 200
+	}
+	
+	// 모임 참여
+	func participateGroup(groupCode: String) async -> Bool {
+		return await moimRepository.participateMoim(groupCode: groupCode)?.code == 200
+	}
+	
+	
 	func getMoimSchedule(moimId: Int) async {
-		let schedules = await moimRepository.getMoimSchedule(moimId: moimId) ?? []
+		let schedules = await moimRepository.getMoimSchedule(moimId: moimId)?.result ?? []
 		let mappedSchedules = setSchedule(schedules.map({$0.toMoimSchedule()}).sorted(by: {$0.startDate < $1.startDate}))
 		
 		await MainActor.run {

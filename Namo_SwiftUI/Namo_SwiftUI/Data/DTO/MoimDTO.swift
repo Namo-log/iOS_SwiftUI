@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Moim: Decodable {
+struct Moim: Decodable, Hashable {
     let groupId: Int
     var groupName: String?
     let groupImgUrl: String?
