@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct GroupListItem: View {
-	let moim: Moim
+	let moim: GroupInfo
 	
 	var body: some View {
 		HStack(spacing: 15) {

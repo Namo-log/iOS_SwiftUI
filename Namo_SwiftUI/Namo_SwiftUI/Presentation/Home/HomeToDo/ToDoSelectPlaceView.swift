@@ -14,7 +14,7 @@ struct ToDoSelectPlaceView: View {
     @EnvironmentObject var scheduleState: ScheduleState
     let placeUseCase = PlaceUseCase.shared
     let scheduleUseCase = ScheduleUseCase.shared
-    let moimUseCase = MoimUseCase.shared
+    let moimUseCase = GroupUseCase.shared
     
     /// 본 화면의 표시 여부 state
     @Binding var isShowSheet: Bool

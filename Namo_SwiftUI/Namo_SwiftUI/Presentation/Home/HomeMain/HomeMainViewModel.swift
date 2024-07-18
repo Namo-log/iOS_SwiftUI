@@ -37,17 +37,14 @@ final class HomeMainViewModel: ObservableObject {
 	}
 	
 	let scheduleUseCase = ScheduleUseCase.shared
-	let scheduleRepository: ScheduleRepository
 	
 	@Injected(\.scheduleState) private var scheduleState
 	@Injected(\.diaryState) private var diaryState
 	@Published var state: State
 	
 	init(
-		scheduleRepository: ScheduleRepository = ScheduleRepositoryImpl(),
 		state: State = .init()
 	) {
-		self.scheduleRepository = scheduleRepository
 		self.state = state
 	}
 	

@@ -7,34 +7,12 @@
 
 import Foundation
 
-struct Moim: Decodable {
-    let groupId: Int
-    var groupName: String?
-    let groupImgUrl: String?
-    let groupCode: String
-    let groupUsers: [MoimUser]
-    
-    init(
-        groupId: Int = -1,
-        groupName: String? = nil,
-        groupImgUrl: String? = nil,
-        groupCode: String = "",
-		groupUsers: [MoimUser] = []
-    ) {
-        self.groupId = groupId
-        self.groupName = groupName
-        self.groupImgUrl = groupImgUrl
-        self.groupCode = groupCode
-        self.groupUsers = groupUsers
-    }
-}
-
 struct MoimScheduleDTO: Decodable, Hashable {
     let name: String
     let startDate: Int
     let endDate: Int
     let interval: Int
-    let users: [MoimUser]
+    let users: [GroupUser]
     let moimId: Int?
     let moimScheduleId: Int?
     let x: Double?
@@ -50,7 +28,7 @@ struct MoimSchedule: Decodable, Hashable, Identifiable {
     let startDate: Date
     let endDate: Date
     let interval: Int
-    let users: [MoimUser]
+    let users: [GroupUser]
     let moimId: Int?
     let moimScheduleId: Int?
     let x: Double?
@@ -60,13 +38,8 @@ struct MoimSchedule: Decodable, Hashable, Identifiable {
     let curMoimSchedule: Bool
 }
 
-struct MoimUser: Decodable, Equatable, Hashable {
-    let userId: Int
-    let userName: String
-    let color: Int
-}
 
-typealias getMoimListResponse = [Moim]
+typealias getMoimListResponse = [GroupInfo]
 typealias getMoimScheduleResponse = [MoimScheduleDTO]
 
 struct paricipateGroupResponse: Codable {

@@ -70,7 +70,7 @@ struct CalendarMoimScheduleDetailItem: View {
 	
 	let scheduleUseCase = ScheduleUseCase.shared
 	let categoryUseCase = CategoryUseCase.shared
-    let moimUseCase = MoimUseCase.shared
+    let moimUseCase = GroupUseCase.shared
 	let moimDiaryUseCase = MoimDiaryUseCase.shared
 	
 	@Binding var isToDoSheetPresented: Bool

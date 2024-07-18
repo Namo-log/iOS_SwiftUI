@@ -24,10 +24,10 @@ struct EditMoimDiaryView: View {
     @State var activityImages: [[Data?]] = [[], [], []]
     
     let info: ScheduleInfo
-    let moimUser: [MoimUser]
+    let moimUser: [GroupUser]
     let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
-    @State var selectedUser: [MoimUser] = []
+    @State var selectedUser: [GroupUser] = []
     @State var finalUserIdList: [String] = ["", "", ""] // API 호출 시 최종적으로 들어가는 정산 참여자 id
 	
 	// 삭제된 활동 API call 하기 위해 저장
@@ -277,7 +277,7 @@ struct EditMoimDiaryView: View {
                         self.cost = String(activities[currentCalculateIndex].money)
                         self.selectedUser.removeAll()
                         for i in activities[currentCalculateIndex].participants {
-                            self.selectedUser.append(MoimUser(userId: i, userName: "", color: 0))
+                            self.selectedUser.append(GroupUser(userId: i, userName: "", color: 0))
                         }
                     } else {
                         self.cost = "0"

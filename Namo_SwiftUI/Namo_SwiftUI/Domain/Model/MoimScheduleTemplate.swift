@@ -27,7 +27,7 @@ struct MoimScheduleTemplate {
     /// 장소 이름
     var locationName: String
     /// 유저 배열
-    var users: [MoimUser]
+    var users: [GroupUser]
     
     init(
         moimScheduleId: Int? = nil,
@@ -37,7 +37,7 @@ struct MoimScheduleTemplate {
         x: Double? = nil,
         y: Double? = nil,
         locationName: String? = nil,
-        users: [MoimUser]? = nil
+        users: [GroupUser]? = nil
     ) {
         self.moimScheduleId = moimScheduleId
         self.name = name ?? ""

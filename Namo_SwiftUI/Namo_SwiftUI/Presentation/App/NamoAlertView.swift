@@ -26,7 +26,7 @@ enum AlertType {
 	)
 	case alertWithContent(
 		content: AnyView,
-		leftButtonTitle: String?,
+		leftButtonTitle: String? = nil,
 		leftButtonAction: () -> Void = {},
 		rightButtonTitle: String,
 		rightButtonAction: () -> Void

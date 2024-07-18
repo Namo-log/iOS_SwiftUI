@@ -18,7 +18,7 @@ struct GroupToDoEditView: View {
     @EnvironmentObject var moimState: MoimState
     let scheduleUseCase = ScheduleUseCase.shared
     let placeUseCase = PlaceUseCase.shared
-    let moimUseCase = MoimUseCase.shared
+    let moimUseCase = GroupUseCase.shared
     
     /// 시작 날짜 + 시각 Picker Show value
     @State private var showStartTimePicker: Bool = false
@@ -361,10 +361,10 @@ struct GroupToDoEditView: View {
         
         @EnvironmentObject var moimState: MoimState
         let scheduleUseCase = ScheduleUseCase.shared
-        let moimUseCase = MoimUseCase.shared
+        let moimUseCase = GroupUseCase.shared
         
         @Binding var showCheckParticipant: Bool
-        @State var selectedUser: [MoimUser]
+        @State var selectedUser: [GroupUser]
         
         var body: some View {
             NamoAlertViewWithTopButton(
@@ -413,7 +413,7 @@ struct GroupToDoEditView: View {
     }
     
     /// 유저 리스트 값을 문자열로 반환해주는 함수 입니다.
-    private func usersInString(_ users: [MoimUser]) -> String {
+    private func usersInString(_ users: [GroupUser]) -> String {
         guard users.count > 0 else { return "없음" }
          
         var userNames = users.count > 4
