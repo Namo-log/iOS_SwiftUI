@@ -13,6 +13,7 @@
 # Secret
 secret.swift
 *.plist
+fastlane/
 
 # Thumbnails
 ._*
