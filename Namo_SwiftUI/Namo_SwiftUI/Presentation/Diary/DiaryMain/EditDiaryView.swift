@@ -192,6 +192,8 @@ struct EditDiaryView: View {
                         await moimDiaryUseCase.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
 					NotificationCenter.default.post(name: .reloadDiaryViaNetwork, object: nil)
+                    
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             } else {
                 Task {
@@ -202,9 +204,11 @@ struct EditDiaryView: View {
                         // 모임 기록(에 대한 개인 메모) edit API 호출
                         await moimDiaryUseCase.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
+                    
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             }
-            self.presentationMode.wrappedValue.dismiss()
+            
         } label: {
             ZStack() {
                 Rectangle()
