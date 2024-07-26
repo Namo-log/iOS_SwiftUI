@@ -389,6 +389,9 @@ struct ToDoEditView: View {
                         Task {
                             // 삭제 후 dismiss
 							await self.scheduleUseCase.deleteSchedule(isMoim: scheduleState.isCurrentScheduleIsGroup)
+                            
+                            NotificationCenter.default.post(name: .reloadDiaryViaNetwork, object: nil)
+                            
                             dismissThis()
                         }
                     }
