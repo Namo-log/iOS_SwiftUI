@@ -26,7 +26,7 @@ struct ImageDetailView: View {
     @Binding var isShowImageDetailScreen: Bool
     
     // 전달받는 이미지 인덱스
-    @State var imageIndex: Int = 0
+    @Binding var imageIndex: Int
     
     // 이미지 배열
     @State var images: [ImageItem] = []
@@ -189,5 +189,5 @@ struct ImageDetailView: View {
 }
 
 #Preview {
-    ImageDetailView(isShowImageDetailScreen: .constant(true))
+    ImageDetailView(isShowImageDetailScreen: .constant(true), imageIndex: .constant(0))
 }
