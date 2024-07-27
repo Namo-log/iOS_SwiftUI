@@ -301,6 +301,11 @@ struct EditMoimDiaryView: View {
                 self.activities.removeAll()
                 await moimDiaryUseCase.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
+                
+                // 화면 진입 시 활동의 개수가 2개 이상(3개)라면 활동 추가 버튼을 보이지 않게 함.
+                if activities.count > 2 {
+                    showAddPlaceButton = false
+                }
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
@@ -322,6 +327,12 @@ struct EditMoimDiaryView: View {
         }
         .onDisappear {
             diaryState.currentMoimDiaryInfo = .init()
+        }
+        .onChange(of: activities.count) { _ in
+            
+            if activities.count <= 2 {
+                showAddPlaceButton = true
+            }
         }
     }
     
