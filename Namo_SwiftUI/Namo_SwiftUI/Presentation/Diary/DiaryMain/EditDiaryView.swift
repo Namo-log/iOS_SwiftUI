@@ -27,9 +27,9 @@ struct EditDiaryView: View {
     @State var typedCharacters = 0
     @State var characterLimit = 200
     @State var pickedImagesData: [Data?] = []
-//    @State var images: [UIImage] = [] // 보여질 사진 목록
-    
-    @State var imagesNew: [ImageItem] = []
+
+    /// 화면에 보여질 이미지 목록
+    @State var images: [ImageItem] = []
     
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
     
@@ -135,7 +135,7 @@ struct EditDiaryView: View {
             .navigationTitle(info.scheduleName)
             .ignoresSafeArea(edges: .bottom)
             .fullScreenCover(isPresented: $showImageDetailViewSheet) {
-                ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imagesNew)
+                ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: images)
             }
             
             // 쓰레기통 클릭 시 Alert 띄우기
@@ -171,7 +171,7 @@ struct EditDiaryView: View {
                     if appState.isPersonalDiary {
                         
                         // 기존의 imagesNew 배열을 비움
-                        imagesNew.removeAll()
+                        images.removeAll()
                         pickedImagesData.removeAll()
                         
                         await diaryUseCase.getOneDiary(scheduleId: info.scheduleId)
@@ -189,7 +189,7 @@ struct EditDiaryView: View {
                     
                     for url in diaryState.currentDiary.urls ?? [] {
                         
-                        imagesNew.append(ImageItem(id: nil, source: .url(url)))
+                        images.append(ImageItem(id: nil, source: .url(url)))
                         
                         guard let url = URL(string: url) else { return }
                         
@@ -275,13 +275,13 @@ struct EditDiaryView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: 20) {
 
-                ForEach(0..<imagesNew.count, id: \.self) { index in
+                ForEach(0..<images.count, id: \.self) { index in
                     
                     ZStack {
                         
                         /// 이미지 출처가 서버일 경우 KF, 사용자 앨범일 경우 UIImage로 화면에 띄움
                         
-                        switch imagesNew[index].source {
+                        switch images[index].source {
                             
                         case .url(let url):
                             
@@ -324,7 +324,7 @@ struct EditDiaryView: View {
                                         pickedImagesData.remove(at: index)
                                         
                                         // 이미지 배열에서 해당하는 인덱스의 이미지 삭제
-                                        imagesNew.remove(at: index)
+                                        images.remove(at: index)
                                         
                                         // 이미지를 제대로 불러오지 못했을 경우 에러 처리
                                     } else {
@@ -343,10 +343,10 @@ struct EditDiaryView: View {
                 if appState.isPersonalDiary {
                     
                     // 사진이 2장 이하일 때만 사진 추가할 수 있는 앨범 표시
-                    if imagesNew.count < 3 {
+                    if images.count < 3 {
                         
                         // 사진 피커 -> 최대 3장까지 선택 가능
-                        PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit - imagesNew.count, selectionBehavior: .ordered) {
+                        PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit - images.count, selectionBehavior: .ordered) {
                             Image(.btnAddImg)
                                 .resizable()
                                 .frame(width: 100, height: 100)
@@ -359,7 +359,7 @@ struct EditDiaryView: View {
             .onAppear {
 
                 pickedImagesData.removeAll()
-                imagesNew.removeAll()
+                images.removeAll()
                 
                 // MARK: images(ImageItem)과 pickedImagesData의 싱크를 맞추기 위함
                 
@@ -370,7 +370,7 @@ struct EditDiaryView: View {
                 for url in urls {
                     
                     // 화면에 보이는 이미지 배열에 하나씩 추가
-                    imagesNew.append(ImageItem(id: nil, source: .url(url)))
+                    images.append(ImageItem(id: nil, source: .url(url)))
                     
                     guard let url = URL(string: url) else { return }
                     
@@ -416,7 +416,7 @@ struct EditDiaryView: View {
                     }
 
                     pickedImagesData.append(contentsOf: pickedImagesDataArray)
-                    imagesNew.append(contentsOf: imagesArray)
+                    images.append(contentsOf: imagesArray)
                 }
             }
         }
