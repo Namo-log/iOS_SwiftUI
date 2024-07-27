@@ -51,5 +51,7 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Thin.otf</string>
 	</array>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>앱이 라이브러리에 사진을 저장하려고 합니다.</string>
 </dict>
 </plist>
