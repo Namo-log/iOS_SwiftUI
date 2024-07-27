@@ -277,7 +277,7 @@ struct EditMoimDiaryView: View {
             
             if showActivityMoneyToastView {
                 
-                ToastViewNew(toastMessage: "정산 금액과 인원을 입력해주세요!", bottomPadding: screenHeight / 7)
+                ToastViewNew(toastMessage: "모임 참여자를 선택해주세요!", bottomPadding: screenHeight / 7)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             
@@ -341,7 +341,7 @@ struct EditMoimDiaryView: View {
                         }
                         
                         // 활동 중 하나라도 정산 금액이 입력되지 않았다면
-                    } else if hasNoActivityMoney(activities: activities) {
+                    } else if hasNoActivityParticipants(activities: activities) {
                         
                         withAnimation {
                             showActivityMoneyToastView = true
@@ -392,7 +392,7 @@ struct EditMoimDiaryView: View {
                         }
 
                         // 활동 중 하나라도 정산 금액이 입력되지 않았다면
-                    } else if hasNoActivityMoney(activities: activities) {
+                    } else if hasNoActivityParticipants(activities: activities) {
                         
                         withAnimation {
                             showActivityMoneyToastView = true
@@ -444,11 +444,9 @@ struct EditMoimDiaryView: View {
         return activityNames.contains { $0 == "" }
     }
     
-    // 활동의 정산 금액이 입력되지 않았음을 검사하는 메소드
-    func hasNoActivityMoney(activities: [ActivityDTO]) -> Bool {
+    // 활동의 참여자가 입력되지 않았음을 검사하는 메소드
+    func hasNoActivityParticipants(activities: [ActivityDTO]) -> Bool {
         
-        let activityMoneys = activities.map { $0.money }
-
-        return activityMoneys.contains { $0 == 0 } || selectedUser.isEmpty
+        return selectedUser.isEmpty
     }
 }
