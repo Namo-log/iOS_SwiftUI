@@ -17,6 +17,7 @@ enum MoimDiaryEndPoint {
     case getMonthMoimDiary(request: GetMonthMoimDiaryReqDTO)
     case getOneMoimDiary(moimScheduleId: Int)
     case getOneMoimDiaryDetail(moimScheduleId: Int)
+    case deleteMoimDiaryOnPersonal(scheduleId: Int)
 }
 
 extension MoimDiaryEndPoint: EndPoint {
@@ -41,6 +42,8 @@ extension MoimDiaryEndPoint: EndPoint {
             return "/all/\(moimScheduleId)"
         case .getOneMoimDiaryDetail(let moimScheduleId):
             return "/detail/\(moimScheduleId)"
+        case .deleteMoimDiaryOnPersonal(scheduleId: let scheduleId):
+            return "/person/\(scheduleId)"
         }
     }
     
@@ -52,7 +55,7 @@ extension MoimDiaryEndPoint: EndPoint {
             return .post
         case .changeMoimDiaryPlace, .editMoimDiary:
             return .patch
-        case .deleteMoimDiaryPlace, .deleteMoimDiary:
+        case .deleteMoimDiaryPlace, .deleteMoimDiary, .deleteMoimDiaryOnPersonal:
             return .delete
         }
     }
@@ -67,7 +70,7 @@ extension MoimDiaryEndPoint: EndPoint {
             return .uploadImagesWithBody(imageDatas: req.imgs, body: body)
         case .editMoimDiary(_, let req):
             return .requestJSONEncodable(parameters: req)
-        case .deleteMoimDiaryPlace, .deleteMoimDiary, .getOneMoimDiary, .getOneMoimDiaryDetail:
+        case .deleteMoimDiaryPlace, .deleteMoimDiary, .getOneMoimDiary, .getOneMoimDiaryDetail, .deleteMoimDiaryOnPersonal:
             return .requestPlain
         case .getMonthMoimDiary(let req):
             let params = ["page": req.page, "size": req.size]

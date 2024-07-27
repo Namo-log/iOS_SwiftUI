@@ -73,4 +73,10 @@ final class MoimDiaryUseCase {
         guard let res = await moimDiaryRepository.getOneMoimDiaryDetail(moimScheduleId: moimScheduleId) else { return }
 		diaryState.currentDiary = res
     }
+    
+    /// 개인 페이지 모임 기록 삭제
+    func deleteMoimDiaryOnPersonal(scheduleId: Int) async -> Bool {
+        
+        return await moimDiaryRepository.deleteMoimDiaryOnPersonal(scheduleId: scheduleId)
+    }
 }
