@@ -123,9 +123,10 @@ struct ImageDetailView: View {
 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
 
-                                    showImageDownloadSuccessAlert = true
+                                    withAnimation {
+                                        showImageDownloadSuccessAlert = true
+                                    }
                                 }
-                                
                             }
 
                         } label: {
@@ -179,7 +180,9 @@ struct ImageDetailView: View {
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                 
-                                showImageDownloadSuccessAlert = false
+                                withAnimation {
+                                    showImageDownloadSuccessAlert = false
+                                }  
                             }
                         }
                 }
