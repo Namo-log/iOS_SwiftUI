@@ -46,7 +46,7 @@ struct UserDTO: Decodable {
     var userId: Int
     var userName: String
 }
-struct ActivityDTO: Decodable {
+struct ActivityDTO: Decodable, Hashable {
     var moimActivityId: Int
     var name: String
     var money: Int

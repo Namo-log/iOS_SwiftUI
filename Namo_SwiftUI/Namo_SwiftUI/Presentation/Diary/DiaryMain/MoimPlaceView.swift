@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import Kingfisher
 
 // 모임 기록에서 장소 뷰
 struct MoimPlaceView: View {
@@ -24,9 +25,16 @@ struct MoimPlaceView: View {
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
     
+    @State var imageItems: [ImageItem] = []
+    
+    @Binding var showImageDetailViewSheet: Bool
+    @Binding var selectedImageIndex: Int
+    
+    @State var imageDictionary: [ActivityDTO: [ImageItem]] = [:]
+    
     let index: Int
     let photosLimit = 3 // 선택가능한 최대 사진 개수
-	let deleteAction: () -> Void
+    let deleteAction: () -> Void
     
     var body: some View {
         HStack(spacing: 0) {
@@ -105,17 +113,6 @@ struct MoimPlaceView: View {
                 }
             }
         }
-        .onAppear(perform: {
-            for url in activity.urls {
-                guard let url = URL(string: url) else { return }
-                DispatchQueue.global().async {
-                    guard let data = try? Data(contentsOf: url) else { return }
-                    pickedImagesData.append(data)
-                    images.append(UIImage(data: data)!)
-                    print(images.description)
-                }
-            }
-        })
     }
     
     // 사진 선택 리스트 뷰
@@ -123,41 +120,136 @@ struct MoimPlaceView: View {
         ScrollView(.horizontal) {
             HStack(alignment: .top, spacing: 20) {
                 // images의 사진들을 하나씩 이미지뷰로 띄운다
-                ForEach(0..<images.count, id: \.self) { i in
-                    Image(uiImage: images[i])
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .aspectRatio(contentMode: .fill)
+                
+                ForEach(0..<imageItems.count, id: \.self) { index in
+                    
+                    ZStack {
+                        
+                        switch imageItems[index].source {
+                            
+                        case .url(let url):
+                            
+                            KFImage(URL(string: url))
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .aspectRatio(contentMode: .fill)
+                                .onTapGesture {
+                                    selectedImageIndex = index
+                                    showImageDetailViewSheet = true
+                                }
+                            
+                        case .uiImage(let uiImage):
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .aspectRatio(contentMode: .fill)
+                                .onTapGesture {
+                                    selectedImageIndex = index
+                                    showImageDetailViewSheet = true
+                                }
+                        }
+                        
+                        Image("icImageDelete")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .offset(x: 40, y: -45)
+                            .shadow(radius: 5)
+                            .onTapGesture {
+                                
+                                if index >= 0 && index < pickedImagesData.count {
+                                    
+                                    pickedImagesData.remove(at: index)
+                                    
+                                    self.imageItems.remove(at: index)
+                                    
+                                } else {
+                                    
+                                    ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "이미지 삭제 오류", message: "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", localizedDescription: "이미지 불러오기 실패"))
+                                }
+                            }
+                    }
                 }
                 
-                // 사진 피커 -> 최대 3장까지 선택 가능
-                PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
-                    Image(.btnAddImg)
-                        .resizable()
-                        .frame(width: 100, height: 100)
+                if imageItems.count < 3 {
+                    
+                    // 사진 피커 -> 최대 3장까지 선택 가능
+                    PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit - imageItems.count, selectionBehavior: .ordered) {
+                        Image(.btnAddImg)
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                    }
                 }
+                
+                
             } // HStack
             .padding(.top, 18)
-            .onChange(of: pickedImageItems) { _ in
-                Task {
-                    // 앞서 선택된 것들은 지우고
-                    pickedImagesData.removeAll()
-                    images.removeAll()
+            .onAppear {
+                
+                pickedImagesData.removeAll()
+                imageItems.removeAll()
+                
+                let dispatchGroup = DispatchGroup()
+                var imagesDataDictionary = [String: Data]()
+//
+//                imageDictionary[activity] = activity.urls.map { ImageItem(id: nil, source: .url($0)) }
+                
+                for url in activity.urls {
                     
-//                    activity.toUrlString(dataList: pickedImagesData)
+                    imageItems.append(ImageItem(id: nil, source: .url(url)))
+   
+                    guard let url = URL(string: url) else { return }
+                    
+                    dispatchGroup.enter()
+                    
+                    DispatchQueue.global().async {
+                        
+                        defer { dispatchGroup.leave() }
+                        
+                        guard let data = try? Data(contentsOf: url) else { return }
+                        
+                        imagesDataDictionary[url.absoluteString] = data
+                    }
+                }
+                
+                print("imageDictionary: \(imagesDataDictionary)")
 
-                    // 선택된 사진들 images에 추가
-                    for item in pickedImageItems {
-                        if let data = try? await item.loadTransferable(type: Data.self) {
+                dispatchGroup.notify(queue: .main) {
+
+                    for url in activity.urls {
+
+                        if let url = URL(string: url), let data = imagesDataDictionary[url.absoluteString] {
                             pickedImagesData.append(data)
-                            if let image = UIImage(data: data) {
-                                images.append(image)
-//                                activity.toUrlString(dataList: pickedImagesData)
-                            }
                         }
                     }
                 }
             }
+            .onChange(of: pickedImageItems) { _ in
+                Task {
+                    
+                    var pickedImagesDataArray: [Data] = []
+                    var imagesArray: [ImageItem] = []
+                    
+                    for item in pickedImageItems {
+                        
+                        if let data = try? await item.loadTransferable(type: Data.self) {
+                            pickedImagesDataArray.append(data)
+                            if let image = UIImage(data: data) {
+                                imagesArray.append(ImageItem(id: nil, source: .uiImage(image)))
+                            }
+                        }
+                        
+                    }
+                    
+                    pickedImagesData.append(contentsOf: pickedImagesDataArray)
+                    imageItems.append(contentsOf: imagesArray)
+                    pickedImageItems.removeAll()
+                    
+                    print("pickedImageData 출력: \(pickedImagesData)")
+                    
+                }
+            }
         } // ScrollView
+
     }
 }

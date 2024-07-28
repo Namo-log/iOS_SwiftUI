@@ -154,8 +154,18 @@ struct EditDiaryView: View {
                     leftButtonTitle: "취소",
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
+                        
                         Task {
-                            let _ = await diaryUseCase.deleteDiary(scheduleId: info.scheduleId)
+                            
+                            if appState.isPersonalDiary {
+                             
+                                let _ = await diaryUseCase.deleteDiary(scheduleId: info.scheduleId)
+                                
+                            } else {
+                                
+                                let _ = await moimDiaryUseCase.deleteMoimDiaryOnPersonal(scheduleId: info.scheduleId)
+                            }
+                            
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -329,11 +339,11 @@ struct EditDiaryView: View {
                                         // 이미지를 제대로 불러오지 못했을 경우 에러 처리
                                     } else {
                                         
-                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "이미지 삭제 오류", message: "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", localizedDescription: "이미지 불러오기 실패"))
+                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "이미지 삭제 오류", message: "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", localizedDescription: "이미지 불러오기 실패"))
                                     }
                                     
-                                    // 앨범에서 선택된 이미지들 목록 비우기
-                                    pickedImageItems.removeAll()
+//                                    // 앨범에서 선택된 이미지들 목록 비우기
+//                                    pickedImageItems.removeAll()
                                 }
                         }
                     }
@@ -350,6 +360,7 @@ struct EditDiaryView: View {
                             Image(.btnAddImg)
                                 .resizable()
                                 .frame(width: 100, height: 100)
+                            
                         }
                     }
                 }
@@ -389,6 +400,8 @@ struct EditDiaryView: View {
                     }
                 }
                 
+                print("EditDiaryView imagesDictionary \(imagesDataDictionary.count)")
+                
                 dispatchGroup.notify(queue: .main) {
                     
                     for url in urls {
@@ -417,6 +430,7 @@ struct EditDiaryView: View {
 
                     pickedImagesData.append(contentsOf: pickedImagesDataArray)
                     images.append(contentsOf: imagesArray)
+                    pickedImageItems.removeAll()
                 }
             }
         }

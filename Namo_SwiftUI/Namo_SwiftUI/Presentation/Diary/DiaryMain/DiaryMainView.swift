@@ -258,7 +258,6 @@ struct DiaryItemView: View {
     /// 이미지 상세보기 화면 활성화 여부
     @Binding var showImageDetailViewSheet: Bool
     
-    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()

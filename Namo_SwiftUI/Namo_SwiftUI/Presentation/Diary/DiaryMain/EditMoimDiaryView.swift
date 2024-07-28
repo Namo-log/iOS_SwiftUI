@@ -33,11 +33,20 @@ struct EditMoimDiaryView: View {
 	// 삭제된 활동 API call 하기 위해 저장
 	@State var deleteActivities: [ActivityDTO] = []
     
-    // 활동 이름 입력 요구 토스트 뷰 활성화 여부
+    /// 활동 이름 입력 요구 토스트 뷰 활성화 여부
     @State var showActivityNameToastView: Bool = false
     
-    // 활동 정산 금액 입력 요구 토스트 뷰 활성화 여부
+    /// 활동 정산 금액 입력 요구 토스트 뷰 활성화 여부
     @State var showActivityMoneyToastView: Bool = false
+    
+    /// 이미지 상세보기 화면 활성화 여부
+    @State var showImageDetailViewSheet: Bool = false
+    
+    /// 이미지 상세보기 화면에 전달할 이미지 인덱스
+    @State var selectedImageIndex: Int = 0
+    
+    /// 이미지 상세보기 페이지에 전달할 이미지 목록
+    @State var imageItems: [ImageItem] = []
     
     // 모임 정산 Alert
     var groupCalculateAlertView: some View {
@@ -191,6 +200,8 @@ struct EditMoimDiaryView: View {
                                           name: $activities[index].name,
                                           currentCalculateIndex: $currentCalculateIndex,
                                           pickedImagesData: $activityImages[index],
+                                          showImageDetailViewSheet: $showImageDetailViewSheet,
+                                          selectedImageIndex: $selectedImageIndex,
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
@@ -296,6 +307,11 @@ struct EditMoimDiaryView: View {
         )
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
+        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+            
+            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imageItems)
+            
+        }
         .onAppear {
             Task {
                 self.activities.removeAll()
@@ -458,6 +474,9 @@ struct EditMoimDiaryView: View {
     // 활동의 참여자가 입력되지 않았음을 검사하는 메소드
     func hasNoActivityParticipants(activities: [ActivityDTO]) -> Bool {
         
-        return selectedUser.isEmpty
+        let activityParticipants = activities.map { $0.participants }
+        
+        return activityParticipants.contains { $0 == [] }
     }
 }
+
