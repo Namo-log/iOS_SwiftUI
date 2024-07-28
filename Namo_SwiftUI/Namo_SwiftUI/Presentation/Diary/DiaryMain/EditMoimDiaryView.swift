@@ -46,7 +46,7 @@ struct EditMoimDiaryView: View {
     @State var selectedImageIndex: Int = 0
     
     /// 이미지 상세보기 페이지에 전달할 이미지 목록
-    @State var imageItems: [ImageItem] = []
+    @State var imagesForImageDetail: [ImageItem] = []
     
     // 모임 정산 Alert
     var groupCalculateAlertView: some View {
@@ -202,6 +202,7 @@ struct EditMoimDiaryView: View {
                                           pickedImagesData: $activityImages[index],
                                           showImageDetailViewSheet: $showImageDetailViewSheet,
                                           selectedImageIndex: $selectedImageIndex,
+                                          imagesForImageDetail: $imagesForImageDetail,
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
@@ -262,6 +263,11 @@ struct EditMoimDiaryView: View {
                         Task {
                             // 모임 기록 삭제
                             await moimDiaryUseCase.deleteMoimDiary(moimScheduleId: info.scheduleId)
+                            
+                            await MainActor.run {
+                                NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil)
+                            }
+                            
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -309,7 +315,7 @@ struct EditMoimDiaryView: View {
         .ignoresSafeArea(edges: .bottom)
         .fullScreenCover(isPresented: $showImageDetailViewSheet) {
             
-            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imageItems)
+            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imagesForImageDetail)
             
         }
         .onAppear {

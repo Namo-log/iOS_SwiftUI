@@ -30,7 +30,7 @@ struct MoimPlaceView: View {
     @Binding var showImageDetailViewSheet: Bool
     @Binding var selectedImageIndex: Int
     
-    @State var imageDictionary: [ActivityDTO: [ImageItem]] = [:]
+    @Binding var imagesForImageDetail: [ImageItem]
     
     let index: Int
     let photosLimit = 3 // 선택가능한 최대 사진 개수
@@ -100,6 +100,12 @@ struct MoimPlaceView: View {
             if isAddingViewVisible {
                 Button {
                     deleteAction()
+                    imageItems.removeAll()
+                    
+                    for url in activity.urls {
+                        imageItems.append(ImageItem(id: nil, source: .url(url)))
+                    }
+                    
                     self.dragOffset = .zero
                 } label: {
                     Rectangle()
@@ -136,6 +142,7 @@ struct MoimPlaceView: View {
                                 .onTapGesture {
                                     selectedImageIndex = index
                                     showImageDetailViewSheet = true
+                                    imagesForImageDetail = imageItems
                                 }
                             
                         case .uiImage(let uiImage):
@@ -146,6 +153,7 @@ struct MoimPlaceView: View {
                                 .onTapGesture {
                                     selectedImageIndex = index
                                     showImageDetailViewSheet = true
+                                    imagesForImageDetail = imageItems
                                 }
                         }
                         
