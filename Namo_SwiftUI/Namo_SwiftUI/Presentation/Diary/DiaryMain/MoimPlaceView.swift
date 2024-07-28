@@ -32,6 +32,11 @@ struct MoimPlaceView: View {
     
     @Binding var imagesForImageDetail: [ImageItem]
     
+    /// 컨텐츠가 바뀌었는지 여부
+    @Binding var isChangedContents: Bool
+    /// 컨텐츠가 바뀌었을 때 저장하지 않고 뒤로가기할 시 나타나는 Alert
+    @Binding var showIsChangedAlert: Bool
+    
     let index: Int
     let photosLimit = 3 // 선택가능한 최대 사진 개수
     let deleteAction: () -> Void
@@ -48,6 +53,10 @@ struct MoimPlaceView: View {
                     )
                     .font(.pretendard(.bold, size: 15))
                     .foregroundStyle(.mainText)
+                    .onChange(of: activity.name) { _ in
+                        
+                        isChangedContents = true
+                    }
                     
                     Spacer()
                     HStack() {
@@ -62,6 +71,10 @@ struct MoimPlaceView: View {
                             self.showCalculateAlert = true
                         }
                         NotificationCenter.default.post(name: NSNotification.Name("UpdateCalculateInfo"), object: nil, userInfo: ["currentCalculateIndex":currentCalculateIndex])
+                    }
+                    .onChange(of: activity.money) { _ in
+                        
+                        isChangedContents = true
                     }
                 }
                 .padding(.top, 20)
@@ -171,6 +184,8 @@ struct MoimPlaceView: View {
                                     
                                     self.imageItems.remove(at: index)
                                     
+                                    isChangedContents = true
+                                    
                                 } else {
                                     
                                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "이미지 삭제 오류", message: "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", localizedDescription: "이미지 불러오기 실패"))
@@ -252,6 +267,7 @@ struct MoimPlaceView: View {
                     pickedImagesData.append(contentsOf: pickedImagesDataArray)
                     imageItems.append(contentsOf: imagesArray)
                     pickedImageItems.removeAll()
+                    isChangedContents = true
                     
                     print("pickedImageData 출력: \(pickedImagesData)")
                     

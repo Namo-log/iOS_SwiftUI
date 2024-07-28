@@ -20,6 +20,7 @@ struct EditDiaryView: View {
     let categoryUseCase = CategoryUseCase.shared
     let diaryUseCase = DiaryUseCase.shared
     let moimDiaryUseCase = MoimDiaryUseCase.shared
+    let scheduleUseCase = ScheduleUseCase.shared
     
     @State var isFromCalendar: Bool
     @State var memo: String
@@ -37,6 +38,11 @@ struct EditDiaryView: View {
     @State var showImageDetailViewSheet: Bool = false
     /// 이미지 상세보기 페이지에 전달할 인덱스
     @State var selectedImageIndex: Int = 0
+    
+    /// 컨텐츠가 바뀌었는지 여부
+    @State var isChangedContents: Bool = false
+    /// 컨텐츠가 바뀌었을 때 저장하지 않고 뒤로가기할 시 나타나는 Alert
+    @State var showIsChangedAlert: Bool = false
     
     let urls: [String]
     let info: ScheduleInfo
@@ -89,6 +95,7 @@ struct EditDiaryView: View {
                                 typedCharacters = memo.count
                                 memo = String(memo.prefix(characterLimit))
                                 diaryState.currentDiary.contents = String(memo.prefix(characterLimit))
+                                isChangedContents = true
                             }
                     } // ZStack
                     .frame(height: 150)
@@ -129,7 +136,7 @@ struct EditDiaryView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
-                leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
+                leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary, isChangedContents: $isChangedContents, showIsChangedAlert: $showIsChangedAlert),
                 trailing: appState.isEditingDiary ? TrashView() : nil
             )
             .navigationTitle(info.scheduleName)
@@ -170,6 +177,36 @@ struct EditDiaryView: View {
                         }
                     }
             }
+            
+            if showIsChangedAlert {
+                
+                AlertViewOld(showAlert: $showIsChangedAlert,
+                             content: AnyView(
+                                
+                                VStack(spacing: 8) {
+                                    
+                                    Text("편집한 내용이 저장되지 않습니다.")
+                                        .font(Font.pretendard(.bold, size: 16))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.top, 24)
+                                    
+                                    Text("정말 나가시겠어요?")
+                                        .font(Font.pretendard(.regular, size: 14))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.bottom, 3)
+                                    
+                                }
+                                
+                             ),
+                             leftButtonTitle: "취소",
+                             rightButtonTitle: "확인",
+                             rightButtonAction: {
+                    self.presentationMode.wrappedValue.dismiss()
+                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+                })
+            }
+            
             
         } // ZStack
         .onAppear {
@@ -231,6 +268,9 @@ struct EditDiaryView: View {
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
+//        .onChange(of: isChangedContents) { _ in
+//            showIsChangedAlert = true
+//        }
     }
     
     // 기록 수정 완료 버튼 또는 기록 저장 버튼
@@ -342,6 +382,7 @@ struct EditDiaryView: View {
                                         ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "이미지 삭제 오류", message: "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", localizedDescription: "이미지 불러오기 실패"))
                                     }
                                     
+                                    isChangedContents = true
 //                                    // 앨범에서 선택된 이미지들 목록 비우기
 //                                    pickedImageItems.removeAll()
                                 }
@@ -431,6 +472,7 @@ struct EditDiaryView: View {
                     pickedImagesData.append(contentsOf: pickedImagesDataArray)
                     images.append(contentsOf: imagesArray)
                     pickedImageItems.removeAll()
+                    isChangedContents = true
                 }
             }
         }

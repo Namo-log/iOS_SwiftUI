@@ -14,13 +14,24 @@ struct DismissButton: View {
     @EnvironmentObject var scheduleState: ScheduleState
 	let scheduleUseCase = ScheduleUseCase.shared
     @Binding var isDeletingDiary: Bool
+    @Binding var isChangedContents: Bool
+    @Binding var showIsChangedAlert: Bool
     
     var body: some View {
         Button{
-            self.presentationMode.wrappedValue.dismiss()
-//            scheduleState.currentSchedule = 
-			scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
-			scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+            
+            
+            if isChangedContents {
+                
+                showIsChangedAlert = true
+                
+            } else {
+                self.presentationMode.wrappedValue.dismiss()
+    //            scheduleState.currentSchedule =
+                scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+                scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+            }
+            
         } label: {
             Image(.icBack)
                 .resizable()

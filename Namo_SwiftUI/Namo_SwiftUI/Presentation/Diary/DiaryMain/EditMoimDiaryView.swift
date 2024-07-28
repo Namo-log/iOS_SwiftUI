@@ -14,6 +14,7 @@ struct EditMoimDiaryView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
     let moimDiaryUseCase = MoimDiaryUseCase.shared
+    let scheduleUseCase = ScheduleUseCase.shared
     
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
@@ -47,6 +48,11 @@ struct EditMoimDiaryView: View {
     
     /// 이미지 상세보기 페이지에 전달할 이미지 목록
     @State var imagesForImageDetail: [ImageItem] = []
+    
+    /// 컨텐츠가 바뀌었는지 여부
+    @State var isChangedContents: Bool = false
+    /// 컨텐츠가 바뀌었을 때 저장하지 않고 뒤로가기할 시 나타나는 Alert
+    @State var showIsChangedAlert: Bool = false
     
     // 모임 정산 Alert
     var groupCalculateAlertView: some View {
@@ -148,6 +154,9 @@ struct EditMoimDiaryView: View {
                 }
                     .padding(.top, 25)
                     .padding(.bottom, 33)
+                    .onChange(of: selectedUser) { _ in
+                        isChangedContents = true
+                    }
             )
         )
     }
@@ -203,6 +212,8 @@ struct EditMoimDiaryView: View {
                                           showImageDetailViewSheet: $showImageDetailViewSheet,
                                           selectedImageIndex: $selectedImageIndex,
                                           imagesForImageDetail: $imagesForImageDetail,
+                                          isChangedContents: $isChangedContents,
+                                          showIsChangedAlert: $showIsChangedAlert,
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
@@ -305,10 +316,40 @@ struct EditMoimDiaryView: View {
                     }
             }
             
+            if showIsChangedAlert {
+                
+                AlertViewOld(showAlert: $showIsChangedAlert,
+                             content: AnyView(
+                                
+                                VStack(spacing: 8) {
+                                    
+                                    Text("편집한 내용이 저장되지 않습니다.")
+                                        .font(Font.pretendard(.bold, size: 16))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.top, 24)
+                                    
+                                    Text("정말 나가시겠어요?")
+                                        .font(Font.pretendard(.regular, size: 14))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.bottom, 3)
+                                    
+                                }
+                                
+                             ),
+                             leftButtonTitle: "취소",
+                             rightButtonTitle: "확인",
+                             rightButtonAction: {
+                    self.presentationMode.wrappedValue.dismiss()
+                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+                })
+            }
+            
+            
         } // ZStack
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(
-            leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
+            leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary, isChangedContents: $isChangedContents, showIsChangedAlert: $showIsChangedAlert),
             trailing: appState.isEditingDiary ? TrashView() : nil
         )
         .navigationTitle(info.scheduleName)
@@ -354,6 +395,7 @@ struct EditMoimDiaryView: View {
             
             if activities.count <= 2 {
                 showAddPlaceButton = true
+                
             }
         }
     }
