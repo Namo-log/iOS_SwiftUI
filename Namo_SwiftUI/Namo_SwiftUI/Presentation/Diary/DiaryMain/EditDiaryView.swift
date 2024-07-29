@@ -9,6 +9,7 @@ import SwiftUI
 
 import Factory
 import PhotosUI
+import Kingfisher
 
 // 개인 / 모임 기록 추가 및 수정 화면
 struct EditDiaryView: View {
@@ -19,6 +20,7 @@ struct EditDiaryView: View {
     let categoryUseCase = CategoryUseCase.shared
     let diaryUseCase = DiaryUseCase.shared
     let moimDiaryUseCase = MoimDiaryUseCase.shared
+    let scheduleUseCase = ScheduleUseCase.shared
     
     @State var isFromCalendar: Bool
     @State var memo: String
@@ -26,8 +28,21 @@ struct EditDiaryView: View {
     @State var typedCharacters = 0
     @State var characterLimit = 200
     @State var pickedImagesData: [Data?] = []
-    @State var images: [UIImage] = [] // 보여질 사진 목록
+
+    /// 화면에 보여질 이미지 목록
+    @State var images: [ImageItem] = []
+    
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
+    
+    /// 이미지 상세보기 화면 활성화 여부
+    @State var showImageDetailViewSheet: Bool = false
+    /// 이미지 상세보기 페이지에 전달할 인덱스
+    @State var selectedImageIndex: Int = 0
+    
+    /// 컨텐츠가 바뀌었는지 여부
+    @State var isChangedContents: Bool = false
+    /// 컨텐츠가 바뀌었을 때 저장하지 않고 뒤로가기할 시 나타나는 Alert
+    @State var showIsChangedAlert: Bool = false
     
     let urls: [String]
     let info: ScheduleInfo
@@ -80,6 +95,7 @@ struct EditDiaryView: View {
                                 typedCharacters = memo.count
                                 memo = String(memo.prefix(characterLimit))
                                 diaryState.currentDiary.contents = String(memo.prefix(characterLimit))
+                                isChangedContents = true
                             }
                     } // ZStack
                     .frame(height: 150)
@@ -120,11 +136,14 @@ struct EditDiaryView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
-                leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
+                leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary, isChangedContents: $isChangedContents, showIsChangedAlert: $showIsChangedAlert),
                 trailing: appState.isEditingDiary ? TrashView() : nil
             )
             .navigationTitle(info.scheduleName)
             .ignoresSafeArea(edges: .bottom)
+            .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+                ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: images)
+            }
             
             // 쓰레기통 클릭 시 Alert 띄우기
             if appState.isDeletingDiary {
@@ -142,39 +161,116 @@ struct EditDiaryView: View {
                     leftButtonTitle: "취소",
                     leftButtonAction: {},
                     rightButtonTitle: "삭제") {
+                        
                         Task {
-                            let _ = await diaryUseCase.deleteDiary(scheduleId: info.scheduleId)
+                            
+                            if appState.isPersonalDiary {
+                             
+                                let _ = await diaryUseCase.deleteDiary(scheduleId: info.scheduleId)
+                                
+                            } else {
+                                
+                                let _ = await moimDiaryUseCase.deleteMoimDiaryOnPersonal(scheduleId: info.scheduleId)
+                            }
+                            
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
             }
+            
+            if showIsChangedAlert {
+                
+                AlertViewOld(showAlert: $showIsChangedAlert,
+                             content: AnyView(
+                                
+                                VStack(spacing: 8) {
+                                    
+                                    Text("편집한 내용이 저장되지 않습니다.")
+                                        .font(Font.pretendard(.bold, size: 16))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.top, 24)
+                                    
+                                    Text("정말 나가시겠어요?")
+                                        .font(Font.pretendard(.regular, size: 14))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.bottom, 3)
+                                    
+                                }
+                                
+                             ),
+                             leftButtonTitle: "취소",
+                             rightButtonTitle: "확인",
+                             rightButtonAction: {
+                    self.presentationMode.wrappedValue.dismiss()
+                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+                })
+            }
+            
+            
         } // ZStack
         .onAppear {
             if isFromCalendar {
                 // 아래의 작업은 캘린더에서 이 화면으로 넘어올 때만 필요해서 해당 불값을 추가함...
-                images.removeAll()
+
                 Task {
+                    // 개인 기록일 경우
                     if appState.isPersonalDiary {
+                        
+                        // 기존의 imagesNew 배열을 비움
+                        images.removeAll()
+                        pickedImagesData.removeAll()
+                        
                         await diaryUseCase.getOneDiary(scheduleId: info.scheduleId)
+
                     } else {
                         await moimDiaryUseCase.getOneMoimDiaryDetail(moimScheduleId: info.scheduleId)
                     }
                     // memo 값 연결
                     memo = diaryState.currentDiary.contents ?? ""
+ 
+                    // MARK: images(ImageItem)과 pickedImagesData의 싱크를 맞추기 위함
+                    
+                    let dispatchGroup = DispatchGroup()
+                    var imagesDataDictionary = [String: Data]()
                     
                     for url in diaryState.currentDiary.urls ?? [] {
+                        
+                        images.append(ImageItem(id: nil, source: .url(url)))
+                        
                         guard let url = URL(string: url) else { return }
                         
+                        dispatchGroup.enter()
+                        
                         DispatchQueue.global().async {
+                            
+                            defer { dispatchGroup.leave() }
+                            
+                            // 서버로부터 받아온 url을 data 타입으로 변환
                             guard let data = try? Data(contentsOf: url) else { return }
-                            images.append(UIImage(data: data)!)
-                            print(images.description)
+                            
+                            imagesDataDictionary[url.absoluteString] = data
                         }
+                    }
+                    
+                    dispatchGroup.notify(queue: .main) {
+                        
+                        for url in diaryState.currentDiary.urls ?? [] {
+                            
+                            if let url = URL(string: url), let data = imagesDataDictionary[url.absoluteString] {
+                                pickedImagesData.append(data)
+                            }
+                            
+                        }
+                        
                     }
                 }
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
+//        .onChange(of: isChangedContents) { _ in
+//            showIsChangedAlert = true
+//        }
     }
     
     // 기록 수정 완료 버튼 또는 기록 저장 버튼
@@ -192,6 +288,8 @@ struct EditDiaryView: View {
                         await moimDiaryUseCase.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
 					NotificationCenter.default.post(name: .reloadDiaryViaNetwork, object: nil)
+                    
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             } else {
                 Task {
@@ -202,9 +300,11 @@ struct EditDiaryView: View {
                         // 모임 기록(에 대한 개인 메모) edit API 호출
                         await moimDiaryUseCase.editMoimDiary(scheduleId: info.scheduleId, req: ChangeMoimDiaryRequestDTO(text: memo))
                     }
+                    
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             }
-            self.presentationMode.wrappedValue.dismiss()
+            
         } label: {
             ZStack() {
                 Rectangle()
@@ -222,55 +322,157 @@ struct EditDiaryView: View {
     
     // 사진 선택 리스트 뷰
     private var PhotoPickerListView: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: 20) {
-                // images의 사진들을 하나씩 이미지뷰로 띄운다
-                ForEach(0..<images.count, id: \.self) { i in
-                    Image(uiImage: images[i])
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .aspectRatio(contentMode: .fill)
+
+                ForEach(0..<images.count, id: \.self) { index in
+                    
+                    ZStack {
+                        
+                        /// 이미지 출처가 서버일 경우 KF, 사용자 앨범일 경우 UIImage로 화면에 띄움
+                        
+                        switch images[index].source {
+                            
+                        case .url(let url):
+                            
+                            KFImage(URL(string: url))
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .aspectRatio(contentMode: .fill)
+                                .onTapGesture {
+                                    selectedImageIndex = index
+                                    showImageDetailViewSheet = true
+                                }
+                            
+                            
+                        case .uiImage(let uiImage):
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .aspectRatio(contentMode: .fill)
+                                .onTapGesture {
+                                    selectedImageIndex = index
+                                    showImageDetailViewSheet = true
+                                }
+                        }
+                        
+                        // 이미지 삭제 버튼은 개인 기록에만 있음
+                        // 모임 기록은 모임 기록 편집 페이지에서만 가능
+                        if appState.isPersonalDiary {
+                            
+                            Image("icImageDelete")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .offset(x: 40, y: -45)
+                                .shadow(radius: 5)
+                                .onTapGesture {
+                      
+                                    // 서버로 보내는 이미지 배열에서 인덱스의 이미지 삭제
+                                    if index >= 0 && index <  pickedImagesData.count {
+                                        
+                                        pickedImagesData.remove(at: index)
+                                        
+                                        // 이미지 배열에서 해당하는 인덱스의 이미지 삭제
+                                        images.remove(at: index)
+                                        
+                                        // 이미지를 제대로 불러오지 못했을 경우 에러 처리
+                                    } else {
+                                        
+                                        ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "이미지 삭제 오류", message: "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", localizedDescription: "이미지 불러오기 실패"))
+                                    }
+                                    
+                                    isChangedContents = true
+//                                    // 앨범에서 선택된 이미지들 목록 비우기
+//                                    pickedImageItems.removeAll()
+                                }
+                        }
+                    }
                 }
                 
+                // 개인 기록일 경우 (모임 기록은 이 화면에서 이미지 수정 불가이기 때문)
                 if appState.isPersonalDiary {
-                    // 사진 피커 -> 최대 3장까지 선택 가능
-                    PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit, selectionBehavior: .ordered) {
-                        Image(.btnAddImg)
-                            .resizable()
-                            .frame(width: 100, height: 100)
+                    
+                    // 사진이 2장 이하일 때만 사진 추가할 수 있는 앨범 표시
+                    if images.count < 3 {
+                        
+                        // 사진 피커 -> 최대 3장까지 선택 가능
+                        PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit - images.count, selectionBehavior: .ordered) {
+                            Image(.btnAddImg)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                            
+                        }
                     }
                 }
             } // HStack
             .padding(.top, 18)
+            // 사진 리스트가 화면에 나타날 때
             .onAppear {
+
                 pickedImagesData.removeAll()
                 images.removeAll()
                 
+                // MARK: images(ImageItem)과 pickedImagesData의 싱크를 맞추기 위함
+                
+                let dispatchGroup = DispatchGroup()
+                var imagesDataDictionary = [String: Data]()
+                
+                // 서버로부터 받아온 이미지 url 배열 순회
                 for url in urls {
+                    
+                    // 화면에 보이는 이미지 배열에 하나씩 추가
+                    images.append(ImageItem(id: nil, source: .url(url)))
+                    
                     guard let url = URL(string: url) else { return }
                     
+                    // 디스패치 그룹
+                    dispatchGroup.enter()
+                    
                     DispatchQueue.global().async {
+                        
+                        // 디스패치 그룹이 닫히도록 보장
+                        defer { dispatchGroup.leave() }
+                        
+                        // 서버로부터 받아온 url을 data 타입으로 변환
                         guard let data = try? Data(contentsOf: url) else { return }
-                        pickedImagesData.append(data)
-                        images.append(UIImage(data: data)!)
+                        
+                        imagesDataDictionary[url.absoluteString] = data
+                    }
+                }
+                
+                print("EditDiaryView imagesDictionary \(imagesDataDictionary.count)")
+                
+                dispatchGroup.notify(queue: .main) {
+                    
+                    for url in urls {
+                        
+                        if let url = URL(string: url), let data = imagesDataDictionary[url.absoluteString] {
+                            pickedImagesData.append(data)
+                        }
                     }
                 }
             }
+            // 앨범에서 사진을 선택할 경우
             .onChange(of: pickedImageItems) { _ in
+
                 Task {
-                    // 앞서 선택된 것들은 지우고
-                    pickedImagesData.removeAll()
-                    images.removeAll()
-                    
-                    // 선택된 사진들 images에 추가
+                    var pickedImagesDataArray: [Data] = []
+                    var imagesArray: [ImageItem] = []
+
                     for item in pickedImageItems {
                         if let data = try? await item.loadTransferable(type: Data.self) {
-                            pickedImagesData.append(data)
+                            pickedImagesDataArray.append(data)
                             if let image = UIImage(data: data) {
-                                images.append(image)
+                                imagesArray.append(ImageItem(id: nil, source: .uiImage(image)))
                             }
                         }
                     }
+
+                    pickedImagesData.append(contentsOf: pickedImagesDataArray)
+                    images.append(contentsOf: imagesArray)
+                    pickedImageItems.removeAll()
+                    isChangedContents = true
                 }
             }
         }

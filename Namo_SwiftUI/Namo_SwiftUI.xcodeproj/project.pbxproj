@@ -77,9 +77,11 @@
 		475264D42C34E5F800EBCA13 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475264D32C34E5F800EBCA13 /* LoginViewModel.swift */; };
 		475264DB2C34E90D00EBCA13 /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475264DA2C34E90D00EBCA13 /* AuthRepositoryImpl.swift */; };
 		475264DD2C34EC1400EBCA13 /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475264DC2C34EC1400EBCA13 /* AuthUseCase.swift */; };
-		47CB0C552C32F0D800B71D2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47CB0C542C32F0D800B71D2E /* GoogleService-Info.plist */; };
+		476A8C9A2C4ED51D00BCE943 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 476A8C992C4ED51D00BCE943 /* GoogleService-Info.plist */; };
+		478E322C2C52542B00A921A1 /* ToastViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478E322B2C52542B00A921A1 /* ToastViewNew.swift */; };
+		478E322E2C52CB9400A921A1 /* ImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478E322D2C52CB9400A921A1 /* ImageDetailView.swift */; };
 		47CB0C592C33BD8900B71D2E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB0C582C33BD8900B71D2E /* OnboardingViewModel.swift */; };
-		47EA5C8F2C3C12D300142A10 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EA5C8E2C3C12D300142A10 /* secret.swift */; };
+		47F6E1432C4ED452009E0137 /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6E1422C4ED452009E0137 /* secret.swift */; };
 		47F73B9A2C36CA7A002D0027 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F73B992C36CA7A002D0027 /* NavigationBarBackground.swift */; };
 		5012A9BF2B5933CB00544AB0 /* Namo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */; };
 		5012A9C12B5933CB00544AB0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5012A9C02B5933CB00544AB0 /* SplashView.swift */; };
@@ -233,9 +235,11 @@
 		475264D32C34E5F800EBCA13 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		475264DA2C34E90D00EBCA13 /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
 		475264DC2C34EC1400EBCA13 /* AuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUseCase.swift; sourceTree = "<group>"; };
-		47CB0C542C32F0D800B71D2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		476A8C992C4ED51D00BCE943 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		478E322B2C52542B00A921A1 /* ToastViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewNew.swift; sourceTree = "<group>"; };
+		478E322D2C52CB9400A921A1 /* ImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
 		47CB0C582C33BD8900B71D2E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		47EA5C8E2C3C12D300142A10 /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
+		47F6E1422C4ED452009E0137 /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		47F73B992C36CA7A002D0027 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarBackground.swift; sourceTree = "<group>"; };
 		5012A9BB2B5933CB00544AB0 /* Namo_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Namo_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012A9BE2B5933CB00544AB0 /* Namo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Namo_SwiftUIApp.swift; sourceTree = "<group>"; };
@@ -580,7 +584,7 @@
 		5012A9BD2B5933CB00544AB0 /* Namo_SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				47CB0C542C32F0D800B71D2E /* GoogleService-Info.plist */,
+				476A8C992C4ED51D00BCE943 /* GoogleService-Info.plist */,
 				885C8BCD2B7393BC008F0595 /* Namo_SwiftUI.entitlements */,
 				2C5717922B5BF5AF00B0F3B3 /* Namo-SwiftUI-Info.plist */,
 				5012A9DE2B5939C200544AB0 /* Common */,
@@ -740,6 +744,8 @@
 				50926D9E2BA4A10E00C656F4 /* ToastView.swift */,
 				2C3C75D62BCBC1C400312F26 /* NamoAlertViewWithTitle.swift */,
 				2C2749A32C0C34FF00ECBA71 /* NamoAlertViewWithOneButton.swift */,
+				478E322B2C52542B00A921A1 /* ToastViewNew.swift */,
+				478E322D2C52CB9400A921A1 /* ImageDetailView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -767,7 +773,7 @@
 			children = (
 				88BDADDF2BA0C55C0055B69A /* ErrorHandling */,
 				2C57175D2B59FC0D00B0F3B3 /* Constants.swift */,
-				47EA5C8E2C3C12D300142A10 /* secret.swift */,
+				47F6E1422C4ED452009E0137 /* secret.swift */,
 				2C2749A12C0C242A00ECBA71 /* RemoteConfigManager.swift */,
 				47F73B992C36CA7A002D0027 /* NavigationBarBackground.swift */,
 			);
@@ -1150,7 +1156,7 @@
 				2C57178E2B5BF56100B0F3B3 /* Pretendard-Light.otf in Resources */,
 				2C5717902B5BF56100B0F3B3 /* Pretendard-ExtraBold.otf in Resources */,
 				5012A9C62B5933CC00544AB0 /* Preview Assets.xcassets in Resources */,
-				47CB0C552C32F0D800B71D2E /* GoogleService-Info.plist in Resources */,
+				476A8C9A2C4ED51D00BCE943 /* GoogleService-Info.plist in Resources */,
 				2C57178B2B5BF56100B0F3B3 /* Pretendard-ExtraLight.otf in Resources */,
 				2C57178F2B5BF56100B0F3B3 /* Pretendard-Regular.otf in Resources */,
 				5012A9C32B5933CC00544AB0 /* Assets.xcassets in Resources */,
@@ -1172,6 +1178,7 @@
 				2CFE00242B70A6EB0054C31B /* ScheduleDTO.swift in Sources */,
 				2CF445282B87628A00A8E514 /* CalendarScheduleDetailItem.swift in Sources */,
 				A24F32602BA5713100014E06 /* DiaryRepositoryImpl.swift in Sources */,
+				47F6E1432C4ED452009E0137 /* secret.swift in Sources */,
 				475264DB2C34E90D00EBCA13 /* AuthRepositoryImpl.swift in Sources */,
 				A24F32582BA56F3500014E06 /* DiaryDTO.swift in Sources */,
 				A257FFD02BC085FB004F58DD /* MoimDiaryRepositoryImpl.swift in Sources */,
@@ -1204,7 +1211,6 @@
 				A257FFCA2BC079ED004F58DD /* MoimDiaryUseCase.swift in Sources */,
 				88D6C9F52B60119C004742AD /* ColorCircleView.swift in Sources */,
 				2C610FB12C46BE1C00925949 /* GroupUser.swift in Sources */,
-				47EA5C8F2C3C12D300142A10 /* secret.swift in Sources */,
 				504F8EA52B75D1D000ADB867 /* LoginBtn.swift in Sources */,
 				47CB0C592C33BD8900B71D2E /* OnboardingViewModel.swift in Sources */,
 				504A313C2B5BDDF3007888B7 /* ViewHiddenModifier.swift in Sources */,
@@ -1272,6 +1278,7 @@
 				2CFE002A2B70D7C30054C31B /* ScheduleEndPoint.swift in Sources */,
 				475264AE2C34194400EBCA13 /* AgreeViewModel.swift in Sources */,
 				50CFD34D2BA0E32D0033C0ED /* CategorySettingView.swift in Sources */,
+				478E322E2C52CB9400A921A1 /* ImageDetailView.swift in Sources */,
 				50BE93442B6F7C4D0005022E /* MemoRepositorySample.swift in Sources */,
 				889EE0E62B88915700F2FFB3 /* PlaceEndPoint.swift in Sources */,
 				A24F325E2BA5710900014E06 /* DiaryRepository.swift in Sources */,
@@ -1294,6 +1301,7 @@
 				88BDADE12BA0C56B0055B69A /* AppError.swift in Sources */,
 				508EC7B72B5A77C9006E5EEA /* LottieView.swift in Sources */,
 				889EE0E32B888ED100F2FFB3 /* PlaceRepositoryImpl.swift in Sources */,
+				478E322C2C52542B00A921A1 /* ToastViewNew.swift in Sources */,
 				8879A7E92B6A494D00794475 /* Data+.swift in Sources */,
 				8879A7ED2B6A521B00794475 /* APITask.swift in Sources */,
 				A22F634F2B96D85900BC39A2 /* TrashView.swift in Sources */,
@@ -1438,7 +1446,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Namo_SwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = 89A25554FY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Namo-SwiftUI-Info.plist";
@@ -1473,7 +1481,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Namo_SwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = 89A25554FY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Namo-SwiftUI-Info.plist";

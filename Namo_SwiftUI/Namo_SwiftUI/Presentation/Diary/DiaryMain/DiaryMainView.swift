@@ -24,6 +24,13 @@ struct DiaryMainView: View {
     @State var page = 0
     @State var size = 10
     
+    /// 이미지 상세보기 페이지에 전달하기 위한 이미지 인덱스
+    @State var selectedImagedIndex: Int = 0
+    /// 이미지 상세보기 화면 활성화 여부
+    @State var showImageDetailViewSheet: Bool = false
+    /// 이미지 상세보기에 전달할 이미지 아이템 배열
+    @State var diaryImages: [ImageItem] = []
+    
     // 개인 / 모임 토글
     private var toggleView: some View {
         Capsule()
@@ -107,7 +114,7 @@ struct DiaryMainView: View {
 								if dateIndicatorIndices.contains(idx) { // 해당되는 구간이면 날짜 뷰 보여주기
 									DiaryDateItemView(startDate: diary.startDate) // 2024.03.27 날짜 뷰
 								}
-								DiaryItemView(diary: diary) // 그 아래 네모난 다이어리 뷰
+								DiaryItemView(diary: diary, selectedImageIndex: $selectedImagedIndex, diaryImages: $diaryImages, showImageDetailViewSheet: $showImageDetailViewSheet) // 그 아래 네모난 다이어리 뷰
 									.onAppear {
 										// 다음 페이지 불러오기
 										if idx % size == 9 {
@@ -176,6 +183,11 @@ struct DiaryMainView: View {
 				await loadDiaries()
 			}
 		}
+        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+            
+            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImagedIndex, images: diaryImages)
+            
+        }
     }
 	
 	private func loadDiaries(resetPage: Bool = true) async {
@@ -239,6 +251,13 @@ struct DiaryItemView: View {
     let categoryUseCase = CategoryUseCase.shared
     var diary: Diary!
     
+    /// 이미지 상세보기로 전달하기 위한 이미지 인덱스
+    @Binding var selectedImageIndex: Int
+    /// 이미지 상세보기로 전달하기 위한 이미지 목록
+    @Binding var diaryImages: [ImageItem]
+    /// 이미지 상세보기 화면 활성화 여부
+    @Binding var showImageDetailViewSheet: Bool
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()
@@ -291,12 +310,28 @@ struct DiaryItemView: View {
                     // TODO: - 이미지 있는 기록이 잘 뜨는지 테스트 못 해봄
                     if let urls = diary.urls {
                         HStack(alignment: .top, spacing: 10) {
-                            ForEach(urls, id: \.self) { url in
-                                KFImage(URL(string: url))
+                            ForEach(urls.indices, id: \.self) { index in
+                                KFImage(URL(string: urls[index]))
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 70, height: 70)
                                     .clipShape(RoundedCorners(radius: 10, corners: [.allCorners]))
+                                    .onTapGesture {
+                                        
+                                        // 선택한 사진의 인덱스 전달
+                                        selectedImageIndex = index
+                                        
+                                        // 이미지 목록의 이전 사진들을 지움
+                                        diaryImages.removeAll()
+                                        
+                                        // 이미지 배열에 해당하는 기록의 사진들을 더함
+                                        for url in urls {
+                                            diaryImages.append(ImageItem(id: nil, source: .url(url)))
+                                        }
+                                        
+                                        showImageDetailViewSheet = true
+                                        
+                                    }
                             }
                         }
                     }

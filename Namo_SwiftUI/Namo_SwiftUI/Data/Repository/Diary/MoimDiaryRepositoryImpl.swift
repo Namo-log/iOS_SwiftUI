@@ -52,4 +52,10 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
             endPoint: MoimDiaryEndPoint.getOneMoimDiaryDetail(moimScheduleId: moimScheduleId)
         )
     }
+    
+    func deleteMoimDiaryOnPersonal(scheduleId: Int) async -> Bool {
+        let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.deleteMoimDiaryOnPersonal(scheduleId: scheduleId))
+        
+        return response?.code == 200
+    }
 }

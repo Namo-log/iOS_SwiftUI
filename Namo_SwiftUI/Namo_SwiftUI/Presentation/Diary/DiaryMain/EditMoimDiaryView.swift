@@ -14,6 +14,7 @@ struct EditMoimDiaryView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
     let moimDiaryUseCase = MoimDiaryUseCase.shared
+    let scheduleUseCase = ScheduleUseCase.shared
     
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
@@ -32,6 +33,26 @@ struct EditMoimDiaryView: View {
 	
 	// 삭제된 활동 API call 하기 위해 저장
 	@State var deleteActivities: [ActivityDTO] = []
+    
+    /// 활동 이름 입력 요구 토스트 뷰 활성화 여부
+    @State var showActivityNameToastView: Bool = false
+    
+    /// 활동 정산 금액 입력 요구 토스트 뷰 활성화 여부
+    @State var showActivityMoneyToastView: Bool = false
+    
+    /// 이미지 상세보기 화면 활성화 여부
+    @State var showImageDetailViewSheet: Bool = false
+    
+    /// 이미지 상세보기 화면에 전달할 이미지 인덱스
+    @State var selectedImageIndex: Int = 0
+    
+    /// 이미지 상세보기 페이지에 전달할 이미지 목록
+    @State var imagesForImageDetail: [ImageItem] = []
+    
+    /// 컨텐츠가 바뀌었는지 여부
+    @State var isChangedContents: Bool = false
+    /// 컨텐츠가 바뀌었을 때 저장하지 않고 뒤로가기할 시 나타나는 Alert
+    @State var showIsChangedAlert: Bool = false
     
     // 모임 정산 Alert
     var groupCalculateAlertView: some View {
@@ -133,6 +154,9 @@ struct EditMoimDiaryView: View {
                 }
                     .padding(.top, 25)
                     .padding(.bottom, 33)
+                    .onChange(of: selectedUser) { _ in
+                        isChangedContents = true
+                    }
             )
         )
     }
@@ -185,6 +209,11 @@ struct EditMoimDiaryView: View {
                                           name: $activities[index].name,
                                           currentCalculateIndex: $currentCalculateIndex,
                                           pickedImagesData: $activityImages[index],
+                                          showImageDetailViewSheet: $showImageDetailViewSheet,
+                                          selectedImageIndex: $selectedImageIndex,
+                                          imagesForImageDetail: $imagesForImageDetail,
+                                          isChangedContents: $isChangedContents,
+                                          showIsChangedAlert: $showIsChangedAlert,
                                           index: index,
                                           deleteAction: {
                                 deleteActivities.append(activities.remove(at: index))
@@ -245,6 +274,11 @@ struct EditMoimDiaryView: View {
                         Task {
                             // 모임 기록 삭제
                             await moimDiaryUseCase.deleteMoimDiary(moimScheduleId: info.scheduleId)
+                            
+                            await MainActor.run {
+                                NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil)
+                            }
+                            
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -254,19 +288,87 @@ struct EditMoimDiaryView: View {
             if showCalculateAlert {
                 groupCalculateAlertView
             }
+            
+            if showActivityNameToastView {
+                
+                ToastViewNew(toastMessage: "활동 이름을 입력해주세요!", bottomPadding: screenHeight / 7)
+                    .onAppear {
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            
+                            withAnimation {
+                                showActivityNameToastView = false
+                            }
+                        }
+                    }
+            }
+            
+            if showActivityMoneyToastView {
+                
+                ToastViewNew(toastMessage: "모임 참여자를 선택해주세요!", bottomPadding: screenHeight / 7)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            
+                            withAnimation {
+                                showActivityMoneyToastView = false
+                            }
+                        }
+                    }
+            }
+            
+            if showIsChangedAlert {
+                
+                AlertViewOld(showAlert: $showIsChangedAlert,
+                             content: AnyView(
+                                
+                                VStack(spacing: 8) {
+                                    
+                                    Text("편집한 내용이 저장되지 않습니다.")
+                                        .font(Font.pretendard(.bold, size: 16))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.top, 24)
+                                    
+                                    Text("정말 나가시겠어요?")
+                                        .font(Font.pretendard(.regular, size: 14))
+                                        .foregroundStyle(.mainText)
+                                        .padding(.bottom, 3)
+                                    
+                                }
+                                
+                             ),
+                             leftButtonTitle: "취소",
+                             rightButtonTitle: "확인",
+                             rightButtonAction: {
+                    self.presentationMode.wrappedValue.dismiss()
+                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+                })
+            }
+            
+            
         } // ZStack
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(
-            leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary),
+            leading: DismissButton(isDeletingDiary: $appState.isDeletingDiary, isChangedContents: $isChangedContents, showIsChangedAlert: $showIsChangedAlert),
             trailing: appState.isEditingDiary ? TrashView() : nil
         )
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
+        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+            
+            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imagesForImageDetail)
+            
+        }
         .onAppear {
             Task {
                 self.activities.removeAll()
                 await moimDiaryUseCase.getOneMoimDiary(moimScheduleId: info.scheduleId)
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
+                
+                // 화면 진입 시 활동의 개수가 2개 이상(3개)라면 활동 추가 버튼을 보이지 않게 함.
+                if activities.count > 2 {
+                    showAddPlaceButton = false
+                }
             }
         }
         .onAppear (perform : UIApplication.shared.hideKeyboard)
@@ -286,60 +388,115 @@ struct EditMoimDiaryView: View {
                 }
             }
         }
+        .onDisappear {
+            diaryState.currentMoimDiaryInfo = .init()
+        }
+        .onChange(of: activities.count) { _ in
+            
+            if activities.count <= 2 {
+                showAddPlaceButton = true
+                
+            }
+        }
     }
     
     // 모임 기록 수정 완료 버튼 또는 기록 저장 버튼
     private var EditSaveDiaryView: some View {
         Button {
+            
+            // 수정 화면이라면
             if appState.isEditingDiary {
                 Task {
-                    // 활동 편집
-                    for i in 0..<activities.count {
-                        if activities.indices.contains(i) {
-                            let moimActivityId = activities[i].moimActivityId
-                            print("@@0528 moimActivityId \(moimActivityId)")
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: activityImages[i])
-                            if moimActivityId == 0 {
-                                let res = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
-                                print("@@0528 생성")
-                                print("@@0528 생성 req \(req)")
-                            } else {
-                                let res = await moimDiaryUseCase.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
-                                print("@@0528 수정")
-                                print("@@0528 수정 req \(req)")
+                    
+                    // 활동 중 하나라도 이름이 입력되지 않았다면
+                    if hasNoActivtyName(activities: activities) {
+                        
+                        withAnimation {
+                            showActivityNameToastView = true
+                        }
+                        
+                        // 활동 중 하나라도 정산 금액이 입력되지 않았다면
+                    } else if hasNoActivityParticipants(activities: activities) {
+                        
+                        withAnimation {
+                            showActivityMoneyToastView = true
+                        }
+                        
+                    } else {
+                        
+                        // 활동 편집
+                        for i in 0..<activities.count {
+                            if activities.indices.contains(i) {
+                                let moimActivityId = activities[i].moimActivityId
+                                print("@@0528 moimActivityId \(moimActivityId)")
+                                let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: activityImages[i])
+                                if moimActivityId == 0 {
+                                    let res = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                                    print("@@0528 생성")
+                                    print("@@0528 생성 req \(req)")
+                                } else {
+                                    let res = await moimDiaryUseCase.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
+                                    print("@@0528 수정")
+                                    print("@@0528 수정 req \(req)")
+                                }
                             }
                         }
-                    }
-                    
-                    // 활동 삭제
-                    for activity in deleteActivities {
-                        let _ = await moimDiaryUseCase.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
-                    }
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+                        
+                        // 활동 삭제
+                        for activity in deleteActivities {
+                            let _ = await moimDiaryUseCase.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
+                        }
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+                        }
+                        
+                        self.presentationMode.wrappedValue.dismiss()
+                        
                     }
                 }
+            // 추가 화면이라면
             } else {
+                
                 Task {
-                    // 활동 추가
-                    for i in 0..<activities.count {
-                        print(activityImages)
-                        let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activityImages[i])
-                        let _ = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
-                    }
                     
-                    // 활동 삭제
-                    for activity in deleteActivities {
-                        let _ = await moimDiaryUseCase.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
-                    }
-                    
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+                    // 활동 중 하나라도 이름이 입력되지 않았다면
+                    if hasNoActivtyName(activities: activities) {
+                        
+                        withAnimation {
+                            showActivityNameToastView = true
+                        }
+
+                        // 활동 중 하나라도 정산 금액이 입력되지 않았다면
+                    } else if hasNoActivityParticipants(activities: activities) {
+                        
+                        withAnimation {
+                            showActivityMoneyToastView = true
+                        }
+                        
+                    } else {
+                        
+                        // 활동 추가
+                        for i in 0..<activities.count {
+                            print(activityImages)
+                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activityImages[i])
+                            let _ = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
+                        }
+                        
+                        // 활동 삭제
+                        for activity in deleteActivities {
+                            let _ = await moimDiaryUseCase.deleteMoimDiaryPlace(activityId: activity.moimActivityId)
+                        }
+                        
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: .reloadGroupCalendarViaNetwork, object: nil, userInfo: nil)
+                        }
+                        
+                        self.presentationMode.wrappedValue.dismiss()
+                        
                     }
                 }
             }
-            
-            self.presentationMode.wrappedValue.dismiss()
+
         } label: {
             ZStack() {
                 Rectangle()
@@ -354,4 +511,20 @@ struct EditMoimDiaryView: View {
             }
         }
     }
+    
+    // 활동 이름이 입력되지 않았음을 검사하는 메소드
+    func hasNoActivtyName(activities: [ActivityDTO]) -> Bool {
+        
+        let activityNames = activities.map { $0.name }
+        return activityNames.contains { $0 == "" }
+    }
+    
+    // 활동의 참여자가 입력되지 않았음을 검사하는 메소드
+    func hasNoActivityParticipants(activities: [ActivityDTO]) -> Bool {
+        
+        let activityParticipants = activities.map { $0.participants }
+        
+        return activityParticipants.contains { $0 == [] }
+    }
 }
+
