@@ -22,14 +22,15 @@ struct EditMoimDiaryView: View {
     @State var activities = [ActivityDTO()]
     @State var currentCalculateIndex: Int = 0
     @State var cost: String = ""
-    @State var activityImages: [[Data?]] = [[], [], []]
+    @State var activityImages: [[ImageItem]] = [[], [], []]
+	@State var deleteImageIds: [[Int]] = [[], [], []]
     
     let info: ScheduleInfo
     let moimUser: [GroupUser]
     let gridColumn: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     @State var selectedUser: [GroupUser] = []
-    @State var finalUserIdList: [String] = ["", "", ""] // API 호출 시 최종적으로 들어가는 정산 참여자 id
+    @State var finalUserIdList: [[Int]] = [[], [], []] // API 호출 시 최종적으로 들어가는 정산 참여자 id
 	
 	// 삭제된 활동 API call 하기 위해 저장
 	@State var deleteActivities: [ActivityDTO] = []
@@ -67,7 +68,7 @@ struct EditMoimDiaryView: View {
             rightButtonAction: {
 				activities[currentCalculateIndex].money = Int(cost) ?? 0
 				activities[currentCalculateIndex].participants = selectedUser.map({$0.userId})
-                finalUserIdList[currentCalculateIndex] = selectedUser.map { String($0.userId) }.joined(separator: ",")
+				finalUserIdList[currentCalculateIndex] = selectedUser.map({$0.userId})
                 showCalculateAlert = false
                 return true
             },
@@ -208,7 +209,9 @@ struct EditMoimDiaryView: View {
                                           activity: $activities[index],
                                           name: $activities[index].name,
                                           currentCalculateIndex: $currentCalculateIndex,
-                                          pickedImagesData: $activityImages[index],
+//                                          pickedImagesData: $activityImages[index],
+										  deleteImageIds: $deleteImageIds[index],
+										  imageItems: $activityImages[index],
                                           showImageDetailViewSheet: $showImageDetailViewSheet,
                                           selectedImageIndex: $selectedImageIndex,
                                           imagesForImageDetail: $imagesForImageDetail,
@@ -234,7 +237,7 @@ struct EditMoimDiaryView: View {
                             
                             if activities.count < 3 {
                                 withAnimation(.easeIn(duration: 0.2)) {
-									activities.append(ActivityDTO(id: 0, name: "", money: 0, participants: [], urls: []))
+									activities.append(ActivityDTO(id: 0, name: "", money: 0, participants: [], images: []))
                                 }
                             }
                         } label: {
@@ -354,15 +357,17 @@ struct EditMoimDiaryView: View {
         )
         .navigationTitle(info.scheduleName)
         .ignoresSafeArea(edges: .bottom)
-        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
-            
-            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imagesForImageDetail)
-            
-        }
+//        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+//            
+//            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: imagesForImageDetail)
+//            
+//        }
         .onAppear {
             Task {
                 self.activities.removeAll()
-                await moimDiaryUseCase.getOneMoimDiary(moimScheduleId: info.scheduleId)
+				if appState.isEditingDiary {
+					await moimDiaryUseCase.getOneMoimDiary(moimScheduleId: info.scheduleId)
+				}
                 self.activities = diaryState.currentMoimDiaryInfo.moimActivityDtos ?? []
                 
                 // 화면 진입 시 활동의 개수가 2개 이상(3개)라면 활동 추가 버튼을 보이지 않게 함.
@@ -428,16 +433,22 @@ struct EditMoimDiaryView: View {
                         for i in 0..<activities.count {
                             if activities.indices.contains(i) {
                                 let moimActivityId = activities[i].moimActivityId
-                                print("@@0528 moimActivityId \(moimActivityId)")
-                                let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: activityImages[i])
+								var imagesData = activityImages[i].compactMap { item in
+									if case let .uiImage(image) = item.source {
+										return image.jpegData(compressionQuality: 0.2)
+									}
+									return nil
+								}
+								if finalUserIdList[i].isEmpty {
+									finalUserIdList[i] = activities[i].participants
+								}
+								
+								let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: finalUserIdList[i], imgs: imagesData)
                                 if moimActivityId == 0 {
                                     let res = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
-                                    print("@@0528 생성")
-                                    print("@@0528 생성 req \(req)")
                                 } else {
-                                    let res = await moimDiaryUseCase.changeMoimDiaryPlace(activityId: moimActivityId, req: req)
-                                    print("@@0528 수정")
-                                    print("@@0528 수정 req \(req)")
+									let res = await moimDiaryUseCase.changeMoimDiaryPlace(activityId: moimActivityId, req: req, deleteImageIds: deleteImageIds[i])
+
                                 }
                             }
                         }
@@ -477,8 +488,14 @@ struct EditMoimDiaryView: View {
                         
                         // 활동 추가
                         for i in 0..<activities.count {
-                            print(activityImages)
-                            let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants.map({String($0)}).joined(separator: ","), imgs: activityImages[i])
+							var imagesData = activityImages[i].compactMap { item in
+								if case let .uiImage(image) = item.source {
+									return image.jpegData(compressionQuality: 0.2)
+								}
+								return nil
+							}
+							
+							let req = EditMoimDiaryPlaceReqDTO(name: activities[i].name, money: String(activities[i].money), participants: activities[i].participants, imgs: imagesData)
                             let _ = await moimDiaryUseCase.createMoimDiaryPlace(moimScheduleId: info.scheduleId, req: req)
                         }
                         

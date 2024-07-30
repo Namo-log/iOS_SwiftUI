@@ -183,11 +183,11 @@ struct DiaryMainView: View {
 				await loadDiaries()
 			}
 		}
-        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
-            
-            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImagedIndex, images: diaryImages)
-            
-        }
+//        .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+//            
+//            ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImagedIndex, images: diaryImages)
+//            
+//        }
     }
 	
 	private func loadDiaries(resetPage: Bool = true) async {
@@ -280,7 +280,7 @@ struct DiaryItemView: View {
                     Spacer()
                     
                     // 다이어리 수정 버튼
-                    NavigationLink(destination: EditDiaryView(isFromCalendar: false, memo: diary.contents ?? "", urls: diary.urls ?? [], info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
+                    NavigationLink(destination: EditDiaryView(isFromCalendar: false, memo: diary.contents ?? "", urls: diary.images ?? [], info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
                         HStack(alignment: .center, spacing: 5) {
                             Image(.icEditDiary)
                                 .resizable()
@@ -308,10 +308,10 @@ struct DiaryItemView: View {
                     
                     // 사진 목록
                     // TODO: - 이미지 있는 기록이 잘 뜨는지 테스트 못 해봄
-                    if let urls = diary.urls {
+					if let urls = diary.images {
                         HStack(alignment: .top, spacing: 10) {
                             ForEach(urls.indices, id: \.self) { index in
-                                KFImage(URL(string: urls[index]))
+								KFImage(URL(string: urls[index].url))
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 70, height: 70)
@@ -326,7 +326,7 @@ struct DiaryItemView: View {
                                         
                                         // 이미지 배열에 해당하는 기록의 사진들을 더함
                                         for url in urls {
-                                            diaryImages.append(ImageItem(id: nil, source: .url(url)))
+											diaryImages.append(ImageItem(id: nil, source: .url(url.url)))
                                         }
                                         
                                         showImageDetailViewSheet = true

@@ -107,7 +107,7 @@ final class APIManager {
             
 			result = try request.result.get()
 		} catch {
-            
+			print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
 		}
@@ -118,7 +118,7 @@ final class APIManager {
             
 			return decodedData.result
 		} catch {
-
+			print("디코딩 에러" + (String(data: result, encoding: .utf8) ?? ""))
 			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
 			return nil
 		}
@@ -137,7 +137,7 @@ final class APIManager {
 			
 			result = try request.result.get()
 		} catch {
-			
+			print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
 		}
@@ -145,13 +145,13 @@ final class APIManager {
 		do {
 
 			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
-			
 			return decodedData
 		} catch {
-
+			print("디코딩 에러" + (String(data: result, encoding: .utf8) ?? ""))
 			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
 			return nil
 		}
+		
 
     }
     
@@ -243,6 +243,15 @@ extension APIManager {
 				  }
 			  }
 		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+		  
+	  case let .uploadImagesWithParameter(images, params, imageKeyName):
+		  return AF.upload(multipartFormData: { multipartFormData in
+			  for image in images {
+				  if let image = image {
+					  multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
+				  }
+			  }
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)\(queryString(from: params))")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
           
       case let .authRequestJSONEncodable(parameters):
           return AF.request(
@@ -263,6 +272,22 @@ extension APIManager {
           )
       }
     }
+	
+	func queryString(from parameters: [String: Any]) -> String {
+		var components: [String] = []
+		
+		for (key, value) in parameters {
+			if let arrayValue = value as? [Any] {
+				for element in arrayValue {
+					components.append("\(key)=\(element)")
+				}
+			} else {
+				components.append("\(key)=\(value)")
+			}
+		}
+		print(components.isEmpty ? "" : "?" + components.joined(separator: "&"))
+		return components.isEmpty ? "" : "?" + components.joined(separator: "&")
+	}
 }
 
 extension APIManager {

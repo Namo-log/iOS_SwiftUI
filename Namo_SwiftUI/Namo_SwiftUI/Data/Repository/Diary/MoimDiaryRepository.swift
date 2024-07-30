@@ -10,7 +10,7 @@ import Foundation
 /// 모임 기록 API
 protocol MoimDiaryRepository {
     func createMoimDiaryPlace(moimScheduleId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool
-    func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool
+	func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO, deleteImageIds: [Int]) async -> Bool
     func deleteMoimDiaryPlace(activityId: Int) async -> Bool
     func editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO) async -> Bool
     func deleteMoimDiary(moimScheduleId: Int) async -> Bool

@@ -10,7 +10,7 @@ import SwiftUICalendar
 import Factory
 
 enum HomeNavigationType: Hashable {
-	case editDiaryView(memo: String, urls: [String], info: ScheduleInfo)
+	case editDiaryView(memo: String, images: [ImageResponse], info: ScheduleInfo)
 }
 
 struct HomeMainView: View {

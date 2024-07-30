@@ -16,6 +16,7 @@ final class DiaryUseCase {
     /// 기록 생성
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async {
         print("기록 생성 요청")
+		print(images.first)
         let result = await diaryRepository.createDiary(scheduleId: scheduleId, content: content, images: images)
 		if result != nil {
 			// 기록 저장에 성공하고 Realm에 해당 item이 있는 경우
@@ -47,7 +48,7 @@ final class DiaryUseCase {
     func getOneDiary(scheduleId: Int) async {
         let diary = await diaryRepository.getOneDiary(scheduleId: scheduleId)
 		diaryState.currentDiary.contents = diary?.contents
-		diaryState.currentDiary.urls = diary?.urls
+		diaryState.currentDiary.images = diary?.images
     }
     
     /// Date를 받아서 해당 월을 String 값으로 바꿔줌
@@ -66,8 +67,9 @@ final class DiaryUseCase {
     }
     
     /// 기록 변경
-    func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool {
-        return await diaryRepository.changeDiary(scheduleId: scheduleId, content: content, images: images)
+	func changeDiary(scheduleId: Int, content: String, images: [Data?], deleteImageIds: [Int]) async -> Bool {
+		print(deleteImageIds)
+		return await diaryRepository.changeDiary(scheduleId: scheduleId, content: content, images: images, deleteImageIds: deleteImageIds)
     }
     
     /// 기록 삭제

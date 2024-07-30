@@ -21,11 +21,12 @@ struct MoimPlaceView: View {
     }
     @Binding var name: String
     @Binding var currentCalculateIndex: Int
-    @Binding var pickedImagesData: [Data?]
+//    @Binding var pickedImagesData: [Data?]
+	@Binding var deleteImageIds: [Int]
     @State var images: [UIImage] = [] // 보여질 사진 목록
     @State var pickedImageItems: [PhotosPickerItem] = [] // 선택된 사진 아이템
     
-    @State var imageItems: [ImageItem] = []
+    @Binding var imageItems: [ImageItem]
     
     @Binding var showImageDetailViewSheet: Bool
     @Binding var selectedImageIndex: Int
@@ -115,8 +116,8 @@ struct MoimPlaceView: View {
                     deleteAction()
                     imageItems.removeAll()
                     
-                    for url in activity.urls {
-                        imageItems.append(ImageItem(id: nil, source: .url(url)))
+					for image in activity.images {
+						imageItems.append(ImageItem(id: image.id, source: .url(image.url)))
                     }
                     
                     self.dragOffset = .zero
@@ -177,10 +178,16 @@ struct MoimPlaceView: View {
                             .offset(x: 40, y: -45)
                             .shadow(radius: 5)
                             .onTapGesture {
-                                
-                                if index >= 0 && index < pickedImagesData.count {
+								// 서버에서 받아온 이미지라면 삭제 목록에 추가
+								if let id = imageItems[index].id {
+									if case .url(_) = imageItems[index].source {
+										print("여기: \(id)")
+										deleteImageIds.append(id)
+									}
+								}
+                                if index >= 0 && index < imageItems.count {
                                     
-                                    pickedImagesData.remove(at: index)
+//                                    pickedImagesData.remove(at: index)
                                     
                                     self.imageItems.remove(at: index)
                                     
@@ -209,7 +216,7 @@ struct MoimPlaceView: View {
             .padding(.top, 18)
             .onAppear {
                 
-                pickedImagesData.removeAll()
+//                pickedImagesData.removeAll()
                 imageItems.removeAll()
                 
                 let dispatchGroup = DispatchGroup()
@@ -217,11 +224,11 @@ struct MoimPlaceView: View {
 //
 //                imageDictionary[activity] = activity.urls.map { ImageItem(id: nil, source: .url($0)) }
                 
-                for url in activity.urls {
+				for image in activity.images {
                     
-                    imageItems.append(ImageItem(id: nil, source: .url(url)))
+					imageItems.append(ImageItem(id: image.id, source: .url(image.url)))
    
-                    guard let url = URL(string: url) else { return }
+					guard let url = URL(string: image.url) else { return }
                     
                     dispatchGroup.enter()
                     
@@ -239,10 +246,10 @@ struct MoimPlaceView: View {
 
                 dispatchGroup.notify(queue: .main) {
 
-                    for url in activity.urls {
+                    for image in activity.images {
 
-                        if let url = URL(string: url), let data = imagesDataDictionary[url.absoluteString] {
-                            pickedImagesData.append(data)
+						if let url = URL(string: image.url), let data = imagesDataDictionary[url.absoluteString] {
+//                            pickedImagesData.append(data)
                         }
                     }
                 }
@@ -257,19 +264,19 @@ struct MoimPlaceView: View {
                         
                         if let data = try? await item.loadTransferable(type: Data.self) {
                             pickedImagesDataArray.append(data)
-                            if let image = UIImage(data: data) {
-                                imagesArray.append(ImageItem(id: nil, source: .uiImage(image)))
+							if let image = UIImage(data: data)?.jpegData(compressionQuality: 0.2) {
+								imagesArray.append(ImageItem(id: nil, source: .uiImage(UIImage(data: image)!)))
                             }
                         }
                         
                     }
                     
-                    pickedImagesData.append(contentsOf: pickedImagesDataArray)
+//                    pickedImagesData.append(contentsOf: pickedImagesDataArray)
                     imageItems.append(contentsOf: imagesArray)
                     pickedImageItems.removeAll()
                     isChangedContents = true
                     
-                    print("pickedImageData 출력: \(pickedImagesData)")
+//                    print("pickedImageData 출력: \(pickedImagesData)")
                     
                 }
             }

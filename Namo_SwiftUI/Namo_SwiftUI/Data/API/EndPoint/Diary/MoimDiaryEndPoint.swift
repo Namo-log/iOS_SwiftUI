@@ -10,7 +10,7 @@ import Foundation
 
 enum MoimDiaryEndPoint {
     case createMoimDiaryPlace(moimScheduleId: Int, req: EditMoimDiaryPlaceReqDTO)
-    case changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO)
+	case changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO, deleteImageIds: [Int])
     case deleteMoimDiaryPlace(activityId: Int)
     case editMoimDiary(scheduleId: Int, req: ChangeMoimDiaryRequestDTO)
     case deleteMoimDiary(moimScheduleId: Int)
@@ -29,7 +29,7 @@ extension MoimDiaryEndPoint: EndPoint {
         switch self {
         case .createMoimDiaryPlace(let moimScheduleId, _):
             return "/\(moimScheduleId)"
-        case .changeMoimDiaryPlace(let activityId, _),
+        case .changeMoimDiaryPlace(let activityId, _, _),
                 .deleteMoimDiaryPlace(let activityId):
             return "/\(activityId)"
         case .getMonthMoimDiary(let req):
@@ -62,12 +62,24 @@ extension MoimDiaryEndPoint: EndPoint {
     
     var task: APITask {
         switch self {
-        case .createMoimDiaryPlace(_, let req):
-            let body = ["name": req.name, "money": req.money, "participants": req.participants] as [String : Any]
-            return .uploadImagesWithBody(imageDatas: req.imgs, body: body)
-        case .changeMoimDiaryPlace(_, let req):
-            let body = ["name": req.name, "money": req.money, "participants": req.participants] as [String : Any]
-            return .uploadImagesWithBody(imageDatas: req.imgs, body: body)
+        case .createMoimDiaryPlace(let moimScheduleId, let req):
+			
+            let params = [
+				"moimScheduleId": moimScheduleId,
+				"activityName": req.name,
+				"activityMoney": req.money,
+				"participantUserIds": req.participants
+			] as [String : Any]
+			return .uploadImagesWithParameter(imageDatas: req.imgs, parameters: params, imageKeyName: "createImages")
+        case .changeMoimDiaryPlace(let activityId, let req, let deleteImageIds):
+            let params = [
+				"activityId": activityId,
+				"deleteImageIds": deleteImageIds,
+				"activityName": req.name,
+				"activityMoney": req.money,
+				"participantUserIds": req.participants
+			] as [String : Any]
+			return .uploadImagesWithParameter(imageDatas: req.imgs, parameters: params, imageKeyName: "createImages")
         case .editMoimDiary(_, let req):
             return .requestJSONEncodable(parameters: req)
         case .deleteMoimDiaryPlace, .deleteMoimDiary, .getOneMoimDiary, .getOneMoimDiaryDetail, .deleteMoimDiaryOnPersonal:
