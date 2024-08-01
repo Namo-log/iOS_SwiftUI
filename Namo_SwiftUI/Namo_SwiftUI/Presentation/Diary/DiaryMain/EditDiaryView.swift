@@ -28,6 +28,7 @@ struct EditDiaryView: View {
     @State var typedCharacters = 0
     @State var characterLimit = 200
     @State var pickedImagesData: [Data?] = []
+	@State var deleteImageIds: [Int] = []
 
     /// 화면에 보여질 이미지 목록
     @State var images: [ImageItem] = []
@@ -44,7 +45,7 @@ struct EditDiaryView: View {
     /// 컨텐츠가 바뀌었을 때 저장하지 않고 뒤로가기할 시 나타나는 Alert
     @State var showIsChangedAlert: Bool = false
     
-    let urls: [String]
+    let urls: [ImageResponse]
     let info: ScheduleInfo
     let moimMember: [GroupUser] = []
     let photosLimit = 3 // 선택가능한 최대 사진 개수
@@ -141,9 +142,9 @@ struct EditDiaryView: View {
             )
             .navigationTitle(info.scheduleName)
             .ignoresSafeArea(edges: .bottom)
-            .fullScreenCover(isPresented: $showImageDetailViewSheet) {
-                ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: images)
-            }
+//            .fullScreenCover(isPresented: $showImageDetailViewSheet) {
+//                ImageDetailView(isShowImageDetailScreen: $showImageDetailViewSheet, imageIndex: $selectedImageIndex, images: images)
+//            }
             
             // 쓰레기통 클릭 시 Alert 띄우기
             if appState.isDeletingDiary {
@@ -234,11 +235,11 @@ struct EditDiaryView: View {
                     let dispatchGroup = DispatchGroup()
                     var imagesDataDictionary = [String: Data]()
                     
-                    for url in diaryState.currentDiary.urls ?? [] {
+                    for image in diaryState.currentDiary.images ?? [] {
                         
-                        images.append(ImageItem(id: nil, source: .url(url)))
+						images.append(ImageItem(id: image.id, source: .url(image.url)))
                         
-                        guard let url = URL(string: url) else { return }
+						guard let url = URL(string: image.url) else { return }
                         
                         dispatchGroup.enter()
                         
@@ -255,10 +256,10 @@ struct EditDiaryView: View {
                     
                     dispatchGroup.notify(queue: .main) {
                         
-                        for url in diaryState.currentDiary.urls ?? [] {
+                        for image in diaryState.currentDiary.images ?? [] {
                             
-                            if let url = URL(string: url), let data = imagesDataDictionary[url.absoluteString] {
-                                pickedImagesData.append(data)
+							if let url = URL(string: image.url), let data = imagesDataDictionary[url.absoluteString] {
+//                                pickedImagesData.append(data)
                             }
                             
                         }
@@ -281,7 +282,14 @@ struct EditDiaryView: View {
                 Task {
                     if appState.isPersonalDiary {
                         // 개인 기록 수정 API 호출
-                        await diaryUseCase.changeDiary(scheduleId: info.scheduleId, content: memo, images: pickedImagesData)
+						var imagesData = images.compactMap { item in
+							if case let .uiImage(image) = item.source {
+								return image.jpegData(compressionQuality: 0.2)
+							}
+							return nil
+						}
+						
+                        await diaryUseCase.changeDiary(scheduleId: info.scheduleId, content: memo, images: imagesData, deleteImageIds: deleteImageIds)
                     } else {
                         print("모임 기록(에 대한 개인 메모) edit API 호출")
                         // 모임 기록(에 대한 개인 메모) edit API 호출
@@ -294,7 +302,7 @@ struct EditDiaryView: View {
             } else {
                 Task {
                     if appState.isPersonalDiary {
-                        await diaryUseCase.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
+						await diaryUseCase.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
                     } else {
                         print("모임 기록(에 대한 개인 메모) edit API 호출")
                         // 모임 기록(에 대한 개인 메모) edit API 호출
@@ -367,11 +375,16 @@ struct EditDiaryView: View {
                                 .offset(x: 40, y: -45)
                                 .shadow(radius: 5)
                                 .onTapGesture {
-                      
+									// 서버에서 받아온 이미지라면 삭제 목록에 추가
+									if let id = images[index].id {
+										if case .url(_) = images[index].source {
+											deleteImageIds.append(id)
+										}
+									}
                                     // 서버로 보내는 이미지 배열에서 인덱스의 이미지 삭제
-                                    if index >= 0 && index <  pickedImagesData.count {
+                                    if index >= 0 && index <  images.count {
                                         
-                                        pickedImagesData.remove(at: index)
+//                                        pickedImagesData.remove(at: index)
                                         
                                         // 이미지 배열에서 해당하는 인덱스의 이미지 삭제
                                         images.remove(at: index)
@@ -419,12 +432,12 @@ struct EditDiaryView: View {
                 var imagesDataDictionary = [String: Data]()
                 
                 // 서버로부터 받아온 이미지 url 배열 순회
-                for url in urls {
+                for image in urls {
                     
                     // 화면에 보이는 이미지 배열에 하나씩 추가
-                    images.append(ImageItem(id: nil, source: .url(url)))
+					images.append(ImageItem(id: nil, source: .url(image.url)))
                     
-                    guard let url = URL(string: url) else { return }
+					guard let url = URL(string: image.url) else { return }
                     
                     // 디스패치 그룹
                     dispatchGroup.enter()
@@ -447,8 +460,8 @@ struct EditDiaryView: View {
                     
                     for url in urls {
                         
-                        if let url = URL(string: url), let data = imagesDataDictionary[url.absoluteString] {
-                            pickedImagesData.append(data)
+						if let url = URL(string: url.url), let data = imagesDataDictionary[url.absoluteString] {
+//                            pickedImagesData.append(data)
                         }
                     }
                 }
@@ -462,14 +475,14 @@ struct EditDiaryView: View {
 
                     for item in pickedImageItems {
                         if let data = try? await item.loadTransferable(type: Data.self) {
-                            pickedImagesDataArray.append(data)
-                            if let image = UIImage(data: data) {
-                                imagesArray.append(ImageItem(id: nil, source: .uiImage(image)))
+							if let image = UIImage(data: data)?.jpegData(compressionQuality: 0.2) {
+								pickedImagesDataArray.append(image)
+								imagesArray.append(ImageItem(id: nil, source: .uiImage(UIImage(data: image)!)))
                             }
                         }
                     }
 
-                    pickedImagesData.append(contentsOf: pickedImagesDataArray)
+//                    pickedImagesData.append(contentsOf: pickedImagesDataArray)
                     images.append(contentsOf: imagesArray)
                     pickedImageItems.removeAll()
                     isChangedContents = true

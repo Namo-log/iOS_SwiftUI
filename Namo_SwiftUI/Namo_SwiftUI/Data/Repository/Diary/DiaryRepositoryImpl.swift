@@ -22,8 +22,8 @@ final class DiaryRepositoryImpl: DiaryRepository {
         return await APIManager.shared.performRequestOld(endPoint: DiaryEndPoint.getOneDiary(scheduleId: scheduleId))
     }
     
-    func changeDiary(scheduleId: Int, content: String, images: [Data?]) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, images: images))
+	func changeDiary(scheduleId: Int, content: String, images: [Data?], deleteImageIds: [Int]) async -> Bool {
+		let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: DiaryEndPoint.changeDiary(scheduleId: scheduleId, content: content, images: images, deleteImageIds: deleteImageIds))
         return response?.code == 200
     }
     

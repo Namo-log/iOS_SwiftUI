@@ -26,6 +26,9 @@ public enum APITask {
 	/// imageKeyName은 request의 body에 들어갈 key이름. 여러 장인 경우 imgs를, 단일 이미지 인경우 img를 넣어 보냄
 	/// 정확한 내용은 스웨거 참고
 	case uploadImagesWithBody(imageDatas: [Data?], body: [String: Any], imageKeyName: String = "imgs")
+	/// image와 함께 직접 url에 파라미터를 넣어서 보내는 요청
+	///  리팩토링 시 더 좋은 방법이 있다면 수정
+	case uploadImagesWithParameter(imageDatas: [Data?], parameters: [String: Any], imageKeyName: String = "imgs")
     // 토큰 헤더를 포함하지 않는 인증 요청
     case authRequestJSONEncodable(parameters: Encodable)
     /// 외부 API 요청

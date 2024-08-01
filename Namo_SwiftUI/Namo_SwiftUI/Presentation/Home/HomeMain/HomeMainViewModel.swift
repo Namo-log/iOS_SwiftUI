@@ -107,7 +107,7 @@ final class HomeMainViewModel: ObservableObject {
 			AppState.shared.navigationPath.append(
 				HomeNavigationType.editDiaryView(
 					memo: self.diaryState.currentDiary.contents ?? "",
-					urls: self.diaryState.currentDiary.urls ?? [],
+					images: self.diaryState.currentDiary.images ?? [],
 					info: ScheduleInfo(
 						scheduleId: schedule.scheduleId,
 						scheduleName: schedule.name,

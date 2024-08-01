@@ -12,7 +12,7 @@ enum DiaryEndPoint {
     case createDiary(scheduleId: Int, content: String, images: [Data?])
     case getMonthDiary(request: GetDiaryRequestDTO)
     case getOneDiary(scheduleId: Int)
-    case changeDiary(scheduleId: Int, content: String, images: [Data?])
+	case changeDiary(scheduleId: Int, content: String, images: [Data?], deleteImageIds: [Int])
     case deleteDiary(diaryId: Int)
 }
 
@@ -51,10 +51,12 @@ extension DiaryEndPoint: EndPoint {
     
     var task: APITask {
         switch self {
-        case .createDiary(let scheduleId, let content, let images),
-             .changeDiary(let scheduleId, let content, let images):
-            let body = ["scheduleId": scheduleId, "content": content] as [String : Any]
-            return .uploadImagesWithBody(imageDatas: images, body: body)
+		case .createDiary(let scheduleId, let content, let images):
+			let body = ["scheduleId": scheduleId, "content": content] as [String : Any]
+			return .uploadImagesWithBody(imageDatas: images, body: body)
+		case .changeDiary(let scheduleId, let content, let images, let deleteImageIds):
+			let params = ["scheduleId": scheduleId, "content": content, "deleteImageIds": deleteImageIds] as [String : Any]
+			return .uploadImagesWithParameter(imageDatas: images, parameters: params, imageKeyName: "createImages")
         case .getMonthDiary(let req):
             let params = ["page": req.page, "size": req.size]
             return .requestParameters(parameters: params, encoding: URLEncoding.default)

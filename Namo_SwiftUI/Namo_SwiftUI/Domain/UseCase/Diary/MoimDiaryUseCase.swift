@@ -21,8 +21,8 @@ final class MoimDiaryUseCase {
     }
     
     /// 모임 메모 장소 수정
-    func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
-        return await moimDiaryRepository.changeMoimDiaryPlace(activityId: activityId, req: req)
+	func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO, deleteImageIds: [Int]) async -> Bool {
+		return await moimDiaryRepository.changeMoimDiaryPlace(activityId: activityId, req: req, deleteImageIds: deleteImageIds)
     }
     
     /// 모임 메모 장소 삭제

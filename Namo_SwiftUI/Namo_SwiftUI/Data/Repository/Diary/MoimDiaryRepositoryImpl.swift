@@ -15,8 +15,8 @@ final class MoimDiaryRepositoryImpl: MoimDiaryRepository {
         return response?.code == 200
     }
     
-    func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO) async -> Bool {
-        let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.changeMoimDiaryPlace(activityId: activityId, req: req))
+	func changeMoimDiaryPlace(activityId: Int, req: EditMoimDiaryPlaceReqDTO, deleteImageIds: [Int]) async -> Bool {
+		let response: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: MoimDiaryEndPoint.changeMoimDiaryPlace(activityId: activityId, req: req, deleteImageIds: deleteImageIds))
         print(response?.message)
         return response?.code == 200
     }

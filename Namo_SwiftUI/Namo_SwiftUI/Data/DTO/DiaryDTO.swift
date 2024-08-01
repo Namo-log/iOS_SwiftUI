@@ -12,18 +12,18 @@ struct Diary: Decodable {
     var name: String
     var startDate: Int
     var contents: String?
-    var urls: [String]?
+    var images: [ImageResponse]?
     var categoryId: Int
     var color: Int
     var placeName: String
     
-    init(scheduleId: Int? = nil, name: String? = nil, startDate: Int? = nil, contents: String? = nil, urls: [String]? = nil, categoryId: Int? = nil, color: Int? = nil, placeName: String? = nil) {
+    init(scheduleId: Int? = nil, name: String? = nil, startDate: Int? = nil, contents: String? = nil, images: [ImageResponse]? = nil, categoryId: Int? = nil, color: Int? = nil, placeName: String? = nil) {
         self.scheduleId = scheduleId ?? -1
         self.name = name ?? ""
         self.categoryId = categoryId ?? -1
         self.startDate = startDate ?? 0
         self.contents = contents ?? ""
-        self.urls = urls ?? []
+        self.images = images ?? []
         self.categoryId = categoryId ?? -1
         self.color = color ?? -1
         self.placeName = placeName ?? ""
@@ -48,7 +48,7 @@ struct GetDiaryResponseDTO: Decodable {
 /// 개별 기록 조회 API 응답
 struct GetOneDiaryResponseDTO: Decodable {
     var contents: String?
-    var urls: [String]?
+    var images: [ImageResponse]?
 }
 
 struct CreateDiaryResponseDTO: Codable {
@@ -57,4 +57,9 @@ struct CreateDiaryResponseDTO: Codable {
 
 struct ChangeMoimDiaryRequestDTO: Encodable {
     let text: String
+}
+
+struct ImageResponse: Decodable, Hashable {
+	let id: Int
+	let url: String
 }

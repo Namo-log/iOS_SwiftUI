@@ -38,4 +38,15 @@ class RemoteConfigManager {
 			return nil
 		}
 	}
+	
+	func getBaseUrl() async throws -> String? {
+		do {
+			try await remoteConfig.fetch()
+			try await remoteConfig.activate()
+			return self.remoteConfig["ios_baseurl"].stringValue
+		} catch {
+			print("Error: \(error)")
+			return nil
+		}
+	}
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct EditMoimDiaryPlaceReqDTO: Encodable {
     var name: String
     var money: String
-    var participants: String
+    var participants: [Int]
     var imgs: [Data?]
 }
 
@@ -51,22 +51,22 @@ struct ActivityDTO: Decodable, Hashable {
     var name: String
     var money: Int
     var participants: [Int]
-    var urls: [String]
+    var images: [ImageResponse]
     
     init() {
         self.moimActivityId = 0
         self.name = ""
         self.money = 0
         self.participants = []
-        self.urls = []
-    } 
+        self.images = []
+    }
     
-    init(id: Int, name: String, money: Int, participants: [Int], urls: [String]) {
+    init(id: Int, name: String, money: Int, participants: [Int], images: [ImageResponse]) {
         self.moimActivityId = id
         self.name = name
         self.money = money
         self.participants = participants
-        self.urls = urls
+        self.images = images
     }
 }
 
