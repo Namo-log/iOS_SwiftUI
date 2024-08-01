@@ -49,7 +49,7 @@ final class APIManager {
     }
     
     // 토큰 재발급
-    private func ReissuanceToken() async -> Bool {
+    func ReissuanceToken() async -> Bool {
         
         guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
               let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {
@@ -86,8 +86,14 @@ final class APIManager {
             
             // 새롭게 발급받은 토큰을 키체인에 저장
             let decodedData = try result.decode(type: BaseResponse<TokenReissuanceResponseDTO>.self, decoder: JSONDecoder())
-            KeyChainManager.addItem(key: "accessToken", value: decodedData.result!.accessToken)
-            KeyChainManager.addItem(key: "refreshToken", value: decodedData.result!.refreshToken)
+			
+			if let tokens = decodedData.result {
+				KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
+				KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
+				
+			} else {
+				return false
+			}
             
         } catch {
             

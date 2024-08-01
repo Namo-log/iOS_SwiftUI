@@ -15,6 +15,8 @@ struct SplashView: View {
     @AppStorage("onboardingDone") var onboardingDone: Bool = false  // 온보딩 완료 여부
     @AppStorage("isLogin") var isLogin: Bool = false                // 로그인 여부
     @AppStorage("newUser") var newUser: Bool = true                 // 약관동의 완료 여부
+	
+	let remoteConfigManager = RemoteConfigManager()
     
     var socialLogin: String?
     
@@ -52,9 +54,22 @@ struct SplashView: View {
         .onAppear {
 			Task {
 				do {
-					if let minimumVersion = try await RemoteConfigManager().getMinimumVersion() {
+					if let minimumVersion = try await remoteConfigManager.getMinimumVersion() {
 						let checkUpdate = checkUpdateRequired(minimumVersion: minimumVersion, currentVersion: version)
 						showUpdateRequired = checkUpdate
+					}
+					
+					if let baseUrl = try await remoteConfigManager.getBaseUrl() {
+						SecretConstants.baseURL = baseUrl
+						let result = await APIManager.shared.ReissuanceToken()
+						if !result {
+							print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
+
+							// 로그아웃 처리
+							DispatchQueue.main.async {
+								UserDefaults.standard.set(false, forKey: "isLogin")
+							}
+						}
 					}
 				} catch {
 					print("최소 버전 가져오기 실패")
