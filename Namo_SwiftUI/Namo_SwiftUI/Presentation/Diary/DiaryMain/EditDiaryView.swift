@@ -302,7 +302,14 @@ struct EditDiaryView: View {
             } else {
                 Task {
                     if appState.isPersonalDiary {
-						await diaryUseCase.createDiary(scheduleId: scheduleState.currentSchedule.scheduleId ?? -1, content: diaryState.currentDiary.contents ?? "", images: pickedImagesData)
+						var imagesData = images.compactMap { item in
+							if case let .uiImage(image) = item.source {
+								return image.jpegData(compressionQuality: 0.2)
+							}
+							return nil
+						}
+						
+						await diaryUseCase.changeDiary(scheduleId: info.scheduleId, content: memo, images: imagesData, deleteImageIds: deleteImageIds)
                     } else {
                         print("모임 기록(에 대한 개인 메모) edit API 호출")
                         // 모임 기록(에 대한 개인 메모) edit API 호출

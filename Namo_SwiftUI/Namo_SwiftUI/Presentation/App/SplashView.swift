@@ -60,7 +60,7 @@ struct SplashView: View {
 					}
 					
 					if let baseUrl = try await remoteConfigManager.getBaseUrl() {
-						SecretConstants.baseURL = baseUrl
+//						SecretConstants.baseURL = baseUrl
 						let result = await APIManager.shared.ReissuanceToken()
 						if !result {
 							print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
