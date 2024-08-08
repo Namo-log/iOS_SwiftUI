@@ -169,11 +169,11 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
     
     // 로그아웃
     func logout() async {
-
-        let accessToken: String = KeyChainManager.readItem(key: "accessToken")!
+		
+		let refreshToken: String = KeyChainManager.readItem(key: "refreshToken")!
 
         // 나모 서버 로그아웃 처리
-        let result: BaseResponse<SignInResponseDTO>? = await authRepository.removeToken(serverAccessToken: LogoutRequestDTO(accessToken: accessToken))
+        let result: BaseResponse<SignInResponseDTO>? = await authRepository.removeToken(refreshToken: LogoutRequestDTO(refreshToken: refreshToken))
 
         if result?.code == 200 {
 
@@ -185,6 +185,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
             }
 
             KeyChainManager.deleteItem(key: "accessToken")
+			KeyChainManager.deleteItem(key: "refreshToken")
 
             if let sociallogin = UserDefaults.standard.string(forKey: "socialLogin") {
 
@@ -215,20 +216,21 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                 }
             }
         } else {
-
+			
             // MARK: 에러 핸들링 추후에 필요
-            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "로그아웃 \(String(describing: result?.code)) 에러"))
+            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "로그 아웃 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "로그아웃 \(String(describing: result?.code)) 에러"))
         }
     }
     
     // 회원 탈퇴
     func withdrawMember() async {
 
-        if let sociallogin = UserDefaults.standard.string(forKey: "socialLogin") {
-
+		if let sociallogin = UserDefaults.standard.string(forKey: "socialLogin"),
+		   let refreshToken = KeyChainManager.readItem(key: "refreshToken")
+		{
+			print(refreshToken)
             if sociallogin == "kakao" {
-
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao()
+				let result: BaseResponse<String>? = await authRepository.withdrawMemberKakao(refreshToken: LogoutRequestDTO(refreshToken: refreshToken))
 
                 if result?.code == 200 {
 
@@ -246,8 +248,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                 }
 
             } else if sociallogin == "naver" {
-
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver()
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberNaver(refreshToken: LogoutRequestDTO(refreshToken: refreshToken))
 
                 print("네이버 회원탈퇴 성공")
 
@@ -264,8 +265,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                 }
 
             } else if sociallogin == "apple" {
-
-                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple()
+                let result: BaseResponse<String>? = await authRepository.withdrawMemberApple(refreshToken: LogoutRequestDTO(refreshToken: refreshToken))
 
                 if result?.code == 200 {
 

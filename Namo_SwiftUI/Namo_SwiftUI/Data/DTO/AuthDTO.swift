@@ -32,8 +32,7 @@ struct SocialSignInRequestDTO: Encodable {
 
 // 로그아웃 요청 DTO
 struct LogoutRequestDTO: Encodable {
-    
-    let accessToken: String
+    let refreshToken: String
 }
 
 // 애플 로그인 요청 DTO

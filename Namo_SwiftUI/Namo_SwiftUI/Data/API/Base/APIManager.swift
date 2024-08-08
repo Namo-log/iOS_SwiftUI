@@ -194,7 +194,7 @@ extension APIManager {
           method: endPoint.method,
           headers: endPoint.headers,
           interceptor: AuthManager()
-        )
+		)
         
       case let .requestJSONEncodable(parameters):
           return AF.request(
@@ -267,6 +267,13 @@ extension APIManager {
             encoder: JSONParameterEncoder.default,
             headers: endPoint.headers
           )
+		  
+	  case .authRequestPlain:
+		  return AF.request(
+			"\(endPoint.baseURL)\(endPoint.path)",
+			method: endPoint.method,
+			headers: endPoint.headers
+		  )
           
       case let .requestParametersExAPI(parameters, encoding):
           return AF.request(

@@ -31,6 +31,8 @@ public enum APITask {
 	case uploadImagesWithParameter(imageDatas: [Data?], parameters: [String: Any], imageKeyName: String = "imgs")
     // 토큰 헤더를 포함하지 않는 인증 요청
     case authRequestJSONEncodable(parameters: Encodable)
+	// 인터셉터를 안 거치는 요청
+	case authRequestPlain
     /// 외부 API 요청
     case requestParametersExAPI(parameters: Parameters, encoding: ParameterEncoding)
 }

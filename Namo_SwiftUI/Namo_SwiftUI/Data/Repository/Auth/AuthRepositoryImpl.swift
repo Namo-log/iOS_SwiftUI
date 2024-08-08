@@ -25,19 +25,19 @@ final class AuthRepositoryImpl: AuthRepository {
     }
     
     // 로그아웃
-    func removeToken<T>(serverAccessToken: LogoutRequestDTO) async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(serverAccessToken: serverAccessToken))
+    func removeToken<T>(refreshToken: LogoutRequestDTO) async -> BaseResponse<T>? where T : Decodable {
+		return await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: refreshToken))
     }
     
-    func withdrawMemberKakao<T>() async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberKakao)
+    func withdrawMemberKakao<T>(refreshToken: LogoutRequestDTO) async -> BaseResponse<T>? where T : Decodable {
+		return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberKakao(refreshToken: refreshToken))
     }
     
-    func withdrawMemberNaver<T>() async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberNaver)
+    func withdrawMemberNaver<T>(refreshToken: LogoutRequestDTO) async -> BaseResponse<T>? where T : Decodable {
+		return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberNaver(refreshToken: refreshToken))
     }
     
-    func withdrawMemberApple<T>() async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple)
+    func withdrawMemberApple<T>(refreshToken: LogoutRequestDTO) async -> BaseResponse<T>? where T : Decodable {
+		return await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: refreshToken))
     }
 }

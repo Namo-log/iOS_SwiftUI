@@ -20,16 +20,16 @@ enum AuthEndPoint {
     case signInApple(appleToken: AppleSignInRequestDTO)
     
     // 카카오 회원 탈퇴
-    case withdrawMemberKakao
+    case withdrawMemberKakao(refreshToken: LogoutRequestDTO)
     
     // 네이버 회원 탈퇴
-    case withdrawMemberNaver
+    case withdrawMemberNaver(refreshToken: LogoutRequestDTO)
     
     // 애플 회원 탈퇴
-    case withdrawMemberApple
+    case withdrawMemberApple(refreshToken: LogoutRequestDTO)
     
     // 로그아웃
-    case logout(serverAccessToken: LogoutRequestDTO)
+    case logout(refreshToken: LogoutRequestDTO)
     
     // 토큰 재발급
     case reissuanceToken(token: TokenReissuanceRequestDTO)
@@ -64,7 +64,7 @@ extension AuthEndPoint: EndPoint {
         case .withdrawMemberApple:
             return "/apple/delete"
             
-        case .logout(serverAccessToken: _):
+        case .logout:
             return "/logout"
             
         case .reissuanceToken:
@@ -94,10 +94,10 @@ extension AuthEndPoint: EndPoint {
             return .requestPlain
         case .withdrawMemberApple:
             return .requestPlain
-        case .logout(serverAccessToken: let dto):
-            return .authRequestJSONEncodable(parameters: dto)
-        case .reissuanceToken(token: let dto):
-            return .requestJSONEncodable(parameters: dto)
+        case .logout:
+            return .requestPlain
+        case .reissuanceToken:
+            return .authRequestPlain
         }
     }
     
@@ -105,8 +105,11 @@ extension AuthEndPoint: EndPoint {
         
         switch self {
             
-        case .withdrawMemberApple, .withdrawMemberKakao, .withdrawMemberNaver:
-            return nil
+		case let .withdrawMemberApple(dto), let .withdrawMemberKakao(dto), let .withdrawMemberNaver(dto), let .logout(dto):
+			return ["refreshToken": dto.refreshToken]
+			
+		case .reissuanceToken(let dto):
+			return ["refreshToken": dto.refreshToken]
         default:
             return ["Content-Type": "application/json"]
         }
