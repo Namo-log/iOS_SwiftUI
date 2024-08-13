@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -218,6 +218,7 @@
 		56F438BBD9F310724355C8E5 /* AlertViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewOld.swift; sourceTree = "<group>"; };
 		59E350110792475128F5CBF3 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
 		5C9D06B8D14345C238CFA028 /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
+		613BE090847CBBD125CE291A /* Namo_SwiftUI-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-release.xcconfig"; sourceTree = "<group>"; };
 		62AE1038308125390E49DCF3 /* MoimDiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryRepository.swift; sourceTree = "<group>"; };
 		6555556B2E64778EBDBB128D /* NavigationBarBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarBackground.swift; sourceTree = "<group>"; };
 		65C0BC91B56CE95A8D44C330 /* FactoryDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryDI.swift; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 		6E52A33741D68D3ECD02E0E5 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		7095D83D532C99896AD55AC0 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		71ADA0F31BC506BD0F5D637E /* NamoAlertViewWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoAlertViewWithTitle.swift; sourceTree = "<group>"; };
+		72688D745427A2405455DB86 /* Namo_SwiftUI-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-debug.xcconfig"; sourceTree = "<group>"; };
 		77271CC26304E86CA5D08423 /* ScheduleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCategory.swift; sourceTree = "<group>"; };
 		777F103BF82CEC20117353D0 /* NamoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoTabView.swift; sourceTree = "<group>"; };
 		798F7DAA262B6CA29DA6232F /* MoimDiaryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimDiaryEndPoint.swift; sourceTree = "<group>"; };
@@ -447,9 +449,19 @@
 			path = GroupToDo;
 			sourceTree = "<group>";
 		};
+		366DA3FDBA24874F612329D9 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				72688D745427A2405455DB86 /* Namo_SwiftUI-debug.xcconfig */,
+				613BE090847CBBD125CE291A /* Namo_SwiftUI-release.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
 		3813CFE734D1AC4E430CA3FB /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				366DA3FDBA24874F612329D9 /* Configurations */,
 				CB599BDB8B018730CAA36C5B /* Derived */,
 				B533E2526EEDECB2ADF96C2A /* Namo_SwiftUI */,
 			);
@@ -1096,6 +1108,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 7E71552B1A89C15EAA194A6F /* Build configuration list for PBXProject "Namo_SwiftUI" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -1276,6 +1290,7 @@
 /* Begin XCBuildConfiguration section */
 		43709D26CF74CA14900FF16B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72688D745427A2405455DB86 /* Namo_SwiftUI-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1340,12 +1355,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Derived/InfoPlists/Namo_SwiftUI-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.test;
 				PRODUCT_NAME = Namo_SwiftUI;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
@@ -1360,6 +1374,7 @@
 		};
 		5D303B6A4879C7599E56F5D6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 613BE090847CBBD125CE291A /* Namo_SwiftUI-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1418,18 +1433,20 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Derived/InfoPlists/Namo_SwiftUI-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.test;
 				PRODUCT_NAME = Namo_SwiftUI;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
