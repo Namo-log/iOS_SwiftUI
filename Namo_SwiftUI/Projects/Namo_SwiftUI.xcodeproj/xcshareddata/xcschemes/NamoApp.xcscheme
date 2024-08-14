@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1AAF258DE6E35CA99BA01E83"
-               BuildableName = "Namo_SwiftUI.app"
-               BlueprintName = "Namo_SwiftUI"
+               BlueprintIdentifier = "1BAE2A1E0DD98CBF7BBB3A13"
+               BuildableName = "NamoApp.app"
+               BlueprintName = "NamoApp"
                ReferencedContainer = "container:Namo_SwiftUI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1AAF258DE6E35CA99BA01E83"
-            BuildableName = "Namo_SwiftUI.app"
-            BlueprintName = "Namo_SwiftUI"
+            BlueprintIdentifier = "1BAE2A1E0DD98CBF7BBB3A13"
+            BuildableName = "NamoApp.app"
+            BlueprintName = "NamoApp"
             ReferencedContainer = "container:Namo_SwiftUI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,9 +62,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1AAF258DE6E35CA99BA01E83"
-            BuildableName = "Namo_SwiftUI.app"
-            BlueprintName = "Namo_SwiftUI"
+            BlueprintIdentifier = "1BAE2A1E0DD98CBF7BBB3A13"
+            BuildableName = "NamoApp.app"
+            BlueprintName = "NamoApp"
             ReferencedContainer = "container:Namo_SwiftUI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

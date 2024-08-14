@@ -8,12 +8,12 @@ let project = Project(
         .release(name: "Release", xcconfig: "Configurations/Namo_SwiftUI-release.xcconfig")
     ]),
     targets: [
-        .target(name: "Namo_SwiftUI",
+        .target(name: "NamoApp",
                 destinations: .iOS,
                 product: .app,
                 bundleId: "com.mongmong.namo.test",
-                sources: ["Namo_SwiftUI/Sources/**"],
-                resources: ["Namo_SwiftUI/Resources/**"],
+                sources: ["Sources/**"],
+                resources: ["Resources/**"],
                 dependencies: [
                     .external(name: "Kingfisher"),
                     .external(name: "Factory"),
@@ -25,11 +25,11 @@ let project = Project(
                     .external(name: "KakaoSDK"),
                     .external(name: "FirebaseDatabase"),
                     .external(name: "FirebaseCrashlytics"),
-                        .external(name: "FirebaseDynamicLinks"),
-                        .external(name: "FirebaseMessaging"),
-                        .external(name: "FirebasePerformance"),
-                        .external(name: "FirebaseRemoteConfig"),
-                        .external(name: "FirebaseAnalytics"),
+                    .external(name: "FirebaseDynamicLinks"),
+                    .external(name: "FirebaseMessaging"),
+                    .external(name: "FirebasePerformance"),
+                    .external(name: "FirebaseRemoteConfig"),
+                    .external(name: "FirebaseAnalytics"),
                 ]
                )
     ]
