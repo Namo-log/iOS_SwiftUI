@@ -1022,20 +1022,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F6E2F8C3B7D9EB13105F5694"
-               BuildableName = "Kingfisher_Kingfisher.bundle"
-               BlueprintName = "Kingfisher_Kingfisher"
-               ReferencedContainer = "container:Tuist/.build/tuist-derived/Kingfisher/Kingfisher.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "11789D24A0490E463CDA3C81"
                BuildableName = "Lottie.framework"
                BlueprintName = "Lottie"

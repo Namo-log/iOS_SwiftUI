@@ -65,6 +65,7 @@ struct Namo_SwiftUIApp: App {
                         instance?.receiveAccessToken(url)
                     }
                 })
+                
         }
     }
 }

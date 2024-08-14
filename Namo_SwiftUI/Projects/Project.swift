@@ -9,7 +9,7 @@ let project = Project(
     ]),
     targets: [
         .target(name: "NamoApp",
-                destinations: .iOS,
+                destinations: [.iPhone],
                 product: .app,
                 bundleId: "com.mongmong.namo.test",
                 sources: ["Sources/**"],
