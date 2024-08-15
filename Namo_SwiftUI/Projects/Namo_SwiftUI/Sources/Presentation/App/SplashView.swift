@@ -71,17 +71,6 @@ struct SplashView: View {
 							}
 						}
 					}
-//					showUpdateRequired = false
-//					
-//					let result = await APIManager.shared.ReissuanceToken()
-//					if !result {
-//						print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
-//
-//						// 로그아웃 처리
-//						DispatchQueue.main.async {
-//							UserDefaults.standard.set(false, forKey: "isLogin")
-//						}
-//					}
 				} catch {
 					print("최소 버전 가져오기 실패")
 				}
