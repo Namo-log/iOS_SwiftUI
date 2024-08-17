@@ -7,6 +7,9 @@
       <FileRef
          location = "group:Namo_SwiftUI/Namo_SwiftUI.xcodeproj">
       </FileRef>
+      <FileRef
+         location = "group:ThirdPartyLibs/ThirdPartyLibs.xcodeproj">
+      </FileRef>
    </Group>
    <Group
       location = "container:"

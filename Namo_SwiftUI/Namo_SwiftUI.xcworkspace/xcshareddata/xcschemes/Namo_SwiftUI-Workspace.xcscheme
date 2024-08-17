@@ -1540,6 +1540,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6B2D0C5E263CA86B1CD4D3ED"
+               BuildableName = "ThirdPartyLibs.framework"
+               BlueprintName = "ThirdPartyLibs"
+               ReferencedContainer = "container:Projects/ThirdPartyLibs/ThirdPartyLibs.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "8A53F29ADBAE4C27AB5DA4CE"
                BuildableName = "UIKitNavigation.framework"
                BlueprintName = "UIKitNavigation"
