@@ -32,6 +32,7 @@ let project = Project(
 					.SPM.FirebasePerformance,
 					.SPM.FirebaseRemoteConfig,
 					.SPM.FirebaseAnalytics,
+					.SPM.ComposableArchitecture,
 				]
 			   )
 	]

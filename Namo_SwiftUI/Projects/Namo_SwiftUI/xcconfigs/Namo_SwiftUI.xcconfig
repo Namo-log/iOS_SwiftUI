@@ -59,3 +59,4 @@ SWIFT_ACTIVE_COMPILATION_CONDITIONS[config=Debug]=DEBUG $(inherited)
 SWIFT_COMPILATION_MODE[config=Release]=wholemodule
 SWIFT_OPTIMIZATION_LEVEL[config=Debug]=-Onone
 VALIDATE_PRODUCT[config=Release]=YES
+OTHER_LDFLAGS=$(inherited) -ObjC

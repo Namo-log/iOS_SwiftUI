@@ -27,4 +27,5 @@ public extension TargetDependency.SPM {
 	static let FirebasePerformance = TargetDependency.external(name: "FirebasePerformance")
 	static let FirebaseRemoteConfig = TargetDependency.external(name: "FirebaseRemoteConfig")
 	static let FirebaseAnalytics = TargetDependency.external(name: "FirebaseAnalytics")
+	static let ComposableArchitecture = TargetDependency.external(name: "ComposableArchitecture")
 }
