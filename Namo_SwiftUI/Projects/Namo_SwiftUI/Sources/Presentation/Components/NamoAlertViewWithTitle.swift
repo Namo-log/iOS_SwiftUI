@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 /*
  사용 예시
@@ -45,13 +46,13 @@ struct NamoAlertViewWithTitle: View {
 				VStack(spacing: 8) {
 					Text(title)
 						.font(.pretendard(.bold, size: 16))
-						.foregroundStyle(Color.mainText)
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.padding(.top, 24)
 					
 					if message != nil {
 						Text(message!)
 							.font(.pretendard(.regular, size: 14))
-							.foregroundStyle(Color.mainText)
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 							.multilineTextAlignment(.center)
 					}
 				}
@@ -59,11 +60,11 @@ struct NamoAlertViewWithTitle: View {
 				HStack(spacing: 8) {
 					Button(action: leftAction, label: {
 						Text("취소")
-							.foregroundStyle(Color(.mainText))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 							.frame(width: screenWidth/2 - 50, height: 43)
 							.font(.pretendard(.bold, size: 16))
 					})
-					.background(Color(.mainGray))
+					.background(Color(asset: CommonAsset.Assets.mainGray))
 					.cornerRadius(4)
 					
 					if let rightButtonTitle = rightButtonTitle,
@@ -74,7 +75,7 @@ struct NamoAlertViewWithTitle: View {
 								.frame(width: screenWidth/2 - 50, height: 43)
 								.font(.pretendard(.bold, size: 16))
 						})
-						.background(Color(.mainOrange))
+						.background(Color(asset: CommonAsset.Assets.mainOrange))
 						.cornerRadius(4)
 					}
 				}

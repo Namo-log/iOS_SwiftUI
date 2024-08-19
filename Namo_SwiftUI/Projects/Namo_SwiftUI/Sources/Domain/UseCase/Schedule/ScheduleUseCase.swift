@@ -8,6 +8,8 @@
 import SwiftUICalendar
 import SwiftUI
 import Factory
+import Common
+import Networks
 
 final class ScheduleUseCase {
 	static let shared = ScheduleUseCase()

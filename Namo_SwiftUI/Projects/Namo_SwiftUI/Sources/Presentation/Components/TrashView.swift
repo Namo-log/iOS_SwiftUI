@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 // 네비게이션 오른쪽 아이템으로 쓰이는 기록 삭제 쓰레기 버튼
 struct TrashView: View {
@@ -15,7 +16,7 @@ struct TrashView: View {
         Button{
             appState.isDeletingDiary = true
         } label: {
-            Image(.icTrash)
+			Image(asset: CommonAsset.Assets.icTrash)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 30, height: 30)

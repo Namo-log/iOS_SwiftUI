@@ -15,7 +15,7 @@ public extension Project {
 		targets: Set<FeatureTarget>,
 		internalDependencies: [TargetDependency] = [],  // 모듈간 의존성
 		externalDependencies: [TargetDependency] = [],  // 외부 라이브러리 의존성
-		frameworkHasResources: Bool = true  // target이 framework인 경우 Resource 포함 여부
+		frameworkHasResources: Bool = false  // target이 framework인 경우 Resource 포함 여부
 	) -> Project {
 		
 		var projectTargets: [Target] = []
@@ -69,6 +69,24 @@ public extension Project {
 				name: name,
 				destinations: destination,
 				product: .staticFramework,
+				bundleId: "\(Environment.bundlePrefix).\(name)",
+				sources: name == "ThirdPartyLibs" ? [] : ["Sources/**"],
+				resources: frameworkHasResources ? ["Resources/**"] : [],
+				dependencies: [
+					internalDependencies,
+					externalDependencies
+				].flatMap { $0 },
+				settings: .settings(base: baseSettings, configurations: XCConfig.path)
+			)
+			
+			projectTargets.append(target)
+		}
+		
+		if targets.contains(.dynamicFramework) {
+			let target = Target.target(
+				name: name,
+				destinations: destination,
+				product: .framework,
 				bundleId: "\(Environment.bundlePrefix).\(name)",
 				sources: name == "ThirdPartyLibs" ? [] : ["Sources/**"],
 				resources: frameworkHasResources ? ["Resources/**"] : [],

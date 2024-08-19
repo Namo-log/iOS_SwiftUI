@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 enum ColorCirclePresentMode {
     /// 현재 선택 가능한 상태
@@ -30,7 +31,7 @@ struct ColorCircleView: View {
         ZStack {
             
             Circle()
-                .fill(color ?? .mainText)
+				.fill(color ?? Color(asset: CommonAsset.Assets.mainText))
                 .aspectRatio(1.0, contentMode: .fit)
             
             if (selectState == .unAvailable || selectState == .selected) {
@@ -41,7 +42,7 @@ struct ColorCircleView: View {
             
             if (selectState == .selected) {
                 Circle()
-                    .fill(color ?? .mainText)
+                    .fill(color ?? Color(asset: CommonAsset.Assets.mainText))
                     .aspectRatio(0.55, contentMode: .fit)
             }
             

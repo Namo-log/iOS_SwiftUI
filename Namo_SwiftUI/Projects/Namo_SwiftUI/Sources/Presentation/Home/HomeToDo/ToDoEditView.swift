@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 /// 일정 추가/생성/삭제에서 표시되는 Edit 화면 입니다.
 /// 카테고리 선택 시 -> ToDoSelectCategoryView
@@ -42,7 +43,7 @@ struct ToDoEditView: View {
     
     @State var showCategoryDeleteAlert: Bool = false
     
-    @State var categoryColor: Color = .mainOrange
+	@State var categoryColor: Color = Color(asset: CommonAsset.Assets.mainOrange)
     @State var categoryName: String = "카테고리 없음"
     
     @State var currPlace: Place?
@@ -119,7 +120,7 @@ struct ToDoEditView: View {
                             .font(.pretendard(.bold, size: 22))
                             .padding(EdgeInsets(top: 18, leading: 30, bottom: 15, trailing: 30))
 							.disabled(scheduleState.isCurrentScheduleIsGroup)
-							.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
+							.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color(asset: CommonAsset.Assets.textDisabled) : Color(asset: CommonAsset.Assets.mainText))
                         
                         // MARK: 일정 선택내용 아이템 목록
                         VStack(alignment: .center, spacing: 20) {
@@ -135,11 +136,11 @@ struct ToDoEditView: View {
                                             .frame(width: 13, height: 13)
                                         Text(self.categoryName)
                                             .font(.pretendard(.regular, size: 15))
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         
-                                        Image(.arrowBasic)
+                                        Image(asset: CommonAsset.Assets.arrowBasic)
                                             .renderingMode(.template)
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         
                                     }
                                     .lineSpacing(12)
@@ -156,7 +157,7 @@ struct ToDoEditView: View {
                             ListItem(listTitle: "시작") {
                                 Text(dateFormatter.string(from: scheduleState.currentSchedule.startDate))
                                     .font(.pretendard(.regular, size: 15))
-									.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
+									.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color(asset: CommonAsset.Assets.textDisabled) : Color(asset: CommonAsset.Assets.mainText))
                                     .onTapGesture {
 										if !scheduleState.isCurrentScheduleIsGroup {
 											withAnimation(.easeInOut(duration: 0.3)) {
@@ -172,13 +173,13 @@ struct ToDoEditView: View {
                                 DatePicker("StartTimePicker", selection: $scheduleState.currentSchedule.startDate)
                                     .datePickerStyle(.graphical)
                                     .labelsHidden()
-                                    .tint(.mainOrange)
+                                    .tint(Color(asset: CommonAsset.Assets.mainOrange))
                             }
                             
                             ListItem(listTitle: "종료") {
                                 Text(dateFormatter.string(from: scheduleState.currentSchedule.endDate))
                                     .font(.pretendard(.regular, size: 15))
-									.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
+									.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color(asset: CommonAsset.Assets.textDisabled) : Color(asset: CommonAsset.Assets.mainText))
                                     .onTapGesture {
 										if !scheduleState.isCurrentScheduleIsGroup {
 											withAnimation(.easeInOut(duration: 0.3)) {
@@ -194,7 +195,7 @@ struct ToDoEditView: View {
                                 DatePicker("EndTimePicker", selection: $scheduleState.currentSchedule.endDate, in: scheduleState.currentSchedule.startDate...)
                                     .datePickerStyle(.graphical)
                                     .labelsHidden()
-                                    .tint(.mainOrange)
+                                    .tint(Color(asset: CommonAsset.Assets.mainOrange))
                             }
                             
                             // MARK: 알림 기능 추가되면 해제
@@ -206,11 +207,11 @@ struct ToDoEditView: View {
                             //                                            .map { NotificationSetting.getValueFromInt($0) })
                             //                                    )
                             //                                    .font(.pretendard(.regular, size: 15))
-                            //                                    .foregroundStyle(.mainText)
+                            //                                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                             //
                             //                                    Image(showNotificationSetting == true ? "upChevron" : "downChevron")
                             //                                        .renderingMode(.template)
-                            //                                        .foregroundStyle(.mainText)
+                            //                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                             //                                }
                             //                                .lineSpacing(12)
                             //                                .onTapGesture {
@@ -265,11 +266,11 @@ struct ToDoEditView: View {
                                     HStack {
                                         Text(scheduleState.currentSchedule.locationName.isEmpty ? "없음" : scheduleState.currentSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
-											.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color.textDisabled : Color.mainText)
+											.foregroundStyle(scheduleState.isCurrentScheduleIsGroup ? Color(asset: CommonAsset.Assets.textDisabled) : Color(asset: CommonAsset.Assets.mainText))
 										if !scheduleState.isCurrentScheduleIsGroup {
-											Image(.arrowBasic)
+											Image(asset: CommonAsset.Assets.arrowBasic)
 												.renderingMode(.template)
-												.foregroundStyle(.mainText)
+												.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 										}
                                     }
                                     .lineSpacing(12)
@@ -305,7 +306,7 @@ struct ToDoEditView: View {
                                 Text("닫기")
                                     .font(.pretendard(.regular, size: 15))
                             })
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                         
                         ToolbarItem(placement: .topBarTrailing) {
@@ -349,7 +350,7 @@ struct ToDoEditView: View {
                                 Text("저장")
                                     .font(.pretendard(.regular, size: 15))
                             })
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                     }//: VStack - toolbar
                 }//: ScrollView
@@ -368,13 +369,13 @@ struct ToDoEditView: View {
                         VStack {
                             Text("일정을 정말 삭제하시겠어요?")
                                 .font(.pretendard(.bold, size: 18))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 24)
                                 .padding(.bottom, 8)
                             Text("일정 삭제 시, 해당 일정에 대한\n기록 또한 삭제됩니다.")
                                 .font(.pretendard(.regular, size: 14))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .lineLimit(2)
                                 .multilineTextAlignment(.center)
                         }
@@ -404,13 +405,13 @@ struct ToDoEditView: View {
                         VStack {
                             Text("카테고리를 정말 삭제하시겠어요?")
                                 .font(.pretendard(.bold, size: 18))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 24)
                                 .padding(.bottom, 8)
                             Text("삭제하더라도 카테고리에 \n포함된 일정은 사라지지 않습니다.")
                                 .font(.pretendard(.regular, size: 14))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .lineLimit(2)
                                 .multilineTextAlignment(.center)
                         }
@@ -547,13 +548,13 @@ struct ToDoEditView: View {
                     .font(.pretendard(self.isOn ? .bold : .regular, size: 15))
                     .lineLimit(1)
                     .padding(EdgeInsets(top: 10, leading: 30, bottom: 10, trailing: 30))
-                    .foregroundStyle(self.isOn ? .mainOrange : .mainText)
+					.foregroundStyle(self.isOn ? Color(asset: CommonAsset.Assets.mainOrange) : Color(asset: CommonAsset.Assets.mainText))
                     .background(
                         RoundedRectangle(
                             cornerRadius: 20,
                             style: .continuous
                         )
-                        .stroke(self.isOn ? .mainOrange : .mainText, lineWidth: self.isOn ? 2 : 1)
+						.stroke(self.isOn ? Color(asset: CommonAsset.Assets.mainOrange) : Color(asset: CommonAsset.Assets.mainText), lineWidth: self.isOn ? 2 : 1)
                     )
             }
         }

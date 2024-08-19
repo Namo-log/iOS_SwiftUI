@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 struct NamoAlertViewWithOneButton: View {
 	
@@ -29,13 +30,13 @@ struct NamoAlertViewWithOneButton: View {
 				VStack(spacing: 8) {
 					Text(title)
 						.font(.pretendard(.bold, size: 16))
-						.foregroundStyle(Color.mainText)
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.padding(.top, 24)
 					
 					if message != nil {
 						Text(message!)
 							.font(.pretendard(.regular, size: 14))
-							.foregroundStyle(Color.mainText)
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 							.multilineTextAlignment(.center)
 					}
 				}
@@ -51,7 +52,7 @@ struct NamoAlertViewWithOneButton: View {
 						.font(.pretendard(.bold, size: 16))
 						.frame(width: screenWidth - 92)
 				})
-				.background(Color(.mainOrange))
+				.background(Color(asset: CommonAsset.Assets.mainOrange))
 				.cornerRadius(4)
 				.padding(.bottom, 16)
 				.padding(.horizontal, 16)

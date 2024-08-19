@@ -8,6 +8,8 @@
 import SwiftUI
 import PhotosUI
 import Kingfisher
+import Networks
+import Common
 
 // 모임 기록에서 장소 뷰
 struct MoimPlaceView: View {
@@ -50,10 +52,10 @@ struct MoimPlaceView: View {
                     TextField(
                         "\(activity.name)",
                         text: $name,
-                        prompt: Text("활동 \(index+1)").foregroundColor(.textPlaceholder)
+                        prompt: Text("활동 \(index+1)").foregroundColor(Color(asset: CommonAsset.Assets.textPlaceholder))
                     )
                     .font(.pretendard(.bold, size: 15))
-                    .foregroundStyle(.mainText)
+                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     .onChange(of: activity.name) { _ in
                         
                         isChangedContents = true
@@ -63,8 +65,8 @@ struct MoimPlaceView: View {
                     HStack() {
                         Text("총 \(activity.money)원")
                             .font(.pretendard(.light, size: 15))
-                            .foregroundStyle(.mainText)
-                        Image(.rightChevronLight)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
+						Image(asset: CommonAsset.Assets.rightChevronLight)
                     }
                     .onTapGesture {
                         self.currentCalculateIndex = self.index
@@ -123,10 +125,10 @@ struct MoimPlaceView: View {
                     self.dragOffset = .zero
                 } label: {
                     Rectangle()
-                        .fill(Color(.mainOrange))
+                        .fill(Color(asset: CommonAsset.Assets.mainOrange))
                         .frame(width: 65, height: 136)
                         .overlay {
-                            Image(.icTrashWhite)
+							Image(asset: CommonAsset.Assets.icTrashWhite)
                                 .resizable()
                                 .frame(width: 24, height: 24)
                         }
@@ -205,7 +207,7 @@ struct MoimPlaceView: View {
                     
                     // 사진 피커 -> 최대 3장까지 선택 가능
                     PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit - imageItems.count, selectionBehavior: .ordered) {
-                        Image(.btnAddImg)
+                        Image(asset: CommonAsset.Assets.btnAddImg)
                             .resizable()
                             .frame(width: 100, height: 100)
                     }

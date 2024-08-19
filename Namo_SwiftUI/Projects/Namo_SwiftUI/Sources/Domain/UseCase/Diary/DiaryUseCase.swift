@@ -7,6 +7,7 @@
 
 import Factory
 import SwiftUI
+import Networks
 
 final class DiaryUseCase {
 	static let shared = DiaryUseCase()

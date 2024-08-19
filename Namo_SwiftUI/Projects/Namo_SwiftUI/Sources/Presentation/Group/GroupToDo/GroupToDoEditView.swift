@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 /// 일정 추가/생성/삭제에서 표시되는 Edit 화면 입니다.
 /// 장소 선택 시 -> ToDoSelectPlaceView
@@ -81,11 +82,11 @@ struct GroupToDoEditView: View {
                                     HStack {
                                         Text(usersInString(scheduleState.currentMoimSchedule.users))
                                             .font(.pretendard(.regular, size: 15))
-                                            .foregroundStyle(.mainText)
-                                        
-										Image(.arrowBasic)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
+										
+										Image(asset: CommonAsset.Assets.arrowBasic)
                                             .renderingMode(.template)
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         
                                     }
                                     .lineSpacing(12)
@@ -96,7 +97,7 @@ struct GroupToDoEditView: View {
                             ListItem(listTitle: "시작") {
                                 Text(dateFormatter.string(from: scheduleState.currentMoimSchedule.startDate))
                                     .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
+                                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
                                             self.showStartTimePicker.toggle()
@@ -109,13 +110,13 @@ struct GroupToDoEditView: View {
                                 DatePicker("StartTimePicker", selection: $scheduleState.currentMoimSchedule.startDate)
                                     .datePickerStyle(.graphical)
                                     .labelsHidden()
-                                    .tint(.mainOrange)
+									.tint(Color(asset: CommonAsset.Assets.mainOrange))
                             }
                             
                             ListItem(listTitle: "종료") {
                                 Text(dateFormatter.string(from: scheduleState.currentMoimSchedule.endDate))
                                     .font(.pretendard(.regular, size: 15))
-                                    .foregroundStyle(.mainText)
+                                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.3)) {
                                             self.showStartTimePicker = false
@@ -128,7 +129,7 @@ struct GroupToDoEditView: View {
                                 DatePicker("EndTimePicker", selection: $scheduleState.currentMoimSchedule.endDate, in: scheduleState.currentMoimSchedule.startDate...)
                                     .datePickerStyle(.graphical)
                                     .labelsHidden()
-                                    .tint(.mainOrange)
+                                    .tint(Color(asset: CommonAsset.Assets.mainOrange))
                             }
                             
                             ListItem(listTitle: "장소") {
@@ -141,10 +142,10 @@ struct GroupToDoEditView: View {
                                     HStack {
                                         Text(scheduleState.currentMoimSchedule.locationName.isEmpty ? "없음" : scheduleState.currentMoimSchedule.locationName)
                                             .font(.pretendard(.regular, size: 15))
-                                            .foregroundStyle(.mainText)
-										Image(.arrowBasic)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
+										Image(asset: CommonAsset.Assets.arrowBasic)
                                             .renderingMode(.template)
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     }
                                     .lineSpacing(12)
                                 })
@@ -178,7 +179,7 @@ struct GroupToDoEditView: View {
                                 Text("닫기")
                                     .font(.pretendard(.regular, size: 15))
                             })
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                         
                         ToolbarItem(placement: .topBarTrailing) {
@@ -213,7 +214,7 @@ struct GroupToDoEditView: View {
                                 Text("저장")
                                     .font(.pretendard(.regular, size: 15))
                             })
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                     }//: VStack - toolbar
                 }//: ScrollView
@@ -235,13 +236,13 @@ struct GroupToDoEditView: View {
                         VStack {
                             Text("모임 일정을 정말 삭제하시겠어요?")
                                 .font(.pretendard(.bold, size: 18))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 24)
                                 .padding(.bottom, 8)
                             Text("삭제한 모임 일정은\n모든 참여자의 일정에서 삭제됩니다.")
                                 .font(.pretendard(.regular, size: 14))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .lineLimit(2)
                                 .multilineTextAlignment(.center)
                         }
@@ -390,7 +391,7 @@ struct GroupToDoEditView: View {
                                                 selectedUser.append(user)
                                             }
                                         }, label: {
-                                            Image(selectedUser.contains(where: {$0 == user}) ? .isSelectedTrue : .isSelectedFalse)
+											Image(asset: selectedUser.contains(where: {$0 == user}) ? CommonAsset.Assets.isSelectedTrue : CommonAsset.Assets.isSelectedFalse)
                                                 .resizable()
                                                 .frame(width: 20, height: 20)
                                         }

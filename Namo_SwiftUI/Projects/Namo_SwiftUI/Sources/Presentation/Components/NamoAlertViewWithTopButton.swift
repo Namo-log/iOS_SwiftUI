@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 /*
  사용 예시
@@ -55,7 +56,7 @@ struct NamoAlertViewWithTopButton: View {
 						Text(leftButtonTitle)
 							.font(.pretendard(.regular, size: 15))
 					})
-					.tint(.mainText)
+					.tint(Color(asset: CommonAsset.Assets.mainText))
 					
 					Spacer()
 					
@@ -72,7 +73,7 @@ struct NamoAlertViewWithTopButton: View {
 						Text(rightButtonTitle)
 							.font(.pretendard(.regular, size: 15))
 					})
-					.tint(.mainText)
+					.tint(Color(asset: CommonAsset.Assets.mainText))
 				}
 				.padding(.top, 15)
 				.padding(.horizontal, 20)

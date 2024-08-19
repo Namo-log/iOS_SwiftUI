@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftUICalendar
 import Factory
+import Common
+import Networks
 
 // 캘린더에 표시되는 아이템
 struct CalendarItem: View {
@@ -31,7 +33,7 @@ struct CalendarItem: View {
 						.foregroundStyle(Color.white)
 						.background(
 							Circle()
-								.fill((date.isFocusYearMonth ?? false) ? Color(.mainOrange) : Color(.mainOrange).opacity(0.5))
+								.fill((date.isFocusYearMonth ?? false) ? Color(asset: CommonAsset.Assets.mainOrange) : Color(asset: CommonAsset.Assets.mainOrange).opacity(0.5))
 								.frame(width: 18, height: 18)
 						)
 					
@@ -39,8 +41,8 @@ struct CalendarItem: View {
 					Text("\(date.day)")
 						.font(.pretendard(.bold, size: 12))
 						.foregroundStyle(
-							focusDate == date ? Color(.mainOrange) :
-							(date.isFocusYearMonth ?? true) ? Color.black : Color(.textUnselected)
+							focusDate == date ? Color(asset: CommonAsset.Assets.mainOrange) :
+							(date.isFocusYearMonth ?? true) ? Color.black : Color(asset: CommonAsset.Assets.textUnselected)
 						)
 				}
 				
@@ -63,7 +65,7 @@ struct CalendarItem: View {
 						Spacer()
 						Text("+\(schedule.count - MAX_SCHEDULE)")
 							.font(.pretendard(.semibold, size: 8))
-							.foregroundStyle(Color(.mainText))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						Spacer()
 					}
 				} else if isMoimCalendar && focusDate == nil, let count = moimState.currentMoimSchedule[date]?.count, count > MAX_SCHEDULE {
@@ -71,7 +73,7 @@ struct CalendarItem: View {
 						Spacer()
 						Text("+\(count - MAX_SCHEDULE)")
 							.font(.pretendard(.semibold, size: 8))
-							.foregroundStyle(Color(.mainText))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						Spacer()
 					}
 				}
@@ -291,7 +293,7 @@ struct CalendarItem: View {
 			ForEach(schedules.indices, id: \.self) { index in
 				if let schedule = schedules[index].schedule {
 					let color = schedule.curMoimSchedule ?
-					Color.mainOrange :
+					Color(asset: CommonAsset.Assets.mainOrange) :
 					categoryUseCase.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
 					// 캘린더 펼친 상태
 					if focusDate == nil {

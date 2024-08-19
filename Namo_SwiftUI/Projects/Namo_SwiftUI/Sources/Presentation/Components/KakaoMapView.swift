@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import KakaoMapsSDK
 import Factory
+import Common
 
 struct KakaoMapView: UIViewRepresentable {
     @Binding var draw: Bool

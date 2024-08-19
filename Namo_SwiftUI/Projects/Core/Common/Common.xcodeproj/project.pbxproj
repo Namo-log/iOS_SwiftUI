@@ -1,0 +1,1059 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0885885D05C846FC6684D911 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A66E46780E4A4AB13CE4C9 /* NotificationName+.swift */; };
+		0B2FC750743D68ACCD844E57 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B2036D103BB39FC23149C /* UIApplication+.swift */; };
+		181F675AC306541D97E9FF3B /* GroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D554F8433A59C294D45CEB /* GroupUser.swift */; };
+		20956EE3DA4653914E863C9B /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE95A763CCEC1AFA59A44B /* ErrorHandler.swift */; };
+		209A1AAE44FE6216BF654C43 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F244E48C69ECCAB74EECB7B /* Color+.swift */; };
+		21276F16ABCD410F06136D1C /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7A37790F07944E98DD5A5F08 /* Pretendard-SemiBold.otf */; };
+		2179AF2C0B050D1FCA0B3DD5 /* MoimScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61662535BD1A27B4D7A7AEB /* MoimScheduleTemplate.swift */; };
+		2DCFBAD933418934241FA80C /* ViewHiddenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE08610BC11789EE9D3D239 /* ViewHiddenModifier.swift */; };
+		3707A45EA0140AB2C3F68FF1 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB12E028F8DC18409FD6DC8 /* NavigationBarBackground.swift */; };
+		38729B53F5BEF094CECA8A9C /* ScheduleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E5EFBFA8EFFF64D3260C6D /* ScheduleCategory.swift */; };
+		3C3F5B0B2ACA7EEEE9874909 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B452B61122F510E17DCE5048 /* APIError.swift */; };
+		3F3192C412BAE45BBFC6B9B2 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCCB58274E1FC105C702B5E /* AppError.swift */; };
+		407124AF9669B3F1BA639E63 /* TuistFonts+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C563D0970A93F78DE9881D5E /* TuistFonts+Common.swift */; };
+		46CF344394BD81F9641C2E14 /* TuistBundle+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5586CF2305054A72E2C12 /* TuistBundle+Common.swift */; };
+		4AB30DFDC5A90046426DEC59 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 738C5A8B6EB0990FD39608AC /* Preview Assets.xcassets */; };
+		59E3CA2E4CF21FBE9753ACAB /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6675B43E1A7011AE85CB076C /* Pretendard-Medium.otf */; };
+		652EB1245394050E74AAC814 /* TuistAssets+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1529B26D943FA08124AB01 /* TuistAssets+Common.swift */; };
+		677F969342C31B9785E7BDC1 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84A5A4304F11221A0D711642 /* Pretendard-Light.otf */; };
+		697A09DB46F07A8B4FAF2453 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD575570C8070BA5E0B3F38E /* NotificationSetting.swift */; };
+		6AB1E112E88241C2E85F809D /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FCF70F8A44B2698DF41A /* Pretendard-ExtraBold.otf */; };
+		7181DEDC7739FDD8CC459288 /* ScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29630807152AA2DE05B3DEB9 /* ScheduleTemplate.swift */; };
+		728C3A3D145C7D356DDD0CDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E5E3A986D733F7AED40E2B7 /* Pretendard-Bold.otf */; };
+		75A86B3CDD8DDF02C6FC4A84 /* YearMonthDay+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5F0BFB7DC5D98F8064B04B /* YearMonthDay+.swift */; };
+		76C1E90AF594638B8DCCFE77 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0597B1B971C9D33E76FC3DE1 /* Pretendard-Thin.otf */; };
+		7D940E701A501B4DC631E84F /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB22D7A144C674119F1E36E /* secret.swift */; };
+		7E929D79AAB9BFF99C326BDF /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBD5A49DCFD3332DEF5A003 /* Font+.swift */; };
+		822BD81B980363D0B7762796 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FA2F741D3B93A0490B66A3 /* Data+.swift */; };
+		832F49C87F7F93AE8EABACCF /* ThirdPartyLibs.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = E7B96C8DBB9162E562CB9EC9 /* ThirdPartyLibs.framework */; };
+		833CCA5CFBBB33BC51B33881 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = EC2E92E3DA8BDE786E50CE4E /* Pretendard-ExtraLight.otf */; };
+		91C12F6D738446AB7D743934 /* GroupInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52603E7141293FAF189A019 /* GroupInfo.swift */; };
+		9C4538804E5023A404B38FB7 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D47AFF5BA684469E9DB465C4 /* Pretendard-Black.otf */; };
+		AA5EC8D16F9665F84A85B018 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146B641C34B0E1FD429C110A /* Assets.xcassets */; };
+		BF204371873EED78126B7469 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AAE7EB496A2EC74BBF9CCF /* Date+.swift */; };
+		C260087E929A90E7F6C66CEE /* YearMonth+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5574E212DAA187BCB7C1D8F0 /* YearMonth+.swift */; };
+		C5CA4B77A9EE01E6E6A412E3 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BAEAA2CC608672CEDC6887FD /* Pretendard-Regular.otf */; };
+		D2E3A86A0811F40F74ED3A29 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EFFC684787F8D0F3377FDD /* KeyChainManager.swift */; };
+		D96D7365FD17760E3BF7FFB1 /* Schedule+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F76C936E945443100B74086 /* Schedule+.swift */; };
+		E1B7431F4B905EC2F1A1E42C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7499329D65853845B3BB8F /* Constants.swift */; };
+		EE669417585A807240D0263B /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC629B8287D6F2D8C4316AB1 /* RemoteConfigManager.swift */; };
+		EF883F9450B65AAD25EDFB19 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1638167E599CBC91B023C223 /* Place.swift */; };
+		F3138AD072EA1ED2C5ED54A9 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9327119D76261659630DBF92 /* Schedule.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		46F82A4CEDA27616ED070666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0F000962B23D0ED661F9B41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 621B6E1ECDFD4168D4985438;
+			remoteInfo = Common_Common;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		04FE1BC26256A7578E6A1291 /* Dependencies */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstSubfolderSpec = 16;
+			files = (
+				832F49C87F7F93AE8EABACCF /* ThirdPartyLibs.framework in Dependencies */,
+			);
+			name = Dependencies;
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		2050D9179AF2A95620543DFA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FB839846C41C52DD24C948D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0597B1B971C9D33E76FC3DE1 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		0CE08610BC11789EE9D3D239 /* ViewHiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHiddenModifier.swift; sourceTree = "<group>"; };
+		0F76C936E945443100B74086 /* Schedule+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+.swift"; sourceTree = "<group>"; };
+		0FFE95A763CCEC1AFA59A44B /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		125B2036D103BB39FC23149C /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		13EFFC684787F8D0F3377FDD /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		146B641C34B0E1FD429C110A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1638167E599CBC91B023C223 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		19D554F8433A59C294D45CEB /* GroupUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupUser.swift; sourceTree = "<group>"; };
+		27A66E46780E4A4AB13CE4C9 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
+		29630807152AA2DE05B3DEB9 /* ScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTemplate.swift; sourceTree = "<group>"; };
+		29E5EFBFA8EFFF64D3260C6D /* ScheduleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCategory.swift; sourceTree = "<group>"; };
+		2E5E3A986D733F7AED40E2B7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		3354DE7E2B4F1877FECB508B /* Common-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Common-Info.plist"; sourceTree = "<group>"; };
+		3A5F0BFB7DC5D98F8064B04B /* YearMonthDay+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonthDay+.swift"; sourceTree = "<group>"; };
+		3DA77FB5518DC2177F7CDB4F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DB22D7A144C674119F1E36E /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
+		3F244E48C69ECCAB74EECB7B /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Namo_SwiftUI.xcconfig; sourceTree = "<group>"; };
+		4A1529B26D943FA08124AB01 /* TuistAssets+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+Common.swift"; sourceTree = "<group>"; };
+		506BEB0806B2B92C86982617 /* Common_Common-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Common_Common-Info.plist"; sourceTree = "<group>"; };
+		5574E212DAA187BCB7C1D8F0 /* YearMonth+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonth+.swift"; sourceTree = "<group>"; };
+		6675B43E1A7011AE85CB076C /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		6AB5586CF2305054A72E2C12 /* TuistBundle+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+Common.swift"; sourceTree = "<group>"; };
+		6BB12E028F8DC18409FD6DC8 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarBackground.swift; sourceTree = "<group>"; };
+		738C5A8B6EB0990FD39608AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		74AAE7EB496A2EC74BBF9CCF /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		7A37790F07944E98DD5A5F08 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		84A5A4304F11221A0D711642 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		8DCCB58274E1FC105C702B5E /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		9327119D76261659630DBF92 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		94CE81795543F3FCF918F681 /* Common_Common.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Common_Common.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5FA2F741D3B93A0490B66A3 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		B452B61122F510E17DCE5048 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		BAEAA2CC608672CEDC6887FD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		C563D0970A93F78DE9881D5E /* TuistFonts+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistFonts+Common.swift"; sourceTree = "<group>"; };
+		C5A2FCF70F8A44B2698DF41A /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		C61662535BD1A27B4D7A7AEB /* MoimScheduleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimScheduleTemplate.swift; sourceTree = "<group>"; };
+		CD7499329D65853845B3BB8F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D47AFF5BA684469E9DB465C4 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		DDBD5A49DCFD3332DEF5A003 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		E7B96C8DBB9162E562CB9EC9 /* ThirdPartyLibs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThirdPartyLibs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC2E92E3DA8BDE786E50CE4E /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		F52603E7141293FAF189A019 /* GroupInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfo.swift; sourceTree = "<group>"; };
+		FC629B8287D6F2D8C4316AB1 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
+		FD575570C8070BA5E0B3F38E /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC0AEDB5FEFD1E57095BAB6C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3839BD63D86A4064B031DEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		23145CDB2E2377FF9F44D7D6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				89F7BA810374E050881BDE50 /* Font */,
+				69F216740B98049F60D39C7F /* Preview Content */,
+				146B641C34B0E1FD429C110A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3942F0B71C55E4F5E5948A4D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5C1C7FA47D3DC3BDFBDA9040 /* Group */,
+				C61662535BD1A27B4D7A7AEB /* MoimScheduleTemplate.swift */,
+				FD575570C8070BA5E0B3F38E /* NotificationSetting.swift */,
+				1638167E599CBC91B023C223 /* Place.swift */,
+				9327119D76261659630DBF92 /* Schedule.swift */,
+				29E5EFBFA8EFFF64D3260C6D /* ScheduleCategory.swift */,
+				29630807152AA2DE05B3DEB9 /* ScheduleTemplate.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3DE07036847DB1BB55C267D6 /* ErrorHandling */ = {
+			isa = PBXGroup;
+			children = (
+				B452B61122F510E17DCE5048 /* APIError.swift */,
+				8DCCB58274E1FC105C702B5E /* AppError.swift */,
+				0FFE95A763CCEC1AFA59A44B /* ErrorHandler.swift */,
+			);
+			path = ErrorHandling;
+			sourceTree = "<group>";
+		};
+		414CC905DAA5F4BA01D19B1D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				EFE714F6B70B11C1C723A78A /* Extensions */,
+				3942F0B71C55E4F5E5948A4D /* Model */,
+				B95DABC4CD2E7DB8097534C6 /* Utils */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		46B7570B57064E55A860C478 /* InfoPlists */ = {
+			isa = PBXGroup;
+			children = (
+				506BEB0806B2B92C86982617 /* Common_Common-Info.plist */,
+				3354DE7E2B4F1877FECB508B /* Common-Info.plist */,
+			);
+			path = InfoPlists;
+			sourceTree = "<group>";
+		};
+		5C1C7FA47D3DC3BDFBDA9040 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				F52603E7141293FAF189A019 /* GroupInfo.swift */,
+				19D554F8433A59C294D45CEB /* GroupUser.swift */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		69F216740B98049F60D39C7F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				738C5A8B6EB0990FD39608AC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		75672AB8A3D5F88FEB6880D7 = {
+			isa = PBXGroup;
+			children = (
+				FA1B67454C7AEA0D639CD237 /* Project */,
+				94BAEE6F1D9EB35E2614AE54 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7A78A2946880272DE20F1087 /* xcconfigs */ = {
+			isa = PBXGroup;
+			children = (
+				4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */,
+			);
+			name = xcconfigs;
+			path = ../../../xcconfigs;
+			sourceTree = "<group>";
+		};
+		89F7BA810374E050881BDE50 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				D47AFF5BA684469E9DB465C4 /* Pretendard-Black.otf */,
+				2E5E3A986D733F7AED40E2B7 /* Pretendard-Bold.otf */,
+				C5A2FCF70F8A44B2698DF41A /* Pretendard-ExtraBold.otf */,
+				EC2E92E3DA8BDE786E50CE4E /* Pretendard-ExtraLight.otf */,
+				84A5A4304F11221A0D711642 /* Pretendard-Light.otf */,
+				6675B43E1A7011AE85CB076C /* Pretendard-Medium.otf */,
+				BAEAA2CC608672CEDC6887FD /* Pretendard-Regular.otf */,
+				7A37790F07944E98DD5A5F08 /* Pretendard-SemiBold.otf */,
+				0597B1B971C9D33E76FC3DE1 /* Pretendard-Thin.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		94BAEE6F1D9EB35E2614AE54 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94CE81795543F3FCF918F681 /* Common_Common.bundle */,
+				3DA77FB5518DC2177F7CDB4F /* Common.framework */,
+				E7B96C8DBB9162E562CB9EC9 /* ThirdPartyLibs.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B95DABC4CD2E7DB8097534C6 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3DE07036847DB1BB55C267D6 /* ErrorHandling */,
+				CD7499329D65853845B3BB8F /* Constants.swift */,
+				13EFFC684787F8D0F3377FDD /* KeyChainManager.swift */,
+				6BB12E028F8DC18409FD6DC8 /* NavigationBarBackground.swift */,
+				FC629B8287D6F2D8C4316AB1 /* RemoteConfigManager.swift */,
+				3DB22D7A144C674119F1E36E /* secret.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DDFBA71553F6521B749B026F /* Derived */ = {
+			isa = PBXGroup;
+			children = (
+				46B7570B57064E55A860C478 /* InfoPlists */,
+				FEC7F181362819803E5C1655 /* Sources */,
+			);
+			path = Derived;
+			sourceTree = "<group>";
+		};
+		EFE714F6B70B11C1C723A78A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3F244E48C69ECCAB74EECB7B /* Color+.swift */,
+				A5FA2F741D3B93A0490B66A3 /* Data+.swift */,
+				74AAE7EB496A2EC74BBF9CCF /* Date+.swift */,
+				DDBD5A49DCFD3332DEF5A003 /* Font+.swift */,
+				27A66E46780E4A4AB13CE4C9 /* NotificationName+.swift */,
+				0F76C936E945443100B74086 /* Schedule+.swift */,
+				125B2036D103BB39FC23149C /* UIApplication+.swift */,
+				0CE08610BC11789EE9D3D239 /* ViewHiddenModifier.swift */,
+				5574E212DAA187BCB7C1D8F0 /* YearMonth+.swift */,
+				3A5F0BFB7DC5D98F8064B04B /* YearMonthDay+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FA1B67454C7AEA0D639CD237 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				DDFBA71553F6521B749B026F /* Derived */,
+				23145CDB2E2377FF9F44D7D6 /* Resources */,
+				414CC905DAA5F4BA01D19B1D /* Sources */,
+				7A78A2946880272DE20F1087 /* xcconfigs */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		FEC7F181362819803E5C1655 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4A1529B26D943FA08124AB01 /* TuistAssets+Common.swift */,
+				6AB5586CF2305054A72E2C12 /* TuistBundle+Common.swift */,
+				C563D0970A93F78DE9881D5E /* TuistFonts+Common.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		621B6E1ECDFD4168D4985438 /* Common_Common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6991EDDA3FD01CD67D8C473F /* Build configuration list for PBXNativeTarget "Common_Common" */;
+			buildPhases = (
+				FA51FE56B76562A2DDB59DE3 /* Resources */,
+				4FB839846C41C52DD24C948D /* Embed Frameworks */,
+				AC0AEDB5FEFD1E57095BAB6C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Common_Common;
+			productName = Common_Common;
+			productReference = 94CE81795543F3FCF918F681 /* Common_Common.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E08ABD263855627D83D37766 /* Common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97BF576076886CD83B76B8B1 /* Build configuration list for PBXNativeTarget "Common" */;
+			buildPhases = (
+				C43FBAEB93088F1FA18F08DA /* Sources */,
+				BD50F1B05281191BCBDB2893 /* Resources */,
+				2050D9179AF2A95620543DFA /* Embed Frameworks */,
+				F3839BD63D86A4064B031DEE /* Frameworks */,
+				04FE1BC26256A7578E6A1291 /* Dependencies */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BABCF67D99121B2A5288A43 /* PBXTargetDependency */,
+			);
+			name = Common;
+			productName = Common;
+			productReference = 3DA77FB5518DC2177F7CDB4F /* Common.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0F000962B23D0ED661F9B41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 7A960902591CDB4F68854742 /* Build configuration list for PBXProject "Common" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 75672AB8A3D5F88FEB6880D7;
+			productRefGroup = 94BAEE6F1D9EB35E2614AE54 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E08ABD263855627D83D37766 /* Common */,
+				621B6E1ECDFD4168D4985438 /* Common_Common */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BD50F1B05281191BCBDB2893 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA51FE56B76562A2DDB59DE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA5EC8D16F9665F84A85B018 /* Assets.xcassets in Resources */,
+				9C4538804E5023A404B38FB7 /* Pretendard-Black.otf in Resources */,
+				728C3A3D145C7D356DDD0CDD /* Pretendard-Bold.otf in Resources */,
+				6AB1E112E88241C2E85F809D /* Pretendard-ExtraBold.otf in Resources */,
+				833CCA5CFBBB33BC51B33881 /* Pretendard-ExtraLight.otf in Resources */,
+				677F969342C31B9785E7BDC1 /* Pretendard-Light.otf in Resources */,
+				59E3CA2E4CF21FBE9753ACAB /* Pretendard-Medium.otf in Resources */,
+				C5CA4B77A9EE01E6E6A412E3 /* Pretendard-Regular.otf in Resources */,
+				21276F16ABCD410F06136D1C /* Pretendard-SemiBold.otf in Resources */,
+				76C1E90AF594638B8DCCFE77 /* Pretendard-Thin.otf in Resources */,
+				4AB30DFDC5A90046426DEC59 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C43FBAEB93088F1FA18F08DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				652EB1245394050E74AAC814 /* TuistAssets+Common.swift in Sources */,
+				46CF344394BD81F9641C2E14 /* TuistBundle+Common.swift in Sources */,
+				407124AF9669B3F1BA639E63 /* TuistFonts+Common.swift in Sources */,
+				209A1AAE44FE6216BF654C43 /* Color+.swift in Sources */,
+				822BD81B980363D0B7762796 /* Data+.swift in Sources */,
+				BF204371873EED78126B7469 /* Date+.swift in Sources */,
+				7E929D79AAB9BFF99C326BDF /* Font+.swift in Sources */,
+				0885885D05C846FC6684D911 /* NotificationName+.swift in Sources */,
+				D96D7365FD17760E3BF7FFB1 /* Schedule+.swift in Sources */,
+				0B2FC750743D68ACCD844E57 /* UIApplication+.swift in Sources */,
+				2DCFBAD933418934241FA80C /* ViewHiddenModifier.swift in Sources */,
+				C260087E929A90E7F6C66CEE /* YearMonth+.swift in Sources */,
+				75A86B3CDD8DDF02C6FC4A84 /* YearMonthDay+.swift in Sources */,
+				91C12F6D738446AB7D743934 /* GroupInfo.swift in Sources */,
+				181F675AC306541D97E9FF3B /* GroupUser.swift in Sources */,
+				2179AF2C0B050D1FCA0B3DD5 /* MoimScheduleTemplate.swift in Sources */,
+				697A09DB46F07A8B4FAF2453 /* NotificationSetting.swift in Sources */,
+				EF883F9450B65AAD25EDFB19 /* Place.swift in Sources */,
+				F3138AD072EA1ED2C5ED54A9 /* Schedule.swift in Sources */,
+				38729B53F5BEF094CECA8A9C /* ScheduleCategory.swift in Sources */,
+				7181DEDC7739FDD8CC459288 /* ScheduleTemplate.swift in Sources */,
+				E1B7431F4B905EC2F1A1E42C /* Constants.swift in Sources */,
+				3C3F5B0B2ACA7EEEE9874909 /* APIError.swift in Sources */,
+				3F3192C412BAE45BBFC6B9B2 /* AppError.swift in Sources */,
+				20956EE3DA4653914E863C9B /* ErrorHandler.swift in Sources */,
+				D2E3A86A0811F40F74ED3A29 /* KeyChainManager.swift in Sources */,
+				3707A45EA0140AB2C3F68FF1 /* NavigationBarBackground.swift in Sources */,
+				EE669417585A807240D0263B /* RemoteConfigManager.swift in Sources */,
+				7D940E701A501B4DC631E84F /* secret.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BABCF67D99121B2A5288A43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Common_Common;
+			target = 621B6E1ECDFD4168D4985438 /* Common_Common */;
+			targetProxy = 46F82A4CEDA27616ED070666 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		02F261521CCC4872F56C76AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/Common_Common-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Common.resources;
+				PRODUCT_NAME = Common_Common;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		258C8C7F9CD64F21B0F7BFB5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(inherited)",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleAppMeasurement/GoogleAppMeasurementWrapper/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleDataTransport",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleDataTransport/GoogleDataTransport/GDTCORLibrary/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/MethodSwizzler/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/NSData+zlib/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Network/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Reachability/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/UserDefaults/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/third_party/IsAppEncrypted/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/CoreOnly/Sources",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/Crashlytics/Crashlytics/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseABTesting/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseAnalyticsWrapper/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseAppCheck/Interop/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseCore/Extension",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseCore/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseDatabase/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseDynamicLinks/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseInstallations/Source/Library/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseMessaging/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebasePerformance/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseRemoteConfig/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseSessions",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseSessions/SourcesObjC",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebaseAnalyticsWrap/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebaseDynamicLinksWrap/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebasePerformanceWrap/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/leveldb",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/leveldb/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/nanopb/spm_headers",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/promises/Sources/FBLPromises/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/swift-navigation/Sources/UIKitNavigationShim/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/swift-syntax/Sources/_SwiftSyntaxCShims/include",
+				);
+				INFOPLIST_FILE = "Derived/InfoPlists/Common-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/CoreOnly/Sources/module.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/promises/Sources/FBLPromises/include/module.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/swift-syntax/Sources/_SwiftSyntaxCShims/include/module.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseABTesting/FirebaseABTesting.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsTarget/FirebaseAnalyticsTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsWrapper/FirebaseAnalyticsWrapper.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAppCheckInterop/FirebaseAppCheckInterop.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCore/FirebaseCore.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCoreExtension/FirebaseCoreExtension.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCrashlytics/FirebaseCrashlytics.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDatabaseInternal/FirebaseDatabaseInternal.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinks/FirebaseDynamicLinks.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinksTarget/FirebaseDynamicLinksTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseInstallations/FirebaseInstallations.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseMessaging/FirebaseMessaging.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformance/FirebasePerformance.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformanceTarget/FirebasePerformanceTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseRemoteConfigInternal/FirebaseRemoteConfigInternal.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseSessionsObjC/FirebaseSessionsObjC.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleAppMeasurementTarget/GoogleAppMeasurementTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleDataTransport/GoogleDataTransport.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_AppDelegateSwizzler/GoogleUtilities_AppDelegateSwizzler.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Environment/GoogleUtilities_Environment.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Logger/GoogleUtilities_Logger.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_MethodSwizzler/GoogleUtilities_MethodSwizzler.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_NSData/GoogleUtilities_NSData.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Network/GoogleUtilities_Network.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Reachability/GoogleUtilities_Reachability.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_UserDefaults/GoogleUtilities_UserDefaults.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/UIKitNavigationShim/UIKitNavigationShim.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/leveldb/leveldb.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/nanopb/nanopb.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				OTHER_SWIFT_FLAGS = (
+					"$(inherited)",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/CoreOnly/Sources/module.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/promises/Sources/FBLPromises/include/module.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/swift-syntax/Sources/_SwiftSyntaxCShims/include/module.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseABTesting/FirebaseABTesting.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsTarget/FirebaseAnalyticsTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsWrapper/FirebaseAnalyticsWrapper.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAppCheckInterop/FirebaseAppCheckInterop.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCore/FirebaseCore.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCoreExtension/FirebaseCoreExtension.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCrashlytics/FirebaseCrashlytics.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDatabaseInternal/FirebaseDatabaseInternal.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinks/FirebaseDynamicLinks.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinksTarget/FirebaseDynamicLinksTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseInstallations/FirebaseInstallations.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseMessaging/FirebaseMessaging.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformance/FirebasePerformance.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformanceTarget/FirebasePerformanceTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseRemoteConfigInternal/FirebaseRemoteConfigInternal.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseSessionsObjC/FirebaseSessionsObjC.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleAppMeasurementTarget/GoogleAppMeasurementTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleDataTransport/GoogleDataTransport.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_AppDelegateSwizzler/GoogleUtilities_AppDelegateSwizzler.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Environment/GoogleUtilities_Environment.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Logger/GoogleUtilities_Logger.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_MethodSwizzler/GoogleUtilities_MethodSwizzler.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_NSData/GoogleUtilities_NSData.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Network/GoogleUtilities_Network.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Reachability/GoogleUtilities_Reachability.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_UserDefaults/GoogleUtilities_UserDefaults.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/UIKitNavigationShim/UIKitNavigationShim.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/leveldb/leveldb.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/nanopb/nanopb.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Common;
+				PRODUCT_NAME = Common;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		77DB12E677E59FCAC671B607 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9872547E4CDA8EC4F1EA62B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(inherited)",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleAppMeasurement/GoogleAppMeasurementWrapper/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleDataTransport",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleDataTransport/GoogleDataTransport/GDTCORLibrary/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/MethodSwizzler/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/NSData+zlib/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Network/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/Reachability/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/GoogleUtilities/UserDefaults/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/GoogleUtilities/third_party/IsAppEncrypted/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/CoreOnly/Sources",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/Crashlytics/Crashlytics/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseABTesting/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseAnalyticsWrapper/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseAppCheck/Interop/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseCore/Extension",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseCore/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseDatabase/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseDynamicLinks/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseInstallations/Source/Library/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseMessaging/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebasePerformance/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseRemoteConfig/Sources/Public",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseSessions",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/FirebaseSessions/SourcesObjC",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebaseAnalyticsWrap/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebaseDynamicLinksWrap/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebasePerformanceWrap/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/leveldb",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/leveldb/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/nanopb/spm_headers",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/promises/Sources/FBLPromises/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/swift-navigation/Sources/UIKitNavigationShim/include",
+					"$(SRCROOT)/../../../Tuist/.build/checkouts/swift-syntax/Sources/_SwiftSyntaxCShims/include",
+				);
+				INFOPLIST_FILE = "Derived/InfoPlists/Common-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/CoreOnly/Sources/module.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/promises/Sources/FBLPromises/include/module.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/swift-syntax/Sources/_SwiftSyntaxCShims/include/module.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseABTesting/FirebaseABTesting.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsTarget/FirebaseAnalyticsTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsWrapper/FirebaseAnalyticsWrapper.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAppCheckInterop/FirebaseAppCheckInterop.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCore/FirebaseCore.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCoreExtension/FirebaseCoreExtension.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCrashlytics/FirebaseCrashlytics.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDatabaseInternal/FirebaseDatabaseInternal.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinks/FirebaseDynamicLinks.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinksTarget/FirebaseDynamicLinksTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseInstallations/FirebaseInstallations.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseMessaging/FirebaseMessaging.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformance/FirebasePerformance.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformanceTarget/FirebasePerformanceTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseRemoteConfigInternal/FirebaseRemoteConfigInternal.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseSessionsObjC/FirebaseSessionsObjC.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleAppMeasurementTarget/GoogleAppMeasurementTarget.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleDataTransport/GoogleDataTransport.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_AppDelegateSwizzler/GoogleUtilities_AppDelegateSwizzler.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Environment/GoogleUtilities_Environment.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Logger/GoogleUtilities_Logger.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_MethodSwizzler/GoogleUtilities_MethodSwizzler.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_NSData/GoogleUtilities_NSData.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Network/GoogleUtilities_Network.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Reachability/GoogleUtilities_Reachability.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_UserDefaults/GoogleUtilities_UserDefaults.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/UIKitNavigationShim/UIKitNavigationShim.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/leveldb/leveldb.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/nanopb/nanopb.modulemap",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				OTHER_SWIFT_FLAGS = (
+					"$(inherited)",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/firebase-ios-sdk/CoreOnly/Sources/module.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/promises/Sources/FBLPromises/include/module.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/checkouts/swift-syntax/Sources/_SwiftSyntaxCShims/include/module.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseABTesting/FirebaseABTesting.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsTarget/FirebaseAnalyticsTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAnalyticsWrapper/FirebaseAnalyticsWrapper.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseAppCheckInterop/FirebaseAppCheckInterop.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCore/FirebaseCore.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCoreExtension/FirebaseCoreExtension.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseCrashlytics/FirebaseCrashlytics.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDatabaseInternal/FirebaseDatabaseInternal.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinks/FirebaseDynamicLinks.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseDynamicLinksTarget/FirebaseDynamicLinksTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseInstallations/FirebaseInstallations.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseMessaging/FirebaseMessaging.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformance/FirebasePerformance.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebasePerformanceTarget/FirebasePerformanceTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseRemoteConfigInternal/FirebaseRemoteConfigInternal.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/FirebaseSessionsObjC/FirebaseSessionsObjC.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleAppMeasurementTarget/GoogleAppMeasurementTarget.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleDataTransport/GoogleDataTransport.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_AppDelegateSwizzler/GoogleUtilities_AppDelegateSwizzler.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Environment/GoogleUtilities_Environment.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Logger/GoogleUtilities_Logger.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_MethodSwizzler/GoogleUtilities_MethodSwizzler.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_NSData/GoogleUtilities_NSData.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Network/GoogleUtilities_Network.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_Reachability/GoogleUtilities_Reachability.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/GoogleUtilities_UserDefaults/GoogleUtilities_UserDefaults.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/UIKitNavigationShim/UIKitNavigationShim.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/leveldb/leveldb.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/nanopb/nanopb.modulemap",
+					"-Xcc",
+					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Common;
+				PRODUCT_NAME = Common;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BD2D3F6AADDEFE89F3BDDA3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/Common_Common-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Common.resources;
+				PRODUCT_NAME = Common_Common;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D913DFD33B481C846A69C945 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6991EDDA3FD01CD67D8C473F /* Build configuration list for PBXNativeTarget "Common_Common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02F261521CCC4872F56C76AD /* Debug */,
+				BD2D3F6AADDEFE89F3BDDA3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A960902591CDB4F68854742 /* Build configuration list for PBXProject "Common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77DB12E677E59FCAC671B607 /* Debug */,
+				D913DFD33B481C846A69C945 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97BF576076886CD83B76B8B1 /* Build configuration list for PBXNativeTarget "Common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9872547E4CDA8EC4F1EA62B3 /* Debug */,
+				258C8C7F9CD64F21B0F7BFB5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0F000962B23D0ED661F9B41 /* Project object */;
+}

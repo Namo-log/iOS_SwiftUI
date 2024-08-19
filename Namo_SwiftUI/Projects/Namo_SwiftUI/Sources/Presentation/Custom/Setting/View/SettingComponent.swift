@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct SettingComponent: View {
     
@@ -20,7 +21,7 @@ struct SettingComponent: View {
             
             Text(title)
                 .font(Font.pretendard(.bold, size: 15))
-                .foregroundStyle(.mainText)
+                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
             
             Spacer()
             
@@ -28,7 +29,7 @@ struct SettingComponent: View {
                 
                 Text(content)
                     .font(Font.pretendard(.bold, size: 15))
-                    .foregroundStyle(.mainText)
+                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
             } else if let image = image {
                 image
             }

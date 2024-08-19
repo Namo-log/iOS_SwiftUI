@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Factory
+import Networks
+import Common
 
 // 모임 기록 추가 및 수정 화면
 struct EditMoimDiaryView: View {
@@ -88,9 +90,9 @@ struct EditMoimDiaryView: View {
                             }
                         }
                         .frame(width: (screenWidth-90)/2, height: 30)
-                        .foregroundStyle(Color.mainText)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         .padding(.trailing, 10)
-                        .background(Color(.mainGray))
+                        .background(Color(asset: CommonAsset.Assets.mainGray))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .font(.pretendard(.regular, size: 15))
                         
@@ -140,7 +142,7 @@ struct EditMoimDiaryView: View {
                                             selectedUser.append(user)
                                         }
                                     }, label: {
-                                        Image(selectedUser.contains(where: {$0.userId == user.userId}) ? .isSelectedTrue : .isSelectedFalse)
+										Image(asset: selectedUser.contains(where: {$0.userId == user.userId}) ? CommonAsset.Assets.isSelectedTrue : CommonAsset.Assets.isSelectedFalse)
                                             .resizable()
                                             .frame(width: 20, height: 20)
                                     }
@@ -174,9 +176,9 @@ struct EditMoimDiaryView: View {
                         HStack(alignment: .top) {
                             Text("참석자 (\(moimUser.count))")
                                 .font(.pretendard(.bold, size: 15))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                             Spacer()
-                            Image(showParticipants ? "upChevronBold" : "downChevronBold")
+							Image(asset: showParticipants ? CommonAsset.Assets.upChevronBold : CommonAsset.Assets.downChevronBold)
                                 .renderingMode(.template)
                         }
                         .onTapGesture {
@@ -191,12 +193,12 @@ struct EditMoimDiaryView: View {
                             HStack(spacing: 10) {
                                 ForEach(moimUser, id: \.self) { user in
                                     Circle()
-                                        .stroke(.textUnselected, lineWidth: 2)
+                                        .stroke(Color(asset: CommonAsset.Assets.textUnselected), lineWidth: 2)
                                         .frame(width: 42, height: 42)
                                         .overlay {
                                             Text(user.userName)
                                                 .font(.pretendard(.bold, size: 11))
-                                                .foregroundStyle(.textPlaceholder)
+                                                .foregroundStyle(Color(asset: CommonAsset.Assets.textPlaceholder))
                                         }
                                 }
                             }
@@ -241,7 +243,7 @@ struct EditMoimDiaryView: View {
                                 }
                             }
                         } label: {
-                            BlackBorderRoundedView(text: "활동 추가", image: Image(.icMap), width: 136, height: 40)
+							BlackBorderRoundedView(text: "활동 추가", image: Image(asset: CommonAsset.Assets.icMap), width: 136, height: 40)
                                 .padding(.top, 25)
                         }
                     }
@@ -261,11 +263,11 @@ struct EditMoimDiaryView: View {
                         VStack(alignment: .center, spacing: 10) {
                             Text("모임 기록을 정말 삭제하시겠어요?")
                                 .font(.pretendard(.bold, size: 16))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .padding(.top, 24)
                             Text("삭제한 모임 기록은\n개인 기록 페이지에서도 삭제됩니다.")
                                 .font(.pretendard(.light, size: 14))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 .multilineTextAlignment(.center)
                         }
                         .padding(.bottom, 5)
@@ -328,12 +330,12 @@ struct EditMoimDiaryView: View {
                                     
                                     Text("편집한 내용이 저장되지 않습니다.")
                                         .font(Font.pretendard(.bold, size: 16))
-                                        .foregroundStyle(.mainText)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         .padding(.top, 24)
                                     
                                     Text("정말 나가시겠어요?")
                                         .font(Font.pretendard(.regular, size: 14))
-                                        .foregroundStyle(.mainText)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         .padding(.bottom, 3)
                                     
                                 }
@@ -517,13 +519,13 @@ struct EditMoimDiaryView: View {
         } label: {
             ZStack() {
                 Rectangle()
-                    .fill(appState.isEditingDiary ? .white : .mainOrange)
+					.fill(appState.isEditingDiary ? .white : Color(asset: CommonAsset.Assets.mainOrange))
                     .frame(height: 60 + 10) // 하단의 Safe Area 영역 칠한 거 높이 10으로 가정
                     .shadow(color: .black.opacity(0.25), radius: 7)
                 
                 Text(appState.isEditingDiary ? "기록 수정" : "기록 저장")
                     .font(.pretendard(.bold, size: 15))
-                    .foregroundStyle(appState.isEditingDiary ? .mainOrange : .white)
+                    .foregroundStyle(appState.isEditingDiary ? Color(asset: CommonAsset.Assets.mainOrange) : .white)
                     .padding(.bottom, 10) // Safe Area 칠한만큼
             }
         }

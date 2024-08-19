@@ -11,5 +11,6 @@ public enum FeatureTarget {
 	case app // iOS App
 	case interface
 	case staticFramework
+	case dynamicFramework
 	case unitTest
 }

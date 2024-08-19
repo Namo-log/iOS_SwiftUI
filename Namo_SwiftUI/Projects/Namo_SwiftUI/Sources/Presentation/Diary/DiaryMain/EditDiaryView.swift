@@ -10,6 +10,8 @@ import SwiftUI
 import Factory
 import PhotosUI
 import Kingfisher
+import Networks
+import Common
 
 // 개인 / 모임 기록 추가 및 수정 화면
 struct EditDiaryView: View {
@@ -60,7 +62,7 @@ struct EditDiaryView: View {
                     // 메모 입력 부분
                     ZStack(alignment: .topLeading) {
                         Rectangle()
-                            .fill(.textBackground)
+                            .fill(Color(asset: CommonAsset.Assets.textBackground))
                         
                         Rectangle()
                             .fill(categoryUseCase.getColorWithPaletteId(id: appState.categoryPalette[info.categoryId ?? 0] ?? 0))
@@ -70,7 +72,7 @@ struct EditDiaryView: View {
                         if self.memo.isEmpty {
                             TextEditor(text: $placeholderText)
                                 .font(.pretendard(.medium, size: 15))
-                                .foregroundColor(.textPlaceholder)
+                                .foregroundColor(Color(asset: CommonAsset.Assets.textPlaceholder))
                                 .disabled(true)
                                 .padding(.leading, 20)
                                 .padding(.top, 5)
@@ -81,7 +83,7 @@ struct EditDiaryView: View {
                         }
                         TextEditor(text: $memo)
                             .font(.pretendard(.medium, size: 15))
-                            .foregroundColor(.mainText)
+                            .foregroundColor(Color(asset: CommonAsset.Assets.mainText))
                             .opacity(self.memo.isEmpty ? 0.25 : 1)
                             .padding(.leading, 20)
                             .padding(.top, 5)
@@ -108,7 +110,7 @@ struct EditDiaryView: View {
                         
                         Text("\(typedCharacters) / \(characterLimit)")
                             .font(.pretendard(.bold, size: 12))
-                            .foregroundStyle(.textUnselected)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.textUnselected))
                     } // HStack
                     .padding(.top, 10)
                     
@@ -126,7 +128,7 @@ struct EditDiaryView: View {
                 if !appState.isPersonalDiary {
                     // 활동 정보 연결되면 아래 코드로 테스트
                     NavigationLink(destination: EditMoimDiaryView(activities: diaryState.currentMoimDiaryInfo.moimActivityDtos ?? [], info: info, moimUser: diaryState.currentMoimDiaryInfo.getMoimUsers())) {
-                        BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
+                        BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(asset: CommonAsset.Assets.icDiary), width: 192, height: 40)
                     }
                     .padding(.bottom, 25)
                 }
@@ -156,7 +158,7 @@ struct EditDiaryView: View {
                     content: AnyView(
                         Text("기록을 정말 삭제하시겠어요?")
                             .font(.pretendard(.bold, size: 16))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                             .padding(.top, 24)
                     ),
                     leftButtonTitle: "취소",
@@ -188,12 +190,12 @@ struct EditDiaryView: View {
                                     
                                     Text("편집한 내용이 저장되지 않습니다.")
                                         .font(Font.pretendard(.bold, size: 16))
-                                        .foregroundStyle(.mainText)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         .padding(.top, 24)
                                     
                                     Text("정말 나가시겠어요?")
                                         .font(Font.pretendard(.regular, size: 14))
-                                        .foregroundStyle(.mainText)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         .padding(.bottom, 3)
                                     
                                 }
@@ -323,13 +325,13 @@ struct EditDiaryView: View {
         } label: {
             ZStack() {
                 Rectangle()
-                    .fill(appState.isEditingDiary ? .white : .mainOrange)
+					.fill(appState.isEditingDiary ? .white : Color(asset: CommonAsset.Assets.mainOrange))
                     .frame(height: 60 + 10) // 하단의 Safe Area 영역 칠한 거 높이 10으로 가정
                     .shadow(color: .black.opacity(0.25), radius: 7)
                 
                 Text(appState.isEditingDiary ? "기록 수정" : "기록 저장")
                     .font(.pretendard(.bold, size: 15))
-                    .foregroundStyle(appState.isEditingDiary ? .mainOrange : .white)
+                    .foregroundStyle(appState.isEditingDiary ? Color(asset: CommonAsset.Assets.mainOrange) : .white)
                     .padding(.bottom, 10) // Safe Area 칠한만큼
             }
         }
@@ -418,7 +420,7 @@ struct EditDiaryView: View {
                         
                         // 사진 피커 -> 최대 3장까지 선택 가능
                         PhotosPicker(selection: $pickedImageItems, maxSelectionCount: photosLimit - images.count, selectionBehavior: .ordered) {
-                            Image(.btnAddImg)
+                            Image(asset: CommonAsset.Assets.btnAddImg)
                                 .resizable()
                                 .frame(width: 100, height: 100)
                             

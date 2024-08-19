@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Alamofire
+import Networks
 
 final class DiaryRepositoryImpl: DiaryRepository {
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async -> CreateDiaryResponseDTO? {

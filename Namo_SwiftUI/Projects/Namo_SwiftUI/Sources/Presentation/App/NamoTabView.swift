@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct NamoTabView: View {
 	@Binding var currentTab: Tab
@@ -13,28 +14,28 @@ struct NamoTabView: View {
 	var body: some View {
 		VStack(spacing: 0) {
 			HStack {
-				Image(currentTab == .home ? .icBottomHomeSelect : .icBottomHomeNoSelect)
+				Image(asset: currentTab == .home ? CommonAsset.Assets.icBottomHomeSelect : CommonAsset.Assets.icBottomHomeNoSelect)
 					.onTapGesture {
 						currentTab = .home
 					}
 				
 				Spacer()
 				
-				Image(currentTab == .diary ? .icBottomDiarySelect : .icBottomDiaryNoSelect)
+				Image(asset: currentTab == .diary ? CommonAsset.Assets.icBottomDiarySelect : CommonAsset.Assets.icBottomDiaryNoSelect)
 					.onTapGesture {
 						currentTab = .diary
 					}
 				
 				Spacer()
 				
-				Image(currentTab == .group ? .icBottomShareSelect : .icBottomShareNoSelect)
+				Image(asset: currentTab == .group ? CommonAsset.Assets.icBottomShareSelect : CommonAsset.Assets.icBottomShareNoSelect)
 					.onTapGesture {
 						currentTab = .group
 					}
 				
 				Spacer()
 				
-				Image(currentTab == .custom ? .icBottomCustomSelect : .icBottomCustomNoSelect)
+				Image(asset: currentTab == .custom ? CommonAsset.Assets.icBottomCustomSelect : CommonAsset.Assets.icBottomCustomNoSelect)
 					.onTapGesture {
 						currentTab = .custom
 					}

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 struct SettingView: View {
     
@@ -69,7 +70,7 @@ struct SettingView: View {
                                 VStack(spacing: 0) {
                                     Text("로그아웃 하시겠어요?")
                                         .font(Font.pretendard(.bold, size: 16))
-                                        .foregroundStyle(.mainText)
+										.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         .frame(height: 22)
                                 }
                                 .frame(height: 66)
@@ -89,16 +90,16 @@ struct SettingView: View {
                                 VStack(spacing: 8) {
                                     Text("정말 계정을 삭제하시겠어요?")
                                         .font(Font.pretendard(.bold, size: 16))
-                                        .foregroundStyle(.mainText)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     
                                     VStack {
                                         Text("지금까지의 정보는")
                                             .font(Font.pretendard(.regular, size: 14))
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                         
                                         Text("3일 뒤 모두 사라집니다.")
                                             .font(Font.pretendard(.regular, size: 14))
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     }
                                 }
                                 .padding(.top, 24)
@@ -143,7 +144,7 @@ struct SettingView: View {
     var customDivider: some View {
         Rectangle()
             .frame(height: 1)
-            .foregroundStyle(.textPlaceholder)
+            .foregroundStyle(Color(asset: CommonAsset.Assets.textPlaceholder))
     }
 }
 

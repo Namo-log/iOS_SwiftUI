@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 // 1px 검은색 보더 있는 라운드 뷰
 struct BlackBorderRoundedView: View {
@@ -33,5 +34,5 @@ struct BlackBorderRoundedView: View {
 }
 
 #Preview {
-    BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(.icDiary), width: 192, height: 40)
+    BlackBorderRoundedView(text: "모임 기록 보러가기", image: Image(asset: CommonAsset.Assets.icDiary), width: 192, height: 40)
 }

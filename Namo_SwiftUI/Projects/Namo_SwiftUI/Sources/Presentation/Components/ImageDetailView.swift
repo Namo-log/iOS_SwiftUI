@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import Common
 
 enum ImageSource: Equatable, Hashable {
     
@@ -148,12 +149,12 @@ struct ImageDetailView: View {
                             .font(Font.pretendard(.bold, size: 18))
                         
                         Text(" / ")
-                            .foregroundStyle(.textPlaceholder)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.textPlaceholder))
                             .font(Font.pretendard(.bold, size: 18))
                         
                         // UIImage 타입 배열의 크기
                         Text("\(images.count)")
-                            .foregroundStyle(.textPlaceholder)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.textPlaceholder))
                             .font(Font.pretendard(.bold, size: 18))
                     }
                 }

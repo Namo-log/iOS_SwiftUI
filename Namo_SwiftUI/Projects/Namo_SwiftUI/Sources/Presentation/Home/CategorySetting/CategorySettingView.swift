@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 struct CategorySettingView: View {
     
@@ -29,7 +30,7 @@ struct CategorySettingView: View {
                     HStack {
                         Text("캘린더")
                             .font(Font.pretendard(.bold, size: 22))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         
                         Spacer()
                     }
@@ -38,13 +39,13 @@ struct CategorySettingView: View {
                     
                     Rectangle()
                         .frame(width: screenWidth - 60, height: 35)
-                        .foregroundStyle(.textBackground)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.textBackground))
                         .cornerRadius(10)
                         .overlay(
                             HStack {
                                 Text("팔레트")
                                     .font(Font.pretendard(.bold, size: 15))
-                                    .foregroundStyle(.mainText)
+                                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     .padding(.leading, 15)
                                 
                                 Spacer()
@@ -52,7 +53,7 @@ struct CategorySettingView: View {
                                 HStack {
                                     Text("기본 팔레트")
                                         .font(Font.pretendard(.regular, size: 15))
-                                        .foregroundStyle(.mainText)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                     Image("vector1")
                                 }
                                 .padding(.trailing, 15)
@@ -64,7 +65,7 @@ struct CategorySettingView: View {
                         ForEach(categoryList.indices, id: \.self) { index in
                             
                             Rectangle()
-                                .foregroundStyle(.textBackground)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.textBackground))
                                 .frame(width: (screenWidth - 80) / 2, height: 50)
                                 .cornerRadius(15)
                                 .onTapGesture {
@@ -88,7 +89,7 @@ struct CategorySettingView: View {
 
                                         Text(categoryList[index].name)
                                             .font(.pretendard(.regular, size: 15))
-                                            .foregroundStyle(.mainText)
+                                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 
                                         Image("vector1")
                                     }
@@ -128,7 +129,7 @@ struct CategorySettingView: View {
                             Image("vector2")
                             Text("일정")
                                 .font(Font.pretendard(.regular, size: 15))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                     }
                 }

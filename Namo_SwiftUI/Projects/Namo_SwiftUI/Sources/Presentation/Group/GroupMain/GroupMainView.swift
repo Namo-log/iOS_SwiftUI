@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import Factory
+import Common
 
 enum GroupViewType: Hashable {
 	// TODO: detail view model 구현 후 init으로 전달로 리팩토링
@@ -117,7 +118,7 @@ struct GroupMainView: View {
 					}
 				})
 			}, label: {
-				Image(.icMore)
+				Image(asset: CommonAsset.Assets.icMore)
 					.padding(10)
 			})
 			
@@ -127,13 +128,13 @@ struct GroupMainView: View {
 	
 	private var noGroup: some View {
 		VStack(spacing: 45) {
-			Image(.noGroup)
+			Image(asset: CommonAsset.Assets.noGroup)
 			
 			Text("그룹 리스트가 없습니다\n그룹을 추가해 보세요!")
 				.font(.pretendard(.light, size: 15))
 				.lineLimit(2)
 				.multilineTextAlignment(.center)
-				.foregroundStyle(Color.mainText)
+				.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 			
 			Spacer()
 			
@@ -186,7 +187,7 @@ struct GroupMainView: View {
 					.overlay(alignment: .bottom) {
 						Rectangle()
 							.frame(width: 150, height: 1)
-							.foregroundStyle(Color(.mainText))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 							.offset(y: 5)
 					}
 					
@@ -213,7 +214,7 @@ struct GroupMainView: View {
 							.frame(width: 60, height: 60)
 							.clipShape(RoundedRectangle(cornerRadius: 5))
 					} else {
-						Image(.icGroup)
+						Image(asset: CommonAsset.Assets.icGroup)
 					}
 				})
 				
@@ -233,7 +234,7 @@ struct GroupMainView: View {
 			}
 			.frame(height: 40)
 			.frame(maxWidth: .infinity)
-			.background(Color(.mainGray))
+			.background(Color(asset: CommonAsset.Assets.mainGray))
 			.cornerRadius(5)
 			
 		}
@@ -260,7 +261,7 @@ struct GroupMainView: View {
 				.overlay(alignment: .bottom) {
 					Rectangle()
 						.frame(width: 150, height: 1)
-						.foregroundStyle(Color(.mainText))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.offset(y: 5)
 				}
 				

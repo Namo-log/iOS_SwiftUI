@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct AlertViewWithTopButton: View {
 	@Binding var showAlert: AlertType?
@@ -30,7 +31,7 @@ struct AlertViewWithTopButton: View {
 						Text(leftButtonTitle)
 							.font(.pretendard(.regular, size: 15))
 					})
-					.tint(.mainText)
+					.tint(Color(asset: CommonAsset.Assets.mainText))
 					
 					Spacer()
 					
@@ -43,7 +44,7 @@ struct AlertViewWithTopButton: View {
 						Text(rightButtonTitle)
 							.font(.pretendard(.regular, size: 15))
 					})
-					.tint(.mainText)
+					.tint(Color(asset: CommonAsset.Assets.mainText))
 				}
 				.padding(.top, 15)
 				.padding(.horizontal, 20)

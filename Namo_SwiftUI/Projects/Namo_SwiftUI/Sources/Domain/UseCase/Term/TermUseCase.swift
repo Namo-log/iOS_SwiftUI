@@ -7,6 +7,7 @@
 
 import Foundation
 import Factory
+import Networks
 
 final class TermUseCase {
     

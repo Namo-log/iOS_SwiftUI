@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 struct CustomMainView: View {
     
@@ -50,7 +51,7 @@ struct CustomMainView: View {
                         if selectedItem == item {
 
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.mainOrange)
+                                .fill(Color(asset: CommonAsset.Assets.mainOrange))
                                 .frame(width: 100, height: 2)
                                 .matchedGeometryEffect(id: "id", in: categoryNamespace)
                                 .offset(y: 15)
@@ -58,7 +59,7 @@ struct CustomMainView: View {
 
                         Text(item)
                             .font(Font.pretendard(.bold, size: 18))
-                            .foregroundStyle(selectedItem == item ? .mainOrange : .textUnselected)
+                            .foregroundStyle(selectedItem == item ? Color(asset: CommonAsset.Assets.mainOrange) : Color(asset: CommonAsset.Assets.textUnselected))
 
                     }
                     .frame(maxWidth: .infinity)
@@ -89,7 +90,7 @@ struct CustomMainView: View {
 
                     Text("커스텀 폰트는 열심히 준비중이몽몽~!")
                         .font(Font.pretendard(.regular, size: 15))
-                        .foregroundStyle(.mainText)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         .padding(.top, 6)
                 }
                 .tag("폰트")
@@ -108,14 +109,14 @@ struct CustomMainView: View {
             Rectangle()
                 .cornerRadius(15)
                 .frame(width: screenWidth - 50, height: 100)
-                .foregroundStyle(.textBackground)
+                .foregroundStyle(Color(asset: CommonAsset.Assets.textBackground))
                 .overlay {
                     
                     HStack(alignment: .top) {
                         Text("기본 팔레트")
                             .font(Font.pretendard(.bold, size: 18))
                             .padding(.leading, 15)
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         
                         Spacer()
                         

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Networks
 
 protocol MoimRepository {
 	func createMoim(groupName: String, image: Data?) async -> BaseResponse<createMoimResponse>?

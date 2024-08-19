@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Networks
 
 /// 모임 기록 API
 protocol MoimDiaryRepository {

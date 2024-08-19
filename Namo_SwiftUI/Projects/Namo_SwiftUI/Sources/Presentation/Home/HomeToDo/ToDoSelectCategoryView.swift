@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 
 /// 일정의 카테고리를 선택 시 표시되는 화면 입니다.
@@ -34,7 +35,7 @@ struct ToDoSelectCategoryView: View {
                             .frame(width: 20, height: 20)
                         Text(category.name)
                             .font(.pretendard(.regular, size: 15))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         Spacer()
                     }
                     .lineSpacing(12)
@@ -62,10 +63,10 @@ struct ToDoSelectCategoryView: View {
                     HStack {
                         Image(systemName: "square.grid.2x2")
                             .renderingMode(.template)
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         Text("카테고리 편집")
                             .font(.pretendard(.regular, size: 15))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     }
                     .lineSpacing(12)
                 }
@@ -88,7 +89,7 @@ struct ToDoSelectCategoryView: View {
                         Text("닫기")
                             .font(.pretendard(.regular, size: 15))
                     })
-                    .foregroundStyle(.mainText)
+                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                 }
             }//: toolbar
         }//: ScrollView

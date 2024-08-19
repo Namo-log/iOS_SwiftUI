@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Factory
+import Common
+import Networks
 
 struct BasicColorItem: Hashable, Identifiable {
     var id: Int
@@ -69,7 +71,7 @@ struct CategoryAddView: View {
                     
                     Text("기본 색상")
                         .font(Font.pretendard(.bold, size: 15))
-                        .foregroundStyle(.mainText)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     
                     Spacer()
                     
@@ -92,11 +94,11 @@ struct CategoryAddView: View {
                         
                         Text("팔레트")
                             .font(Font.pretendard(.bold, size: 15))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         
                         Text("기본 팔레트")
                             .font(Font.pretendard(.regular, size: 15))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     }
                     
                     Spacer()
@@ -117,7 +119,7 @@ struct CategoryAddView: View {
                     
                     Text("공유 설정")
                         .font(Font.pretendard(.bold, size: 15))
-                        .foregroundStyle(.mainText)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     
                 }
                 .toggleStyle(SwitchToggleStyle(tint: Color(hex:0x63A4E0)))
@@ -139,7 +141,7 @@ struct CategoryAddView: View {
                             Image("vector2")
                             Text("카테고리 설정")
                                 .font(Font.pretendard(.regular, size: 15))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                     }
                 }
@@ -195,7 +197,7 @@ struct CategoryAddView: View {
                     } label: {
                         Text("저장")
                             .font(Font.pretendard(.regular, size: 15))
-                            .foregroundStyle(.mainText)
+                            .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     }
                 }
             }

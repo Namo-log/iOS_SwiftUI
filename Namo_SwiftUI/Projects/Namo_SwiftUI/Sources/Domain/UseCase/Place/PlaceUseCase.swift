@@ -7,6 +7,7 @@
 
 import Factory
 import SwiftUI
+import Common
 
 final class PlaceUseCase {
 	static let shared = PlaceUseCase()

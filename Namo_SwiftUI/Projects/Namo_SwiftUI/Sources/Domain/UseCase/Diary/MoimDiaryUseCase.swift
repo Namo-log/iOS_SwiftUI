@@ -7,6 +7,7 @@
 
 import Factory
 import SwiftUI
+import Networks
 
 /// 모임 기록 API
 final class MoimDiaryUseCase {

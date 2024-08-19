@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Networks
 
 protocol DiaryRepository {
     func createDiary(scheduleId: Int, content: String, images: [Data?]) async -> CreateDiaryResponseDTO?

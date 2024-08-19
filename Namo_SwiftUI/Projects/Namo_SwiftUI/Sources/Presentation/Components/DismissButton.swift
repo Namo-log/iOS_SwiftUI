@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 // 네비게이션 왼쪽 아이템으로 쓰이는 주황색 뒤로가기 버튼
 struct DismissButton: View {
@@ -33,7 +34,7 @@ struct DismissButton: View {
             }
             
         } label: {
-            Image(.icBack)
+            Image(asset: CommonAsset.Assets.icBack)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 24, height: 14)

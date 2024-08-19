@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Networks
 
 final class CategoryRepositoryImpl: CategoryRepository {
 	func postCategory(data: postCategoryRequest) async -> postCategoryResponse? {

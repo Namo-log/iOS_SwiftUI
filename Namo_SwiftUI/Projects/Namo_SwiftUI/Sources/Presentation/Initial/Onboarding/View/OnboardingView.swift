@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 // 온보딩 화면
 
@@ -25,7 +26,7 @@ struct OnboardingView: View {
                     ForEach(1..<6, id: \.self) {index in
                         
                         Circle()
-                            .fill(onboardingVM.state.onboardingIndex == index ? Color.mainOrange : Color.textUnselected)
+                            .fill(onboardingVM.state.onboardingIndex == index ? Color(asset: CommonAsset.Assets.mainOrange) : Color(asset: CommonAsset.Assets.textUnselected))
                             .frame(width: 10, height: 10)
                             .padding(8)
                     }
@@ -74,8 +75,7 @@ struct OnboardingView: View {
                                 onboardingVM.state.onboardingIndex = 5
                             }
                         } label: {
-
-                            Image(.btnSkip)
+							Image(asset: CommonAsset.Assets.btnSkip)
                         }
                         .hidden(onboardingVM.state.onboardingIndex == 5)
                         .padding(.trailing, 35)
@@ -114,16 +114,16 @@ struct OnboardingView: View {
                             .foregroundStyle(.white)
                             .font(Font.pretendard(.bold, size: 18))
                             .frame(width: screenWidth-50, height: 55)
-                            .background(Color.mainOrange)
+                            .background(Color(asset: CommonAsset.Assets.mainOrange))
                             .cornerRadius(15)
                         
                     } else {
                         
                         Text("다음")
-                            .foregroundStyle(Color(.mainOrange))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                             .font(Font.pretendard(.bold, size: 18))
                             .frame(width: screenWidth-50, height: 55)
-                            .background(Color.textBackground)
+							.background(Color(asset: CommonAsset.Assets.textBackground))
                             .cornerRadius(15)
                     }
                 }

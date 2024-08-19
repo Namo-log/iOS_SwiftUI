@@ -7,9 +7,32 @@
       <FileRef
          location = "group:Namo_SwiftUI/Namo_SwiftUI.xcodeproj">
       </FileRef>
-      <FileRef
-         location = "group:ThirdPartyLibs/ThirdPartyLibs.xcodeproj">
-      </FileRef>
+      <Group
+         location = "group:Core"
+         name = "Core">
+         <FileRef
+            location = "group:Common/Common.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Networks/Networks.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:TestCore/TestCore.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:ThirdPartyLibs/ThirdPartyLibs.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:UIComponent/UIComponent.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Features"
+         name = "Features">
+         <FileRef
+            location = "group:BaseFeature/BaseFeature.xcodeproj">
+         </FileRef>
+      </Group>
    </Group>
    <Group
       location = "container:"

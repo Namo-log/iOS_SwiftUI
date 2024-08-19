@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 struct ToDoSelectPlaceView: View {
     
@@ -51,7 +52,7 @@ struct ToDoSelectPlaceView: View {
                 CircleItemView {
                     Image(systemName: "arrow.left")
                         .renderingMode(.template)
-                        .foregroundStyle(.mainOrange)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                         .font(.system(size: 20))
                 }
                 .padding(.all, 12)
@@ -88,10 +89,10 @@ struct ToDoSelectPlaceView: View {
                                 .font(.pretendard(.bold, size: 15))
                                 .lineLimit(1)
                                 .padding(EdgeInsets(top: 7, leading: 57, bottom: 7, trailing: 57))
-                                .foregroundStyle(.mainOrange)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                                 .background(
                                     RoundedRectangle(cornerRadius: 15, style: .circular)
-                                        .stroke(.mainOrange, lineWidth: 1)
+                                        .stroke(Color(asset: CommonAsset.Assets.mainOrange), lineWidth: 1)
                                         .background(in: .capsule, fillStyle: .init())
                                         
                                 )
@@ -112,10 +113,10 @@ struct ToDoSelectPlaceView: View {
                                 .font(.pretendard(.bold, size: 15))
                                 .lineLimit(1)
                                 .padding(EdgeInsets(top: 7, leading: 57, bottom: 7, trailing: 57))
-                                .foregroundStyle(.mainOrange)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                                 .background(
                                     RoundedRectangle(cornerRadius: 15, style: .circular)
-                                        .stroke(.mainOrange, lineWidth: 1)
+										.stroke(Color(asset: CommonAsset.Assets.mainOrange), lineWidth: 1)
                                         .background(in: .capsule, fillStyle: .init())
                                         
                                 )
@@ -186,11 +187,11 @@ struct ToDoSelectPlaceView: View {
                         VStack {
                             HStack {
                                 Image(systemName: "magnifyingglass")
-                                    .foregroundStyle(.mainText)
+                                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                                 TextField("장소 입력", text: $searchText)
-                                    .foregroundStyle(.mainText)
+                                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                             }
-                            Color.textPlaceholder
+							Color(asset: CommonAsset.Assets.textPlaceholder)
                                 .frame(height: 1)
                         }
                         .padding(.trailing, 20)
@@ -207,7 +208,7 @@ struct ToDoSelectPlaceView: View {
                                 .foregroundStyle(.white)
                                 .background(
                                     RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                        .foregroundStyle(.mainOrange)
+                                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                                 )
                         }
                     }
@@ -254,16 +255,16 @@ struct ToDoSelectPlaceView: View {
                 .padding(.all, 12)
                 Spacer()
                 if let selectedPlace = self.selectedPlace, place.id == selectedPlace.id {
-                    Image(.checkMark)
+					Image(asset: CommonAsset.Assets.checkMark)
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 15, height: 15)
-                        .foregroundStyle(.mainOrange)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                         .padding(.vertical, 25)
                         .padding(.trailing, 20)
                 }
             }
-            .background(.textBackground)
+            .background(Color(asset: CommonAsset.Assets.textBackground))
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
             .onTapGesture {
                 isRevise = false

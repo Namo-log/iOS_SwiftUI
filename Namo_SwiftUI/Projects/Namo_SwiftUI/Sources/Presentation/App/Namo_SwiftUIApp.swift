@@ -11,6 +11,7 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import NaverThirdPartyLogin
 import Firebase
+import Common
 
 @main
 struct Namo_SwiftUIApp: App {

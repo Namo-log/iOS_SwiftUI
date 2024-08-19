@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 // 약관 동의 화면
 
@@ -47,16 +48,16 @@ struct AgreeView: View {
                         .foregroundStyle(.white)
                         .font(Font.pretendard(.bold, size: 18))
                         .frame(width: screenWidth-50, height: 55)
-                        .background(Color.mainOrange)
+						.background(Color(asset: CommonAsset.Assets.mainOrange))
                         .cornerRadius(15)
                     
                 } else {
                     
                     Text("확인")
-                        .foregroundStyle(Color(.mainOrange))
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainOrange))
                         .font(Font.pretendard(.bold, size: 18))
                         .frame(width: screenWidth-50, height: 55)
-                        .background(Color.textBackground)
+                        .background(Color(asset: CommonAsset.Assets.textBackground))
                         .cornerRadius(15)
                 }
             }

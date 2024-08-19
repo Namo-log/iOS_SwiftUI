@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Networks
 
 final class ScheduleRepositoryImpl: ScheduleRepository {
 	func postSchedule(data: postScheduleRequest) async -> postScheduleResponse? {

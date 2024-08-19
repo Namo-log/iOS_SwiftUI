@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Alamofire
+import Networks
 
 /// 모임 기록 API
 final class MoimDiaryRepositoryImpl: MoimDiaryRepository {

@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import Factory
+import Common
 
 class GroupMainViewModel: ObservableObject {
 	

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import Common
 
 struct GroupListItem: View {
 	let moim: GroupInfo
@@ -37,7 +38,7 @@ struct GroupListItem: View {
 		}
 		.padding(.horizontal, 15)
 		.frame(width: screenWidth-50, height: 70)
-		.background(Color(.textBackground))
+		.background(Color(asset: CommonAsset.Assets.textBackground))
 		.clipShape(RoundedRectangle(cornerRadius: 10))
 		.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
 	}

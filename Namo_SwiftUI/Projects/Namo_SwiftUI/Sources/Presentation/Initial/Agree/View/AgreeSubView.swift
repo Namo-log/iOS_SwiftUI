@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct AgreeSubView: View {
 
@@ -15,7 +16,7 @@ struct AgreeSubView: View {
         
         VStack {
             HStack {
-                Image(agreeVM.state.required1 && agreeVM.state.required2 ? .isSelectedTrue : .isSelectedFalse)
+				Image(asset: agreeVM.state.required1 && agreeVM.state.required2 ? CommonAsset.Assets.isSelectedTrue : CommonAsset.Assets.isSelectedFalse)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
@@ -33,7 +34,7 @@ struct AgreeSubView: View {
             .padding(.bottom, 20)
             
             Rectangle()
-                .fill(.textPlaceholder)
+                .fill(Color(asset: CommonAsset.Assets.textPlaceholder))
                 .frame(width: screenWidth-90, height: 0.5)
             
             CheckItem(toggleText: "(필수) 이용약관", linkURL: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", toggleValue: $agreeVM.state.required1)
@@ -54,7 +55,7 @@ struct CheckItem: View {
         
         VStack {
             HStack {
-                Image(toggleValue ? .isSelectedTrue : .isSelectedFalse)
+				Image(asset: toggleValue ? CommonAsset.Assets.isSelectedTrue : CommonAsset.Assets.isSelectedFalse)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
@@ -69,7 +70,7 @@ struct CheckItem: View {
                     
                     Spacer()
                     
-					Image(.arrowBasic)
+					Image(asset: CommonAsset.Assets.arrowBasic)
                         .hidden(linkURL == nil)
                 }
                 .onTapGesture {

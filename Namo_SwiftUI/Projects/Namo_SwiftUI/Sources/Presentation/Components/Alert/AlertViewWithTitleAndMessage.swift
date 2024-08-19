@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct AlertViewWithTitleAndMessage: View {
 	@Binding var showAlert: AlertType?
@@ -30,12 +31,12 @@ struct AlertViewWithTitleAndMessage: View {
 				VStack(spacing: 8) {
 					Text(title)
 						.font(.pretendard(.bold, size: 16))
-						.foregroundStyle(Color.mainText)
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 					
 					if let message = message {
 						Text(message)
 							.font(.pretendard(.regular, size: 14))
-							.foregroundStyle(Color.mainText)
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 					}
 				}
 				
@@ -43,11 +44,11 @@ struct AlertViewWithTitleAndMessage: View {
 					if let leftButtonTitle = leftButtonTitle {
 						Button(action: leftButtonAction, label: {
 							Text(leftButtonTitle)
-								.foregroundStyle(Color(.mainText))
+								.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 								.frame(width: screenWidth/2 - 50, height: 43)
 								.font(.pretendard(.bold, size: 16))
 						})
-						.background(Color(.mainGray))
+						.background(Color(asset: CommonAsset.Assets.mainGray))
 						.cornerRadius(4)
 					}
 					
@@ -57,7 +58,7 @@ struct AlertViewWithTitleAndMessage: View {
 							.frame(width: screenWidth/2 - 50, height: 43)
 							.font(.pretendard(.bold, size: 16))
 					})
-					.background(Color(.mainOrange))
+					.background(Color(asset: CommonAsset.Assets.mainOrange))
 					.cornerRadius(4)
 				}
 				.padding(.bottom, 16)

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Common
+import Networks
 
 struct SplashView: View {
     
@@ -34,9 +36,9 @@ struct SplashView: View {
             } else {
                 ZStack {            // 스플래시 화면
                     
-                    LinearGradient(gradient: Gradient(colors: [Color(hex: 0xe59744), Color.mainOrange]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    
-                    Image(.logo)
+					LinearGradient(gradient: Gradient(colors: [Color(hex: 0xe59744), Color(asset: CommonAsset.Assets.mainOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+					
+					Image(asset: CommonAsset.Assets.logo)
 					
 					if showUpdateRequired {
 						NamoAlertViewWithOneButton(

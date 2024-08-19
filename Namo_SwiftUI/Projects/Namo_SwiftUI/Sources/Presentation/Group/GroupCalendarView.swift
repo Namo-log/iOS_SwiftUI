@@ -8,6 +8,7 @@
 import SwiftUI
 import Factory
 import SwiftUICalendar
+import Common
 
 struct GroupCalendarView: View {
 	let scheduleUseCase = ScheduleUseCase.shared
@@ -133,7 +134,7 @@ struct GroupCalendarView: View {
 			Button(action: {
 				dismiss()
 			}, label: {
-				Image(.icArrowOnlyHead)
+				Image(asset: CommonAsset.Assets.icArrowOnlyHead)
 			})
 			.foregroundStyle(Color.black)
 			.padding(.trailing, 8)
@@ -149,7 +150,7 @@ struct GroupCalendarView: View {
 					)
 					.font(.pretendard(.bold, size: 22))
 					
-					Image(.icChevronBottomBlack)
+					Image(asset: CommonAsset.Assets.icChevronBottomBlack)
 				}
 			})
 			.foregroundStyle(Color.black)
@@ -165,7 +166,7 @@ struct GroupCalendarView: View {
 					showGroupInfo = true
 				}
 			}, label: {
-				Image(.icMoreVertical)
+				Image(asset: CommonAsset.Assets.icMoreVertical)
 			})
 		}
 		.padding(.top, 15)
@@ -179,7 +180,7 @@ struct GroupCalendarView: View {
 				ForEach(weekdays, id: \.self) { weekday in
 					Text(weekday)
 						.font(.pretendard(.bold, size: 12))
-						.foregroundStyle(Color(.textUnselected))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.textUnselected))
 					
 					Spacer()
 				}
@@ -204,7 +205,7 @@ struct GroupCalendarView: View {
 				HStack {
 					Text("개인 일정")
 						.font(.pretendard(.bold, size: 15))
-						.foregroundStyle(Color(.mainText))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.padding(.bottom, 11)
 						.padding(.leading, 3)
 					
@@ -222,12 +223,12 @@ struct GroupCalendarView: View {
 				} else {
 					HStack(spacing: 12) {
 						Rectangle()
-							.fill(Color.textPlaceholder)
+							.fill(Color(asset: CommonAsset.Assets.textPlaceholder))
 							.frame(width: 3, height: 21)
 						
 						Text("등록된 개인 일정이 없습니다.")
 							.font(.pretendard(.medium, size: 14))
-							.foregroundStyle(Color(.textDisabled))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.textDisabled))
 						
 						Spacer()
 					}
@@ -236,7 +237,7 @@ struct GroupCalendarView: View {
 				HStack {
 					Text("모임 일정")
 						.font(.pretendard(.bold, size: 15))
-						.foregroundStyle(Color(.mainText))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.padding(.top, 20)
 						.padding(.bottom, 11)
 						.padding(.leading, 3)
@@ -255,12 +256,12 @@ struct GroupCalendarView: View {
 				} else {
 					HStack(spacing: 12) {
 						Rectangle()
-							.fill(Color.textPlaceholder)
+							.fill(Color(asset: CommonAsset.Assets.textPlaceholder))
 							.frame(width: 3, height: 21)
 						
 						Text("등록된 모임 일정이 없습니다.")
 							.font(.pretendard(.medium, size: 14))
-							.foregroundStyle(Color(.textDisabled))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.textDisabled))
 						
 						Spacer()
 					}
@@ -281,7 +282,7 @@ struct GroupCalendarView: View {
                 scheduleUseCase.setDateAndTimesToCurrentMoimSchedule(focusDate: focusDate)
                 self.isToDoSheetPresented = true
             }, label: {
-				Image(.floatingAdd)
+				Image(asset: CommonAsset.Assets.floatingAdd)
 					.padding(.bottom, 37)
 					.padding(.trailing, 25)
 			})
@@ -355,14 +356,14 @@ struct GroupCalendarView: View {
 						
 						TextField("", text: $newGroupName)
 							.font(.pretendard(.regular, size: 15))
-							.foregroundStyle(Color(.mainText))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 							.multilineTextAlignment(.trailing)
 							.focused($isGroupNameFoused)
 						
 						Button(action: {
 							isGroupNameFoused = true
 						}, label: {
-							Image(.icPencil)
+							Image(asset: CommonAsset.Assets.icPencil)
 						})
 					}
 					.padding(.bottom, 20)
@@ -375,7 +376,7 @@ struct GroupCalendarView: View {
 						
 						Text("\(moimState.currentMoim.groupUsers.count) 명")
 							.font(.pretendard(.regular, size: 15))
-							.foregroundStyle(Color(.mainText))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 					}
 					.padding(.bottom, 30)
 					
@@ -388,7 +389,7 @@ struct GroupCalendarView: View {
 								
 								Text("\(user.userName)")
 									.font(.pretendard(.regular, size: 15))
-									.foregroundStyle(Color(.mainText))
+									.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 								
 								Spacer(minLength: 0)
 							}
@@ -407,7 +408,7 @@ struct GroupCalendarView: View {
 							.overlay {
 								Text("\(moimState.currentMoim.groupCode)")
 									.font(.pretendard(.regular, size: 15))
-									.foregroundStyle(Color(.mainText))
+									.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 									.kerning(3)
 									.fixedSize()
 									.offset(x: textOffset, y: 0)
@@ -425,13 +426,13 @@ struct GroupCalendarView: View {
 								moimState.showGroupCodeCopyToast = true
 							}
 						}, label: {
-							Image(.btnCopy)
+							Image(asset: CommonAsset.Assets.btnCopy)
 						})
 						.padding(.horizontal, 12)
 					}
 					.frame(height: 40)
 					.frame(maxWidth: .infinity)
-					.background(Color(.mainGray))
+					.background(Color(asset: CommonAsset.Assets.mainGray))
 					.cornerRadius(5)
 					.padding(.bottom, 31)
 					

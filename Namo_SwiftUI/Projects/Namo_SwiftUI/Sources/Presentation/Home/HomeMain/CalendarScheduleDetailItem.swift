@@ -8,6 +8,8 @@
 import SwiftUI
 import Factory
 import SwiftUICalendar
+import Common
+import Networks
 
 struct CalendarScheduleDetailItem: View {
 	let ymd: YearMonthDay
@@ -29,7 +31,7 @@ struct CalendarScheduleDetailItem: View {
 				VStack(alignment: .leading, spacing: 4) {
 					Text(schedule.getScheduleTimeWithCurrentYMD(currentYMD: ymd))
 						.font(.pretendard(.medium, size: 12))
-						.foregroundStyle(Color(.mainText))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 					
 					Text(schedule.name)
 						.font(.pretendard(.bold, size: 15))
@@ -43,7 +45,7 @@ struct CalendarScheduleDetailItem: View {
 					Button(action: {
 						homeMainVM.action(.scheduleDiaryEditButtonTapped(schedule: schedule))
 					}, label: {
-						Image(hasDiary ? .btnAddRecordOrange : .btnAddRecord)
+						Image(asset: hasDiary ? CommonAsset.Assets.btnAddRecordOrange : CommonAsset.Assets.btnAddRecord)
 							.resizable()
 							.frame(width: 34, height: 34)
 							.padding(.trailing, 11)
@@ -53,7 +55,7 @@ struct CalendarScheduleDetailItem: View {
 			.frame(width: screenWidth-50, height: 55)
 			.background(
 				RoundedRectangle(cornerRadius: 15)
-					.fill(Color(.textBackground))
+					.fill(Color(asset: CommonAsset.Assets.textBackground))
 					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 			)
 			.onTapGesture {
@@ -77,7 +79,7 @@ struct CalendarMoimScheduleDetailItem: View {
 	
 	var body: some View {
 		let color = schedule.curMoimSchedule ?
-		Color.mainOrange :
+		Color(asset: CommonAsset.Assets.mainOrange) :
 		categoryUseCase.getColorWithPaletteId(id: schedule.users.first?.color ?? 0)
 		HStack(spacing: 5) {
 			Rectangle()
@@ -88,7 +90,7 @@ struct CalendarMoimScheduleDetailItem: View {
 			VStack(alignment: .leading, spacing: 4) {
 				Text(scheduleUseCase.getMoimScheduleTimeWithCurrentYMD(currentYMD: ymd, schedule: schedule))
 					.font(.pretendard(.medium, size: 12))
-					.foregroundStyle(Color(.mainText))
+					.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 				
 				Text(schedule.name)
 					.font(.pretendard(.bold, size: 15))
@@ -100,7 +102,8 @@ struct CalendarMoimScheduleDetailItem: View {
 			
 			if schedule.curMoimSchedule {
                 NavigationLink(destination: EditMoimDiaryView(info: ScheduleInfo(scheduleId: schedule.moimScheduleId ?? 0, scheduleName: schedule.name, date: schedule.startDate, place: schedule.locationName ?? "", categoryId: nil), moimUser: schedule.users)) {
-                    Image(schedule.hasDiaryPlace ? .btnAddRecordOrange : .btnAddRecord)
+					
+					Image(asset: schedule.hasDiaryPlace ? CommonAsset.Assets.btnAddRecordOrange : CommonAsset.Assets.btnAddRecord)
                         .resizable()
                         .frame(width: 34, height: 34)
                         .padding(.trailing, 11)
@@ -125,7 +128,7 @@ struct CalendarMoimScheduleDetailItem: View {
 		.frame(width: screenWidth-50, height: 55)
 		.background(
 			RoundedRectangle(cornerRadius: 15)
-				.fill(Color(.textBackground))
+				.fill(Color(asset: CommonAsset.Assets.textBackground))
 				.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 		)
 		.onTapGesture {

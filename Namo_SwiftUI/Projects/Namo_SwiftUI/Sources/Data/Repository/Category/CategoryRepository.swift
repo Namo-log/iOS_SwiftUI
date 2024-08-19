@@ -5,6 +5,8 @@
 //  Created by 정현우 on 2/11/24.
 //
 
+import Networks
+
 protocol CategoryRepository {
 	func postCategory(data: postCategoryRequest) async -> postCategoryResponse?
 	func patchCategory(id: Int, data: postCategoryRequest) async -> postCategoryResponse?

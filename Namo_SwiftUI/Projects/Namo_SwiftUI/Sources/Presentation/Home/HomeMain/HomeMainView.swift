@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftUICalendar
 import Factory
+import Networks
+import Common
 
 enum HomeNavigationType: Hashable {
 	case editDiaryView(memo: String, images: [ImageResponse], info: ScheduleInfo)
@@ -126,7 +128,7 @@ struct HomeMainView: View {
 					)
 					.font(.pretendard(.bold, size: 22))
 					
-					Image(.icChevronBottomBlack)
+					Image(asset: CommonAsset.Assets.icChevronBottomBlack)
 				}
 			})
 			.foregroundStyle(Color.black)
@@ -162,7 +164,7 @@ struct HomeMainView: View {
 				ForEach(weekdays, id: \.self) { weekday in
 					Text(weekday)
 						.font(.pretendard(.bold, size: 12))
-						.foregroundStyle(Color(.textUnselected))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.textUnselected))
 					
 					Spacer()
 				}
@@ -191,7 +193,7 @@ struct HomeMainView: View {
 				HStack {
 					Text("개인 일정")
 						.font(.pretendard(.bold, size: 15))
-						.foregroundStyle(Color(.mainText))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.padding(.bottom, 11)
 						.padding(.leading, 3)
 					
@@ -213,12 +215,12 @@ struct HomeMainView: View {
 				} else {
 					HStack(spacing: 12) {
 						Rectangle()
-							.fill(Color.textPlaceholder)
+							.fill(Color(asset: CommonAsset.Assets.textPlaceholder))
 							.frame(width: 3, height: 21)
 						
 						Text("등록된 개인 일정이 없습니다.")
 							.font(.pretendard(.medium, size: 14))
-							.foregroundStyle(Color(.textDisabled))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.textDisabled))
 						
 						Spacer()
 					}
@@ -227,7 +229,7 @@ struct HomeMainView: View {
 				HStack {
 					Text("모임 일정")
 						.font(.pretendard(.bold, size: 15))
-						.foregroundStyle(Color(.mainText))
+						.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.padding(.top, 20)
 						.padding(.bottom, 11)
 						.padding(.leading, 3)
@@ -250,12 +252,12 @@ struct HomeMainView: View {
 				} else {
 					HStack(spacing: 12) {
 						Rectangle()
-							.fill(Color.textPlaceholder)
+							.fill(Color(asset: CommonAsset.Assets.textPlaceholder))
 							.frame(width: 3, height: 21)
 						
 						Text("등록된 모임 일정이 없습니다.")
 							.font(.pretendard(.medium, size: 14))
-							.foregroundStyle(Color(.textDisabled))
+							.foregroundStyle(Color(asset: CommonAsset.Assets.textDisabled))
 						
 						Spacer()
 					}
@@ -278,7 +280,7 @@ struct HomeMainView: View {
 			Button(action: {
 				homeMainVM.action(.didTapAddScheduleButton)
             }, label: {
-				Image(.floatingAdd)
+				Image(asset: CommonAsset.Assets.floatingAdd)
 					.padding(.bottom, 37)
 					.padding(.trailing, 25)
 			})

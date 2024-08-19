@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Factory
+import Common
 
 /*
  사용 예시
@@ -57,11 +58,11 @@ struct AlertViewOld: View {
 					if let leftButtonTitle = leftButtonTitle {
 						Button(action: leftAciton, label: {
 							Text(leftButtonTitle)
-								.foregroundStyle(Color(.mainText))
+								.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 								.frame(width: screenWidth/2 - 50, height: 43)
 								.font(.pretendard(.bold, size: 16))
 						})
-						.background(Color(.mainGray))
+						.background(Color(asset: CommonAsset.Assets.mainGray))
 						.cornerRadius(4)
 					}
 					
@@ -72,7 +73,7 @@ struct AlertViewOld: View {
 							.frame(width: screenWidth/2 - 50, height: 43)
 							.font(.pretendard(.bold, size: 16))
 					})
-					.background(Color(.mainOrange))
+					.background(Color(asset: CommonAsset.Assets.mainOrange))
 					.cornerRadius(4)
 				}
 				.padding(.bottom, 16)

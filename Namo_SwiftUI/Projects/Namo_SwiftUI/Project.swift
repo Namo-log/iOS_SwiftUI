@@ -7,8 +7,9 @@ let project = Project.makeModule(
 	name: Environment.workspaceName,
 	targets: [.app],
 	internalDependencies: [
-		.thirdPartyLibs
-	]
+		.Features.base
+	],
+	frameworkHasResources: true
 )
 
 //let project = Project(

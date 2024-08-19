@@ -9,6 +9,8 @@ import SwiftUI
 
 import Factory
 import Kingfisher
+import Networks
+import Common
 
 struct DiaryMainView: View {
     @EnvironmentObject var diaryState: DiaryState
@@ -34,11 +36,11 @@ struct DiaryMainView: View {
     // 개인 / 모임 토글
     private var toggleView: some View {
         Capsule()
-            .foregroundColor(.mainGray)
+            .foregroundColor(Color(asset: CommonAsset.Assets.mainGray))
             .frame(width: 152, height: 30)
             .overlay(alignment: appState.isPersonalDiary ? .leading : .trailing, content: {
                 Capsule()
-                    .fill(.mainOrange)
+                    .fill(Color(asset: CommonAsset.Assets.mainOrange))
                     .frame(width: 80, height: 26)
                     .overlay(
                         Text(appState.isPersonalDiary ? "개인" : "모임")
@@ -51,7 +53,7 @@ struct DiaryMainView: View {
             .overlay(alignment: appState.isPersonalDiary ? .trailing : .leading, content: {
                 Text(appState.isPersonalDiary ? "모임" : "개인")
                     .font(.pretendard(.bold, size: 15))
-                    .foregroundStyle(Color(.mainText))
+                    .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                     .padding(appState.isPersonalDiary ? .trailing : .leading, 24)
                     .onTapGesture {
 						withAnimation {
@@ -77,8 +79,7 @@ struct DiaryMainView: View {
                         HStack {
                             Text(currentDate)
                                 .font(.pretendard(.bold, size: 22))
-                            
-                            Image(.icChevronBottomBlack)
+							Image(asset: CommonAsset.Assets.icChevronBottomBlack)
                         }
                     }
                     .foregroundColor(.black)
@@ -93,13 +94,13 @@ struct DiaryMainView: View {
                 
 				if diaryState.monthDiaries.isEmpty {
 					VStack(spacing: 45) {
-						Image(.noDiary)
+						Image(asset: CommonAsset.Assets.noDiary)
 						
 						Text("기록이 없습니다.\n일정에 기록을 남겨보세요!")
 							.font(.pretendard(.light, size: 15))
 							.lineLimit(2)
 							.multilineTextAlignment(.center)
-							.foregroundStyle(Color.mainText)
+							.foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						
 						Spacer()
 						
@@ -229,13 +230,13 @@ struct DiaryDateItemView: View {
     var body: some View {
         HStack(spacing: 18) {
             Rectangle()
-                .fill(.mainText)
+				.fill(Color(asset: CommonAsset.Assets.mainText))
                 .frame(height: 1)
             Text(Date(timeIntervalSince1970: Double(startDate)).toYMDString())
                 .font(.pretendard(.bold, size: 15))
-                .foregroundStyle(.mainText)
+                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
             Rectangle()
-                .fill(.mainText)
+				.fill(Color(asset: CommonAsset.Assets.mainText))
                 .frame(height: 1)
             
         }
@@ -261,7 +262,7 @@ struct DiaryItemView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(.textBackground)
+                .fill(Color(asset: CommonAsset.Assets.textBackground))
                 .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
             
             Rectangle()
@@ -273,7 +274,7 @@ struct DiaryItemView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(diary.name)
                         .font(.pretendard(.bold, size: 15))
-                        .foregroundStyle(.mainText)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
 						.lineLimit(2)
                     
                     // 세로 여백
@@ -282,14 +283,14 @@ struct DiaryItemView: View {
                     // 다이어리 수정 버튼
                     NavigationLink(destination: EditDiaryView(isFromCalendar: false, memo: diary.contents ?? "", urls: diary.images ?? [], info: ScheduleInfo(scheduleId: diary.scheduleId, scheduleName: diary.name, date: Date(timeIntervalSince1970: Double(diary.startDate)), place: diary.placeName, categoryId: diary.categoryId))) {
                         HStack(alignment: .center, spacing: 5) {
-                            Image(.icEditDiary)
+                            Image(asset: CommonAsset.Assets.icEditDiary)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 20, height: 20)
                             
                             Text("수정")
                                 .font(.pretendard(.light, size: 12))
-                                .foregroundStyle(.mainText)
+                                .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         }
                     }
                     .simultaneousGesture(TapGesture().onEnded {
@@ -302,7 +303,7 @@ struct DiaryItemView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     Text(diary.contents?.replacingOccurrences(of: "\n", with: " ") ?? "")
                         .font(.pretendard(.light, size: 14))
-                        .foregroundStyle(.mainText)
+                        .foregroundStyle(Color(asset: CommonAsset.Assets.mainText))
                         .lineLimit(5)
                         .truncationMode(.tail)
                     

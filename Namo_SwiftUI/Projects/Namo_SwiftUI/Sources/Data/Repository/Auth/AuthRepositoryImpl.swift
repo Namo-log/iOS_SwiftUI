@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import Networks
 
 final class AuthRepositoryImpl: AuthRepository {
     
     // 카카오 소셜 로그인
     func signIn<T>(kakaoToken: SocialSignInRequestDTO) async -> BaseResponse<T>? where T : Decodable {
-        return await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInKakao(kakaoToken: kakaoToken))
+		return await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInKakao(kakaoToken: kakaoToken))
     }
     
     // 네이버 소셜 로그인
