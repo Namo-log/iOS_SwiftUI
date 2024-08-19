@@ -29,5 +29,6 @@ let project = Project.makeModule(
 		.SPM.FirebaseRemoteConfig,
 		.SPM.FirebaseAnalytics,
 		.SPM.ComposableArchitecture,
+		.SPM.TCACoordinators,
 	]
 )

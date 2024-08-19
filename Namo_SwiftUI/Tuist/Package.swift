@@ -34,5 +34,6 @@ let package = Package(
 		.package(url: "https://github.com/kakao/kakao-ios-sdk", .upToNextMajor(from: "2.20.0")),
 		.package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.0.0")),
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.13.0"),
+		.package(url: "https://github.com/johnpatrickmorgan/TCACoordinators.git", exact: "0.10.1"),
 	]
 )

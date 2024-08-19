@@ -728,6 +728,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1BB2F3B874D5162454B43154"
+               BuildableName = "FlowStacks.framework"
+               BlueprintName = "FlowStacks"
+               ReferencedContainer = "container:Tuist/.build/tuist-derived/FlowStacks/FlowStacks.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "4160F70E94342FB432F5ABF1"
                BuildableName = "GoogleAppMeasurementTarget.framework"
                BlueprintName = "GoogleAppMeasurementTarget"
@@ -1586,6 +1600,20 @@
                BuildableName = "SwiftUINavigation.framework"
                BlueprintName = "SwiftUINavigation"
                ReferencedContainer = "container:Tuist/.build/tuist-derived/swift-navigation/swift-navigation.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3AF3F349EB5391BC0A46BC8C"
+               BuildableName = "TCACoordinators.framework"
+               BlueprintName = "TCACoordinators"
+               ReferencedContainer = "container:Tuist/.build/tuist-derived/TCACoordinators/TCACoordinators.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
