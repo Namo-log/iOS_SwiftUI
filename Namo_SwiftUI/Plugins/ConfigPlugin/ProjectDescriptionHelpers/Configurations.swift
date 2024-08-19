@@ -8,15 +8,9 @@
 import ProjectDescription
 
 // TODO: 각 target에 따른 별도의 xcconfig 사용?(framework, test, demo 등)
-public struct XCConfig {
-	private struct Path {
-		static var path: ProjectDescription.Path {
-			.relativeToRoot("xcconfigs/Namo_SwiftUI.xcconfig")
-		}
-	}
-	
+public struct XCConfig {	
 	public static let path: [Configuration] = [
-		.debug(name: "Debug", xcconfig: Path.path),
-		.release(name: "Release", xcconfig: Path.path)
+        .debug(name: "Debug", xcconfig: .relativeToRoot("xcconfigs/Namo_SwiftUI-debug.xcconfig")),
+		.release(name: "Release", xcconfig: .relativeToRoot("xcconfigs/Namo_SwiftUI-release.xcconfig"))
 	]
 }

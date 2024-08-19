@@ -37,8 +37,9 @@
 /* Begin PBXFileReference section */
 		37D22A43307B1370C8E57B6A /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66FF5A69595CAAA4E653CC62 /* UIComponent-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UIComponent-Info.plist"; sourceTree = "<group>"; };
+		8AE8CE00770AE7E06C252101 /* Namo_SwiftUI-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-release.xcconfig"; sourceTree = "<group>"; };
 		9AE03DE1710FA261D5C1D69B /* UIComponent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIComponent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A08B83F32CBB48CD9B40F728 /* Namo_SwiftUI.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Namo_SwiftUI.xcconfig; sourceTree = "<group>"; };
+		A6A138852A015DDE6C83F26A /* Namo_SwiftUI-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-debug.xcconfig"; sourceTree = "<group>"; };
 		C67F903056C4AFB684C4FAF4 /* sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,7 +75,8 @@
 		9CB9C63778BF981FAC9D5695 /* xcconfigs */ = {
 			isa = PBXGroup;
 			children = (
-				A08B83F32CBB48CD9B40F728 /* Namo_SwiftUI.xcconfig */,
+				A6A138852A015DDE6C83F26A /* Namo_SwiftUI-debug.xcconfig */,
+				8AE8CE00770AE7E06C252101 /* Namo_SwiftUI-release.xcconfig */,
 			);
 			name = xcconfigs;
 			path = ../../../xcconfigs;
@@ -187,7 +189,7 @@
 /* Begin XCBuildConfiguration section */
 		803277F30716181C162357A5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A08B83F32CBB48CD9B40F728 /* Namo_SwiftUI.xcconfig */;
+			baseConfigurationReference = 8AE8CE00770AE7E06C252101 /* Namo_SwiftUI-release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -354,13 +356,13 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.UIComponent;
 				PRODUCT_NAME = UIComponent;
@@ -492,7 +494,7 @@
 		};
 		B2CB13680D1C66BCA9541359 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A08B83F32CBB48CD9B40F728 /* Namo_SwiftUI.xcconfig */;
+			baseConfigurationReference = A6A138852A015DDE6C83F26A /* Namo_SwiftUI-debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -659,13 +661,13 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.UIComponent;
 				PRODUCT_NAME = UIComponent;

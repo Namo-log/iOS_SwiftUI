@@ -35,9 +35,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		368495294C931290F0862353 /* Namo_SwiftUI-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-debug.xcconfig"; sourceTree = "<group>"; };
+		5500876F56960580A4A109AC /* Namo_SwiftUI-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-release.xcconfig"; sourceTree = "<group>"; };
 		94E64299A8A22023329365DE /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7F4398FA3ED4855E1BB199C /* TestCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TestCore-Info.plist"; sourceTree = "<group>"; };
-		D0984D3DFB4E253894B0C015 /* Namo_SwiftUI.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Namo_SwiftUI.xcconfig; sourceTree = "<group>"; };
 		D718B5DED7DD5137A16E40A5 /* TestCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TestCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75A3D8B596841CE4CE8E327 /* sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,7 +92,8 @@
 		9E86D761421D26EF5488FCA3 /* xcconfigs */ = {
 			isa = PBXGroup;
 			children = (
-				D0984D3DFB4E253894B0C015 /* Namo_SwiftUI.xcconfig */,
+				368495294C931290F0862353 /* Namo_SwiftUI-debug.xcconfig */,
+				5500876F56960580A4A109AC /* Namo_SwiftUI-release.xcconfig */,
 			);
 			name = xcconfigs;
 			path = ../../../xcconfigs;
@@ -187,7 +189,7 @@
 /* Begin XCBuildConfiguration section */
 		3D3803FCA8AAC8183DB57AC4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0984D3DFB4E253894B0C015 /* Namo_SwiftUI.xcconfig */;
+			baseConfigurationReference = 5500876F56960580A4A109AC /* Namo_SwiftUI-release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -354,9 +356,9 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
-					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
@@ -380,7 +382,7 @@
 		};
 		84912908376E3246D258EB84 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0984D3DFB4E253894B0C015 /* Namo_SwiftUI.xcconfig */;
+			baseConfigurationReference = 368495294C931290F0862353 /* Namo_SwiftUI-debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -547,11 +549,11 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
+					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
-					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 				);

@@ -48,6 +48,7 @@
 		EE669417585A807240D0263B /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC629B8287D6F2D8C4316AB1 /* RemoteConfigManager.swift */; };
 		EF883F9450B65AAD25EDFB19 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1638167E599CBC91B023C223 /* Place.swift */; };
 		F3138AD072EA1ED2C5ED54A9 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9327119D76261659630DBF92 /* Schedule.swift */; };
+		F61CDEA60B814E979B0D0144 /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8770316F402CB3B226129C /* Bundle+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,7 +113,6 @@
 		3DA77FB5518DC2177F7CDB4F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DB22D7A144C674119F1E36E /* secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		3F244E48C69ECCAB74EECB7B /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
-		4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Namo_SwiftUI.xcconfig; sourceTree = "<group>"; };
 		4A1529B26D943FA08124AB01 /* TuistAssets+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+Common.swift"; sourceTree = "<group>"; };
 		506BEB0806B2B92C86982617 /* Common_Common-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Common_Common-Info.plist"; sourceTree = "<group>"; };
 		5574E212DAA187BCB7C1D8F0 /* YearMonth+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonth+.swift"; sourceTree = "<group>"; };
@@ -126,8 +126,10 @@
 		8DCCB58274E1FC105C702B5E /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		9327119D76261659630DBF92 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		94CE81795543F3FCF918F681 /* Common_Common.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Common_Common.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E8770316F402CB3B226129C /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		A5FA2F741D3B93A0490B66A3 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		B452B61122F510E17DCE5048 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		B876D7462EDA20B2D5734632 /* Namo_SwiftUI-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-release.xcconfig"; sourceTree = "<group>"; };
 		BAEAA2CC608672CEDC6887FD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		C563D0970A93F78DE9881D5E /* TuistFonts+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistFonts+Common.swift"; sourceTree = "<group>"; };
 		C5A2FCF70F8A44B2698DF41A /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		CD7499329D65853845B3BB8F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D47AFF5BA684469E9DB465C4 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		DDBD5A49DCFD3332DEF5A003 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		E503ADA450FA75E8F447B11B /* Namo_SwiftUI-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Namo_SwiftUI-debug.xcconfig"; sourceTree = "<group>"; };
 		E7B96C8DBB9162E562CB9EC9 /* ThirdPartyLibs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThirdPartyLibs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC2E92E3DA8BDE786E50CE4E /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		F52603E7141293FAF189A019 /* GroupInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfo.swift; sourceTree = "<group>"; };
@@ -241,7 +244,8 @@
 		7A78A2946880272DE20F1087 /* xcconfigs */ = {
 			isa = PBXGroup;
 			children = (
-				4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */,
+				E503ADA450FA75E8F447B11B /* Namo_SwiftUI-debug.xcconfig */,
+				B876D7462EDA20B2D5734632 /* Namo_SwiftUI-release.xcconfig */,
 			);
 			name = xcconfigs;
 			path = ../../../xcconfigs;
@@ -298,6 +302,7 @@
 		EFE714F6B70B11C1C723A78A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9E8770316F402CB3B226129C /* Bundle+.swift */,
 				3F244E48C69ECCAB74EECB7B /* Color+.swift */,
 				A5FA2F741D3B93A0490B66A3 /* Data+.swift */,
 				74AAE7EB496A2EC74BBF9CCF /* Date+.swift */,
@@ -438,6 +443,7 @@
 				652EB1245394050E74AAC814 /* TuistAssets+Common.swift in Sources */,
 				46CF344394BD81F9641C2E14 /* TuistBundle+Common.swift in Sources */,
 				407124AF9669B3F1BA639E63 /* TuistFonts+Common.swift in Sources */,
+				F61CDEA60B814E979B0D0144 /* Bundle+.swift in Sources */,
 				209A1AAE44FE6216BF654C43 /* Color+.swift in Sources */,
 				822BD81B980363D0B7762796 /* Data+.swift in Sources */,
 				BF204371873EED78126B7469 /* Date+.swift in Sources */,
@@ -504,7 +510,7 @@
 		};
 		258C8C7F9CD64F21B0F7BFB5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */;
+			baseConfigurationReference = B876D7462EDA20B2D5734632 /* Namo_SwiftUI-release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -671,13 +677,13 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Common;
 				PRODUCT_NAME = Common;
@@ -756,7 +762,7 @@
 		};
 		9872547E4CDA8EC4F1EA62B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4011472F3516A8FBA7ABFBD6 /* Namo_SwiftUI.xcconfig */;
+			baseConfigurationReference = E503ADA450FA75E8F447B11B /* Namo_SwiftUI-debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -925,11 +931,11 @@
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
-					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Common;
 				PRODUCT_NAME = Common;

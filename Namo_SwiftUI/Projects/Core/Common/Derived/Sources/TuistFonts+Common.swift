@@ -18,8 +18,8 @@
 // MARK: - Fonts
 
 // swiftlint:disable identifier_name line_length type_body_length
-public enum CommonFontFamily {
-  public enum Pretendard {
+public enum CommonFontFamily: Sendable {
+  public enum Pretendard: Sendable {
     public static let black = CommonFontConvertible(name: "Pretendard-Black", family: "Pretendard", path: "Pretendard-Black.otf")
     public static let bold = CommonFontConvertible(name: "Pretendard-Bold", family: "Pretendard", path: "Pretendard-Bold.otf")
     public static let extraBold = CommonFontConvertible(name: "Pretendard-ExtraBold", family: "Pretendard", path: "Pretendard-ExtraBold.otf")
@@ -40,7 +40,7 @@ public enum CommonFontFamily {
 
 // MARK: - Implementation Details
 
-public struct CommonFontConvertible {
+public struct CommonFontConvertible: Sendable {
   public let name: String
   public let family: String
   public let path: String
