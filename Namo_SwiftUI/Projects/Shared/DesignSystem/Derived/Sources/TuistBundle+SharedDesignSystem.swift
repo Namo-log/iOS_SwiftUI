@@ -4,7 +4,7 @@
 import Foundation// MARK: - Swift Bundle Accessor - for SPM
 private class BundleFinder {}
 extension Foundation.Bundle {
-/// Since SharedDesignSystem is a static library, the bundle containing the resources is copied into the final product.
+/// Since SharedDesignSystem is a static framework, the bundle containing the resources is copied into the final product.
 static let module: Bundle = {
     let bundleName = "SharedDesignSystem_SharedDesignSystem"
     var candidates = [

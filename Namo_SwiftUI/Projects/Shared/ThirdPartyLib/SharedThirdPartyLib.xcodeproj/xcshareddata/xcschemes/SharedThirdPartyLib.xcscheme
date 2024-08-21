@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C04B71A51D20E52920E3132F"
-               BuildableName = "SharedThirdPartyLib.framework"
+               BuildableName = "libSharedThirdPartyLib.a"
                BlueprintName = "SharedThirdPartyLib"
                ReferencedContainer = "container:SharedThirdPartyLib.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C04B71A51D20E52920E3132F"
-            BuildableName = "SharedThirdPartyLib.framework"
+            BuildableName = "libSharedThirdPartyLib.a"
             BlueprintName = "SharedThirdPartyLib"
             ReferencedContainer = "container:SharedThirdPartyLib.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C04B71A51D20E52920E3132F"
-            BuildableName = "SharedThirdPartyLib.framework"
+            BuildableName = "libSharedThirdPartyLib.a"
             BlueprintName = "SharedThirdPartyLib"
             ReferencedContainer = "container:SharedThirdPartyLib.xcodeproj">
          </BuildableReference>

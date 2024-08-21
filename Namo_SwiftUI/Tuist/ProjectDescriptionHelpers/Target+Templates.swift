@@ -190,7 +190,6 @@ public extension Target {
 	static func shared(factory: TargetFactory) -> Self {
 		var newFactory = factory
 		newFactory.name = ModulePath.Shared.name
-//		newFactory.product = .staticFramework
 		
 		return make(factory: newFactory)
 	}
@@ -202,8 +201,6 @@ public extension Target {
 		if module == .DesignSystem {
 			newFactory.sources = .sources
 			newFactory.resources = ["Resources/**"]
-//			newFactory.product = .staticFramework
-		} else if module == .ThirdPartyLib {
 			newFactory.product = .staticFramework
 		}
 		

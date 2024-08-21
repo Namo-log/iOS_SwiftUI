@@ -63,8 +63,9 @@
 		3DBF0B511706D9E72BBFAB26 /* SharedDesignSystem_SharedDesignSystem.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharedDesignSystem_SharedDesignSystem.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		432023965AD3CED90EF9DD00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4D1350F402B4F65B1A9102F8 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		555BB49B3599C84B829D0C4E /* SharedDesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedDesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5908E6C31A00AA5F1E80ACF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6AC1697A7DAC909AC709777C /* libSharedDesignSystem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedDesignSystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		65C933E397D5E0477BB0790B /* SharedDesignSystem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SharedDesignSystem-Info.plist"; sourceTree = "<group>"; };
 		752F5584105853819105558B /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		7CC8C75CE0918423B2695A26 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		89597B8A0989CA0F3BA10CB1 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
@@ -100,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				A1958EB17850057CC45BDBBD /* SharedDesignSystem_SharedDesignSystem-Info.plist */,
+				65C933E397D5E0477BB0790B /* SharedDesignSystem-Info.plist */,
 			);
 			path = InfoPlists;
 			sourceTree = "<group>";
@@ -151,8 +153,8 @@
 		7C5C1797D057E923EA7612EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6AC1697A7DAC909AC709777C /* libSharedDesignSystem.a */,
 				3DBF0B511706D9E72BBFAB26 /* SharedDesignSystem_SharedDesignSystem.bundle */,
+				555BB49B3599C84B829D0C4E /* SharedDesignSystem.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,8 +230,8 @@
 			);
 			name = SharedDesignSystem;
 			productName = SharedDesignSystem;
-			productReference = 6AC1697A7DAC909AC709777C /* libSharedDesignSystem.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 555BB49B3599C84B829D0C4E /* SharedDesignSystem.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -339,9 +341,21 @@
 		5DB787C9C7FA309CE6139EBA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/SharedDesignSystem-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				OTHER_LDFLAGS = "-ObjC";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.SharedDesignSystem;
 				PRODUCT_NAME = SharedDesignSystem;
 				SDKROOT = iphoneos;
@@ -357,6 +371,8 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -422,9 +438,21 @@
 		C35C9736C7973BB18B1F4636 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/SharedDesignSystem-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				OTHER_LDFLAGS = "-ObjC";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.SharedDesignSystem;
 				PRODUCT_NAME = SharedDesignSystem;
 				SDKROOT = iphoneos;
@@ -436,6 +464,8 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};

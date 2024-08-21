@@ -1555,7 +1555,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3B9B44D7180B637859DEF51A"
-               BuildableName = "libSharedDesignSystem.a"
+               BuildableName = "SharedDesignSystem.framework"
                BlueprintName = "SharedDesignSystem"
                ReferencedContainer = "container:Projects/Shared/DesignSystem/SharedDesignSystem.xcodeproj">
             </BuildableReference>
@@ -1583,7 +1583,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C04B71A51D20E52920E3132F"
-               BuildableName = "SharedThirdPartyLib.framework"
+               BuildableName = "libSharedThirdPartyLib.a"
                BlueprintName = "SharedThirdPartyLib"
                ReferencedContainer = "container:Projects/Shared/ThirdPartyLib/SharedThirdPartyLib.xcodeproj">
             </BuildableReference>

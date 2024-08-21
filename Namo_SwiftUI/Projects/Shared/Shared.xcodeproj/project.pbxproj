@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		214D16EC67A82AB3BDBE0150 /* SharedThirdPartyLib.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = A6A8459E402B3299C685447B /* SharedThirdPartyLib.framework */; };
 		BA3A56D8932CBD7C286F42B0 /* SharedExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B6CD41F8C641297F4F72AC /* SharedExport.swift */; };
 		C138CC181501905D841992D3 /* libSharedUtil.a in Dependencies */ = {isa = PBXBuildFile; fileRef = 434CA24C9D6B637523A5D1EA /* libSharedUtil.a */; };
-		DF0F43574ED89C593F865A27 /* libSharedDesignSystem.a in Dependencies */ = {isa = PBXBuildFile; fileRef = 41246ACC48BD6F75E49EDED0 /* libSharedDesignSystem.a */; };
+		D11368D30C8592D95980128D /* SharedDesignSystem.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = 948CD17CA1B289BEF5D29CBD /* SharedDesignSystem.framework */; };
+		D1211879E56C03CEDE2147DA /* libSharedThirdPartyLib.a in Dependencies */ = {isa = PBXBuildFile; fileRef = 356D198D1C5A4815096ACF4A /* libSharedThirdPartyLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,8 +29,8 @@
 			buildActionMask = 8;
 			dstSubfolderSpec = 16;
 			files = (
-				DF0F43574ED89C593F865A27 /* libSharedDesignSystem.a in Dependencies */,
-				214D16EC67A82AB3BDBE0150 /* SharedThirdPartyLib.framework in Dependencies */,
+				D11368D30C8592D95980128D /* SharedDesignSystem.framework in Dependencies */,
+				D1211879E56C03CEDE2147DA /* libSharedThirdPartyLib.a in Dependencies */,
 				C138CC181501905D841992D3 /* libSharedUtil.a in Dependencies */,
 			);
 			name = Dependencies;
@@ -39,11 +39,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		41246ACC48BD6F75E49EDED0 /* libSharedDesignSystem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedDesignSystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		356D198D1C5A4815096ACF4A /* libSharedThirdPartyLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedThirdPartyLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		434CA24C9D6B637523A5D1EA /* libSharedUtil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedUtil.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6403DC9A355EF9096596A834 /* libShared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libShared.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		948CD17CA1B289BEF5D29CBD /* SharedDesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedDesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B6CD41F8C641297F4F72AC /* SharedExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedExport.swift; sourceTree = "<group>"; };
-		A6A8459E402B3299C685447B /* SharedThirdPartyLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedThirdPartyLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +69,9 @@
 			isa = PBXGroup;
 			children = (
 				6403DC9A355EF9096596A834 /* libShared.a */,
-				41246ACC48BD6F75E49EDED0 /* libSharedDesignSystem.a */,
+				356D198D1C5A4815096ACF4A /* libSharedThirdPartyLib.a */,
 				434CA24C9D6B637523A5D1EA /* libSharedUtil.a */,
-				A6A8459E402B3299C685447B /* SharedThirdPartyLib.framework */,
+				948CD17CA1B289BEF5D29CBD /* SharedDesignSystem.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -319,11 +319,11 @@
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
-					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Shared;
 				PRODUCT_NAME = Shared;
@@ -492,13 +492,13 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
-					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
-					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Shared;
 				PRODUCT_NAME = Shared;
