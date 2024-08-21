@@ -6,9 +6,9 @@
 //
 
 import ProjectDescription
-import EnvPlugin
+import DependencyPlugin
 
 let workspace = Workspace(
-	name: Environment.workspaceName,
+	name: Project.Environment.appName,
 	projects: ["Projects/**"]
 )
