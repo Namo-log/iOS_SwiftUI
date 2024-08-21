@@ -5,32 +5,52 @@
       location = "group:Projects"
       name = "Projects">
       <FileRef
-         location = "group:Namo_SwiftUI/Namo_SwiftUI.xcodeproj">
+         location = "group:App/Namo_SwiftUI.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Core/Core.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Domain/Domain.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Feature/Feature.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Shared/Shared.xcodeproj">
       </FileRef>
       <Group
          location = "group:Core"
          name = "Core">
          <FileRef
-            location = "group:Common/Common.xcodeproj">
-         </FileRef>
-         <FileRef
-            location = "group:Networks/Networks.xcodeproj">
-         </FileRef>
-         <FileRef
-            location = "group:TestCore/TestCore.xcodeproj">
-         </FileRef>
-         <FileRef
-            location = "group:ThirdPartyLibs/ThirdPartyLibs.xcodeproj">
-         </FileRef>
-         <FileRef
-            location = "group:UIComponent/UIComponent.xcodeproj">
+            location = "group:Network/CoreNetwork.xcodeproj">
          </FileRef>
       </Group>
       <Group
-         location = "group:Features"
-         name = "Features">
+         location = "group:Domain"
+         name = "Domain">
          <FileRef
-            location = "group:BaseFeature/BaseFeature.xcodeproj">
+            location = "group:Friend/DomainFriend.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Feature"
+         name = "Feature">
+         <FileRef
+            location = "group:Friend/FeatureFriend.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Shared"
+         name = "Shared">
+         <FileRef
+            location = "group:DesignSystem/SharedDesignSystem.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:ThirdPartyLib/SharedThirdPartyLib.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Util/SharedUtil.xcodeproj">
          </FileRef>
       </Group>
    </Group>
