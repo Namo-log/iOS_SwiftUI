@@ -262,7 +262,7 @@ struct DiaryItemView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+                .fill(Color.itemBackground)
                 .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 0)
             
             Rectangle()

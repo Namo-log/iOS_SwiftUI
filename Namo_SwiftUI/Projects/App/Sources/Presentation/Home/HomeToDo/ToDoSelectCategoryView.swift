@@ -59,7 +59,7 @@ struct ToDoSelectCategoryView: View {
                 
                 Button {
                     
-                    path.append(CategoryViews.CategorySettingView)
+//                    path.append(CategoryViews.CategorySettingView)
                     
                 } label: {
                     HStack {

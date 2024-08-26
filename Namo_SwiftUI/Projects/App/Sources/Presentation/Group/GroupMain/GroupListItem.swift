@@ -39,7 +39,7 @@ struct GroupListItem: View {
 		}
 		.padding(.horizontal, 15)
 		.frame(width: screenWidth-50, height: 70)
-		.background(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+        .background(Color.itemBackground)
 		.clipShape(RoundedRectangle(cornerRadius: 10))
 		.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
 	}

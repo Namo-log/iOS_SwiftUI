@@ -53,21 +53,22 @@ struct Namo_SwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashView()
-                .environmentObject(appState)
-				.environmentObject(scheduleState)
-				.environmentObject(moimState)
-                .environmentObject(diaryState)
-                .onOpenURL(perform: { url in
-                    
-                    if AuthApi.isKakaoTalkLoginUrl(url) {
-                        
-                        AuthController.handleOpenUrl(url: url)
-         
-                    } else {
-                        instance?.receiveAccessToken(url)
-                    }
-                })
+//            SplashView()
+//                .environmentObject(appState)
+//				.environmentObject(scheduleState)
+//				.environmentObject(moimState)
+//                .environmentObject(diaryState)
+//                .onOpenURL(perform: { url in
+//                    
+//                    if AuthApi.isKakaoTalkLoginUrl(url) {
+//                        
+//                        AuthController.handleOpenUrl(url: url)
+//         
+//                    } else {
+//                        instance?.receiveAccessToken(url)
+//                    }
+//                })
+            NamoPopupView()
         }
     }
 }

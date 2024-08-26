@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A3E161538D2D46ADEF08D /* Colors.swift */; };
 		0BC53F14B3A6114E15A790F5 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8DBC2CA35B8EE9D5FEEAA648 /* Pretendard-Medium.otf */; };
 		0F23932EC063B2B33390439A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */; };
 		44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */; };
@@ -22,6 +23,7 @@
 		AAA8FEE32850F19C4A853C4B /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC8C75CE0918423B2695A26 /* Pretendard-Regular.otf */; };
 		C21D81D1797079E69995AC34 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 752F5584105853819105558B /* Pretendard-Light.otf */; };
 		CFC4C34C6656F18DCD3EF87F /* TuistBundle+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EEA2C2EF34E576E34E8062 /* TuistBundle+SharedDesignSystem.swift */; };
+		D80D929CD5055DCDE968DC92 /* NamoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		A1958EB17850057CC45BDBBD /* SharedDesignSystem_SharedDesignSystem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SharedDesignSystem_SharedDesignSystem-Info.plist"; sourceTree = "<group>"; };
 		B35F28151A7CC43C670BB9A4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B9EEA2C2EF34E576E34E8062 /* TuistBundle+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+SharedDesignSystem.swift"; sourceTree = "<group>"; };
+		C77A3E161538D2D46ADEF08D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoPopupView.swift; sourceTree = "<group>"; };
 		D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		DBB7737AF5C8A70CC304E8E7 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		F25D73ECA0C92D873F413A7D /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
@@ -159,6 +163,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		88C811F06B95993BEBFA7103 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		8BF760223F7A3660877B2F41 /* Derived */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,9 +201,19 @@
 		E4D6BC21CF1185821CD1D415 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				88C811F06B95993BEBFA7103 /* Components */,
+				ED29A7FC0434E9872326FA4F /* Foundation */,
 				F25D73ECA0C92D873F413A7D /* Font+.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		ED29A7FC0434E9872326FA4F /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				C77A3E161538D2D46ADEF08D /* Colors.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,7 +320,9 @@
 				5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */,
 				CFC4C34C6656F18DCD3EF87F /* TuistBundle+SharedDesignSystem.swift in Sources */,
 				44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */,
+				D80D929CD5055DCDE968DC92 /* NamoPopupView.swift in Sources */,
 				5EA30BCAF609AA7ED1C943F4 /* Font+.swift in Sources */,
+				07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

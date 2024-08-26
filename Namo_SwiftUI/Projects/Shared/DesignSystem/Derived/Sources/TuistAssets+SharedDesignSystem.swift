@@ -19,16 +19,17 @@
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-public enum SharedDesignSystemAsset {
+public enum SharedDesignSystemAsset: Sendable {
   public enum Assets {
   public static let accentColor = SharedDesignSystemColors(name: "AccentColor")
+    public static let black = SharedDesignSystemColors(name: "Black")
     public static let blue = SharedDesignSystemColors(name: "Blue")
+    public static let itemBackground = SharedDesignSystemColors(name: "ItemBackground")
     public static let mainGray = SharedDesignSystemColors(name: "MainGray")
     public static let mainOrange = SharedDesignSystemColors(name: "MainOrange")
     public static let mainText = SharedDesignSystemColors(name: "MainText")
     public static let pink = SharedDesignSystemColors(name: "Pink")
     public static let purple = SharedDesignSystemColors(name: "Purple")
-    public static let textBackground = SharedDesignSystemColors(name: "TextBackground")
     public static let textDisabled = SharedDesignSystemColors(name: "TextDisabled")
     public static let textPlaceholder = SharedDesignSystemColors(name: "TextPlaceholder")
     public static let textUnselected = SharedDesignSystemColors(name: "TextUnselected")
@@ -108,8 +109,8 @@ public enum SharedDesignSystemAsset {
 
 // MARK: - Implementation Details
 
-public final class SharedDesignSystemColors {
-  public fileprivate(set) var name: String
+public final class SharedDesignSystemColors: Sendable {
+  public let name: String
 
   #if os(macOS)
   public typealias Color = NSColor
@@ -118,27 +119,17 @@ public final class SharedDesignSystemColors {
   #endif
 
   @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, visionOS 1.0, *)
-  public private(set) lazy var color: Color = {
+  public var color: Color {
     guard let color = Color(asset: self) else {
       fatalError("Unable to load color asset named \(name).")
     }
     return color
-  }()
+  }
 
   #if canImport(SwiftUI)
-  private var _swiftUIColor: Any? = nil
   @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, visionOS 1.0, *)
-  public private(set) var swiftUIColor: SwiftUI.Color {
-    get {
-      if self._swiftUIColor == nil {
-        self._swiftUIColor = SwiftUI.Color(asset: self)
-      }
-
-      return self._swiftUIColor as! SwiftUI.Color
-    }
-    set {
-      self._swiftUIColor = newValue
-    }
+  public var swiftUIColor: SwiftUI.Color {
+      return SwiftUI.Color(asset: self)
   }
   #endif
 
@@ -171,8 +162,8 @@ public extension SwiftUI.Color {
 }
 #endif
 
-public struct SharedDesignSystemData {
-  public fileprivate(set) var name: String
+public struct SharedDesignSystemData: Sendable {
+  public let name: String
 
   #if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
   @available(iOS 9.0, macOS 10.11, visionOS 1.0, *)
@@ -199,8 +190,8 @@ public extension NSDataAsset {
 }
 #endif
 
-public struct SharedDesignSystemImages {
-  public fileprivate(set) var name: String
+public struct SharedDesignSystemImages: Sendable {
+  public let name: String
 
   #if os(macOS)
   public typealias Image = NSImage

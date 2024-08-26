@@ -57,7 +57,7 @@ struct CalendarScheduleDetailItem: View {
 			.frame(width: screenWidth-50, height: 55)
 			.background(
 				RoundedRectangle(cornerRadius: 15)
-					.fill(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+                    .fill(Color.itemBackground)
 					.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 			)
 			.onTapGesture {
@@ -130,7 +130,7 @@ struct CalendarMoimScheduleDetailItem: View {
 		.frame(width: screenWidth-50, height: 55)
 		.background(
 			RoundedRectangle(cornerRadius: 15)
-				.fill(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+                .fill(Color.itemBackground)
 				.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
 		)
 		.onTapGesture {

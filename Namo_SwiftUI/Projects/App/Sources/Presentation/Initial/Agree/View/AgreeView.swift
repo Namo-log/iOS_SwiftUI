@@ -59,7 +59,7 @@ struct AgreeView: View {
                         .foregroundStyle(Color(asset: SharedDesignSystemAsset.Assets.mainOrange))
                         .font(Font.pretendard(.bold, size: 18))
                         .frame(width: screenWidth-50, height: 55)
-                        .background(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+                        .background(Color.itemBackground)
                         .cornerRadius(15)
                 }
             }
