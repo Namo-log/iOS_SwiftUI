@@ -77,19 +77,21 @@ struct Namo_SwiftUIApp: App {
                     Text("팝업 테스트")
                 }
             }
-            .popup(isPresented: $isPresented, title: "팝업뷰 테스트") {
-                VStack {
-                    Text("\(count)")
-                    Button(action: {
-                        count += 1
-                    }, label: {
-                        Text("Count up")
-                    })
-                }
-            } confirmAction: {
-                count = 0
-            }
-
+            .dialog(isPresented: $isPresented,
+                    title: "일정을 정말 삭제하시겠어요?",
+                    content: "일정 삭제 시, 해당 일정에 대한 \n 기록 또한 삭제됩니다.")
+//            .popup(isPresented: $isPresented, title: "팝업뷰 테스트") {
+//                VStack {
+//                    Text("\(count)")
+//                    Button(action: {
+//                        count += 1
+//                    }, label: {
+//                        Text("Count up")
+//                    })
+//                }
+//            } confirmAction: {
+//                count = 0
+//            }
         }
     }
 }

@@ -19,6 +19,7 @@ public extension Color {
     
     static let mainOrange = Color(asset: NamoColors.mainOrange)
     static let mainText = Color(asset: NamoColors.mainText)
+    static let mainGray = Color(asset: NamoColors.mainGray)
     
     static let itemBackground = Color(asset: NamoColors.itemBackground)
     

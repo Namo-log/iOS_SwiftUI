@@ -11,6 +11,7 @@
 		0BC53F14B3A6114E15A790F5 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8DBC2CA35B8EE9D5FEEAA648 /* Pretendard-Medium.otf */; };
 		0F23932EC063B2B33390439A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */; };
 		44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */; };
+		47B854A22C7C74DD00A5A60F /* NamoDialogModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B854A12C7C74DD00A5A60F /* NamoDialogModifier.swift */; };
 		5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169A08D777B10FCCA0B6E622 /* TuistAssets+SharedDesignSystem.swift */; };
 		5EA30BCAF609AA7ED1C943F4 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25D73ECA0C92D873F413A7D /* Font+.swift */; };
 		5ECE51E139CE7ED168245C50 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 382585C95C5CA5517165D74C /* Pretendard-Thin.otf */; };
@@ -64,6 +65,7 @@
 		382585C95C5CA5517165D74C /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		3DBF0B511706D9E72BBFAB26 /* SharedDesignSystem_SharedDesignSystem.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharedDesignSystem_SharedDesignSystem.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		432023965AD3CED90EF9DD00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		47B854A12C7C74DD00A5A60F /* NamoDialogModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoDialogModifier.swift; sourceTree = "<group>"; };
 		4D1350F402B4F65B1A9102F8 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		555BB49B3599C84B829D0C4E /* SharedDesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedDesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5908E6C31A00AA5F1E80ACF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,6 +148,14 @@
 			path = Popup;
 			sourceTree = "<group>";
 		};
+		47B854A02C7C74C900A5A60F /* Dialog */ = {
+			isa = PBXGroup;
+			children = (
+				47B854A12C7C74DD00A5A60F /* NamoDialogModifier.swift */,
+			);
+			path = Dialog;
+			sourceTree = "<group>";
+		};
 		59717554951799DCB2AF62AE /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +184,7 @@
 		88C811F06B95993BEBFA7103 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				47B854A02C7C74C900A5A60F /* Dialog */,
 				47B8549F2C7C5CAD00A5A60F /* Popup */,
 			);
 			path = Components;
@@ -326,6 +337,7 @@
 				5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */,
 				CFC4C34C6656F18DCD3EF87F /* TuistBundle+SharedDesignSystem.swift in Sources */,
 				44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */,
+				47B854A22C7C74DD00A5A60F /* NamoDialogModifier.swift in Sources */,
 				D80D929CD5055DCDE968DC92 /* NamoPopupView.swift in Sources */,
 				5EA30BCAF609AA7ED1C943F4 /* Font+.swift in Sources */,
 				07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */,
