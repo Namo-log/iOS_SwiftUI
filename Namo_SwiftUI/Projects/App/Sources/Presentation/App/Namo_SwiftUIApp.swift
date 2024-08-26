@@ -26,6 +26,8 @@ struct Namo_SwiftUIApp: App {
     
     let instance = NaverThirdPartyLoginConnection.getSharedInstance()
     
+    @State var isPresented = false
+    @State var count = 0
     init() {
 		FirebaseApp.configure()
 		
@@ -68,7 +70,26 @@ struct Namo_SwiftUIApp: App {
 //                        instance?.receiveAccessToken(url)
 //                    }
 //                })
-            NamoPopupView()
+            VStack{
+                Button(action: {
+                    isPresented = true
+                }) {
+                    Text("팝업 테스트")
+                }
+            }
+            .popup(isPresented: $isPresented, title: "팝업뷰 테스트") {
+                VStack {
+                    Text("\(count)")
+                    Button(action: {
+                        count += 1
+                    }, label: {
+                        Text("Count up")
+                    })
+                }
+            } confirmAction: {
+                count = 0
+            }
+
         }
     }
 }

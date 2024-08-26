@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -138,6 +138,14 @@
 			name = Project;
 			sourceTree = "<group>";
 		};
+		47B8549F2C7C5CAD00A5A60F /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
 		59717554951799DCB2AF62AE /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,7 +174,7 @@
 		88C811F06B95993BEBFA7103 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */,
+				47B8549F2C7C5CAD00A5A60F /* Popup */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -203,7 +211,6 @@
 			children = (
 				88C811F06B95993BEBFA7103 /* Components */,
 				ED29A7FC0434E9872326FA4F /* Foundation */,
-				F25D73ECA0C92D873F413A7D /* Font+.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -211,6 +218,7 @@
 		ED29A7FC0434E9872326FA4F /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				F25D73ECA0C92D873F413A7D /* Font+.swift */,
 				C77A3E161538D2D46ADEF08D /* Colors.swift */,
 			);
 			path = Foundation;
@@ -262,8 +270,6 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 4E09BB944B7C48EB0432C2D8 /* Build configuration list for PBXProject "SharedDesignSystem" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -351,10 +357,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-					"$(inherited)",
-					DEBUG,
-				);
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -387,10 +390,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-					"$(inherited)",
-					DEBUG,
-				);
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
