@@ -11,7 +11,6 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import NaverThirdPartyLogin
 import Firebase
-
 import SharedDesignSystem
 import SharedUtil
 
@@ -25,9 +24,7 @@ struct Namo_SwiftUIApp: App {
 	var diaryState = Container.shared.diaryState()
     
     let instance = NaverThirdPartyLoginConnection.getSharedInstance()
-    
-    @State var isPresented = false
-    @State var count = 0
+
     init() {
 		FirebaseApp.configure()
 		
@@ -55,43 +52,21 @@ struct Namo_SwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            SplashView()
-//                .environmentObject(appState)
-//				.environmentObject(scheduleState)
-//				.environmentObject(moimState)
-//                .environmentObject(diaryState)
-//                .onOpenURL(perform: { url in
-//                    
-//                    if AuthApi.isKakaoTalkLoginUrl(url) {
-//                        
-//                        AuthController.handleOpenUrl(url: url)
-//         
-//                    } else {
-//                        instance?.receiveAccessToken(url)
-//                    }
-//                })
-            VStack{
-                Button(action: {
-                    isPresented = true
-                }) {
-                    Text("팝업 테스트")
-                }
-            }
-            .dialog(isPresented: $isPresented,
-                    title: "일정을 정말 삭제하시겠어요?",
-                    content: "일정 삭제 시, 해당 일정에 대한 \n 기록 또한 삭제됩니다.")
-//            .popup(isPresented: $isPresented, title: "팝업뷰 테스트") {
-//                VStack {
-//                    Text("\(count)")
-//                    Button(action: {
-//                        count += 1
-//                    }, label: {
-//                        Text("Count up")
-//                    })
-//                }
-//            } confirmAction: {
-//                count = 0
-//            }
+            SplashView()
+                .environmentObject(appState)
+				.environmentObject(scheduleState)
+				.environmentObject(moimState)
+                .environmentObject(diaryState)
+                .onOpenURL(perform: { url in
+                    
+                    if AuthApi.isKakaoTalkLoginUrl(url) {
+                        
+                        AuthController.handleOpenUrl(url: url)
+         
+                    } else {
+                        instance?.receiveAccessToken(url)
+                    }
+                })
         }
     }
 }

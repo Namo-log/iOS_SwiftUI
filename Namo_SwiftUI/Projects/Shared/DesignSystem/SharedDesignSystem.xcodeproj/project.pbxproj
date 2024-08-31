@@ -11,9 +11,9 @@
 		0BC53F14B3A6114E15A790F5 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8DBC2CA35B8EE9D5FEEAA648 /* Pretendard-Medium.otf */; };
 		0F23932EC063B2B33390439A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */; };
 		44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */; };
-		47B854A22C7C74DD00A5A60F /* NamoDialogModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B854A12C7C74DD00A5A60F /* NamoDialogModifier.swift */; };
+		45421FB4E91C42BBC20A6B29 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15F691BDF39B8930D3503F /* Font+.swift */; };
+		477E87902C8350DD0072B393 /* NamoToastViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477E878F2C8350DD0072B393 /* NamoToastViewModifier.swift */; };
 		5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169A08D777B10FCCA0B6E622 /* TuistAssets+SharedDesignSystem.swift */; };
-		5EA30BCAF609AA7ED1C943F4 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25D73ECA0C92D873F413A7D /* Font+.swift */; };
 		5ECE51E139CE7ED168245C50 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 382585C95C5CA5517165D74C /* Pretendard-Thin.otf */; };
 		60EADE89611D631AEBCEAB52 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4D1350F402B4F65B1A9102F8 /* Pretendard-ExtraBold.otf */; };
 		806FC4EEAA28E7701655C88E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89597B8A0989CA0F3BA10CB1 /* Pretendard-Black.otf */; };
@@ -22,9 +22,10 @@
 		8D41AD52F64845CDD64D7EAA /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = DBB7737AF5C8A70CC304E8E7 /* Pretendard-ExtraLight.otf */; };
 		9DC48EF363CA6DACA55A14F3 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B35F28151A7CC43C670BB9A4 /* Pretendard-SemiBold.otf */; };
 		AAA8FEE32850F19C4A853C4B /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC8C75CE0918423B2695A26 /* Pretendard-Regular.otf */; };
+		B3C5B821F52ADDF66AEB16F0 /* NamoDialogModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F759D22D35F9B365CF7AF7D6 /* NamoDialogModifier.swift */; };
 		C21D81D1797079E69995AC34 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 752F5584105853819105558B /* Pretendard-Light.otf */; };
 		CFC4C34C6656F18DCD3EF87F /* TuistBundle+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EEA2C2EF34E576E34E8062 /* TuistBundle+SharedDesignSystem.swift */; };
-		D80D929CD5055DCDE968DC92 /* NamoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */; };
+		D6C64BF2D97CD82B3244222D /* NamoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF82F28E9FFF254AE5AAC658 /* NamoPopupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,10 +66,11 @@
 		382585C95C5CA5517165D74C /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		3DBF0B511706D9E72BBFAB26 /* SharedDesignSystem_SharedDesignSystem.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharedDesignSystem_SharedDesignSystem.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		432023965AD3CED90EF9DD00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		47B854A12C7C74DD00A5A60F /* NamoDialogModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoDialogModifier.swift; sourceTree = "<group>"; };
+		477E878F2C8350DD0072B393 /* NamoToastViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoToastViewModifier.swift; sourceTree = "<group>"; };
 		4D1350F402B4F65B1A9102F8 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		555BB49B3599C84B829D0C4E /* SharedDesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedDesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5908E6C31A00AA5F1E80ACF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5C15F691BDF39B8930D3503F /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		65C933E397D5E0477BB0790B /* SharedDesignSystem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SharedDesignSystem-Info.plist"; sourceTree = "<group>"; };
 		752F5584105853819105558B /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		7CC8C75CE0918423B2695A26 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
@@ -79,10 +81,10 @@
 		B35F28151A7CC43C670BB9A4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B9EEA2C2EF34E576E34E8062 /* TuistBundle+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+SharedDesignSystem.swift"; sourceTree = "<group>"; };
 		C77A3E161538D2D46ADEF08D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoPopupView.swift; sourceTree = "<group>"; };
 		D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		DBB7737AF5C8A70CC304E8E7 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
-		F25D73ECA0C92D873F413A7D /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		DF82F28E9FFF254AE5AAC658 /* NamoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoPopupView.swift; sourceTree = "<group>"; };
+		F759D22D35F9B365CF7AF7D6 /* NamoDialogModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoDialogModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,20 +142,12 @@
 			name = Project;
 			sourceTree = "<group>";
 		};
-		47B8549F2C7C5CAD00A5A60F /* Popup */ = {
+		477E878E2C8350C50072B393 /* Toast */ = {
 			isa = PBXGroup;
 			children = (
-				D46E56C682E5CD9D177B3D54 /* NamoPopupView.swift */,
+				477E878F2C8350DD0072B393 /* NamoToastViewModifier.swift */,
 			);
-			path = Popup;
-			sourceTree = "<group>";
-		};
-		47B854A02C7C74C900A5A60F /* Dialog */ = {
-			isa = PBXGroup;
-			children = (
-				47B854A12C7C74DD00A5A60F /* NamoDialogModifier.swift */,
-			);
-			path = Dialog;
+			path = Toast;
 			sourceTree = "<group>";
 		};
 		59717554951799DCB2AF62AE /* Font */ = {
@@ -172,6 +166,14 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		61845D3817783BEC0F9A656E /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				DF82F28E9FFF254AE5AAC658 /* NamoPopupView.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
 		7C5C1797D057E923EA7612EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,8 +186,9 @@
 		88C811F06B95993BEBFA7103 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				47B854A02C7C74C900A5A60F /* Dialog */,
-				47B8549F2C7C5CAD00A5A60F /* Popup */,
+				477E878E2C8350C50072B393 /* Toast */,
+				FADE4DC338ADD70C7FF9FA51 /* Dialog */,
+				61845D3817783BEC0F9A656E /* Popup */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -229,10 +232,18 @@
 		ED29A7FC0434E9872326FA4F /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				F25D73ECA0C92D873F413A7D /* Font+.swift */,
 				C77A3E161538D2D46ADEF08D /* Colors.swift */,
+				5C15F691BDF39B8930D3503F /* Font+.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		FADE4DC338ADD70C7FF9FA51 /* Dialog */ = {
+			isa = PBXGroup;
+			children = (
+				F759D22D35F9B365CF7AF7D6 /* NamoDialogModifier.swift */,
+			);
+			path = Dialog;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,10 +348,11 @@
 				5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */,
 				CFC4C34C6656F18DCD3EF87F /* TuistBundle+SharedDesignSystem.swift in Sources */,
 				44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */,
-				47B854A22C7C74DD00A5A60F /* NamoDialogModifier.swift in Sources */,
-				D80D929CD5055DCDE968DC92 /* NamoPopupView.swift in Sources */,
-				5EA30BCAF609AA7ED1C943F4 /* Font+.swift in Sources */,
+				B3C5B821F52ADDF66AEB16F0 /* NamoDialogModifier.swift in Sources */,
+				D6C64BF2D97CD82B3244222D /* NamoPopupView.swift in Sources */,
 				07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */,
+				477E87902C8350DD0072B393 /* NamoToastViewModifier.swift in Sources */,
+				45421FB4E91C42BBC20A6B29 /* Font+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
