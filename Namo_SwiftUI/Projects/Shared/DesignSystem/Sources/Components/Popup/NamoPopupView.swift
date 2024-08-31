@@ -84,17 +84,17 @@ public struct NamoPopupModifier<CotentView: View>: ViewModifier {
                         width: UIScreen.main.bounds.width,
                         height: UIScreen.main.bounds.height
                     )
-                }
+                }                    
             }
     }
 }
 
 extension View {
-    public func popup<Content: View>(isPresented: Binding<Bool>, title: String, content: @escaping (() -> Content), confirmAction: (() -> Void)?) -> some View {
+    public func namoPopupView<Content: View>(isPresented: Binding<Bool>, title: String, content: @escaping (() -> Content), confirmAction: (() -> Void)?) -> some View {
         modifier(NamoPopupModifier(isPresented: isPresented, title: title, contentView: content, confirmAction: confirmAction))
     }
     
-    public func popup<Content: View>(isPresented: Binding<Bool>, title: String, content: @escaping (() -> Content)) -> some View {
+    public func namoPopupView<Content: View>(isPresented: Binding<Bool>, title: String, content: @escaping (() -> Content)) -> some View {
         modifier(NamoPopupModifier(isPresented: isPresented, title: title, contentView: content))
     }
 }

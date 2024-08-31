@@ -49,7 +49,7 @@ public struct NamoToastViewModifier: ViewModifier {
 }
 
 public extension View {
-    func toast(isPresented: Binding<Bool>, title: String) -> some View {
+    func namoToastView(isPresented: Binding<Bool>, title: String) -> some View {
         modifier(NamoToastViewModifier(isPresented: isPresented, title: title))
     }
 }

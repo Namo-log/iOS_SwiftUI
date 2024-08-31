@@ -52,7 +52,7 @@ struct Namo_SwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            SplashView()                
                 .environmentObject(appState)
 				.environmentObject(scheduleState)
 				.environmentObject(moimState)

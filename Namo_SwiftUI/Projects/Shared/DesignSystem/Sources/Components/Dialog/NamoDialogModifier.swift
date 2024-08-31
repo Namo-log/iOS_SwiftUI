@@ -91,11 +91,11 @@ public struct NamoDialogModifier: ViewModifier {
 }
 
 extension View {
-    public func dialog(isPresented: Binding<Bool>, title: String, content: String) -> some View {
+    public func namoAlertView(isPresented: Binding<Bool>, title: String, content: String) -> some View {
         modifier(NamoDialogModifier(isPresented: isPresented, title: title, content: content))
     }
     
-    public func dialog(isPresented: Binding<Bool>, title: String, content: String, confirmAction: (() -> Void)?) -> some View {
+    public func namoAlertView(isPresented: Binding<Bool>, title: String, content: String, confirmAction: (() -> Void)?) -> some View {
         modifier(NamoDialogModifier(isPresented: isPresented, title: title, content: content, confirmAction: confirmAction))
     }
 }
