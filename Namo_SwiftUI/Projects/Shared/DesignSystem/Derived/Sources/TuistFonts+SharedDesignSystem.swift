@@ -18,8 +18,8 @@
 // MARK: - Fonts
 
 // swiftlint:disable identifier_name line_length type_body_length
-public enum SharedDesignSystemFontFamily: Sendable {
-  public enum Pretendard: Sendable {
+public enum SharedDesignSystemFontFamily {
+  public enum Pretendard {
     public static let black = SharedDesignSystemFontConvertible(name: "Pretendard-Black", family: "Pretendard", path: "Pretendard-Black.otf")
     public static let bold = SharedDesignSystemFontConvertible(name: "Pretendard-Bold", family: "Pretendard", path: "Pretendard-Bold.otf")
     public static let extraBold = SharedDesignSystemFontConvertible(name: "Pretendard-ExtraBold", family: "Pretendard", path: "Pretendard-ExtraBold.otf")
@@ -40,7 +40,7 @@ public enum SharedDesignSystemFontFamily: Sendable {
 
 // MARK: - Implementation Details
 
-public struct SharedDesignSystemFontConvertible: Sendable {
+public struct SharedDesignSystemFontConvertible {
   public let name: String
   public let family: String
   public let path: String

@@ -28,20 +28,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "87EA802785C2DA6B58134CC2"
-               BuildableName = "Alamofire_Alamofire.bundle"
-               BlueprintName = "Alamofire_Alamofire"
-               ReferencedContainer = "container:Tuist/.build/tuist-derived/Alamofire/Alamofire.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "7CB5E98E45FAAF594F8A0F1E"
                BuildableName = "CasePaths.framework"
                BlueprintName = "CasePaths"
@@ -280,6 +266,62 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7F20A2B9BD13AEF81255307B"
+               BuildableName = "libDomainCategory.a"
+               BlueprintName = "DomainCategory"
+               ReferencedContainer = "container:Projects/Domain/Category/DomainCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F292C30A8E945F3FFC160E75"
+               BuildableName = "libDomainCategoryInterface.a"
+               BlueprintName = "DomainCategoryInterface"
+               ReferencedContainer = "container:Projects/Domain/Category/DomainCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8F5D697D3CD2AECB30E08D6B"
+               BuildableName = "libDomainCategoryTesting.a"
+               BlueprintName = "DomainCategoryTesting"
+               ReferencedContainer = "container:Projects/Domain/Category/DomainCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B04AE9995F95BA8C4CA16B89"
+               BuildableName = "DomainCategoryTests.xctest"
+               BlueprintName = "DomainCategoryTests"
+               ReferencedContainer = "container:Projects/Domain/Category/DomainCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "9345765E8E4CD237C5199AF0"
                BuildableName = "libDomainFriend.a"
                BlueprintName = "DomainFriend"
@@ -382,6 +424,76 @@
                BuildableName = "libFeature.a"
                BlueprintName = "Feature"
                ReferencedContainer = "container:Projects/Feature/Feature.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "31D7269C51C352B083C7BC6D"
+               BuildableName = "libFeatureCategory.a"
+               BlueprintName = "FeatureCategory"
+               ReferencedContainer = "container:Projects/Feature/Category/FeatureCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7DF600D20BB57AD052FA411B"
+               BuildableName = "FeatureCategoryExample.app"
+               BlueprintName = "FeatureCategoryExample"
+               ReferencedContainer = "container:Projects/Feature/Category/FeatureCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F97BCA7E70B1662F624E1E61"
+               BuildableName = "libFeatureCategoryInterface.a"
+               BlueprintName = "FeatureCategoryInterface"
+               ReferencedContainer = "container:Projects/Feature/Category/FeatureCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9154F88F2B1B6C0EA664D153"
+               BuildableName = "libFeatureCategoryTesting.a"
+               BlueprintName = "FeatureCategoryTesting"
+               ReferencedContainer = "container:Projects/Feature/Category/FeatureCategory.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "94DA3011B0DAB0ADF8BDA7F0"
+               BuildableName = "FeatureCategoryTests.xctest"
+               BlueprintName = "FeatureCategoryTests"
+               ReferencedContainer = "container:Projects/Feature/Category/FeatureCategory.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -2044,10 +2156,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B04AE9995F95BA8C4CA16B89"
+               BuildableName = "DomainCategoryTests.xctest"
+               BlueprintName = "DomainCategoryTests"
+               ReferencedContainer = "container:Projects/Domain/Category/DomainCategory.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D254A83AA311716730CE638"
                BuildableName = "DomainFriendTests.xctest"
                BlueprintName = "DomainFriendTests"
                ReferencedContainer = "container:Projects/Domain/Friend/DomainFriend.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "94DA3011B0DAB0ADF8BDA7F0"
+               BuildableName = "FeatureCategoryTests.xctest"
+               BlueprintName = "FeatureCategoryTests"
+               ReferencedContainer = "container:Projects/Feature/Category/FeatureCategory.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference

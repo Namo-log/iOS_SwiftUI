@@ -2,7 +2,7 @@
 //  Project.swift
 //  AppManifests
 //
-//  Created by 정현우 on 8/21/24.
+//  Created by 정현우 on 9/1/24.
 //
 
 import ProjectDescription
@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
 	.feature(
-		interface: .Friend,
+		interface: .Category,
 		factory: .init(
 			dependencies: [
 				.domain
@@ -19,42 +19,43 @@ let targets: [Target] = [
 		)
 	),
 	.feature(
-		implements: .Friend,
+		implements: .Category,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .Friend)
+				.feature(interface: .Category)
 			]
 		)
 	),
 	.feature(
-		testing: .Friend,
+		testing: .Category,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .Friend)
+				.feature(interface: .Category)
 			]
 		)
 	),
 	.feature(
-		tests: .Friend,
+		tests: .Category,
 		factory: .init(
 			dependencies: [
-				.feature(testing: .Friend)
+				.feature(testing: .Category)
 			]
 		)
 	),
 	.feature(
-		example: .Friend,
+		example: .Category,
 		factory: .init(
 			infoPlist: .exampleAppDefault,
 			dependencies: [
-				.feature(interface: .Friend),
-				.feature(implements: .Friend)
+				.feature(interface: .Category),
+				.feature(implements: .Category)
 			]
 		)
 	)
 ]
 
 let project: Project = .makeModule(
-	name: ModulePath.Feature.name+ModulePath.Feature.Friend.rawValue,
+	name: ModulePath.Feature.name+ModulePath.Feature.Category.rawValue,
 	targets: targets
 )
+

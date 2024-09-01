@@ -19,7 +19,7 @@
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-public enum NamoSwiftUIAsset: Sendable {
+public enum NamoSwiftUIAsset {
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
