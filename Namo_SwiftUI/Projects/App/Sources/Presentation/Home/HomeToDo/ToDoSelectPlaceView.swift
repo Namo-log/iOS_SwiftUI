@@ -266,7 +266,7 @@ struct ToDoSelectPlaceView: View {
                         .padding(.trailing, 20)
                 }
             }
-            .background(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+            .background(Color.itemBackground)
             .clipShape(.rect(cornerRadius: 10, style: .continuous))
             .onTapGesture {
                 isRevise = false

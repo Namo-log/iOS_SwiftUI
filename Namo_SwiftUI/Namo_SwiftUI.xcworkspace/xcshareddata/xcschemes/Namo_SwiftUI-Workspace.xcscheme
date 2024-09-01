@@ -28,6 +28,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "87EA802785C2DA6B58134CC2"
+               BuildableName = "Alamofire_Alamofire.bundle"
+               BlueprintName = "Alamofire_Alamofire"
+               ReferencedContainer = "container:Tuist/.build/tuist-derived/Alamofire/Alamofire.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "7CB5E98E45FAAF594F8A0F1E"
                BuildableName = "CasePaths.framework"
                BlueprintName = "CasePaths"

@@ -111,7 +111,7 @@ struct CustomMainView: View {
             Rectangle()
                 .cornerRadius(15)
                 .frame(width: screenWidth - 50, height: 100)
-                .foregroundStyle(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+                .foregroundStyle(Color.itemBackground)
                 .overlay {
                     
                     HStack(alignment: .top) {

@@ -20,11 +20,11 @@ struct AlertViewWithContent: View {
 	
     var body: some View {
 		ZStack {
-			Color.black.opacity(0.5)
-				.edgesIgnoringSafeArea(.all)
-				.onTapGesture {
-					showAlert = nil
-				}
+//			Color.black.opacity(0.5)
+//				.edgesIgnoringSafeArea(.all)
+//				.onTapGesture {
+//					showAlert = nil
+//				}
 			
 			VStack(spacing: 16) {
 				content

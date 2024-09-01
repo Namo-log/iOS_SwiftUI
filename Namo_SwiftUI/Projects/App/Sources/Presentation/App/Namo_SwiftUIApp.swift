@@ -11,7 +11,6 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import NaverThirdPartyLogin
 import Firebase
-
 import SharedDesignSystem
 import SharedUtil
 
@@ -25,7 +24,7 @@ struct Namo_SwiftUIApp: App {
 	var diaryState = Container.shared.diaryState()
     
     let instance = NaverThirdPartyLoginConnection.getSharedInstance()
-    
+
     init() {
 		FirebaseApp.configure()
 		
@@ -53,7 +52,7 @@ struct Namo_SwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            SplashView()                
                 .environmentObject(appState)
 				.environmentObject(scheduleState)
 				.environmentObject(moimState)

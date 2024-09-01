@@ -63,7 +63,7 @@ struct EditDiaryView: View {
                     // 메모 입력 부분
                     ZStack(alignment: .topLeading) {
                         Rectangle()
-                            .fill(Color(asset: SharedDesignSystemAsset.Assets.textBackground))
+                            .fill(Color.itemBackground)
                         
                         Rectangle()
                             .fill(categoryUseCase.getColorWithPaletteId(id: appState.categoryPalette[info.categoryId ?? 0] ?? 0))
