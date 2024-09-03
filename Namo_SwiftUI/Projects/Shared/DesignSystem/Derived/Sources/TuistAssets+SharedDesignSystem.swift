@@ -105,6 +105,9 @@ public enum SharedDesignSystemAsset {
 	public static let icFavorite = SharedDesignSystemImages(name: "icFavorite")
 	public static let icFavoriteFill = SharedDesignSystemImages(name: "icFavoriteFill")
 	public static let icAddFriend = SharedDesignSystemImages(name: "icAddFriend")
+	public static let icCalendar = SharedDesignSystemImages(name: "icCalendar")
+	public static let icTrashcan = SharedDesignSystemImages(name: "icTrashcan")
+
 
 	  
   }

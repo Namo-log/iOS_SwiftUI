@@ -35,6 +35,11 @@ public struct FriendListStore {
 		// 친구 신청 전송 toast messagge
 		var addFriendRequestToastMessage: String
 		
+		// 친구 정보 popup
+		var showFriendInfoPopup: Bool
+		// 현재 선택한 친구
+		var selectedFriend: DummyFriend?
+		
 		
 		public init(
 			friendSearchTerm: String = "",
@@ -43,7 +48,9 @@ public struct FriendListStore {
 			addFriendNickname: String = "",
 			addFriendTag: String = "",
 			showAddFriendRequestToast: Bool = false,
-			addFriendRequestToastMessage: String = ""
+			addFriendRequestToastMessage: String = "",
+			showFriendInfoPopup: Bool = false,
+			selectedFriend: DummyFriend? = nil
 		) {
 			self.friendSearchTerm = friendSearchTerm
 			self.friends = friends
@@ -52,6 +59,8 @@ public struct FriendListStore {
 			self.addFriendTag = addFriendTag
 			self.showAddFriendRequestToast = showAddFriendRequestToast
 			self.addFriendRequestToastMessage = addFriendRequestToastMessage
+			self.showFriendInfoPopup = showFriendInfoPopup
+			self.selectedFriend = selectedFriend
 		}
 	}
 	
@@ -67,6 +76,10 @@ public struct FriendListStore {
 		case addFriendRequestTapped
 		// 친구 신청 완료 toast 띄우기
 		case showAddFriendRequestToast
+		// 친구 정보 popup 띄우기
+		case showFriendInfoPopup(DummyFriend)
+		// 친구 정보에서 즐겨찾기 버튼 탭
+		case favoriteBtnTappedInInfo
 	}
 	
 	public var body: some ReducerOf<Self> {
@@ -83,13 +96,19 @@ public struct DummyFriend: Equatable {
 	let nickname: String
 	let description: String
 	var isFavorite: Bool
+	let tag: String
+	let name: String
+	let birthday: String
 	
 	
-	public init(id: Int, image: Color, nickname: String, description: String, isFavorite: Bool) {
+	public init(id: Int, image: Color, nickname: String, description: String, isFavorite: Bool, tag: String, name: String = "가나다", birthday: String = "10월 14일") {
 		self.id = id
 		self.image = image
 		self.nickname = nickname
 		self.description = description
 		self.isFavorite = isFavorite
+		self.tag = tag
+		self.name = name
+		self.birthday = birthday
 	}
 }

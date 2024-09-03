@@ -47,6 +47,21 @@ extension FriendListStore {
 				state.showAddFriendPopup = false
 				
 				return .none
+				
+			case let .showFriendInfoPopup(friend):
+				state.selectedFriend = friend
+				state.showFriendInfoPopup = true
+				
+				return .none
+				
+			case .favoriteBtnTappedInInfo:
+				if let friend = state.selectedFriend,
+				   let index = state.friends.firstIndex(where: {$0 == friend}) {
+					state.selectedFriend?.isFavorite.toggle()
+					state.friends[index].isFavorite.toggle()
+				}
+				
+				return .none
 			}
 		}
 		
