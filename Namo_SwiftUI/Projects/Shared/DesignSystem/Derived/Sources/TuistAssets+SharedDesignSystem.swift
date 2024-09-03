@@ -101,6 +101,12 @@ public enum SharedDesignSystemAsset {
     public static let noDiary = SharedDesignSystemImages(name: "noDiary")
     public static let noGroup = SharedDesignSystemImages(name: "noGroup")
     public static let noNetwork = SharedDesignSystemImages(name: "noNetwork")
+	public static let icSearch = SharedDesignSystemImages(name: "icSearch")
+	public static let icFavorite = SharedDesignSystemImages(name: "icFavorite")
+	public static let icFavoriteFill = SharedDesignSystemImages(name: "icFavoriteFill")
+	public static let icAddFriend = SharedDesignSystemImages(name: "icAddFriend")
+
+	  
   }
   public enum PreviewAssets {
   }
