@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7353B3B5047D5D34387AA3C1 /* libDomain.a in Dependencies */ = {isa = PBXBuildFile; fileRef = D2FA4CA69E30F4D1E24C1CE8 /* libDomain.a */; };
 		869FEDBEF8881CEAE39493E6 /* libFeatureFriend.a in Dependencies */ = {isa = PBXBuildFile; fileRef = E0D22D298EC6A8BC5D97880E /* libFeatureFriend.a */; };
+		F1BD92F3E1D1702F3242543A /* libFeatureMoim.a in Dependencies */ = {isa = PBXBuildFile; fileRef = 2FD5D5A3A19F099EFAFDEEB3 /* libFeatureMoim.a */; };
 		F4032C9775D9FC37F0911580 /* FeatureExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBAA3D396372144AA543AD /* FeatureExport.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,6 +21,7 @@
 			files = (
 				7353B3B5047D5D34387AA3C1 /* libDomain.a in Dependencies */,
 				869FEDBEF8881CEAE39493E6 /* libFeatureFriend.a in Dependencies */,
+				F1BD92F3E1D1702F3242543A /* libFeatureMoim.a in Dependencies */,
 			);
 			name = Dependencies;
 			runOnlyForDeploymentPostprocessing = 1;
@@ -37,6 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2FD5D5A3A19F099EFAFDEEB3 /* libFeatureMoim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFeatureMoim.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46DBAA3D396372144AA543AD /* FeatureExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureExport.swift; sourceTree = "<group>"; };
 		B693A64B9FA839E6FD15EC24 /* libFeature.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFeature.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2FA4CA69E30F4D1E24C1CE8 /* libDomain.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDomain.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +87,7 @@
 				D2FA4CA69E30F4D1E24C1CE8 /* libDomain.a */,
 				B693A64B9FA839E6FD15EC24 /* libFeature.a */,
 				E0D22D298EC6A8BC5D97880E /* libFeatureFriend.a */,
+				2FD5D5A3A19F099EFAFDEEB3 /* libFeatureMoim.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -313,11 +317,11 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 				);
@@ -488,13 +492,13 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
+					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
-					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mongmong.namo.Feature;
 				PRODUCT_NAME = Feature;
