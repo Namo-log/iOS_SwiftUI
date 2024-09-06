@@ -6,3 +6,4 @@
 //
 
 @_exported import DomainFriend
+@_exported import DomainMoim

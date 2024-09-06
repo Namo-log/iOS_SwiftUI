@@ -79,6 +79,7 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let icLoginApple = SharedDesignSystemImages(name: "ic_login_apple")
     public static let icLoginKakao = SharedDesignSystemImages(name: "ic_login_kakao")
     public static let icLoginNaver1 = SharedDesignSystemImages(name: "ic_login_naver 1")
+    public static let icNotification = SharedDesignSystemImages(name: "ic_notification")
     public static let isSelectedFalse = SharedDesignSystemImages(name: "isSelectedFalse")
     public static let isSelectedTrue = SharedDesignSystemImages(name: "isSelectedTrue")
     public static let loginLogo = SharedDesignSystemImages(name: "loginLogo")

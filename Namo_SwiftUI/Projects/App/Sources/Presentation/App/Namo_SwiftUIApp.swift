@@ -56,7 +56,7 @@ struct Namo_SwiftUIApp: App {
                 .environmentObject(appState)
 				.environmentObject(scheduleState)
 				.environmentObject(moimState)
-                .environmentObject(diaryState)
+                .environmentObject(diaryState)                
                 .onOpenURL(perform: { url in
                     
                     if AuthApi.isKakaoTalkLoginUrl(url) {
