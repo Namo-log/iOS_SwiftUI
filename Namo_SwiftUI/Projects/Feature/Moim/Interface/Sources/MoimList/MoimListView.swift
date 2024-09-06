@@ -12,6 +12,6 @@ public struct MoimListView: View {
     public init() {}
     
     public var body: some View {
-        Text("Hello, World!")
+        Text("모임리스트")
     }
 }
