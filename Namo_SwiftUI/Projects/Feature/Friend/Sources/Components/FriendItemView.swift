@@ -1,6 +1,6 @@
 //
 //  FriendItemView.swift
-//  FeatureFriendInterface
+//  FeatureFriend
 //
 //  Created by 정현우 on 9/2/24.
 //

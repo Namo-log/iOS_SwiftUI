@@ -1,6 +1,6 @@
 //
 //  FriendListView.swift
-//  FeatureFriendInterface
+//  FeatureFriend
 //
 //  Created by 정현우 on 9/2/24.
 //
@@ -43,7 +43,16 @@ public struct FriendListView: View {
 				isPresented: $store.showFriendInfoPopup,
 				title: "친구 정보",
 				content: {
-					friendInfoPopup
+					FriendInfoPopupView(
+						store: Store(
+							initialState: FriendInfoPopupStore.State(
+								friend: store.selectedFriend ?? DummyFriend(id: 0)
+							),
+							reducer: {
+								FriendInfoPopupStore()
+							}
+						)
+					)
 				}
 			)
 			.namoToastView(
@@ -217,139 +226,4 @@ public struct FriendListView: View {
 		}
 	}
 	
-	private var friendInfoPopup: some View {
-		VStack(alignment: .leading, spacing: 0) {
-			if let friend = store.selectedFriend {
-				friendInfoPopupImageAndNickname(friend: friend)
-				.padding(.bottom, 20)
-				
-				friendInfoPopupDescriptionAndBirth(friend: friend)
-				.padding(.bottom, 32)
-				
-				friendInfoPopupButtons(friend: friend)
-			}
-		}
-		.padding(.horizontal, 30)
-		.padding(.top, 20)
-		.padding(.bottom, 26)
-	}
-	
-	private func friendInfoPopupImageAndNickname(friend: DummyFriend) -> some View {
-		HStack(spacing: 0) {
-			friend.image
-				.frame(width: 72, height: 72)
-				.clipShape(RoundedRectangle(cornerRadius: 15))
-				.padding(.trailing, 20)
-			
-			VStack(alignment: .leading, spacing: 6) {
-				Text(friend.nickname)
-					.font(.pretendard(.bold, size: 15))
-					.foregroundStyle(Color.mainText)
-					.lineLimit(1)
-				
-				Text("#\(friend.tag)")
-					.font(.pretendard(.bold, size: 15))
-					.foregroundStyle(Color.mainText)
-					.lineLimit(1)
-			}
-			
-			Spacer(minLength: 20)
-			
-			Button(
-				action: {
-					store.send(.favoriteBtnTappedInInfo)
-				}, label: {
-					Image(asset: friend.isFavorite ? SharedDesignSystemAsset.Assets.icFavoriteFill : SharedDesignSystemAsset.Assets.icFavorite)
-						.resizable()
-						.frame(width: 28, height: 28)
-				}
-			)
-		}
-	}
-	
-	private func friendInfoPopupDescriptionAndBirth(friend: DummyFriend) -> some View {
-		VStack(alignment: .leading, spacing: 0) {
-			Text(friend.description)
-				.font(.pretendard(.regular, size: 15))
-				.foregroundStyle(Color.mainText)
-				.padding(.bottom, 16)
-			
-			HStack {
-				Text("이름")
-					.font(.pretendard(.bold, size: 15))
-					.foregroundStyle(Color.mainText)
-				
-				Spacer()
-				
-				Text(friend.name)
-					.font(.pretendard(.regular, size: 15))
-					.foregroundStyle(Color.mainText)
-			}
-			.padding(.bottom, 16)
-			
-			HStack {
-				Text("생일")
-					.font(.pretendard(.bold, size: 15))
-					.foregroundStyle(Color.mainText)
-				
-				Spacer()
-				
-				Text(friend.birthday)
-					.font(.pretendard(.regular, size: 15))
-					.foregroundStyle(Color.mainText)
-			}
-		}
-	}
-	
-	private func friendInfoPopupButtons(friend: DummyFriend) -> some View {
-		HStack {
-			Spacer(minLength: 0)
-			
-			Button(
-				action: {
-				
-				}, label: {
-					HStack(spacing: 12) {
-						Image(asset: SharedDesignSystemAsset.Assets.icTrashcan)
-							.resizable()
-							.frame(width: 20, height: 20)
-						
-						Text("일정")
-							.font(.pretendard(.regular, size: 15))
-							.foregroundColor(Color.colorBlack)
-					}
-					.frame(width: 120, height: 40)
-					.background(
-						Capsule()
-							.stroke(Color.colorBlack, lineWidth: 1)
-					)
-				}
-			)
-			.padding(.horizontal, 16)
-			
-			Button(
-				action: {
-					
-				}, label: {
-					HStack(spacing: 12) {
-						Image(asset: SharedDesignSystemAsset.Assets.icCalendar)
-							.resizable()
-							.frame(width: 20, height: 20)
-						
-						Text("삭제")
-							.font(.pretendard(.regular, size: 15))
-							.foregroundColor(Color.colorBlack)
-					}
-					.frame(width: 120, height: 40)
-					.background(
-						Capsule()
-							.stroke(Color.colorBlack, lineWidth: 1)
-					)
-				}
-			)
-			
-			Spacer(minLength: 0)
-			
-		}
-	}
 }

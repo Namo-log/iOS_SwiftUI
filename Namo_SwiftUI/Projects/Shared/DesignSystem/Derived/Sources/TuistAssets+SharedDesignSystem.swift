@@ -50,6 +50,7 @@ public enum SharedDesignSystemAsset {
     public static let downChevronBold = SharedDesignSystemImages(name: "downChevronBold")
     public static let dummy = SharedDesignSystemImages(name: "dummy")
     public static let floatingAdd = SharedDesignSystemImages(name: "floatingAdd")
+    public static let icAddFriend = SharedDesignSystemImages(name: "icAddFriend")
     public static let icArrowOnlyHead = SharedDesignSystemImages(name: "icArrowOnlyHead")
     public static let icBack = SharedDesignSystemImages(name: "icBack")
     public static let icBackArrowOrange = SharedDesignSystemImages(name: "icBackArrowOrange")
@@ -62,9 +63,12 @@ public enum SharedDesignSystemAsset {
     public static let icBottomHomeSelect = SharedDesignSystemImages(name: "icBottomHomeSelect")
     public static let icBottomShareNoSelect = SharedDesignSystemImages(name: "icBottomShareNoSelect")
     public static let icBottomShareSelect = SharedDesignSystemImages(name: "icBottomShareSelect")
+    public static let icCalendar = SharedDesignSystemImages(name: "icCalendar")
     public static let icChevronBottomBlack = SharedDesignSystemImages(name: "icChevronBottomBlack")
     public static let icDiary = SharedDesignSystemImages(name: "icDiary")
     public static let icEditDiary = SharedDesignSystemImages(name: "icEditDiary")
+    public static let icFavorite = SharedDesignSystemImages(name: "icFavorite")
+    public static let icFavoriteFill = SharedDesignSystemImages(name: "icFavoriteFill")
     public static let icGroup = SharedDesignSystemImages(name: "icGroup")
     public static let icImageDelete = SharedDesignSystemImages(name: "icImageDelete")
     public static let icImageDownload = SharedDesignSystemImages(name: "icImageDownload")
@@ -72,8 +76,10 @@ public enum SharedDesignSystemAsset {
     public static let icMore = SharedDesignSystemImages(name: "icMore")
     public static let icMoreVertical = SharedDesignSystemImages(name: "icMoreVertical")
     public static let icPencil = SharedDesignSystemImages(name: "icPencil")
+    public static let icSearch = SharedDesignSystemImages(name: "icSearch")
     public static let icTrash = SharedDesignSystemImages(name: "icTrash")
     public static let icTrashWhite = SharedDesignSystemImages(name: "icTrashWhite")
+    public static let icTrashcan = SharedDesignSystemImages(name: "icTrashcan")
     public static let icCannotDelete = SharedDesignSystemImages(name: "ic_cannot_delete")
     public static let icDeleteSchedule = SharedDesignSystemImages(name: "ic_delete_schedule")
     public static let icLoginApple = SharedDesignSystemImages(name: "ic_login_apple")
@@ -101,15 +107,6 @@ public enum SharedDesignSystemAsset {
     public static let noDiary = SharedDesignSystemImages(name: "noDiary")
     public static let noGroup = SharedDesignSystemImages(name: "noGroup")
     public static let noNetwork = SharedDesignSystemImages(name: "noNetwork")
-	public static let icSearch = SharedDesignSystemImages(name: "icSearch")
-	public static let icFavorite = SharedDesignSystemImages(name: "icFavorite")
-	public static let icFavoriteFill = SharedDesignSystemImages(name: "icFavoriteFill")
-	public static let icAddFriend = SharedDesignSystemImages(name: "icAddFriend")
-	public static let icCalendar = SharedDesignSystemImages(name: "icCalendar")
-	public static let icTrashcan = SharedDesignSystemImages(name: "icTrashcan")
-
-
-	  
   }
   public enum PreviewAssets {
   }
