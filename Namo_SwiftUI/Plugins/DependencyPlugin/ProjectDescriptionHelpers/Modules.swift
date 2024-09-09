@@ -29,7 +29,7 @@ public extension ModulePath {
 	enum Feature: String, CaseIterable {
 		case Friend
 		case Category
-        case Onboarding
+//        case Onboarding
 		
 		public static let name: String = "Feature"
 	}

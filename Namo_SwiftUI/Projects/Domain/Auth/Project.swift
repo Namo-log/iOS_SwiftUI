@@ -11,37 +11,37 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .domain(
-        interface: .Auth,
-        factory: .init(
-            dependencies: [
-                .core
-            ]
+            interface: .Auth,
+            factory: .init(
+                dependencies: [
+                    .core
+                ]
+            )
+        ),
+        .domain(
+            implements: .Auth,
+            factory: .init(
+                dependencies: [
+                    .domain(interface: .Auth)
+                ]
+            )
+        ),
+        .domain(
+            testing: .Auth,
+            factory: .init(
+                dependencies: [
+                    .domain(interface: .Auth)
+                ]
+            )
+        ),
+        .domain(
+            tests: .Auth,
+            factory: .init(
+                dependencies: [
+                    .domain(testing: .Auth)
+                ]
+            )
         )
-    ),
-    .domain(
-        implements: .Auth,
-        factory: .init(
-            dependencies: [
-                .domain(interface: .Auth)
-            ]
-        )
-    ),
-    .domain(
-        testing: .Auth,
-        factory: .init(
-            dependencies: [
-                .domain(interface: .Auth)
-            ]
-        )
-    ),
-    .domain(
-        tests: .Auth,
-        factory: .init(
-            dependencies: [
-                .domain(testing: .Auth)
-            ]
-        )
-    )
 ]
 
 let project: Project = .makeModule(
