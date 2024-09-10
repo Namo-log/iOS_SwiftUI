@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedDesignSystem
+import Factory
 
 public struct SectionTabBar: View {
     @Binding var tabIndex: Int

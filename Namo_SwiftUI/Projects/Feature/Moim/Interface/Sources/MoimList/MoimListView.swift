@@ -12,6 +12,14 @@ public struct MoimListView: View {
     public init() {}
     
     public var body: some View {
-        Text("모임리스트")
+        ScrollView {
+            LazyVStack {
+                ForEach(1...10, id: \.self) { _ in
+                    MoimListCell()
+                        .padding(.top, 20)
+                }
+            }
+            .padding(.horizontal, 25)
+        }        
     }
 }

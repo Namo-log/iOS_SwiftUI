@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedDesignSystem
 
 public struct MoimView: View {
     @State private var tabIndex = 0
@@ -17,20 +18,20 @@ public struct MoimView: View {
             SectionTabBar(tabIndex: $tabIndex)
             Spacer()
             if tabIndex == 0 {
-                
                 MoimListView()
             } else {
                 Text("친구 리스트")
             }
             Spacer()
         }
+        .edgesIgnoringSafeArea(.bottom)
         .namoNabBar(left: {
             Text("Group Calendar")
                 .font(.pretendard(.bold, size: 22))
                 .foregroundStyle(.black)
             
         }, right: {
-            Text("")
+            Image(asset: SharedDesignSystemAsset.Assets.icNotification)              
         })
     }
 }
