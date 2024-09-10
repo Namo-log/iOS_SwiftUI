@@ -9,6 +9,7 @@ import SwiftUI
 import SharedDesignSystem
 
 public struct MoimListView: View {
+    @State private var showingSheet = false
     
     public init() {}
     
@@ -34,8 +35,12 @@ public struct MoimListView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             FloatingButton {
-                print("일정 추가")
+                showingSheet = true
             }
         }
+        .sheet(isPresented: $showingSheet, content: {
+            MoimCreateView()
+                .presentationDetents([.height(700)])
+        })
     }
 }
