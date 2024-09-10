@@ -17,26 +17,24 @@ public struct MoimView: View {
     
     public var body: some View {
         VStack {
-            SectionTabBar(tabIndex: $tabIndex)
-            
-            Spacer()
-            
-            if tabIndex == 0 {
-                MoimListView()
-            } else {
-                FriendListView(
-                    store: Store(
-                        initialState: FriendListStore.State(
-                            friends: dummyFriends
-                        ),
-                        reducer: {
-                            FriendListStore()
-                        }
+            SectionTabBar(tabIndex: $tabIndex, tabTitle: ["모임 일정", "친구 리스트"]) {
+                Spacer()
+                if tabIndex == 0 {
+                    MoimListView()
+                } else {
+                    FriendListView(
+                        store: Store(
+                            initialState: FriendListStore.State(
+                                friends: dummyFriends
+                            ),
+                            reducer: {
+                                FriendListStore()
+                            }
+                        )
                     )
-                )
+                }
+                Spacer()
             }
-            
-            Spacer()
         }
         .edgesIgnoringSafeArea(.bottom)
         .namoNabBar(left: {

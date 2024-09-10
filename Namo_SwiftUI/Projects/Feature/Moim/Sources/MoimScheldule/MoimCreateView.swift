@@ -105,7 +105,7 @@ extension MoimCreateView {
             
             Spacer()
             
-            Image(asset: SharedDesignSystemAsset.Assets.appLogoSquare2)
+            Image(asset: SharedDesignSystemAsset.Assets.addPictrue)
                 .resizable()
                 .frame(width: 55, height: 55)
         }

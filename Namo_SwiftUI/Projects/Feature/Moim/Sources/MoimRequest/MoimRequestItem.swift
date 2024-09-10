@@ -12,9 +12,9 @@ struct MoimRequestItem: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 16) {
-                Image(asset: SharedDesignSystemAsset.Assets.appLogoSquare2)
-                    .frame(width: 48, height: 48)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                Image(asset: SharedDesignSystemAsset.Assets.mongi1)
+                    .frame(width: 48, height: 48)                
+                    .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("2024.08.07 (수) 12:00")
@@ -39,11 +39,10 @@ struct MoimRequestItem: View {
                     
                 }
                 
-                Spacer(minLength: 0)
             }
             .padding(.leading, 16)
             .padding(.trailing, 20)
-            .padding(.vertical, 12)
+            .padding(.vertical, 17)
             .background(Color.itemBackground)
             
             HStack {
@@ -52,6 +51,7 @@ struct MoimRequestItem: View {
                         
                     }, label: {
                         Text("수락")
+                            .font(.pretendard(.bold, size: 16))
                             .frame(maxWidth: .infinity)
                     }
                 )
@@ -66,6 +66,7 @@ struct MoimRequestItem: View {
                         
                     }, label: {
                         Text("거절")
+                            .font(.pretendard(.bold, size: 16))
                             .frame(maxWidth: .infinity)
                     }
                 )
@@ -75,7 +76,6 @@ struct MoimRequestItem: View {
             .frame(height: 52)
             
         }
-        .frame(height: 124)
         .frame(maxWidth: .infinity)
         .background()
         .clipShape(RoundedRectangle(cornerRadius: 10))

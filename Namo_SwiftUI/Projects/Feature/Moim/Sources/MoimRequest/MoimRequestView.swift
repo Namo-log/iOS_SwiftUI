@@ -7,10 +7,32 @@
 
 import SwiftUI
 import SharedDesignSystem
+import FeatureFriend
+import ComposableArchitecture
 
-struct MoimRequestView: View {
-    var body: some View {
+public struct MoimRequestView: View {
+    @State private var tabIndex = 0
+    
+    public init() {}
+    
+    public var body: some View {
         VStack {
+            SectionTabBar(tabIndex: $tabIndex, tabTitle: ["모임 요청", "친구 요청"]) {
+                if tabIndex == 0 {
+                    MoimRequestList()
+                } else {
+                    FriendRequestListView(
+                        store: Store(
+                            initialState: FriendRequestListStore.State(
+                                friends: dummyFriends
+                            ),
+                            reducer: {
+                                FriendRequestListStore()
+                            }
+                        )
+                    )
+                }
+            }
             
         }
         .namoNabBar(center: {
@@ -18,7 +40,9 @@ struct MoimRequestView: View {
                 .font(.pretendard(.bold, size: 16))
                 .foregroundStyle(.black)
         }, left: {
-            Text("")
+            Button(action: {}, label: {
+                Image(asset: SharedDesignSystemAsset.Assets.icArrowLeftThick)
+            })
         })
     }
         

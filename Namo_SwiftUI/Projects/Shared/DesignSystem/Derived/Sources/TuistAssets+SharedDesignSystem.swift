@@ -65,7 +65,6 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let icBottomHomeSelect = SharedDesignSystemImages(name: "icBottomHomeSelect")
     public static let icBottomShareNoSelect = SharedDesignSystemImages(name: "icBottomShareNoSelect")
     public static let icBottomShareSelect = SharedDesignSystemImages(name: "icBottomShareSelect")
-    public static let icCalendar = SharedDesignSystemImages(name: "icCalendar")
     public static let icChevronBottomBlack = SharedDesignSystemImages(name: "icChevronBottomBlack")
     public static let icEditDiary = SharedDesignSystemImages(name: "icEditDiary")
     public static let icFavorite = SharedDesignSystemImages(name: "icFavorite")
