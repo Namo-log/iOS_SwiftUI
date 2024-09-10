@@ -1,6 +1,6 @@
 import SwiftUI
 import SharedDesignSystem
-import FeatureMoimInterface
+import FeatureMoim
 
 @main
 struct FeautureMoimExampleApp: App {

@@ -22,8 +22,7 @@ let targets: [Target] = [
 		implements: .Friend,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .Friend),
-                .feature(interface: .Moim)
+				.feature(interface: .Friend)                
 			]
 		)
 	),
@@ -48,7 +47,6 @@ let targets: [Target] = [
 		factory: .init(
 			infoPlist: .exampleAppDefault,
 			dependencies: [
-				.feature(interface: .Friend),
 				.feature(implements: .Friend)
 			]
 		)

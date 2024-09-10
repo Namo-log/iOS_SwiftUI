@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedDesignSystem
 
 public struct MoimListView: View {
     
@@ -30,6 +31,11 @@ public struct MoimListView: View {
                 }
             }
             .padding(.horizontal, 20)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            FloatingButton {
+                print("일정 추가")
+            }
         }
     }
 }

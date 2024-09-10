@@ -47,7 +47,6 @@ let targets: [Target] = [
 		factory: .init(
 			infoPlist: .exampleAppDefault,
 			dependencies: [
-				.feature(interface: .Category),
 				.feature(implements: .Category)
 			]
 		)

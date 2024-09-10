@@ -22,7 +22,8 @@ let targets: [Target] = [
         implements: .Moim,
         factory: .init(
             dependencies: [
-                .feature(interface: .Moim)
+                .feature(interface: .Moim),
+                .feature(implements: .Friend)
             ]
         )
     ),
