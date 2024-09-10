@@ -10,17 +10,20 @@ import SharedDesignSystem
 
 public struct MoimListView: View {
     @State private var showingSheet = false
+    @State private var isCheck = false
     
     public init() {}
     
     public var body: some View {
         ScrollView {
-            HStack {
+            HStack(spacing: 8) {
                 Spacer()
                 
                 Text("지난 모임 일정 숨기기")
                     .font(.pretendard(.regular, size: 12))
                     .foregroundStyle(Color.textDisabled)
+                
+                CheckButton(isCheck: $isCheck)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 20)

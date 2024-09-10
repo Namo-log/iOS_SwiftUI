@@ -55,7 +55,7 @@ struct MoimCreateView: View {
                     )
                 }
             }
-            .padding(.horizontal, 20)    
+            .padding(.horizontal, 20)
             
             Button(action: {}, label: {
                 Text("새 모임 시작하기")

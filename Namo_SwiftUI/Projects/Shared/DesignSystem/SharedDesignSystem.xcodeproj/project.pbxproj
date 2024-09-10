@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,7 @@
 		0F23932EC063B2B33390439A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */; };
 		44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */; };
 		45421FB4E91C42BBC20A6B29 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15F691BDF39B8930D3503F /* Font+.swift */; };
-		472F7F162C90806400A54EBB /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472F7F152C90806400A54EBB /* FloatingButton.swift */; };
+		472D66852B34E518A56E9BDA /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87442A3E23D980B38BD32C1F /* CheckButton.swift */; };
 		5499DEB0FC4E5AB35CEF18BE /* NamoToastViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FE4132B9CDA4FFBF1CB15A /* NamoToastViewModifier.swift */; };
 		5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169A08D777B10FCCA0B6E622 /* TuistAssets+SharedDesignSystem.swift */; };
 		5ECE51E139CE7ED168245C50 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 382585C95C5CA5517165D74C /* Pretendard-Thin.otf */; };
@@ -21,6 +21,7 @@
 		806FC4EEAA28E7701655C88E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89597B8A0989CA0F3BA10CB1 /* Pretendard-Black.otf */; };
 		89438F0386EBF5BE0289E62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5908E6C31A00AA5F1E80ACF5 /* Assets.xcassets */; };
 		898EEA4CED78400B2FF4B0D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 432023965AD3CED90EF9DD00 /* Preview Assets.xcassets */; };
+		89FE99A7EE512CB8061AB16E /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006B2F1EC92744EB0617D70B /* FloatingButton.swift */; };
 		8D41AD52F64845CDD64D7EAA /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = DBB7737AF5C8A70CC304E8E7 /* Pretendard-ExtraLight.otf */; };
 		9DC48EF363CA6DACA55A14F3 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B35F28151A7CC43C670BB9A4 /* Pretendard-SemiBold.otf */; };
 		AAA8FEE32850F19C4A853C4B /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC8C75CE0918423B2695A26 /* Pretendard-Regular.otf */; };
@@ -64,12 +65,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		006B2F1EC92744EB0617D70B /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		169A08D777B10FCCA0B6E622 /* TuistAssets+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+SharedDesignSystem.swift"; sourceTree = "<group>"; };
 		382585C95C5CA5517165D74C /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		3DBF0B511706D9E72BBFAB26 /* SharedDesignSystem_SharedDesignSystem.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharedDesignSystem_SharedDesignSystem.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FE4132B9CDA4FFBF1CB15A /* NamoToastViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoToastViewModifier.swift; sourceTree = "<group>"; };
 		432023965AD3CED90EF9DD00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		472F7F152C90806400A54EBB /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		4D1350F402B4F65B1A9102F8 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		555BB49B3599C84B829D0C4E /* SharedDesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedDesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5908E6C31A00AA5F1E80ACF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +78,7 @@
 		65C933E397D5E0477BB0790B /* SharedDesignSystem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SharedDesignSystem-Info.plist"; sourceTree = "<group>"; };
 		752F5584105853819105558B /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		7CC8C75CE0918423B2695A26 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		87442A3E23D980B38BD32C1F /* CheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButton.swift; sourceTree = "<group>"; };
 		89597B8A0989CA0F3BA10CB1 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		8DBC2CA35B8EE9D5FEEAA648 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistFonts+SharedDesignSystem.swift"; sourceTree = "<group>"; };
@@ -118,6 +120,15 @@
 			path = InfoPlists;
 			sourceTree = "<group>";
 		};
+		2B4C7D8D39A4C9095209FFED /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				87442A3E23D980B38BD32C1F /* CheckButton.swift */,
+				006B2F1EC92744EB0617D70B /* FloatingButton.swift */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
 		330318D5D899F9B1345C0ECC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,14 +155,6 @@
 				E4D6BC21CF1185821CD1D415 /* Sources */,
 			);
 			name = Project;
-			sourceTree = "<group>";
-		};
-		472F7F142C90805400A54EBB /* Basic */ = {
-			isa = PBXGroup;
-			children = (
-				472F7F152C90806400A54EBB /* FloatingButton.swift */,
-			);
-			path = Basic;
 			sourceTree = "<group>";
 		};
 		59717554951799DCB2AF62AE /* Font */ = {
@@ -244,7 +247,7 @@
 		E4D6BC21CF1185821CD1D415 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				472F7F142C90805400A54EBB /* Basic */,
+				2B4C7D8D39A4C9095209FFED /* Basic */,
 				88C811F06B95993BEBFA7103 /* Components */,
 				ED29A7FC0434E9872326FA4F /* Foundation */,
 			);
@@ -314,6 +317,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 4E09BB944B7C48EB0432C2D8 /* Build configuration list for PBXProject "SharedDesignSystem" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -370,11 +375,12 @@
 				5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */,
 				CFC4C34C6656F18DCD3EF87F /* TuistBundle+SharedDesignSystem.swift in Sources */,
 				44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */,
+				472D66852B34E518A56E9BDA /* CheckButton.swift in Sources */,
+				89FE99A7EE512CB8061AB16E /* FloatingButton.swift in Sources */,
 				B3C5B821F52ADDF66AEB16F0 /* NamoDialogModifier.swift in Sources */,
 				7B8FF1BFEEE9C5ED58D1028B /* NamoNabBarModifier.swift in Sources */,
 				D6C64BF2D97CD82B3244222D /* NamoPopupView.swift in Sources */,
 				5499DEB0FC4E5AB35CEF18BE /* NamoToastViewModifier.swift in Sources */,
-				472F7F162C90806400A54EBB /* FloatingButton.swift in Sources */,
 				07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */,
 				45421FB4E91C42BBC20A6B29 /* Font+.swift in Sources */,
 			);
@@ -405,7 +411,10 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -438,7 +447,10 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
