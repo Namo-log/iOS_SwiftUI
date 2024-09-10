@@ -14,11 +14,15 @@ public struct FriendInfoPopupStore {
 	@ObservableState
 	public struct State: Equatable {
 		public var friend: DummyFriend
+		// 친구 요청에서 온 팝업인지 아닌지
+		public var isRequestPopup: Bool
 		
 		public init(
-			friend: DummyFriend
+			friend: DummyFriend,
+			isRequestPopup: Bool = false
 		) {
 			self.friend = friend
+			self.isRequestPopup = isRequestPopup
 		}
 	}
 	

@@ -20,20 +20,24 @@ public struct FriendInfoPopupView: View {
 
 	public var body: some View {
 		VStack(alignment: .leading, spacing: 0) {
-			friendInfoPopupImageAndNickname
+			imageAndNickname
 				.padding(.bottom, 20)
 			
-			friendInfoPopupDescriptionAndBirth
+			descriptionAndBirth
 				.padding(.bottom, 32)
 			
-			friendInfoPopupButtons
+			if store.isRequestPopup {
+				acceptAndRejectBtn
+			} else {
+				scheduleAndDeleteBtn
+			}
 		}
 		.padding(.horizontal, 30)
 		.padding(.top, 20)
 		.padding(.bottom, 26)
 	}
 	
-	private var friendInfoPopupImageAndNickname: some View {
+	private var imageAndNickname: some View {
 		HStack(spacing: 0) {
 			store.friend.image
 				.frame(width: 72, height: 72)
@@ -54,19 +58,22 @@ public struct FriendInfoPopupView: View {
 			
 			Spacer(minLength: 20)
 			
-			Button(
-				action: {
-//					store.send(.favoriteBtnTappedInInfo)
-				}, label: {
-					Image(asset: store.friend.isFavorite ? SharedDesignSystemAsset.Assets.icFavoriteFill : SharedDesignSystemAsset.Assets.icFavorite)
-						.resizable()
-						.frame(width: 28, height: 28)
-				}
-			)
+			
+			if !store.isRequestPopup {
+				Button(
+					action: {
+						//					store.send(.favoriteBtnTappedInInfo)
+					}, label: {
+						Image(asset: store.friend.isFavorite ? SharedDesignSystemAsset.Assets.icFavoriteFill : SharedDesignSystemAsset.Assets.icFavorite)
+							.resizable()
+							.frame(width: 28, height: 28)
+					}
+				)
+			}
 		}
 	}
 	
-	private var friendInfoPopupDescriptionAndBirth: some View {
+	private var descriptionAndBirth: some View {
 		VStack(alignment: .leading, spacing: 0) {
 			Text(store.friend.description)
 				.font(.pretendard(.regular, size: 15))
@@ -100,7 +107,7 @@ public struct FriendInfoPopupView: View {
 		}
 	}
 	
-	private var friendInfoPopupButtons: some View {
+	private var scheduleAndDeleteBtn: some View {
 		HStack {
 			Spacer(minLength: 0)
 			
@@ -144,6 +151,46 @@ public struct FriendInfoPopupView: View {
 						Capsule()
 							.stroke(Color.colorBlack, lineWidth: 1)
 					)
+				}
+			)
+			
+			Spacer(minLength: 0)
+			
+		}
+	}
+	
+	private var acceptAndRejectBtn: some View {
+		HStack {
+			Spacer(minLength: 0)
+			
+			Button(
+				action: {
+				
+				}, label: {
+					Text("수락")
+						.font(.pretendard(.regular, size: 15))
+						.foregroundColor(Color.colorBlack)
+						.frame(width: 120, height: 40)
+						.background(
+							Capsule()
+								.stroke(Color.colorBlack, lineWidth: 1)
+						)
+				}
+			)
+			.padding(.horizontal, 16)
+			
+			Button(
+				action: {
+					
+				}, label: {
+					Text("거절")
+						.font(.pretendard(.regular, size: 15))
+						.foregroundColor(Color.colorBlack)
+						.frame(width: 120, height: 40)
+						.background(
+							Capsule()
+								.stroke(Color.colorBlack, lineWidth: 1)
+						)
 				}
 			)
 			

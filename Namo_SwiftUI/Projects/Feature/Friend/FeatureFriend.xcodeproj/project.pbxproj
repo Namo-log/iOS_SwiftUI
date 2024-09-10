@@ -51,6 +51,9 @@
 		2AEE29D081125CE610ED9ECC /* FirebaseRemoteConfig.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53C9DB0F42DB1C54CA160F9E /* FirebaseRemoteConfig.framework */; };
 		2AEF6E07C4F0513914622CAF /* Promises_Promises.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B40245226E176A799A70E6AD /* Promises_Promises.bundle */; };
 		2B30E32F346886E602E8E897 /* GoogleUtilities_GoogleUtilities_NSData.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 7CB62448F4BC539B004566D5 /* GoogleUtilities_GoogleUtilities_NSData.bundle */; };
+		2C51600D2C8F622E008737ED /* FriendRequestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51600C2C8F622E008737ED /* FriendRequestListView.swift */; };
+		2C51600F2C8F623C008737ED /* FriendRequestListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51600E2C8F623C008737ED /* FriendRequestListStore.swift */; };
+		2C5160122C8F64D3008737ED /* FriendRequestItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5160112C8F64D3008737ED /* FriendRequestItemView.swift */; };
 		2D211008E2EA070BBA21D36F /* leveldb_leveldb.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 5A5AE29C05B13217953CE061 /* leveldb_leveldb.bundle */; };
 		2E4EEEDD4FB8E53FA5A4990A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C86BB70D4070C9AEBF9F9487 /* libz.tbd */; };
 		2E5800071DEE773BCE70E0A2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 100FE29B2981B2E3D6916014 /* Security.framework */; };
@@ -571,6 +574,9 @@
 		22F8F7A09F32A2E140632A3B /* libCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		25617C18A46EBEBEA83459C9 /* KakaoMapsSDK-SPM_KakaoMapsSDK_SPM.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KakaoMapsSDK-SPM_KakaoMapsSDK_SPM.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		270C4938C132106468AD568F /* SwiftNavigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftNavigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C51600C2C8F622E008737ED /* FriendRequestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestListView.swift; sourceTree = "<group>"; };
+		2C51600E2C8F623C008737ED /* FriendRequestListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestListStore.swift; sourceTree = "<group>"; };
+		2C5160112C8F64D3008737ED /* FriendRequestItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestItemView.swift; sourceTree = "<group>"; };
 		2F67C222C6A10D96DD780F15 /* CustomDump.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomDump.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AA31ADBCB751EED42FDAA62 /* IssueReporting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IssueReporting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ABF7D900A480374E815BEBC /* third_party_IsAppEncrypted.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = third_party_IsAppEncrypted.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -992,6 +998,7 @@
 		1D388E9B7BD0DEF27F15955F /* FriendList */ = {
 			isa = PBXGroup;
 			children = (
+				2C51600B2C8F6214008737ED /* Subview */,
 				1B718C4C5BC5451A885A1F15 /* FriendListStore.swift */,
 				4311F5712731DBC9E4937680 /* FriendListView.swift */,
 			);
@@ -1024,6 +1031,32 @@
 				88171A1B53777D7C9ED01B83 /* WatchKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C51600A2C8F61F5008737ED /* FriendRequestList */ = {
+			isa = PBXGroup;
+			children = (
+				2C5160102C8F6425008737ED /* SubView */,
+				2C51600E2C8F623C008737ED /* FriendRequestListStore.swift */,
+				2C51600C2C8F622E008737ED /* FriendRequestListView.swift */,
+			);
+			path = FriendRequestList;
+			sourceTree = "<group>";
+		};
+		2C51600B2C8F6214008737ED /* Subview */ = {
+			isa = PBXGroup;
+			children = (
+				22C5A37FED91EC1E30BA2B91 /* FriendItemView.swift */,
+			);
+			path = Subview;
+			sourceTree = "<group>";
+		};
+		2C5160102C8F6425008737ED /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				2C5160112C8F64D3008737ED /* FriendRequestItemView.swift */,
+			);
+			path = SubView;
 			sourceTree = "<group>";
 		};
 		37A50D7AAE2ABA90658A0494 /* Sources */ = {
@@ -1120,6 +1153,7 @@
 			isa = PBXGroup;
 			children = (
 				A1E4C378B3CEC380F9C548DF /* Components */,
+				2C51600A2C8F61F5008737ED /* FriendRequestList */,
 				1D388E9B7BD0DEF27F15955F /* FriendList */,
 			);
 			path = Sources;
@@ -1278,7 +1312,6 @@
 			isa = PBXGroup;
 			children = (
 				00D0858F3A98AE898123548E /* FriendInfoPopup */,
-				22C5A37FED91EC1E30BA2B91 /* FriendItemView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1624,10 +1657,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB83ABF3D2227DEC6A7B7079 /* FriendInfoPopupStore.swift in Sources */,
+				2C5160122C8F64D3008737ED /* FriendRequestItemView.swift in Sources */,
 				CE0A95BCC813637F1AD157AE /* FriendInfoPopupView.swift in Sources */,
 				8054E01CDAE43C2BE49B6BC4 /* FriendItemView.swift in Sources */,
 				5BD68ACB98A93FF4D9FB7633 /* FriendListStore.swift in Sources */,
+				2C51600D2C8F622E008737ED /* FriendRequestListView.swift in Sources */,
 				D9284902427300B01704CB66 /* FriendListView.swift in Sources */,
+				2C51600F2C8F623C008737ED /* FriendRequestListStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
