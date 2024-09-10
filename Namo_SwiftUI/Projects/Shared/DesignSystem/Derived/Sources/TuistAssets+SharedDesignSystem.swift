@@ -87,6 +87,7 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let mapPinRed = SharedDesignSystemImages(name: "map_pin_red")
     public static let mapPinSelected = SharedDesignSystemImages(name: "map_pin_selected")
     public static let mongi1 = SharedDesignSystemImages(name: "mongi 1")
+    public static let mongiIcon = SharedDesignSystemImages(name: "mongi_icon")
     public static let rightChevronLight = SharedDesignSystemImages(name: "rightChevronLight")
     public static let settings = SharedDesignSystemImages(name: "settings")
     public static let upChevron = SharedDesignSystemImages(name: "upChevron")

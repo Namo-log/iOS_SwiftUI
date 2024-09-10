@@ -28,7 +28,7 @@ public struct NamoNavBarModifier<C, L, R>: ViewModifier where C: View, L: View, 
                     Spacer()
                     right?()
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity)
                 
                 HStack {
@@ -45,8 +45,8 @@ public struct NamoNavBarModifier<C, L, R>: ViewModifier where C: View, L: View, 
             
             Spacer()
         }
-        .background(.white)
-        .navigationBarHidden(true)
+        .background(.white)        
+        .navigationBarHidden(true)        
     }
 }
 

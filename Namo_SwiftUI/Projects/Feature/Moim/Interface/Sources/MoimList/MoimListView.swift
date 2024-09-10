@@ -13,13 +13,23 @@ public struct MoimListView: View {
     
     public var body: some View {
         ScrollView {
+            HStack {
+                Spacer()
+                
+                Text("지난 모임 일정 숨기기")
+                    .font(.pretendard(.regular, size: 12))
+                    .foregroundStyle(Color.textDisabled)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            
             LazyVStack {
-                ForEach(1...10, id: \.self) { _ in
+                ForEach(0..<10, id: \.self) { index in
                     MoimListCell()
-                        .padding(.top, 20)
+                        .padding(.top, index != 0 ? 20 : 0)
                 }
             }
-            .padding(.horizontal, 25)
-        }        
+            .padding(.horizontal, 20)
+        }
     }
 }

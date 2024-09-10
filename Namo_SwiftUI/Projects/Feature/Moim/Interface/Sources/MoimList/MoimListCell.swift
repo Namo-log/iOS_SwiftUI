@@ -31,9 +31,10 @@ struct MoimListCell: View {
                             .font(.pretendard(.bold, size: 12))
                             .foregroundStyle(Color.mainText)
                         
-                        Text("코코아, 유즈, 뚜뚜, 고흐, 초코, 다나")
+                        Text("코코아, 유즈, 뚜뚜, 고흐, 초코, 다나, 반디, 램프, 연현 let's go")
                             .font(.pretendard(.regular, size: 12))
                             .foregroundStyle(Color.mainText)
+                            .lineLimit(1)
                     }
                 }
                 
