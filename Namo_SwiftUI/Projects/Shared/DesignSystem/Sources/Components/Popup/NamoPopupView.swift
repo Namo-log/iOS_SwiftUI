@@ -31,6 +31,9 @@ public struct NamoPopupModifier<CotentView: View>: ViewModifier {
                     ZStack {
                         Color.black.opacity(0.5)
                             .ignoresSafeArea(.all)
+							.onTapGesture {
+								isPresented = false
+							}
                         
                         
                         VStack(spacing: 0) {
@@ -67,12 +70,11 @@ public struct NamoPopupModifier<CotentView: View>: ViewModifier {
                                             .opacity(0)
                                     }
                                 }
+								.padding(.horizontal, 20)
                                 
                                 contentView()
-                                    .padding(.top, 20)
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 16)
+                            .padding(.top, 16)
                         }
                         .frame(maxWidth: .infinity)
                         .background(.white)
