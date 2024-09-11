@@ -18,7 +18,7 @@ public struct EmptyListView: View {
     public var body: some View {
         VStack {
             Spacer()
-            Image(asset: SharedDesignSystemAsset.Assets.mongiIcon)
+            Image(asset: SharedDesignSystemAsset.Assets.noGroup)
             
             Text(title)
                 .font(.pretendard(.regular, size: 15))

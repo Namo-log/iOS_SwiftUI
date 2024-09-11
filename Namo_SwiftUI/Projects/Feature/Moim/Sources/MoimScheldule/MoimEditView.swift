@@ -61,7 +61,7 @@ struct MoimEditView: View {
                             .stroke(.black, lineWidth: 1)
                     )
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 30)
             }
             .padding(.bottom, 13)
             
@@ -195,12 +195,14 @@ extension MoimEditView {
                     .foregroundStyle(Color.mainText)
                 Spacer()
                 
-                HStack(spacing: 8) {
-                    Text("없음")
-                        .font(.pretendard(.regular, size: 15))
-                        .foregroundStyle(Color.mainText)
-                    
-                    Image(asset: SharedDesignSystemAsset.Assets.icRight)
+                Button(action: {}) {
+                    HStack(spacing: 8) {
+                        Text("없음")
+                            .font(.pretendard(.regular, size: 15))
+                            .foregroundStyle(Color.mainText)
+                        
+                        Image(asset: SharedDesignSystemAsset.Assets.icRight)
+                    }
                 }
             }
         }
@@ -214,8 +216,9 @@ extension MoimEditView {
                     .foregroundStyle(Color.mainText)
                 Spacer()
                     
-                Image(asset: SharedDesignSystemAsset.Assets.icRight)
-                
+                Button(action: {}) {
+                    Image(asset: SharedDesignSystemAsset.Assets.icRight)
+                }                
             }
             
             ParticipantListView()

@@ -6,7 +6,7 @@ import FeatureMoim
 struct FeautureMoimExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            MoimView()
+            FriendInviteView()
         }
     }
 }
