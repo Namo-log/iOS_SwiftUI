@@ -29,12 +29,9 @@ struct Participant: View {
         .background(Color.itemBackground)
         .cornerRadius(13)
         .shadow(
-            color: Color.black.opacity(0.1),
-            radius: 2
+            color: Color.black.opacity(0.2),
+            radius: 4
         )
     }
 }
 
-#Preview {
-    Participant()
-}

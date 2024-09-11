@@ -1059,6 +1059,14 @@
 			path = "naveridlogin-ios-sp";
 			sourceTree = "<group>";
 		};
+		472CEC5C2C91676D00F52F18 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				A1AE6C0BA1BE60F096B3881F /* SectionTabBar.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		50CB43458001A75C53CD6CA1 /* KakaoSDKCertCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1242,6 +1250,7 @@
 		899C399987DED82CAB3D7188 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				472CEC5C2C91676D00F52F18 /* SubViews */,
 				C29618DC268FB489395EAC91 /* MoimList */,
 				AB11A7E71C82174C7F7DDCDA /* MoimRequest */,
 				E0856FED63CAB5394820DDA7 /* MoimScheldule */,
@@ -1362,7 +1371,6 @@
 				70A2F92C2CB6A3F2F1EE0015 /* MoimListCell.swift */,
 				5F527A229C60D8D4C4B09D3A /* MoimListView.swift */,
 				490CBD00C71BC9A9347234F8 /* MoimView.swift */,
-				A1AE6C0BA1BE60F096B3881F /* SectionTabBar.swift */,
 			);
 			path = MoimList;
 			sourceTree = "<group>";

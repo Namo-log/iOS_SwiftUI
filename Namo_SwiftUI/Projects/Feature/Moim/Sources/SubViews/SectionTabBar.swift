@@ -35,8 +35,10 @@ public struct SectionTabBar<Content: View>: View {
                             GeometryReader { proxy in
                                 Color.clear.contentShape(Rectangle())
                                     .onAppear {
-                                        offset = proxy.frame(in: .named("OuterView")).minX - 10
-                                        width = proxy.frame(in: .named("OuterView")).width + 20
+                                        if index == 0  {
+                                            offset = proxy.frame(in: .named("OuterView")).minX - 10
+                                            width = proxy.frame(in: .named("OuterView")).width + 20
+                                        }
                                     }
                                     .onTapGesture {
                                         withAnimation {
@@ -48,18 +50,17 @@ public struct SectionTabBar<Content: View>: View {
                             }
                         }
                 }
-                
-                Rectangle()
-                    .frame(maxWidth: .infinity, maxHeight: 1.5)
-                    .foregroundColor(.mainGray)
-                    .overlay {
-                        Path(CGRect(x: 0, y: 0, width: width, height: 1.5))
-                            .offset(x: offset)
-                            .foregroundColor(.mainOrange)
-                        
-                    }
             }
-            .coordinateSpace(name: "OuterView")
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1.5)
+                .foregroundColor(.mainGray)
+                .overlay {
+                    Path(CGRect(x: 0, y: 0, width: width, height: 1.5))
+                        .offset(x: offset)
+                        .foregroundColor(.mainOrange)                    
+                }
+                .coordinateSpace(name: "OuterView")
             
             content()
         }
