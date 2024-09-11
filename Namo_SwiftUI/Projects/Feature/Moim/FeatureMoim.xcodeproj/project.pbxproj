@@ -262,7 +262,7 @@
 		C12210D68BE76E39422CA5FC /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6DF8D2559406ECA724099F /* WatchKit.framework */; platformFilters = (watchos, ); };
 		C18D03AA2E005E1445EA6B1C /* Clocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D903A16DD372EA0248E84A8 /* Clocks.framework */; };
 		C253F3A64F8691F1C2763047 /* Firebase_FirebaseCoreExtension.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 2251B167A9CCDECABF06E249 /* Firebase_FirebaseCoreExtension.bundle */; };
-		C2DDE0E85729E340B1733DED /* MoimCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6F11E2095FEBC99C88FAF /* MoimCreateView.swift */; };
+		C2DDE0E85729E340B1733DED /* MoimEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6F11E2095FEBC99C88FAF /* MoimEditView.swift */; };
 		C30BA8DC326CED5D26DE11A9 /* libCoreNetworkInterface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4134D7795B6DC08E1DB68C90 /* libCoreNetworkInterface.a */; };
 		C374108D4F206F1C0298B8A5 /* Firebase_FirebaseCrashlytics.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 46AC44C12FEC309061E96432 /* Firebase_FirebaseCrashlytics.bundle */; };
 		C3AB98E8743ECF87EA408401 /* nanopb_nanopb.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = F50F8F84574175DCA8348CF3 /* nanopb_nanopb.bundle */; };
@@ -680,7 +680,7 @@
 		A1AE6C0BA1BE60F096B3881F /* SectionTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTabBar.swift; sourceTree = "<group>"; };
 		A1E027D1581012692A8D48D0 /* MoimRequestItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRequestItem.swift; sourceTree = "<group>"; };
 		A2D3C8D4EC531E323CB0DE32 /* KakaoOpenSDK_KakaoSDKCommon.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KakaoOpenSDK_KakaoSDKCommon.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2D6F11E2095FEBC99C88FAF /* MoimCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimCreateView.swift; sourceTree = "<group>"; };
+		A2D6F11E2095FEBC99C88FAF /* MoimEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimEditView.swift; sourceTree = "<group>"; };
 		A812066F54F1A013639DFF0D /* Promises_FBLPromises.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Promises_FBLPromises.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83854834DF7DBDBCD9084C2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		A84624454C90A97E8278A6B8 /* UIKitNavigationShim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIKitNavigationShim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1425,7 +1425,7 @@
 		E0856FED63CAB5394820DDA7 /* MoimScheldule */ = {
 			isa = PBXGroup;
 			children = (
-				A2D6F11E2095FEBC99C88FAF /* MoimCreateView.swift */,
+				A2D6F11E2095FEBC99C88FAF /* MoimEditView.swift */,
 				C4EEF27263954463D1485666 /* Participant.swift */,
 				AA3017461D65EEF7EA01373A /* ParticipantListView.swift */,
 			);
@@ -1706,7 +1706,7 @@
 				E8AFD302A3F68857D6A22B7B /* MoimRequestItem.swift in Sources */,
 				27B45BBF19D628CFD95D2F19 /* MoimRequestView.swift in Sources */,
 				7639007DF948DFB4561D99B6 /* MoimSampleView.swift in Sources */,
-				C2DDE0E85729E340B1733DED /* MoimCreateView.swift in Sources */,
+				C2DDE0E85729E340B1733DED /* MoimEditView.swift in Sources */,
 				D4428FE9D0FE71F579CCC602 /* Participant.swift in Sources */,
 				1752CE514F6E392C5AA3EF8B /* ParticipantListView.swift in Sources */,
 				472F7F282C90BEFB00A54EBB /* MoimRequestList.swift in Sources */,

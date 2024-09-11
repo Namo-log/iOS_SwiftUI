@@ -42,7 +42,7 @@ public struct MoimListView: View {
             }
         }
         .sheet(isPresented: $showingSheet, content: {
-            MoimCreateView()
+            MoimEditView()
                 .presentationDetents([.height(700)])
         })
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 import SharedDesignSystem
 
-struct MoimCreateView: View {
+struct MoimEditView: View {
     @State private var text = ""
     
     var body: some View {
@@ -69,7 +69,7 @@ struct MoimCreateView: View {
     }
 }
 
-extension MoimCreateView {
+extension MoimEditView {
     
     private var titleView: some View {
         HStack(alignment: .center, spacing: 0) {
