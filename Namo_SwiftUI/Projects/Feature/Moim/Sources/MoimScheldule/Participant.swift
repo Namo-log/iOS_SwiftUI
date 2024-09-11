@@ -9,17 +9,17 @@ import SwiftUI
 import SharedDesignSystem
 
 struct Participant: View {
-    @State private var dummyFriends = ["코코아", "유즈", "초코", "캐슬", "다나", "연현", "루카", "뚜뚜", "램프", "반디"]
-    @State private var dummyColors: [Color] = [.mainGray, .mainOrange, .pink, .blue]
+    let name: String
+    let color: Color
     
     var body: some View {
         VStack {
             HStack(spacing: 9) {
                 Circle()
                     .frame(width: 14, height: 14)
-                    .foregroundColor(dummyColors.randomElement()!)
+                    .foregroundColor(color)
                 
-                Text(dummyFriends.randomElement()!)
+                Text(name)
                     .font(.pretendard(.regular, size: 15))
                     .foregroundStyle(Color.mainText)
             }

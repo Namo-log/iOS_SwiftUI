@@ -9,7 +9,7 @@ import SwiftUI
 import SharedDesignSystem
 import PhotosUI
 
-struct MoimEditView: View {
+public struct MoimEditView: View {
     @State private var text = ""
     @State private var coverImageItem: PhotosPickerItem?
     @State private var coverImage: Image?
@@ -17,8 +17,12 @@ struct MoimEditView: View {
     @State private var endDate = Date()
     @State private var showingStartPicker = false
     @State private var showingEndPicker = false
+    @State private var dummyFriends = ["코", "코아", "초코", "캐슬슬슬", "슬", "다나ㅇㅇㅇㅇ", "연현", "루카", "뚜뚜", "램프", "반디ddddddd"]
+    @State private var dummyColors: [Color] = [.namoBlue, .namoPink, .namoOrange, .namoYellow, .colorRed, .colorBlue, .colorLime, .colorLavendar, .colorGreen]
     
-    var body: some View {
+    public init() {}
+    
+    public  var body: some View {
         VStack(spacing: 0) {
             // title
             titleView
@@ -40,8 +44,10 @@ struct MoimEditView: View {
                     // 장소, 시간
                     settingView
                     
+                    
                     // 친구 초대
                     participantListView
+                    
                     
                     // 일정보기 버튼
                     Button(action: {}, label: {
@@ -215,13 +221,18 @@ extension MoimEditView {
                     .font(.pretendard(.bold, size: 15))
                     .foregroundStyle(Color.mainText)
                 Spacer()
-                    
+                
                 Button(action: {}) {
                     Image(asset: SharedDesignSystemAsset.Assets.icRight)
-                }                
+                }
             }
             
-            ParticipantListView()
+            FlexibleGridView(data: dummyFriends,
+                             horizontalSpacing: 12,
+                             verticalSpacing: 12) { string in
+                Participant(name: string, color: dummyColors.randomElement()!)
+            }
+
         }
     }
 }
