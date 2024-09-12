@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import SharedDesignSystem
 
 public struct TempView: View {
     
     public init() {}
     
     public var body: some View {
-        Text("temp")
+        VStack {
+            LoginButton(style: .kakao, action: {})
+            LoginButton(style: .naver, action: {})
+            LoginButton(style: .apple, action: {})
+        }
     }
-}
-
-#Preview {
-    TempView()
 }

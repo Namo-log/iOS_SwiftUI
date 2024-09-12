@@ -34,20 +34,6 @@
                ReferencedContainer = "container:DomainMoim.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83F3C73177F15328F983E7DE"
-               BuildableName = "libDomainMoimTesting.a"
-               BlueprintName = "DomainMoimTesting"
-               ReferencedContainer = "container:DomainMoim.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -56,16 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "11CF28F70B9C4767522B5FAA"
-               BuildableName = "DomainMoimTests.xctest"
-               BlueprintName = "DomainMoimTests"
-               ReferencedContainer = "container:DomainMoim.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

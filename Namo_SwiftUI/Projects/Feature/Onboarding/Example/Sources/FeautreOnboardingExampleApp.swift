@@ -11,3 +11,7 @@ struct FeatureFriendExampleApp: App {
         }
     }
 }
+
+#Preview {
+    TempView()
+}
