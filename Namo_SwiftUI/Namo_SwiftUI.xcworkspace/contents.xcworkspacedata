@@ -35,6 +35,9 @@
          <FileRef
             location = "group:Friend/DomainFriend.xcodeproj">
          </FileRef>
+         <FileRef
+            location = "group:Moim/DomainMoim.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "group:Feature"
@@ -44,6 +47,9 @@
          </FileRef>
          <FileRef
             location = "group:Friend/FeatureFriend.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Moim/FeatureMoim.xcodeproj">
          </FileRef>
       </Group>
       <Group

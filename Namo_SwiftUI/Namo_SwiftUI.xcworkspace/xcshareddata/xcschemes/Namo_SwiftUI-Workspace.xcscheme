@@ -28,6 +28,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "87EA802785C2DA6B58134CC2"
+               BuildableName = "Alamofire_Alamofire.bundle"
+               BlueprintName = "Alamofire_Alamofire"
+               ReferencedContainer = "container:Tuist/.build/tuist-derived/Alamofire/Alamofire.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "7CB5E98E45FAAF594F8A0F1E"
                BuildableName = "CasePaths.framework"
                BlueprintName = "CasePaths"
@@ -378,6 +392,62 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2DE302F05225823A90B5ED02"
+               BuildableName = "libDomainMoim.a"
+               BlueprintName = "DomainMoim"
+               ReferencedContainer = "container:Projects/Domain/Moim/DomainMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5B37807146784678A62F2616"
+               BuildableName = "libDomainMoimInterface.a"
+               BlueprintName = "DomainMoimInterface"
+               ReferencedContainer = "container:Projects/Domain/Moim/DomainMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "83F3C73177F15328F983E7DE"
+               BuildableName = "libDomainMoimTesting.a"
+               BlueprintName = "DomainMoimTesting"
+               ReferencedContainer = "container:Projects/Domain/Moim/DomainMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "11CF28F70B9C4767522B5FAA"
+               BuildableName = "DomainMoimTests.xctest"
+               BlueprintName = "DomainMoimTests"
+               ReferencedContainer = "container:Projects/Domain/Moim/DomainMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "787785524E0E998535524C4F"
                BuildableName = "FBLPromises.framework"
                BlueprintName = "FBLPromises"
@@ -564,6 +634,76 @@
                BuildableName = "FeatureFriendTests.xctest"
                BlueprintName = "FeatureFriendTests"
                ReferencedContainer = "container:Projects/Feature/Friend/FeatureFriend.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EB466F5BCB1418BA731F2104"
+               BuildableName = "libFeatureMoim.a"
+               BlueprintName = "FeatureMoim"
+               ReferencedContainer = "container:Projects/Feature/Moim/FeatureMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E11A7DC926FD3E8C192B03F5"
+               BuildableName = "FeatureMoimExample.app"
+               BlueprintName = "FeatureMoimExample"
+               ReferencedContainer = "container:Projects/Feature/Moim/FeatureMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "958B82544AD965DC7F7CDA79"
+               BuildableName = "libFeatureMoimInterface.a"
+               BlueprintName = "FeatureMoimInterface"
+               ReferencedContainer = "container:Projects/Feature/Moim/FeatureMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A56E946EBB82730A199AEA44"
+               BuildableName = "libFeatureMoimTesting.a"
+               BlueprintName = "FeatureMoimTesting"
+               ReferencedContainer = "container:Projects/Feature/Moim/FeatureMoim.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3FC6A75663B44186F9D028C8"
+               BuildableName = "FeatureMoimTests.xctest"
+               BlueprintName = "FeatureMoimTests"
+               ReferencedContainer = "container:Projects/Feature/Moim/FeatureMoim.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -2176,6 +2316,16 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "11CF28F70B9C4767522B5FAA"
+               BuildableName = "DomainMoimTests.xctest"
+               BlueprintName = "DomainMoimTests"
+               ReferencedContainer = "container:Projects/Domain/Moim/DomainMoim.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "94DA3011B0DAB0ADF8BDA7F0"
                BuildableName = "FeatureCategoryTests.xctest"
                BlueprintName = "FeatureCategoryTests"
@@ -2190,6 +2340,16 @@
                BuildableName = "FeatureFriendTests.xctest"
                BlueprintName = "FeatureFriendTests"
                ReferencedContainer = "container:Projects/Feature/Friend/FeatureFriend.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3FC6A75663B44186F9D028C8"
+               BuildableName = "FeatureMoimTests.xctest"
+               BlueprintName = "FeatureMoimTests"
+               ReferencedContainer = "container:Projects/Feature/Moim/FeatureMoim.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

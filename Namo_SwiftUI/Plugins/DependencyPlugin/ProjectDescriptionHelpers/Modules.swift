@@ -29,6 +29,7 @@ public extension ModulePath {
 	enum Feature: String, CaseIterable {
 		case Friend
 		case Category
+        case Moim
 		
 		public static let name: String = "Feature"
 	}
@@ -40,6 +41,7 @@ public extension ModulePath {
 	enum Domain: String, CaseIterable {
 		case Friend
 		case Category
+        case Moim
 		
 		public static let name: String = "Domain"
 	}
