@@ -74,7 +74,7 @@ extension LoginButton {
             case .naver:
                 return .init(hex: 0x03C75A)
             case .apple:
-                return .colorBlack
+                return .black
             }
         }
         
