@@ -7,11 +7,11 @@ struct FeatureFriendExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TempView()
+            OnboardingLoginView()
         }
     }
 }
 
 #Preview {
-    TempView()
+    OnboardingLoginView()
 }
