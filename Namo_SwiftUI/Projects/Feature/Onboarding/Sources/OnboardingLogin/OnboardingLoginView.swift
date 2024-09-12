@@ -29,7 +29,7 @@ public struct OnboardingLoginView: View {
                     .frame(width: 150, height: 150)
             }
             
-            Spacer()
+            Spacer(minLength: isSmallScreen(threshold: 680, for: \.height) ? nil : 138)
             
             VStack(spacing: 20) {
                 LoginButton(style: .kakao, action: {})
