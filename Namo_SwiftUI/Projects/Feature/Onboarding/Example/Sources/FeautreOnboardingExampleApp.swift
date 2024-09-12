@@ -13,5 +13,5 @@ struct FeatureFriendExampleApp: App {
 }
 
 #Preview {
-    OnboardingLoginView()
+    OnboardingTOSView()
 }

@@ -113,6 +113,7 @@
 		87D18FC425A3BF12153A140B /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9483DB5B96FABD81B074B9 /* Firebase.framework */; };
 		88D683F12C9362D600952FD1 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D683F02C9362D600952FD1 /* LoginButton.swift */; };
 		88D683F42C936E6300952FD1 /* OnboardingLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D683F32C936E6300952FD1 /* OnboardingLoginView.swift */; };
+		88D683FA2C93776600952FD1 /* OnboardingTOSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D683F92C93776600952FD1 /* OnboardingTOSView.swift */; };
 		8963D19C4FF61009E6531E4D /* Promises_FBLPromises.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE22B86C6F228A861BD6437A /* Promises_FBLPromises.bundle */; };
 		8A3D80FD9C894354DB32B25E /* libCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 263DAC7149EBA483E75E0F5E /* libCore.a */; };
 		8B52FBB74674A8F09A259CC4 /* GoogleUtilities_UserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADE5BBB59FB795A6033E04E /* GoogleUtilities_UserDefaults.framework */; };
@@ -386,6 +387,7 @@
 		88C4BCC8A404C098860E145C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		88D683F02C9362D600952FD1 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		88D683F32C936E6300952FD1 /* OnboardingLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginView.swift; sourceTree = "<group>"; };
+		88D683F92C93776600952FD1 /* OnboardingTOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTOSView.swift; sourceTree = "<group>"; };
 		8CBFF144092A070C5CF40065 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		8F962C6826C04DDFAB4A62B8 /* FeautreOnboardingExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeautreOnboardingExampleApp.swift; sourceTree = "<group>"; };
 		908D47C0552E240AE8CE6B10 /* GoogleUtilities_AppDelegateSwizzler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleUtilities_AppDelegateSwizzler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -889,9 +891,26 @@
 			path = SubView;
 			sourceTree = "<group>";
 		};
+		88D683F82C93766700952FD1 /* OnboardingTOS */ = {
+			isa = PBXGroup;
+			children = (
+				88D683FB2C93786700952FD1 /* SubView */,
+				88D683F92C93776600952FD1 /* OnboardingTOSView.swift */,
+			);
+			path = OnboardingTOS;
+			sourceTree = "<group>";
+		};
+		88D683FB2C93786700952FD1 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
 		938106E52E5D81080BDB5179 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				88D683F82C93766700952FD1 /* OnboardingTOS */,
 				88D683F22C936DCA00952FD1 /* OnboardingLogin */,
 				88D683EF2C9362AB00952FD1 /* Components */,
 				4389300FF6C0972870D3D55D /* FeatureOnboardingSource.swift */,
@@ -1145,6 +1164,7 @@
 			files = (
 				3F2A0987501FD54944CECD52 /* FeatureOnboardingSource.swift in Sources */,
 				88D683F42C936E6300952FD1 /* OnboardingLoginView.swift in Sources */,
+				88D683FA2C93776600952FD1 /* OnboardingTOSView.swift in Sources */,
 				88D683F12C9362D600952FD1 /* LoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
