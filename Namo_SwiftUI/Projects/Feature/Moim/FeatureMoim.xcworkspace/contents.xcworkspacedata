@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:../.."
+      name = "Projects">
+      <FileRef
+         location = "group:Core/Core.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Domain/Domain.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Shared/Shared.xcodeproj">
+      </FileRef>
+      <Group
+         location = "group:Core"
+         name = "Core">
+         <FileRef
+            location = "group:Network/CoreNetwork.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Domain"
+         name = "Domain">
+         <FileRef
+            location = "group:Friend/DomainFriend.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Moim/DomainMoim.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Feature"
+         name = "Feature">
+         <FileRef
+            location = "group:Friend/FeatureFriend.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Moim/FeatureMoim.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Shared"
+         name = "Shared">
+         <FileRef
+            location = "group:DesignSystem/SharedDesignSystem.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:ThirdPartyLib/SharedThirdPartyLib.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Util/SharedUtil.xcodeproj">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Dependencies">
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/Alamofire/Alamofire.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/Factory/Factory.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/Firebase/Firebase.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/FlowStacks/FlowStacks.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/GoogleAppMeasurement/GoogleAppMeasurement.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/GoogleDataTransport/GoogleDataTransport.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/GoogleUtilities/GoogleUtilities.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/KakaoMapsSDK-SPM/KakaoMapsSDK-SPM.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/KakaoOpenSDK/KakaoOpenSDK.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/Kingfisher/Kingfisher.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/Lottie/Lottie.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/Promises/Promises.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/SwiftUICalendar/SwiftUICalendar.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/TCACoordinators/TCACoordinators.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/combine-schedulers/combine-schedulers.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/leveldb/leveldb.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/nanopb/nanopb.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/naveridlogin-ios-sp/naveridlogin-ios-sp.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-case-paths/swift-case-paths.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-clocks/swift-clocks.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-collections/swift-collections.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-composable-architecture/swift-composable-architecture.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-concurrency-extras/swift-concurrency-extras.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-custom-dump/swift-custom-dump.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-dependencies/swift-dependencies.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-identified-collections/swift-identified-collections.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-navigation/swift-navigation.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-perception/swift-perception.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/swift-syntax/swift-syntax.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:../../../Tuist/.build/tuist-derived/xctest-dynamic-overlay/xctest-dynamic-overlay.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>

@@ -51,6 +51,9 @@
          <FileRef
             location = "group:Moim/FeatureMoim.xcodeproj">
          </FileRef>
+         <FileRef
+            location = "group:Onboarding/FeatureOnboarding.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "group:Shared"

@@ -30,6 +30,7 @@ public extension ModulePath {
 		case Friend
 		case Category
         case Moim
+        case Onboarding
 		
 		public static let name: String = "Feature"
 	}
