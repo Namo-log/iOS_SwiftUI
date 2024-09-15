@@ -13,13 +13,10 @@ public struct NamoPallete: View {
     let itemName: String
     let colors: [Color]
     
-    let columns = [
-            GridItem(.flexible()), 
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible())
-        ]
+    var columns: [GridItem] {
+        let columnCount = colors.count >= 5 ? 5 : colors.count
+        return Array(repeating: GridItem(.flexible()), count: columnCount)
+    }
     
     public init(itemName: String, colors: [Color]) {
         self.itemName = itemName
@@ -34,7 +31,7 @@ public struct NamoPallete: View {
             
             Spacer()
                 
-            LazyVGrid(columns: columns, spacing: 16) {
+            LazyVGrid(columns: columns, alignment: .trailing, spacing: 20) {
                 ForEach(colors, id: \.self) { color in
                     Circle()
                         .fill(color)

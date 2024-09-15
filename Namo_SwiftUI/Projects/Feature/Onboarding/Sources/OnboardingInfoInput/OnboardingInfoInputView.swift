@@ -42,6 +42,10 @@ public struct OnboardingInfoInputView: View {
             .padding(.horizontal, 30)
         }
         .padding(.vertical, 40)
+        .sheet(isPresented: $isShowingPalette) {
+            ProfileColorSelectView()
+                .presentationDetents([.height(300)])
+        }
         .namoToastView(isPresented: .constant(false), title: "색상과 필수 항목을 기재해주세요.")
     }
 }
