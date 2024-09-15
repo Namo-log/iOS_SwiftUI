@@ -99,6 +99,7 @@
 		4771EB76EDCA8FE2F0E9F262 /* GoogleDataTransport_GoogleDataTransport.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 7F5DF4EFF2ED22DD1728E139 /* GoogleDataTransport_GoogleDataTransport.bundle */; };
 		479D8CB74E6706EAE7D907C4 /* DependenciesMacros.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71832246A8C9A7836736A7D1 /* DependenciesMacros.framework */; };
 		47B22BA52C940115009A4073 /* DiaryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B22BA42C940115009A4073 /* DiaryEditView.swift */; };
+		47E9BD2E2C96AFF100090CB4 /* ParticipantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E9BD2D2C96AFF100090CB4 /* ParticipantListView.swift */; };
 		47FB7808E0B358DC96E8AA38 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 839B6F74B4E22F7EF30B0111 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle */; };
 		4AA743DAF2880E11EECC2BE1 /* FirebaseRemoteConfigInterop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFFD193B82672BFE6218EA3 /* FirebaseRemoteConfigInterop.framework */; };
 		4ABA59A9EEF80FE8FE017303 /* KakaoSDKTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB417AAABD148808389A782 /* KakaoSDKTalk.framework */; };
@@ -610,6 +611,7 @@
 		46D6CAC051E9BA0A21230434 /* libSharedUtil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedUtil.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		470314142C91CBA900B46439 /* FlexibleGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleGridView.swift; sourceTree = "<group>"; };
 		47B22BA42C940115009A4073 /* DiaryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEditView.swift; sourceTree = "<group>"; };
+		47E9BD2D2C96AFF100090CB4 /* ParticipantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantListView.swift; sourceTree = "<group>"; };
 		4864C8651CBD821D7D30EBB6 /* FlowStacks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlowStacks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B72C6A2975F4848B467D3E /* FriendInviteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInviteListView.swift; sourceTree = "<group>"; };
 		490CBD00C71BC9A9347234F8 /* MoimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimView.swift; sourceTree = "<group>"; };
@@ -1079,6 +1081,7 @@
 			isa = PBXGroup;
 			children = (
 				47B22BA42C940115009A4073 /* DiaryEditView.swift */,
+				47E9BD2D2C96AFF100090CB4 /* ParticipantListView.swift */,
 			);
 			path = MoimRecord;
 			sourceTree = "<group>";
@@ -1741,6 +1744,7 @@
 				F6D94BD29B2306660F9F550E /* MoimRequestList.swift in Sources */,
 				47B22BA52C940115009A4073 /* DiaryEditView.swift in Sources */,
 				27B45BBF19D628CFD95D2F19 /* MoimRequestView.swift in Sources */,
+				47E9BD2E2C96AFF100090CB4 /* ParticipantListView.swift in Sources */,
 				BF18090A59436AF6E903AB28 /* MoimEditView.swift in Sources */,
 				470314152C91CBA900B46439 /* FlexibleGridView.swift in Sources */,
 				D4428FE9D0FE71F579CCC602 /* Participant.swift in Sources */,
