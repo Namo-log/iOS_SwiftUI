@@ -18,6 +18,8 @@ public struct OnboardingInfoInputView: View {
             Text("프로필 설정")
                 .font(.pretendard(.regular, size: 20))
                 .foregroundColor(.colorBlack)
+            
+            ProfileImageInputView()
         }
     }
 }
