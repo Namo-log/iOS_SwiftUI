@@ -1,25 +1,27 @@
 //
 //  NamoButton.swift
-//  FeatureOnboarding
+//  SharedDesignSystem
 //
-//  Created by 박민서 on 9/15/24.
+//  Created by 박민서 on 9/16/24.
 //
 
 import SwiftUI
 
-import SharedUtil
-import SharedDesignSystem
-
-// TODO: 추후 SharedDesignSystem으로 이전 필요
 /// App 전역에서 사용되는 커스텀 버튼 입니다.
 public struct NamoButton: View {
-    
+    /// 버튼 라벨 텍스트
     var title: String
+    /// 버튼 라벨 텍스트 폰트
     var font: Font
+    /// 버튼 cornerRadii
     var cornerRadius: CGFloat
+    /// 버튼 라벨 - 배경 간의 verticalPadding
     var verticalPadding: CGFloat
+    /// Namo 버튼 타입
     var type: NamoButtonType
+    /// 화면 밑에 붙는 직사각형 버튼인 경우 true
     var isBottomButton: Bool
+    /// 버튼 액션
     var action: () -> Void
     
     public init(
