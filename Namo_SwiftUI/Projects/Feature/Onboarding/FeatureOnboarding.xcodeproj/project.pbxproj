@@ -117,6 +117,7 @@
 		83BFD1145D450A74B54BC601 /* FirebaseCoreExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DE0BA00C1748A6873ED0BA /* FirebaseCoreExtension.framework */; };
 		87D18FC425A3BF12153A140B /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9483DB5B96FABD81B074B9 /* Firebase.framework */; };
 		88D684082C973C7000952FD1 /* ProfileImageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D684072C973C7000952FD1 /* ProfileImageInputView.swift */; };
+		88D6840A2C9740BE00952FD1 /* ProfileInfoInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D684092C9740BE00952FD1 /* ProfileInfoInputView.swift */; };
 		8963D19C4FF61009E6531E4D /* Promises_FBLPromises.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE22B86C6F228A861BD6437A /* Promises_FBLPromises.bundle */; };
 		8A3D80FD9C894354DB32B25E /* libCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 263DAC7149EBA483E75E0F5E /* libCore.a */; };
 		8B52FBB74674A8F09A259CC4 /* GoogleUtilities_UserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADE5BBB59FB795A6033E04E /* GoogleUtilities_UserDefaults.framework */; };
@@ -393,6 +394,7 @@
 		87B8E92999972BF1B2C5811C /* UIKitNavigationShim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIKitNavigationShim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C4BCC8A404C098860E145C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		88D684072C973C7000952FD1 /* ProfileImageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageInputView.swift; sourceTree = "<group>"; };
+		88D684092C9740BE00952FD1 /* ProfileInfoInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoInputView.swift; sourceTree = "<group>"; };
 		8928D002EA79F2AEBFE6D7C6 /* OnboardingTOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTOSView.swift; sourceTree = "<group>"; };
 		8CBFF144092A070C5CF40065 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		8F962C6826C04DDFAB4A62B8 /* FeautreOnboardingExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeautreOnboardingExampleApp.swift; sourceTree = "<group>"; };
@@ -906,6 +908,7 @@
 			isa = PBXGroup;
 			children = (
 				88D684072C973C7000952FD1 /* ProfileImageInputView.swift */,
+				88D684092C9740BE00952FD1 /* ProfileInfoInputView.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -1210,6 +1213,7 @@
 				DC4AC3BDD4FD790ABA7148D1 /* OnboardingSplashView.swift in Sources */,
 				3C2667C5F21FC0FBC39BAEE4 /* OnboardingTOSView.swift in Sources */,
 				62E015E5E126035893731CA6 /* TOSListView.swift in Sources */,
+				88D6840A2C9740BE00952FD1 /* ProfileInfoInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

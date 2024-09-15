@@ -20,6 +20,11 @@ public struct OnboardingInfoInputView: View {
                 .foregroundColor(.colorBlack)
             
             ProfileImageInputView()
+                .padding()
+            
+            ProfileInfoInputView(name: "test")
+                .padding(.horizontal, 30)
+                .padding(.vertical)
         }
     }
 }
