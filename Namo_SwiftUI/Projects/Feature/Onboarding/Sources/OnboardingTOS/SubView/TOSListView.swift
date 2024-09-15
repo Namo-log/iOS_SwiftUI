@@ -15,16 +15,20 @@ struct TOSListView: View {
     var body: some View {
         VStack {
             CheckItem(agreementItem: .init(title: "전체 동의"), toggleValue: .constant(true))
-
-            Rectangle()
-                .fill(Color(asset: SharedDesignSystemAsset.Assets.textPlaceholder))
-                .frame(width: screenWidth-90, height: 0.5)
+            
+            Divider()
+                .foregroundStyle(Color.textPlaceholder)
+                .frame(height: 1.5)
             
             CheckItem(agreementItem: .init(title: "이용 약관", url: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", isRequired: true), toggleValue: .constant(true))
             
+            CheckItem(agreementItem: .init(title: "개인정보 수집 및 이용", url: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32"), toggleValue: .constant(true))
+            
             CheckItem(agreementItem: .init(title: "위치 서비스 이용 약관", isRequired: false), toggleValue: .constant(false))
+            
+            CheckItem(agreementItem: .init(title: "앱 푸쉬 알림 수신 동의", isRequired: false), toggleValue: .constant(false))
         }
-        .frame(width: screenWidth-90)
+        .padding(.horizontal, 45)
     }
 }
 
@@ -90,7 +94,3 @@ extension TOSListView {
         }
     }
 }
-
-//            CheckItem(toggleText: "(필수) 이용약관", linkURL: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", toggleValue: $agreeVM.state.required1)
-//
-//            CheckItem(toggleText: "(필수) 개인정보 수집 및 이용", linkURL: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32", toggleValue: $agreeVM.state.required2)
