@@ -17,27 +17,22 @@ public struct OnboardingTOSView: View {
             
             Spacer()
             
-            if #available(iOS 17.0, *) {
-                Text("서비스 이용을 위한 ")
-                    .foregroundStyle(Color.colorBlack)
-                    .font(Font.pretendard(.regular, size: 18))
-                + Text("약관 동의")
-                    .foregroundStyle(Color.colorBlack)
-                    .font(Font.pretendard(.bold, size: 18))
-            } else {
-                Text("서비스 이용을 위한 ")
-                    .foregroundColor(.colorBlack)
-                    .font(Font.pretendard(.regular, size: 18))
-                + Text("약관 동의")
-                    .foregroundColor(.colorBlack)
-                    .font(Font.pretendard(.bold, size: 18))
-            }
+            Text("서비스 이용을 위한 ")
+                .foregroundColor(.colorBlack)
+                .font(Font.pretendard(.regular, size: 18))
+            + Text("약관 동의")
+                .foregroundColor(.colorBlack)
+                .font(Font.pretendard(.bold, size: 18))
             
             TOSListView()
             
             Spacer()
             
-            Button("희희", action: {})
+            NamoButton(title: "확인", type: .next, action: {
+                print("확인")
+            })
+            .padding(.horizontal, 25)
+            
         }
         .padding(.bottom, 40)
     }
