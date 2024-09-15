@@ -33,8 +33,8 @@ struct TOSListView: View {
 }
 
 extension TOSListView {
-    
-    /// 약관 동의에 사용되는 약관 모델입니다. - 추후 Domain으로 이관 예정
+    // TODO: 추후 Domain으로 이전 필요
+    /// 약관 동의에 사용되는 약관 모델입니다.
     public struct AgreementItem {
         /// 약관 제목
         public let title: String

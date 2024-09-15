@@ -10,6 +10,7 @@ import SwiftUI
 import SharedUtil
 import SharedDesignSystem
 
+// TODO: 추후 SharedDesignSystem으로 이전 필요
 /// App 전역에서 사용되는 커스텀 버튼 입니다.
 public struct NamoButton: View {
     

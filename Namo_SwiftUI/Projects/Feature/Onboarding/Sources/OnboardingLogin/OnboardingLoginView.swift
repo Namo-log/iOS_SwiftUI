@@ -16,7 +16,7 @@ public struct OnboardingLoginView: View {
     public var body: some View {
         
         VStack {
-            
+            // TODO: 추후 화면 사이즈별 대응 디자인 기준 적용 필요
             Spacer(minLength: isSmallScreen(threshold: 680, for: \.height) ? nil : 170)
             
             VStack(spacing: 34) {
