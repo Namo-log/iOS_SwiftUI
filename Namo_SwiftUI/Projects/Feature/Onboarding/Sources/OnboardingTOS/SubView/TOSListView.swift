@@ -14,31 +14,15 @@ struct TOSListView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Image(asset: toggle ? SharedDesignSystemAsset.Assets.isSelectedTrue : SharedDesignSystemAsset.Assets.isSelectedFalse)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
-                    .onTapGesture {
-                        // 전체 동의 버튼 탭
-                        toggle.toggle()
-                    }
-                Text("전체 동의")
-                    .padding(.leading)
-                    .font(Font.pretendard(.regular, size: 18))
-                
-                Spacer()
-            }
-            .padding(.leading, 15)
-            .padding(.bottom, 20)
-            
+            CheckItem(agreementItem: .init(title: "전체 동의"), toggleValue: .constant(true))
+
             Rectangle()
                 .fill(Color(asset: SharedDesignSystemAsset.Assets.textPlaceholder))
                 .frame(width: screenWidth-90, height: 0.5)
             
-//            CheckItem(toggleText: "(필수) 이용약관", linkURL: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", toggleValue: $agreeVM.state.required1)
-//            
-//            CheckItem(toggleText: "(필수) 개인정보 수집 및 이용", linkURL: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32", toggleValue: $agreeVM.state.required2)
+            CheckItem(agreementItem: .init(title: "이용 약관", url: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", isRequired: true), toggleValue: .constant(true))
+            
+            CheckItem(agreementItem: .init(title: "위치 서비스 이용 약관", isRequired: false), toggleValue: .constant(false))
         }
         .frame(width: screenWidth-90)
     }
@@ -46,59 +30,67 @@ struct TOSListView: View {
 
 extension TOSListView {
     
-    /// 약관 동의에 사용되는 약관 모델입니다.
+    /// 약관 동의에 사용되는 약관 모델입니다. - 추후 Domain으로 이관 예정
     public struct AgreementItem {
         /// 약관 제목
         public let title: String
         /// 약관 링크
         public let URL: String?
         /// 필수 여부
-        public let isRequired: Bool
+        public let isRequired: Bool?
+        /// 필수 여부에 따라 작성된 제목
+        public var formattedTitle: String {
+            guard let isRequired else { return title }
+            let desc = isRequired ? "(필수)" : "(선택)"
+            return "\(desc) \(title)"
+        }
+        /// init
+        public init(title: String, url: String? = nil, isRequired: Bool? = nil) {
+            self.title = title
+            self.URL = url
+            self.isRequired = isRequired
+        }
     }
     
     /// 약관 목록 아이템뷰입니다.
     struct CheckItem: View {
         
-        let text: String
-        let linkURL: String?
+        let agreementItem: AgreementItem
         @Binding var toggleValue: Bool
         
         var body: some View {
-            
-            VStack {
-                HStack {
-                    Image(asset: toggleValue ? SharedDesignSystemAsset.Assets.isSelectedTrue : SharedDesignSystemAsset.Assets.isSelectedFalse)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20, height: 20)
-                        .onTapGesture {
-                            toggleValue.toggle()
-                        }
-                    
-                    Group {
-                        Text(text)
-                            .font(Font.pretendard(.regular, size: 18))
-                            .padding(.leading)
-                        
-                        Spacer()
-                        
-                        Image(asset: SharedDesignSystemAsset.Assets.arrowBasic)
-                            .hidden(linkURL == nil)
-                    }
+            HStack(alignment: .center, spacing: 16) {
+                Image(asset: toggleValue ? SharedDesignSystemAsset.Assets.isSelectedTrue : SharedDesignSystemAsset.Assets.isSelectedFalse)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
                     .onTapGesture {
-                        if let urlString = linkURL, let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-                            
+                        toggleValue.toggle()
+                    }
+                
+                Text(agreementItem.formattedTitle)
+                    .lineLimit(1)
+                    .foregroundStyle(Color.colorBlack)
+                    .font(Font.pretendard(.regular, size: 18))
+                
+                Spacer(minLength: 0)
+                
+                Image(asset: SharedDesignSystemAsset.Assets.arrowBasic)
+                    .hidden(agreementItem.URL == nil)
+                    .onTapGesture {
+                        if let urlString = agreementItem.URL, let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
                             DispatchQueue.main.async {
                                 UIApplication.shared.open(url)
                             }
                         }
                     }
-                    .disabled(linkURL == nil)
-                }
-                .padding(.top, 20)
-                .padding(.leading, 15)
+                    .disabled(agreementItem.URL == nil)
             }
-            .frame(width: screenWidth - 90)
+            .padding(/*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
         }
     }
 }
+
+//            CheckItem(toggleText: "(필수) 이용약관", linkURL: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", toggleValue: $agreeVM.state.required1)
+//
+//            CheckItem(toggleText: "(필수) 개인정보 수집 및 이용", linkURL: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32", toggleValue: $agreeVM.state.required2)
