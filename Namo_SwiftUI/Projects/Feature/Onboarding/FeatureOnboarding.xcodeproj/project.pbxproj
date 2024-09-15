@@ -121,6 +121,7 @@
 		88D6840C2C975BAC00952FD1 /* NamoPallete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6840B2C975BAC00952FD1 /* NamoPallete.swift */; };
 		88D6840E2C97635E00952FD1 /* ProfileColorSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6840D2C97635E00952FD1 /* ProfileColorSelectView.swift */; };
 		88D684112C976BEB00952FD1 /* OnboardingCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D684102C976BEB00952FD1 /* OnboardingCompleteView.swift */; };
+		88D684142C976D1700952FD1 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D684132C976D1700952FD1 /* ProfileCardView.swift */; };
 		8963D19C4FF61009E6531E4D /* Promises_FBLPromises.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE22B86C6F228A861BD6437A /* Promises_FBLPromises.bundle */; };
 		8A3D80FD9C894354DB32B25E /* libCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 263DAC7149EBA483E75E0F5E /* libCore.a */; };
 		8B52FBB74674A8F09A259CC4 /* GoogleUtilities_UserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADE5BBB59FB795A6033E04E /* GoogleUtilities_UserDefaults.framework */; };
@@ -401,6 +402,7 @@
 		88D6840B2C975BAC00952FD1 /* NamoPallete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoPallete.swift; sourceTree = "<group>"; };
 		88D6840D2C97635E00952FD1 /* ProfileColorSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileColorSelectView.swift; sourceTree = "<group>"; };
 		88D684102C976BEB00952FD1 /* OnboardingCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteView.swift; sourceTree = "<group>"; };
+		88D684132C976D1700952FD1 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
 		8928D002EA79F2AEBFE6D7C6 /* OnboardingTOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTOSView.swift; sourceTree = "<group>"; };
 		8CBFF144092A070C5CF40065 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		8F962C6826C04DDFAB4A62B8 /* FeautreOnboardingExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeautreOnboardingExampleApp.swift; sourceTree = "<group>"; };
@@ -923,9 +925,18 @@
 		88D6840F2C976B1B00952FD1 /* OnboardingComplete */ = {
 			isa = PBXGroup;
 			children = (
+				88D684122C976D0500952FD1 /* SubView */,
 				88D684102C976BEB00952FD1 /* OnboardingCompleteView.swift */,
 			);
 			path = OnboardingComplete;
+			sourceTree = "<group>";
+		};
+		88D684122C976D0500952FD1 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				88D684132C976D1700952FD1 /* ProfileCardView.swift */,
+			);
+			path = SubView;
 			sourceTree = "<group>";
 		};
 		938106E52E5D81080BDB5179 /* Sources */ = {
@@ -1223,6 +1234,7 @@
 			files = (
 				5B105B05C3A6958D6FA9ABE7 /* NamoButton.swift in Sources */,
 				3F2A0987501FD54944CECD52 /* FeatureOnboardingSource.swift in Sources */,
+				88D684142C976D1700952FD1 /* ProfileCardView.swift in Sources */,
 				88D684082C973C7000952FD1 /* ProfileImageInputView.swift in Sources */,
 				88D6840C2C975BAC00952FD1 /* NamoPallete.swift in Sources */,
 				88D684112C976BEB00952FD1 /* OnboardingCompleteView.swift in Sources */,

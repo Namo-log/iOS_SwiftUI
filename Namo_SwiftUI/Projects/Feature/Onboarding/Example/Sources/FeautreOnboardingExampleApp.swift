@@ -7,7 +7,7 @@ struct FeatureFriendExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingInfoInputView()
+            OnboardingCompleteView()
         }
     }
 }

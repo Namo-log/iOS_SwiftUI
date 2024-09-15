@@ -14,6 +14,7 @@ public struct ProfileInfoInputView: View {
     var name: String?
     var birthDate: Date?
     var bio: String?
+    var favoriteColor: Color?
     
     public init(nickname: String? = nil, name: String?, birthDate: Date? = nil, bio: String? = nil) {
         self.nickname = nickname
