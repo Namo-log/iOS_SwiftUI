@@ -28,7 +28,7 @@ public struct OnboardingTOSView: View {
             
             Spacer()
             
-            NamoButton(title: "확인", type: .next, action: {
+            NamoButton(title: "확인", type: .active, action: {
                 print("확인")
             })
             .padding(.horizontal, 25)

@@ -30,6 +30,7 @@ public struct OnboardingSplashView: View {
             
             Image(asset: SharedDesignSystemAsset.Assets.logo)
         }
+        .ignoresSafeArea()
         .namoAlertView(
             isPresented: $showUpdateRequired,
             title: "업데이트가 필요합니다.",

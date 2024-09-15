@@ -22,7 +22,7 @@ struct TOSListView: View {
             
             CheckItem(agreementItem: .init(title: "이용 약관", url: "https://agreeable-streetcar-8e8.notion.site/30d9c6cf5b9f414cb624780360d2da8c", isRequired: true), toggleValue: .constant(true))
             
-            CheckItem(agreementItem: .init(title: "개인정보 수집 및 이용", url: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32"), toggleValue: .constant(true))
+            CheckItem(agreementItem: .init(title: "개인정보 수집 및 이용", url: "https://agreeable-streetcar-8e8.notion.site/ca8d93c7a4ef4ad98fd6169c444a5f32", isRequired: true), toggleValue: .constant(true))
             
             CheckItem(agreementItem: .init(title: "위치 서비스 이용 약관", isRequired: false), toggleValue: .constant(false))
             
