@@ -11,6 +11,8 @@ import SharedUtil
 
 public struct OnboardingInfoInputView: View {
     
+    @State private var isShowingPalette = false
+    
     public init() {}
     
     public var body: some View {
@@ -33,7 +35,9 @@ public struct OnboardingInfoInputView: View {
                 Text("＊표시는 필수 항목입니다.")
                     .font(.pretendard(.regular, size: 14))
                     .foregroundColor(.mainText)
-                NamoButton(title: "확인", type: .active, action: {})
+                NamoButton(title: "확인", type: .active, action: {
+                    isShowingPalette.toggle()
+                })
             }
             .padding(.horizontal, 30)
         }
