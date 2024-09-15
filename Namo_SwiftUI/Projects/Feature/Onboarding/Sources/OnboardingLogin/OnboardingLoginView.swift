@@ -17,7 +17,7 @@ public struct OnboardingLoginView: View {
         
         VStack {
             
-            Spacer()
+            Spacer(minLength: isSmallScreen(threshold: 680, for: \.height) ? nil : 170)
             
             VStack(spacing: 34) {
                 Text("나의 모임 기록 ")
@@ -32,12 +32,14 @@ public struct OnboardingLoginView: View {
             Spacer(minLength: isSmallScreen(threshold: 680, for: \.height) ? nil : 138)
             
             VStack(spacing: 20) {
-                LoginButton(style: .kakao, action: {})
+                LoginButton(style: .kakao, action: {
+                    print(screenHeight)
+                })
                 LoginButton(style: .naver, action: {})
                 LoginButton(style: .apple, action: {})
             }
             
-            Spacer()
+            Spacer(minLength: isSmallScreen(threshold: 680, for: \.height) ? nil : 83)
         }
     }
 }
