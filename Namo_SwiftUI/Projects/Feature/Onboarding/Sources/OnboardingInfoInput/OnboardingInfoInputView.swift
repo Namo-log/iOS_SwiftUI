@@ -15,16 +15,29 @@ public struct OnboardingInfoInputView: View {
     
     public var body: some View {
         VStack {
-            Text("프로필 설정")
-                .font(.pretendard(.regular, size: 20))
-                .foregroundColor(.colorBlack)
+            VStack(spacing: 40) {
+                Text("프로필 설정")
+                    .font(.pretendard(.regular, size: 20))
+                    .foregroundColor(.colorBlack)
+                
+                ProfileImageInputView()
+                
+                ProfileInfoInputView(name: "test")
+                    .padding(.horizontal, 30)
+                    .padding(.vertical)
+            }
             
-            ProfileImageInputView()
-                .padding()
+            Spacer()
             
-            ProfileInfoInputView(name: "test")
-                .padding(.horizontal, 30)
-                .padding(.vertical)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("＊표시는 필수 항목입니다.")
+                    .font(.pretendard(.regular, size: 14))
+                    .foregroundColor(.mainText)
+                NamoButton(title: "확인", type: .active, action: {})
+            }
+            .padding(.horizontal, 30)
         }
+        .padding(.vertical, 40)
+        .namoToastView(isPresented: .constant(false), title: "색상과 필수 항목을 기재해주세요.")
     }
 }
