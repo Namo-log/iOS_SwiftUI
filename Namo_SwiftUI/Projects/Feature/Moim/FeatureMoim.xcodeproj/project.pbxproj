@@ -33,7 +33,6 @@
 		14F631C3F4C05BE124EDF818 /* FirebaseSessionsObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67733A970C504915BE711482 /* FirebaseSessionsObjC.framework */; };
 		161C2B339E743D62A0CA1248 /* KakaoSDKTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE7E2549801CB0900A2052E /* KakaoSDKTemplate.framework */; };
 		17493EB82BD7B1EECF3A5CB4 /* Factory_Factory.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = D6CD2A5CA4F841AF09ED0A38 /* Factory_Factory.bundle */; };
-		1752CE514F6E392C5AA3EF8B /* ParticipantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3017461D65EEF7EA01373A /* ParticipantListView.swift */; };
 		17F6CB0E81452401C2111575 /* SharedDesignSystem_SharedDesignSystem.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 874D73DF0699E6DA38C6C187 /* SharedDesignSystem_SharedDesignSystem.bundle */; };
 		199BF403484CE723F8EADDF6 /* KakaoOpenSDK_KakaoSDKCommon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A2D3C8D4EC531E323CB0DE32 /* KakaoOpenSDK_KakaoSDKCommon.bundle */; };
 		1A6A63BC762189B31AD0D167 /* Lottie_Lottie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 284F14D724A773DF43923E75 /* Lottie_Lottie.bundle */; };
@@ -99,6 +98,8 @@
 		470314152C91CBA900B46439 /* FlexibleGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470314142C91CBA900B46439 /* FlexibleGridView.swift */; };
 		4771EB76EDCA8FE2F0E9F262 /* GoogleDataTransport_GoogleDataTransport.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 7F5DF4EFF2ED22DD1728E139 /* GoogleDataTransport_GoogleDataTransport.bundle */; };
 		479D8CB74E6706EAE7D907C4 /* DependenciesMacros.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71832246A8C9A7836736A7D1 /* DependenciesMacros.framework */; };
+		47B22BA52C940115009A4073 /* DiaryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B22BA42C940115009A4073 /* DiaryEditView.swift */; };
+		47E9BD2E2C96AFF100090CB4 /* ParticipantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E9BD2D2C96AFF100090CB4 /* ParticipantListView.swift */; };
 		47FB7808E0B358DC96E8AA38 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 839B6F74B4E22F7EF30B0111 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle */; };
 		4AA743DAF2880E11EECC2BE1 /* FirebaseRemoteConfigInterop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFFD193B82672BFE6218EA3 /* FirebaseRemoteConfigInterop.framework */; };
 		4ABA59A9EEF80FE8FE017303 /* KakaoSDKTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB417AAABD148808389A782 /* KakaoSDKTalk.framework */; };
@@ -609,6 +610,8 @@
 		46AC44C12FEC309061E96432 /* Firebase_FirebaseCrashlytics.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Firebase_FirebaseCrashlytics.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D6CAC051E9BA0A21230434 /* libSharedUtil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedUtil.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		470314142C91CBA900B46439 /* FlexibleGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleGridView.swift; sourceTree = "<group>"; };
+		47B22BA42C940115009A4073 /* DiaryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEditView.swift; sourceTree = "<group>"; };
+		47E9BD2D2C96AFF100090CB4 /* ParticipantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantListView.swift; sourceTree = "<group>"; };
 		4864C8651CBD821D7D30EBB6 /* FlowStacks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlowStacks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B72C6A2975F4848B467D3E /* FriendInviteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInviteListView.swift; sourceTree = "<group>"; };
 		490CBD00C71BC9A9347234F8 /* MoimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimView.swift; sourceTree = "<group>"; };
@@ -690,7 +693,6 @@
 		A83854834DF7DBDBCD9084C2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		A84624454C90A97E8278A6B8 /* UIKitNavigationShim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIKitNavigationShim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9814BA6FD6947FC0B1DBEA3 /* FeatureMoimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeatureMoimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA3017461D65EEF7EA01373A /* ParticipantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantListView.swift; sourceTree = "<group>"; };
 		AB9D4B026E18970C1720DB5A /* KakaoSDKCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KakaoSDKCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC49F2E2001795E3D9C89FA8 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD29176A40290A49E9E296BC /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
@@ -1075,6 +1077,15 @@
 			path = "naveridlogin-ios-sp";
 			sourceTree = "<group>";
 		};
+		47B22BA32C93FD6B009A4073 /* MoimRecord */ = {
+			isa = PBXGroup;
+			children = (
+				47B22BA42C940115009A4073 /* DiaryEditView.swift */,
+				47E9BD2D2C96AFF100090CB4 /* ParticipantListView.swift */,
+			);
+			path = MoimRecord;
+			sourceTree = "<group>";
+		};
 		50CB43458001A75C53CD6CA1 /* KakaoSDKCertCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1269,6 +1280,7 @@
 			isa = PBXGroup;
 			children = (
 				660160215287AE1426FF2A37 /* FriendInvite */,
+				47B22BA32C93FD6B009A4073 /* MoimRecord */,
 				C29618DC268FB489395EAC91 /* MoimList */,
 				AB11A7E71C82174C7F7DDCDA /* MoimRequest */,
 				E0856FED63CAB5394820DDA7 /* MoimScheldule */,
@@ -1452,7 +1464,6 @@
 			children = (
 				9D9F2CB26C53401197F9F99C /* MoimEditView.swift */,
 				C4EEF27263954463D1485666 /* Participant.swift */,
-				AA3017461D65EEF7EA01373A /* ParticipantListView.swift */,
 			);
 			path = MoimScheldule;
 			sourceTree = "<group>";
@@ -1731,11 +1742,12 @@
 				F27431EB2B33BB2511FC5FB5 /* MoimView.swift in Sources */,
 				E8AFD302A3F68857D6A22B7B /* MoimRequestItem.swift in Sources */,
 				F6D94BD29B2306660F9F550E /* MoimRequestList.swift in Sources */,
+				47B22BA52C940115009A4073 /* DiaryEditView.swift in Sources */,
 				27B45BBF19D628CFD95D2F19 /* MoimRequestView.swift in Sources */,
+				47E9BD2E2C96AFF100090CB4 /* ParticipantListView.swift in Sources */,
 				BF18090A59436AF6E903AB28 /* MoimEditView.swift in Sources */,
 				470314152C91CBA900B46439 /* FlexibleGridView.swift in Sources */,
 				D4428FE9D0FE71F579CCC602 /* Participant.swift in Sources */,
-				1752CE514F6E392C5AA3EF8B /* ParticipantListView.swift in Sources */,
 				7B864FDE46C887164BA54F10 /* EmptyListView.swift in Sources */,
 				44461D6B2A49E2CE56828C08 /* SectionTabBar.swift in Sources */,
 			);
