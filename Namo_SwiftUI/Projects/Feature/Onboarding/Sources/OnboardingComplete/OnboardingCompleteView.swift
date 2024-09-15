@@ -14,6 +14,9 @@ public struct OnboardingCompleteView: View {
     
     public var body: some View {
         VStack {
+            
+            Spacer()
+            
             VStack(spacing: 16) {
                 Text("회원 가입이 완료되었습니다")
                     .font(.pretendard(.regular, size: 20))
@@ -26,6 +29,12 @@ public struct OnboardingCompleteView: View {
             
             ProfileCardView()
                 .padding(.horizontal, 30)
+            
+            Spacer()
+            
+            NamoButton(title: "확인", type: .active, action: {})
+                .padding(.horizontal, 25)
         }
+        .padding(.vertical, 40)
     }
 }
