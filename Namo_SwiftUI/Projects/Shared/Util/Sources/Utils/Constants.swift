@@ -27,3 +27,7 @@ public let tabBarHeight: CGFloat = 80
 public let version = Bundle.main.infoDictionary? ["CFBundleShortVersionString"] as! String
 public let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
 
+public func isSmallScreen(threshold: CGFloat, for dimension: KeyPath<CGSize, CGFloat>) -> Bool {
+    let screenSize = UIScreen.main.bounds.size
+    return screenSize[keyPath: dimension] <= threshold
+}

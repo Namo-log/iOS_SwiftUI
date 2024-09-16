@@ -10,6 +10,7 @@
 		07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A3E161538D2D46ADEF08D /* Colors.swift */; };
 		0BC53F14B3A6114E15A790F5 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8DBC2CA35B8EE9D5FEEAA648 /* Pretendard-Medium.otf */; };
 		0F23932EC063B2B33390439A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9D8AF760EE44718D2C0F3F5 /* Pretendard-Bold.otf */; };
+		41E084D9B5E72BE03194185A /* NamoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C7492B1EF98968D4C6E95 /* NamoButton.swift */; };
 		44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */; };
 		45421FB4E91C42BBC20A6B29 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15F691BDF39B8930D3503F /* Font+.swift */; };
 		472D66852B34E518A56E9BDA /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87442A3E23D980B38BD32C1F /* CheckButton.swift */; };
@@ -83,6 +84,7 @@
 		8DBC2CA35B8EE9D5FEEAA648 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		8F363D8F5EF636163B77F05D /* TuistFonts+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistFonts+SharedDesignSystem.swift"; sourceTree = "<group>"; };
 		A1958EB17850057CC45BDBBD /* SharedDesignSystem_SharedDesignSystem-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SharedDesignSystem_SharedDesignSystem-Info.plist"; sourceTree = "<group>"; };
+		A94C7492B1EF98968D4C6E95 /* NamoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamoButton.swift; sourceTree = "<group>"; };
 		B35F28151A7CC43C670BB9A4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B9EEA2C2EF34E576E34E8062 /* TuistBundle+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+SharedDesignSystem.swift"; sourceTree = "<group>"; };
 		C77A3E161538D2D46ADEF08D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				BA5F0ED81DB55AF2365D0E31 /* NavBar */,
 				61845D3817783BEC0F9A656E /* Popup */,
 				A8E821C45E596BD51DB23D53 /* Toast */,
+				A94C7492B1EF98968D4C6E95 /* NamoButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				472D66852B34E518A56E9BDA /* CheckButton.swift in Sources */,
 				89FE99A7EE512CB8061AB16E /* FloatingButton.swift in Sources */,
 				B3C5B821F52ADDF66AEB16F0 /* NamoDialogModifier.swift in Sources */,
+				41E084D9B5E72BE03194185A /* NamoButton.swift in Sources */,
 				7B8FF1BFEEE9C5ED58D1028B /* NamoNabBarModifier.swift in Sources */,
 				D6C64BF2D97CD82B3244222D /* NamoPopupView.swift in Sources */,
 				5499DEB0FC4E5AB35CEF18BE /* NamoToastViewModifier.swift in Sources */,
