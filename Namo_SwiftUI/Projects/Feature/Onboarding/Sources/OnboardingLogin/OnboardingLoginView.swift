@@ -8,10 +8,15 @@
 import SwiftUI
 import SharedDesignSystem
 import SharedUtil
+import ComposableArchitecture
 
 public struct OnboardingLoginView: View {
     
-    public init() {}
+    public let store: StoreOf<OnboardingLoginStore>
+    
+    public init(store: StoreOf<OnboardingLoginStore>) {
+        self.store = store
+    }
     
     public var body: some View {
         
@@ -33,10 +38,14 @@ public struct OnboardingLoginView: View {
             
             VStack(spacing: 20) {
                 LoginButton(style: .kakao, action: {
-                    print(screenHeight)
+                    store.send(.kakaoLoginButtonTapped)
                 })
-                LoginButton(style: .naver, action: {})
-                LoginButton(style: .apple, action: {})
+                LoginButton(style: .naver, action: {
+                    store.send(.naverLoginButtonTapped)
+                })
+                LoginButton(style: .apple, action: {
+                    store.send(.appleLoginButtonTapped)
+                })
             }
             
             Spacer(minLength: isSmallScreen(threshold: 680, for: \.height) ? nil : 83)

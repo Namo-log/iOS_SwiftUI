@@ -7,11 +7,10 @@ struct FeatureFriendExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingCompleteView()
+            OnboardingLoginView(store: Store(initialState: OnboardingLoginStore.State()) {
+                OnboardingLoginStore()
+                    ._printChanges()
+            })
         }
     }
-}
-
-#Preview {
-    OnboardingTOSView()
 }
