@@ -12,7 +12,7 @@ public struct OnboardingLoginStore {
     
     public init() {}
     
-    @ObservableState
+//    @ObservableState // 화면에 연결되어 재렌더링 매개체가 되는 경우에만 활성화
     public struct State: Equatable {
         
         public init() {}
