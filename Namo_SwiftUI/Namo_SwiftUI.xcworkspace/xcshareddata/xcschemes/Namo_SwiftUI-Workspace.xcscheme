@@ -252,6 +252,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA52526EEB1E77AAB03EF1AF"
+               BuildableName = "libDomainAuth.a"
+               BlueprintName = "DomainAuth"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B00C88B269BEE5C24C3237DD"
+               BuildableName = "libDomainAuthInterface.a"
+               BlueprintName = "DomainAuthInterface"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "9345765E8E4CD237C5199AF0"
                BuildableName = "libDomainFriend.a"
                BlueprintName = "DomainFriend"
