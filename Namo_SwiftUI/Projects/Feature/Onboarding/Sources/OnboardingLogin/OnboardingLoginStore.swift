@@ -7,6 +7,8 @@
 
 import ComposableArchitecture
 
+import DomainAuth
+
 @Reducer
 public struct OnboardingLoginStore {
     
@@ -24,6 +26,8 @@ public struct OnboardingLoginStore {
         case appleLoginButtonTapped
     }
     
+    @Dependency(\.authClient) var authClient
+    
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -36,6 +40,7 @@ public struct OnboardingLoginStore {
                 return .none
             case .appleLoginButtonTapped:
                 print("apple")
+                authClient.loginHelper.appleLogin()
                 return .none
             }
         }

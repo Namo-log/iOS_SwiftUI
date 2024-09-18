@@ -7,10 +7,19 @@
 
 import Foundation
 import ComposableArchitecture
+
 import Core
+import DomainAuthInterface
 
 extension AuthClient: DependencyKey {
     public static let liveValue = AuthClient(
+        
+        // MARK: API
+        reqSignInWithApple: { reqDTO in
+            let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
+            guard let data = res?.result else { return nil }
+            return (data.accessToken, data.refreshToken)
+        }
     )
 }
 
