@@ -6,3 +6,4 @@
 //
 
 @_exported import FeatureFriend
+@_exported import FeatureHome

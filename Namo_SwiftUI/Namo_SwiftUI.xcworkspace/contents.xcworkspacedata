@@ -45,6 +45,9 @@
          <FileRef
             location = "group:Friend/FeatureFriend.xcodeproj">
          </FileRef>
+         <FileRef
+            location = "group:Home/FeatureHome.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "group:Shared"

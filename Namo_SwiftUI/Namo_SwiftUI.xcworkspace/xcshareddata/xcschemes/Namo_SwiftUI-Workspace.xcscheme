@@ -574,6 +574,76 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3CFBBAD99DF6AE1BE0C807D8"
+               BuildableName = "libFeatureHome.a"
+               BlueprintName = "FeatureHome"
+               ReferencedContainer = "container:Projects/Feature/Home/FeatureHome.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E4A9EF6BA1598B4329F7554D"
+               BuildableName = "FeatureHomeExample.app"
+               BlueprintName = "FeatureHomeExample"
+               ReferencedContainer = "container:Projects/Feature/Home/FeatureHome.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9694F88B5F03B85E6FC32B8A"
+               BuildableName = "libFeatureHomeInterface.a"
+               BlueprintName = "FeatureHomeInterface"
+               ReferencedContainer = "container:Projects/Feature/Home/FeatureHome.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1BBB6153E9D78AC54597F8CB"
+               BuildableName = "libFeatureHomeTesting.a"
+               BlueprintName = "FeatureHomeTesting"
+               ReferencedContainer = "container:Projects/Feature/Home/FeatureHome.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "412E456385C20FB7348DB896"
+               BuildableName = "FeatureHomeTests.xctest"
+               BlueprintName = "FeatureHomeTests"
+               ReferencedContainer = "container:Projects/Feature/Home/FeatureHome.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "769B28412864CE639D5C8BFF"
                BuildableName = "Firebase.framework"
                BlueprintName = "Firebase"
@@ -2190,6 +2260,16 @@
                BuildableName = "FeatureFriendTests.xctest"
                BlueprintName = "FeatureFriendTests"
                ReferencedContainer = "container:Projects/Feature/Friend/FeatureFriend.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "412E456385C20FB7348DB896"
+               BuildableName = "FeatureHomeTests.xctest"
+               BlueprintName = "FeatureHomeTests"
+               ReferencedContainer = "container:Projects/Feature/Home/FeatureHome.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
