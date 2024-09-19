@@ -40,7 +40,12 @@ public struct OnboardingLoginStore {
                 return .none
             case .appleLoginButtonTapped:
                 print("apple")
-                authClient.loginHelper.appleLogin()
+                authClient.loginHelper.appleLogin { result in
+                    if let result {
+                        print("와 씨 됐다")
+                        print(result)
+                    }
+                }
                 return .none
             }
         }

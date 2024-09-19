@@ -9,10 +9,15 @@ import Foundation
 import AuthenticationServices
 
 import Core
+import SharedUtil
 
 public final class SNSLoginHelper: NSObject {
+    
+    // 클로저 저장을 위한 프로퍼티
+    private var appleLoginCompletion: ((AppleLoginInfo?) -> Void)?
+    
     // 애플 로그인
-    public func appleLogin() {
+    public func appleLogin(completion: @escaping (AppleLoginInfo?) -> Void) {
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
@@ -22,6 +27,8 @@ public final class SNSLoginHelper: NSObject {
         
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
+        
+        self.appleLoginCompletion = completion
         authorizationController.performRequests()
     }
 }
@@ -29,81 +36,36 @@ public final class SNSLoginHelper: NSObject {
 // MARK: 애플 로그인 Extension 구현
 extension SNSLoginHelper: ASAuthorizationControllerDelegate, ASWebAuthenticationPresentationContextProviding, ASAuthorizationControllerPresentationContextProviding {
     
-    // 애플 로그인 성공 후 서버로 정보 보내기
+    // 애플 로그인 성공 시 필요 정보 클로저로 리턴
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         
-        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {return}
-        
-        let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)!
-        let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)!
-        
-        var email: String = ""
-        var username: String = ""
-        
-        if let appleEmail = appleIDCredential.email {
-            email = appleEmail
-            
-            UserDefaults.standard.set(appleEmail, forKey: "appleLoginEmail")
-            
-        } else {
-            email = UserDefaults.standard.string(forKey: "appleLoginEmail") ?? ""
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            self.appleLoginCompletion?(nil)
+            return
         }
         
-        if let appleFullName = appleIDCredential.fullName {
-            if let familyName = appleFullName.familyName, let givenName = appleFullName.givenName {
-                
-                username = familyName + givenName
-                
-                UserDefaults.standard.set(username, forKey: "appleLoginUsername")
-                
-            } else {
-                
-                username = UserDefaults.standard.string(forKey: "appleLoginUsername") ?? ""
-            }
+        guard
+            let identityToken = appleIDCredential.identityToken,
+            let identityTokenString = String(data: identityToken, encoding: .utf8),
+            let authorizationCode = appleIDCredential.authorizationCode,
+            let authorizationCodeString = String(data: authorizationCode, encoding: .utf8)
+        else {
+            self.appleLoginCompletion?(nil)
+            return
         }
-
-//        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode, username: username, email: email)
         
-        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode)
-        
-        // 나모 API 로직 블록
-        Task {
-            
-            /// 나모 서버로부터 애플 토큰을 보내고 서버의 토큰을 받음
-            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: appleLoginDTO))
-            
-            let namoServerTokens = result?.result
-            
-            /// 서버의 토큰을 제대로 받았을 때
-            if let serverTokens = namoServerTokens {
-                
-                /// 키체인에 서버의 토큰을 저장
-                KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
-                KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
-                
-                print("accessToken: \(serverTokens.accessToken)")
-                print("refreshToken: \(serverTokens.refreshToken)")
-                
-                /// 현재 로그인한 소셜 미디어는 애플
-                UserDefaults.standard.set("apple", forKey: "socialLogin")
-                
-                DispatchQueue.main.async {
-                    
-                    UserDefaults.standard.set(true, forKey: "isLogin")
-                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-                }
-
-                print("애플 로그인 성공")
-
-            } else {
-                print("서버 토큰 에러")
-            }
-        }
+        self.appleLoginCompletion?(
+            AppleLoginInfo(
+                identityToken: identityTokenString,
+                authorizationCode: authorizationCodeString
+            )
+        )
     }
     
-    // 애플 로그인 실패
+    // 애플 로그인 실패 시 nil 리턴
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Error occurred: \(error.localizedDescription)")
+        print("Apple login failed: \(error.localizedDescription)")
+        self.appleLoginCompletion?(nil)
     }
     
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {

@@ -14,9 +14,11 @@ import Core
 /// Input from, Output to -> TCA Store
 public struct AuthClient {
     public let loginHelper = SNSLoginHelper()
-    public lazy var appleLogin: () -> Void = loginHelper.appleLogin
+    /// 애플 로그인을 진행합니다. - Apple 로그인 토큰 인증을 위한 정보를 받습니다.
+    public lazy var appleLogin: (@escaping (AppleLoginInfo?) -> Void) -> Void = loginHelper.appleLogin
     
     // MARK: API
+    /// 나모 API : 애플 소셜 로그인을 통한 회원가입
     public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> Tokens?
     // signInWithKakao
     // signInWithNaver

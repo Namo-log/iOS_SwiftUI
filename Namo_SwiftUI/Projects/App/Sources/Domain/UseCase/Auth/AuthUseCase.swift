@@ -395,7 +395,7 @@ extension AuthUseCase: ASAuthorizationControllerDelegate, ASWebAuthenticationPre
             }
         }
 
-        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode, username: username, email: email)
+        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode)
 
         print("보내는 identityToken: \(identityToken)")
         print("보내는 authorizationCode: \(authorizationCode)")
