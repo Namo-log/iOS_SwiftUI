@@ -62,43 +62,43 @@ extension SNSLoginHelper: ASAuthorizationControllerDelegate, ASWebAuthentication
             }
         }
 
-        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode, username: username, email: email)
+//        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode, username: username, email: email)
         
-        print("야 됐다 : \(appleLoginDTO)")
+        let appleLoginDTO = AppleSignInRequestDTO(identityToken: identityToken, authorizationCode: authorizationCode)
         
-        // 나모 서버 보내깅
-//        Task {
-//            
-//            /// 나모 서버로부터 애플 토큰을 보내고 서버의 토큰을 받음
-//            let result: BaseResponse<SignInResponseDTO>? = await authRepository.signIn(appleToken: appleLoginDTO)
-//            
-//            let namoServerTokens = result?.result
-//            
-//            /// 서버의 토큰을 제대로 받았을 때
-//            if let serverTokens = namoServerTokens {
-//                
-//                /// 키체인에 서버의 토큰을 저장
-//                KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
-//                KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
-//                
-//                print("accessToken: \(serverTokens.accessToken)")
-//                print("refreshToken: \(serverTokens.refreshToken)")
-//                
-//                /// 현재 로그인한 소셜 미디어는 애플
-//                UserDefaults.standard.set("apple", forKey: "socialLogin")
-//                
-//                DispatchQueue.main.async {
-//                    
-//                    UserDefaults.standard.set(true, forKey: "isLogin")
-//                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-//                }
-//
-//                print("애플 로그인 성공")
-//
-//            } else {
-//                print("서버 토큰 에러")
-//            }
-//        }
+        // 나모 API 로직 블록
+        Task {
+            
+            /// 나모 서버로부터 애플 토큰을 보내고 서버의 토큰을 받음
+            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: appleLoginDTO))
+            
+            let namoServerTokens = result?.result
+            
+            /// 서버의 토큰을 제대로 받았을 때
+            if let serverTokens = namoServerTokens {
+                
+                /// 키체인에 서버의 토큰을 저장
+                KeyChainManager.addItem(key: "accessToken", value: serverTokens.accessToken)
+                KeyChainManager.addItem(key: "refreshToken", value: serverTokens.refreshToken)
+                
+                print("accessToken: \(serverTokens.accessToken)")
+                print("refreshToken: \(serverTokens.refreshToken)")
+                
+                /// 현재 로그인한 소셜 미디어는 애플
+                UserDefaults.standard.set("apple", forKey: "socialLogin")
+                
+                DispatchQueue.main.async {
+                    
+                    UserDefaults.standard.set(true, forKey: "isLogin")
+                    UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
+                }
+
+                print("애플 로그인 성공")
+
+            } else {
+                print("서버 토큰 에러")
+            }
+        }
     }
     
     // 애플 로그인 실패

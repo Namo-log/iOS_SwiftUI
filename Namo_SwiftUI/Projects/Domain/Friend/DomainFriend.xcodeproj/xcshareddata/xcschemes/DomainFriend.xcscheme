@@ -34,20 +34,6 @@
                ReferencedContainer = "container:DomainFriend.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6DC1B52135096F1539C07BA"
-               BuildableName = "libDomainFriendTesting.a"
-               BlueprintName = "DomainFriendTesting"
-               ReferencedContainer = "container:DomainFriend.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -56,16 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D254A83AA311716730CE638"
-               BuildableName = "DomainFriendTests.xctest"
-               BlueprintName = "DomainFriendTests"
-               ReferencedContainer = "container:DomainFriend.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
