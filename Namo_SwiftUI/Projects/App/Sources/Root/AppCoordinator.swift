@@ -22,7 +22,7 @@ struct AppCoordinator {
     @ObservableState
     struct State {
         static let initialState = State(routes: [.root(.splash(.init()))],
-                                        mainTab: .init(),
+                                        mainTab: .intialState,
                                         splash: .init(),
                                         onBoarding: .init())
         var routes: [Route<AppScreen.State>]
@@ -49,7 +49,7 @@ struct AppCoordinator {
             switch action {
             case .router(.routeAction(_, action: .splash(.loginCheck(let isSuccess)))):
                 if isSuccess {
-                    state.routes = [.root(.mainTab(.init()))]
+                    state.routes = [.root(.mainTab(.init(moim: .initialState)))]
                 } else {
                     state.routes = [.root(.onBoarding(.init()), embedInNavigationView: true)]
                 }

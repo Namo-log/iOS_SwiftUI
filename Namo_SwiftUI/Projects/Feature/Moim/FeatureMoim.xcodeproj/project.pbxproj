@@ -95,6 +95,9 @@
 		43BFB7CF34A0D1588FA99D30 /* FirebaseCoreInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7FB78E719794CFE4E1F6B0 /* FirebaseCoreInternal.framework */; };
 		44461D6B2A49E2CE56828C08 /* SectionTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2444604F08CAB6A0E29D30 /* SectionTabBar.swift */; };
 		46BEBA842356D20AD06A5BEE /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 839B6F74B4E22F7EF30B0111 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle */; };
+		475216482C9D5880007F583F /* MoimViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475216472C9D5880007F583F /* MoimViewStore.swift */; };
+		47550E6F2C9DC5E700C47F18 /* MoimCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */; };
+		47550E712C9DC5F200C47F18 /* MoimCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */; };
 		4771EB76EDCA8FE2F0E9F262 /* GoogleDataTransport_GoogleDataTransport.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 7F5DF4EFF2ED22DD1728E139 /* GoogleDataTransport_GoogleDataTransport.bundle */; };
 		479D8CB74E6706EAE7D907C4 /* DependenciesMacros.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71832246A8C9A7836736A7D1 /* DependenciesMacros.framework */; };
 		47FB7808E0B358DC96E8AA38 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 839B6F74B4E22F7EF30B0111 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle */; };
@@ -609,6 +612,9 @@
 		46AA86A4775EFB145E4B98EE /* ConcurrencyExtras.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConcurrencyExtras.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46AC44C12FEC309061E96432 /* Firebase_FirebaseCrashlytics.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Firebase_FirebaseCrashlytics.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D6CAC051E9BA0A21230434 /* libSharedUtil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharedUtil.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		475216472C9D5880007F583F /* MoimViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimViewStore.swift; sourceTree = "<group>"; };
+		47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimCoordinator.swift; sourceTree = "<group>"; };
+		47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimCoordinatorView.swift; sourceTree = "<group>"; };
 		4864C8651CBD821D7D30EBB6 /* FlowStacks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlowStacks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B72C6A2975F4848B467D3E /* FriendInviteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInviteListView.swift; sourceTree = "<group>"; };
 		490CBD00C71BC9A9347234F8 /* MoimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimView.swift; sourceTree = "<group>"; };
@@ -1086,6 +1092,15 @@
 			path = "naveridlogin-ios-sp";
 			sourceTree = "<group>";
 		};
+		475216492C9D590B007F583F /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				70A2F92C2CB6A3F2F1EE0015 /* MoimListCell.swift */,
+				5F527A229C60D8D4C4B09D3A /* MoimListView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		50CB43458001A75C53CD6CA1 /* KakaoSDKCertCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1397,9 +1412,11 @@
 		C29618DC268FB489395EAC91 /* MoimList */ = {
 			isa = PBXGroup;
 			children = (
-				70A2F92C2CB6A3F2F1EE0015 /* MoimListCell.swift */,
-				5F527A229C60D8D4C4B09D3A /* MoimListView.swift */,
+				475216492C9D590B007F583F /* SubViews */,
 				490CBD00C71BC9A9347234F8 /* MoimView.swift */,
+				475216472C9D5880007F583F /* MoimViewStore.swift */,
+				47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */,
+				47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */,
 			);
 			path = MoimList;
 			sourceTree = "<group>";
@@ -1740,15 +1757,18 @@
 				297B634BF7EDC43DC908C9D6 /* MoimListCell.swift in Sources */,
 				8EFC8438194F2971DD610476 /* MoimListView.swift in Sources */,
 				F27431EB2B33BB2511FC5FB5 /* MoimView.swift in Sources */,
+				47550E6F2C9DC5E700C47F18 /* MoimCoordinator.swift in Sources */,
 				D3EBBF1786DEC60C8D171AB9 /* DiaryEditView.swift in Sources */,
 				7AE12EA15EB53236BC028007 /* ParticipantListView.swift in Sources */,
 				E8AFD302A3F68857D6A22B7B /* MoimRequestItem.swift in Sources */,
 				F6D94BD29B2306660F9F550E /* MoimRequestList.swift in Sources */,
 				27B45BBF19D628CFD95D2F19 /* MoimRequestView.swift in Sources */,
+				47550E712C9DC5F200C47F18 /* MoimCoordinatorView.swift in Sources */,
 				BF18090A59436AF6E903AB28 /* MoimEditView.swift in Sources */,
 				D4428FE9D0FE71F579CCC602 /* Participant.swift in Sources */,
 				7B864FDE46C887164BA54F10 /* EmptyListView.swift in Sources */,
 				8C3E848A9551F58063CB8BAF /* FlexibleGridView.swift in Sources */,
+				475216482C9D5880007F583F /* MoimViewStore.swift in Sources */,
 				44461D6B2A49E2CE56828C08 /* SectionTabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

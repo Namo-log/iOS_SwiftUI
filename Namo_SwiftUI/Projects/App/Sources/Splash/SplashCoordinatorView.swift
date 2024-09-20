@@ -15,7 +15,7 @@ struct SplashCoordinatorView: View {
     var body: some View {
         Text("Splash")
             .onAppear {
-                store.send(.loginCheck(isSuccess: false))
+                store.send(.loginCheck(isSuccess: true))
             }
     }
 }

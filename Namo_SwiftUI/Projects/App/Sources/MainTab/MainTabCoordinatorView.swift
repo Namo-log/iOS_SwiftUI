@@ -8,12 +8,18 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
+import Feature
 
 struct MainTabCoordinatorView: View {
     let store: StoreOf<MainTabCoordinator>
     
     var body: some View {
-        Text("MainTab!")
+        WithPerceptionTracking {
+            TabView {
+                MoimCoordinatorView(store: store.scope(state: \.moim, action: \.moim))
+                    .tabItem { Text("모임") }
+            }
+        }
     }
 }
 

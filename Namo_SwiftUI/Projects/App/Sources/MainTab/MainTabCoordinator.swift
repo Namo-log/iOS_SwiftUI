@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import TCACoordinators
+import Feature
 
 @Reducer
 struct MainTabCoordinator {
@@ -15,8 +16,24 @@ struct MainTabCoordinator {
         case moim
     }
     
+    enum Action {
+        case moim(MoimCoordinator.Action)
+    }
+    
     @ObservableState
     struct State: Equatable {
-        
+        static let intialState = State(moim: .initialState)
+        var moim: MoimCoordinator.State
+    }
+    
+    var body: some ReducerOf<Self> {
+
+        Reduce { state, action in
+            switch action {
+            default:
+                break
+            }
+            return .none
+        }
     }
 }

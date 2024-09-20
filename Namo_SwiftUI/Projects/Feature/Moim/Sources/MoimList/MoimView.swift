@@ -11,6 +11,7 @@ import FeatureFriend
 import ComposableArchitecture
 
 public struct MoimView: View {
+    
     @State private var tabIndex = 0
     
     public init() {}
