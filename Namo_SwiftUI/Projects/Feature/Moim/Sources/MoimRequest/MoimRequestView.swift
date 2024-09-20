@@ -51,6 +51,6 @@ public struct MoimRequestView: View {
             })
         })
     }
-        
+    
 }
 

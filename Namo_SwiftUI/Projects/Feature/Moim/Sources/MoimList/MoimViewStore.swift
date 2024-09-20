@@ -15,12 +15,15 @@ public struct MoimViewStore {
     
     public enum Action {
         case requestButtonTap
+        case logout
     }
     
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .requestButtonTap:                
+                return .none
+            default:
                 return .none
             }
         }

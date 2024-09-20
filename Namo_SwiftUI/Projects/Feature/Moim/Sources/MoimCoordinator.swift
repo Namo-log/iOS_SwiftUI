@@ -23,8 +23,8 @@ public struct MoimCoordinator {
     
     @ObservableState
     public struct State: Equatable {
-        public init(routes: [Route<MoimScreen.State>], 
-                    moimSchedule: MoimViewStore.State, 
+        public init(routes: [Route<MoimScreen.State>],
+                    moimSchedule: MoimViewStore.State,
                     moimRequest: MoimRequestViewStore.State) {
             self.routes = routes
             self.moimSchedule = moimSchedule
@@ -55,7 +55,7 @@ public struct MoimCoordinator {
         Reduce { state, action in
             switch action {
             case .router(.routeAction(_, action: .moimSchedule(.requestButtonTap))):
-                state.routes.push(.moimRequest(.init()))   
+                state.routes.push(.moimRequest(.init()))
             case .router(.routeAction(_, action: .moimRequest(.backButtonTap))):
                 state.routes.goBack()
             default:

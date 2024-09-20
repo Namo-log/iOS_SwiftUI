@@ -22,7 +22,7 @@ public struct MoimCoordinatorView: View {
             case let .moimSchedule(store):
                 MoimView(store: store)
             case let .moimRequest(store):
-                MoimRequestView(store: store)
+                MoimRequestView(store: store)                    
             }
         }
     }

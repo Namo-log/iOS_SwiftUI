@@ -16,7 +16,7 @@ public struct MoimView: View {
     @State private var tabIndex = 0
     
     public init(store: StoreOf<MoimViewStore>) {        
-        self.store = store
+        self.store = store        
     }
     
     public var body: some View {

@@ -49,7 +49,7 @@ struct AppCoordinator {
         }
         
         Reduce<State, Action> { state, action in
-            switch action {            
+            switch action {                                  
             case .router(.routeAction(_, action: .splash(.loginCheck(let isSuccess)))):
                 if isSuccess {
                     state.routes = [.root(.mainTab(.init(moim: .initialState)), embedInNavigationView: true)]
