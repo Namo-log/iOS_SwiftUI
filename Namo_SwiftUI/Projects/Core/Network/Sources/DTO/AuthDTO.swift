@@ -56,8 +56,8 @@ public struct AppleSignInRequestDTO: Codable {
         self.authorizationCode = authorizationCode
     }
 	
-    let identityToken: String
-    let authorizationCode: String
+    public let identityToken: String
+    public let authorizationCode: String
 //    let username: String
 //    let email: String
 }

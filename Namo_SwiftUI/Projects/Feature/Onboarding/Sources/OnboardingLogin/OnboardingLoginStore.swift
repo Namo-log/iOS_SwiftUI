@@ -8,6 +8,8 @@
 import ComposableArchitecture
 
 import DomainAuth
+import DomainAuthInterface
+import Core
 
 @Reducer
 public struct OnboardingLoginStore {
@@ -24,12 +26,15 @@ public struct OnboardingLoginStore {
         case kakaoLoginButtonTapped
         case naverLoginButtonTapped
         case appleLoginButtonTapped
+        case namoAppleLoginResponse(AppleSignInRequestDTO)
     }
     
     @Dependency(\.authClient) var authClient
     
     public var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce {
+            state,
+            action in
             switch action {
                 
             case .kakaoLoginButtonTapped:
@@ -40,13 +45,18 @@ public struct OnboardingLoginStore {
                 return .none
             case .appleLoginButtonTapped:
                 print("apple")
-                authClient.loginHelper.appleLogin { result in
-                    if let result {
-                        print("와 씨 됐다")
-                        print(result)
-                    }
+                return .run { send in
+                    guard let data = await authClient.appleLogin() else { return }
+                    let reqData = data as AppleSignInRequestDTO
+                    await send(.namoAppleLoginResponse(reqData))
                 }
-                return .none
+                
+            case .namoAppleLoginResponse(let reqData):
+                print("namo apple")
+                return .run { send in
+                    let result = try await authClient.reqSignInWithApple(reqData)
+                    print(result)
+                }
             }
         }
     }

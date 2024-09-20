@@ -17,19 +17,26 @@ public final class SNSLoginHelper: NSObject {
     private var appleLoginCompletion: ((AppleLoginInfo?) -> Void)?
     
     // 애플 로그인
-    public func appleLogin(completion: @escaping (AppleLoginInfo?) -> Void) {
+    public func appleLogin() async -> AppleLoginInfo? {
         
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        
-        self.appleLoginCompletion = completion
-        authorizationController.performRequests()
+        // 클로저 기반의 비동기 작업을 async/await 방식으로 변환
+        await withCheckedContinuation { continuation in
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            
+            authorizationController.delegate = self
+            authorizationController.presentationContextProvider = self
+            
+            self.appleLoginCompletion = { loginInfo in
+                // 비동기 작업이 끝나면 continuation.resume()으로 결과를 넘깁니다
+                continuation.resume(returning: loginInfo)  // 로그인 성공 또는 실패 후 반환
+            }
+            
+            authorizationController.performRequests()
+        }
     }
 }
 
