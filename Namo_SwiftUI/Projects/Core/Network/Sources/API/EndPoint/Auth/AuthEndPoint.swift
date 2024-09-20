@@ -49,7 +49,7 @@ extension AuthEndPoint: EndPoint {
         switch self {
             
         case .signInKakao:
-            return "/kakao/signup"
+            return "/signup/KAKAO"
             
         case .signInNaver:
             return "/signup/NAVER"
