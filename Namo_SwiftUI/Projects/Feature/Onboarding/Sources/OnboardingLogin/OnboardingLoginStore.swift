@@ -40,7 +40,11 @@ public struct OnboardingLoginStore {
                 
             case .kakaoLoginButtonTapped:
                 print("kakao")
-                return .none
+                return .run { send in
+                    guard let data = await authClient.kakaoLogin() else { return }
+                    let reqData = data as SocialSignInRequestDTO
+                    print(reqData)
+                }
                 
             case .naverLoginButtonTapped:
                 print("naver")

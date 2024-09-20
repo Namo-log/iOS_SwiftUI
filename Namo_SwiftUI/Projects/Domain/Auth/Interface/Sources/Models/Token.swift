@@ -17,3 +17,5 @@ public typealias Tokens = (accessToken: AccessToken, refreshToken: RefreshToken)
 public typealias AppleLoginInfo = AppleSignInRequestDTO
 /// NaverLoginInfo 구조체 명시를 위한 alias 입니다.
 public typealias NaverLoginInfo = SocialSignInRequestDTO
+/// KakaoLoginInfo 구조체 명시를 위한 alias 입니다.
+public typealias KakaoLoginInfo = SocialSignInRequestDTO

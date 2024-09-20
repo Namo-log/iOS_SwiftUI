@@ -26,6 +26,11 @@ public struct AuthClient {
         return await loginHelper.naverLogin()
     }
     
+    /// 카카오 로그인을 진행합니다. - Kakao 로그인 토큰 인증을 위한 정보를 받습니다.
+    public func kakaoLogin() async -> KakaoLoginInfo? {
+        return await loginHelper.kakaoLogin()
+    }
+    
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
     public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> Tokens?
