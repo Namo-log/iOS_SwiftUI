@@ -15,6 +15,7 @@ extension AuthClient: DependencyKey {
     public static let liveValue = AuthClient(
         
         // MARK: API
+        loginHelper: SNSLoginHelper(),
         reqSignInWithApple: { reqDTO in
             let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
             guard let data = res?.result else { return nil }

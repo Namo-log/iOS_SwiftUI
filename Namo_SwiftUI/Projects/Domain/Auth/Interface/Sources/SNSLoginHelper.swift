@@ -7,11 +7,16 @@
 
 import Foundation
 import AuthenticationServices
-
 import Core
 import SharedUtil
 
-public final class SNSLoginHelper: NSObject {
+/// SNSLoginHelper의 인터페이스 프로토콜입니다.
+public protocol SNSLoginHelperProtocol {
+    func appleLogin() async -> AppleLoginInfo?
+}
+
+/// 소셜 로그인 진행을 위한 헬퍼 클래스입니다
+public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {
     
     // 클로저 저장을 위한 프로퍼티
     private var appleLoginCompletion: ((AppleLoginInfo?) -> Void)?

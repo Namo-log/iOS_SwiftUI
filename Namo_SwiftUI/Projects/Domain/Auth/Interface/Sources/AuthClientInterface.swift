@@ -14,7 +14,7 @@ import Core
 /// Input from, Output to -> TCA Store
 public struct AuthClient {
     /// 소셜 로그인 진행을 위한 헬퍼 클래스입니다
-    public let loginHelper = SNSLoginHelper()
+    public let loginHelper: SNSLoginHelperProtocol
     
     /// 애플 로그인을 진행합니다. - Apple 로그인 토큰 인증을 위한 정보를 받습니다.
     public func appleLogin() async -> AppleLoginInfo? {
@@ -29,18 +29,22 @@ public struct AuthClient {
     // saveToken
     // loadToken
     public init(
+        loginHelper: SNSLoginHelperProtocol,
         reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> Tokens?
     ) {
+        self.loginHelper = loginHelper
         self.reqSignInWithApple = reqSignInWithApple
     }
 }
 
 extension AuthClient: TestDependencyKey {
     public static var previewValue = Self(
+        loginHelper: unimplemented("\(Self.self).loginHelper"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple")
     )
     
     public static let testValue = Self(
+        loginHelper: unimplemented("\(Self.self).loginHelper"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple")
     )
 }
