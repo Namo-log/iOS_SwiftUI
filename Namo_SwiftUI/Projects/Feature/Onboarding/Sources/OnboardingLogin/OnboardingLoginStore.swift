@@ -26,6 +26,8 @@ public struct OnboardingLoginStore {
         case kakaoLoginButtonTapped
         case naverLoginButtonTapped
         case appleLoginButtonTapped
+        case namoKakaoLoginResponse(SocialSignInRequestDTO)
+        case namoNaverLoginResponse(SocialSignInRequestDTO)
         case namoAppleLoginResponse(AppleSignInRequestDTO)
     }
     
@@ -39,16 +41,46 @@ public struct OnboardingLoginStore {
                 
             case .kakaoLoginButtonTapped:
                 print("kakao")
-                return .none
+                return .run { send in
+                    guard let data = await authClient.kakaoLogin() else { return }
+                    let reqData = data as SocialSignInRequestDTO
+                    await send(.namoKakaoLoginResponse(reqData))
+                }
+                
             case .naverLoginButtonTapped:
                 print("naver")
-                return .none
+                return .run { send in
+                    guard let data = await authClient.naverLogin() else { return }
+                    let reqData = data as SocialSignInRequestDTO
+                    await send(.namoNaverLoginResponse(reqData))
+                }
+                
             case .appleLoginButtonTapped:
                 print("apple")
                 return .run { send in
                     guard let data = await authClient.appleLogin() else { return }
                     let reqData = data as AppleSignInRequestDTO
                     await send(.namoAppleLoginResponse(reqData))
+                }
+                
+            case .namoKakaoLoginResponse(let reqData):
+                print("namo kakao")
+                return .run { send in
+                    if let result = try await authClient.reqSignInWithKakao(reqData) {
+                        print("result as Token type is \(result)")
+                    } else {
+                        print("인생은 니뜻대로 되지않는단다")
+                    }
+                }
+                
+            case .namoNaverLoginResponse(let reqData):
+                print("namo naver")
+                return .run { send in
+                    if let result = try await authClient.reqSignInWithNaver(reqData) {
+                        print("result as Token type is \(result)")
+                    } else {
+                        print("인생은 니뜻대로 되지않는단다")
+                    }
                 }
                 
             case .namoAppleLoginResponse(let reqData):

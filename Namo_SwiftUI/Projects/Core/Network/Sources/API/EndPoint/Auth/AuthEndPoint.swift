@@ -49,10 +49,10 @@ extension AuthEndPoint: EndPoint {
         switch self {
             
         case .signInKakao:
-            return "/kakao/signup"
+            return "/signup/KAKAO"
             
         case .signInNaver:
-            return "/naver/signup"
+            return "/signup/NAVER"
             
         case .signInApple:
             return "/signup/apple"

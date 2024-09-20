@@ -89,6 +89,7 @@
 		81AC377A2EEEFBBA72859FEF /* libSharedThirdPartyLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0ACAFB329012646CC4E670 /* libSharedThirdPartyLib.a */; };
 		83E51B4FC78E7699D92DDD6D /* Lottie_Lottie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DA4D5BE56DEC9F3EC70A209A /* Lottie_Lottie.bundle */; };
 		88323626F6B3CD01067FEC8E /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50657C2ACD7A1548F44E7925 /* AuthClient.swift */; };
+		88B595FB2C9DB76A00DEB63F /* SNSLoginHelperInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B595FA2C9DB76A00DEB63F /* SNSLoginHelperInterface.swift */; };
 		88C5770988A27E7C3AF86344 /* libDomainAuthInterface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7803B06F4B9E27539E0548 /* libDomainAuthInterface.a */; };
 		8AC566B9E1BA2B2299DC3F34 /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A6C5752503DB95468A2BEB /* GoogleAppMeasurementIdentitySupport.xcframework */; };
 		8C2BED9F82C2918133B53A6A /* SNSLoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B03D09547CE81C84653DD /* SNSLoginHelper.swift */; };
@@ -396,6 +397,7 @@
 		80A6C5752503DB95468A2BEB /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; path = GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
 		80C4E6CED17919B89FB4DED5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		84866AF0BE3EBF95134920F7 /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; path = GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		88B595FA2C9DB76A00DEB63F /* SNSLoginHelperInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSLoginHelperInterface.swift; sourceTree = "<group>"; };
 		89651178011A15E8364774F4 /* FirebaseAppCheckInterop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebaseAppCheckInterop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C886F57CC04A917C174A0BF /* GoogleDataTransport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleDataTransport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF84DF9B7212EBD3A4F1A94 /* FirebasePerformance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebasePerformance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -696,6 +698,7 @@
 		52FACDBB5CD203BE52C5B905 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				519B03D09547CE81C84653DD /* SNSLoginHelper.swift */,
 				50657C2ACD7A1548F44E7925 /* AuthClient.swift */,
 				91641F28076E5D0B97DCCE74 /* temp.swift */,
 			);
@@ -968,7 +971,7 @@
 			children = (
 				0823B29AE4C9A60E5F6E164B /* Models */,
 				FAB3F9E955B883598A12A8F4 /* AuthClientInterface.swift */,
-				519B03D09547CE81C84653DD /* SNSLoginHelper.swift */,
+				88B595FA2C9DB76A00DEB63F /* SNSLoginHelperInterface.swift */,
 				BF9487AA7FF0990CEBF89537 /* temp.swift */,
 			);
 			path = Sources;
@@ -1171,6 +1174,7 @@
 				B8390C25899FD1EF6ED4AA4A /* Token.swift in Sources */,
 				8C2BED9F82C2918133B53A6A /* SNSLoginHelper.swift in Sources */,
 				E56AC13906C3F706B6169B1C /* temp.swift in Sources */,
+				88B595FB2C9DB76A00DEB63F /* SNSLoginHelperInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
