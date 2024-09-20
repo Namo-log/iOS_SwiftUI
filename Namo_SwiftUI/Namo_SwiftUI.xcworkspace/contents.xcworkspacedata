@@ -5,10 +5,16 @@
       location = "group:Projects"
       name = "Projects">
       <FileRef
+         location = "group:App/Namo_SwiftUI.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Core/Core.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:Domain/Domain.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Feature/Feature.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:Shared/Shared.xcodeproj">
@@ -24,6 +30,12 @@
          location = "group:Domain"
          name = "Domain">
          <FileRef
+            location = "group:Auth/DomainAuth.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Category/DomainCategory.xcodeproj">
+         </FileRef>
+         <FileRef
             location = "group:Friend/DomainFriend.xcodeproj">
          </FileRef>
          <FileRef
@@ -33,6 +45,15 @@
       <Group
          location = "group:Feature"
          name = "Feature">
+         <FileRef
+            location = "group:Category/FeatureCategory.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Friend/FeatureFriend.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Moim/FeatureMoim.xcodeproj">
+         </FileRef>
          <FileRef
             location = "group:Onboarding/FeatureOnboarding.xcodeproj">
          </FileRef>

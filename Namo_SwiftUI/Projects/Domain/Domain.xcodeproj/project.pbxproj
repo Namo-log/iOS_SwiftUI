@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1E13B143DCF9FE058E8E6169 /* libDomainMoim.a in Dependencies */ = {isa = PBXBuildFile; fileRef = DE91EE7C7887404008661B5E /* libDomainMoim.a */; };
 		8A350CC20B3DE3EBDB4354A8 /* libDomainFriend.a in Dependencies */ = {isa = PBXBuildFile; fileRef = 4C914F02C2A88CBE1F35DDBD /* libDomainFriend.a */; };
+		8FDA654DA6F12D693578C52C /* libDomainAuth.a in Dependencies */ = {isa = PBXBuildFile; fileRef = A1D5EE76F4D567B75AE6957A /* libDomainAuth.a */; };
 		99E59EE1EDB24928FFC366E5 /* libCore.a in Dependencies */ = {isa = PBXBuildFile; fileRef = F57E1DE543CF2E9CD9B47103 /* libCore.a */; };
 		EBB6E45B0329A0E3FF9924B3 /* DomainExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C308776C88029023F3EB998D /* DomainExport.swift */; };
 /* End PBXBuildFile section */
@@ -20,6 +21,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				99E59EE1EDB24928FFC366E5 /* libCore.a in Dependencies */,
+				8FDA654DA6F12D693578C52C /* libDomainAuth.a in Dependencies */,
 				8A350CC20B3DE3EBDB4354A8 /* libDomainFriend.a in Dependencies */,
 				1E13B143DCF9FE058E8E6169 /* libDomainMoim.a in Dependencies */,
 			);
@@ -40,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		4C914F02C2A88CBE1F35DDBD /* libDomainFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDomainFriend.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1D5EE76F4D567B75AE6957A /* libDomainAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDomainAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4367E054ACE3E2F1887404 /* libDomain.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDomain.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C308776C88029023F3EB998D /* DomainExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainExport.swift; sourceTree = "<group>"; };
 		DE91EE7C7887404008661B5E /* libDomainMoim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDomainMoim.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +65,7 @@
 			children = (
 				F57E1DE543CF2E9CD9B47103 /* libCore.a */,
 				AA4367E054ACE3E2F1887404 /* libDomain.a */,
+				A1D5EE76F4D567B75AE6957A /* libDomainAuth.a */,
 				4C914F02C2A88CBE1F35DDBD /* libDomainFriend.a */,
 				DE91EE7C7887404008661B5E /* libDomainMoim.a */,
 			);
@@ -370,11 +374,11 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
-					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
 				);
@@ -604,11 +608,11 @@
 					"-Xcc",
 					"-fmodule-map-file=$(SRCROOT)/../../Tuist/.build/tuist-derived/third_party_IsAppEncrypted/third_party_IsAppEncrypted.modulemap",
 					"-load-plugin-executable",
+					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
+					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/PerceptionMacros#PerceptionMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/CasePathsMacros#CasePathsMacros",
-					"-load-plugin-executable",
-					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/ComposableArchitectureMacros#ComposableArchitectureMacros",
 					"-load-plugin-executable",
 					"$BUILD_DIR/Debug$EFFECTIVE_PLATFORM_NAME/DependenciesMacrosPlugin#DependenciesMacrosPlugin",
 				);

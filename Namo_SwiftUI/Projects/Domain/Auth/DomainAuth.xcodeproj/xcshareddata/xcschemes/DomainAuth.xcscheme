@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9345765E8E4CD237C5199AF0"
-               BuildableName = "libDomainFriend.a"
-               BlueprintName = "DomainFriend"
-               ReferencedContainer = "container:DomainFriend.xcodeproj">
+               BlueprintIdentifier = "FA52526EEB1E77AAB03EF1AF"
+               BuildableName = "libDomainAuth.a"
+               BlueprintName = "DomainAuth"
+               ReferencedContainer = "container:DomainAuth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9ED93C033AD61F2294911BD"
-               BuildableName = "libDomainFriendInterface.a"
-               BlueprintName = "DomainFriendInterface"
-               ReferencedContainer = "container:DomainFriend.xcodeproj">
+               BlueprintIdentifier = "B00C88B269BEE5C24C3237DD"
+               BuildableName = "libDomainAuthInterface.a"
+               BlueprintName = "DomainAuthInterface"
+               ReferencedContainer = "container:DomainAuth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -42,10 +42,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6DC1B52135096F1539C07BA"
-               BuildableName = "libDomainFriendTesting.a"
-               BlueprintName = "DomainFriendTesting"
-               ReferencedContainer = "container:DomainFriend.xcodeproj">
+               BlueprintIdentifier = "95C5BB3F750DA98A9778885A"
+               BuildableName = "libDomainAuthTesting.a"
+               BlueprintName = "DomainAuthTesting"
+               ReferencedContainer = "container:DomainAuth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -60,10 +60,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D254A83AA311716730CE638"
-               BuildableName = "DomainFriendTests.xctest"
-               BlueprintName = "DomainFriendTests"
-               ReferencedContainer = "container:DomainFriend.xcodeproj">
+               BlueprintIdentifier = "F1A1ADB72A1B257398039755"
+               BuildableName = "DomainAuthTests.xctest"
+               BlueprintName = "DomainAuthTests"
+               ReferencedContainer = "container:DomainAuth.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -81,10 +81,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9345765E8E4CD237C5199AF0"
-            BuildableName = "libDomainFriend.a"
-            BlueprintName = "DomainFriend"
-            ReferencedContainer = "container:DomainFriend.xcodeproj">
+            BlueprintIdentifier = "FA52526EEB1E77AAB03EF1AF"
+            BuildableName = "libDomainAuth.a"
+            BlueprintName = "DomainAuth"
+            ReferencedContainer = "container:DomainAuth.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -97,10 +97,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9345765E8E4CD237C5199AF0"
-            BuildableName = "libDomainFriend.a"
-            BlueprintName = "DomainFriend"
-            ReferencedContainer = "container:DomainFriend.xcodeproj">
+            BlueprintIdentifier = "FA52526EEB1E77AAB03EF1AF"
+            BuildableName = "libDomainAuth.a"
+            BlueprintName = "DomainAuth"
+            ReferencedContainer = "container:DomainAuth.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -34,6 +34,20 @@
                ReferencedContainer = "container:CoreNetwork.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5F92654AE20FF885572BEB8F"
+               BuildableName = "libCoreNetworkTesting.a"
+               BlueprintName = "CoreNetworkTesting"
+               ReferencedContainer = "container:CoreNetwork.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -42,6 +56,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8C4381308140F87C229303E4"
+               BuildableName = "CoreNetworkTests.xctest"
+               BlueprintName = "CoreNetworkTests"
+               ReferencedContainer = "container:CoreNetwork.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
