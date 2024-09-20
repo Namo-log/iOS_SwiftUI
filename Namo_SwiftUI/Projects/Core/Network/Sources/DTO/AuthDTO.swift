@@ -45,12 +45,6 @@ public struct LogoutRequestDTO: Encodable {
 
 // 애플 로그인 요청 DTO
 public struct AppleSignInRequestDTO: Codable {
-//	public init(identityToken: String, authorizationCode: String, username: String, email: String) {
-//		self.identityToken = identityToken
-//		self.authorizationCode = authorizationCode
-//		self.username = username
-//		self.email = email
-//	}
     
     public init(identityToken: String, authorizationCode: String) {
         self.identityToken = identityToken
@@ -59,8 +53,6 @@ public struct AppleSignInRequestDTO: Codable {
 	
     public let identityToken: String
     public let authorizationCode: String
-//    let username: String
-//    let email: String
 }
 
 // 토큰 재발급 요청 DTO
