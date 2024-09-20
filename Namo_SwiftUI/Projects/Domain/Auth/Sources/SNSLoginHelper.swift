@@ -11,12 +11,6 @@ import NaverThirdPartyLogin
 import Core
 import SharedUtil
 
-/// SNSLoginHelper의 인터페이스 프로토콜입니다.
-public protocol SNSLoginHelperProtocol {
-    func appleLogin() async -> AppleLoginInfo?
-    func naverLogin() async -> NaverLoginInfo?
-}
-
 /// 소셜 로그인 진행을 위한 헬퍼 클래스입니다
 public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {
     
