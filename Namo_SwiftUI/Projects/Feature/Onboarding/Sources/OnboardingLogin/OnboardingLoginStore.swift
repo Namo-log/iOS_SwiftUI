@@ -55,7 +55,7 @@ public struct OnboardingLoginStore {
                 print("namo apple")
                 return .run { send in
                     let result = try await authClient.reqSignInWithApple(reqData)
-                    print(result)
+                    print("result as Token type is \(result)")
                 }
             }
         }

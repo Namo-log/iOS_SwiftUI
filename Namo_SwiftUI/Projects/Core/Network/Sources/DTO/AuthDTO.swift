@@ -12,7 +12,7 @@ import Foundation
 public struct TermDTO: Decodable {
     
     let content: String
-    let isCheck: Bool
+    let check: Bool
 }
 
 /// 로그인 응답 DTO
@@ -20,6 +20,7 @@ public struct SignInResponseDTO: Decodable {
 	public let accessToken: String
 	public let refreshToken: String
 	public let newUser: Bool
+    public let signUpComplete: Bool
 	public let terms: [TermDTO]
 }
 
