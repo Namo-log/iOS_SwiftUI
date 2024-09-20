@@ -34,19 +34,22 @@ public struct AuthClient {
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
     public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> Tokens?
-    // signInWithKakao
     /// 나모 API : 네이버 소셜 로그인을 통한 회원가입
     public var reqSignInWithNaver: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
+    /// 나모 API : 카카오 소셜 로그인을 통한 회원가입
+    public var reqSignInWithKakao: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
     // saveToken
     // loadToken
     public init(
         loginHelper: SNSLoginHelperProtocol,
         reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> Tokens?,
-        reqSignInWithNaver: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?
+        reqSignInWithNaver: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?,
+        reqSignInWithKakao: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?
     ) {
         self.loginHelper = loginHelper
         self.reqSignInWithApple = reqSignInWithApple
         self.reqSignInWithNaver = reqSignInWithNaver
+        self.reqSignInWithKakao = reqSignInWithKakao
     }
 }
 
@@ -54,12 +57,13 @@ extension AuthClient: TestDependencyKey {
     public static var previewValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
-        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver")
+        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver"), reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao")
     )
     
     public static let testValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
-        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver")
+        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver"),
+        reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao")
     )
 }
