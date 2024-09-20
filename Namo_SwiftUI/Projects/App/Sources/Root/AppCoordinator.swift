@@ -11,8 +11,11 @@ import TCACoordinators
 
 @Reducer(state: .equatable)
 enum AppScreen {
+    // 메인탭
     case mainTab(MainTabCoordinator)
+    // 온보딩
     case onBoarding(OnBoardingCoordinator)
+    // 스플래시
     case splash(SplashCoordinator)
 }
 
@@ -21,7 +24,7 @@ struct AppCoordinator {
     
     @ObservableState
     struct State {
-        static let initialState = State(routes: [.root(.splash(.init()))],
+        static let initialState = State(routes: [.root(.splash(.init()), embedInNavigationView: true)],
                                         mainTab: .intialState,
                                         splash: .init(),
                                         onBoarding: .init())
@@ -46,10 +49,10 @@ struct AppCoordinator {
         }
         
         Reduce<State, Action> { state, action in
-            switch action {
+            switch action {            
             case .router(.routeAction(_, action: .splash(.loginCheck(let isSuccess)))):
                 if isSuccess {
-                    state.routes = [.root(.mainTab(.init(moim: .initialState)))]
+                    state.routes = [.root(.mainTab(.init(moim: .initialState)), embedInNavigationView: true)]
                 } else {
                     state.routes = [.root(.onBoarding(.init()), embedInNavigationView: true)]
                 }

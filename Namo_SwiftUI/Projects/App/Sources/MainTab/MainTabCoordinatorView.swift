@@ -16,6 +16,7 @@ struct MainTabCoordinatorView: View {
     var body: some View {
         WithPerceptionTracking {
             TabView {
+                // TabCoordinator에서 받아온 CoordinatorReducer
                 MoimCoordinatorView(store: store.scope(state: \.moim, action: \.moim))
                     .tabItem { Text("모임") }
             }

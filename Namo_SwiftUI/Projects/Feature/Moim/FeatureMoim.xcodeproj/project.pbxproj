@@ -98,6 +98,7 @@
 		475216482C9D5880007F583F /* MoimViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475216472C9D5880007F583F /* MoimViewStore.swift */; };
 		47550E6F2C9DC5E700C47F18 /* MoimCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */; };
 		47550E712C9DC5F200C47F18 /* MoimCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */; };
+		47550E732C9DF65500C47F18 /* MoimRequestViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47550E722C9DF65500C47F18 /* MoimRequestViewStore.swift */; };
 		4771EB76EDCA8FE2F0E9F262 /* GoogleDataTransport_GoogleDataTransport.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 7F5DF4EFF2ED22DD1728E139 /* GoogleDataTransport_GoogleDataTransport.bundle */; };
 		479D8CB74E6706EAE7D907C4 /* DependenciesMacros.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71832246A8C9A7836736A7D1 /* DependenciesMacros.framework */; };
 		47FB7808E0B358DC96E8AA38 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 839B6F74B4E22F7EF30B0111 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle */; };
@@ -615,6 +616,7 @@
 		475216472C9D5880007F583F /* MoimViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimViewStore.swift; sourceTree = "<group>"; };
 		47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimCoordinator.swift; sourceTree = "<group>"; };
 		47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimCoordinatorView.swift; sourceTree = "<group>"; };
+		47550E722C9DF65500C47F18 /* MoimRequestViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRequestViewStore.swift; sourceTree = "<group>"; };
 		4864C8651CBD821D7D30EBB6 /* FlowStacks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlowStacks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B72C6A2975F4848B467D3E /* FriendInviteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInviteListView.swift; sourceTree = "<group>"; };
 		490CBD00C71BC9A9347234F8 /* MoimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimView.swift; sourceTree = "<group>"; };
@@ -1381,6 +1383,7 @@
 				A1E027D1581012692A8D48D0 /* MoimRequestItem.swift */,
 				D8ABDA38D7CC5C7D9F69BD30 /* MoimRequestList.swift */,
 				5B91F9B2FFB891A65A92BDFB /* MoimRequestView.swift */,
+				47550E722C9DF65500C47F18 /* MoimRequestViewStore.swift */,
 			);
 			path = MoimRequest;
 			sourceTree = "<group>";
@@ -1755,6 +1758,7 @@
 				56D880988F0FBB3716CBE239 /* FriendInviteListView.swift in Sources */,
 				57248B623E2B6C02D3DA3F09 /* FriendInviteView.swift in Sources */,
 				297B634BF7EDC43DC908C9D6 /* MoimListCell.swift in Sources */,
+				47550E732C9DF65500C47F18 /* MoimRequestViewStore.swift in Sources */,
 				8EFC8438194F2971DD610476 /* MoimListView.swift in Sources */,
 				F27431EB2B33BB2511FC5FB5 /* MoimView.swift in Sources */,
 				47550E6F2C9DC5E700C47F18 /* MoimCoordinator.swift in Sources */,

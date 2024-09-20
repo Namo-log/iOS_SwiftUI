@@ -11,9 +11,13 @@ import FeatureFriend
 import ComposableArchitecture
 
 public struct MoimRequestView: View {
+    let store: StoreOf<MoimRequestViewStore>
+    
     @State private var tabIndex = 0
     
-    public init() {}
+    public init(store: StoreOf<MoimRequestViewStore>) {
+        self.store = store
+    }
     
     public var body: some View {
         VStack {
@@ -40,7 +44,9 @@ public struct MoimRequestView: View {
                 .font(.pretendard(.bold, size: 16))
                 .foregroundStyle(.black)
         }, left: {
-            Button(action: {}, label: {
+            Button(action: {
+                store.send(.backButtonTap)
+            }, label: {
                 Image(asset: SharedDesignSystemAsset.Assets.icArrowLeftThick)
             })
         })
@@ -48,6 +54,3 @@ public struct MoimRequestView: View {
         
 }
 
-#Preview {
-    MoimRequestView()
-}

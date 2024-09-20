@@ -1,26 +1,26 @@
 //
-//  MoimViewStore.swift
+//  MoimRequestViewStore.swift
 //  FeatureMoim
 //
-//  Created by 권석기 on 9/20/24.
+//  Created by 권석기 on 9/21/24.
 //
 
 import Foundation
 import ComposableArchitecture
 
 @Reducer
-public struct MoimViewStore {
+public struct MoimRequestViewStore {
     @ObservableState
     public struct State: Equatable {}
     
     public enum Action {
-        case requestButtonTap
+        case backButtonTap
     }
     
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .requestButtonTap:                
+            case .backButtonTap:                
                 return .none
             }
         }

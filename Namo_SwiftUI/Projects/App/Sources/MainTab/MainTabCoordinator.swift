@@ -27,13 +27,16 @@ struct MainTabCoordinator {
     }
     
     var body: some ReducerOf<Self> {
-
+        // 탭은 Navigatin을 가지지 않고 각 Coordinator를 Scope로 설정
+        Scope(state: \.moim, action: \.moim) {
+            MoimCoordinator()
+        }
         Reduce { state, action in
             switch action {
             default:
-                break
-            }
-            return .none
+                return .none
+            }            
         }
+        
     }
 }
