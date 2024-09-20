@@ -13,5 +13,7 @@ public typealias AccessToken = String
 public typealias RefreshToken = String
 /// AccessToken, RefreshToken 튜플 명시를 위한 alias 입니다.
 public typealias Tokens = (accessToken: AccessToken, refreshToken: RefreshToken)
-/// AppleLoginInfo 튜플 명시를 위한 alias 입니다.
+/// AppleLoginInfo 구조체 명시를 위한 alias 입니다.
 public typealias AppleLoginInfo = AppleSignInRequestDTO
+/// NaverLoginInfo 구조체 명시를 위한 alias 입니다.
+public typealias NaverLoginInfo = SocialSignInRequestDTO

@@ -21,30 +21,40 @@ public struct AuthClient {
         return await loginHelper.appleLogin()
     }
     
+    /// 네이버 로그인을 진행합니다. - Naver 로그인 토큰 인증을 위한 정보를 받습니다.
+    public func naverLogin() async -> NaverLoginInfo? {
+        return await loginHelper.naverLogin()
+    }
+    
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
     public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> Tokens?
     // signInWithKakao
-    // signInWithNaver
+    /// 나모 API : 네이버 소셜 로그인을 통한 회원가입
+    public var reqSignInWithNaver: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
     // saveToken
     // loadToken
     public init(
         loginHelper: SNSLoginHelperProtocol,
-        reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> Tokens?
+        reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> Tokens?,
+        reqSignInWithNaver: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?
     ) {
         self.loginHelper = loginHelper
         self.reqSignInWithApple = reqSignInWithApple
+        self.reqSignInWithNaver = reqSignInWithNaver
     }
 }
 
 extension AuthClient: TestDependencyKey {
     public static var previewValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
-        reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple")
+        reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
+        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver")
     )
     
     public static let testValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
-        reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple")
+        reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
+        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver")
     )
 }

@@ -52,7 +52,7 @@ extension AuthEndPoint: EndPoint {
             return "/kakao/signup"
             
         case .signInNaver:
-            return "/naver/signup"
+            return "/signup/NAVER"
             
         case .signInApple:
             return "/signup/apple"

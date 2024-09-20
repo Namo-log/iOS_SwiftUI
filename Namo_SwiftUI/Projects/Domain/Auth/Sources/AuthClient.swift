@@ -20,6 +20,13 @@ extension AuthClient: DependencyKey {
             let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
             guard let data = res?.result else { return nil }
             return (data.accessToken, data.refreshToken)
+        },
+        reqSignInWithNaver: { reqDTO in
+            let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInNaver(naverToken: reqDTO))
+            print("자 여기서 너가 어떻게 할지 보자고")
+            print(res)
+            guard let data = res?.result else { return nil }
+            return (data.accessToken, data.refreshToken)
         }
     )
 }
