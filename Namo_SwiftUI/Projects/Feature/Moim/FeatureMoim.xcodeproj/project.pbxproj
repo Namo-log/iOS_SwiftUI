@@ -1103,6 +1103,24 @@
 			path = SubViews;
 			sourceTree = "<group>";
 		};
+		47550E742C9DFA5300C47F18 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				9951EC7C95781925DDCB4C84 /* FriendAddItem.swift */,
+				48B72C6A2975F4848B467D3E /* FriendInviteListView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		47550E752C9DFA6F00C47F18 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				A1E027D1581012692A8D48D0 /* MoimRequestItem.swift */,
+				D8ABDA38D7CC5C7D9F69BD30 /* MoimRequestList.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		50CB43458001A75C53CD6CA1 /* KakaoSDKCertCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1123,8 +1141,7 @@
 		660160215287AE1426FF2A37 /* FriendInvite */ = {
 			isa = PBXGroup;
 			children = (
-				9951EC7C95781925DDCB4C84 /* FriendAddItem.swift */,
-				48B72C6A2975F4848B467D3E /* FriendInviteListView.swift */,
+				47550E742C9DFA5300C47F18 /* SubViews */,
 				90961EBE9BAF129EBBAD8EFE /* FriendInviteView.swift */,
 			);
 			path = FriendInvite;
@@ -1296,6 +1313,8 @@
 		899C399987DED82CAB3D7188 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */,
+				47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */,
 				660160215287AE1426FF2A37 /* FriendInvite */,
 				C29618DC268FB489395EAC91 /* MoimList */,
 				26020955DDB5204A18889AB1 /* MoimRecord */,
@@ -1380,8 +1399,7 @@
 		AB11A7E71C82174C7F7DDCDA /* MoimRequest */ = {
 			isa = PBXGroup;
 			children = (
-				A1E027D1581012692A8D48D0 /* MoimRequestItem.swift */,
-				D8ABDA38D7CC5C7D9F69BD30 /* MoimRequestList.swift */,
+				47550E752C9DFA6F00C47F18 /* SubViews */,
 				5B91F9B2FFB891A65A92BDFB /* MoimRequestView.swift */,
 				47550E722C9DF65500C47F18 /* MoimRequestViewStore.swift */,
 			);
@@ -1418,8 +1436,6 @@
 				475216492C9D590B007F583F /* SubViews */,
 				490CBD00C71BC9A9347234F8 /* MoimView.swift */,
 				475216472C9D5880007F583F /* MoimViewStore.swift */,
-				47550E6E2C9DC5E700C47F18 /* MoimCoordinator.swift */,
-				47550E702C9DC5F200C47F18 /* MoimCoordinatorView.swift */,
 			);
 			path = MoimList;
 			sourceTree = "<group>";
