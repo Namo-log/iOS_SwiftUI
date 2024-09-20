@@ -15,7 +15,8 @@ let targets: [Target] = [
 			dependencies: [
 				.core,
 				.domain(implements: .Friend),
-                .domain(implements: .Moim)
+                .domain(implements: .Moim),
+                .domain(implements: .Auth)
 			]
 		)
 	)

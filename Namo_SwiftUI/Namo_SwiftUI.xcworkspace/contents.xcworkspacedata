@@ -30,6 +30,9 @@
          location = "group:Domain"
          name = "Domain">
          <FileRef
+            location = "group:Auth/DomainAuth.xcodeproj">
+         </FileRef>
+         <FileRef
             location = "group:Category/DomainCategory.xcodeproj">
          </FileRef>
          <FileRef

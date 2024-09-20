@@ -43,6 +43,7 @@ public extension ModulePath {
 		case Friend
 		case Category
         case Moim
+        case Auth
 		
 		public static let name: String = "Domain"
 	}

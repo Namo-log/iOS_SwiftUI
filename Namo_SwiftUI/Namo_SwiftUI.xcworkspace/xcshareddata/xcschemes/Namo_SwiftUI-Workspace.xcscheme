@@ -280,6 +280,62 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA52526EEB1E77AAB03EF1AF"
+               BuildableName = "libDomainAuth.a"
+               BlueprintName = "DomainAuth"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B00C88B269BEE5C24C3237DD"
+               BuildableName = "libDomainAuthInterface.a"
+               BlueprintName = "DomainAuthInterface"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "95C5BB3F750DA98A9778885A"
+               BuildableName = "libDomainAuthTesting.a"
+               BlueprintName = "DomainAuthTesting"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1A1ADB72A1B257398039755"
+               BuildableName = "DomainAuthTests.xctest"
+               BlueprintName = "DomainAuthTests"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "7F20A2B9BD13AEF81255307B"
                BuildableName = "libDomainCategory.a"
                BlueprintName = "DomainCategory"
@@ -2360,6 +2416,16 @@
                BuildableName = "CoreNetworkTests.xctest"
                BlueprintName = "CoreNetworkTests"
                ReferencedContainer = "container:Projects/Core/Network/CoreNetwork.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1A1ADB72A1B257398039755"
+               BuildableName = "DomainAuthTests.xctest"
+               BlueprintName = "DomainAuthTests"
+               ReferencedContainer = "container:Projects/Domain/Auth/DomainAuth.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
