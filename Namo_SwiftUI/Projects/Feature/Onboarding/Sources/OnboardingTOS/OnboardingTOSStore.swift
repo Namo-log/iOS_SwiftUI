@@ -48,6 +48,7 @@ public struct OnboardingTOSStore {
                     
                 case .agreeAll:
                     let newValue = !state.entireAgreement
+                    state.entireAgreement = newValue
                     state.termsOfServiceAgreement = newValue
                     state.personalDataConsent = newValue
                     state.locationServiceAgreement = newValue

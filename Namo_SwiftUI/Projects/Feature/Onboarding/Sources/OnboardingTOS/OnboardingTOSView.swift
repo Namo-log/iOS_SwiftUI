@@ -7,10 +7,15 @@
 
 import SwiftUI
 import SharedDesignSystem
+import ComposableArchitecture
 
 public struct OnboardingTOSView: View {
     
-    public init() {}
+    public let store: StoreOf<OnboardingTOSStore>
+    
+    public init(store: StoreOf<OnboardingTOSStore>) {
+        self.store = store
+    }
     
     public var body: some View {
         VStack(spacing: 56) {
@@ -24,7 +29,7 @@ public struct OnboardingTOSView: View {
                 .foregroundColor(.colorBlack)
                 .font(Font.pretendard(.bold, size: 18))
             
-            TOSListView()
+            TOSListView(store: store)
             
             Spacer()
             

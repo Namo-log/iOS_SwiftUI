@@ -8,25 +8,28 @@
 import SwiftUI
 import SharedDesignSystem
 import SharedUtil
+import ComposableArchitecture
 
 struct TOSListView: View {
-    @State var toggle: Bool = true
+    
+    let store: StoreOf<OnboardingTOSStore>
+    
+    init(store: StoreOf<OnboardingTOSStore>) {
+        self.store = store
+    }
     
     var body: some View {
         VStack {
-            CheckItem(agreementItem: .agreeAll, toggleValue: .constant(true))
+            CheckItem(store: store, agreementItem: .agreeAll)
             
             Divider()
                 .foregroundStyle(Color.textPlaceholder)
                 .frame(height: 1.5)
             
-            CheckItem(agreementItem: .termsOfServiceAgreement, toggleValue: .constant(true))
-            
-            CheckItem(agreementItem: .personalDataConsent, toggleValue: .constant(true))
-            
-            CheckItem(agreementItem: .locationServiceAgreement, toggleValue: .constant(false))
-            
-            CheckItem(agreementItem: .pushNotificationConsent, toggleValue: .constant(false))
+            CheckItem(store: store, agreementItem: .termsOfServiceAgreement)
+            CheckItem(store: store, agreementItem: .personalDataConsent)
+            CheckItem(store: store, agreementItem: .locationServiceAgreement)
+            CheckItem(store: store, agreementItem: .pushNotificationConsent)
         }
         .padding(.horizontal, 45)
     }
@@ -98,38 +101,53 @@ extension TOSListView {
     /// 약관 목록 아이템뷰입니다.
     struct CheckItem: View {
         
+        let store: StoreOf<OnboardingTOSStore>
         let agreementItem: AgreementItem
-        @Binding var toggleValue: Bool
+        
+        var toggleValue: Bool {
+            switch self.agreementItem {
+                
+            case .agreeAll:
+                return store.entireAgreement
+            case .termsOfServiceAgreement:
+                return store.termsOfServiceAgreement
+            case .personalDataConsent:
+                return store.personalDataConsent
+            case .locationServiceAgreement:
+                return store.locationServiceAgreement
+            case .pushNotificationConsent:
+                return store.pushNotificationConsent
+            }
+        }
         
         var body: some View {
-            HStack(alignment: .center, spacing: 16) {
-                Image(asset: toggleValue ? SharedDesignSystemAsset.Assets.isSelectedTrue : SharedDesignSystemAsset.Assets.isSelectedFalse)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
-                    .onTapGesture {
-                        toggleValue.toggle()
-                    }
-                
-                Text(agreementItem.formattedTitle)
-                    .lineLimit(1)
-                    .foregroundStyle(Color.colorBlack)
-                    .font(Font.pretendard(.regular, size: 18))
-                
-                Spacer(minLength: 0)
-                
-                Image(asset: SharedDesignSystemAsset.Assets.arrowBasic)
-                    .hidden(agreementItem.URL == nil)
-//                    .onTapGesture {
-//                        if let urlString = agreementItem.URL, let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-//                            DispatchQueue.main.async {
-//                                UIApplication.shared.open(url)
-//                            }
-//                        }
-//                    }
-                    .disabled(agreementItem.URL == nil)
+            WithPerceptionTracking {
+                HStack(alignment: .center, spacing: 16) {
+                    Image(asset: toggleValue ? SharedDesignSystemAsset.Assets.isSelectedTrue : SharedDesignSystemAsset.Assets.isSelectedFalse)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .onTapGesture {
+                            store.send(.tosListItemCheckCircleTapped(agreementItem))
+                        }
+                    
+                    Text(agreementItem.formattedTitle)
+                        .lineLimit(1)
+                        .foregroundStyle(Color.colorBlack)
+                        .font(Font.pretendard(.regular, size: 18))
+                    
+                    Spacer(minLength: 0)
+                    
+                    Image(asset: SharedDesignSystemAsset.Assets.arrowBasic)
+                        .hidden(agreementItem.URL == nil)
+                        .onTapGesture {
+                            store.send(.tosListItemLinkTapped(agreementItem))
+                        }
+                        .disabled(agreementItem.URL == nil)
+                }
+                .padding(/*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
             }
-            .padding(/*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+            
         }
     }
 }
