@@ -32,10 +32,12 @@ public struct OnboardingTOSStore {
     }
     
     public enum Action {
-        // 각 약관 동의 체크 버튼 탭
+        /// 각 약관 동의 체크 버튼 탭
         case tosListItemCheckCircleTapped(AgreementItem)
-        // 각 약관 설명 > 버튼 탭
+        /// 각 약관 설명 > 버튼 탭
         case tosListItemLinkTapped(AgreementItem)
+        /// 약관 전체 상황 체크, 반영
+        case checkAgreements
     }
     
     public var body: some ReducerOf<Self> {
@@ -64,7 +66,7 @@ public struct OnboardingTOSStore {
                     state.pushNotificationConsent.toggle()
                 }
                 
-                return .none
+                return .send(.checkAgreements)
                 
             case .tosListItemLinkTapped(let item):
                 let item = item as AgreementItem
@@ -76,6 +78,19 @@ public struct OnboardingTOSStore {
                         UIApplication.shared.open(url)
                     }
                 }
+                return .none
+                
+            case .checkAgreements:
+                // 모든 약관의 전체 동의 여부 판단
+                let allAgreementsChecked: Bool =
+                ![
+                    state.termsOfServiceAgreement,
+                    state.personalDataConsent,
+                    state.locationServiceAgreement,
+                    state.pushNotificationConsent
+                ].contains(false)
+                
+                state.entireAgreement = allAgreementsChecked
                 return .none
             }
         }
