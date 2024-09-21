@@ -13,6 +13,7 @@ import KakaoSDKAuth
 import KakaoSDKUser
 import Core
 import SharedUtil
+import DomainAuthInterface
 
 /// 소셜 로그인 진행을 위한 헬퍼 클래스입니다
 public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {

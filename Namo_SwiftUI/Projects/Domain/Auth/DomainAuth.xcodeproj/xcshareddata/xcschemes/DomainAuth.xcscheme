@@ -34,20 +34,6 @@
                ReferencedContainer = "container:DomainAuth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "95C5BB3F750DA98A9778885A"
-               BuildableName = "libDomainAuthTesting.a"
-               BlueprintName = "DomainAuthTesting"
-               ReferencedContainer = "container:DomainAuth.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -56,16 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1A1ADB72A1B257398039755"
-               BuildableName = "DomainAuthTests.xctest"
-               BlueprintName = "DomainAuthTests"
-               ReferencedContainer = "container:DomainAuth.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
