@@ -11,9 +11,13 @@ import FeatureFriend
 import ComposableArchitecture
 
 public struct MoimView: View {
+    let store: StoreOf<MoimViewStore>
+    
     @State private var tabIndex = 0
     
-    public init() {}
+    public init(store: StoreOf<MoimViewStore>) {        
+        self.store = store        
+    }
     
     public var body: some View {
         VStack {
@@ -43,7 +47,11 @@ public struct MoimView: View {
                 .foregroundStyle(.black)
             
         }, right: {
-            Image(asset: SharedDesignSystemAsset.Assets.icNotification)
+            Button(action: {                
+                store.send(.requestButtonTap)
+            }) {
+                Image(asset: SharedDesignSystemAsset.Assets.icNotification)
+            }
         })
     }
 }
