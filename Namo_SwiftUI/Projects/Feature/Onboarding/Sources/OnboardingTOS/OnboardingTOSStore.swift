@@ -15,6 +15,8 @@ public struct OnboardingTOSStore {
     
     @ObservableState
     public struct State: Equatable {
+        /// 전체 동의
+        var entireAgreement: Bool = false
         /// 이용 약관
         var termsOfServiceAgreement: Bool = false
         /// 개인정보 수집 및 이용
@@ -29,26 +31,43 @@ public struct OnboardingTOSStore {
         }
     }
     
-    public enum Action: BindableAction {
-        case binding(BindingAction<State>)
-//        case tosListItemCheckCircleTapped(AgreementItem)
+    public enum Action {
+        // 각 약관 동의 체크 버튼 탭
+        case tosListItemCheckCircleTapped(AgreementItem)
+        // 각 약관 설명 > 버튼 탭
         case tosListItemLinkTapped(AgreementItem)
     }
     
     public var body: some ReducerOf<Self> {
-        BindingReducer()
         
-        Reduce {
-            state,
-            action in
+        Reduce { state, action in
             switch action {
                 
-            case .binding:
+            case .tosListItemCheckCircleTapped(let item):
+                switch item {
+                    
+                case .agreeAll:
+                    let newValue = !state.entireAgreement
+                    state.termsOfServiceAgreement = newValue
+                    state.personalDataConsent = newValue
+                    state.locationServiceAgreement = newValue
+                    state.pushNotificationConsent = newValue
+                    
+                case .termsOfServiceAgreement:
+                    state.termsOfServiceAgreement.toggle()
+                case .personalDataConsent:
+                    state.personalDataConsent.toggle()
+                case .locationServiceAgreement:
+                    state.locationServiceAgreement.toggle()
+                case .pushNotificationConsent:
+                    state.pushNotificationConsent.toggle()
+                }
+                
                 return .none
-//            case .tosListItemCheckCircleTapped(let item):
                 
             case .tosListItemLinkTapped(let item):
                 let item = item as AgreementItem
+                // URL 체크 후 웹뷰 오픈
                 if let urlString = item.URL,
                    let url = URL(string: urlString),
                    UIApplication.shared.canOpenURL(url) {
