@@ -191,7 +191,7 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let icUpThick = SharedDesignSystemImages(name: "ic_up_thick")
     public static let icXmark = SharedDesignSystemImages(name: "ic_xmark")
     public static let icXmarkWhite = SharedDesignSystemImages(name: "ic_xmark_white")
-    public static let addPictrue = SharedDesignSystemImages(name: "addPictrue")
+    public static let addPicture = SharedDesignSystemImages(name: "addPicture")
     public static let appLogo = SharedDesignSystemImages(name: "appLogo")
     public static let noDiary = SharedDesignSystemImages(name: "noDiary")
     public static let noGroup = SharedDesignSystemImages(name: "noGroup")

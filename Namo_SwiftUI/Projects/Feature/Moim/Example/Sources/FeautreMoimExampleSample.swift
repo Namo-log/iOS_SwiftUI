@@ -7,10 +7,12 @@ struct FeautureMoimExampleApp: App {
     var body: some Scene {
         WindowGroup {
             //            FriendInviteView()
-//                        MoimView()
+            MoimView(store: .init(initialState: .init(), reducer: {
+                MoimViewStore()
+            }))
             //            MoimRequestView()
-//            MoimEditView()
-            DiaryEditView()
+            //            MoimEditView()
+            //            DiaryEditView()
         }
     }
 }

@@ -7,3 +7,5 @@
 
 @_exported import DomainFriend
 @_exported import DomainMoim
+@_exported import DomainAuth
+@_exported import DomainAuthInterface

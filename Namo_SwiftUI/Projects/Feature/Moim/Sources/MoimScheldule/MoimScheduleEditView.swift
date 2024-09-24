@@ -9,7 +9,7 @@ import SwiftUI
 import SharedDesignSystem
 import PhotosUI
 
-public struct MoimEditView: View {
+public struct MoimScheduleEditView: View {
     @State private var text = ""
     @State private var coverImageItem: PhotosPickerItem?
     @State private var coverImage: Image?
@@ -70,21 +70,13 @@ public struct MoimEditView: View {
                 .padding(.horizontal, 30)
             }
             .padding(.bottom, 13)
-            
-            Button(action: {}, label: {
-                Text("새 모임 시작하기")
-                    .font(.pretendard(.bold, size: 15))
-                    .frame(maxWidth: .infinity, minHeight: 82)
-                    .foregroundColor(.white)
-            })
-            .background(Color.mainOrange)
         }
         .padding(.top, 15)
         .edgesIgnoringSafeArea(.bottom)
     }
 }
 
-extension MoimEditView {
+extension MoimScheduleEditView {
     
     private var titleView: some View {
         HStack(alignment: .center, spacing: 0) {
@@ -102,7 +94,11 @@ extension MoimEditView {
             
             Spacer()
             
-            Text("  ")
+            Button(action: {}) {
+                Text("생성")
+                    .font(.pretendard(.regular, size: 15))
+                    .foregroundStyle(Color.mainText)
+            }
         }
     }
     
@@ -127,7 +123,7 @@ extension MoimEditView {
                         .frame(width: 55, height: 55)
                         .cornerRadius(8)
                 } else {
-                    Image(asset: SharedDesignSystemAsset.Assets.addPictrue)
+                    Image(asset: SharedDesignSystemAsset.Assets.addPicture)
                         .resizable()
                         .frame(width: 55, height: 55)
                 }
