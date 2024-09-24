@@ -10,13 +10,16 @@ import SharedDesignSystem
 import FeatureFriend
 import ComposableArchitecture
 
-public struct MoimView: View {
-    let store: StoreOf<MoimViewStore>
+public struct MoimView: View {    
+    
+    private let store: StoreOf<MoimViewStore>
     
     @State private var tabIndex = 0
     
-    public init(store: StoreOf<MoimViewStore>) {        
-        self.store = store        
+    public init(store: StoreOf<MoimViewStore>,
+                tabIndex: Int = 0) {
+        self.store = store
+        self.tabIndex = tabIndex
     }
     
     public var body: some View {
@@ -24,7 +27,7 @@ public struct MoimView: View {
             SectionTabBar(tabIndex: $tabIndex, tabTitle: ["모임 일정", "친구 리스트"]) {
                 Spacer()
                 if tabIndex == 0 {
-                    MoimListView()
+//                    MoimListView()
                 } else {
                     FriendListView(
                         store: Store(
@@ -48,7 +51,7 @@ public struct MoimView: View {
             
         }, right: {
             Button(action: {                
-                store.send(.requestButtonTap)
+                
             }) {
                 Image(asset: SharedDesignSystemAsset.Assets.icNotification)
             }

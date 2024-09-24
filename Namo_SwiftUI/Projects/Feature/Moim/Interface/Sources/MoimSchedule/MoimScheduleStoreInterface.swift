@@ -30,7 +30,7 @@ public struct MoimScheduleStore {
         public init() {}
     }
     
-    public enum Action: BindableAction, Equatable {        
+    public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case selectedImage(Image)
         case startPickerTapped

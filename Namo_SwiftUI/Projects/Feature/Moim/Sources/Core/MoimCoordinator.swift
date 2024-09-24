@@ -31,7 +31,10 @@ public struct MoimCoordinator {
             self.moimRequest = moimRequest
         }
         
-        public static let initialState = State(routes: [.root(.moimSchedule(.init()), embedInNavigationView: true)], moimSchedule: .init(), moimRequest: .init())
+        public static let initialState = State(routes: [.root(.moimSchedule(.init()),
+                                                              embedInNavigationView: true)],
+                                               moimSchedule: .init(),
+                                               moimRequest: .init())
         
         var routes: [Route<MoimScreen.State>]
         var moimSchedule: MoimViewStore.State
@@ -53,11 +56,7 @@ public struct MoimCoordinator {
         }
         
         Reduce { state, action in
-            switch action {
-            case .router(.routeAction(_, action: .moimSchedule(.requestButtonTap))):
-                state.routes.push(.moimRequest(.init()))
-            case .router(.routeAction(_, action: .moimRequest(.backButtonTap))):
-                state.routes.goBack()
+            switch action {            
             default:
                 return .none
             }
