@@ -8,22 +8,20 @@
 import SwiftUI
 import SharedDesignSystem
 import PhotosUI
+import ComposableArchitecture
+import FeatureMoimInterface
 
 public struct MoimScheduleEditView: View {
-    @State private var text = ""
-    @State private var coverImageItem: PhotosPickerItem?
-    @State private var coverImage: Image?
-    @State private var startDate = Date()
-    @State private var endDate = Date()
-    @State private var showingStartPicker = false
-    @State private var showingEndPicker = false
-    @State private var dummyFriends = ["코", "코아", "초코", "캐슬슬슬", "슬", "다나ㅇㅇㅇㅇ", "연현", "루카", "뚜뚜", "램프", "반디ddddddd"]
-    @State private var dummyColors: [Color] = [.namoBlue, .namoPink, .namoOrange, .namoYellow, .colorRed, .colorBlue, .colorLime, .colorLavendar, .colorGreen]
+    @Perception.Bindable private var store: StoreOf<MoimScheduleStore>
+    @ObservedObject private var viewStore: ViewStoreOf<MoimScheduleStore>
     
-    public init() {}
+    public init(store: StoreOf<MoimScheduleStore>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: {$0})
+    }
     
     public  var body: some View {
-        VStack(spacing: 0) {
+        WithPerceptionTracking {
             // title
             titleView
                 .padding(.horizontal, 20)
@@ -33,7 +31,7 @@ public struct MoimScheduleEditView: View {
                 
                 VStack(spacing: 30) {
                     // textField
-                    TextField("내 모임", text: $text)
+                    TextField("내 모임", text: viewStore.$title)
                         .font(.pretendard(.bold, size: 22))
                         .foregroundStyle(Color.mainText)
                         .padding(.top, 20)
@@ -116,8 +114,8 @@ extension MoimScheduleEditView {
             
             Spacer()
             
-            PhotosPicker(selection: $coverImageItem, matching: .images) {
-                if let coverImage = coverImage {
+            PhotosPicker(selection: viewStore.$coverImageItem, matching: .images) {
+                if let coverImage = viewStore.coverImage {
                     coverImage
                         .resizable()
                         .frame(width: 55, height: 55)
@@ -128,13 +126,7 @@ extension MoimScheduleEditView {
                         .frame(width: 55, height: 55)
                 }
             }
-        }.onChange(of: coverImageItem, perform: { value in
-            Task {
-                if let loaded = try? await coverImageItem?.loadTransferable(type: Image.self) {
-                    coverImage = loaded
-                }
-            }
-        })
+        }
     }
     
     private var settingView: some View {
@@ -151,14 +143,12 @@ extension MoimScheduleEditView {
                         .font(.pretendard(.regular, size: 15))
                         .foregroundStyle(Color.mainText)
                         .onTapGesture {
-                            withAnimation {
-                                showingStartPicker.toggle()
-                            }
+                            viewStore.send(.startPickerTapped)
                         }
                 }
                 
-                if showingStartPicker {
-                    DatePicker("startTimeDatePicker", selection: $startDate)
+                if viewStore.showingStartPicker {
+                    DatePicker("startTimeDatePicker", selection: viewStore.$startDate)
                         .datePickerStyle(.graphical)
                         .labelsHidden()
                         .tint(Color(asset: SharedDesignSystemAsset.Assets.mainOrange))
@@ -177,14 +167,12 @@ extension MoimScheduleEditView {
                         .font(.pretendard(.regular, size: 15))
                         .foregroundStyle(Color.mainText)
                         .onTapGesture {
-                            withAnimation {
-                                showingEndPicker.toggle()
-                            }
+                            viewStore.send(.endPickerTapped)
                         }
                 }
                 
-                if showingEndPicker {
-                    DatePicker("endTimeDatePicker", selection: $endDate)
+                if viewStore.showingEndPicker {
+                    DatePicker("endTimeDatePicker", selection: viewStore.$endDate)
                         .datePickerStyle(.graphical)
                         .labelsHidden()
                         .tint(Color(asset: SharedDesignSystemAsset.Assets.mainOrange))
@@ -221,18 +209,7 @@ extension MoimScheduleEditView {
                 Button(action: {}) {
                     Image(asset: SharedDesignSystemAsset.Assets.icRight)
                 }
-            }
-            
-            FlexibleGridView(data: dummyFriends,
-                             horizontalSpacing: 12,
-                             verticalSpacing: 12) { string in
-                Participant(name: string, color: dummyColors.randomElement()!)
-            }
-
+            }            
         }
     }
 }
-
-//#Preview {
-//    MoimComposeView()
-//}
