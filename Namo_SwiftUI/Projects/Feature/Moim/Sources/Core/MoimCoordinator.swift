@@ -14,7 +14,7 @@ public enum MoimScreen {
     // 모임 일정
     case moimSchedule(MoimViewStore)
     // 모임/친구 요청
-    case moimRequest(MoimRequestViewStore)
+    case moimRequest(MoimRequestStore)
 }
 
 @Reducer
@@ -25,7 +25,7 @@ public struct MoimCoordinator {
     public struct State: Equatable {
         public init(routes: [Route<MoimScreen.State>],
                     moimSchedule: MoimViewStore.State,
-                    moimRequest: MoimRequestViewStore.State) {
+                    moimRequest: MoimRequestStore.State) {
             self.routes = routes
             self.moimSchedule = moimSchedule
             self.moimRequest = moimRequest
@@ -38,13 +38,13 @@ public struct MoimCoordinator {
         
         var routes: [Route<MoimScreen.State>]
         var moimSchedule: MoimViewStore.State
-        var moimRequest: MoimRequestViewStore.State
+        var moimRequest: MoimRequestStore.State
     }
     
     public enum Action {
         case router(IndexedRouterActionOf<MoimScreen>)
         case moimSchedule(MoimViewStore.Action)
-        case moimRequest(MoimRequestViewStore.Action)
+        case moimRequest(MoimRequestStore.Action)
     }
     
     public var body: some ReducerOf<Self> {
@@ -52,7 +52,7 @@ public struct MoimCoordinator {
             MoimViewStore()
         }
         Scope(state: \.moimRequest, action: \.moimRequest) {
-            MoimRequestViewStore()
+            MoimRequestStore()
         }
         
         Reduce { state, action in

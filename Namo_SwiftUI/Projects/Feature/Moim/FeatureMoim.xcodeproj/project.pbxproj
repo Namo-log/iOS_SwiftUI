@@ -102,6 +102,8 @@
 		4726C4632CA3247400DAC1C2 /* MoimListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726C4622CA3247400DAC1C2 /* MoimListView.swift */; };
 		4726C4652CA324C700DAC1C2 /* MoimListStoreInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726C4642CA324C700DAC1C2 /* MoimListStoreInterface.swift */; };
 		4726C4682CA3260100DAC1C2 /* MoimViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726C4672CA3260100DAC1C2 /* MoimViewStore.swift */; };
+		474019952CA3A4DA0056930D /* MoimRequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474019942CA3A4DA0056930D /* MoimRequestStore.swift */; };
+		474019982CA3A5480056930D /* MoimRequestStoreInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474019972CA3A5480056930D /* MoimRequestStoreInterface.swift */; };
 		4771EB76EDCA8FE2F0E9F262 /* GoogleDataTransport_GoogleDataTransport.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 7F5DF4EFF2ED22DD1728E139 /* GoogleDataTransport_GoogleDataTransport.bundle */; };
 		479D8CB74E6706EAE7D907C4 /* DependenciesMacros.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71832246A8C9A7836736A7D1 /* DependenciesMacros.framework */; };
 		47FB7808E0B358DC96E8AA38 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 839B6F74B4E22F7EF30B0111 /* GoogleUtilities_GoogleUtilities_UserDefaults.bundle */; };
@@ -303,7 +305,6 @@
 		CCBCA00EA12FBC591219F7F3 /* Promises_FBLPromises.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = A812066F54F1A013639DFF0D /* Promises_FBLPromises.bundle */; };
 		CD64B317762981AA3BE9597E /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33921F5CDE9E30C7A21A5E4 /* nanopb.framework */; };
 		CDB18888EF5229DA5B725727 /* FirebaseDynamicLinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EF0B2A2CB44C7883BB69E0 /* FirebaseDynamicLinks.framework */; };
-		CDE6D1BFB1C9A5888B5333A4 /* MoimRequestViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00757BDD8163AD13C0207486 /* MoimRequestViewStore.swift */; };
 		CE314347684CAFFEF68F1814 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E1B72603EB1E9B8280CC19 /* Firebase.framework */; };
 		D04A94E6781BB5B63ECDC7C8 /* GoogleDataTransport_GoogleDataTransport.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7F5DF4EFF2ED22DD1728E139 /* GoogleDataTransport_GoogleDataTransport.bundle */; };
 		D166A10625E2AF21D9287F90 /* GoogleAppMeasurementTarget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D46735E4DE6D701C9F5C28 /* GoogleAppMeasurementTarget.framework */; };
@@ -586,7 +587,6 @@
 
 /* Begin PBXFileReference section */
 		000C65C4DF9B8833C04E0A44 /* SwiftUICalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUICalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00757BDD8163AD13C0207486 /* MoimRequestViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRequestViewStore.swift; sourceTree = "<group>"; };
 		01E1B72603EB1E9B8280CC19 /* Firebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Firebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0273D46CEFA4E046EE38D4FC /* FirebasePerformanceTarget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebasePerformanceTarget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06EE05B9D8FE19469988B136 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -628,6 +628,8 @@
 		4726C4622CA3247400DAC1C2 /* MoimListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimListView.swift; sourceTree = "<group>"; };
 		4726C4642CA324C700DAC1C2 /* MoimListStoreInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimListStoreInterface.swift; sourceTree = "<group>"; };
 		4726C4672CA3260100DAC1C2 /* MoimViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimViewStore.swift; sourceTree = "<group>"; };
+		474019942CA3A4DA0056930D /* MoimRequestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRequestStore.swift; sourceTree = "<group>"; };
+		474019972CA3A5480056930D /* MoimRequestStoreInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimRequestStoreInterface.swift; sourceTree = "<group>"; };
 		4864C8651CBD821D7D30EBB6 /* FlowStacks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlowStacks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		490CBD00C71BC9A9347234F8 /* MoimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoimView.swift; sourceTree = "<group>"; };
 		4C4D997D2A68F4E6F6A933C9 /* IdentifiedCollections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IdentifiedCollections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1134,12 +1136,12 @@
 			path = "naveridlogin-ios-sp";
 			sourceTree = "<group>";
 		};
-		4726C45D2CA322C300DAC1C2 /* Moim */ = {
+		4726C45D2CA322C300DAC1C2 /* MoimList */ = {
 			isa = PBXGroup;
 			children = (
 				4726C4642CA324C700DAC1C2 /* MoimListStoreInterface.swift */,
 			);
-			path = Moim;
+			path = MoimList;
 			sourceTree = "<group>";
 		};
 		4726C4662CA325E600DAC1C2 /* Main */ = {
@@ -1149,6 +1151,14 @@
 				4726C4672CA3260100DAC1C2 /* MoimViewStore.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		474019962CA3A4F10056930D /* MoimRequest */ = {
+			isa = PBXGroup;
+			children = (
+				474019972CA3A5480056930D /* MoimRequestStoreInterface.swift */,
+			);
+			path = MoimRequest;
 			sourceTree = "<group>";
 		};
 		50CB43458001A75C53CD6CA1 /* KakaoSDKCertCore */ = {
@@ -1374,11 +1384,11 @@
 			children = (
 				5BA0E412F552E88BE004E662 /* Core */,
 				4726C4662CA325E600DAC1C2 /* Main */,
-				660160215287AE1426FF2A37 /* FriendInvite */,
 				C29618DC268FB489395EAC91 /* MoimList */,
-				26020955DDB5204A18889AB1 /* MoimRecord */,
 				AB11A7E71C82174C7F7DDCDA /* MoimRequest */,
 				E0856FED63CAB5394820DDA7 /* MoimScheldule */,
+				660160215287AE1426FF2A37 /* FriendInvite */,
+				26020955DDB5204A18889AB1 /* MoimRecord */,
 				28A46893C854D9130EA828DD /* SubViews */,
 			);
 			path = Sources;
@@ -1417,7 +1427,8 @@
 		975E6568265AC7B892E2F730 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4726C45D2CA322C300DAC1C2 /* Moim */,
+				4726C45D2CA322C300DAC1C2 /* MoimList */,
+				474019962CA3A4F10056930D /* MoimRequest */,
 				0738AA8E8751D1676CFEC6F0 /* MoimSchedule */,
 			);
 			path = Sources;
@@ -1461,7 +1472,7 @@
 			children = (
 				515A8262497E100593A6A638 /* SubViews */,
 				5B91F9B2FFB891A65A92BDFB /* MoimRequestView.swift */,
-				00757BDD8163AD13C0207486 /* MoimRequestViewStore.swift */,
+				474019942CA3A4DA0056930D /* MoimRequestStore.swift */,
 			);
 			path = MoimRequest;
 			sourceTree = "<group>";
@@ -1832,6 +1843,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B881C7D862170F8B5BD568BC /* MoimCoordinator.swift in Sources */,
+				474019952CA3A4DA0056930D /* MoimRequestStore.swift in Sources */,
 				BD1C557F67BEBD21C9AB7784 /* MoimCoordinatorView.swift in Sources */,
 				57248B623E2B6C02D3DA3F09 /* FriendInviteView.swift in Sources */,
 				4EF501269B552C8930FD95EE /* FriendAddItem.swift in Sources */,
@@ -1842,9 +1854,9 @@
 				D3EBBF1786DEC60C8D171AB9 /* DiaryEditView.swift in Sources */,
 				7AE12EA15EB53236BC028007 /* ParticipantListView.swift in Sources */,
 				27B45BBF19D628CFD95D2F19 /* MoimRequestView.swift in Sources */,
-				CDE6D1BFB1C9A5888B5333A4 /* MoimRequestViewStore.swift in Sources */,
 				2E907B4E673E5A8CE6C60320 /* MoimRequestItem.swift in Sources */,
 				64245ABD8D63FB83871E6207 /* MoimRequestList.swift in Sources */,
+				474019982CA3A5480056930D /* MoimRequestStoreInterface.swift in Sources */,
 				4726C4652CA324C700DAC1C2 /* MoimListStoreInterface.swift in Sources */,
 				4726C4682CA3260100DAC1C2 /* MoimViewStore.swift in Sources */,
 				A0EAF0150DF79B002B2892EA /* MoimScheduleEditView.swift in Sources */,

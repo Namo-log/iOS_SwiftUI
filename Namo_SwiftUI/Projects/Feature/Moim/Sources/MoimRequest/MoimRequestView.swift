@@ -11,11 +11,11 @@ import FeatureFriend
 import ComposableArchitecture
 
 public struct MoimRequestView: View {
-    let store: StoreOf<MoimRequestViewStore>
+    let store: StoreOf<MoimRequestStore>
     
     @State private var tabIndex = 0
     
-    public init(store: StoreOf<MoimRequestViewStore>) {
+    public init(store: StoreOf<MoimRequestStore>) {
         self.store = store
     }
     
@@ -45,7 +45,7 @@ public struct MoimRequestView: View {
                 .foregroundStyle(.black)
         }, left: {
             Button(action: {
-                store.send(.backButtonTap)
+                
             }, label: {
                 Image(asset: SharedDesignSystemAsset.Assets.icArrowLeftThick)
             })

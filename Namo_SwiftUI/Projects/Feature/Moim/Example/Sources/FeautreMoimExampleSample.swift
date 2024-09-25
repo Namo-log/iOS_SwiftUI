@@ -8,15 +8,8 @@ import ComposableArchitecture
 struct FeautureMoimExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            //            FriendInviteView()
-//            MoimView(store: .init(initialState: .init(), reducer: {
-//                MoimViewStore()
-//            }))
-            //            MoimRequestView()
-            //            MoimEditView()
-            //            DiaryEditView()
-            MoimScheduleEditView(store: Store(initialState: MoimScheduleStore.State(), reducer: {
-                MoimScheduleStore()
+            MoimCoordinatorView(store: .init(initialState: .initialState, reducer: {
+                MoimCoordinator()
             }))
         }
     }

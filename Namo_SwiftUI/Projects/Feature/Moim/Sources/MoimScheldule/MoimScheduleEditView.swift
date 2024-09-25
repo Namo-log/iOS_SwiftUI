@@ -48,22 +48,7 @@ public struct MoimScheduleEditView: View {
                     
                     
                     // 일정보기 버튼
-                    Button(action: {}, label: {
-                        HStack(spacing: 12) {
-                            Image(asset: SharedDesignSystemAsset.Assets.icCalendar)
-                            Text("초대한 친구 일정 보기")
-                                .font(.pretendard(.regular, size: 15))
-                                .foregroundStyle(.black)
-                        }
-                        .background(.white)
-                        .padding(.vertical, 11)
-                        .padding(.horizontal, 20)
-                    })
-                    .cornerRadius(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(.black, lineWidth: 1)
-                    )
+                    shoeScheduleButton
                 }
                 .padding(.horizontal, 30)
             }
@@ -75,6 +60,25 @@ public struct MoimScheduleEditView: View {
 }
 
 extension MoimScheduleEditView {
+    
+    private var shoeScheduleButton: some View {
+        Button(action: {}, label: {
+            HStack(spacing: 12) {
+                Image(asset: SharedDesignSystemAsset.Assets.icCalendar)
+                Text("초대한 친구 일정 보기")
+                    .font(.pretendard(.regular, size: 15))
+                    .foregroundStyle(.black)
+            }
+            .background(.white)
+            .padding(.vertical, 11)
+            .padding(.horizontal, 20)
+        })
+        .cornerRadius(20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(.black, lineWidth: 1)
+        )
+    }
     
     private var titleView: some View {
         HStack(alignment: .center, spacing: 0) {
@@ -209,7 +213,7 @@ extension MoimScheduleEditView {
                 Button(action: {}) {
                     Image(asset: SharedDesignSystemAsset.Assets.icRight)
                 }
-            }            
+            }
         }
     }
 }
