@@ -120,6 +120,7 @@
 		83780496B33A75C3D1335DD0 /* GoogleUtilities_Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3759A17DF59D240E8F442226 /* GoogleUtilities_Network.framework */; };
 		83BFD1145D450A74B54BC601 /* FirebaseCoreExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DE0BA00C1748A6873ED0BA /* FirebaseCoreExtension.framework */; };
 		87D18FC425A3BF12153A140B /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9483DB5B96FABD81B074B9 /* Firebase.framework */; };
+		883181372CA4A61C000BD57D /* OnboardingInfoInputStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883181362CA4A61C000BD57D /* OnboardingInfoInputStore.swift */; };
 		8963D19C4FF61009E6531E4D /* Promises_FBLPromises.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE22B86C6F228A861BD6437A /* Promises_FBLPromises.bundle */; };
 		8A3D80FD9C894354DB32B25E /* libCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 263DAC7149EBA483E75E0F5E /* libCore.a */; };
 		8B52FBB74674A8F09A259CC4 /* GoogleUtilities_UserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADE5BBB59FB795A6033E04E /* GoogleUtilities_UserDefaults.framework */; };
@@ -404,6 +405,7 @@
 		86D5DA645DD09A6F350BA4A7 /* Firebase_FirebaseInstallations.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Firebase_FirebaseInstallations.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A413441CC0752EB46252B1 /* FirebaseCoreInternal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebaseCoreInternal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B8E92999972BF1B2C5811C /* UIKitNavigationShim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIKitNavigationShim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		883181362CA4A61C000BD57D /* OnboardingInfoInputStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInfoInputStore.swift; sourceTree = "<group>"; };
 		88C4BCC8A404C098860E145C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		8928D002EA79F2AEBFE6D7C6 /* OnboardingTOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTOSView.swift; sourceTree = "<group>"; };
 		8A103BAE3CFD55E533286549 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 			children = (
 				65786144CE186B4912952EB3 /* SubView */,
 				F685F2DC06090D7B6C46C286 /* OnboardingInfoInputView.swift */,
+				883181362CA4A61C000BD57D /* OnboardingInfoInputStore.swift */,
 			);
 			path = OnboardingInfoInput;
 			sourceTree = "<group>";
@@ -1255,6 +1258,7 @@
 				15596C289B7AFAD15E2F074E /* ProfileImageInputView.swift in Sources */,
 				9C268C5FAD982718D91C74B9 /* ProfileInfoInputView.swift in Sources */,
 				58E83B369AF2ABC59C8EC7EE /* OnboardingLoginStore.swift in Sources */,
+				883181372CA4A61C000BD57D /* OnboardingInfoInputStore.swift in Sources */,
 				399E2C3DB4377097627BA69C /* OnboardingLoginView.swift in Sources */,
 				FF64D791062894020A956E36 /* LoginButton.swift in Sources */,
 				B8498B579C9B98CADE76DA24 /* OnboardingSplashStore.swift in Sources */,
