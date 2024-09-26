@@ -6,92 +6,89 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 
 public struct ProfileInfoInputView: View {
     
-    var nickname: String?
-    var name: String?
-    var birthDate: Date?
-    var bio: String?
-    var favoriteColor: Color?
+    @Perception.Bindable var store: StoreOf<OnboardingInfoInputStore>
     
-    public init(nickname: String? = nil, name: String?, birthDate: Date? = nil, bio: String? = nil) {
-        self.nickname = nickname
-        self.name = name
-        self.birthDate = birthDate
-        self.bio = bio
+    public init(store: StoreOf<OnboardingInfoInputStore>) {
+        self.store = store
     }
     
     public var body: some View {
-        VStack(spacing: 32) {
-            // 닉네임
-            HStack(alignment: .top) {
-                ItemHeader(title: "닉네임", isRequired: true)
-                Spacer()
-                VStack(alignment: .leading, spacing: 8) {
-                    
-                    ItemTextField(placeholder: "닉네임 입력")
-                    
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(" · 영어, 한글, 숫자 포함 12자 이내")
-                                .lineLimit(1)
-                                .font(.pretendard(.regular, size: 14))
-                                .foregroundColor(.textDisabled)
-                            Text(" · 태그, 이모지 및 특수 문자 불가능")
-                                .lineLimit(1)
-                                .font(.pretendard(.regular, size: 14))
-                                .foregroundColor(.textDisabled)
+        WithPerceptionTracking {
+            VStack(spacing: 32) {
+                // 닉네임
+                HStack(alignment: .top) {
+                    ItemHeader(title: "닉네임", isRequired: true)
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 8) {
+                        
+                        ItemTextField(text: $store.nickname, placeholder: "닉네임 입력")
+                        
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(" · 영어, 한글, 숫자 포함 12자 이내")
+                                    .lineLimit(1)
+                                    .font(.pretendard(.regular, size: 14))
+                                    .foregroundColor(.textDisabled)
+                                Text(" · 태그, 이모지 및 특수 문자 불가능")
+                                    .lineLimit(1)
+                                    .font(.pretendard(.regular, size: 14))
+                                    .foregroundColor(.textDisabled)
+                            }
+                            Spacer()
                         }
-                        Spacer()
+                        
                     }
-                    
+                    .frame(width: 240)
                 }
-                .frame(width: 240)
-            }
-            // 이름
-            HStack {
-                ItemHeader(title: "이름", isRequired: true)
-                Spacer()
+                // 이름
                 HStack {
-                    Text(name ?? "Unvalid")
-                        .font(.pretendard(.regular, size: 15))
-                        .foregroundColor(.textDisabled)
+                    ItemHeader(title: "이름", isRequired: true)
                     Spacer()
-                    Image(asset: SharedDesignSystemAsset.Assets.icCheckCircleSelected)
-                        .resizable()
-                        .frame(width: 18, height: 18)
+                    HStack {
+                        Text(store.name)
+                            .font(.pretendard(.regular, size: 15))
+                            .foregroundColor(.textDisabled)
+                        Spacer()
+                        Image(asset: SharedDesignSystemAsset.Assets.icCheckCircleSelected)
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    }
+                    .frame(width: 240)
                 }
-                .frame(width: 240)
-            }
-            // 생년월일
-            HStack {
-                ItemHeader(title: "생년월일", isRequired: true)
-                Spacer()
+                // 생년월일
                 HStack {
-                    ItemTextField(placeholder: "YYYY", inputType: .numberPad)
-                    Text("/")
-                        .foregroundColor(.textPlaceholder)
-                    ItemTextField(placeholder: "MM", inputType: .numberPad)
-                    Text("/")
-                        .foregroundColor(.textPlaceholder)
-                    ItemTextField(placeholder: "DD", inputType: .numberPad)
-                }
-                .frame(width: 240)
-            }
-            // 한줄소개
-            VStack(spacing: 16) {
-                HStack {
-                    ItemHeader(title: "한 줄 소개", isRequired: false)
+                    ItemHeader(title: "생년월일", isRequired: true)
                     Spacer()
-                    Text("0 / 50")
-                        .font(.pretendard(.bold, size: 12))
-                        .foregroundColor(.textUnselected)
+                    HStack {
+                        ItemTextField(text: .constant(""), placeholder: "YYYY", inputType: .numberPad)
+                        Text("/")
+                            .foregroundColor(.textPlaceholder)
+                        ItemTextField(text: .constant(""), placeholder: "MM", inputType: .numberPad)
+                        Text("/")
+                            .foregroundColor(.textPlaceholder)
+                        ItemTextField(text: .constant(""), placeholder: "DD", inputType: .numberPad)
+                    }
+                    .frame(width: 240)
                 }
-                ItemTextField(placeholder: "내용 입력")
+                // 한줄소개
+                VStack(spacing: 16) {
+                    HStack {
+                        ItemHeader(title: "한 줄 소개", isRequired: false)
+                        Spacer()
+                        Text("0 / 50")
+                            .font(.pretendard(.bold, size: 12))
+                            .foregroundColor(.textUnselected)
+                    }
+                    ItemTextField(text: $store.bio, placeholder: "내용 입력")
+                }
             }
         }
+        
     }
 }
 
@@ -101,12 +98,13 @@ extension ProfileInfoInputView {
         @State var tempStr: String = ""
         @State var isValid: Bool = false
         
+        @Binding var text: String
         let placeholder: String
         var inputType: UIKeyboardType = .default
         
         var body: some View {
             VStack(alignment: .leading, spacing: 4) {
-                TextField(placeholder, text: $tempStr)
+                TextField(placeholder, text: $text)
                     .textFieldStyle(.plain)
                     .font(.pretendard(.regular, size: 15))
                     .foregroundColor(isValid ? .mainOrange : .mainText)

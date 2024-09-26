@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 import SharedUtil
 
@@ -13,7 +14,11 @@ public struct OnboardingInfoInputView: View {
     
     @State private var isShowingPalette = false
     
-    public init() {}
+    public let store: StoreOf<OnboardingInfoInputStore>
+    
+    public init(store: StoreOf<OnboardingInfoInputStore>) {
+        self.store = store
+    }
     
     public var body: some View {
         VStack {
@@ -24,7 +29,7 @@ public struct OnboardingInfoInputView: View {
                 
                 ProfileImageInputView()
                 
-                ProfileInfoInputView(name: "test")
+                ProfileInfoInputView(store: store)
                     .padding(.horizontal, 30)
                     .padding(.vertical)
             }
