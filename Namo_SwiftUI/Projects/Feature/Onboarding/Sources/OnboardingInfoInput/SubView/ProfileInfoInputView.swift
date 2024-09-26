@@ -80,7 +80,7 @@ public struct ProfileInfoInputView: View {
                     HStack {
                         ItemHeader(title: "한 줄 소개", isRequired: false)
                         Spacer()
-                        Text("0 / 50")
+                        Text("\(store.bio.count) / 50")
                             .font(.pretendard(.bold, size: 12))
                             .foregroundColor(.textUnselected)
                     }

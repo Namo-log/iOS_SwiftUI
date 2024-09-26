@@ -19,13 +19,15 @@ public struct OnboardingInfoInputStore {
         /// 프로필 이미지
         var profileImage: Image?
         /// 닉네임
-        var nickname: String?
+        var nickname: String = ""
         /// 이름
         let name: String
         /// 생년월일
         var birthDate: Date?
         /// 한줄소개
-        var bio: String?
+        var bio: String = ""
+        /// 좋아하는 색상
+        var favoriteColor: Color?
         /// 프로필 이미지 적합 여부
         var isProfileImageValid: Bool?
         /// 닉네임 적합 여부
@@ -48,7 +50,7 @@ public struct OnboardingInfoInputStore {
                 self.isNameLoaded = true
             }
             else {
-                self.name = ""
+                self.name = "Unvalid"
                 self.isNameLoaded = false
             }
         }
@@ -74,8 +76,15 @@ public struct OnboardingInfoInputStore {
         
         Reduce { state, action in
             switch action {
-            case .binding:
-                return .none
+            case .binding(let bindingAction):
+                switch bindingAction.keyPath {
+                case \State.nickname:
+                    return .send(.nicknameChanged(state.nickname))
+                case \State.bio:
+                    return .send(.bioChanged(state.bio))
+                default:
+                    return .none
+                }
             case .addImageButtonTapped:
                 print("이미지 피커 표시")
                 return .none

@@ -7,9 +7,9 @@ struct FeatureFriendExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingTOSView(store: Store(initialState: OnboardingTOSStore.State()) {
-                OnboardingTOSStore()
-                    ._printChanges()
+            OnboardingInfoInputView(store: Store(initialState: OnboardingInfoInputStore.State(name: "테스트")) {
+                OnboardingInfoInputStore()
+//                    ._printChanges()
             })
 //            OnboardingLoginView(store: Store(initialState: OnboardingLoginStore.State()) {
 //                OnboardingLoginStore()
