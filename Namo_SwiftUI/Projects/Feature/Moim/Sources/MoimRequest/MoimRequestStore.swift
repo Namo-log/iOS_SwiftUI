@@ -12,7 +12,7 @@ import FeatureMoimInterface
 extension MoimRequestStore {
     public init() {
         let reducer: Reduce<State, Action> = Reduce { state, action in
-            switch action {
+            switch action {            
             default:
                 return .none
             }

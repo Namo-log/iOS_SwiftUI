@@ -7,11 +7,14 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SharedDesignSystem
 
 struct MoimListView: View {
     let store: StoreOf<MoimListStore>
     
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            Text("dd")
+        }
     }
 }

@@ -16,9 +16,13 @@ public struct MoimRequestStore {
         self.reducer = reducer
     }
     
-    public struct State: Equatable {}
+    public struct State: Equatable {
+        public init() {}
+    }
     
-    public enum Action {}
+    public enum Action {
+        case backButtonTap
+    }
     
     public var body: some ReducerOf<Self> {
         reducer

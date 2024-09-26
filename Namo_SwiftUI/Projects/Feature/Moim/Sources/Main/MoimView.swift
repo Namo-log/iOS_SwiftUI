@@ -10,118 +10,52 @@ import SharedDesignSystem
 import FeatureFriend
 import ComposableArchitecture
 
-public struct MoimView: View {    
-    
+
+
+public struct MoimView: View {
+    @State private var currentTab: Int = 0
     private let store: StoreOf<MoimViewStore>
     
-    @State private var tabIndex = 0
-    
-    public init(store: StoreOf<MoimViewStore>,
-                tabIndex: Int = 0) {
+    public init(store: StoreOf<MoimViewStore>) {
         self.store = store
-        self.tabIndex = tabIndex
     }
     
     public var body: some View {
-        VStack {
-            SectionTabBar(tabIndex: $tabIndex, tabTitle: ["모임 일정", "친구 리스트"]) {
-                Spacer()
-                if tabIndex == 0 {
-//                    MoimListView()
-                } else {
-                    FriendListView(
-                        store: Store(
-                            initialState: FriendListStore.State(
-                                friends: dummyFriends
-                            ),
-                            reducer: {
-                                FriendListStore()
-                            }
-                        )
+        VStack(spacing: 0) {
+            TabBarView(currentTab: $currentTab, tabBarOptions: ["모임 일정", "친구리스트"])
+            
+            TabView(selection: $currentTab) {
+                MoimListView(store: .init(initialState: MoimListStore.State(), reducer: {
+                    MoimListStore()
+                }))
+                .tag(0)
+                
+                FriendListView(
+                    store: .init(
+                        initialState: FriendListStore.State(
+                            friends: []
+                        ),
+                        reducer: {
+                            FriendListStore()
+                        }
                     )
-                }
-                Spacer()
+                )
+                .tag(1)
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            
+           
         }
-        .edgesIgnoringSafeArea(.bottom)
         .namoNabBar(left: {
             Text("Group Calendar")
                 .font(.pretendard(.bold, size: 22))
                 .foregroundStyle(.black)
-            
         }, right: {
-            Button(action: {                
-                
+            Button(action: {
+                store.send(.notificationButtonTap)
             }) {
                 Image(asset: SharedDesignSystemAsset.Assets.icNotification)
             }
         })
     }
 }
-
-let dummyFriends: [DummyFriend] = [
-    DummyFriend(
-        id: 1,
-        image: .blue,
-        nickname: "닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네https://cyber.gachon.ac.kr/ubion_document/94/f7/94f7ee67dadffd59821c4ba9351f7c74fbc8764b/94f7ee67dadffd59821c4ba9351f7c74fbc8764b.files/3.png임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임",
-        description: "설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명",
-        isFavorite: true,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 2,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 3,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 4,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 5,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 6,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 7,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    ),
-    DummyFriend(
-        id: 8,
-        image: .blue,
-        nickname: "닉네임",
-        description: "설명",
-        isFavorite: false,
-        tag: "1234"
-    )
-]

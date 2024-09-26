@@ -13,5 +13,7 @@ public struct MoimViewStore {
     public init() {}
     public struct State: Equatable {}
     
-    public enum Action {}
+    public enum Action {
+        case notificationButtonTap
+    }
 }

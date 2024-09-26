@@ -10,7 +10,7 @@ struct FeautureMoimExampleApp: App {
         WindowGroup {
             MoimCoordinatorView(store: .init(initialState: .initialState, reducer: {
                 MoimCoordinator()
-            }))
+            }))            
         }
     }
 }

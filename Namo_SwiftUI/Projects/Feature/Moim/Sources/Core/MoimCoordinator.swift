@@ -55,12 +55,17 @@ public struct MoimCoordinator {
             MoimRequestStore()
         }
         
-        Reduce { state, action in
-            switch action {            
+        Reduce<State, Action> { state, action in
+            switch action {
+            case .router(.routeAction(_, action: .moimSchedule(.notificationButtonTap))):
+                state.routes.push(.moimRequest(.init()))
+                return .none
+            case .router(.routeAction(_, action: .moimRequest(.backButtonTap))):
+                state.routes.goBack()
+                return .none
             default:
                 return .none
             }
-            return .none
         }
         .forEachRoute(\.routes, action: \.router)
     }
