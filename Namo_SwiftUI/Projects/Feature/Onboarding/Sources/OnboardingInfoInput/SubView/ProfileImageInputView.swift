@@ -34,7 +34,14 @@ public struct ProfileImageInputView: View {
             Button(action: {
                 store.send(.addFavoriteColorButtonTapped)
             }, label: {
-                Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
+                switch store.favoriteColorState {
+                case .blank:
+                    Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
+                case .filled, .valid:
+                    Image(asset: SharedDesignSystemAsset.Assets.icFavColorValid)
+                case .invalid:
+                    Image(asset: SharedDesignSystemAsset.Assets.icFavColorInvalid)
+                }
             })
             .offset(x: 52, y: 52)
         }

@@ -8,6 +8,30 @@
 import ComposableArchitecture
 import SwiftUICore
 
+/// InfoInput 작성 시 내용 구분용으로 사용하는 enum입니다
+public enum InfoFormState {
+    // 미작성
+    case blank
+    // 작성됨
+    case filled
+    // 적합
+    case valid
+    // 부적합
+    case invalid
+    
+    var lineColor: Color {
+        switch self {
+            
+        case .blank:
+            return .textPlaceholder
+        case .filled, .valid:
+            return .mainText
+        case .invalid:
+            return .namoOrange
+        }
+    }
+}
+
 @Reducer
 public struct OnboardingInfoInputStore {
     
@@ -36,14 +60,20 @@ public struct OnboardingInfoInputStore {
         var selectedPaletterColor: Color?
         /// 좋아하는 색상
         var favoriteColor: Color?
-        /// 프로필 이미지 적합 여부
-        var isProfileImageValid: Bool?
-        /// 닉네임 적합 여부
-        var isNicknameValid: Bool?
+        /// 좋아하는 색상 선택 상태
+        var favoriteColorState: InfoFormState = .blank
+        /// 닉네임 작성 상태
+        var nicknameState: InfoFormState = .blank
         /// 이름 로드 여부
         var isNameLoaded: Bool = false
-        /// 생년월일 적합 여부
-        var isBirthDateValid: Bool?
+        /// 생년 작성 상태
+        var birthYearState: InfoFormState = .blank
+        /// 생월 작성 상태
+        var birthMonthState: InfoFormState = .blank
+        /// 생일 작성 상태
+        var birthDayState: InfoFormState = .blank
+        /// 한줄소개 작성 상태
+        var bioState: InfoFormState = .blank
         /// 확인 버튼 활성화 상태
         var isNextButtonIsEnabled: Bool = false
         /// 팔레트 뷰 표시 여부
@@ -135,6 +165,7 @@ public struct OnboardingInfoInputStore {
                 if let color = nilableColor {
                     print("컬러 저장: \(color)")
                     state.favoriteColor = color
+                    state.favoriteColorState = .filled
                     return .none
                 }
                 else {
@@ -150,12 +181,15 @@ public struct OnboardingInfoInputStore {
                 return .none
             case .birthYearChanged(let year):
                 print("현재 year: \(year)")
+                state.birthYearState = year.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
             case .birthMonthChanged(let month):
                 print("현재 month: \(month)")
+                state.birthMonthState = month.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
             case .birthDayChanged(let day):
                 print("현재 day: \(day)")
+                state.birthDayState = day.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
             case .birthDateMerge(let year, let month, let day):
                 state.birthDate = "\(year)-\(month)-\(day)"
