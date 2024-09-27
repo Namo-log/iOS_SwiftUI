@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     /// 정규식을 사용하여 문자열이 규칙에 맞는지 검증
-    func matches(regex: String) -> Bool {
+    public func matches(regex: String) -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: regex)
             let range = NSRange(location: 0, length: self.utf16.count)

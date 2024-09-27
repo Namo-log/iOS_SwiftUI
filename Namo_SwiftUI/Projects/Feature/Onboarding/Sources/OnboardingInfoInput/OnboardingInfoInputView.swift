@@ -35,19 +35,15 @@ public struct OnboardingInfoInputView: View {
                         .padding(.vertical)
                 }
                 
-                Spacer()
+                Spacer(minLength: 0)
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("＊표시는 필수 항목입니다.")
                         .font(.pretendard(.regular, size: 14))
                         .foregroundColor(.mainText)
-                    NamoButton(title: "확인", type: .inactive, action: {
-                        store.isShowingNamoToast = true
-                    })
+                    NamoButton(title: "확인", type: store.isNextButtonIsEnabled ? .active : .inactive, action: {})
                     .onTapGesture {
-                        if !store.isNextButtonIsEnabled {
-                            store.isShowingNamoToast = true
-                        }
+                        store.send(.nextButtonTapped)
                     }
                 }
                 .padding(.horizontal, 30)

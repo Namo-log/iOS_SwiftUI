@@ -35,6 +35,15 @@ public enum InfoFormState: Equatable {
 @Reducer
 public struct OnboardingInfoInputStore {
     
+    /// 닉네임 정규식 (영어, 한글, 숫자 포함 12자 이내, 특수 문자 및 이모지 불가)
+    let nicknameRegex = "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{1,12}$"
+    /// 년도 정규식
+    let yearRegex = #"^\d{4}$"#
+    /// 월 정규식
+    let monthRegex = "^(0[1-9]|1[0-2])$"
+    /// 일 정규식
+    let dayRegex = "^(0[1-9]|[12][0-9]|3[01])$"
+
     public init() {}
     
     @ObservableState
@@ -167,8 +176,8 @@ public struct OnboardingInfoInputStore {
                 if let color = nilableColor {
                     print("컬러 저장: \(color)")
                     state.favoriteColor = color
-                    state.favoriteColorState = .filled
-                    return .none
+                    state.favoriteColorState = .valid
+                    return .send(.checkFormStatus)
                 }
                 else {
                     print("컬러 저장 불가")
@@ -179,31 +188,45 @@ public struct OnboardingInfoInputStore {
                 state.isShowingPalette = false
                 return .none
             case .nicknameChanged(let nickname):
-                state.nicknameState = nickname.isEmpty ? .blank : .filled
+//                state.nicknameState = nickname.isEmpty ? .blank : .filled
+                state.nicknameState = state.nickname.matches(regex: nicknameRegex) ? .valid : .invalid
                 print("현재 nickname: \(nickname), \(state.nicknameState)")
-                return .none
+                return .send(.checkFormStatus)
             case .birthYearChanged(let year):
                 print("현재 year: \(year)")
-                state.birthYearState = year.isEmpty ? .blank : .filled
+//                state.birthYearState = year.isEmpty ? .blank : .filled
+                state.birthYearState = state.birthYear.matches(regex: yearRegex) ? .valid : .invalid
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
             case .birthMonthChanged(let month):
                 print("현재 month: \(month)")
-                state.birthMonthState = month.isEmpty ? .blank : .filled
+//                state.birthMonthState = month.isEmpty ? .blank : .filled
+                state.birthMonthState = state.birthMonth.matches(regex: monthRegex) ? .valid : .invalid
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
             case .birthDayChanged(let day):
                 print("현재 day: \(day)")
-                state.birthDayState = day.isEmpty ? .blank : .filled
+//                state.birthDayState = day.isEmpty ? .blank : .filled
+                state.birthDayState = state.birthDay.matches(regex: dayRegex) ? .valid : .invalid
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
             case .birthDateMerge(let year, let month, let day):
                 state.birthDate = "\(year)-\(month)-\(day)"
                 print("현재 birthDate: \(state.birthDate)")
-                return .none
+                return .send(.checkFormStatus)
             case .bioChanged(let bio):
                 print("현재 bio: \(bio)")
-                state.bioState = bio.isEmpty ? .blank : .filled
-                return .none
+//                state.bioState = bio.isEmpty ? .blank : .filled
+                state.bioState = state.bio.count <= 50 ? .valid : .invalid
+                return .send(.checkFormStatus)
             case .checkFormStatus:
-//                state.nickname
+                let status =
+                state.favoriteColorState == .valid
+                && state.nicknameState == .valid
+                && state.isNameLoaded
+                && state.birthYearState == .valid
+                && state.birthMonthState == .valid
+                && state.birthDayState == .valid
+                && state.bioState != .invalid
+                
+                state.isNextButtonIsEnabled = status
                 return .none
             case .nextButtonTapped:
                 print("다음")

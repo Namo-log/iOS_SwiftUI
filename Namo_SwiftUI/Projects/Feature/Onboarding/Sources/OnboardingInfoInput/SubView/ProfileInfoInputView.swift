@@ -125,6 +125,7 @@ extension ProfileInfoInputView {
     struct ItemTextField: View {
         @Binding var text: String
         @Binding var state: InfoFormState
+        @State var lineColor: Color = InfoFormState.blank.lineColor
         
         let placeholder: String
         var inputType: UIKeyboardType = .default
@@ -136,11 +137,11 @@ extension ProfileInfoInputView {
                     TextField(placeholder, text: $text)
                         .disableAutocorrection(true)
                         .textFieldStyle(.plain)
-                        .foregroundColor(state.lineColor)
+                        .foregroundColor(lineColor)
                         .font(.pretendard(.regular, size: 15))
                         .keyboardType(inputType)
                         
-                    if isCheckmark && state == .filled {
+                    if isCheckmark && state == .valid {
                         Circle()
                             .fill(Color.namoOrange)
                             .frame(width: 16, height: 16)
@@ -152,7 +153,11 @@ extension ProfileInfoInputView {
                     }
                 }
                 Divider()
-                    .background(state.lineColor)
+                    .background(lineColor)
+            }
+            // state.lineColor 직접 관측하지 못함
+            .onChange(of: state) { newValue in
+                lineColor = newValue.lineColor
             }
         }
     }
