@@ -54,9 +54,14 @@ public struct ProfileInfoInputView: View {
                             .font(.pretendard(.regular, size: 15))
                             .foregroundColor(.textDisabled)
                         Spacer()
-                        Image(asset: SharedDesignSystemAsset.Assets.icCheckCircleSelected)
-                            .resizable()
-                            .frame(width: 18, height: 18)
+                        Circle()
+                            .fill(Color.namoOrange)
+                            .frame(width: 16, height: 16)
+                            .overlay {
+                                Image(asset: SharedDesignSystemAsset.Assets.icCheckmark)
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                            }
                     }
                     .frame(width: 240)
                 }
@@ -100,14 +105,27 @@ extension ProfileInfoInputView {
         
         let placeholder: String
         var inputType: UIKeyboardType = .default
+        var isCheckmark: Bool = false
         
         var body: some View {
             VStack(alignment: .leading, spacing: 4) {
-                TextField(placeholder, text: $text)
-                    .textFieldStyle(.plain)
-                    .font(.pretendard(.regular, size: 15))
-                    .foregroundColor(state.lineColor)
-                    .keyboardType(inputType)
+                HStack {
+                    TextField(placeholder, text: $text)
+                        .textFieldStyle(.plain)
+                        .font(.pretendard(.regular, size: 15))
+                        .foregroundColor(state.lineColor)
+                        .keyboardType(inputType)
+                    if isCheckmark && state == .valid {
+                        Circle()
+                            .fill(Color.namoOrange)
+                            .frame(width: 16, height: 16)
+                            .overlay {
+                                Image(asset: SharedDesignSystemAsset.Assets.icCheckmark)
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                            }
+                    }
+                }
                 Divider()
                     .foregroundColor(state.lineColor)
             }

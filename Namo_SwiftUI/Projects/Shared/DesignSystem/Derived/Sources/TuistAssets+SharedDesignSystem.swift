@@ -131,6 +131,7 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let icCheck = SharedDesignSystemImages(name: "ic_check")
     public static let icCheckCircle = SharedDesignSystemImages(name: "ic_check_circle")
     public static let icCheckCircleSelected = SharedDesignSystemImages(name: "ic_check_circle_selected")
+    public static let icCheckmark = SharedDesignSystemImages(name: "ic_checkmark")
     public static let icCircleLarge = SharedDesignSystemImages(name: "ic_circle_large")
     public static let icCircleSelectedLarge = SharedDesignSystemImages(name: "ic_circle_selected_large")
     public static let icCircleSelectedSmall = SharedDesignSystemImages(name: "ic_circle_selected_small")

@@ -48,7 +48,7 @@ public struct NamoPallete: View {
                         .frame(width: 24, height: 24)
                         .overlay {
                             if color == self.selectedColor {
-                                Image(asset: SharedDesignSystemAsset.Assets.checkMark)
+                                Image(asset: SharedDesignSystemAsset.Assets.icCheckmark)
                                     .frame(width: 24, height: 24)
                             }
                         }
