@@ -15,7 +15,7 @@ public extension Color {
     
     //    static let colorPink = Color(asset: NamoColors.pink)
     //    static let colorPurple = Color(asset: NamoColors.purple)
-//    static let colorYellow = Color(asset: NamoColors.yellow)
+    //    static let colorYellow = Color(asset: NamoColors.yellow)
     
     static let mainOrange = Color(asset: NamoColors.mainOrange)
     static let mainText = Color(asset: NamoColors.mainText)
@@ -47,4 +47,27 @@ public extension Color {
     static let colorPurple = Color(asset: NamoColors.purple)
     static let colorRed = Color(asset: NamoColors.red)
     static let colorYellow = Color(asset: NamoColors.yellow)
+    
+    static let NamoColorPalette: [Color] = [
+        .namoOrange,
+        .namoPink,
+        .namoYellow,
+        .namoBlue,
+        .colorLightGray,
+        .colorRed,
+        .colorPink,
+        .colorOrange,
+        .colorYellow,
+        .colorLime,
+        .colorLightGreen,
+        .colorGreen,
+        .colorCyan,
+        .colorLightBlue,
+        .colorBlue,
+        .colorLavendar,
+        .colorPurple,
+        .colorMagenta,
+        // colorDarkGray 추가 필요
+        .colorBlack
+    ]
 }
