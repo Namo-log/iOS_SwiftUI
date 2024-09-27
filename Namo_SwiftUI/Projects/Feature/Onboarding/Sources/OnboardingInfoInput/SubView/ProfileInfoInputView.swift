@@ -65,13 +65,13 @@ public struct ProfileInfoInputView: View {
                     ItemHeader(title: "생년월일", isRequired: true)
                     Spacer()
                     HStack {
-                        ItemTextField(text: .constant(""), placeholder: "YYYY", inputType: .numberPad)
+                        ItemTextField(text: $store.birthYear, placeholder: "YYYY", inputType: .numberPad)
                         Text("/")
                             .foregroundColor(.textPlaceholder)
-                        ItemTextField(text: .constant(""), placeholder: "MM", inputType: .numberPad)
+                        ItemTextField(text: $store.birthMonth, placeholder: "MM", inputType: .numberPad)
                         Text("/")
                             .foregroundColor(.textPlaceholder)
-                        ItemTextField(text: .constant(""), placeholder: "DD", inputType: .numberPad)
+                        ItemTextField(text: $store.birthDay, placeholder: "DD", inputType: .numberPad)
                     }
                     .frame(width: 240)
                 }
