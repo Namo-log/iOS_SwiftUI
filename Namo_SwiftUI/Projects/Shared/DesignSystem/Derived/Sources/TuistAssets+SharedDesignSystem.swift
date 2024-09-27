@@ -101,6 +101,7 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let onboarding5 = SharedDesignSystemData(name: "onboarding5")
     public static let blue = SharedDesignSystemColors(name: "Blue")
     public static let cyan = SharedDesignSystemColors(name: "Cyan")
+    public static let darkGray = SharedDesignSystemColors(name: "DarkGray")
     public static let gray = SharedDesignSystemColors(name: "Gray")
     public static let green = SharedDesignSystemColors(name: "Green")
     public static let lavendar = SharedDesignSystemColors(name: "Lavendar")
