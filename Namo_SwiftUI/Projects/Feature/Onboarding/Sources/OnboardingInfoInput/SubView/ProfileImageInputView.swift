@@ -11,39 +11,41 @@ import SharedDesignSystem
 
 public struct ProfileImageInputView: View {
     
-    var store: StoreOf<OnboardingInfoInputStore>
+    @Perception.Bindable var store: StoreOf<OnboardingInfoInputStore>
     
     public init(store: StoreOf<OnboardingInfoInputStore>) {
         self.store = store
     }
     
     public var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 24)
-                .frame(width: 120, height: 120)
-                .foregroundColor(.mainGray)
-            
-            Image(asset: SharedDesignSystemAsset.Assets.icImage)
-                .resizable()
-                .frame(width: 28, height: 28)
-        }
-        .onTapGesture {
-            store.send(.addImageButtonTapped)
-        }
-        .overlay {
-            Button(action: {
-                store.send(.addFavoriteColorButtonTapped)
-            }, label: {
-                switch store.favoriteColorState {
-                case .blank:
-                    Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
-                case .filled, .valid:
-                    Image(asset: SharedDesignSystemAsset.Assets.icFavColorValid)
-                case .invalid:
-                    Image(asset: SharedDesignSystemAsset.Assets.icFavColorInvalid)
-                }
-            })
-            .offset(x: 52, y: 52)
+        WithPerceptionTracking {
+            ZStack {
+                RoundedRectangle(cornerRadius: 24)
+                    .frame(width: 120, height: 120)
+                    .foregroundColor(.mainGray)
+                
+                Image(asset: SharedDesignSystemAsset.Assets.icImage)
+                    .resizable()
+                    .frame(width: 28, height: 28)
+            }
+            .onTapGesture {
+                store.send(.addImageButtonTapped)
+            }
+            .overlay {
+                Button(action: {
+                    store.send(.addFavoriteColorButtonTapped)
+                }, label: {
+                    switch store.favoriteColorState {
+                    case .blank:
+                        Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
+                    case .filled, .valid:
+                        Image(asset: SharedDesignSystemAsset.Assets.icFavColorValid)
+                    case .invalid:
+                        Image(asset: SharedDesignSystemAsset.Assets.icFavColorInvalid)
+                    }
+                })
+                .offset(x: 52, y: 52)
+            }
         }
     }
 }

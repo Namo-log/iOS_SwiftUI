@@ -42,8 +42,13 @@ public struct OnboardingInfoInputView: View {
                         .font(.pretendard(.regular, size: 14))
                         .foregroundColor(.mainText)
                     NamoButton(title: "확인", type: .inactive, action: {
-                        isShowingPalette.toggle()
+                        store.isShowingNamoToast = true
                     })
+                    .onTapGesture {
+                        if !store.isNextButtonIsEnabled {
+                            store.isShowingNamoToast = true
+                        }
+                    }
                 }
                 .padding(.horizontal, 30)
             }
@@ -52,7 +57,7 @@ public struct OnboardingInfoInputView: View {
                 ProfileColorSelectView(store: store)
                     .presentationDetents([.height(300)])
             }
-            .namoToastView(isPresented: .constant(false), title: "색상과 필수 항목을 기재해주세요.")
+            .namoToastView(isPresented: $store.isShowingNamoToast, title: "색상과 필수 항목을 기재해주세요.")
         }
     }
 }

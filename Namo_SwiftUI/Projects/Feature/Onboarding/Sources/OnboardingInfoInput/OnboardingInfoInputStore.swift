@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUICore
 
 /// InfoInput 작성 시 내용 구분용으로 사용하는 enum입니다
-public enum InfoFormState {
+public enum InfoFormState: Equatable {
     // 미작성
     case blank
     // 작성됨
@@ -23,11 +23,11 @@ public enum InfoFormState {
         switch self {
             
         case .blank:
-            return .textPlaceholder
+            return Color.textPlaceholder
         case .filled, .valid:
-            return .mainText
+            return Color.mainText
         case .invalid:
-            return .namoOrange
+            return Color.namoOrange
         }
     }
 }
@@ -79,7 +79,7 @@ public struct OnboardingInfoInputStore {
         /// 팔레트 뷰 표시 여부
         var isShowingPalette: Bool = false
         /// 토스트 표시 여부
-        var isSowingNamoToast: Bool = false
+        var isShowingNamoToast: Bool = false
         
         
         public init(name: String?) {
@@ -118,6 +118,8 @@ public struct OnboardingInfoInputStore {
         case birthDateMerge(String, String, String)
         /// 한줄소개 수정
         case bioChanged(String)
+        /// 폼 작성 상태 확인
+        case checkFormStatus
         /// 확인 버튼 탭
         case nextButtonTapped
     }
@@ -177,7 +179,8 @@ public struct OnboardingInfoInputStore {
                 state.isShowingPalette = false
                 return .none
             case .nicknameChanged(let nickname):
-                print("현재 nickname: \(nickname)")
+                state.nicknameState = nickname.isEmpty ? .blank : .filled
+                print("현재 nickname: \(nickname), \(state.nicknameState)")
                 return .none
             case .birthYearChanged(let year):
                 print("현재 year: \(year)")
@@ -197,6 +200,10 @@ public struct OnboardingInfoInputStore {
                 return .none
             case .bioChanged(let bio):
                 print("현재 bio: \(bio)")
+                state.bioState = bio.isEmpty ? .blank : .filled
+                return .none
+            case .checkFormStatus:
+//                state.nickname
                 return .none
             case .nextButtonTapped:
                 print("다음")

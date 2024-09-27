@@ -26,7 +26,12 @@ public struct ProfileInfoInputView: View {
                     Spacer()
                     VStack(alignment: .leading, spacing: 8) {
                         
-                        ItemTextField(text: $store.nickname, state: $store.nicknameState, placeholder: "닉네임 입력")
+                        ItemTextField(
+                            text: $store.nickname,
+                            state: $store.nicknameState,
+                            placeholder: "닉네임 입력",
+                            isCheckmark: true
+                        )
                         
                         HStack {
                             VStack(alignment: .leading) {
@@ -70,13 +75,28 @@ public struct ProfileInfoInputView: View {
                     ItemHeader(title: "생년월일", isRequired: true)
                     Spacer()
                     HStack {
-                        ItemTextField(text: $store.birthYear, state: $store.birthYearState, placeholder: "YYYY", inputType: .numberPad)
+                        ItemTextField(
+                            text: $store.birthYear,
+                            state: $store.birthYearState,
+                            placeholder: "YYYY",
+                            inputType: .numberPad
+                        )
                         Text("/")
                             .foregroundColor(.textPlaceholder)
-                        ItemTextField(text: $store.birthMonth, state: $store.birthMonthState, placeholder: "MM", inputType: .numberPad)
+                        ItemTextField(
+                            text: $store.birthMonth,
+                            state: $store.birthMonthState,
+                            placeholder: "MM",
+                            inputType: .numberPad
+                        )
                         Text("/")
                             .foregroundColor(.textPlaceholder)
-                        ItemTextField(text: $store.birthDay, state: $store.birthDayState, placeholder: "DD", inputType: .numberPad)
+                        ItemTextField(
+                            text: $store.birthDay,
+                            state: $store.birthDayState,
+                            placeholder: "DD",
+                            inputType: .numberPad
+                        )
                     }
                     .frame(width: 240)
                 }
@@ -89,11 +109,14 @@ public struct ProfileInfoInputView: View {
                             .font(.pretendard(.bold, size: 12))
                             .foregroundColor(.textUnselected)
                     }
-                    ItemTextField(text: $store.bio, state: $store.bioState, placeholder: "내용 입력")
+                    ItemTextField(
+                        text: $store.bio,
+                        state: $store.bioState,
+                        placeholder: "내용 입력"
+                    )
                 }
             }
         }
-        
     }
 }
 
@@ -111,11 +134,13 @@ extension ProfileInfoInputView {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     TextField(placeholder, text: $text)
+                        .disableAutocorrection(true)
                         .textFieldStyle(.plain)
-                        .font(.pretendard(.regular, size: 15))
                         .foregroundColor(state.lineColor)
+                        .font(.pretendard(.regular, size: 15))
                         .keyboardType(inputType)
-                    if isCheckmark && state == .valid {
+                        
+                    if isCheckmark && state == .filled {
                         Circle()
                             .fill(Color.namoOrange)
                             .frame(width: 16, height: 16)
@@ -127,7 +152,7 @@ extension ProfileInfoInputView {
                     }
                 }
                 Divider()
-                    .foregroundColor(state.lineColor)
+                    .background(state.lineColor)
             }
         }
     }
