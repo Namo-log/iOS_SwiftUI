@@ -10,6 +10,7 @@ import SharedDesignSystem
 
 public struct NamoPallete: View {
     
+    @Binding var selectedColor: Color?
     let itemName: String
     let colors: [Color]
     
@@ -18,10 +19,16 @@ public struct NamoPallete: View {
         return Array(repeating: GridItem(.flexible()), count: columnCount)
     }
     
-    public init(itemName: String, colors: [Color]) {
+    public init(
+        selectedColor: Binding<Color?>,
+        itemName: String,
+        colors: [Color]
+    ) {
+        self._selectedColor = selectedColor
         self.itemName = itemName
         self.colors = colors
     }
+    
     
     public var body: some View {
         HStack {
@@ -30,12 +37,21 @@ public struct NamoPallete: View {
                 .foregroundColor(.mainText)
             
             Spacer()
-                
+            
             LazyVGrid(columns: columns, alignment: .trailing, spacing: 20) {
                 ForEach(colors, id: \.self) { color in
                     Circle()
                         .fill(color)
                         .frame(width: 24, height: 24)
+                        .overlay {
+                            if color == self.selectedColor {
+                                Image(asset: SharedDesignSystemAsset.Assets.checkMark)
+                                    .frame(width: 24, height: 24)
+                            }
+                        }
+                        .onTapGesture {
+                            selectedColor = color
+                        }
                 }
             }
         }

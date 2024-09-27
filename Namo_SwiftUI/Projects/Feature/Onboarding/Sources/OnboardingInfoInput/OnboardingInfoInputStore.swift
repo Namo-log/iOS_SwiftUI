@@ -32,6 +32,8 @@ public struct OnboardingInfoInputStore {
         var birthDate: String?
         /// 한줄소개
         var bio: String = ""
+        /// 선택된 팔레트 컬러
+        var selectedPaletterColor: Color?
         /// 좋아하는 색상
         var favoriteColor: Color?
         /// 프로필 이미지 적합 여부
@@ -68,6 +70,10 @@ public struct OnboardingInfoInputStore {
         case addImageButtonTapped
         /// 좋아하는 컬러 추가 버튼 탭
         case addFavoriteColorButtonTapped
+        /// 컬러 팔레트 색 선택
+        case selectPaletteColor(Color)
+        /// 컬러 저장
+        case saveFavoriteColor(Color?)
         /// 컬러 팔레트 dismiss
         case dismissColorPaletteView
         /// 닉네임 수정
@@ -103,6 +109,14 @@ public struct OnboardingInfoInputStore {
                     return .send(.birthMonthChanged(state.birthMonth))
                 case \State.birthDay:
                     return .send(.birthDayChanged(state.birthDay))
+                case \State.selectedPaletterColor:
+                    if let selectedColor = state.selectedPaletterColor {
+                        return .send(.selectPaletteColor(selectedColor))
+                    }
+                    else {
+                        print("nil 컬러 선택 오류")
+                        return .none
+                    }
                 default:
                     return .none
                 }
@@ -113,6 +127,20 @@ public struct OnboardingInfoInputStore {
                 print("컬러 팔레트 표시")
                 state.isShowingPalette = true
                 return .none
+            case .selectPaletteColor(let color):
+                print("컬러 선택: \(color)")
+                state.selectedPaletterColor = color
+                return .none
+            case .saveFavoriteColor(let nilableColor):
+                if let color = nilableColor {
+                    print("컬러 저장: \(color)")
+                    state.favoriteColor = color
+                    return .none
+                }
+                else {
+                    print("컬러 저장 불가")
+                    return .none
+                }
             case .dismissColorPaletteView:
                 print("컬러 팔레트 dismiss")
                 state.isShowingPalette = false
