@@ -14,43 +14,45 @@ public struct OnboardingInfoInputView: View {
     
     @State private var isShowingPalette = false
     
-    public let store: StoreOf<OnboardingInfoInputStore>
+    @Perception.Bindable var store: StoreOf<OnboardingInfoInputStore>
     
     public init(store: StoreOf<OnboardingInfoInputStore>) {
         self.store = store
     }
     
     public var body: some View {
-        VStack {
-            VStack(spacing: 40) {
-                Text("프로필 설정")
-                    .font(.pretendard(.regular, size: 20))
-                    .foregroundColor(.colorBlack)
+        WithPerceptionTracking {
+            VStack {
+                VStack(spacing: 40) {
+                    Text("프로필 설정")
+                        .font(.pretendard(.regular, size: 20))
+                        .foregroundColor(.colorBlack)
+                    
+                    ProfileImageInputView(store: store)
+                    
+                    ProfileInfoInputView(store: store)
+                        .padding(.horizontal, 30)
+                        .padding(.vertical)
+                }
                 
-                ProfileImageInputView()
+                Spacer()
                 
-                ProfileInfoInputView(store: store)
-                    .padding(.horizontal, 30)
-                    .padding(.vertical)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("＊표시는 필수 항목입니다.")
+                        .font(.pretendard(.regular, size: 14))
+                        .foregroundColor(.mainText)
+                    NamoButton(title: "확인", type: .inactive, action: {
+                        isShowingPalette.toggle()
+                    })
+                }
+                .padding(.horizontal, 30)
             }
-            
-            Spacer()
-            
-            VStack(alignment: .leading, spacing: 10) {
-                Text("＊표시는 필수 항목입니다.")
-                    .font(.pretendard(.regular, size: 14))
-                    .foregroundColor(.mainText)
-                NamoButton(title: "확인", type: .inactive, action: {
-                    isShowingPalette.toggle()
-                })
+            .padding(.vertical, 40)
+            .sheet(isPresented: $store.isShowingPalette) {
+                ProfileColorSelectView(store: store)
+                    .presentationDetents([.height(300)])
             }
-            .padding(.horizontal, 30)
+            .namoToastView(isPresented: .constant(false), title: "색상과 필수 항목을 기재해주세요.")
         }
-        .padding(.vertical, 40)
-        .sheet(isPresented: $isShowingPalette) {
-            ProfileColorSelectView()
-                .presentationDetents([.height(300)])
-        }
-        .namoToastView(isPresented: .constant(false), title: "색상과 필수 항목을 기재해주세요.")
     }
 }

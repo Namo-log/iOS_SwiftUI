@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 
 public struct ProfileColorSelectView: View {
     
-    @Environment(\.dismiss) var dismiss
+    var store: StoreOf<OnboardingInfoInputStore>
     
-    public init() {}
+    public init(store: StoreOf<OnboardingInfoInputStore>) {
+        self.store = store
+    }
     
     public var body: some View {
         VStack(spacing: 40) {
@@ -27,7 +30,7 @@ public struct ProfileColorSelectView: View {
                 .foregroundColor(.mainText)
         }, left: {
             Button(action: {
-                dismiss()
+                store.send(.dismissColorPaletteView)
             }, label: {
                 Text("취소")
                     .font(.pretendard(.regular, size: 15))
@@ -35,7 +38,7 @@ public struct ProfileColorSelectView: View {
             })
         }, right: {
             Button(action: {
-                dismiss()
+                store.send(.dismissColorPaletteView)
             }, label: {
                 Text("저장")
                     .font(.pretendard(.regular, size: 15))

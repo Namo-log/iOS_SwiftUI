@@ -6,16 +6,15 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 
 public struct ProfileImageInputView: View {
     
-    var profileImage: Image?
-    var isValid: Bool?
+    var store: StoreOf<OnboardingInfoInputStore>
     
-    public init(profileImage: Image? = nil, isValid: Bool? = nil) {
-        self.profileImage = profileImage
-        self.isValid = isValid
+    public init(store: StoreOf<OnboardingInfoInputStore>) {
+        self.store = store
     }
     
     public var body: some View {
@@ -28,9 +27,12 @@ public struct ProfileImageInputView: View {
                 .resizable()
                 .frame(width: 28, height: 28)
         }
+        .onTapGesture {
+            store.send(.addImageButtonTapped)
+        }
         .overlay {
             Button(action: {
-                print("add image")
+                store.send(.addFavoriteColorButtonTapped)
             }, label: {
                 Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
             })

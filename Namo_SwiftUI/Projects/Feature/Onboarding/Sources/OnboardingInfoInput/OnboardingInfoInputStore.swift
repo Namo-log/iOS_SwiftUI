@@ -66,6 +66,10 @@ public struct OnboardingInfoInputStore {
         case binding(BindingAction<State>)
         /// 이미지 추가 버튼 탭
         case addImageButtonTapped
+        /// 좋아하는 컬러 추가 버튼 탭
+        case addFavoriteColorButtonTapped
+        /// 컬러 팔레트 dismiss
+        case dismissColorPaletteView
         /// 닉네임 수정
         case nicknameChanged(String)
         /// 생년 수정
@@ -80,7 +84,6 @@ public struct OnboardingInfoInputStore {
         case bioChanged(String)
         /// 확인 버튼 탭
         case nextButtonTapped
-        
     }
 
     public var body: some ReducerOf<Self> {
@@ -105,6 +108,14 @@ public struct OnboardingInfoInputStore {
                 }
             case .addImageButtonTapped:
                 print("이미지 피커 표시")
+                return .none
+            case .addFavoriteColorButtonTapped:
+                print("컬러 팔레트 표시")
+                state.isShowingPalette = true
+                return .none
+            case .dismissColorPaletteView:
+                print("컬러 팔레트 dismiss")
+                state.isShowingPalette = false
                 return .none
             case .nicknameChanged(let nickname):
                 print("현재 nickname: \(nickname)")
