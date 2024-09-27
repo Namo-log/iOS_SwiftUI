@@ -16,7 +16,7 @@ public struct NamoPallete: View {
     
     var columns: [GridItem] {
         let columnCount = colors.count >= 5 ? 5 : colors.count
-        return Array(repeating: GridItem(.flexible()), count: columnCount)
+        return Array(repeating: GridItem(.flexible(minimum: 20)), count: columnCount)
     }
     
     public init(
@@ -32,13 +32,16 @@ public struct NamoPallete: View {
     
     public var body: some View {
         HStack {
-            Text(itemName)
-                .font(.pretendard(.bold, size: 15))
-                .foregroundColor(.mainText)
+            VStack {
+                Text(itemName)
+                    .font(.pretendard(.bold, size: 15))
+                    .foregroundColor(.mainText)
+                Spacer()
+            }
             
             Spacer()
             
-            LazyVGrid(columns: columns, alignment: .trailing, spacing: 20) {
+            LazyVGrid(columns: columns, alignment: .trailing, spacing: 16) {
                 ForEach(colors, id: \.self) { color in
                     Circle()
                         .fill(color)

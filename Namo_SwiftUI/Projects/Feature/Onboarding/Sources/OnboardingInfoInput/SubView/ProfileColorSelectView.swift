@@ -19,8 +19,9 @@ public struct ProfileColorSelectView: View {
     
     public var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 40) {
-                NamoPallete(selectedColor: $store.selectedPaletterColor, itemName: "색상", colors: [.colorBlack, .colorBlue, .colorCyan, .colorGray, .colorGreen, .colorLavendar, .colorLime, .colorPink, .colorOrange])
+            VStack {
+                Spacer()
+                NamoPallete(selectedColor: $store.selectedPaletterColor, itemName: "색상", colors: Color.namoPaletteColors)
                 Spacer()
             }
             .padding(30)
