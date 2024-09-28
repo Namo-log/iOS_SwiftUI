@@ -51,6 +51,7 @@ public enum SharedDesignSystemAsset {
     public static let dummy = SharedDesignSystemImages(name: "dummy")
     public static let floatingAdd = SharedDesignSystemImages(name: "floatingAdd")
     public static let icAddFriend = SharedDesignSystemImages(name: "icAddFriend")
+    public static let icArchive = SharedDesignSystemImages(name: "icArchive")
     public static let icArrowOnlyHead = SharedDesignSystemImages(name: "icArrowOnlyHead")
     public static let icBack = SharedDesignSystemImages(name: "icBack")
     public static let icBackArrowOrange = SharedDesignSystemImages(name: "icBackArrowOrange")

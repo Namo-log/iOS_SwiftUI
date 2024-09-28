@@ -41,6 +41,7 @@ public extension ModulePath {
 	enum Domain: String, CaseIterable {
 		case Friend
 		case Category
+		case Schedule
 		
 		public static let name: String = "Domain"
 	}

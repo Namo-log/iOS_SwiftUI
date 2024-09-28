@@ -35,6 +35,9 @@
          <FileRef
             location = "group:Friend/DomainFriend.xcodeproj">
          </FileRef>
+         <FileRef
+            location = "group:Schedule/DomainSchedule.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "group:Feature"

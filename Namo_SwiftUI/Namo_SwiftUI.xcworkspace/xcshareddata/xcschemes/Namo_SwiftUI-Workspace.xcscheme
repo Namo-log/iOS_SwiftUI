@@ -378,6 +378,62 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "98B61C911C2DA5776BA6D497"
+               BuildableName = "libDomainSchedule.a"
+               BlueprintName = "DomainSchedule"
+               ReferencedContainer = "container:Projects/Domain/Schedule/DomainSchedule.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "89894A3D842F8B4138802709"
+               BuildableName = "libDomainScheduleInterface.a"
+               BlueprintName = "DomainScheduleInterface"
+               ReferencedContainer = "container:Projects/Domain/Schedule/DomainSchedule.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "06E441E11C8D7D7C27CFC336"
+               BuildableName = "libDomainScheduleTesting.a"
+               BlueprintName = "DomainScheduleTesting"
+               ReferencedContainer = "container:Projects/Domain/Schedule/DomainSchedule.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3B741F1A0FA01EC7C1A4CF5D"
+               BuildableName = "DomainScheduleTests.xctest"
+               BlueprintName = "DomainScheduleTests"
+               ReferencedContainer = "container:Projects/Domain/Schedule/DomainSchedule.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "787785524E0E998535524C4F"
                BuildableName = "FBLPromises.framework"
                BlueprintName = "FBLPromises"
@@ -2240,6 +2296,16 @@
                BuildableName = "DomainFriendTests.xctest"
                BlueprintName = "DomainFriendTests"
                ReferencedContainer = "container:Projects/Domain/Friend/DomainFriend.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3B741F1A0FA01EC7C1A4CF5D"
+               BuildableName = "DomainScheduleTests.xctest"
+               BlueprintName = "DomainScheduleTests"
+               ReferencedContainer = "container:Projects/Domain/Schedule/DomainSchedule.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference

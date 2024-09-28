@@ -9,86 +9,111 @@ import Foundation
 
 import SharedUtil
 
-public struct postScheduleRequest: Codable {
-	public init(name: String, startDate: Int, endDate: Int, interval: Int, alarmDate: [Int], x: Double?, y: Double?, locationName: String, categoryId: Int) {
-		self.name = name
-		self.startDate = startDate
-		self.endDate = endDate
-		self.interval = interval
-		self.alarmDate = alarmDate
-		self.x = x
-		self.y = y
-		self.locationName = locationName
-		self.categoryId = categoryId
-	}
-	
-	public let name: String
+public typealias GetMonthlyScheduleResponseDTO = [ScheduleDTO]
+
+public struct ScheduleDTO: Decodable {
+	public let scheduleId: Int
+	public let title: String
+	public let categoryInfo: ScheduleCategoryDTO
 	public let startDate: Int
 	public let endDate: Int
 	public let interval: Int
-	public let alarmDate: [Int]
-	public let x: Double?
-	public let y: Double?
-	public let locationName: String
-	public let categoryId: Int
-}
-
-public struct postScheduleResponse: Codable {
-	public init(scheduleId: Int) {
+	public let locationInfo: ScheduleLocationDTO
+	public let hasDiary: Bool
+	public let isMeetingSchedule: Bool
+	public let meetingInfo: ScheduleMeetingDTO
+	public let notificationInfo: [ScheduleNotificationDTO]
+	
+	public init(
+		scheduleId: Int,
+		title: String,
+		categoryInfo: ScheduleCategoryDTO,
+		startDate: Int,
+		endDate: Int,
+		interval: Int,
+		locationInfo: ScheduleLocationDTO,
+		hasDiary: Bool,
+		isMeetingSchedule: Bool,
+		meetingInfo: ScheduleMeetingDTO,
+		notificationInfo: [ScheduleNotificationDTO]
+	) {
 		self.scheduleId = scheduleId
-	}
-	public let scheduleId: Int
-}
-
-public typealias getScheduleResponse = [ScheduleDTO]
-
-public struct ScheduleDTO: Codable {
-	public init(scheduleId: Int, name: String, startDate: Int, endDate: Int, alarmDate: [Int], interval: Int, x: Double?, y: Double?, locationName: String?, kakaoLocationId: Int?, categoryId: Int, hasDiary: Bool?, moimSchedule: Bool) {
-		self.scheduleId = scheduleId
-		self.name = name
+		self.title = title
+		self.categoryInfo = categoryInfo
 		self.startDate = startDate
 		self.endDate = endDate
-		self.alarmDate = alarmDate
 		self.interval = interval
-		self.x = x
-		self.y = y
+		self.locationInfo = locationInfo
+		self.hasDiary = hasDiary
+		self.isMeetingSchedule = isMeetingSchedule
+		self.meetingInfo = meetingInfo
+		self.notificationInfo = notificationInfo
+	}
+}
+
+public struct ScheduleCategoryDTO: Decodable {
+	public let categoryId: Int
+	public let colorId: Int
+	public let name: String
+	public let isShared: Bool
+	
+	public init(
+		categoryId: Int,
+		colorId: Int,
+		name: String,
+		isShared: Bool
+	) {
+		self.categoryId = categoryId
+		self.colorId = colorId
+		self.name = name
+		self.isShared = isShared
+	}
+}
+
+public struct ScheduleLocationDTO: Decodable {
+	public let longitude: Double
+	public let latitude: Double
+	public let locationName: String
+	public let kakaoLocationId: String
+	
+	public init(
+		longitude: Double,
+		latitude: Double,
+		locationName: String,
+		kakaoLocationId: String
+	) {
+		self.longitude = longitude
+		self.latitude = latitude
 		self.locationName = locationName
 		self.kakaoLocationId = kakaoLocationId
-		self.categoryId = categoryId
-		self.hasDiary = hasDiary
-		self.moimSchedule = moimSchedule
 	}
-	
-	public let scheduleId: Int
-	public let name: String
-	public let startDate: Int
-	public let endDate: Int
-	public let alarmDate: [Int]
-	public let interval: Int
-	public let x: Double?
-	public let y: Double?
-	public let locationName: String?
-	public let kakaoLocationId: Int?
-	public let categoryId: Int
-	public let hasDiary: Bool?
-	public let moimSchedule: Bool
 }
 
-public extension ScheduleDTO {
-	func toSchedule() -> Schedule {
-		return Schedule(
-			scheduleId: scheduleId,
-			name: name,
-			startDate: Date(timeIntervalSince1970: Double(startDate)),
-			endDate: Date(timeIntervalSince1970: Double(endDate)),
-			alarmDate: alarmDate,
-			interval: interval,
-			x: x,
-			y: y,
-            locationName: locationName ?? "",
-			categoryId: categoryId,
-			hasDiary: hasDiary,
-			moimSchedule: moimSchedule
-		)
+public struct ScheduleMeetingDTO: Decodable {
+	public let participantCount: Int
+	public let participantNicknames: String
+	public let isOwner: Bool
+	
+	public init(
+		participantCount: Int,
+		participantNicknames: String,
+		isOwner: Bool
+	) {
+		self.participantCount = participantCount
+		self.participantNicknames = participantNicknames
+		self.isOwner = isOwner
+	}
+}
+
+public struct ScheduleNotificationDTO: Decodable {
+	public let notificationId: Int
+	public let trigger: String
+	
+	public init(
+		notificationId: Int,
+		trigger: String
+	) {
+		self.notificationId = notificationId
+		self.trigger = trigger
 	}
 }

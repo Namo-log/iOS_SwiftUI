@@ -15,6 +15,8 @@ let targets: [Target] = [
 			dependencies: [
 				.core,
 				.domain(implements: .Friend),
+				.domain(implements: .Category),
+				.domain(implements: .Schedule)
 			]
 		)
 	)

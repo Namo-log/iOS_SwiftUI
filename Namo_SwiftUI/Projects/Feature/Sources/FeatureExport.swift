@@ -6,4 +6,5 @@
 //
 
 @_exported import FeatureFriend
+@_exported import FeatureCategory
 @_exported import FeatureHome

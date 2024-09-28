@@ -16,6 +16,7 @@
 		5BA41DFB97F3D0ADD6B55084 /* TuistAssets+SharedDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169A08D777B10FCCA0B6E622 /* TuistAssets+SharedDesignSystem.swift */; };
 		5ECE51E139CE7ED168245C50 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 382585C95C5CA5517165D74C /* Pretendard-Thin.otf */; };
 		60EADE89611D631AEBCEAB52 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4D1350F402B4F65B1A9102F8 /* Pretendard-ExtraBold.otf */; };
+		685B864305B28E246695DBE3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC922F56C5B33C4C9F4AA57 /* RoundedCorners.swift */; };
 		806FC4EEAA28E7701655C88E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89597B8A0989CA0F3BA10CB1 /* Pretendard-Black.otf */; };
 		89438F0386EBF5BE0289E62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5908E6C31A00AA5F1E80ACF5 /* Assets.xcassets */; };
 		898EEA4CED78400B2FF4B0D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 432023965AD3CED90EF9DD00 /* Preview Assets.xcassets */; };
@@ -62,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0DC922F56C5B33C4C9F4AA57 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		169A08D777B10FCCA0B6E622 /* TuistAssets+SharedDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+SharedDesignSystem.swift"; sourceTree = "<group>"; };
 		382585C95C5CA5517165D74C /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		3DBF0B511706D9E72BBFAB26 /* SharedDesignSystem_SharedDesignSystem.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharedDesignSystem_SharedDesignSystem.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +183,7 @@
 				FADE4DC338ADD70C7FF9FA51 /* Dialog */,
 				61845D3817783BEC0F9A656E /* Popup */,
 				A8E821C45E596BD51DB23D53 /* Toast */,
+				0DC922F56C5B33C4C9F4AA57 /* RoundedCorners.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				44F66A690DC48090D5EFD843 /* TuistFonts+SharedDesignSystem.swift in Sources */,
 				B3C5B821F52ADDF66AEB16F0 /* NamoDialogModifier.swift in Sources */,
 				D6C64BF2D97CD82B3244222D /* NamoPopupView.swift in Sources */,
+				685B864305B28E246695DBE3 /* RoundedCorners.swift in Sources */,
 				5499DEB0FC4E5AB35CEF18BE /* NamoToastViewModifier.swift in Sources */,
 				07A5F597F97EFFD7017EAB78 /* Colors.swift in Sources */,
 				45421FB4E91C42BBC20A6B29 /* Font+.swift in Sources */,
