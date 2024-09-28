@@ -131,6 +131,8 @@ public struct OnboardingInfoInputStore {
         case checkFormStatus
         /// 확인 버튼 탭
         case nextButtonTapped
+        /// 토스트뷰 표시
+        case showToastView
     }
 
     public var body: some ReducerOf<Self> {
@@ -229,7 +231,17 @@ public struct OnboardingInfoInputStore {
                 state.isNextButtonIsEnabled = status
                 return .none
             case .nextButtonTapped:
-                print("다음")
+                if state.isNextButtonIsEnabled {
+                    print("다음 화면")
+                    return .none
+                } else {
+                    return .concatenate(
+                        // TODO: 모든 UI 일괄 검증 로직 추가
+                        .send(.showToastView)
+                    )
+                }
+            case .showToastView:
+                state.isShowingNamoToast = true
                 return .none
             }
         }

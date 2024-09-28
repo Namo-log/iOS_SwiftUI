@@ -10,10 +10,12 @@ import SwiftUI
 public struct NamoToastViewModifier: ViewModifier {
     @Binding var isPresented: Bool
     let title: String
+    let isTabBarScreen: Bool
     
-    public init(isPresented: Binding<Bool>, title: String) {
+    public init(isPresented: Binding<Bool>, title: String, isTabBarScreen: Bool = true) {
         self._isPresented = isPresented
         self.title = title
+        self.isTabBarScreen = isTabBarScreen
     }
     
     public func body(content: Content) -> some View {
@@ -32,7 +34,7 @@ public struct NamoToastViewModifier: ViewModifier {
                     .background(Color.black.opacity(0.5))
                     .cornerRadius(8)
                     
-                    Spacer()
+                    Spacer(minLength: isTabBarScreen ? 0 : 100)
                 }
             }
         }
@@ -51,5 +53,9 @@ public struct NamoToastViewModifier: ViewModifier {
 public extension View {
     func namoToastView(isPresented: Binding<Bool>, title: String) -> some View {
         modifier(NamoToastViewModifier(isPresented: isPresented, title: title))
+    }
+    
+    func namoToastView(isPresented: Binding<Bool>, title: String, isTabBarScreen: Bool) -> some View {
+        modifier(NamoToastViewModifier(isPresented: isPresented, title: title, isTabBarScreen: isTabBarScreen))
     }
 }

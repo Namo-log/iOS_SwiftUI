@@ -53,7 +53,7 @@ public struct OnboardingInfoInputView: View {
                 ProfileColorSelectView(store: store)
                     .presentationDetents([.height(300)])
             }
-            .namoToastView(isPresented: $store.isShowingNamoToast, title: "색상과 필수 항목을 기재해주세요.")
+            .namoToastView(isPresented: $store.isShowingNamoToast, title: "색상과 필수 항목을 기재해주세요.", isTabBarScreen: false)
         }
     }
 }
