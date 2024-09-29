@@ -17,7 +17,9 @@ public struct MoimListStore {
         self.reducer = reducer
     }
     
-    public struct State: Equatable {}
+    public struct State: Equatable {
+        public init() {}
+    }
     
     public enum Action {}
     

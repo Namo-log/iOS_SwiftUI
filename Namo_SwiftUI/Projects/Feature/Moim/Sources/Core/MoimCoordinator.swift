@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import TCACoordinators
+import FeatureMoimInterface
 
 @Reducer(state: .equatable)
 public enum MoimScreen {

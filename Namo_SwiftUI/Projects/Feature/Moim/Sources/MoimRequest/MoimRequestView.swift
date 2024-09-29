@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 import FeatureFriend
-import ComposableArchitecture
+import FeatureMoimInterface
+
 
 public struct MoimRequestView: View {
     

@@ -34,9 +34,7 @@ public struct OnboardingLoginStore {
     @Dependency(\.authClient) var authClient
     
     public var body: some ReducerOf<Self> {
-        Reduce {
-            state,
-            action in
+        Reduce { state, action in
             switch action {
                 
             case .kakaoLoginButtonTapped:
