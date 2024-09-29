@@ -36,10 +36,10 @@ extension Container {
             .singleton
     }
     
-    var scheduleRepository: Factory<ScheduleRepository> {
-        self { ScheduleRepositoryImpl() }
-            .singleton
-    }
+//    var scheduleRepository: Factory<ScheduleRepository> {
+//        self { ScheduleRepositoryImpl() }
+//            .singleton
+//    }
     
     var categoryRepository: Factory<CategoryRepository> {
         self { CategoryRepositoryImpl() }

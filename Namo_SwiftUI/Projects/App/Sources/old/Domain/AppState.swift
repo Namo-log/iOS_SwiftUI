@@ -37,7 +37,7 @@ class ScheduleState: ObservableObject {
 	@Published var isCurrentScheduleIsGroup: Bool = false
 	
 	/// calendar에 보여지기 위한 스케쥴들
-	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
+//	@Published var calendarSchedules: [YearMonthDay: [CalendarSchedule]] = [:]
 	// 캘린더에 표시된(계산된) YearMonth를 저장
 	@Published var calculatedYearMonth: [YearMonth] = []
     
@@ -80,7 +80,7 @@ class AppState: ObservableObject {
 	@Published var isTabbarHidden: Bool = false
 	@Published var isTabbarOpaque: Bool = false
     
-    @Published var currentTab: Tab = .home
+//    @Published var currentTab: Tab = .home
 	
 	// Alert
 	@Published var alertType: AlertType? = nil
