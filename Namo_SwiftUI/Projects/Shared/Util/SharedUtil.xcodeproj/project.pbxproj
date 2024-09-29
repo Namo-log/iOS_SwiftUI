@@ -16,6 +16,7 @@
 		2D8FEF0B935D98A1904BDA47 /* YearMonthDay+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8F8C64733EC0E7929DF8CF /* YearMonthDay+.swift */; };
 		363B6EC65AEAA756E90C959E /* Schedule+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6E67990127E28D1739251B /* Schedule+.swift */; };
 		45C9D7F6D1CD02D904207718 /* ScheduleTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C84D36F121E1BDDAEFA38D4 /* ScheduleTemplate.swift */; };
+		4BFE26E69E50D1CA017B66EE /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CA38EE6373A721D14CA6A3 /* String+.swift */; };
 		4C37C1D7B5AE922FF6BE6E79 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0F887785F82C8D65C25E30 /* Constants.swift */; };
 		4F4D196C019FFD0BDB8CB883 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52854D5645A38B6E55305B2 /* Color+.swift */; };
 		61775ED121A5386B11B5D5F7 /* YearMonth+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A806A018C9BDC4E12FD9CE /* YearMonth+.swift */; };
@@ -85,6 +86,7 @@
 		C52854D5645A38B6E55305B2 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		D2D70646554E455595B9BD03 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		D68870B796EA41C6AB308056 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		E0CA38EE6373A721D14CA6A3 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		F84CB167FE650A3D10C8CE33 /* ViewHiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHiddenModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,6 +190,7 @@
 				3824E9E34A6DCB04CC00C288 /* Date+.swift */,
 				6858B77510EBCDF70423E8CB /* NotificationName+.swift */,
 				BA6E67990127E28D1739251B /* Schedule+.swift */,
+				E0CA38EE6373A721D14CA6A3 /* String+.swift */,
 				18F1A5A27796DA82F508F92E /* UIApplication+.swift */,
 				F84CB167FE650A3D10C8CE33 /* ViewHiddenModifier.swift */,
 				44A806A018C9BDC4E12FD9CE /* YearMonth+.swift */,
@@ -266,6 +269,7 @@
 				C06801412EE471B392F0E45E /* Date+.swift in Sources */,
 				C6084601FA9579E3DC41D02D /* NotificationName+.swift in Sources */,
 				363B6EC65AEAA756E90C959E /* Schedule+.swift in Sources */,
+				4BFE26E69E50D1CA017B66EE /* String+.swift in Sources */,
 				0B4342A971586E1621E9C7E9 /* UIApplication+.swift in Sources */,
 				B760371DA43886FB4CDB991C /* ViewHiddenModifier.swift in Sources */,
 				61775ED121A5386B11B5D5F7 /* YearMonth+.swift in Sources */,

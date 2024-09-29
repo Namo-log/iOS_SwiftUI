@@ -6,35 +6,46 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 
 public struct ProfileImageInputView: View {
     
-    var profileImage: Image?
-    var isValid: Bool?
+    @Perception.Bindable var store: StoreOf<OnboardingInfoInputStore>
     
-    public init(profileImage: Image? = nil, isValid: Bool? = nil) {
-        self.profileImage = profileImage
-        self.isValid = isValid
+    public init(store: StoreOf<OnboardingInfoInputStore>) {
+        self.store = store
     }
     
     public var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 24)
-                .frame(width: 120, height: 120)
-                .foregroundColor(.mainGray)
-            
-            Image(asset: SharedDesignSystemAsset.Assets.icImage)
-                .resizable()
-                .frame(width: 28, height: 28)
-        }
-        .overlay {
-            Button(action: {
-                print("add image")
-            }, label: {
-                Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
-            })
-            .offset(x: 52, y: 52)
+        WithPerceptionTracking {
+            ZStack {
+                RoundedRectangle(cornerRadius: 24)
+                    .frame(width: 120, height: 120)
+                    .foregroundColor(.mainGray)
+                
+                Image(asset: SharedDesignSystemAsset.Assets.icImage)
+                    .resizable()
+                    .frame(width: 28, height: 28)
+            }
+            .onTapGesture {
+                store.send(.addImageButtonTapped)
+            }
+            .overlay {
+                Button(action: {
+                    store.send(.addFavoriteColorButtonTapped)
+                }, label: {
+                    switch store.favoriteColorState {
+                    case .blank:
+                        Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
+                    case .filled, .valid:
+                        Image(asset: SharedDesignSystemAsset.Assets.icFavColorValid)
+                    case .invalid:
+                        Image(asset: SharedDesignSystemAsset.Assets.icFavColorInvalid)
+                    }
+                })
+                .offset(x: 52, y: 52)
+            }
         }
     }
 }
