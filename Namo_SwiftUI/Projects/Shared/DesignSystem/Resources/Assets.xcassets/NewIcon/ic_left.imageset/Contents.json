@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "Direction=Left, isThick=no.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Direction=Left, isThick=no@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "Direction=Left, isThick=no@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

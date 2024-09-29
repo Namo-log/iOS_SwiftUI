@@ -17,6 +17,8 @@ let targets: [Target] = [
 				.domain(implements: .Friend),
 				.domain(implements: .Category),
 				.domain(implements: .Schedule)
+                .domain(implements: .Moim),
+                .domain(implements: .Auth)
 			]
 		)
 	)

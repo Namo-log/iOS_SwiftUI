@@ -30,6 +30,8 @@ public extension ModulePath {
 		case Friend
 		case Category
 		case Home
+        case Moim
+        case Onboarding
 		
 		public static let name: String = "Feature"
 	}
@@ -42,6 +44,8 @@ public extension ModulePath {
 		case Friend
 		case Category
 		case Schedule
+        case Moim
+        case Auth
 		
 		public static let name: String = "Domain"
 	}

@@ -17,6 +17,8 @@ let targets: [Target] = [
 				.feature(implements: .Friend),
 				.feature(implements: .Category),
 				.feature(implements: .Home)
+                .feature(implements: .Moim),
+                .feature(implements: .Onboarding)
 			]
 		)
 	)

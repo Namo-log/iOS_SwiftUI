@@ -67,8 +67,8 @@ public struct FriendListView: View {
 			VStack(spacing: 4) {
 				HStack(spacing: 8) {
 					Image(asset: SharedDesignSystemAsset.Assets.icSearch)
-						.resizable()
-						.frame(width: 20, height: 20)
+                        .renderingMode(.template)
+                        .foregroundColor(Color.textPlaceholder)                        
 					
 					TextField(
 						"",
