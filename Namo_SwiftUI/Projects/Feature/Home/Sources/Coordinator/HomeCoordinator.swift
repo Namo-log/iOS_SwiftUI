@@ -1,5 +1,5 @@
 //
-//  HomeCoordinatorStore.swift
+//  HomeCoordinator.swift
 //  FeatureHome
 //
 //  Created by 정현우 on 9/27/24.
@@ -14,10 +14,14 @@ public enum HomeScreen {
 }
 
 @Reducer
-public struct HomeCoordinatorStore {
+public struct HomeCoordinator {
+	public init() {}
+	
 	@ObservableState
 	public struct State: Equatable {
 		var routes: [Route<HomeScreen.State>]
+		
+		public static let initialState = State(routes: [.root(.homeMain(.init()), embedInNavigationView: true)])
 	}
 	
 	public enum Action {
