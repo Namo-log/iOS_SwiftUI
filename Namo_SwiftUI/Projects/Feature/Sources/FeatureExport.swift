@@ -6,5 +6,9 @@
 //
 
 @_exported import FeatureFriend
+@_exported import FeatureCategory
+@_exported import FeatureHome
 @_exported import FeatureMoim
 @_exported import FeatureOnboarding
+@_exported import FeatureCalendar
+

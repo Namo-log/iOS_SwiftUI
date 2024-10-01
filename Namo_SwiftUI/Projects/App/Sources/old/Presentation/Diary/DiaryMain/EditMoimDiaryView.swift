@@ -18,7 +18,7 @@ struct EditMoimDiaryView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var diaryState: DiaryState
     let moimDiaryUseCase = MoimDiaryUseCase.shared
-    let scheduleUseCase = ScheduleUseCase.shared
+//    let scheduleUseCase = ScheduleUseCase.shared
     
     @State private var showParticipants: Bool = true
     @State private var showAddPlaceButton: Bool = true
@@ -347,8 +347,8 @@ struct EditMoimDiaryView: View {
                              rightButtonTitle: "확인",
                              rightButtonAction: {
                     self.presentationMode.wrappedValue.dismiss()
-                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
-                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+//                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+//                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
                 })
             }
             

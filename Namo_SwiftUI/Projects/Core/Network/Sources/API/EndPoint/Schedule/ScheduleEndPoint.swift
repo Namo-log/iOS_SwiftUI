@@ -10,10 +10,7 @@ import Alamofire
 import SharedUtil
 
 public enum ScheduleEndPoint {
-    case getAllSchedule
-	case postSchedule(data: postScheduleRequest)
-    case patchSchedule(scheduleId: Int, data: postScheduleRequest)
-    case deleteSchedule(scheduleId: Int, isMoim: Bool)
+	case getSchedule(startDate: String, endDate: String)
 }
 
 extension ScheduleEndPoint: EndPoint {
@@ -23,36 +20,29 @@ extension ScheduleEndPoint: EndPoint {
 	
 	public var path: String {
 		switch self {
-        case .getAllSchedule:
-            return "/all"
-		case .postSchedule:
-			return ""
-        case let .patchSchedule(scheduleId, _):
-            return "/\(scheduleId)"
-        case let .deleteSchedule(scheduleId, isMoim):
-            return "/\(scheduleId)/\(isMoim ? 1 : 0)"
+		case .getSchedule:
+			return "/calendar"
 		}
 	}
 	
 	public var method: HTTPMethod {
 		switch self {
-        case .getAllSchedule:
-            return .get
-		case .postSchedule:
-			return .post
-        case .patchSchedule:
-            return .patch
-        case .deleteSchedule:
-            return .delete
+		case .getSchedule:
+			return .get
 		}
 	}
 	
 	public var task: APITask {
         switch self {
-        case .getAllSchedule, .deleteSchedule:
-            return .requestPlain
-        case let .postSchedule(data), let .patchSchedule(_, data):
-            return .requestJSONEncodable(parameters: data)
+		case let .getSchedule(startDate, endDate):
+			var parameters: [String: Any] = [
+				"startDate": startDate,
+				"endDate": endDate
+			]
+			return .requestParameters(
+				parameters: parameters,
+				encoding: URLEncoding.default
+			)
         }
 	}
 	

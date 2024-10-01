@@ -13,7 +13,7 @@ import SharedDesignSystem
 struct DismissButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var scheduleState: ScheduleState
-	let scheduleUseCase = ScheduleUseCase.shared
+//	let scheduleUseCase = ScheduleUseCase.shared
     @Binding var isDeletingDiary: Bool
     @Binding var isChangedContents: Bool
     @Binding var showIsChangedAlert: Bool
@@ -29,8 +29,8 @@ struct DismissButton: View {
             } else {
                 self.presentationMode.wrappedValue.dismiss()
     //            scheduleState.currentSchedule =
-                scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
-                scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+//                scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+//                scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
             }
             
         } label: {

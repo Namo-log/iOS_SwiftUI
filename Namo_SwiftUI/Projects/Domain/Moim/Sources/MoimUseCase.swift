@@ -14,8 +14,7 @@ extension MoimUseCase: DependencyKey {
     public static let liveValue = MoimUseCase(
         getMoimList: {
             let response: BaseResponse<[MoimScheduleDTO]>? = await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
-            print(response)
-            return ["test"]
+            return response?.result
         }
     )
 }

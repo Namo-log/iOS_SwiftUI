@@ -7,13 +7,12 @@
 
 import SwiftUI
 import ComposableArchitecture
-import CoreNetwork
 
 /// 모임 관련 유스케이스 인터페이스
 public struct MoimUseCase {
-    public var getMoimList: @Sendable () async throws -> [String]
+    public var getMoimList: @Sendable () async throws -> [MoimSchedule]?
     
-    public init(getMoimList: @escaping @Sendable () async throws -> [String]) {
+    public init(getMoimList: @escaping @Sendable () async throws -> [MoimSchedule]?) {
         self.getMoimList = getMoimList
     }
 }
