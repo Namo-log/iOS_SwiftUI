@@ -23,7 +23,7 @@ struct EditDiaryView: View {
     let categoryUseCase = CategoryUseCase.shared
     let diaryUseCase = DiaryUseCase.shared
     let moimDiaryUseCase = MoimDiaryUseCase.shared
-    let scheduleUseCase = ScheduleUseCase.shared
+//    let scheduleUseCase = ScheduleUseCase.shared
     
     @State var isFromCalendar: Bool
     @State var memo: String
@@ -206,8 +206,8 @@ struct EditDiaryView: View {
                              rightButtonTitle: "확인",
                              rightButtonAction: {
                     self.presentationMode.wrappedValue.dismiss()
-                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
-                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
+//                    scheduleUseCase.setScheduleToCurrentSchedule(schedule: nil)
+//                    scheduleUseCase.setScheduleToCurrentMoimSchedule(schedule: nil, users: nil)
                 })
             }
             

@@ -16,7 +16,7 @@ import SharedUtil
 import ComposableArchitecture
 import FeatureOnboarding
 
-@main
+//@main
 struct Namo_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {

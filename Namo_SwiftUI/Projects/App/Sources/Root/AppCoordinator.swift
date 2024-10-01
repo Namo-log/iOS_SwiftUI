@@ -52,7 +52,7 @@ struct AppCoordinator {
             switch action {                                  
             case .router(.routeAction(_, action: .splash(.loginCheck(let isSuccess)))):
                 if isSuccess {
-                    state.routes = [.root(.mainTab(.init(moim: .initialState)), embedInNavigationView: true)]
+					state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
                 } else {
                     state.routes = [.root(.onBoarding(.init()), embedInNavigationView: true)]
                 }

@@ -1,0 +1,55 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+import DependencyPlugin
+
+let targets: [Target] = [
+	.feature(
+		interface: .{{ name }},
+		factory: .init(
+			dependencies: [
+				.domain
+			]
+		)
+	),
+	.feature(
+		implements: .{{ name }},
+		factory: .init(
+			dependencies: [
+				.feature(interface: .{{ name }})
+			]
+		)
+	),
+	.feature(
+		testing: .{{ name }},
+		factory: .init(
+			dependencies: [
+				.feature(interface: .{{ name }})
+			]
+		)
+	),
+	.feature(
+		tests: .{{ name }},
+		factory: .init(
+			dependencies: [
+				.feature(testing: .{{ name }})
+			]
+		)
+	),
+	.feature(
+		example: .{{ name }},
+		factory: .init(
+			infoPlist: .exampleAppDefault,
+			dependencies: [
+				.feature(implements: .{{ name }})
+			]
+		)
+	)
+]
+
+let project: Project = .makeModule(
+	name: ModulePath.Feature.name+ModulePath.Feature.{{ name }}.rawValue,
+	targets: targets
+)
+
+
+

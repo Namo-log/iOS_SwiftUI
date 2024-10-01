@@ -184,7 +184,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                 // 로그인 화면으로 이동
                 UserDefaults.standard.set(false, forKey: "isLogin")
                 AppState.shared.isTabbarHidden = true
-                AppState.shared.currentTab = .home
+//                AppState.shared.currentTab = .home
             }
 
             KeyChainManager.deleteItem(key: "accessToken")
@@ -244,7 +244,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                         // 로그인 화면으로 이동
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         AppState.shared.isTabbarHidden = true
-                        AppState.shared.currentTab = .home
+//                        AppState.shared.currentTab = .home
                     }
                 } else {
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카카오 회원 탈퇴 \(String(describing: result?.code)) 에러"))
@@ -260,7 +260,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                         // 로그인 화면으로 이동
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         AppState.shared.isTabbarHidden = true
-                        AppState.shared.currentTab = .home
+//                        AppState.shared.currentTab = .home
                     }
                 } else {
 
@@ -278,7 +278,7 @@ final class AuthUseCase: NSObject, ASAuthorizationControllerPresentationContextP
                         // 로그인 화면으로 이동
                         UserDefaults.standard.set(false, forKey: "isLogin")
                         AppState.shared.isTabbarHidden = true
-                        AppState.shared.currentTab = .home
+//                        AppState.shared.currentTab = .home
                     }
                 } else {
                     ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "회원 탈퇴 오류", message: "일시적인 서비스 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "애플 회원 탈퇴 \(String(describing: result?.code)) 에러"))

@@ -15,8 +15,11 @@ let targets: [Target] = [
 			dependencies: [
 				.domain,
 				.feature(implements: .Friend),
+				.feature(implements: .Category),
+				.feature(implements: .Home),
                 .feature(implements: .Moim),
-                .feature(implements: .Onboarding)
+                .feature(implements: .Onboarding),
+				.feature(implements: .Calendar),
 			]
 		)
 	)

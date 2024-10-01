@@ -1,15 +1,15 @@
+////
+////  ScheduleRepository.swift
+////  Namo_SwiftUI
+////
+////  Created by 정현우 on 2/5/24.
+////
 //
-//  ScheduleRepository.swift
-//  Namo_SwiftUI
+//import CoreNetwork
 //
-//  Created by 정현우 on 2/5/24.
-//
-
-import CoreNetwork
-
-protocol ScheduleRepository {
-	func postSchedule(data: postScheduleRequest) async -> postScheduleResponse?
-	func getAllSchedule() async -> getScheduleResponse?
-    func patchSchedule(scheduleId: Int, data: postScheduleRequest) async -> postScheduleResponse?
-    func deleteSchedule(scheduleId: Int, isMoim: Bool) async -> String?
-}
+//protocol ScheduleRepository {
+//	func postSchedule(data: postScheduleRequest) async -> postScheduleResponse?
+//	func getAllSchedule() async -> getScheduleResponse?
+//    func patchSchedule(scheduleId: Int, data: postScheduleRequest) async -> postScheduleResponse?
+//    func deleteSchedule(scheduleId: Int, isMoim: Bool) async -> String?
+//}

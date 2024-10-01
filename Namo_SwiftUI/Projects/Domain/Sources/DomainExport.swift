@@ -6,4 +6,6 @@
 //
 
 @_exported import DomainFriend
+@_exported import DomainCategory
+@_exported import DomainSchedule
 @_exported import DomainMoim
