@@ -7,4 +7,4 @@
 
 @_exported import FeatureFriend
 @_exported import FeatureMoim
-
+@_exported import FeatureOnboarding

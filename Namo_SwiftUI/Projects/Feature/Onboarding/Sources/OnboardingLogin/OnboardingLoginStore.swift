@@ -10,6 +10,7 @@ import ComposableArchitecture
 import DomainAuth
 import DomainAuthInterface
 import Core
+import SharedUtil
 
 @Reducer
 public struct OnboardingLoginStore {
@@ -86,6 +87,11 @@ public struct OnboardingLoginStore {
                 return .run { send in
                     let result = try await authClient.reqSignInWithApple(reqData)
                     print("result as Token type is \(result)")
+                    if let accessToken = result?.accessToken,
+                       let refreshToken = result?.refreshToken {
+                        KeyChainManager.addItem(key: "accessToken", value: accessToken)
+                        KeyChainManager.addItem(key: "refreshToken", value: refreshToken)
+                    }
                 }
             }
         }
