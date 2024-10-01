@@ -8,12 +8,23 @@
 import Foundation
 import ComposableArchitecture
 import FeatureMoimInterface
+import Domain
 
 extension MoimListStore {
     public init() {
+        @Dependency(\.moimUseCase) var moimUseCase
+        
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
-            default:
+            // 뷰가 로드되면 모임리스트 요청
+            case .viewOnAppear:
+                return .run { send in
+                    let result = try await moimUseCase.getMoimList()
+                    return await send(.moimListResponse(result))
+                }
+            // 모임리스트 요청 결과 스토어 업데이트
+            case let  .moimListResponse(moimList):
+                print("result: \(moimList)")
                 return .none
             }
             

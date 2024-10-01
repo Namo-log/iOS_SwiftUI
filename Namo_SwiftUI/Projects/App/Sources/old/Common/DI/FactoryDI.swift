@@ -45,10 +45,10 @@ extension Container {
             .singleton
     }
     
-    var moimRepository: Factory<MoimRepository> {
-        self { MoimRepositoryImpl() }
-            .singleton
-    }
+//    var moimRepository: Factory<MoimRepository> {
+//        self { MoimRepositoryImpl() }
+//            .singleton
+//    }
     
     var placeRepository: Factory<PlaceRepository> {
         self { PlaceRepositoryImpl() }

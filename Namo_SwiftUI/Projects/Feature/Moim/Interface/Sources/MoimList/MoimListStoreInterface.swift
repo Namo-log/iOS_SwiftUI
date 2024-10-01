@@ -19,9 +19,13 @@ public struct MoimListStore {
     
     public struct State: Equatable {
         public init() {}
+        var moimList: [String] = []
     }
     
-    public enum Action {}
+    public enum Action {
+        case viewOnAppear
+        case moimListResponse([String])
+    }
     
     public var body: some ReducerOf<Self> {
         reducer

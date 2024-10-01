@@ -29,5 +29,8 @@ struct MoimListView: View {
                 
             }
         }
+        .onAppear {
+            store.send(.viewOnAppear)
+        }
     }
 }
