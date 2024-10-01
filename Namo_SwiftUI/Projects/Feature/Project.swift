@@ -19,6 +19,7 @@ let targets: [Target] = [
 				.feature(implements: .Home),
                 .feature(implements: .Moim),
                 .feature(implements: .Onboarding),
+				.feature(implements: .Calendar),
 			]
 		)
 	)

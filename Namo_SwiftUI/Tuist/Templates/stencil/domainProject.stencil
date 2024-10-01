@@ -1,0 +1,46 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+import DependencyPlugin
+
+let targets: [Target] = [
+    .domain(
+        interface: .{{ name }},
+        factory: .init(
+            dependencies: [
+                .core
+            ]
+        )
+    ),
+    .domain(
+        implements: .{{ name }},
+        factory: .init(
+            dependencies: [
+                .domain(interface: .{{ name }})
+            ]
+        )
+    ),
+    .domain(
+        testing: .{{ name }},
+        factory: .init(
+            dependencies: [
+                .domain(interface: .{{ name }})
+            ]
+        )
+    ),
+    .domain(
+        tests: .{{ name }},
+        factory: .init(
+            dependencies: [
+                .domain(testing: .{{ name }})
+            ]
+        )
+    )
+]
+
+let project: Project = .makeModule(
+    name: ModulePath.Domain.name+ModulePath.Domain.{{ name }}.rawValue,
+    targets: targets
+)
+
+
+

@@ -32,6 +32,7 @@ public extension ModulePath {
 		case Home
         case Moim
         case Onboarding
+		case Calendar
 		
 		public static let name: String = "Feature"
 	}
