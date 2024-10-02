@@ -30,7 +30,9 @@ public struct HomeMainStore {
 		// datepicker selection
 		var pickerCurrentYear: Int = YearMonth.current.year
 		var pickerCurrentMonth: Int = YearMonth.current.month
-
+		
+		// 캘린더 debounce 대기시간동안 다시 스크롤 방지
+		var isScrolling: Bool = false
 		
 		public init() {}
 	}

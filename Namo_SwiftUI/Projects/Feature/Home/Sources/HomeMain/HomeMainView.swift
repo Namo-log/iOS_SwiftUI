@@ -44,9 +44,18 @@ public struct HomeMainView: View {
 			
 		}
 		.ignoresSafeArea(edges: .bottom)
-		.onAppear {
-			store.send(.getSchedule(ym: calendarController.yearMonth))
-		}
+//		.onAppear {
+//			store.send(.getSchedule(ym: calendarController.yearMonth))
+//		}
+//		.onChange(of: calendarController.yearMonth) { newYM in
+//			if calendarController.yearMonth < newYM {
+//				// 다음달로
+//				store.send(.scrollForwardTo(ym: newYM))
+//			} else {
+//				// 이전달로
+//				store.send(.scrollBackwardTo(ym: newYM))
+//			}
+//		}
 		.namoUnderButtonPopupView(
 			isPresented: $store.showDatePicker,
 			contentView: {
@@ -66,15 +75,6 @@ public struct HomeMainView: View {
 				
 			}
 		)
-//		.onChange(of: calendarController.yearMonth) { newYM in
-//			if calendarController.yearMonth < newYM {
-//				// 다음달로
-//				store.send(.scrollForwardTo(ym: newYM))
-//			} else {
-//				// 이전달로
-//				store.send(.scrollBackwardTo(ym: newYM))
-//			}
-//		}
 	}
 	
 	private var header: some View {
@@ -109,7 +109,13 @@ public struct HomeMainView: View {
 			// 오늘 날짜로
 			Button(
 				action: {
-					calendarController.scrollTo(.current, isAnimate: true)
+					if !store.isScrolling {
+						store.isScrolling = true
+						calendarController.scrollTo(.current, isAnimate: true)
+						DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+							store.isScrolling = false
+						}
+					}
 				}, label: {
 					Text(Date().toDD())
 						.font(.pretendard(.semibold, size: 16))
