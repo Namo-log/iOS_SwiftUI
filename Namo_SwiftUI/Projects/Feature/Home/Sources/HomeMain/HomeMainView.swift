@@ -5,6 +5,7 @@
 //  Created by 정현우 on 9/18/24.
 //
 
+import Foundation
 import SwiftUI
 
 import ComposableArchitecture
@@ -46,6 +47,25 @@ public struct HomeMainView: View {
 		.onAppear {
 			store.send(.getSchedule(ym: calendarController.yearMonth))
 		}
+		.namoUnderButtonPopupView(
+			isPresented: $store.showDatePicker,
+			contentView: {
+				datePicker
+			},
+			confirmAction: {
+				store.showDatePicker = false
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+					calendarController.scrollTo(
+						YearMonth(year: store.pickerCurrentYear, month: store.pickerCurrentMonth),
+						isAnimate: true
+					)
+				}
+				
+				
+				// TODO: 해당 월 일정 불러오기
+				
+			}
+		)
 //		.onChange(of: calendarController.yearMonth) { newYM in
 //			if calendarController.yearMonth < newYM {
 //				// 다음달로
@@ -102,6 +122,31 @@ public struct HomeMainView: View {
 			)
 			.tint(Color.colorBlack)
 			
+		}
+	}
+	
+	private var datePicker: some View {
+		HStack(spacing: 0) {
+			Picker("", selection: $store.pickerCurrentYear) {
+				ForEach(2000...2099, id: \.self) {
+					Text("\(String($0))년")
+						.font(.pretendard(.regular, size: 23))
+				}
+			}
+			.pickerStyle(.inline)
+			
+			Picker("", selection: $store.pickerCurrentMonth) {
+				ForEach(1...12, id: \.self) {
+					Text("\(String($0))월")
+						.font(.pretendard(.regular, size: 23))
+				}
+			}
+			.pickerStyle(.inline)
+		}
+		.frame(height: 154)
+		.onAppear {
+			store.pickerCurrentYear = calendarController.yearMonth.year
+			store.pickerCurrentMonth = calendarController.yearMonth.month
 		}
 	}
 }
