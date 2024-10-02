@@ -8,17 +8,14 @@ import FeatureHome
 struct FeatureHomeExampleApp: App {
 	var body: some Scene {
 		WindowGroup {
-//			HomeCoordinatorView(
-//				store: Store(
-//					initialState: HomeCoordinatorStore.State(),
-//					reducer: {
-//						HomeCoordinatorStore()
-//					}
-//				)
-//			)
-			HomeMainView(store: Store(initialState: HomeMainStore.State(), reducer: {
-				HomeMainStore()
-			}))
+			HomeCoordinatorView(
+				store: Store(
+					initialState: HomeCoordinator.State.initialState,
+					reducer: {
+						HomeCoordinator()
+					}
+				)
+			)
 		}
 	}
 }

@@ -1,8 +1,8 @@
 //
 //  NamoCalendarDetailScheduleItem.swift
-//  FeatureHome
+//  FeatureCalendar
 //
-//  Created by 정현우 on 9/28/24.
+//  Created by 정현우 on 10/2/24.
 //
 
 import SwiftUI
