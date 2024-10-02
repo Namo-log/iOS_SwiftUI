@@ -2,12 +2,20 @@
 //  KeyChainManager.swift
 //  Namo_SwiftUI
 //
-//  Created by 고성민 on 2/9/24.
+//  Created by 박민서 on 10/2/24.
 //
 
 import Foundation
 
-// JWT 토큰을 저장하기 위한 키체인입니다.
+enum KeychainError: Error {
+    case itemAddFailed(OSStatus)
+    case itemUpdateFailed(OSStatus)
+    case itemDeleteFailed(OSStatus)
+    case itemReadFailed(OSStatus)
+    case dataEncodingFailed
+    case dataDecodingFailed
+}
+
 public class KeyChainManager {
     
 	public static let service = Bundle.main.bundleIdentifier
