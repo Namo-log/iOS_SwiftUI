@@ -51,6 +51,8 @@ public struct HomeMainStore {
 		
 	}
 	
+	@Dependency(\.scheduleUseCase) var scheduleUseCase
+	
 	public var body: some ReducerOf<Self> {
 		BindingReducer()
 		Reduce { state, action in
@@ -103,11 +105,13 @@ public struct HomeMainStore {
 	}
 	
 	func getSchedule(ym: YearMonth) async -> [YearMonthDay: [CalendarSchedule]] {
-		let response = await ScheduleUseCase.liveValue.getSchedule(
-			startDate: ym.addMonth(-2).getFirstDay(),
-			endDate: ym.addMonth(2).getLastDay()
-		)
+//		let response = await scheduleUseCase.getSchedule(
+//			startDate: ym.addMonth(-2).getFirstDay(),
+//			endDate: ym.addMonth(2).getLastDay()
+//		)
 		
-		return ScheduleUseCase.liveValue.mapScheduleToCalendar(response)
+		let response = Schedule.dummySchedules
+		
+		return scheduleUseCase.mapScheduleToCalendar(response)
 	}
 }

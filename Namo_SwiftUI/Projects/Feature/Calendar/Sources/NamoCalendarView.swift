@@ -9,6 +9,7 @@ import SwiftUI
 
 import SwiftUICalendar
 
+import SharedUtil
 import SharedDesignSystem
 import DomainSchedule
 
@@ -24,6 +25,8 @@ public struct NamoCalendarView: View {
 	let showDetailView: Bool
 	// 특정 달을 선택했을때
 	let dateTapAction: (YearMonthDay) -> Void
+	// 일정 추가 버튼 탭
+	let scheduleAddTapAction: (YearMonthDay) -> Void
 	
 	private let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 	
@@ -33,7 +36,8 @@ public struct NamoCalendarView: View {
 		schedules: Binding<[YearMonthDay: [CalendarSchedule]]> = .constant([:]),
 		showWeekDay: Bool = true,
 		showDetailView: Bool = true,
-		dateTapAction: @escaping (YearMonthDay) -> Void
+		dateTapAction: @escaping (YearMonthDay) -> Void = { _ in },
+		scheduleAddTapAction: @escaping (YearMonthDay) -> Void = { _ in }
 	) {
 		self.calendarController = calendarController
 		self._focusDate = focusDate
@@ -41,6 +45,7 @@ public struct NamoCalendarView: View {
 		self.showWeekDay = showWeekDay
 		self.showDetailView = showDetailView
 		self.dateTapAction = dateTapAction
+		self.scheduleAddTapAction = scheduleAddTapAction
 	}
 	
 	public var body: some View {
@@ -55,22 +60,26 @@ public struct NamoCalendarView: View {
 					CalendarView(calendarController) { date in
 						GeometryReader { geometry in
 							VStack(alignment: .leading) {
-								calendarDate(date: date)
-									.onTapGesture {
-										dateTapAction(date)
-										print(date)
-									}
+								NamoCalendarItem(
+									focusDate: $focusDate,
+									date: date,
+									schedules: schedules[date] ?? []
+								)
+								.onTapGesture {
+									dateTapAction(date)
+								}
 							}
 							.frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
 						}
 					}
 				}
 			}
+			.padding(.leading, 14)
+			.padding(.horizontal, 6)
+			.padding(.top, 3)
 			
 			if showDetailView && focusDate != nil {
 				detailView
-					.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
-					.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 0)
 			}
 		}
 	}
@@ -97,48 +106,59 @@ public struct NamoCalendarView: View {
 		)
 	}
 	
-	private func calendarDate(date: YearMonthDay) -> some View {
-		GeometryReader { geometry in
-			if date.isToday {
-				Text("\(date.day)")
-					.font(.pretendard(.bold, size: 12))
-					.foregroundStyle(Color.white)
-					.background(
-						Circle()
-							.fill(
-								(date.isFocusYearMonth ?? false)
-								? Color(asset: SharedDesignSystemAsset.Assets.mainOrange)
-								: Color(asset: SharedDesignSystemAsset.Assets.mainOrange).opacity(0.5))
-							.frame(width: 18, height: 18)
-					)
-			} else {
-				Text("\(date.day)")
-					.font(.pretendard(.bold, size: 12))
-					.foregroundStyle(
-						focusDate == date
-						? Color(asset: SharedDesignSystemAsset.Assets.mainOrange)
-						: (date.isFocusYearMonth ?? true)
-							? Color.black
-							: Color(asset: SharedDesignSystemAsset.Assets.textUnselected)
-					)
-			}
-		}
-	}
-	
 	private var detailView: some View {
 		let focusDate = focusDate!
 		
 		return VStack(spacing: 0) {
-			Text(String(format: "%02d.%02d (%@)", focusDate.month, focusDate.day, focusDate.getShortWeekday()))
-				.font(.pretendard(.bold, size: 22))
-				.padding(.vertical, 20)
+			HStack {
+				Spacer()
+				
+				Text(String(format: "%02d.%02d (%@)", focusDate.month, focusDate.day, focusDate.getShortWeekday()))
+					.font(.pretendard(.bold, size: 22))
+					.padding(.vertical, 20)
+				
+				Spacer()
+			}
+			.contentShape(Rectangle())
+			.gesture(
+				DragGesture()
+					.onChanged { value in
+						let dragHeight = value.translation.height
+						if dragHeight > 0 {
+							withAnimation {
+								self.focusDate = nil
+							}
+						}
+					}
+			)
 			
 			ScrollView(.vertical, showsIndicators: false) {
 				detailViewPersonalSchedule
 					.padding(.bottom, 32)
 				
 				detailViewMeetingSchedule
+				
+				Spacer()
+					.frame(height: 50)
 			}
+			.padding(.leading, 28)
+			.padding(.trailing, 22)
+		}
+		.background(Color.white)
+		.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
+		.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: -5)
+		.mask {
+			// 상단에만 shadow를 주기 위함
+			Rectangle().padding(.top, -20)
+		}
+		.overlay(alignment: .bottomTrailing) {
+			Button(action: {
+				scheduleAddTapAction(focusDate)
+			}, label: {
+				Image(asset: SharedDesignSystemAsset.Assets.floatingAdd)
+					.padding(.bottom, 28)
+					.padding(.trailing, 24)
+			})
 		}
 	}
 	

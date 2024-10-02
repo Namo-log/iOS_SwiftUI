@@ -34,7 +34,7 @@ public struct NamoCalendarDetailScheduleItem: View {
 		HStack(spacing: 14) {
 			Rectangle()
 				.fill(Color.paletteColor(id: schedule.categoryInfo.colorId))
-				.frame(width: 30, height: 56)
+				.frame(width: 30, height: schedule.isMeetingSchedule ? 74 : 56)
 				.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
 			
 			VStack(alignment: .leading, spacing: 4) {
@@ -61,13 +61,15 @@ public struct NamoCalendarDetailScheduleItem: View {
 					.font(.pretendard(.bold, size: 15))
 					.foregroundStyle(Color.colorBlack)
 				
-				if schedule.isMeetingSchedule {
+				if schedule.isMeetingSchedule,
+				   let meetingInfo = schedule.meetingInfo
+				{
 					HStack {
-						Text("\(schedule.meetingInfo.participantCount)")
+						Text("\(meetingInfo.participantCount)")
 							.font(.pretendard(.bold, size: 12))
 							.foregroundStyle(Color.mainText)
 						
-						Text(schedule.meetingInfo.participantNicknames)
+						Text(meetingInfo.participantNicknames)
 							.font(.pretendard(.medium, size: 12))
 							.foregroundStyle(Color.mainText)
 							.lineLimit(1)

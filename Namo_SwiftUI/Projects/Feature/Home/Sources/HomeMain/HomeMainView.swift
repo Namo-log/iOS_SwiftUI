@@ -37,18 +37,15 @@ public struct HomeMainView: View {
 					store.send(.selectDate(date), animation: .default)
 				}
 			)
-			.padding(.leading, 14)
-			.padding(.horizontal, 6)
-			.padding(.top, 3)
 
 			Spacer()
 				.frame(height: tabBarHeight)
 			
 		}
 		.ignoresSafeArea(edges: .bottom)
-//		.onAppear {
-//			store.send(.getSchedule(ym: calendarController.yearMonth))
-//		}
+		.onAppear {
+			store.send(.getSchedule(ym: calendarController.yearMonth))
+		}
 //		.onChange(of: calendarController.yearMonth) { newYM in
 //			if calendarController.yearMonth < newYM {
 //				// 다음달로
