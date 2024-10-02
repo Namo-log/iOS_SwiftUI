@@ -60,7 +60,7 @@ public struct NamoCalendarView: View {
 					CalendarView(calendarController) { date in
 						GeometryReader { geometry in
 							VStack(alignment: .leading) {
-								NamoCalendarItem(
+								CalendarItem(
 									focusDate: $focusDate,
 									date: date,
 									schedules: schedules[date] ?? []
@@ -179,7 +179,7 @@ public struct NamoCalendarView: View {
 			   !schedules.isEmpty
 			{
 				ForEach(schedules, id: \.self) { schedule in
-					NamoCalendarDetailScheduleItem(
+					CalendarDetailScheduleItem(
 						ymd: focusDate!,
 						schedule: schedule,
 						diaryEditAction: {
@@ -220,7 +220,7 @@ public struct NamoCalendarView: View {
 			   !schedules.isEmpty
 			{
 				ForEach(schedules, id: \.self) { schedule in
-					NamoCalendarDetailScheduleItem(
+					CalendarDetailScheduleItem(
 						ymd: focusDate!,
 						schedule: schedule,
 						diaryEditAction: {

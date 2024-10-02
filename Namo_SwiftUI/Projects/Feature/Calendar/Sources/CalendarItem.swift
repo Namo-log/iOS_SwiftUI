@@ -1,5 +1,5 @@
 //
-//  NamoCalendarItem.swift
+//  CalendarItem.swift
 //  FeatureCalendar
 //
 //  Created by 정현우 on 10/2/24.
@@ -12,7 +12,7 @@ import SharedUtil
 import SharedDesignSystem
 import DomainSchedule
 
-struct NamoCalendarItem: View {
+struct CalendarItem: View {
 	@Binding var focusDate: YearMonthDay?
 	let date: YearMonthDay
 	let schedules: [CalendarSchedule]

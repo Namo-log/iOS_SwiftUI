@@ -1,5 +1,5 @@
 //
-//  NamoCalendarDetailScheduleItem.swift
+//  CalendarDetailScheduleItem.swift
 //  FeatureCalendar
 //
 //  Created by 정현우 on 10/2/24.
@@ -13,7 +13,7 @@ import SharedDesignSystem
 import SharedUtil
 import DomainSchedule
 
-public struct NamoCalendarDetailScheduleItem: View {
+public struct CalendarDetailScheduleItem: View {
 	let ymd: YearMonthDay
 	let schedule: Schedule
 	let diaryEditAction: () -> Void
