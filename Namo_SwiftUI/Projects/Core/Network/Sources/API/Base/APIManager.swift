@@ -57,8 +57,11 @@ public final class APIManager {
         return await makeDataRequest(endPoint: endPoint).serializingData().response
     }
     
-    /// 토큰 재발급을 처리하는 함수입니다.
-    /// 토큰 재발급, 저장 성공 시 true, 실패 시 false를 반환합니다.
+    /// 토큰 재발급을 처리하는 함수
+    ///
+    /// - Returns: 토큰 재발급 및 저장 성공 시 true, 실패 시 false 반환
+    /// - Note: 이 함수는 토큰이 만료되었을 때 재발급을 시도하며, 성공 시 키체인에 새 토큰을 저장합니다.
+    ///         재발급이 실패하면 false를 반환하여 로그아웃 처리가 가능합니다.
     private func handleTokenReissuance() async -> Bool {
         do {
             // 토큰 재발급을 시도합니다
@@ -72,7 +75,13 @@ public final class APIManager {
         }
     }
     
-    /// 새로운 토큰을 키체인에 저장하는 함수입니다.
+    /// 새로 발급받은 액세스 토큰과 리프레시 토큰을 키체인에 저장하는 함수
+    ///
+    /// - Parameters:
+    ///   - accessToken: 새롭게 발급받은 액세스 토큰
+    ///   - refreshToken: 새롭게 발급받은 리프레시 토큰
+    /// - Throws: 토큰 저장 중 오류가 발생할 경우 에러를 throw
+    /// - Note: 새로 발급된 토큰을 각각 키체인에 저장하며, 저장에 실패하면 에러를 throw하여 호출자가 이를 처리할 수 있도록 합니다.
     private func storeTokens(accessToken: String, refreshToken: String) throws {
         do {
             // 새로운 토큰 키체인 저장을 시도합니다
@@ -85,7 +94,12 @@ public final class APIManager {
         }
     }
     
-    /// 토큰 재발급 요청, 응답을 처리하는 함수입니다
+    /// 토큰 재발급 요청을 보내고 응답을 처리하는 함수
+    ///
+    /// - Throws: 토큰 재발급 실패, 응답 디코딩 오류, 403 오류 발생 시 에러를 throw
+    /// - Returns: 새롭게 발급된 TokenReissuanceResponseDTO 객체를 반환
+    /// - Note: 기존에 저장된 액세스 토큰과 리프레시 토큰을 사용하여 토큰 재발급 요청을 보내고,
+    ///         성공 시 새로운 토큰을 반환합니다. 403 응답이 발생하거나 다른 에러가 발생할 경우 에러를 throw합니다.
     private func reissueTokens() async throws -> TokenReissuanceResponseDTO {
         do {
             // 기존 토큰 가져오기를 시도합니다
