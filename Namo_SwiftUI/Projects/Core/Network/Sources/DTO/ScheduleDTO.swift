@@ -21,7 +21,7 @@ public struct ScheduleDTO: Decodable {
 	public let locationInfo: ScheduleLocationDTO
 	public let hasDiary: Bool
 	public let isMeetingSchedule: Bool
-	public let meetingInfo: ScheduleMeetingDTO
+	public let meetingInfo: ScheduleMeetingDTO?
 	public let notificationInfo: [ScheduleNotificationDTO]
 	
 	public init(
@@ -34,7 +34,7 @@ public struct ScheduleDTO: Decodable {
 		locationInfo: ScheduleLocationDTO,
 		hasDiary: Bool,
 		isMeetingSchedule: Bool,
-		meetingInfo: ScheduleMeetingDTO,
+		meetingInfo: ScheduleMeetingDTO?,
 		notificationInfo: [ScheduleNotificationDTO]
 	) {
 		self.scheduleId = scheduleId

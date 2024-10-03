@@ -21,7 +21,9 @@ public struct HomeCoordinator {
 	public struct State: Equatable {
 		var routes: [Route<HomeScreen.State>]
 		
-		public static let initialState = State(routes: [.root(.homeMain(.init()), embedInNavigationView: true)])
+		public static let initialState = State(
+			routes: [.root(.homeMain(.init()), embedInNavigationView: true)]
+		)
 	}
 	
 	public enum Action {
@@ -39,5 +41,6 @@ public struct HomeCoordinator {
 				return .none
 			}
 		}
+		.forEachRoute(\.routes, action: \.router)
 	}
 }
