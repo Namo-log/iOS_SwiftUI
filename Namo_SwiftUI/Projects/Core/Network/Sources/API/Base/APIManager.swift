@@ -25,22 +25,36 @@ public final class APIManager {
 	public func requestData(endPoint: EndPoint) async -> DataResponse<Data, AFError> {
                  
         var response = await makeDataRequest(endPoint: endPoint).serializingData().response
-        
+    
+        // 403 에러 발생 시 토큰 재발급 시도
         if let statusCode = response.response?.statusCode, statusCode == 403 {
-            // 403 에러 발생 시 토큰 재발급 시도
-            guard await handleTokenReissuance() else {
-                print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
-                // 로그아웃 처리
-                DispatchQueue.main.async {
-                    UserDefaults.standard.set(false, forKey: "isLogin")
-                }
-                return response
-            }
-            // 재발급 성공 후 원래 요청 재시도
-            response = await makeDataRequest(endPoint: endPoint).serializingData().response
+            response = await handleTokenReissuanceAndRetry(endPoint: endPoint, originalResponse: response)
         }
         
         return response
+    }
+    
+    /// 403 응답 코드 처리 및 토큰 재발급 후 원래 요청을 재시도하는 함수
+    ///
+    /// - Parameters:
+    ///   - endPoint: 원래 요청의 Endpoint 정보
+    ///   - originalResponse: 최초 요청에서 반환된 DataResponse
+    /// - Returns: 토큰 재발급 실패 시 기존 응답을 반환하고, 성공 시 원래 요청을 재시도하여 그 결과를 반환
+    /// - Note: 이 함수는 403 Forbidden 응답이 발생했을 때 호출됩니다. 토큰 재발급을 시도하고,
+    ///         재발급이 성공하면 해당 요청을 다시 시도하여 최종 응답을 반환합니다.
+    private func handleTokenReissuanceAndRetry(endPoint: EndPoint, originalResponse: DataResponse<Data, AFError>) async -> DataResponse<Data, AFError> {
+        // 토큰 재발급 처리 시도
+        guard await handleTokenReissuance() else {
+            print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
+            // 로그아웃 처리
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
+            return originalResponse
+        }
+
+        // 재발급 성공 후 원래 요청 재시도
+        return await makeDataRequest(endPoint: endPoint).serializingData().response
     }
     
     /// 토큰 재발급을 처리하는 함수입니다.
