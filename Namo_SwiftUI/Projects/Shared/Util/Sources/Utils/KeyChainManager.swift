@@ -69,22 +69,23 @@ public struct KeyChainManager {
     }
     
     // MARK: 키체인 값 업데이트
-	public static func updateItem(key: String, value: String) {
+	public static func updateItem(key: String, value: String) throws {
+        guard let valueData = value.data(using: .utf8) else {
+            throw KeychainError.dataEncodingFailed
+        }
         
-        let valueData = value.data(using: .utf8)!
-        
-        let previousQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                        kSecAttrService: service ?? "com.mongmong.namo",
-                                        kSecAttrAccount: key]
+        let previousQuery: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key
+        ]
         
         let updateQuery: [CFString: Any] = [kSecValueData: valueData]
         
         let status = SecItemUpdate(previousQuery as CFDictionary, updateQuery as CFDictionary)
         
-        if status == errSecSuccess {
-            print("update complete")
-        } else {
-            print("not finished update")
+        if status != errSecSuccess {
+            throw KeychainError.itemUpdateFailed(status)
         }
     }
     
