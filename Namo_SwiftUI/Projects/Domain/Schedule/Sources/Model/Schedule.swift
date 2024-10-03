@@ -19,7 +19,7 @@ public struct Schedule: Decodable, Hashable {
 	public let locationInfo: ScheduleLocation
 	public let hasDiary: Bool
 	public let isMeetingSchedule: Bool
-	public let meetingInfo: ScheduleMeeting
+	public let meetingInfo: ScheduleMeeting?
 	public let notificationInfo: [ScheduleNotification]
 	
 	public init(
@@ -32,7 +32,7 @@ public struct Schedule: Decodable, Hashable {
 		locationInfo: ScheduleLocation,
 		hasDiary: Bool,
 		isMeetingSchedule: Bool,
-		meetingInfo: ScheduleMeeting,
+		meetingInfo: ScheduleMeeting?,
 		notificationInfo: [ScheduleNotification]
 	) {
 		self.scheduleId = scheduleId
@@ -114,4 +114,84 @@ public struct ScheduleNotification: Decodable, Hashable {
 		self.notificationId = notificationId
 		self.trigger = trigger
 	}
+}
+
+public extension Schedule {
+	static public let dummySchedules: [Schedule] = [
+		Schedule(
+			scheduleId: 1,
+			title: "Test1",
+			categoryInfo: ScheduleCategory(
+				categoryId: 1,
+				colorId: 1,
+				name: "학교",
+				isShared: true
+			),
+			startDate: Date(timeIntervalSince1970: 1727860000),
+			endDate: Date(timeIntervalSince1970: 1727863275),
+			interval: 1,
+			locationInfo: ScheduleLocation(
+				longitude: 36.0,
+				latitude: 127.0,
+				locationName: "위치위치",
+				kakaoLocationId: ""
+			),
+			hasDiary: false,
+			isMeetingSchedule: false,
+			meetingInfo: nil,
+			notificationInfo: []
+		),
+		Schedule(
+			scheduleId: 2,
+			title: "Test2",
+			categoryInfo: ScheduleCategory(
+				categoryId: 1,
+				colorId: 1,
+				name: "학교",
+				isShared: true
+			),
+			startDate: Date(timeIntervalSince1970: 1727800000),
+			endDate: Date(timeIntervalSince1970: 1727863275),
+			interval: 2,
+			locationInfo: ScheduleLocation(
+				longitude: 36.0,
+				latitude: 127.0,
+				locationName: "위치위치",
+				kakaoLocationId: ""
+			),
+			hasDiary: false,
+			isMeetingSchedule: false,
+			meetingInfo: nil,
+			notificationInfo: []
+		),
+		Schedule(
+			scheduleId: 3,
+			title: "Test3",
+			categoryInfo: ScheduleCategory(
+				categoryId: 1,
+				colorId: 1,
+				name: "학교",
+				isShared: true
+			),
+			startDate: Date(timeIntervalSince1970: 1727800000),
+			endDate: Date(timeIntervalSince1970: 1727863275),
+			interval: 2,
+			locationInfo: ScheduleLocation(
+				longitude: 36.0,
+				latitude: 127.0,
+				locationName: "위치위치",
+				kakaoLocationId: ""
+			),
+			hasDiary: false,
+			isMeetingSchedule: true,
+			meetingInfo: ScheduleMeeting(
+				participantCount: 3,
+				participantNicknames: "연현,램프,반디",
+				isOwner: true
+			),
+			notificationInfo: []
+		)
+		
+		
+	]
 }

@@ -27,6 +27,13 @@ public struct HomeMainStore {
 		// 캘린더에 표시될 일정
 		var schedules: [YearMonthDay: [CalendarSchedule]] = [:]
 		
+		// datepicker selection
+		var pickerCurrentYear: Int = YearMonth.current.year
+		var pickerCurrentMonth: Int = YearMonth.current.month
+		
+		// 캘린더 debounce 대기시간동안 다시 스크롤 방지
+		var isScrolling: Bool = false
+		
 		public init() {}
 	}
 	
@@ -50,6 +57,8 @@ public struct HomeMainStore {
 		case selectDate(YearMonthDay)
 		
 	}
+	
+	@Dependency(\.scheduleUseCase) var scheduleUseCase
 	
 	public var body: some ReducerOf<Self> {
 		BindingReducer()
@@ -103,11 +112,13 @@ public struct HomeMainStore {
 	}
 	
 	func getSchedule(ym: YearMonth) async -> [YearMonthDay: [CalendarSchedule]] {
-		let response = await ScheduleUseCase.liveValue.getSchedule(
+		let response = await scheduleUseCase.getSchedule(
 			startDate: ym.addMonth(-2).getFirstDay(),
 			endDate: ym.addMonth(2).getLastDay()
 		)
 		
-		return ScheduleUseCase.liveValue.mapScheduleToCalendar(response)
+//		let response = Schedule.dummySchedules
+		
+		return scheduleUseCase.mapScheduleToCalendar(response)
 	}
 }

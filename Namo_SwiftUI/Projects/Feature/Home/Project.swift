@@ -22,7 +22,8 @@ let targets: [Target] = [
 		implements: .Home,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .Home)
+				.feature(interface: .Home),
+				.feature(implements: .Calendar)
 			]
 		)
 	),
