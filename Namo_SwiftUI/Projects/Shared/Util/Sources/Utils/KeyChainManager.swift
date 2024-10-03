@@ -45,30 +45,26 @@ public struct KeyChainManager {
     }
     
     // MARK: 키체인 아이템 조회
-	public static func readItem(key: String) -> String? {
+    public static func readItem(key: String) throws -> String {
         
-        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                kSecAttrService: service ?? "com.mongmong.namo",
-                                kSecAttrAccount: key,
-                           kSecReturnAttributes: true,
-                                 kSecReturnData: true]
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key,
+            kSecReturnAttributes: true,
+            kSecReturnData: true
+        ]
         
         var item: CFTypeRef?
-        if SecItemCopyMatching(query as CFDictionary, &item) != errSecSuccess {
-            print("read failed")
-            return nil
-        }
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
         
-//        guard let existItem = item as? [String: Any] else {return}
-//        guard let data = existItem["v_Data"] as? Data else {return}
-//        guard let returnValue = String(data: data, encoding: .utf8) else {return}
+        if status != errSecSuccess { throw KeychainError.itemReadFailed(status) }
         
-        guard let existItem = item as? [String:Any],
+        guard let existItem = item as? [String: Any],
               let data = existItem[kSecValueData as String] as? Data,
-              let returnValue = String(data: data, encoding: .utf8) else {
-            return nil
-        }
-
+              let returnValue = String(data: data, encoding: .utf8)
+        else { throw KeychainError.dataDecodingFailed }
+        
         return returnValue
     }
     
