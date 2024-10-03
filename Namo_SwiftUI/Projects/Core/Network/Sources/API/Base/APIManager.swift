@@ -26,28 +26,77 @@ public final class APIManager {
                  
         var response = await makeDataRequest(endPoint: endPoint).serializingData().response
         
-        // HTTP Status가 403일 때(토큰이 만료되었을 때)
         if let statusCode = response.response?.statusCode, statusCode == 403 {
-
-
-            guard await ReissuanceToken() else {
-                
-                // 토큰 갱신에 실패한 경우
-                
+            // 403 에러 발생 시 토큰 재발급 시도
+            guard await handleTokenReissuance() else {
                 print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
-
                 // 로그아웃 처리
                 DispatchQueue.main.async {
                     UserDefaults.standard.set(false, forKey: "isLogin")
                 }
                 return response
             }
-            
-            // 토큰 갱신에 성공한 경우
-            // 원래 요청을 다시 시도
+            // 재발급 성공 후 원래 요청 재시도
             response = await makeDataRequest(endPoint: endPoint).serializingData().response
         }
+        
         return response
+    }
+    
+    /// 토큰 재발급을 처리하는 함수입니다.
+    /// 토큰 재발급, 저장 성공 시 true, 실패 시 false를 반환합니다.
+    private func handleTokenReissuance() async -> Bool {
+        do {
+            // 토큰 재발급을 시도합니다
+            let tokens = try await reissueTokens()
+            // 토큰 저장을 시도합니다
+            try storeTokens(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
+            return true
+        } catch {
+            print("토큰 갱신 실패: \(error)")
+            return false
+        }
+    }
+    
+    /// 새로운 토큰을 키체인에 저장하는 함수입니다.
+    private func storeTokens(accessToken: String, refreshToken: String) throws {
+        do {
+            // 새로운 토큰 키체인 저장을 시도합니다
+            try KeyChainManager.addItem(key: "accessToken", value: accessToken)
+            try KeyChainManager.addItem(key: "refreshToken", value: refreshToken)
+            print("새 토큰 저장 완료")
+        } catch {
+            print("토큰 저장 실패: \(error)")
+            throw error
+        }
+    }
+    
+    /// 토큰 재발급 요청, 응답을 처리하는 함수입니다
+    private func reissueTokens() async throws -> TokenReissuanceResponseDTO {
+        do {
+            // 기존 토큰 가져오기를 시도합니다
+            let accessToken = try KeyChainManager.readItem(key: "accessToken")
+            let refreshToken = try KeyChainManager.readItem(key: "refreshToken")
+            
+            // 새로운 토큰 재발급을 시도합니다
+            let response = await makeDataRequest(endPoint: AuthEndPoint.reissuanceToken(token: TokenReissuanceRequestDTO(accessToken: accessToken, refreshToken: refreshToken))).serializingData().response
+            
+            // 403의 경우 throw 처리
+            if response.response?.statusCode == 403 {
+                throw APIError.customError("Refresh token expired")
+            }
+            
+            // 결과 디코드
+            let result = try response.result.get()
+            let decodedData = try result.decode(type: BaseResponse<TokenReissuanceResponseDTO>.self, decoder: JSONDecoder())
+            guard let tokens = decodedData.result else {
+                throw APIError.customError("Invalid token reissuance response")
+            }
+            
+            return tokens
+        } catch {
+            throw APIError.customError("Failed to reissue tokens: \(error)")
+        }
     }
     
     // 토큰 재발급
