@@ -16,29 +16,31 @@ enum KeychainError: Error {
     case dataDecodingFailed
 }
 
-public class KeyChainManager {
+public struct KeyChainManager {
     
-	public static let service = Bundle.main.bundleIdentifier
+    // public static let service = Bundle.main.bundleIdentifier
+    // TODO: Tuist Module - Bundle Identifier 관련 논의 필요
+    public static let service = "com.mongmong.namo"
     
     // MARK: 키체인에 아이템 저장
-	public static func addItem(key: String, value: String) {
+    public static func addItem(key: String, value: String) throws {
         
         let valueData = value.data(using: .utf8)!
         
-        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                kSecAttrService: service ?? "com.mongmong.namo",
-                                kSecAttrAccount: key,
-                                  kSecValueData: valueData]
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key,
+            kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
+            kSecValueData: valueData
+        ]
         
         let status = SecItemAdd(query as CFDictionary, nil)
-        
-        if status == errSecSuccess {
-            print("add success")
-            print("\(key): \(valueData)")
-        } else if status == errSecDuplicateItem {   // key가 중복될 경우 업데이트
-            updateItem(key: key, value: value)
-        } else {
-            print("add failed")
+                
+        if status == errSecDuplicateItem { // key 중복 - 업데이트
+            try updateItem(key: key, value: value)
+        } else if status != errSecSuccess { // 중복 외 실패의 경우
+            throw KeychainError.itemAddFailed(status)
         }
     }
     
