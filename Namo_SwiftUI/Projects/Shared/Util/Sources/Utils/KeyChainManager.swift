@@ -90,32 +90,40 @@ public struct KeyChainManager {
     }
     
     // MARK: 키체인 아이템 삭제
-	public static func deleteItem(key: String) {
+	public static func deleteItem(key: String) throws {
         
-        let deleteQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                      kSecAttrService: service ?? "com.mongmong.namo",
-                                      kSecAttrAccount: key]
+        let deleteQuery: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key
+        ]
         
         let status = SecItemDelete(deleteQuery as CFDictionary)
-        if status == errSecSuccess {
-            print("remove key-value data complete")
-        } else {
-            print("remove key-value data failed")
+        
+        if status != errSecSuccess {
+            throw KeychainError.itemDeleteFailed(status)
         }
     }
     
     // MARK: 키체인 아이템 존재 여부 확인
-	public static func itemExists(key: String) -> Bool {
+    public static func itemExists(key: String) throws -> Bool {
         
-        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                kSecAttrService: service ?? "com.mongmong.namo",
-                                kSecAttrAccount: key,
-                                 kSecMatchLimit: kSecMatchLimitOne,
-                           kSecReturnAttributes: false]
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key,
+            kSecMatchLimit: kSecMatchLimitOne,
+            kSecReturnAttributes: false
+        ]
         
         let status = SecItemCopyMatching(query as CFDictionary, nil)
         
-        return status == errSecSuccess
-        
+        if status == errSecSuccess {
+            return true
+        } else if status == errSecItemNotFound {
+            return false
+        } else {
+            throw KeychainError.itemReadFailed(status)
+        }
     }
 }
