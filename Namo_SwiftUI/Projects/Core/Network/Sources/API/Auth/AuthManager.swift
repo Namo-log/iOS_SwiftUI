@@ -29,27 +29,27 @@ public class AuthManager: RequestInterceptor {
         // baseURL 확인
         guard urlRequest.url?.absoluteString.hasPrefix(SecretConstants.baseURL) == true else { return }
         
-        // accessToken 조회
-        guard let accessToken = KeyChainManager.readItem(key: "accessToken") else {
+        do {
+            // accessToken 조회
+            let accessToken = try KeyChainManager.readItem(key: "accessToken")
             
-            // 토큰이 없는 경우 isLogin = false -> 로그인 화면으로 이동
+            // URLRequest 헤더 추가
+            var urlRequest = urlRequest
+            urlRequest.headers.add(.authorization("Bearer \(accessToken)"))
+            
+            // URLRequest 반환
+            completion(.success(urlRequest))
+        } catch {
+            // 토큰 조회 실패 시 처리 로직
             DispatchQueue.main.async {
+                // TODO: 어떤 이유 때문에 작성되었는지 확인 필요
                 UserDefaults.standard.set(false, forKey: "isLogin")
                 NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
             }
             
+            // 실패 결과 반환
             completion(.failure(APIError.customError("[AuthManager] 키체인 토큰 조회 실패. 로그인이 필요합니다. (adapt)")))
-            return
         }
-        
-        //: 조건 확인 끝
-        
-        // URLRequest 헤더 추가, return
-        var urlRequest = urlRequest
-        urlRequest.headers.add(.authorization("Bearer \(accessToken)"))
-        print("JWT: \(accessToken)")
-        
-        completion(.success(urlRequest))
     }
     
     /// Request 요청이 실패했을 때, 재시도 여부를 결정합니다.
