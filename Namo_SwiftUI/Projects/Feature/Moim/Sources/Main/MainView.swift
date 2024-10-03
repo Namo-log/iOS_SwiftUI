@@ -28,38 +28,25 @@ public struct MainView: View {
                 TabBarView(currentTab: viewStore.$currentTab, tabBarOptions: ["모임 일정", "친구리스트"])
                 
                 TabView(selection: viewStore.$currentTab) {
+                    
                     // 모임일정 리스트
-                    MoimListView(store: .init(initialState: MoimListStore.State(), reducer: {
-                        MoimListStore()
-                    }))
-                    .overlay(alignment: .bottomTrailing) {
-                        FloatingButton {
-                            store.send(.set(\.$isSheetPresented, true))
+                    MoimListView(store: store.scope(state: \.moimList, action: \.moimList))
+                        .overlay(alignment: .bottomTrailing) {
+                            FloatingButton {
+                                store.send(.set(\.$isSheetPresented, true))
+                            }
                         }
-                    }
-                    .sheet(isPresented: viewStore.$isSheetPresented, content: {
-                        MoimScheduleEditView(store: .init(initialState: MoimEditStore.State(), reducer: {
-                            MoimEditStore()
-                        }))
-                        .presentationDetents([.height(700)])
-                    })
-                    .tag(0)
+                        .sheet(isPresented: viewStore.$isSheetPresented, content: {
+                            MoimScheduleEditView(store: store.scope(state: \.moimEdit, action: \.moimEdit))
+                                .presentationDetents([.height(700)])
+                        })
+                        .tag(0)
                     
                     // 친구 리스트
-                    FriendListView(
-                        store: .init(
-                            initialState: FriendListStore.State(
-                                friends: []
-                            ),
-                            reducer: {
-                                FriendListStore()
-                            }
-                        )
-                    )
-                    .tag(1)
+                    FriendListView(store: store.scope(state: \.friendList, action: \.friendList))
+                        .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                
                 
             }
             .namoNabBar(left: {

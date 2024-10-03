@@ -14,6 +14,10 @@ import DomainMoimInterface
 struct MoimListView: View {
     let store: StoreOf<MoimListStore>
     
+    public init(store: StoreOf<MoimListStore>) {
+        self.store = store
+    }
+    
     var body: some View {
         WithPerceptionTracking {
             ZStack {

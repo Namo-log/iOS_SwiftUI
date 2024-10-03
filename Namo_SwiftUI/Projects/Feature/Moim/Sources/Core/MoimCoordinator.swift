@@ -24,8 +24,8 @@ public struct MoimCoordinator {
     
     @ObservableState
     public struct State: Equatable {
-        public static let initialState = State(routes: [.root(.moimSchedule(.init()), embedInNavigationView: true)],
-                                               moimSchedule: .init(),
+        public static let initialState = State(routes: [.root(.moimSchedule(.initialState), embedInNavigationView: true)],
+                                               moimSchedule: .initialState,
                                                moimRequest: .init()
                                             )
         

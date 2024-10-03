@@ -19,7 +19,7 @@ public struct MoimListStore {
     }
     
     @ObservableState
-    public struct State {
+    public struct State: Equatable {
         public init() {}
         public var moimList: [MoimScheduleItem] = []
     }
