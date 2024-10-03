@@ -59,6 +59,7 @@ public struct OnboardingLoginStore {
                 return .run { send in
                     guard let data = await authClient.appleLogin() else { return }
                     let reqData = data as AppleSignInRequestDTO
+                    print(reqData)
                     await send(.namoAppleLoginResponse(reqData))
                 }
                 

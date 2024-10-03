@@ -12,7 +12,7 @@ import ComposableArchitecture
 public struct MoimRequestStore {
     private let reducer: Reduce<State, Action>
     
-    public init(reducer: Reduce<State, Action>) {
+    public init(reducer: Reduce<State, Action>) {        
         self.reducer = reducer
     }
     

@@ -17,6 +17,8 @@ struct SplashCoordinatorView: View {
         Text("Splash 임시")
             .onAppear {
                 store.send(.loginCheck)
+//                KeyChainManager.deleteItem(key: "accessToken")
+//                KeyChainManager.deleteItem(key: "refreshToken")
             }
     }
 }

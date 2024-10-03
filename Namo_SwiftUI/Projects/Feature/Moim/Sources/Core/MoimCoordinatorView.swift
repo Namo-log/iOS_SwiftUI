@@ -20,9 +20,9 @@ public struct MoimCoordinatorView: View {
         TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
             switch screen.case {
             case let .moimSchedule(store):
-                MoimView(store: store)
+                MainView(store: store)
             case let .moimRequest(store):
-                MoimRequestView(store: store)                    
+                MoimRequestView(store: store)             
             }
         }
     }

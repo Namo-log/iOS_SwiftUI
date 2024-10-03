@@ -12,10 +12,10 @@ import ComposableArchitecture
 import FeatureMoimInterface
 
 public struct MoimScheduleEditView: View {
-    @Perception.Bindable private var store: StoreOf<MoimScheduleStore>
-    @ObservedObject private var viewStore: ViewStoreOf<MoimScheduleStore>
+    @Perception.Bindable private var store: StoreOf<MoimEditStore>
+    @ObservedObject private var viewStore: ViewStoreOf<MoimEditStore>
     
-    public init(store: StoreOf<MoimScheduleStore>) {
+    public init(store: StoreOf<MoimEditStore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: {$0})
     }
@@ -82,7 +82,9 @@ extension MoimScheduleEditView {
     
     private var titleView: some View {
         HStack(alignment: .center, spacing: 0) {
-            Button(action: {}, label: {
+            Button(action: {
+                
+            }, label: {
                 Text("취소")
                     .font(.pretendard(.regular, size: 15))
                     .foregroundStyle(Color.mainText)
@@ -96,7 +98,9 @@ extension MoimScheduleEditView {
             
             Spacer()
             
-            Button(action: {}) {
+            Button(action: {
+                store.send(.createButtonTapped)
+            }) {
                 Text("생성")
                     .font(.pretendard(.regular, size: 15))
                     .foregroundStyle(Color.mainText)
@@ -151,7 +155,7 @@ extension MoimScheduleEditView {
                         }
                 }
                 
-                if viewStore.showingStartPicker {
+                if viewStore.isStartPickerPresented {
                     DatePicker("startTimeDatePicker", selection: viewStore.$startDate)
                         .datePickerStyle(.graphical)
                         .labelsHidden()
@@ -175,7 +179,7 @@ extension MoimScheduleEditView {
                         }
                 }
                 
-                if viewStore.showingEndPicker {
+                if viewStore.isEndPickerPresented {
                     DatePicker("endTimeDatePicker", selection: viewStore.$endDate)
                         .datePickerStyle(.graphical)
                         .labelsHidden()

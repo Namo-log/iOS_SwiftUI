@@ -59,7 +59,7 @@ class MoimState: ObservableObject {
 	@Published var moims: [GroupInfo] = []
 	/// 유저가 현재 확인하고 있는 모임
 	@Published var currentMoim: GroupInfo = GroupInfo()
-	@Published var currentMoimSchedule: [YearMonthDay: [CalendarMoimSchedule]] = [:]
+//	@Published var currentMoimSchedule: [YearMonthDay: [CalendarMoimSchedule]] = [:]
 	
 	// 그룹 탈퇴 후 토스트
 	@Published var showGroupWithdrawToast: Bool = false

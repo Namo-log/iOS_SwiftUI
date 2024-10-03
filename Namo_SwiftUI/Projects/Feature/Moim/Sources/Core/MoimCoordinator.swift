@@ -13,7 +13,7 @@ import FeatureMoimInterface
 @Reducer(state: .equatable)
 public enum MoimScreen {
     // 모임 일정
-    case moimSchedule(MoimViewStore)
+    case moimSchedule(MainViewStore)
     // 모임/친구 요청
     case moimRequest(MoimRequestStore)
 }
@@ -24,33 +24,25 @@ public struct MoimCoordinator {
     
     @ObservableState
     public struct State: Equatable {
-        public init(routes: [Route<MoimScreen.State>],
-                    moimSchedule: MoimViewStore.State,
-                    moimRequest: MoimRequestStore.State) {
-            self.routes = routes
-            self.moimSchedule = moimSchedule
-            self.moimRequest = moimRequest
-        }
-        
-        public static let initialState = State(routes: [.root(.moimSchedule(.init()),
-                                                              embedInNavigationView: true)],
+        public static let initialState = State(routes: [.root(.moimSchedule(.init()), embedInNavigationView: true)],
                                                moimSchedule: .init(),
-                                               moimRequest: .init())
+                                               moimRequest: .init()
+                                            )
         
         var routes: [Route<MoimScreen.State>]
-        var moimSchedule: MoimViewStore.State
+        var moimSchedule: MainViewStore.State
         var moimRequest: MoimRequestStore.State
     }
     
     public enum Action {
         case router(IndexedRouterActionOf<MoimScreen>)
-        case moimSchedule(MoimViewStore.Action)
+        case moimSchedule(MainViewStore.Action)
         case moimRequest(MoimRequestStore.Action)
     }
     
     public var body: some ReducerOf<Self> {
         Scope(state: \.moimSchedule, action: \.moimSchedule) {
-            MoimViewStore()
+            MainViewStore()
         }
         Scope(state: \.moimRequest, action: \.moimRequest) {
             MoimRequestStore()
@@ -58,9 +50,11 @@ public struct MoimCoordinator {
         
         Reduce<State, Action> { state, action in
             switch action {
+                // 모임 요청
             case .router(.routeAction(_, action: .moimSchedule(.notificationButtonTap))):
                 state.routes.push(.moimRequest(.init()))
                 return .none
+                // 화면 제거
             case .router(.routeAction(_, action: .moimRequest(.backButtonTap))):
                 state.routes.goBack()
                 return .none

@@ -27,7 +27,7 @@ struct SplashCoordinator {
             switch action {
             case .loginCheck:
                 if KeyChainManager.readItem(key: "accessToken") != nil,
-                   KeyChainManager.readItem(key: "refreshToken") != nil {
+                   KeyChainManager.readItem(key: "refreshToken") != nil {                    
                     return .send(.goToMainScreen)
                 } else {
                     return .send(.goToOnboardingScreen)

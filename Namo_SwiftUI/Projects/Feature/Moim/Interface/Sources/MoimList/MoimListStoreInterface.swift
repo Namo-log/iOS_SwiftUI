@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import DomainMoimInterface
 
 @Reducer
 public struct MoimListStore {
@@ -17,14 +18,15 @@ public struct MoimListStore {
         self.reducer = reducer
     }
     
-    public struct State: Equatable {
+    @ObservableState
+    public struct State {
         public init() {}
-        var moimList: [String] = []
+        public var moimList: [MoimScheduleItem] = []
     }
     
     public enum Action {
         case viewOnAppear
-        case moimListResponse([String])
+        case moimListResponse([MoimScheduleItem])
     }
     
     public var body: some ReducerOf<Self> {

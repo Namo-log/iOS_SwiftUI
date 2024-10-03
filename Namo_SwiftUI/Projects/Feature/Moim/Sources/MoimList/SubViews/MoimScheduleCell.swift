@@ -7,37 +7,47 @@
 
 import SwiftUI
 import SharedDesignSystem
+import DomainMoimInterface
+import Kingfisher
 
-struct MoimRequestCell: View {
+struct MoimScheduleCell: View {
+    private let scheduleItem: MoimScheduleItem
+    
+    init(scheduleItem: MoimScheduleItem) {
+        self.scheduleItem = scheduleItem
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 16) {
-                Image(asset: SharedDesignSystemAsset.Assets.mongi1)
+                KFImage(URL(string: scheduleItem.imageUrl))
                     .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: 48, height: 48)
+                    .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("2024.08.07 (수) 12:00")
+                    Text(scheduleItem.startDate)
                         .font(.pretendard(.regular, size: 12))
                         .foregroundStyle(Color.mainText)
                     
                     
-                    Text("나모 3기 회식")
+                    Text(scheduleItem.title)
                         .font(.pretendard(.bold, size: 15))
                         .foregroundStyle(Color.mainText)
                     
                     HStack {
-                        Text("10")
+                        Text("\(scheduleItem.participantCount)")
                             .font(.pretendard(.bold, size: 12))
                             .foregroundStyle(Color.mainText)
                         
-                        Text("코코아, 유즈, 뚜뚜, 고흐, 초코, 다나, 반디, 램프, 연현 let's go")
+                        Text(scheduleItem.participantNicknames)
                             .font(.pretendard(.regular, size: 12))
                             .foregroundStyle(Color.mainText)
                             .lineLimit(1)
                     }
                 }
-                
+                Spacer()
                 Image(asset: SharedDesignSystemAsset.Assets.btnAddRecord)
                 
             }

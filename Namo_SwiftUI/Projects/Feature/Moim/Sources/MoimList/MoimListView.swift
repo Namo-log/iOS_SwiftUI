@@ -9,28 +9,31 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 import FeatureMoimInterface
+import DomainMoimInterface
 
 struct MoimListView: View {
     let store: StoreOf<MoimListStore>
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                LazyVStack(spacing: 20) {
-                    ForEach(1...10, id: \.self) { _ in
-                        MoimRequestCell()
+        WithPerceptionTracking {
+            ZStack {
+                if !store.moimList.isEmpty {
+                    ScrollView {
+                        LazyVStack(spacing: 20) {
+                            ForEach(store.moimList, id: \.self) { moimSchedule in
+                                MoimScheduleCell(scheduleItem: moimSchedule)
+                            }
+                        }
+                        .padding(20)
                     }
+                } else {
+                    EmptyListView(title: "모임 일정이 없습니다.\n 친구와의 모임 약속을 잡아보세요!")
                 }
-                .padding(20)
             }
-        }
-        .overlay(alignment: .bottomTrailing) {
-            FloatingButton {
-                
+            .frame(maxWidth: .infinity)           
+            .onAppear {
+                store.send(.viewOnAppear)
             }
-        }
-        .onAppear {
-            store.send(.viewOnAppear)
         }
     }
 }

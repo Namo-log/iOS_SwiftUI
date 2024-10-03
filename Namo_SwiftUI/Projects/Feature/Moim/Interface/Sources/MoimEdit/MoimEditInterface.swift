@@ -10,7 +10,7 @@ import PhotosUI
 import ComposableArchitecture
 
 @Reducer
-public struct MoimScheduleStore {
+public struct MoimEditStore {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -22,10 +22,15 @@ public struct MoimScheduleStore {
         @BindingState public var coverImageItem: PhotosPickerItem?
         @BindingState public var startDate: Date = .now
         @BindingState public var endDate: Date = .now
-        @BindingState public var showingStartPicker: Bool = false
-        @BindingState public var showingEndPicker: Bool = false
+        @BindingState public var isStartPickerPresented: Bool = false
+        @BindingState public var isEndPickerPresented: Bool = false
         
         public var coverImage: Image?
+        public var longitude = 0.0
+        public var latitude = 0.0
+        public var locationName = ""
+        public var kakaoLocationId = ""
+        public var participants: [String] = []
         
         public init() {}
     }
@@ -35,6 +40,7 @@ public struct MoimScheduleStore {
         case selectedImage(Image)
         case startPickerTapped
         case endPickerTapped
+        case createButtonTapped
     }
     
     public var body: some ReducerOf<Self> {
@@ -43,3 +49,5 @@ public struct MoimScheduleStore {
         reducer
     }
 }
+
+

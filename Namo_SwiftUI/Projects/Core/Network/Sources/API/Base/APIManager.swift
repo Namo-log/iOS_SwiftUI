@@ -46,6 +46,7 @@ public final class APIManager {
             // 토큰 갱신에 성공한 경우
             // 원래 요청을 다시 시도
             response = await makeDataRequest(endPoint: endPoint).serializingData().response
+            
         }
         return response
     }
@@ -137,24 +138,24 @@ public final class APIManager {
 	/// - Parameters:
 	///   - endPoint: 네트워크 요청을 정의하는 Endpoint
 	///   - decoder: 사용할 디코더. 기본값은 `JSONDecoder()`입니다.
-	/// - Returns: 디코딩된 Response
+	/// - Returns: 디코딩된 Responseㅇ
 	public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
 		var result: Data = .init()
 		do {
 			let request = await self.requestData(endPoint: endPoint)
-			
 			result = try request.result.get()
 		} catch {
+            
 			print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
 			ErrorHandler.shared.handleAPIError(.networkError)
 			return nil
 		}
 
 		do {
-
+            
 			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
 			return decodedData
-		} catch {
+		} catch {            
 			print("디코딩 에러" + (String(data: result, encoding: .utf8) ?? ""))
 			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
 			return nil

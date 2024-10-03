@@ -10,11 +10,16 @@ import ComposableArchitecture
 import DomainMoimInterface
 import CoreNetwork
 
+// 모임 유즈케이스 구현체
 extension MoimUseCase: DependencyKey {
     public static let liveValue = MoimUseCase(
         getMoimList: {
-            let response: BaseResponse<[MoimScheduleDTO]>? = await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
-            return response?.result
+            let response: BaseResponse<[MoimScheduleListResponseDTO]>? = await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
+            guard let data = response?.result else { return [] }
+            return data.map { $0.toEntity() }
+        },
+        createMoim: { moim in
+            let response: BaseResponse<Int>? = await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moim.toDto()))
         }
     )
 }

@@ -23,11 +23,10 @@ extension MoimListStore {
                     return await send(.moimListResponse(result))
                 }
             // 모임리스트 요청 결과 스토어 업데이트
-            case let  .moimListResponse(moimList):
-                print("result: \(moimList)")
+            case let  .moimListResponse(moimList):                
+                state.moimList = moimList
                 return .none
-            }
-            
+            }            
         }
         self.init(reducer: reducer)
     }
