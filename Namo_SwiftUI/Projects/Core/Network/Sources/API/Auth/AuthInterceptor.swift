@@ -13,7 +13,7 @@ import NaverThirdPartyLogin
 import SharedUtil
 
 /// API Request의 Authentication을 관리합니다.
-public class AuthManager: RequestInterceptor {
+public class AuthInterceptor: RequestInterceptor {
     
     /// 요청 실패 시 재시도 횟수입니다.
     private var retryLimit = 2

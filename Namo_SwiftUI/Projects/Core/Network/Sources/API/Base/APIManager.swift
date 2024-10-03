@@ -190,7 +190,7 @@ public extension APIManager {
           "\(endPoint.baseURL)\(endPoint.path)",
           method: endPoint.method,
           headers: endPoint.headers,
-          interceptor: AuthManager()
+          interceptor: AuthInterceptor()
 		)
         
       case let .requestJSONEncodable(parameters):
@@ -200,7 +200,7 @@ public extension APIManager {
             parameters: parameters,
             encoder: JSONParameterEncoder.default,
             headers: endPoint.headers,
-            interceptor: AuthManager()
+            interceptor: AuthInterceptor()
           )
         
       case let .requestCustomJSONEncodable(parameters, encoder):
@@ -210,7 +210,7 @@ public extension APIManager {
             parameters: parameters,
             encoder: .json(encoder: encoder),
             headers: endPoint.headers,
-            interceptor: AuthManager()
+            interceptor: AuthInterceptor()
           )
         
       case let .requestParameters(parameters, encoding):
@@ -220,7 +220,7 @@ public extension APIManager {
             parameters: parameters,
             encoding: encoding,
             headers: endPoint.headers,
-            interceptor: AuthManager()
+            interceptor: AuthInterceptor()
           )
           
       case let .uploadImages(images, imageKeyName):
@@ -230,7 +230,7 @@ public extension APIManager {
 					  multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).png", mimeType: "image/png")
 				  }
               }
-		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
 		  
 	  case let .uploadImagesWithBody(images, body, imageKeyName):
 		  return AF.upload(multipartFormData: { multipartFormData in
@@ -245,7 +245,7 @@ public extension APIManager {
 					  multipartFormData.append(data, withName: key)
 				  }
 			  }
-		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
 		  
 	  case let .uploadImagesWithParameter(images, params, imageKeyName):
 		  return AF.upload(multipartFormData: { multipartFormData in
@@ -254,7 +254,7 @@ public extension APIManager {
 					  multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
 				  }
 			  }
-		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)\(queryString(from: params))")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+		  }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)\(queryString(from: params))")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
           
       case let .authRequestJSONEncodable(parameters):
           return AF.request(
