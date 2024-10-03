@@ -11,7 +11,7 @@ import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     
-    @StateObject var loginVM: LoginViewModel = .init()
+//    @StateObject var loginVM: LoginViewModel = .init()
 
     var body: some View {
         
@@ -38,18 +38,18 @@ struct LoginView: View {
             VStack(spacing: 0) {
                 LoginBtn(textContent: "카카오 로그인", textColor: .black, btnBackgroundColor: 0xFFE812, btnImage: "ic_login_kakao") {
                     
-                    loginVM.action(.loginKakao)
+//                    loginVM.action(.loginKakao)
                 }
                 
                 LoginBtn(textContent: "네이버 로그인", textColor: .white, btnBackgroundColor: 0x03C75A, btnImage: "ic_login_naver 1") {
-                    loginVM.action(.loginNaver)
+//                    loginVM.action(.loginNaver)
                 }
                 .padding(.top, 22)
                 
                 
                 LoginBtn(textContent: "Apple 로그인", textColor: .white, btnBackgroundColor: 0x000000, btnImage: "ic_login_apple"){
                     
-                    loginVM.action(.loginApple)
+//                    loginVM.action(.loginApple)
                 }
                 .padding(.top, 22)
             }

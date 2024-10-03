@@ -41,10 +41,10 @@ extension Container {
 //            .singleton
 //    }
     
-    var categoryRepository: Factory<CategoryRepository> {
-        self { CategoryRepositoryImpl() }
-            .singleton
-    }
+//    var categoryRepository: Factory<CategoryRepository> {
+//        self { CategoryRepositoryImpl() }
+//            .singleton
+//    }
     
     var moimRepository: Factory<MoimRepository> {
         self { MoimRepositoryImpl() }
@@ -56,15 +56,15 @@ extension Container {
             .singleton
     }
     
-    var diaryRepository: Factory<DiaryRepository> {
-        self { DiaryRepositoryImpl() }
-            .singleton
-    }
-    
-    var moimDiaryRepository: Factory<MoimDiaryRepository> {
-        self { MoimDiaryRepositoryImpl() }
-            .singleton
-    }
+//    var diaryRepository: Factory<DiaryRepository> {
+//        self { DiaryRepositoryImpl() }
+//            .singleton
+//    }
+//    
+//    var moimDiaryRepository: Factory<MoimDiaryRepository> {
+//        self { MoimDiaryRepositoryImpl() }
+//            .singleton
+//    }
     
     var termRepository: Factory<TermRepository> {
         self { TermRepositoryImpl() }
