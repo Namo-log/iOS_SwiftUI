@@ -22,10 +22,10 @@ public final class APIManager {
     /// - Parameters:
     ///     - `endPoint`: 네트워크 요청을 정의하는 `Endpoint`
     /// - Returns: Alamofire Request 응답 결과인 `DataResponse<Data, AFError>`
-	public func requestData(endPoint: EndPoint) async -> DataResponse<Data, AFError> {
-                 
+    public func requestData(endPoint: EndPoint) async -> DataResponse<Data, AFError> {
+        
         var response = await makeDataRequest(endPoint: endPoint).serializingData().response
-    
+        
         // 403 에러 발생 시 토큰 재발급 시도
         if let statusCode = response.response?.statusCode, statusCode == 403 {
             response = await handleTokenReissuanceAndRetry(endPoint: endPoint, originalResponse: response)
@@ -33,6 +33,51 @@ public final class APIManager {
         
         return response
     }
+    
+    /// 네트워크 요청을 수행하고 결과를 디코딩하여 반환합니다.
+    ///
+    /// - Parameters:
+    ///   - endPoint: 네트워크 요청을 정의하는 Endpoint
+    ///   - decoder: 사용할 디코더. 기본값은 `JSONDecoder()`입니다.
+    /// - Returns: 디코딩된 Response
+    public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
+        var result: Data = .init()
+        do {
+            let request = await self.requestData(endPoint: endPoint)
+            result = try request.result.get()
+        } catch {
+            print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
+            ErrorHandler.shared.handleAPIError(.networkError)
+            return nil
+        }
+        
+        do {
+            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+            return decodedData
+        } catch {
+            print("디코딩 에러" + (String(data: result, encoding: .utf8) ?? ""))
+            ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
+            return nil
+        }
+    }
+    
+    // BaseResponse 없는 메소드
+    public func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+        do {
+            let request = await self.requestData(endPoint: endPoint)
+            let result = try request.result.get()
+            print("inferred DataType to be decoded : \(T.self)")
+            let decodedData = try result.decode(type: T.self, decoder: decoder)
+            return decodedData
+        } catch {
+            print("에러 발생: \(error)")
+            return nil
+        }
+    }
+}
+
+// MARK: API 토큰 처리 관련 extension
+private extension APIManager {
     
     /// 403 응답 코드 처리 및 토큰 재발급 후 원래 요청을 재시도하는 함수
     ///
@@ -42,7 +87,7 @@ public final class APIManager {
     /// - Returns: 토큰 재발급 실패 시 기존 응답을 반환하고, 성공 시 원래 요청을 재시도하여 그 결과를 반환
     /// - Note: 이 함수는 403 Forbidden 응답이 발생했을 때 호출됩니다. 토큰 재발급을 시도하고,
     ///         재발급이 성공하면 해당 요청을 다시 시도하여 최종 응답을 반환합니다.
-    private func handleTokenReissuanceAndRetry(endPoint: EndPoint, originalResponse: DataResponse<Data, AFError>) async -> DataResponse<Data, AFError> {
+    func handleTokenReissuanceAndRetry(endPoint: EndPoint, originalResponse: DataResponse<Data, AFError>) async -> DataResponse<Data, AFError> {
         // 토큰 재발급 처리 시도
         guard await handleTokenReissuance() else {
             print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
@@ -52,7 +97,7 @@ public final class APIManager {
             }
             return originalResponse
         }
-
+        
         // 재발급 성공 후 원래 요청 재시도
         return await makeDataRequest(endPoint: endPoint).serializingData().response
     }
@@ -62,7 +107,7 @@ public final class APIManager {
     /// - Returns: 토큰 재발급 및 저장 성공 시 true, 실패 시 false 반환
     /// - Note: 이 함수는 토큰이 만료되었을 때 재발급을 시도하며, 성공 시 키체인에 새 토큰을 저장합니다.
     ///         재발급이 실패하면 false를 반환하여 로그아웃 처리가 가능합니다.
-    private func handleTokenReissuance() async -> Bool {
+    func handleTokenReissuance() async -> Bool {
         do {
             // 토큰 재발급을 시도합니다
             let tokens = try await reissueTokens()
@@ -82,7 +127,7 @@ public final class APIManager {
     ///   - refreshToken: 새롭게 발급받은 리프레시 토큰
     /// - Throws: 토큰 저장 중 오류가 발생할 경우 에러를 throw
     /// - Note: 새로 발급된 토큰을 각각 키체인에 저장하며, 저장에 실패하면 에러를 throw하여 호출자가 이를 처리할 수 있도록 합니다.
-    private func storeTokens(accessToken: String, refreshToken: String) throws {
+    func storeTokens(accessToken: String, refreshToken: String) throws {
         do {
             // 새로운 토큰 키체인 저장을 시도합니다
             try KeyChainManager.addItem(key: "accessToken", value: accessToken)
@@ -100,7 +145,7 @@ public final class APIManager {
     /// - Returns: 새롭게 발급된 TokenReissuanceResponseDTO 객체를 반환
     /// - Note: 기존에 저장된 액세스 토큰과 리프레시 토큰을 사용하여 토큰 재발급 요청을 보내고,
     ///         성공 시 새로운 토큰을 반환합니다. 403 응답이 발생하거나 다른 에러가 발생할 경우 에러를 throw합니다.
-    private func reissueTokens() async throws -> TokenReissuanceResponseDTO {
+    func reissueTokens() async throws -> TokenReissuanceResponseDTO {
         do {
             // 기존 토큰 가져오기를 시도합니다
             let accessToken = try KeyChainManager.readItem(key: "accessToken")
@@ -126,55 +171,10 @@ public final class APIManager {
             throw APIError.customError("Failed to reissue tokens: \(error)")
         }
     }
-    
-	/// 네트워크 요청을 수행하고 결과를 디코딩하여 반환합니다.
-	///
-	/// - Parameters:
-	///   - endPoint: 네트워크 요청을 정의하는 Endpoint
-	///   - decoder: 사용할 디코더. 기본값은 `JSONDecoder()`입니다.
-	/// - Returns: 디코딩된 Response
-	public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
-		var result: Data = .init()
-		do {
-			let request = await self.requestData(endPoint: endPoint)
-			
-			result = try request.result.get()
-		} catch {
-			print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
-			ErrorHandler.shared.handleAPIError(.networkError)
-			return nil
-		}
-
-		do {
-
-			let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
-			return decodedData
-		} catch {
-			print("디코딩 에러" + (String(data: result, encoding: .utf8) ?? ""))
-			ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
-			return nil
-		}
-		
-
-    }
-    
-    // BaseResponse 없는 메소드
-	public func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
-        do {
-            let request = await self.requestData(endPoint: endPoint)
-            let result = try request.result.get()
-            print("inferred DataType to be decoded : \(T.self)")
-            let decodedData = try result.decode(type: T.self, decoder: decoder)
-            return decodedData
-        } catch {
-            print("에러 발생: \(error)")
-            return nil
-        }
-    }
 }
 
+// MARK: Endpoint task request 데이터 생성 extension
 public extension APIManager {
-    // endpoint의 task에 따라 request 데이터 생성 메서드
     
     /// Endpoint의 task에 따라 request 데이터를 생성하는 메서드입니다.
     ///
@@ -300,6 +300,7 @@ public extension APIManager {
 	}
 }
 
+// MARK: kakaoMap API 요청 extension
 public extension APIManager {
     func KakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil, completion: @escaping (KakaoMapResponseDTO?, Error?) -> Void) {
         
