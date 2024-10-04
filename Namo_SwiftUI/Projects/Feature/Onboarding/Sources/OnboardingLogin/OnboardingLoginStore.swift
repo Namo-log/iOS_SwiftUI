@@ -66,6 +66,7 @@ public struct OnboardingLoginStore {
                 return .run { send in
                     if let result = try await authClient.reqSignInWithKakao(reqData) {
                         print("result as Token type is \(result)")
+                        
                     } else {
                         print("인생은 니뜻대로 되지않는단다")
                     }

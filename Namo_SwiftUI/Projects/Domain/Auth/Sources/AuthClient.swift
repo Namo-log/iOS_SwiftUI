@@ -22,6 +22,7 @@ extension AuthClient: DependencyKey {
         
         // MARK: API
         loginHelper: SNSLoginHelper(),
+        authManager: AuthManager(),
         reqSignInWithApple: { reqDTO -> SignInResponseDTO? in
             let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
             guard let data = res?.result else { return nil }

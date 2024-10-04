@@ -11,28 +11,24 @@ import Core
 import ComposableArchitecture
 import DomainAuthInterface
 
-/// 로그인 및 로그아웃 상태를 관리하는 클래스입니다.
+/// 로그인 및 로그아웃 상태를 관리하는 매니저입니다.
 /// - 의존성:
 ///   - `authClient`를 사용하여 로그아웃 및 로그인 API 요청을 처리합니다.
-public struct AuthManager {
+public struct AuthManager: AuthManagerProtocol {
     
+    // MARK: 추후 문제시 init에서 의존성 주입으로 변경
     @Dependency(\.authClient) var authClient
     
-    /// 현재 소셜 로그인 상태
-    enum OAuthType: String {
-        case kakao
-        case naver
-        case apple
-    }
+    public init() {}
     
     /// 로그인 상태 가져오기
-    func getLoginState() -> OAuthType? {
+    public func getLoginState() -> OAuthType? {
         guard let oAuthTypeString = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
         return OAuthType(rawValue: oAuthTypeString)
     }
     
     /// 카카오/네이버/애플 로그인 상태 저장
-    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
+    public func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. socialLogin 상태 저장
@@ -48,7 +44,7 @@ public struct AuthManager {
     }
     
     /// 카카오/네이버/애플 로그아웃 상태 저장
-    func setLogoutState(with oAuthType: OAuthType) async {
+    public func setLogoutState(with oAuthType: OAuthType) async {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. get refreshToken
