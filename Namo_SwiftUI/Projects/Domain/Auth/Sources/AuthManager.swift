@@ -10,6 +10,7 @@ import SharedUtil
 
 public struct AuthManager {
     
+    /// 현재 소셜 로그인 상태
     enum OAuthType: String {
         case kakao
         case naver
@@ -37,9 +38,7 @@ public struct AuthManager {
 //            try await postNamoLogout(refreshToken: refreshToken)
 //            // 로그인 상태 가져오기
 //            if let loginState = getLoginState() {
-//                switch loginState {
-//                    
-//                }
+//                try logout(with: loginState)
 //            }
 //        } catch {
 //            // 에러 처리
@@ -48,8 +47,6 @@ public struct AuthManager {
 //        
 //        // "socialLogin" nil 처리
 //        UserDefaults.standard.removeObject(forKey: "socialLogin")
-//        
-//        
 //    }
 //    
 //    /// 나모 로그아웃 API 호출
@@ -63,15 +60,15 @@ public struct AuthManager {
 //    }
 //    
 //    /// OAuthType별 로그아웃 처리
-//    private func logout(with oAuthType: OAuthType) {
+//    private func logout(with oAuthType: OAuthType) async throws {
 //        switch oAuthType {
 //            
 //        case .kakao:
-//            <#code#>
+//            try await authClient.kakaoLogout()
 //        case .naver:
-//            <#code#>
-//        case .apple:
-//            <#code#>
+//            await authClient.naverLogout()
+//        default:
+//            return
 //        }
 //    }
     
