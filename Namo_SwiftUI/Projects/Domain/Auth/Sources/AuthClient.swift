@@ -44,6 +44,27 @@ extension AuthClient: DependencyKey {
             if result?.code != 200 {
                 throw APIError.customError("로그아웃 실패: 응답 코드 \(result?.code ?? 0)")
             }
+        },
+        reqWithdrawalApple: { reqDTO in
+            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            
+            if result?.code != 200 {
+                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
+            }
+        },
+        reqWithdrawalNaver: { reqDTO in
+            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            
+            if result?.code != 200 {
+                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
+            }
+        },
+        reqWithdrawalKakao: { reqDTO in
+            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            
+            if result?.code != 200 {
+                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
+            }
         }
     )
 }

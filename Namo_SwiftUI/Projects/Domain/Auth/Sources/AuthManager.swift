@@ -54,7 +54,15 @@ public struct AuthManager: AuthManagerProtocol {
             try await authClient.reqSignOut(LogoutRequestDTO(refreshToken: refreshToken))
             
             // 3. 소셜 로그인 타입별 로그아웃 진행
-            try await logout(with: oAuthType)
+            switch oAuthType {
+                
+            case .kakao:
+                await authClient.kakaoLogout()
+            case .naver:
+                await authClient.naverLogout()
+            case .apple:
+                return
+            }
             
             // 4. "socialLogin" 세팅 nil 처리
             UserDefaults.standard.removeObject(forKey: "socialLogin")
@@ -69,33 +77,40 @@ public struct AuthManager: AuthManagerProtocol {
         }
     }
     
-    /// OAuthType별 로그아웃 처리
-    private func logout(with oAuthType: OAuthType) async throws {
-        switch oAuthType {
-            
-        case .kakao:
-            try await authClient.kakaoLogout()
-        case .naver:
-            await authClient.naverLogout()
-        case .apple:
-            return
+    /// OAuthType별 회원탈퇴 처리
+    public func withdraw(with oAuthType: OAuthType) async {
+        do {
+            let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
+            switch oAuthType {
+                
+            case .kakao:
+                try await authClient.reqWithdrawalKakao(LogoutRequestDTO(refreshToken: refreshToken))
+            case .naver:
+                try await authClient.reqWithdrawalNaver(LogoutRequestDTO(refreshToken: refreshToken))
+            case .apple:
+                try await authClient.reqWithdrawalApple(LogoutRequestDTO(refreshToken: refreshToken))
+            }
+            print("회원 탈퇴 완료")
+        } catch {
+            // 에러 처리
+            print("임시 처리: \(error.localizedDescription)")
         }
     }
-    
-    // + UI 화면 변경 어디까지 쓸 진 모름
-    // 로그인 했을 때
+}
+
+// + UI 화면 변경 어디까지 쓸 진 모름
+// 로그인 했을 때
 //    DispatchQueue.main.async {
 //        UserDefaults.standard.set(true, forKey: "isLogin")
 //        UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
 //        AppState.shared.isTabbarOpaque = false
 //        AppState.shared.isTabbarHidden = false
 //    }
-    
-    // 로그아웃 시
+
+// 로그아웃 시
 //    DispatchQueue.main.async {
 //        // 로그인 화면으로 이동
 //        UserDefaults.standard.set(false, forKey: "isLogin")
 //        AppState.shared.isTabbarHidden = true
 //        AppState.shared.currentTab = .home
 //    }
-}
