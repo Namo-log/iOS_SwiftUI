@@ -14,7 +14,7 @@ import Core
 /// Input from, Output to -> TCA Store
 public struct AuthClient {
     /// 소셜 로그인 진행을 위한 헬퍼 클래스입니다
-    public let loginHelper: SNSLoginHelperProtocol
+    private let loginHelper: SNSLoginHelperProtocol
     
     /// 애플 로그인을 진행합니다. - Apple 로그인 토큰 인증을 위한 정보를 받습니다.
     public func appleLogin() async -> AppleLoginInfo? {
