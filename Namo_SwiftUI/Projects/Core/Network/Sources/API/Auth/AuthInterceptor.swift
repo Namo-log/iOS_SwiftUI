@@ -40,12 +40,12 @@ public class AuthInterceptor: RequestInterceptor {
             // URLRequest 반환
             completion(.success(urlRequest))
         } catch {
-            // 토큰 조회 실패 시 처리 로직
-            DispatchQueue.main.async {
-                // TODO: 어떤 이유 때문에 작성되었는지 확인 필요
-                UserDefaults.standard.set(false, forKey: "isLogin")
-                NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
-            }
+//            // 토큰 조회 실패 시 처리 로직
+//            DispatchQueue.main.async {
+//                // TODO: 어떤 이유 때문에 작성되었는지 확인 필요
+//                UserDefaults.standard.set(false, forKey: "isLogin")
+//                NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
+//            }
             
             // 실패 결과 반환
             completion(.failure(APIError.customError("[AuthManager] 키체인 토큰 조회 실패. 로그인이 필요합니다. (adapt)")))

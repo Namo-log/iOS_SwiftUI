@@ -98,17 +98,17 @@ public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {
     }
     
     // 카카오 로그아웃
-    public func kakaoLogout() async throws {
+    public func kakaoLogout() async {
         if AuthApi.hasToken() {
-            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            await withCheckedContinuation { continuation in
                 UserApi.shared.logout() { error in
                     if let error {
-                        // 카카오 로그아웃 실패시 error throw
-                        continuation.resume(throwing: error)
+                        print("Kakao Logout Failed: \(error.localizedDescription)")
+                        continuation.resume()
                     }
                     else {
                         print("Kakao Logout Success")
-                        continuation.resume(returning: ())
+                        continuation.resume()
                     }
                 }
             }

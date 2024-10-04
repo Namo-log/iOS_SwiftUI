@@ -36,8 +36,8 @@ public struct AuthClient {
     }
     
     /// 카카오 로그아웃을 진행합니다. - 실패 시 error를 throw 합니다.
-    public func kakaoLogout() async throws {
-        return try await loginHelper.kakaoLogout()
+    public func kakaoLogout() async {
+        return await loginHelper.kakaoLogout()
     }
     
     /// 네이버 로그아웃을 진행합니다.
