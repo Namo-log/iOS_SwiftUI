@@ -9,8 +9,9 @@ import Foundation
 import SharedUtil
 import Core
 import ComposableArchitecture
+import DomainAuthInterface
 
-/// 소셜 로그인 및 로그아웃 상태를 관리하는 클래스입니다.
+/// 로그인 및 로그아웃 상태를 관리하는 클래스입니다.
 /// - 의존성:
 ///   - `authClient`를 사용하여 로그아웃 및 로그인 API 요청을 처리합니다.
 public struct AuthManager {
@@ -31,9 +32,19 @@ public struct AuthManager {
     }
     
     /// 카카오/네이버/애플 로그인 상태 저장
-    func setLoginState(_ oAuthType: OAuthType) {
+    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
-        UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
+        do {
+            // 1. socialLogin 상태 저장
+            UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
+            
+            // 2. tokens 키체인 저장
+            try KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
+            try KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
+        } catch {
+            // 에러 처리
+            print("임시 처리: \(error.localizedDescription)")
+        }
     }
     
     /// 카카오/네이버/애플 로그아웃 상태 저장
@@ -51,6 +62,11 @@ public struct AuthManager {
             
             // 4. "socialLogin" 세팅 nil 처리
             UserDefaults.standard.removeObject(forKey: "socialLogin")
+            
+            // 5. tokens 키체인 삭제
+            try KeyChainManager.deleteItem(key: "accessToken")
+            try KeyChainManager.deleteItem(key: "refreshToken")
+            
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
