@@ -10,6 +10,9 @@ import SharedUtil
 import Core
 import ComposableArchitecture
 
+/// 소셜 로그인 및 로그아웃 상태를 관리하는 클래스입니다.
+/// - 의존성:
+///   - `authClient`를 사용하여 로그아웃 및 로그인 API 요청을 처리합니다.
 public struct AuthManager {
     
     @Dependency(\.authClient) var authClient
@@ -29,11 +32,13 @@ public struct AuthManager {
     
     /// 카카오/네이버/애플 로그인 상태 저장
     func setLoginState(_ oAuthType: OAuthType) {
+        // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
     }
     
     /// 카카오/네이버/애플 로그아웃 상태 저장
     func setLogoutState(with oAuthType: OAuthType) async {
+        // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. get refreshToken
             let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")

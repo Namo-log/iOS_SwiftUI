@@ -15,7 +15,10 @@ import Core
 import SharedUtil
 import DomainAuthInterface
 
-/// 소셜 로그인 진행을 위한 헬퍼 클래스입니다
+/// SNSLoginHelper는 카카오, 네이버, 애플과 같은 소셜 로그인 및 로그아웃을 위한 헬퍼 클래스입니다.
+/// 소셜 로그인 관련 SDK, API 호출은 모두 이곳에서 관리됩니다.
+/// - 의존성:
+///   - 카카오, 네이버, 애플 로그인 SDK와 직접 통신하여 API 요청을 처리합니다.
 public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {
     
     override public init() {

@@ -12,6 +12,11 @@ import Core
 import DomainAuthInterface
 import SharedUtil
 
+/// API를 통해 소셜 로그인과 로그아웃, 나모 인증 작업을 수행하는 역할을 담당합니다.
+/// Auth 관련 Namo API는 모두 이곳에서 호출됩니다.
+/// - 의존성:
+///   - `SNSLoginHelperProtocol`을 사용하여 소셜 로그인/로그아웃 API 로직을 처리합니다.
+///   - 서버와의 통신을 담당하는 `APIManager`를 통해 실제 로그아웃 API 요청을 수행합니다.
 extension AuthClient: DependencyKey {
     public static let liveValue = AuthClient(
         
