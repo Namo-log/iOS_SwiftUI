@@ -10,4 +10,5 @@ public protocol SNSLoginHelperProtocol {
     func appleLogin() async -> AppleLoginInfo?
     func naverLogin() async -> NaverLoginInfo?
     func kakaoLogin() async -> KakaoLoginInfo?
+    func kakaoLogout() async throws
 }

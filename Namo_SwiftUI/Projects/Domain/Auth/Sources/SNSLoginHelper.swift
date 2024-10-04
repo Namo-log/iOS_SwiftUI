@@ -93,6 +93,24 @@ public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {
             : await self.loginWithKakaoWeb()
         }
     }
+    
+    // 카카오 로그아웃
+    public func kakaoLogout() async throws {
+        if AuthApi.hasToken() {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                UserApi.shared.logout() { error in
+                    if let error {
+                        // 카카오 로그아웃 실패시 error throw
+                        continuation.resume(throwing: error)
+                    }
+                    else {
+                        print("Kakao Logout Success")
+                        continuation.resume(returning: ())
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: 애플 로그인 Extension 구현
