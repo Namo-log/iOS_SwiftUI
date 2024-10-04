@@ -65,8 +65,8 @@ public struct OnboardingLoginStore {
                 print("namo kakao")
                 return .run { send in
                     if let result = try await authClient.reqSignInWithKakao(reqData) {
-                        print("result as Token type is \(result)")
-                        
+                        let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        authClient.setLoginState(.kakao, with: tokens)
                     } else {
                         print("인생은 니뜻대로 되지않는단다")
                     }
@@ -76,7 +76,8 @@ public struct OnboardingLoginStore {
                 print("namo naver")
                 return .run { send in
                     if let result = try await authClient.reqSignInWithNaver(reqData) {
-                        print("result as Token type is \(result)")
+                        let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        authClient.setLoginState(.naver, with: tokens)
                     } else {
                         print("인생은 니뜻대로 되지않는단다")
                     }
@@ -85,8 +86,12 @@ public struct OnboardingLoginStore {
             case .namoAppleLoginResponse(let reqData):
                 print("namo apple")
                 return .run { send in
-                    let result = try await authClient.reqSignInWithApple(reqData)
-                    print("result as Token type is \(result)")
+                    if let result = try await authClient.reqSignInWithApple(reqData) {
+                        let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        authClient.setLoginState(.apple, with: tokens)
+                    } else {
+                        print("인생은 니뜻대로 되지않는단다")
+                    }
                 }
             }
         }
