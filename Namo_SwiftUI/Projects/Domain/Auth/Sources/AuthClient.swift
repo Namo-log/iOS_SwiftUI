@@ -39,28 +39,28 @@ extension AuthClient: DependencyKey {
             return data
         },
         reqSignOut: { reqDTO -> Void in
-            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: reqDTO))
+            let result: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: reqDTO))
             // 나모 로그아웃 요청이 실패한 경우 에러 throw
             if result?.code != 200 {
                 throw APIError.customError("로그아웃 실패: 응답 코드 \(result?.code ?? 0)")
             }
         },
         reqWithdrawalApple: { reqDTO in
-            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            let result: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
             
             if result?.code != 200 {
                 throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
             }
         },
         reqWithdrawalNaver: { reqDTO in
-            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            let result: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
             
             if result?.code != 200 {
                 throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
             }
         },
         reqWithdrawalKakao: { reqDTO in
-            let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            let result: BaseResponse<String>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
             
             if result?.code != 200 {
                 throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")

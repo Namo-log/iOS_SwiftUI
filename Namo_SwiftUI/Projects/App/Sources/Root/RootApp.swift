@@ -8,15 +8,20 @@
 import SwiftUI
 import TCACoordinators
 import ComposableArchitecture
+import FeatureOnboarding
 
 @main
 struct RootApp: App {
     
     var body: some Scene {
         WindowGroup {
-            AppCoordinatorView(store: Store(initialState: .initialState, reducer: {
-                AppCoordinator()
-            }))
+//            AppCoordinatorView(store: Store(initialState: .initialState, reducer: {
+//                AppCoordinator()
+//            }))
+            OnboardingLoginView(store: Store(initialState: OnboardingLoginStore.State()) {
+                OnboardingLoginStore()
+                    ._printChanges()
+            })
         }
     }
 }
