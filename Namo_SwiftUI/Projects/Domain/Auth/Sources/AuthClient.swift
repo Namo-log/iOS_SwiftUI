@@ -22,20 +22,20 @@ extension AuthClient: DependencyKey {
         
         // MARK: API
         loginHelper: SNSLoginHelper(),
-        reqSignInWithApple: { reqDTO -> Tokens? in
+        reqSignInWithApple: { reqDTO -> SignInResponseDTO? in
             let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
             guard let data = res?.result else { return nil }
-            return (data.accessToken, data.refreshToken)
+            return data
         },
-        reqSignInWithNaver: { reqDTO -> Tokens? in
+        reqSignInWithNaver: { reqDTO -> SignInResponseDTO? in
             let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInNaver(naverToken: reqDTO))
             guard let data = res?.result else { return nil }
-            return (data.accessToken, data.refreshToken)
+            return data
         },
-        reqSignInWithKakao: { reqDTO -> Tokens? in
+        reqSignInWithKakao: { reqDTO -> SignInResponseDTO? in
             let res: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInKakao(kakaoToken: reqDTO))
             guard let data = res?.result else { return nil }
-            return (data.accessToken, data.refreshToken)
+            return data
         },
         reqSignOut: { reqDTO -> Void in
             let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: reqDTO))

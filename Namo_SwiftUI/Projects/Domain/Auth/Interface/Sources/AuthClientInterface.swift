@@ -43,19 +43,19 @@ public struct AuthClient {
     
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
-    public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> Tokens?
+    public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> SignInResponseDTO?
     /// 나모 API : 네이버 소셜 로그인을 통한 회원가입
-    public var reqSignInWithNaver: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
+    public var reqSignInWithNaver: @Sendable (SocialSignInRequestDTO) async throws -> SignInResponseDTO?
     /// 나모 API : 카카오 소셜 로그인을 통한 회원가입
-    public var reqSignInWithKakao: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
+    public var reqSignInWithKakao: @Sendable (SocialSignInRequestDTO) async throws -> SignInResponseDTO?
     /// 나모 API : 로그아웃
     public var reqSignOut: @Sendable (LogoutRequestDTO) async throws -> Void
     
     public init(
         loginHelper: SNSLoginHelperProtocol,
-        reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> Tokens?,
-        reqSignInWithNaver: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?,
-        reqSignInWithKakao: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?,
+        reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> SignInResponseDTO?,
+        reqSignInWithNaver: @Sendable @escaping (SocialSignInRequestDTO) async throws -> SignInResponseDTO?,
+        reqSignInWithKakao: @Sendable @escaping (SocialSignInRequestDTO) async throws -> SignInResponseDTO?,
         reqSignOut: @Sendable @escaping (LogoutRequestDTO) async throws -> Void
     ) {
         self.loginHelper = loginHelper
