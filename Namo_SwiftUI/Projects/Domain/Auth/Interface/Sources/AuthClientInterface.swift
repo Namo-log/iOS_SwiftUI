@@ -48,18 +48,21 @@ public struct AuthClient {
     public var reqSignInWithNaver: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
     /// 나모 API : 카카오 소셜 로그인을 통한 회원가입
     public var reqSignInWithKakao: @Sendable (SocialSignInRequestDTO) async throws -> Tokens?
-    // saveToken
-    // loadToken
+    /// 나모 API : 로그아웃
+    public var reqSignOut: @Sendable (LogoutRequestDTO) async throws -> Void
+    
     public init(
         loginHelper: SNSLoginHelperProtocol,
         reqSignInWithApple: @Sendable @escaping (AppleSignInRequestDTO) async throws -> Tokens?,
         reqSignInWithNaver: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?,
-        reqSignInWithKakao: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?
+        reqSignInWithKakao: @Sendable @escaping (SocialSignInRequestDTO) async throws -> Tokens?,
+        reqSignOut: @Sendable @escaping (LogoutRequestDTO) async throws -> Void
     ) {
         self.loginHelper = loginHelper
         self.reqSignInWithApple = reqSignInWithApple
         self.reqSignInWithNaver = reqSignInWithNaver
         self.reqSignInWithKakao = reqSignInWithKakao
+        self.reqSignOut = reqSignOut
     }
 }
 
@@ -67,13 +70,16 @@ extension AuthClient: TestDependencyKey {
     public static var previewValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
-        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver"), reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao")
+        reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver"),
+        reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao"),
+        reqSignOut: unimplemented("\(Self.self).reqSignOut")
     )
     
     public static let testValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
         reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver"),
-        reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao")
+        reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao"),
+        reqSignOut: unimplemented("\(Self.self).reqSignOut")
     )
 }

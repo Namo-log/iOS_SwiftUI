@@ -7,8 +7,12 @@
 
 import Foundation
 import SharedUtil
+import Core
+import ComposableArchitecture
 
 public struct AuthManager {
+    
+    @Dependency(\.authClient) var authClient
     
     /// 현재 소셜 로그인 상태
     enum OAuthType: String {
@@ -28,66 +32,38 @@ public struct AuthManager {
         UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
     }
     
-//    /// 카카오/네이버/애플 로그아웃 상태 저장
-//    func setLogoutState(with oAuthType: OAuthType) async {
-//        
-//        do {
-//            // refreshToken 가져오기
-//            let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
-//            // 나모 로그아웃 API 호출
-//            try await postNamoLogout(refreshToken: refreshToken)
-//            // 로그인 상태 가져오기
-//            if let loginState = getLoginState() {
-//                try logout(with: loginState)
-//            }
-//        } catch {
-//            // 에러 처리
-//        }
-//        
-//        
-//        // "socialLogin" nil 처리
-//        UserDefaults.standard.removeObject(forKey: "socialLogin")
-//    }
-//    
-//    /// 나모 로그아웃 API 호출
-//    private func postNamoLogout(refreshToken: String) async throws {
-//        let result: BaseResponse<SignInResponseDTO>? = await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: LogoutRequestDTO(refreshToken: refreshToken)))
-//        
-//        // 나모 로그아웃 요청이 실패한 경우 에러 throw
-//        if result?.code != 200 {
-//            throw APIError.customError("로그아웃 실패: 응답 코드 \(result?.code ?? 0)")
-//        }
-//    }
-//    
-//    /// OAuthType별 로그아웃 처리
-//    private func logout(with oAuthType: OAuthType) async throws {
-//        switch oAuthType {
-//            
-//        case .kakao:
-//            try await authClient.kakaoLogout()
-//        case .naver:
-//            await authClient.naverLogout()
-//        default:
-//            return
-//        }
-//    }
+    /// 카카오/네이버/애플 로그아웃 상태 저장
+    func setLogoutState(with oAuthType: OAuthType) async {
+        do {
+            // 1. get refreshToken
+            let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
+            
+            // 2. 나모 로그아웃 API 호출
+            try await authClient.reqSignOut(LogoutRequestDTO(refreshToken: refreshToken))
+            
+            // 3. 소셜 로그인 타입별 로그아웃 진행
+            try await logout(with: oAuthType)
+            
+            // 4. "socialLogin" 세팅 nil 처리
+            UserDefaults.standard.removeObject(forKey: "socialLogin")
+        } catch {
+            // 에러 처리
+            print("임시 처리: \(error.localizedDescription)")
+        }
+    }
     
-    // 카카오/네이버/애플 로그아웃 상태 저장
-//    let refreshToken: String = KeyChainManager.readItem(key: "refreshToken")!
-    // socialLogin 지워야함
-    // 플랫폼 별로 로그아웃 방법이 다르다
-    
-    // 카카오/네이버/애플 회원탈퇴 상태 저장
-    
-    
-    
-    // 카카오/네이버/애플 토큰 키체인에 저장
-    // 필요한지는 모르겠음
-//    KeyChainManager.addItem(key: "kakaoAccessToken", value: kakaoAccessToken)
-//    KeyChainManager.addItem(key: "kakaoRefreshToken", value: kakaoRefreshToken)
-    
-    
-    
+    /// OAuthType별 로그아웃 처리
+    private func logout(with oAuthType: OAuthType) async throws {
+        switch oAuthType {
+            
+        case .kakao:
+            try await authClient.kakaoLogout()
+        case .naver:
+            await authClient.naverLogout()
+        case .apple:
+            return
+        }
+    }
     
     // + UI 화면 변경 어디까지 쓸 진 모름
     // 로그인 했을 때
