@@ -36,6 +36,11 @@ public struct AuthClient {
         return try await loginHelper.kakaoLogout()
     }
     
+    /// 네이버 로그아웃을 진행합니다.
+    public func naverLogout() async {
+        return await loginHelper.naverLogout()
+    }
+    
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
     public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> Tokens?

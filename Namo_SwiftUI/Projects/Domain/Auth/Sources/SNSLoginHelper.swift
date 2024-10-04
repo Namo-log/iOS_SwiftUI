@@ -111,6 +111,12 @@ public final class SNSLoginHelper: NSObject, SNSLoginHelperProtocol {
             }
         }
     }
+    
+    // 네이버 로그아웃
+    public func naverLogout() async {
+        await NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
+        print("Naver Logout Success")
+    }
 }
 
 // MARK: 애플 로그인 Extension 구현
