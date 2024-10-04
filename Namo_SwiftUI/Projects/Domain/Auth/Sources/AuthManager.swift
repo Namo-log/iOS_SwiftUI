@@ -37,6 +37,7 @@ public struct AuthManager: AuthManagerProtocol {
             // 2. tokens 키체인 저장
             try KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
             try KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
+            print("!---로그인 처리 완료---!")
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
@@ -71,6 +72,7 @@ public struct AuthManager: AuthManagerProtocol {
             try KeyChainManager.deleteItem(key: "accessToken")
             try KeyChainManager.deleteItem(key: "refreshToken")
             
+            print("!---로그아웃 완료---!")
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
@@ -90,7 +92,7 @@ public struct AuthManager: AuthManagerProtocol {
             case .apple:
                 try await authClient.reqWithdrawalApple(LogoutRequestDTO(refreshToken: refreshToken))
             }
-            print("회원 탈퇴 완료")
+            print("!---회원 탈퇴 완료---!")
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
