@@ -27,7 +27,7 @@ struct SplashCoordinator {
     var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .loginCheck:
+            case .loginCheck:                
                 if authClient.getLoginState() != nil {
                     return .send(.goToMainScreen)
                 } else {

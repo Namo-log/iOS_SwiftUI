@@ -11,7 +11,7 @@ import Foundation
 public struct MoimScheduleListResponseDTO: Decodable {
     public init(meetingScheduleId: Int,
                 title: String,
-                startDate: Int,
+                startDate: String,
                 imageUrl: String,
                 participantCount: Int,
                 participantNicknames: String) {
@@ -24,7 +24,7 @@ public struct MoimScheduleListResponseDTO: Decodable {
     }
     public let meetingScheduleId: Int
     public let title: String
-    public let startDate: Int
+    public let startDate: String
     public let imageUrl: String
     public let participantCount: Int
     public let participantNicknames: String

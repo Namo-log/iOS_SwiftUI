@@ -7,12 +7,13 @@
 
 import Foundation
 import CoreNetwork
+import SharedUtil
 
 public extension MoimScheduleListResponseDTO {
     func toEntity() -> MoimScheduleItem {
         return .init(meetingScheduleId: meetingScheduleId,
                      title: title,
-                     startDate: Date(timeIntervalSince1970: TimeInterval(startDate)).toYMDEHM(),
+                     startDate: Date.ISO8601toDate(startDate).toYMDEHM(),
                      imageUrl: imageUrl,
                      participantCount: participantCount,
                      participantNicknames: participantNicknames)
