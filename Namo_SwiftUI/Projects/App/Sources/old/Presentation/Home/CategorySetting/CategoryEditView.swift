@@ -179,7 +179,7 @@ struct CategoryEditView: View {
                             // 카테고리 수정 API 호출
                             Task {
                                 
-                                let result = await categoryUseCase.editCategory(id: self.categoryList.first!.categoryId, data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+								let result = await categoryUseCase.editCategory(id: self.categoryList.first!.categoryId, data: postCategoryRequest(categoryName: categoryTitle, colorId: selectedPaletteId, isShared: isShare))
                                 
                                 // 수정이 성공했을 경우에만
                                 if result {

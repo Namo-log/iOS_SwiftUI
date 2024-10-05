@@ -186,7 +186,7 @@ struct CategoryAddView: View {
                             Task {
                                 
                                 // 카테고리 생성 API 호출
-                                let result = await categoryUseCase.addCategory(data: postCategoryRequest(name: categoryTitle, paletteId: selectedPaletteId, isShare: isShare))
+								let result = await categoryUseCase.addCategory(data: postCategoryRequest(categoryName: categoryTitle, colorId: selectedPaletteId, isShared: isShare))
                                 
                                 // 생성이 성공했을 경우에만
                                 if result {

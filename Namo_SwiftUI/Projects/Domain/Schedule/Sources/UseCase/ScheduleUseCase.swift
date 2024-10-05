@@ -151,6 +151,35 @@ public struct ScheduleUseCase {
 		}
 	}
 	
+	// Schedule 객체에서 일정 생성/편집에서 사용하는 ScheduleEdit 객체로 변환
+	public func scheduleToScheduleEdit(
+		schedule: Schedule? = nil,
+		selectDate: YearMonthDay
+	) -> ScheduleEdit {
+		if let schedule = schedule {
+			return ScheduleEdit(
+				title: schedule.title,
+				categoryId: schedule.categoryInfo.categoryId,
+				period: SchedulePeriod(
+					startDate: schedule.startDate,
+					endDate: schedule.endDate
+				),
+				location: schedule.locationInfo,
+				reminderTrigger: schedule.notificationInfo.map {$0.trigger}
+			)
+		} else {
+			return ScheduleEdit(
+				period: SchedulePeriod(
+					startDate: selectDate.toDateWithTime(hour: 8),
+					endDate: selectDate.toDateWithTime(hour: 9)
+				)
+			)
+		}
+	}
+	
+	
+	
+	
 }
 
 extension ScheduleUseCase: DependencyKey {

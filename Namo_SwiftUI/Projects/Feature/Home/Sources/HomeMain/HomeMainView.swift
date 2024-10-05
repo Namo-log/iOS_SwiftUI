@@ -36,6 +36,9 @@ public struct HomeMainView: View {
 				schedules: $store.schedules,
 				dateTapAction: { date in
 					store.send(.selectDate(date), animation: .default)
+				},
+				scheduleAddTapAction: { date in
+					store.send(.editSchedule(isNewSchedule: true, selectDate: date))
 				}
 			)
 

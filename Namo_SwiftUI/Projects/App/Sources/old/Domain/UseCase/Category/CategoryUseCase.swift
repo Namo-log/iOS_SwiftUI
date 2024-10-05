@@ -20,12 +20,12 @@ final class CategoryUseCase {
 	func getCategories() async {
 		let categories = await categoryRepository.getAllCategory()
 		
-		DispatchQueue.main.async {
-			AppState.shared.categoryState.categoryList = categories?.map { return $0.toCategory() } ?? [] // 받아온 Categories categoryState의 categoryList에 저장
-			categories?.forEach {
-				AppState.shared.categoryPalette[$0.categoryId] = $0.paletteId
-			}
-		}
+//		DispatchQueue.main.async {
+//			AppState.shared.categoryState.categoryList = categories?.map { return $0.toCategory() } ?? [] // 받아온 Categories categoryState의 categoryList에 저장
+//			categories?.forEach {
+//				AppState.shared.categoryPalette[$0.categoryId] = $0.paletteId
+//			}
+//		}
 	}
     
     /// AppState의 카테고리 리스트를 뷰에서 쓰일 형태로 변환
@@ -41,30 +41,32 @@ final class CategoryUseCase {
     // 카테고리 생성
     func addCategory(data: postCategoryRequest) async -> Bool {
         
-        if let result = await categoryRepository.postCategory(data: data)?.id {
-            
-            return true
-            
-        } else {
-            
-            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "네트워크 오류", message: "일시적인 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카테고리 생성 실패"))
-            
-            return false
-        }
+//        if let result = await categoryRepository.postCategory(data: data)?.id {
+//            
+//            return true
+//            
+//        } else {
+//            
+//            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "네트워크 오류", message: "일시적인 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카테고리 생성 실패"))
+//            
+//            return false
+//        }
+		return false
     }
     
     // 카테고리 수정
     func editCategory(id: Int, data: postCategoryRequest) async -> Bool {
         
-        if let result = await categoryRepository.patchCategory(id: id, data: data)?.id {
-            
-            return true
-        } else {
-            
-            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "네트워크 오류", message: "일시적인 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카테고리 수정 실패"))
-            
-            return false
-        }
+//        if let result = await categoryRepository.patchCategory(id: id, data: data)?.id {
+//            
+//            return true
+//        } else {
+//            
+//            ErrorHandler.shared.handle(type: .showAlert, error: .customError(title: "네트워크 오류", message: "일시적인 오류가 발생했습니다. \n잠시 후 다시 시도해주세요.", localizedDescription: "카테고리 수정 실패"))
+//            
+//            return false
+//        }
+		return false
     }
     
     // 카테고리 삭제
