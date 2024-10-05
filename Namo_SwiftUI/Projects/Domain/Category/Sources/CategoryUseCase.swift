@@ -15,9 +15,15 @@ import CoreNetwork
 @DependencyClient
 public struct CategoryUseCase {
 	public func getAllCategory() async -> [NamoCategory] {
-		let response: BaseResponse<[CategoryDTO]>? = await APIManager.shared.performRequest(endPoint: CategoryEndPoint.getAllCategory)
-		
-		return response?.result?.map({$0.toEntity()}) ?? []
+		do {
+			let response: BaseResponse<[CategoryDTO]> = try await APIManager.shared.performRequest(endPoint: CategoryEndPoint.getAllCategory)
+			
+			return response.result?.map({$0.toEntity()}) ?? []
+		} catch (let e) {
+			print(e.localizedDescription)
+			// TODO: error handling
+			return []
+		}
 	}
 }
 
