@@ -8,14 +8,15 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
+import SharedUtil
 
 struct SplashCoordinatorView: View {
     let store: StoreOf<SplashCoordinator>
     
     var body: some View {
-        Text("Splash")
+        Text("Splash 임시")
             .onAppear {
-                store.send(.loginCheck(isSuccess: true))
+                store.send(.loginCheck)
             }
     }
 }

@@ -47,7 +47,7 @@ public final class APIManager {
             result = try request.result.get()
         } catch {
             print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
-            throw APIError.networkError(error.errorDescription)
+            throw APIError.networkError(error.localizedDescription)
         }
         
         do {

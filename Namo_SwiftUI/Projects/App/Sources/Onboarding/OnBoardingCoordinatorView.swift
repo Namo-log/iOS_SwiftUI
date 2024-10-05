@@ -8,11 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
+import FeatureOnboarding
 
 struct OnBoardingCoordinatorView: View {
     let store: StoreOf<OnBoardingCoordinator>
     
     var body: some View {
-        Text("Onboarding")
+        OnboardingLoginView(store: store.scope(state: \.onBoarding, action: \.onboarding))
     }
 }
