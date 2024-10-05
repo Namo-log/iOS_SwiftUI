@@ -10,7 +10,7 @@ import SwiftUI
 
 class SettingViewModel: ObservableObject {
     
-    private let authUseCase = AuthUseCase.shared
+//    private let authUseCase = AuthUseCase.shared
     
     struct State {
         
@@ -74,11 +74,11 @@ class SettingViewModel: ObservableObject {
 
     func logout() async {
         
-        await authUseCase.logout()
+//        await authUseCase.logout()
     }
     
     func withdrawMember() async {
         
-        await authUseCase.withdrawMember()
+//        await authUseCase.withdrawMember()
     }
  }
