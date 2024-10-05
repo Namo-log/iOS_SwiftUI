@@ -21,7 +21,7 @@ public struct ScheduleUseCase {
 		let startDateString = String(format: "%04d-%02d-%02d", startDate.year, startDate.month, startDate.day)
 		let endDateString = String(format: "%04d-%02d-%02d", endDate.year, endDate.month, endDate.day)
 		
-		let response: BaseResponse<GetMonthlyScheduleResponseDTO>? = await APIManager.shared.performRequest(
+		let response: BaseResponse<GetMonthlyScheduleResponseDTO>? = try? await APIManager.shared.performRequest(
 			endPoint: ScheduleEndPoint.getSchedule(
 				startDate: startDateString, endDate: endDateString
 			)

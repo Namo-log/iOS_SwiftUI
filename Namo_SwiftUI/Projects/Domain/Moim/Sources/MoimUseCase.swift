@@ -14,12 +14,12 @@ import CoreNetwork
 extension MoimUseCase: DependencyKey {
     public static let liveValue = MoimUseCase(
         getMoimList: {
-            let response: BaseResponse<[MoimScheduleListResponseDTO]>? = await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
+            let response: BaseResponse<[MoimScheduleListResponseDTO]>? = try? await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
             guard let data = response?.result else { return [] }
             return data.map { $0.toEntity() }
         },
         createMoim: { moim in
-            let response: BaseResponse<Int>? = await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moim.toDto()))
+            let response: BaseResponse<Int>? = try? await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moim.toDto()))
         }
     )
 }

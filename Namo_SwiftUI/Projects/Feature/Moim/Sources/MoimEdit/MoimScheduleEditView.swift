@@ -83,7 +83,7 @@ extension MoimScheduleEditView {
     private var titleView: some View {
         HStack(alignment: .center, spacing: 0) {
             Button(action: {
-                
+                store.send(.cancleButtonTapped)
             }, label: {
                 Text("취소")
                     .font(.pretendard(.regular, size: 15))

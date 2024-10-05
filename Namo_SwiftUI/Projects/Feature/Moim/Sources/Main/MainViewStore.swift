@@ -9,12 +9,15 @@ import Foundation
 import ComposableArchitecture
 import FeatureMoimInterface
 import FeatureFriend
+
 @Reducer
 public struct MainViewStore {
     public init() {}
-        
+    
     public struct State: Equatable {
-        public static let initialState = State(moimList: .init(), friendList: .init(), moimEdit: .init())
+        public static let initialState = State(moimList: .init(), 
+                                               friendList: .init(),
+                                               moimEdit: .init())
         
         // 현재 선택한탭
         @BindingState public var currentTab = 0
@@ -48,5 +51,15 @@ public struct MainViewStore {
         }
         
         BindingReducer()
+        
+        Reduce<State, Action> { state, action in
+            switch action {
+            case .moimEdit(.cancleButtonTapped):
+                state.isSheetPresented = false
+                return .none
+            default:
+                return .none
+            }
+        }
     }
 }

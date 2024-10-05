@@ -22,7 +22,7 @@ extension ScheduleDTO {
 			locationInfo: locationInfo.toEntity(),
 			hasDiary: hasDiary,
 			isMeetingSchedule: isMeetingSchedule,
-			meetingInfo: meetingInfo.toEntity(),
+			meetingInfo: meetingInfo?.toEntity(),
 			notificationInfo: notificationInfo.map { $0.toEntity() }
 		)
 	}
@@ -82,7 +82,7 @@ extension Schedule {
 			locationInfo: locationInfo.toDTO(),
 			hasDiary: hasDiary,
 			isMeetingSchedule: isMeetingSchedule,
-			meetingInfo: meetingInfo.toDTO(),
+			meetingInfo: meetingInfo?.toDTO(),
 			notificationInfo: notificationInfo.map { $0.toDTO() }
 		)
 	}

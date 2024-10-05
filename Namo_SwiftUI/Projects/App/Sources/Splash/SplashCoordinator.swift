@@ -12,8 +12,10 @@ import SharedUtil
 
 @Reducer
 struct SplashCoordinator {
+    @Dependency(\.authClient) var authClient
+    
     struct State: Equatable {
-        var isLogin: Bool = false        
+        var isLogin: Bool = false
     }
     
     enum Action {
@@ -26,8 +28,7 @@ struct SplashCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
             case .loginCheck:
-                if KeyChainManager.readItem(key: "accessToken") != nil,
-                   KeyChainManager.readItem(key: "refreshToken") != nil {                    
+                if authClient.getLoginState() != nil {
                     return .send(.goToMainScreen)
                 } else {
                     return .send(.goToOnboardingScreen)
