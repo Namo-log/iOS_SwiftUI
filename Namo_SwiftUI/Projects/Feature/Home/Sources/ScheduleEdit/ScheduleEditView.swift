@@ -37,15 +37,11 @@ struct ScheduleEditView: View {
 			}
 			.padding(.horizontal, 30)
 			.background(Color.white)
-			.clipShape(UnevenRoundedRectangle(cornerRadii: .init(
-				topLeading: 15,
-				topTrailing: 15)))
-			.shadow(radius: 10)
-			.offset(y: 100)
-			.onAppear {
-				store.send(.viewOnAppear)
-			}
 		}
+		.onAppear {
+			store.send(.viewOnAppear)
+		}
+		.toolbar(.hidden, for: .navigationBar)
 	}
 	
 	private var navigationBar: some View {
@@ -94,19 +90,19 @@ struct ScheduleEditView: View {
 				content: {
 					Button(
 						action: {
-							
+							store.send(.selectCategoryTapped)
 						},
 						label: {
-							if let category = store.selectedCategory {
+							if store.schedule.category.categoryId != -1 {
 								HStack {
 									ColorCircleView(
 										color: Color.paletteColor(
-											id: category.colorId
+											id: store.schedule.category.colorId
 										)
 									)
 									.frame(width: 12, height: 12)
 									
-									Text(category.categoryName)
+									Text(store.schedule.category.name)
 								}
 							} else {
 								Text("없음")

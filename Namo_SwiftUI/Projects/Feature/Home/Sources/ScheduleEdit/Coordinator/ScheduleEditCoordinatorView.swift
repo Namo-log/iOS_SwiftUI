@@ -22,7 +22,18 @@ public struct ScheduleEditCoordinatorView: View {
 			switch screen.case {
 			case let .scheduleEdit(store):
 				ScheduleEditView(store: store)
+				
+			case let .categoryList(store):
+				CategoryListView(store: store)
+				
+			case let .categoryEdit(store):
+				CategoryEditView(store: store)
 			}
 		}
+		.clipShape(UnevenRoundedRectangle(cornerRadii: .init(
+			topLeading: 15,
+			topTrailing: 15)))
+		.shadow(radius: 10)
+		.offset(y: 100)
 	}
 }

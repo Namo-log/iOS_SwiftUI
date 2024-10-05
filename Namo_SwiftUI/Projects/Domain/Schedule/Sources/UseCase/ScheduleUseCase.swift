@@ -159,7 +159,7 @@ public struct ScheduleUseCase {
 		if let schedule = schedule {
 			return ScheduleEdit(
 				title: schedule.title,
-				categoryId: schedule.categoryInfo.categoryId,
+				category: schedule.categoryInfo,
 				period: SchedulePeriod(
 					startDate: schedule.startDate,
 					endDate: schedule.endDate

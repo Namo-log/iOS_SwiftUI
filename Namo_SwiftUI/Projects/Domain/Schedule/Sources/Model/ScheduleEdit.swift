@@ -11,20 +11,20 @@ import DomainCategory
 
 public struct ScheduleEdit: Encodable, Equatable {
 	public var title: String
-	public var categoryId: Int
+	public var category: ScheduleCategory
 	public var period: SchedulePeriod
 	public var location: ScheduleLocation?
 	public var reminderTrigger: [String]?
 	
 	public init(
 		title: String = "",
-		categoryId: Int = 0,
+		category: ScheduleCategory = .init(categoryId: -1, colorId: -1, name: "", isShared: false),
 		period: SchedulePeriod,
 		location: ScheduleLocation? = nil,
 		reminderTrigger: [String]? = nil
 	) {
 		self.title = title
-		self.categoryId = categoryId
+		self.category = category
 		self.period = period
 		self.location = location
 		self.reminderTrigger = reminderTrigger

@@ -59,14 +59,8 @@ public struct HomeCoordinator {
 				let scheduleEdit = scheduleUseCase.scheduleToScheduleEdit(schedule: schedule, selectDate: selectDate)
 				state.routes.presentCover(
 					.scheduleEditCoordinator(.init(
-						routes: [
-							.root(
-								.scheduleEdit(.init(
-									isNewSchedule: isNewSchedule,
-									schedule: scheduleEdit
-								))
-							)
-						]
+						isNewSchedule: isNewSchedule,
+						schedule: scheduleEdit
 					))
 				)
 
@@ -74,9 +68,8 @@ public struct HomeCoordinator {
 				
 			case .router(.routeAction(_, action: .scheduleEditCoordinator(.router(.routeAction(_, action: .scheduleEdit(.closeBtnTapped)))))):
 				// 스케쥴 생성/편집 닫기
-				state.routes.dismiss()
 				
-				return .none
+				return .send(.dismiss)
 				
 			case .dismiss:
 				state.showBackgroundOpacity = false

@@ -47,7 +47,7 @@ public struct Schedule: Decodable, Hashable {
 	}
 }
 
-public struct ScheduleCategory: Decodable, Hashable {
+public struct ScheduleCategory: Codable, Hashable {
 	public let categoryId: Int
 	public let colorId: Int
 	public let name: String

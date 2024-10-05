@@ -10,7 +10,17 @@ import SwiftUI
 struct ScheduleEditNavigationBar<Content: View>: View {
 	let title: String
 	let leftButton: () -> Content
-	let rightButton: () -> Content
+	let rightButton: (() -> Content)?
+
+	init(
+		title: String,
+		leftButton: @escaping () -> Content,
+		rightButton: (() -> Content)? = nil
+	) {
+		self.title = title
+		self.leftButton = leftButton
+		self.rightButton = rightButton
+	}
 
 	
 	var body: some View {
@@ -23,7 +33,9 @@ struct ScheduleEditNavigationBar<Content: View>: View {
 			
 			Spacer()
 			
-			rightButton()
+			if let rightButton = rightButton {
+				rightButton()
+			}
 		}
 		.frame(height: 48)
 	}
