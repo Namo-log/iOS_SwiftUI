@@ -75,12 +75,13 @@ public struct MoimScheduleRequestDTO: Decodable, Encodable {
 }
 
 public struct PeriodDto: Decodable, Encodable {
-    public init(startDate: Int, endDate: Int) {
+    public init(startDate: String,
+                endDate: String) {
         self.startDate = startDate
         self.endDate = endDate
     }
-    public let startDate: Int
-    public let endDate: Int
+    public let startDate: String
+    public let endDate: String
 }
 
 public struct LocationDto: Decodable, Encodable {

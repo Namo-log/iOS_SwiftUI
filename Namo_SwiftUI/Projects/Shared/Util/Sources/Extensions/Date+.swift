@@ -105,7 +105,8 @@ public extension Date {
     func dateToISO8601() -> String {
         let formatter = ISO8601DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "KST")
-        let ISO8601String = formatter.string(from: self)
+        formatter.formatOptions = [.withInternetDateTime]
+        let ISO8601String = formatter.string(from: self)        
         return ISO8601String
     }        
     

@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import FeatureMoimInterface
 import Domain
+import SharedUtil
 
 extension MoimEditStore {
     public init() {
@@ -46,6 +47,11 @@ extension MoimEditStore {
                                                                         locationName: "",
                                                                         kakaoLocationId: "",
                                                                         participants: []))                    
+                }
+            case .viewOnAppear:
+                return .run { send in
+                   let token = try KeyChainManager.readItem(key: "accessToken")
+                    print(token)
                 }
             default:
                 return .none

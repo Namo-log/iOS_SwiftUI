@@ -10,6 +10,7 @@ import SharedDesignSystem
 import PhotosUI
 import ComposableArchitecture
 import FeatureMoimInterface
+import SharedUtil
 
 public struct MoimScheduleEditView: View {
     @Perception.Bindable private var store: StoreOf<MoimEditStore>
@@ -56,6 +57,9 @@ public struct MoimScheduleEditView: View {
         }
         .padding(.top, 15)
         .edgesIgnoringSafeArea(.bottom)
+        .onAppear {
+            store.send(.viewOnAppear)
+        }
     }
 }
 

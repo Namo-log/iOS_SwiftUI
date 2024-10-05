@@ -42,6 +42,7 @@ public struct MoimEditStore {
         case endPickerTapped
         case createButtonTapped
         case cancleButtonTapped
+        case viewOnAppear
     }
     
     public var body: some ReducerOf<Self> {
