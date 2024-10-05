@@ -2,113 +2,128 @@
 //  KeyChainManager.swift
 //  Namo_SwiftUI
 //
-//  Created by 고성민 on 2/9/24.
+//  Created by 박민서 on 10/2/24.
 //
 
 import Foundation
 
-// JWT 토큰을 저장하기 위한 키체인입니다.
-public class KeyChainManager {
+enum KeychainError: Error {
+    case itemAddFailed(OSStatus)
+    case itemUpdateFailed(OSStatus)
+    case itemDeleteFailed(OSStatus)
+    case itemReadFailed(OSStatus)
+    case dataEncodingFailed
+    case dataDecodingFailed
+}
+
+public struct KeyChainManager {
     
-	public static let service = Bundle.main.bundleIdentifier
+    // public static let service = Bundle.main.bundleIdentifier
+    // TODO: Tuist Module - Bundle Identifier 관련 논의 필요
+    public static let service = "com.mongmong.namo"
     
     // MARK: 키체인에 아이템 저장
-	public static func addItem(key: String, value: String) {
+    public static func addItem(key: String, value: String) throws {
         
         let valueData = value.data(using: .utf8)!
         
-        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                kSecAttrService: service ?? "com.mongmong.namo",
-                                kSecAttrAccount: key,
-                                  kSecValueData: valueData]
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key,
+            kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
+            kSecValueData: valueData
+        ]
         
         let status = SecItemAdd(query as CFDictionary, nil)
-        
-        if status == errSecSuccess {
-            print("add success")
-            print("\(key): \(valueData)")
-        } else if status == errSecDuplicateItem {   // key가 중복될 경우 업데이트
-            updateItem(key: key, value: value)
-        } else {
-            print("add failed")
+                
+        if status == errSecDuplicateItem { // key 중복 - 업데이트
+            try updateItem(key: key, value: value)
+        } else if status != errSecSuccess { // 중복 외 실패의 경우
+            throw KeychainError.itemAddFailed(status)
         }
     }
     
     // MARK: 키체인 아이템 조회
-	public static func readItem(key: String) -> String? {
+    public static func readItem(key: String) throws -> String {
         
-        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                kSecAttrService: service ?? "com.mongmong.namo",
-                                kSecAttrAccount: key,
-                           kSecReturnAttributes: true,
-                                 kSecReturnData: true]
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key,
+            kSecReturnAttributes: true,
+            kSecReturnData: true
+        ]
         
         var item: CFTypeRef?
-        if SecItemCopyMatching(query as CFDictionary, &item) != errSecSuccess {
-            print("read failed")
-            return nil
-        }
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
         
-//        guard let existItem = item as? [String: Any] else {return}
-//        guard let data = existItem["v_Data"] as? Data else {return}
-//        guard let returnValue = String(data: data, encoding: .utf8) else {return}
+        if status != errSecSuccess { throw KeychainError.itemReadFailed(status) }
         
-        guard let existItem = item as? [String:Any],
+        guard let existItem = item as? [String: Any],
               let data = existItem[kSecValueData as String] as? Data,
-              let returnValue = String(data: data, encoding: .utf8) else {
-            return nil
-        }
-
+              let returnValue = String(data: data, encoding: .utf8)
+        else { throw KeychainError.dataDecodingFailed }
+        
         return returnValue
     }
     
     // MARK: 키체인 값 업데이트
-	public static func updateItem(key: String, value: String) {
+	public static func updateItem(key: String, value: String) throws {
+        guard let valueData = value.data(using: .utf8) else {
+            throw KeychainError.dataEncodingFailed
+        }
         
-        let valueData = value.data(using: .utf8)!
-        
-        let previousQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                        kSecAttrService: service ?? "com.mongmong.namo",
-                                        kSecAttrAccount: key]
+        let previousQuery: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key
+        ]
         
         let updateQuery: [CFString: Any] = [kSecValueData: valueData]
         
         let status = SecItemUpdate(previousQuery as CFDictionary, updateQuery as CFDictionary)
         
-        if status == errSecSuccess {
-            print("update complete")
-        } else {
-            print("not finished update")
+        if status != errSecSuccess {
+            throw KeychainError.itemUpdateFailed(status)
         }
     }
     
     // MARK: 키체인 아이템 삭제
-	public static func deleteItem(key: String) {
+	public static func deleteItem(key: String) throws {
         
-        let deleteQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                      kSecAttrService: service ?? "com.mongmong.namo",
-                                      kSecAttrAccount: key]
+        let deleteQuery: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key
+        ]
         
         let status = SecItemDelete(deleteQuery as CFDictionary)
-        if status == errSecSuccess {
-            print("remove key-value data complete")
-        } else {
-            print("remove key-value data failed")
+        
+        if status != errSecSuccess {
+            throw KeychainError.itemDeleteFailed(status)
         }
     }
     
     // MARK: 키체인 아이템 존재 여부 확인
-	public static func itemExists(key: String) -> Bool {
+    public static func itemExists(key: String) throws -> Bool {
         
-        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                kSecAttrService: service ?? "com.mongmong.namo",
-                                kSecAttrAccount: key,
-                                 kSecMatchLimit: kSecMatchLimitOne,
-                           kSecReturnAttributes: false]
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: key,
+            kSecMatchLimit: kSecMatchLimitOne,
+            kSecReturnAttributes: false
+        ]
         
         let status = SecItemCopyMatching(query as CFDictionary, nil)
         
-        return status == errSecSuccess
-        
+        if status == errSecSuccess {
+            return true
+        } else if status == errSecItemNotFound {
+            return false
+        } else {
+            throw KeychainError.itemReadFailed(status)
+        }
     }
 }

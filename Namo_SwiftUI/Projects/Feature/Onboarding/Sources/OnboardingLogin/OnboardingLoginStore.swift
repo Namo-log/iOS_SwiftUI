@@ -29,6 +29,7 @@ public struct OnboardingLoginStore {
         case namoKakaoLoginResponse(SocialSignInRequestDTO)
         case namoNaverLoginResponse(SocialSignInRequestDTO)
         case namoAppleLoginResponse(AppleSignInRequestDTO)
+        case loginFailed(String)
     }
     
     @Dependency(\.authClient) var authClient
@@ -40,7 +41,10 @@ public struct OnboardingLoginStore {
             case .kakaoLoginButtonTapped:
                 print("kakao")
                 return .run { send in
-                    guard let data = await authClient.kakaoLogin() else { return }
+                    guard let data = await authClient.kakaoLogin() else {
+                        await send(.loginFailed("kakao login failed"))
+                        return
+                    }
                     let reqData = data as SocialSignInRequestDTO
                     await send(.namoKakaoLoginResponse(reqData))
                 }
@@ -48,7 +52,10 @@ public struct OnboardingLoginStore {
             case .naverLoginButtonTapped:
                 print("naver")
                 return .run { send in
-                    guard let data = await authClient.naverLogin() else { return }
+                    guard let data = await authClient.naverLogin() else {
+                        await send(.loginFailed("naver login failed"))
+                        return
+                    }
                     let reqData = data as SocialSignInRequestDTO
                     await send(.namoNaverLoginResponse(reqData))
                 }
@@ -56,7 +63,10 @@ public struct OnboardingLoginStore {
             case .appleLoginButtonTapped:
                 print("apple")
                 return .run { send in
-                    guard let data = await authClient.appleLogin() else { return }
+                    guard let data = await authClient.appleLogin() else {
+                        await send(.loginFailed("apple login failed"))
+                        return
+                    }
                     let reqData = data as AppleSignInRequestDTO
                     await send(.namoAppleLoginResponse(reqData))
                 }
@@ -64,29 +74,42 @@ public struct OnboardingLoginStore {
             case .namoKakaoLoginResponse(let reqData):
                 print("namo kakao")
                 return .run { send in
-                    if let result = try await authClient.reqSignInWithKakao(reqData) {
-                        print("result as Token type is \(result)")
-                    } else {
-                        print("인생은 니뜻대로 되지않는단다")
+                    do {
+                        let result = try await authClient.reqSignInWithKakao(reqData)
+                        let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        authClient.setLoginState(.kakao, with: tokens)
+                    } catch {
+                        await send(.loginFailed(error.localizedDescription))
                     }
                 }
                 
             case .namoNaverLoginResponse(let reqData):
                 print("namo naver")
                 return .run { send in
-                    if let result = try await authClient.reqSignInWithNaver(reqData) {
-                        print("result as Token type is \(result)")
-                    } else {
-                        print("인생은 니뜻대로 되지않는단다")
+                    do {
+                        let result = try await authClient.reqSignInWithNaver(reqData)
+                        let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        authClient.setLoginState(.naver, with: tokens)
+                    } catch {
+                        await send(.loginFailed(error.localizedDescription))
                     }
                 }
                 
             case .namoAppleLoginResponse(let reqData):
                 print("namo apple")
                 return .run { send in
-                    let result = try await authClient.reqSignInWithApple(reqData)
-                    print("result as Token type is \(result)")
+                    do {
+                        let result = try await authClient.reqSignInWithApple(reqData)
+                        let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        authClient.setLoginState(.apple, with: tokens)
+                    } catch {
+                        await send(.loginFailed(error.localizedDescription))
+                    }
                 }
+                
+            case .loginFailed(let errorDesc):
+                print("임시 에러 처리: \(errorDesc)")
+                return .none
             }
         }
     }

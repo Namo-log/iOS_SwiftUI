@@ -58,13 +58,13 @@ extension AuthEndPoint: EndPoint {
             return "/signup/apple"
             
         case .withdrawMemberKakao:
-            return "/kakao/delete"
+            return "/delete/kakao"
             
         case .withdrawMemberNaver:
-            return "/naver/delete"
+            return "/delete/naver"
             
         case .withdrawMemberApple:
-            return "/apple/delete"
+            return "/delete/apple"
             
         case .logout:
             return "/logout"
