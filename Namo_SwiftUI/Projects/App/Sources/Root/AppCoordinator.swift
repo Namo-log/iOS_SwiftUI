@@ -50,7 +50,7 @@ struct AppCoordinator {
         
         Reduce<State, Action> { state, action in
 
-            switch action {
+            switch action {            
             case .router(.routeAction(_, action: .onBoarding(.onboarding(.namoAppleLoginResponse(_))))):
                 state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
             case .router(.routeAction(_, action: .splash(.goToOnboardingScreen))):
