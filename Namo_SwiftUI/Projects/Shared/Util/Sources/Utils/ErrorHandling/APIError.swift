@@ -10,7 +10,7 @@ import Foundation
 /// 네트워크 요청 시 발생할 수 있는 에러를 정의한 열거형입니다.
 public enum APIError: Error {
     /// 네트워크 에러
-	case networkError
+	case networkError(String?)
     /// 400 ~ 499에러
     case badRequest(String?)
     /// 500

@@ -40,15 +40,14 @@ public final class APIManager {
     ///   - endPoint: 네트워크 요청을 정의하는 Endpoint
     ///   - decoder: 사용할 디코더. 기본값은 `JSONDecoder()`입니다.
     /// - Returns: 디코딩된 Response
-    public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> BaseResponse<T>? {
+    public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async throws -> BaseResponse<T> {
         var result: Data = .init()
         do {
             let request = await self.requestData(endPoint: endPoint)
             result = try request.result.get()
         } catch {
             print("네트워크 에러" + (String(data: result, encoding: .utf8) ?? ""))
-            ErrorHandler.shared.handleAPIError(.networkError)
-            return nil
+            throw APIError.networkError(error.errorDescription)
         }
         
         do {
@@ -56,13 +55,12 @@ public final class APIManager {
             return decodedData
         } catch {
             print("디코딩 에러" + (String(data: result, encoding: .utf8) ?? ""))
-            ErrorHandler.shared.handleAPIError(.parseError(error.localizedDescription))
-            return nil
+            throw APIError.parseError(error.localizedDescription)
         }
     }
     
     // BaseResponse 없는 메소드
-    public func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+    public func performRequestWithoutBaseResponse<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async throws -> T {
         do {
             let request = await self.requestData(endPoint: endPoint)
             let result = try request.result.get()
@@ -71,7 +69,7 @@ public final class APIManager {
             return decodedData
         } catch {
             print("에러 발생: \(error)")
-            return nil
+            throw APIError.customError(error.localizedDescription)
         }
     }
 }

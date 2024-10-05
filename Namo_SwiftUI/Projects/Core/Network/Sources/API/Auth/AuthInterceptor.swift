@@ -71,7 +71,7 @@ public class AuthInterceptor: RequestInterceptor {
         } else {
             
             // 네트워크 오류. 잠시 후 다시 시도해달라는 Alert 창을 띄움
-            ErrorHandler.shared.handleAPIError(.networkError)
+//            ErrorHandler.shared.handleAPIError(.networkError)
             
             completion(.doNotRetry)
         }
