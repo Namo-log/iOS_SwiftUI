@@ -8,7 +8,6 @@
 import SwiftUI
 import TCACoordinators
 import ComposableArchitecture
-import FeatureOnboarding
 
 @main
 struct RootApp: App {
