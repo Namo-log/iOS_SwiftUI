@@ -23,47 +23,53 @@ extension AuthClient: DependencyKey {
         // MARK: API
         loginHelper: SNSLoginHelper(),
         authManager: AuthManager(),
-        reqSignInWithApple: { reqDTO -> SignInResponseDTO? in
-            let res: BaseResponse<SignInResponseDTO>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
-            guard let data = res?.result else { return nil }
+        reqSignInWithApple: { reqDTO -> SignInResponseDTO in
+            let res: BaseResponse<SignInResponseDTO> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInApple(appleToken: reqDTO))
+            guard let data = res.result else {
+                throw APIError.parseError("res.result is nil")
+            }
             return data
         },
-        reqSignInWithNaver: { reqDTO -> SignInResponseDTO? in
-            let res: BaseResponse<SignInResponseDTO>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInNaver(naverToken: reqDTO))
-            guard let data = res?.result else { return nil }
+        reqSignInWithNaver: { reqDTO -> SignInResponseDTO in
+            let res: BaseResponse<SignInResponseDTO> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInNaver(naverToken: reqDTO))
+            guard let data = res.result else {
+                throw APIError.parseError("res.result is nil")
+            }
             return data
         },
-        reqSignInWithKakao: { reqDTO -> SignInResponseDTO? in
-            let res: BaseResponse<SignInResponseDTO>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInKakao(kakaoToken: reqDTO))
-            guard let data = res?.result else { return nil }
+        reqSignInWithKakao: { reqDTO -> SignInResponseDTO in
+            let res: BaseResponse<SignInResponseDTO> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signInKakao(kakaoToken: reqDTO))
+            guard let data = res.result else {
+                throw APIError.parseError("res.result is nil")
+            }
             return data
         },
         reqSignOut: { reqDTO -> Void in
-            let result: BaseResponse<String>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: reqDTO))
+            let result: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.logout(refreshToken: reqDTO))
             // 나모 로그아웃 요청이 실패한 경우 에러 throw
-            if result?.code != 200 {
-                throw APIError.customError("로그아웃 실패: 응답 코드 \(result?.code ?? 0)")
+            if result.code != 200 {
+                throw APIError.customError("로그아웃 실패: 응답 코드 \(result.code)")
             }
         },
         reqWithdrawalApple: { reqDTO in
-            let result: BaseResponse<String>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            let result: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
             
-            if result?.code != 200 {
-                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
+            if result.code != 200 {
+                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result.code)")
             }
         },
         reqWithdrawalNaver: { reqDTO in
-            let result: BaseResponse<String>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            let result: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
             
-            if result?.code != 200 {
-                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
+            if result.code != 200 {
+                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result.code)")
             }
         },
         reqWithdrawalKakao: { reqDTO in
-            let result: BaseResponse<String>? = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
+            let result: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.withdrawMemberApple(refreshToken: reqDTO))
             
-            if result?.code != 200 {
-                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result?.code ?? 0)")
+            if result.code != 200 {
+                throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result.code)")
             }
         }
     )

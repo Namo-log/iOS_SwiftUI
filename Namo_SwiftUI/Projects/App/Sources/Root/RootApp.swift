@@ -15,13 +15,9 @@ struct RootApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            AppCoordinatorView(store: Store(initialState: .initialState, reducer: {
-//                AppCoordinator()
-//            }))
-            OnboardingLoginView(store: Store(initialState: OnboardingLoginStore.State()) {
-                OnboardingLoginStore()
-                    ._printChanges()
-            })
+            AppCoordinatorView(store: Store(initialState: .initialState, reducer: {
+                AppCoordinator()
+            }))
         }
     }
 }
