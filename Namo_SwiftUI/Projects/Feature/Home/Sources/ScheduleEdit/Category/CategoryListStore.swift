@@ -37,7 +37,7 @@ public struct CategoryListStore {
 				return .none
 				
 			case .categorySelect(let category):
-				let sCategory = ScheduleCategory(categoryId: category.colorId, colorId: category.colorId, name: category.categoryName, isShared: category.shared)
+				let sCategory = ScheduleCategory(categoryId: category.categoryId, colorId: category.colorId, name: category.categoryName, isShared: category.shared)
 				
 				state.schedule.category = sCategory
 				

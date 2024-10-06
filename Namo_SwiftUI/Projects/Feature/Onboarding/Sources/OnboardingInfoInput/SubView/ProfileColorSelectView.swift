@@ -21,7 +21,7 @@ public struct ProfileColorSelectView: View {
         WithPerceptionTracking {
             VStack {
                 Spacer()
-                NamoPallete(selectedColor: $store.selectedPaletterColor, itemName: "색상", colors: Color.namoPaletteColors)
+                NamoPallete(selectedColor: $store.selectedPaletterColor, itemName: "색상")
                 Spacer()
             }
             .padding(30)

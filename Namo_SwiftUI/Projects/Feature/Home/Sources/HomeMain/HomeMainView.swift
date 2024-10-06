@@ -24,41 +24,43 @@ public struct HomeMainView: View {
 	}
 	
 	public var body: some View {
-		VStack(spacing: 0) {
-			header
-				.padding(.bottom, 22)
-				.padding(.horizontal, 20)
-			
-
-			NamoCalendarView(
-				calendarController: calendarController,
-				focusDate: $store.focusDate,
-				schedules: $store.schedules,
-				dateTapAction: { date in
-					store.send(.selectDate(date), animation: .default)
-				},
-				scheduleAddTapAction: { date in
-					store.send(.editSchedule(isNewSchedule: true, selectDate: date))
-				}
-			)
-
-			Spacer()
-				.frame(height: tabBarHeight)
-			
+		WithPerceptionTracking {
+			VStack(spacing: 0) {
+				header
+					.padding(.bottom, 22)
+					.padding(.horizontal, 20)
+				
+				
+				NamoCalendarView(
+					calendarController: calendarController,
+					focusDate: $store.focusDate,
+					schedules: $store.schedules,
+					dateTapAction: { date in
+						store.send(.selectDate(date), animation: .default)
+					},
+					scheduleAddTapAction: { date in
+						store.send(.editSchedule(isNewSchedule: true, selectDate: date))
+					}
+				)
+				
+				Spacer()
+					.frame(height: tabBarHeight)
+				
+			}
 		}
 		.ignoresSafeArea(edges: .bottom)
-//		.onAppear {
-//			store.send(.getSchedule(ym: calendarController.yearMonth))
-//		}
-//		.onChange(of: calendarController.yearMonth) { newYM in
-//			if calendarController.yearMonth < newYM {
-//				// 다음달로
-//				store.send(.scrollForwardTo(ym: newYM))
-//			} else {
-//				// 이전달로
-//				store.send(.scrollBackwardTo(ym: newYM))
-//			}
-//		}
+		.onAppear {
+			store.send(.getSchedule(ym: calendarController.yearMonth))
+		}
+		.onChange(of: calendarController.yearMonth) { newYM in
+			if calendarController.yearMonth < newYM {
+				// 다음달로
+				store.send(.scrollForwardTo(ym: newYM))
+			} else {
+				// 이전달로
+				store.send(.scrollBackwardTo(ym: newYM))
+			}
+		}
 		.namoUnderButtonPopupView(
 			isPresented: $store.showDatePicker,
 			contentView: {

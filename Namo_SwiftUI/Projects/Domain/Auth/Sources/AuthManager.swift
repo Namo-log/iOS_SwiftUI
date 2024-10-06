@@ -38,6 +38,7 @@ public struct AuthManager: AuthManagerProtocol {
             try KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
             try KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
             print("!---로그인 처리 완료---!")
+			print("accessToken: \(tokens.accessToken)")
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")

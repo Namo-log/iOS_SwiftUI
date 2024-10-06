@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ScheduleEditNavigationBar<Content: View>: View {
+struct ScheduleEditNavigationBar<L: View, R: View>: View {
 	let title: String
-	let leftButton: () -> Content
-	let rightButton: (() -> Content)?
+	let leftButton: () -> L
+	let rightButton: (() -> R)?
 
 	init(
 		title: String,
-		leftButton: @escaping () -> Content,
-		rightButton: (() -> Content)? = nil
+		leftButton: @escaping () -> L,
+		rightButton: (() -> R)? = {EmptyView()}
 	) {
 		self.title = title
 		self.leftButton = leftButton
@@ -29,13 +29,14 @@ struct ScheduleEditNavigationBar<Content: View>: View {
 			
 			Spacer()
 			
-			Text(title)
-			
-			Spacer()
-			
 			if let rightButton = rightButton {
 				rightButton()
 			}
+		}
+		.overlay {
+			Text(title)
+				.font(.pretendard(.bold, size: 15))
+				.foregroundStyle(Color.colorBlack)
 		}
 		.frame(height: 48)
 	}

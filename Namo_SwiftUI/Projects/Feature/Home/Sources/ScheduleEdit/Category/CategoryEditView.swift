@@ -12,21 +12,36 @@ import ComposableArchitecture
 import SharedDesignSystem
 
 struct CategoryEditView: View {
-	let store: StoreOf<CategoryEditStore>
+	@Perception.Bindable var store: StoreOf<CategoryEditStore>
 	
 	var body: some View {
-		ZStack(alignment: .top) {
-			if !store.isNewCategory {
-				DeleteCircleButton(action: {
+		WithPerceptionTracking {
+			ZStack(alignment: .top) {
+				if !store.isNewCategory {
+					DeleteCircleButton(action: {
+						
+					})
+				}
+				
+				VStack(spacing: 0) {
+					navigationBar
+						.padding(.horizontal, 19)
 					
-				})
+					VStack(spacing: 32) {
+						title
+						
+						colorPallete
+						
+						shareToggle
+						
+						Spacer()
+					}
+					.padding(.top, 12)
+					.padding(.horizontal, 30)
+				}
 			}
-			
-			VStack {
-				navigationBar
-			}
+			.toolbar(.hidden, for: .navigationBar)
 		}
-		.toolbar(.hidden, for: .navigationBar)
 	}
 	
 	private var navigationBar: some View {
@@ -47,7 +62,39 @@ struct CategoryEditView: View {
 					}
 				)
 				.tint(Color.mainText)
+			},
+			rightButton: {
+				Button(
+					action: {
+						
+					},
+					label: {
+						Text("저장")
+							.font(.pretendard(.regular, size: 15))
+					}
+				)
+				.tint(Color.mainText)
 			}
 		)
+	}
+	
+	private var title: some View {
+		TextField("새 카테고리", text: $store.category.categoryName)
+			.font(.pretendard(.bold, size: 22))
+			.padding(.top, 12)
+			.foregroundStyle(Color(asset: SharedDesignSystemAsset.Assets.mainText))
+	}
+	
+	private var colorPallete: some View {
+		NamoPallete(selectedColor: $store.selectedColor, itemName: "색상")
+	}
+	
+	private var shareToggle: some View {
+		Toggle(isOn: $store.isShared) {
+			Text("공개 설정")
+				.font(.pretendard(.bold, size: 15))
+				.foregroundColor(.mainText)
+		}
+		.tint(Color.colorToggle)
 	}
 }

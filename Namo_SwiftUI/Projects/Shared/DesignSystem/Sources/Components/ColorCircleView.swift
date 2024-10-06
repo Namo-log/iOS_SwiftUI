@@ -11,7 +11,10 @@ public struct ColorCircleView: View {
 	let color: Color
 	let isChecked: Bool
 	
-	public init(color: Color, isChecked: Bool = false) {
+	public init(
+		color: Color,
+		isChecked: Bool = false
+	) {
 		self.color = color
 		self.isChecked = isChecked
 	}
@@ -21,11 +24,11 @@ public struct ColorCircleView: View {
 			Circle()
 				.fill(color)
 			
-			Image(asset: SharedDesignSystemAsset.Assets.icCheckmark)
-				.resizable()
-				.scaledToFit()
-				.scaleEffect(CGSize(width: 0.5, height: 0.5))
-
+			if isChecked {
+				Image(asset: SharedDesignSystemAsset.Assets.icCheckmark)
+					.resizable()
+					.scaledToFit()
+			}
 		}
 	}
 }

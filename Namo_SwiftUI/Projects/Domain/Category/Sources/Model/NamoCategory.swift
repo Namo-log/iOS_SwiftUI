@@ -22,11 +22,11 @@ public struct NamoCategory: Encodable, Equatable {
 		self.shared = shared
 	}
 	
-	public let categoryId: Int
-	public let categoryName: String
-	public let colorId: Int
-	public let baseCategory: Bool
-	public let shared: Bool
+	public var categoryId: Int
+	public var categoryName: String
+	public var colorId: Int
+	public var baseCategory: Bool
+	public var shared: Bool
 }
 
 

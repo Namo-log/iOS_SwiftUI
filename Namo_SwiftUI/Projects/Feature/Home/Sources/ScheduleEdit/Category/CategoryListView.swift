@@ -17,10 +17,12 @@ struct CategoryListView: View {
 	var body: some View {
 		VStack {
 			navigationBar
+				.padding(.horizontal, 19)
 			
 			ScrollView(.vertical, showsIndicators: false) {
 				categoryList
 			}
+			.padding(.horizontal, 30)
 		}
 		.toolbar(.hidden, for: .navigationBar)
 	}
@@ -48,53 +50,63 @@ struct CategoryListView: View {
 	}
 	
 	private var categoryList: some View {
-		VStack {
-			ForEach(store.categories, id: \.categoryId) { category in
+		WithPerceptionTracking {
+			VStack(spacing: 20) {
+				ForEach(store.categories, id: \.categoryId) { category in
+					HStack(spacing: 16) {
+						Button(
+							action: {
+								store.send(.categorySelect(category))
+							},
+							label: {
+								ColorCircleView(
+									color: PalleteColor(rawValue: category.colorId)?.color ?? .clear,
+									isChecked: store.schedule.category.categoryId == category.categoryId
+								)
+								.frame(width: 20, height: 20)
+							}
+						)
+						
+						Button(
+							action: {
+								store.send(.categorySelect(category))
+							},
+							label: {
+								HStack {
+									Text(category.categoryName)
+										.font(.pretendard(.regular, size: 15))
+										.foregroundStyle(Color.mainText)
+									
+									Image(asset: SharedDesignSystemAsset.Assets.icRight)
+									
+									Spacer()
+								}
+							}
+						)
+					}
+					
+				}
 				HStack {
 					Button(
 						action: {
-							store.send(.categorySelect(category))
+							store.send(.newCategoryTapped)
 						},
 						label: {
-							ColorCircleView(
-								color: Color.paletteColor(id: category.colorId),
-								isChecked: category.categoryId == store.schedule.category.categoryId
-							)
-							.frame(width: 20, height: 20)
-						}
-					)
-					
-					Button(
-						action: {
-							store.send(.categorySelect(category))
-						},
-						label: {
-							HStack {
-								Text(category.categoryName)
+							HStack(spacing: 16) {
+								Image(asset: SharedDesignSystemAsset.Assets.icAdded)
+									.resizable()
+									.frame(width: 20, height: 20)
+								
+								Text("새 카테고리 추가")
 									.font(.pretendard(.regular, size: 15))
-									.foregroundStyle(Color.mainText)
-								
-								Image(asset: SharedDesignSystemAsset.Assets.icRight)
-								
-								Spacer()
 							}
 						}
 					)
+					.tint(Color.mainText)
+					
+					Spacer()
 				}
-				
 			}
-			
-			Button(
-				action: {
-					store.send(.newCategoryTapped)
-				},
-				label: {
-					HStack {
-						Image(asset: SharedDesignSystemAsset.Assets.icAdded)
-						Text("새 카테고리 추가")
-					}
-				}
-			)
 		}
 	}
 }

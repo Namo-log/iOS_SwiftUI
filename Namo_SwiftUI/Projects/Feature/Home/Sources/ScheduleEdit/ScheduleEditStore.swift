@@ -38,13 +38,23 @@ public struct ScheduleEditStore {
 		) {
 			self.isNewSchedule = isNewSchedule
 			self._schedule = schedule
+			
+			// 신규 일정인 경우 base category 설정
+			if isNewSchedule,
+			   let category = self.categories.filter({$0.baseCategory}).first {
+				self.schedule.category = ScheduleCategory(
+					categoryId: category.categoryId,
+					colorId: category.colorId,
+					name: category.categoryName,
+					isShared: category.shared
+				)
+			}
 		}
 	}
 	
 	public enum Action: BindableAction {
 		case binding(BindingAction<State>)
 		
-		case viewOnAppear
 		// 닫기 버튼
 		case closeBtnTapped
 		// 저장 버튼
@@ -70,22 +80,6 @@ public struct ScheduleEditStore {
 		Reduce { state, action in
 			switch action {
 			case .binding:
-				return .none
-				
-			case .viewOnAppear:
-				if state.isNewSchedule {
-					// 스케쥴 생성의 경우 base category
-					if let category = state.categories.filter({$0.baseCategory}).first {
-						let scheduleCategory = ScheduleCategory(
-							categoryId: category.categoryId,
-							colorId: category.colorId,
-							name: category.categoryName,
-							isShared: category.shared
-						)
-						state.schedule.category = scheduleCategory
-					}
-				}
-				
 				return .none
 				
 			case .closeBtnTapped:

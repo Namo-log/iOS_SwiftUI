@@ -15,31 +15,31 @@ struct ScheduleEditView: View {
 	@Perception.Bindable var store: StoreOf<ScheduleEditStore>
 	
 	var body: some View {
-		ZStack(alignment: .top) {
-			if !store.isNewSchedule {
-				DeleteCircleButton(action: {
-					
-				})
-			}
-			
-			VStack(spacing: 0) {
-				navigationBar
-				
-				ScrollView {
-					VStack {
-						title
+		WithPerceptionTracking {
+			ZStack(alignment: .top) {
+				if !store.isNewSchedule {
+					DeleteCircleButton(action: {
 						
-						listItems
-						
-						Spacer()
-					}
+					})
 				}
+				
+				VStack(spacing: 0) {
+					navigationBar
+						.padding(.horizontal, 19)
+					
+					ScrollView {
+						VStack {
+							title
+							
+							listItems
+							
+							Spacer()
+						}
+					}
+					.padding(.horizontal, 30)
+				}
+				.background(Color.white)
 			}
-			.padding(.horizontal, 30)
-			.background(Color.white)
-		}
-		.onAppear {
-			store.send(.viewOnAppear)
 		}
 		.toolbar(.hidden, for: .navigationBar)
 	}
@@ -96,13 +96,12 @@ struct ScheduleEditView: View {
 							if store.schedule.category.categoryId != -1 {
 								HStack {
 									ColorCircleView(
-										color: Color.paletteColor(
-											id: store.schedule.category.colorId
-										)
+										color: PalleteColor(rawValue: store.schedule.category.colorId)?.color ?? .clear
 									)
 									.frame(width: 12, height: 12)
 									
 									Text(store.schedule.category.name)
+										.font(.pretendard(.regular, size: 15))
 								}
 							} else {
 								Text("없음")
@@ -113,6 +112,7 @@ struct ScheduleEditView: View {
 							Image(asset: SharedDesignSystemAsset.Assets.icRight)
 						}
 					)
+					.tint(Color.mainText)
 				}
 			)
 			
@@ -228,7 +228,10 @@ struct ScheduleEditView: View {
 		HStack {
 			Text(title)
 				.font(.pretendard(.bold, size: 15))
+				.foregroundStyle(Color.mainText)
+			
 			Spacer()
+			
 			content()
 		}
 	}
