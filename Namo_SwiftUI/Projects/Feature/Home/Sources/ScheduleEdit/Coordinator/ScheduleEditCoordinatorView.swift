@@ -28,6 +28,9 @@ public struct ScheduleEditCoordinatorView: View {
 				
 			case let .categoryEdit(store):
 				CategoryEditView(store: store)
+				
+			case let .reminderSetting(store):
+				ReminderSettingView(store: store)
 			}
 		}
 		.clipShape(UnevenRoundedRectangle(cornerRadii: .init(

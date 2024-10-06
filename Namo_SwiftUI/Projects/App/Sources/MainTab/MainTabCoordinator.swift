@@ -54,7 +54,6 @@ struct MainTabCoordinator {
 				
 				return .run { send in
 					let response = await categoryUseCase.getAllCategory()
-					print(response)
 					await send(.getAllCategoryResponse(categories: response))
 				}
 				

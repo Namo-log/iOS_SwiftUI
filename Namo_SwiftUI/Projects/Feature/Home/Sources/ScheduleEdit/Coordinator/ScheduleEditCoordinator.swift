@@ -16,6 +16,7 @@ public enum ScheduleEditScreen {
 	case scheduleEdit(ScheduleEditStore)
 	case categoryList(CategoryListStore)
 	case categoryEdit(CategoryEditStore)
+	case reminderSetting(ReminderSettingStore)
 }
 
 @Reducer
@@ -96,6 +97,21 @@ public struct ScheduleEditCoordinator {
 				
 			case .router(.routeAction(_, action: .categoryEdit(.backBtnTapped))):
 				// 카테고리 생성/편집 뒤로가기
+				state.routes.pop()
+				return .none
+				
+			case .router(.routeAction(_, action: .scheduleEdit(.reminderBtnTapped))):
+				// 일정 생성/편집에서 알림 push
+				state.routes.push(.reminderSetting(.init(schedule: state.$schedule)))
+				return .none
+				
+			case .router(.routeAction(_, action: .reminderSetting(.backBtnTapped))):
+				// 알림 pop
+				state.routes.pop()
+				return .none
+				
+			case .router(.routeAction(_, action: .reminderSetting(.saveReminderBtnTapped))):
+				// 알림 pop
 				state.routes.pop()
 				return .none
 				
