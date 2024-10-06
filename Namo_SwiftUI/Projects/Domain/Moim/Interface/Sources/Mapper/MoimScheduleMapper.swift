@@ -25,11 +25,24 @@ public extension MoimSchedule {
         return .init(title: title,
                      imageUrl: nil,
                      period: PeriodDto(startDate: startDate.dateToISO8601(),
-                                   endDate: startDate.dateToISO8601()),
-                     location: LocationDto(longitude: 0.0, 
-                                     latitude: 0.0,
-                                     locationName: "",
-                                     kakaoLocationId: ""),
+                                       endDate: startDate.dateToISO8601()),
+                     location: LocationDto(longitude: 0.0,
+                                           latitude: 0.0,
+                                           locationName: "",
+                                           kakaoLocationId: ""),
                      participants: [11])
+    }
+}
+
+public extension MoimScheduleResonseDTO {
+    func toEntity() -> MoimSchedule {
+        .init(title: title,
+              startDate: .now,
+              endDate: .now,
+              longitude: locationInfo.longitude,
+              latitude: locationInfo.latitude,
+              locationName: locationInfo.locationName,
+              kakaoLocationId: locationInfo.kakaoLocationId,
+              participants: [])
     }
 }

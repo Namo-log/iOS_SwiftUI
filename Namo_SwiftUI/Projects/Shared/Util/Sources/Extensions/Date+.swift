@@ -117,7 +117,7 @@ public extension Date {
         formatter.timeZone = TimeZone(abbreviation: "KST")
         formatter.formatOptions = [.withFullDate, .withTime, .withColonSeparatorInTime ]
         guard let date = formatter.date(from: string) else {
-            fatalError("Incorrect date format")
+            fatalError("Incorrect date format")            
         }
         return date
     }

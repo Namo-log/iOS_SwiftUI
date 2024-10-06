@@ -49,11 +49,7 @@ public struct MoimCoordinator {
         }
         
         Reduce<State, Action> { state, action in
-            switch action {
-                // 카카오맵
-            case .router(.routeAction(_, action: .moimSchedule(.moimEdit(.goToKakaoMap)))):
-                
-                return .none
+            switch action {                
                 // 모임 요청
             case .router(.routeAction(_, action: .moimSchedule(.notificationButtonTap))):
                 state.routes.push(.moimRequest(.init()))

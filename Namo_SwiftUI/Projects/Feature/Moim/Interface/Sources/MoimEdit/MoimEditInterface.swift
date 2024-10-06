@@ -42,8 +42,7 @@ public struct MoimEditStore {
         case startPickerTapped
         case endPickerTapped
         case createButtonTapped
-        case cancleButtonTapped
-        case goToKakaoMap
+        case cancleButtonTapped        
         case viewOnAppear
     }
     

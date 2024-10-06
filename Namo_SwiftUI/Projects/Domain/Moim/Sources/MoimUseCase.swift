@@ -14,9 +14,14 @@ import CoreNetwork
 extension MoimUseCase: DependencyKey {
     public static let liveValue = MoimUseCase(
         getMoimList: {
-            let response: BaseResponse<[MoimScheduleListResponseDTO]>? = try? await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
-            guard let data = response?.result else { return [] }
-            return data.map { $0.toEntity() }
+            do {
+                let response: BaseResponse<[MoimScheduleListResponseDTO]>? = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimList)
+                guard let data = response?.result else { return [] }
+                return data.map { $0.toEntity() }
+            } catch {
+                print(error.localizedDescription)
+                throw error
+            }
         },
         createMoim: { moim, imageFile in
             do {
@@ -32,6 +37,16 @@ extension MoimUseCase: DependencyKey {
                 let response: BaseResponse<Int>? = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moimDto))
             } catch {
                 print(error.localizedDescription)
+            }
+        },
+        getMoimDetail: { meetingScheduleId in
+            do {
+                let response: BaseResponse<MoimScheduleResonseDTO> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimDetail(meetingScheduleId))                
+                guard let data = response.result else { fatalError() }
+                return data.toEntity()
+            } catch {
+                print(error.localizedDescription)
+                throw error
             }
         }
     )

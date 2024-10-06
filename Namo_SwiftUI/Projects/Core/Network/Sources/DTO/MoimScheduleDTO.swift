@@ -31,27 +31,33 @@ public struct MoimScheduleListResponseDTO: Decodable {
 }
 
 // 모임일정 상세 응답 DTO
-public struct MoimScheduleResonseDTO: Decodable, Hashable {
-    public init(meetingScheduleId: Int,
+public struct MoimScheduleResonseDTO: Decodable {
+    public init(scheduleId: Int,
                 title: String,
-                startDate: Int,
-                imageUrl: String,
-                participantCount: Int,
-                participantNicknames: [String]) {
-        self.meetingScheduleId = meetingScheduleId
+                imageUrl: String?,
+                startDate: String,
+                endDate: String,
+                interval: Int,
+                locationInfo: LocationDto,
+                participants: [ParticipantsDto]) {
+        self.scheduleId = scheduleId
         self.title = title
         self.startDate = startDate
         self.imageUrl = imageUrl
-        self.participantCount = participantCount
-        self.participantNicknames = participantNicknames
+        self.endDate = endDate
+        self.interval = interval
+        self.participants = participants
+        self.locationInfo = locationInfo
     }
     
-    public let meetingScheduleId: Int
+    public let scheduleId: Int
     public let title: String
-    public let startDate: Int
-    public let imageUrl: String
-    public let participantCount: Int
-    public let participantNicknames: [String]
+    public let startDate: String
+    public let endDate: String
+    public let imageUrl: String?
+    public let interval: Int
+    public let participants: [ParticipantsDto]
+    public let locationInfo: LocationDto
 }
 
 // 모임일정 생성 DTO
@@ -84,7 +90,7 @@ public struct PeriodDto: Encodable {
     public let endDate: String
 }
 
-public struct LocationDto: Encodable {
+public struct LocationDto: Encodable, Decodable {
     public init(longitude: Double,
                 latitude: Double,
                 locationName: String,
@@ -98,4 +104,26 @@ public struct LocationDto: Encodable {
     public let latitude: Double
     public let locationName: String
     public let kakaoLocationId: String
+}
+
+public struct ParticipantsDto: Decodable {
+    public init(participantId: Int,
+                userId: Int,
+                isGuest: Bool,
+                nickname: String,
+                colorId: Int,
+                isOwner: Bool) {
+        self.participantId = participantId
+        self.userId = userId
+        self.isGuest = isGuest
+        self.nickname = nickname
+        self.colorId = colorId
+        self.isOwner = isOwner
+    }
+    public let participantId: Int
+    public let userId: Int
+    public let isGuest: Bool
+    public let nickname: String
+    public let colorId: Int
+    public let isOwner: Bool
 }

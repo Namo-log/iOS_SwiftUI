@@ -12,31 +12,29 @@ import SharedUtil
 public enum MoimEndPoint {
     case getMoimList
     case createMoim(MoimScheduleRequestDTO)
-    case getPresignedUrl(prefix: String, filename: String)
+    case getMoimDetail(Int)
 }
 
 extension MoimEndPoint: EndPoint {
     public var baseURL: String {
-        return "\(SecretConstants.baseURL)"
+        return "\(SecretConstants.baseURL)/schedules"
     }
     
     public var path: String {
         switch self {
         case .getMoimList, .createMoim:
-            return "/schedules/meeting"
-        case .getPresignedUrl:
-            return "/s3/generate-presigned-url"
+            return "/meeting"
+        case let .getMoimDetail(meetingScheduleId):
+            return "/meeting/\(meetingScheduleId)"
         }
     }
     
     public var method: Alamofire.HTTPMethod {
         switch self {
-        case .getMoimList:
+        case .getMoimList, .getMoimDetail(_):
             return .get
         case .createMoim:
             return .post
-        case .getPresignedUrl:
-            return .get
         }
     }
     
@@ -44,14 +42,12 @@ extension MoimEndPoint: EndPoint {
         switch self {
         case .getMoimList:
                return .requestPlain
-        case let .createMoim(moimDto):            
-            return .requestJSONEncodable(parameters: moimDto)
-        case let .getPresignedUrl(prefix, filename):
-            let parameter: [String: String] = [
-                "prefix": prefix,
-                "fileName": filename
-            ]
+        case let .getMoimDetail(meetingScheduleId):
+            let parameter: [String: Any] = ["meetingScheduleId": meetingScheduleId]
             return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
+        case let .createMoim(moimDto):
+            return .requestJSONEncodable(parameters: moimDto)
+     
         }
     }
     

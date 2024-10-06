@@ -27,6 +27,7 @@ public struct MoimListStore {
     public enum Action {
         case viewOnAppear
         case moimListResponse([MoimScheduleItem])
+        case moimCellSelected(meetingScheduleId: Int)
     }
     
     public var body: some ReducerOf<Self> {

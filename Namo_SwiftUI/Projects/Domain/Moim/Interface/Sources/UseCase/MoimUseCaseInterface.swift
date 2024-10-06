@@ -12,10 +12,13 @@ import ComposableArchitecture
 public struct MoimUseCase {
     public var getMoimList: @Sendable () async throws -> [MoimScheduleItem]
     public var createMoim: @Sendable (MoimSchedule, UIImage?) async throws -> Void
+    public var getMoimDetail: @Sendable (_ meetingScheduleId: Int) async throws -> MoimSchedule
     
     public init(getMoimList: @escaping @Sendable () async throws -> [MoimScheduleItem],
-                createMoim: @escaping @Sendable (MoimSchedule, UIImage?) async throws -> Void) {
+                createMoim: @escaping @Sendable (MoimSchedule, UIImage?) async throws -> Void,
+                getMoimDetail: @escaping @Sendable (_ meetingScheduleId: Int) async throws -> MoimSchedule) {
         self.getMoimList = getMoimList
         self.createMoim = createMoim        
+        self.getMoimDetail = getMoimDetail
     }
 }

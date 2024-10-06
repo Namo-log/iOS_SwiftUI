@@ -26,6 +26,9 @@ struct MoimListView: View {
                         LazyVStack(spacing: 20) {
                             ForEach(store.moimList, id: \.self) { moimSchedule in
                                 MoimScheduleCell(scheduleItem: moimSchedule)
+                                    .onTapGesture {
+                                        store.send(.moimCellSelected(meetingScheduleId: moimSchedule.meetingScheduleId))
+                                    }
                             }
                         }
                         .padding(20)

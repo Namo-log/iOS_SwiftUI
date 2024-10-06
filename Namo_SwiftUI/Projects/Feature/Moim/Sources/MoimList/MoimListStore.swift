@@ -26,7 +26,9 @@ extension MoimListStore {
             case let  .moimListResponse(moimList):                
                 state.moimList = moimList
                 return .none
-            }            
+            default:
+                return .none
+            }
         }
         self.init(reducer: reducer)
     }

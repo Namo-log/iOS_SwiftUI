@@ -12,6 +12,8 @@ import FeatureFriend
 
 @Reducer
 public struct MainViewStore {
+    @Dependency(\.moimUseCase) var moimUseCase
+    
     public init() {}
     
     public struct State: Equatable {
@@ -37,6 +39,7 @@ public struct MainViewStore {
         case moimList(MoimListStore.Action)
         case moimEdit(MoimEditStore.Action)
         case friendList(FriendListStore.Action)
+        case presentDetailSheet
     }
     
     public var body: some Reducer<State, Action> {
@@ -56,6 +59,18 @@ public struct MainViewStore {
             switch action {
             case .moimEdit(.cancleButtonTapped):
                 state.isSheetPresented = false
+                return .none
+            case let .moimList(.moimCellSelected(meetingScheduleId)):
+                return .run { send in
+                    do {
+                        let moimSchedule = try await moimUseCase.getMoimDetail(meetingScheduleId)
+                        await send(.presentDetailSheet)
+                    } catch {
+                        
+                    }
+                }
+            case .presentDetailSheet:
+                state.isSheetPresented = true
                 return .none
             default:
                 return .none
