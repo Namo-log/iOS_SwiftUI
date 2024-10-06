@@ -27,7 +27,7 @@ struct AppCoordinator {
         static let initialState = State(routes: [.root(.splash(.init()), embedInNavigationView: true)],
                                         mainTab: .intialState,
                                         splash: .init(),
-                                        onBoarding: .init())
+                                        onBoarding: .init(onBoarding: .init()))
         var routes: [Route<AppScreen.State>]
         var mainTab: MainTabCoordinator.State
         var splash: SplashCoordinator.State
@@ -49,14 +49,14 @@ struct AppCoordinator {
         }
         
         Reduce<State, Action> { state, action in
-            switch action {                                  
-            case .router(.routeAction(_, action: .splash(.loginCheck(let isSuccess)))):
-                if isSuccess {
-					state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
-                } else {
-                    state.routes = [.root(.onBoarding(.init()), embedInNavigationView: true)]
-                }
-                return .none
+
+            switch action {            
+            case .router(.routeAction(_, action: .onBoarding(.onboarding(.namoAppleLoginResponse(_))))):
+                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
+            case .router(.routeAction(_, action: .splash(.goToOnboardingScreen))):
+                state.routes = [.root(.onBoarding(.init(onBoarding: .init())), embedInNavigationView: true)]
+            case .router(.routeAction(_, action: .splash(.goToMainScreen))):
+                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
             default:
                 break
             }

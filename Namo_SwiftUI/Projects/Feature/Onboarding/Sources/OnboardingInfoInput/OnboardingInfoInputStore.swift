@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import SwiftUICore
+import SwiftUI
 
 /// InfoInput 작성 시 내용 구분용으로 사용하는 enum입니다
 public enum InfoFormState: Equatable {

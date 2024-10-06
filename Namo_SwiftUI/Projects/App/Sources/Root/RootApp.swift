@@ -8,6 +8,8 @@
 import SwiftUI
 import TCACoordinators
 import ComposableArchitecture
+import FeatureOnboarding
+import SharedUtil
 
 @main
 struct RootApp: App {
@@ -17,6 +19,6 @@ struct RootApp: App {
             AppCoordinatorView(store: Store(initialState: .initialState, reducer: {
                 AppCoordinator()
             }))
-        }
+        }        
     }
 }
