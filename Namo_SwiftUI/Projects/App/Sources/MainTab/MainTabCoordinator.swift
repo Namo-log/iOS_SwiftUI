@@ -64,7 +64,6 @@ struct MainTabCoordinator {
             default:
                 return .none
             }            
-        }
-        
+        }        
     }
 }
