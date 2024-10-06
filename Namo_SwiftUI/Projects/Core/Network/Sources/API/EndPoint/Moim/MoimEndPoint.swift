@@ -40,7 +40,7 @@ extension MoimEndPoint: EndPoint {
         case .getMoimList:
                return .requestPlain
         case let .createMoim(moimDto):            
-            return .requestParameters(parameters: moimDto.toDictionary ?? [:], encoding: URLEncoding.default)
+            return .requestJSONEncodable(parameters: moimDto)
         }
     }
     
@@ -51,13 +51,5 @@ extension MoimEndPoint: EndPoint {
         default:
             return ["Content-Type": "application/json"]
         }
-    }
-}
-
-extension Encodable {
-    var toDictionary : [String: Any]? {
-        guard let object = try? JSONEncoder().encode(self) else { return nil }
-        guard let dictionary = try? JSONSerialization.jsonObject(with: object, options: []) as? [String:Any] else { return nil }
-        return dictionary
     }
 }

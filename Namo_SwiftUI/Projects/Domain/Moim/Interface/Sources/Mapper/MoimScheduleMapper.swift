@@ -23,10 +23,13 @@ public extension MoimScheduleListResponseDTO {
 public extension MoimSchedule {
     func toDto() -> MoimScheduleRequestDTO {
         return .init(title: title,
-                     imageUrl: nil,
-                     period: .init(startDate: startDate.dateToISO8601(),
+                     imageUrl: "https://static.namong.shop/origin/diary/image.jpg",
+                     period: PeriodDto(startDate: startDate.dateToISO8601(),
                                    endDate: startDate.dateToISO8601()),
-                     location: .init(longitude: 0.0, latitude: 0.0, locationName: "어디든", kakaoLocationId: "string"),
-                     participants: [0])
+                     location: LocationDto(longitude: 0.0, 
+                                     latitude: 0.0,
+                                     locationName: "어디든",
+                                     kakaoLocationId: "string"),
+                     participants: [11])
     }
 }

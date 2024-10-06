@@ -101,16 +101,17 @@ public extension Date {
     
     
     /// Date타입을  ISO8601 포맷으로 변환합니다
-   
-    func dateToISO8601() -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone(abbreviation: "KST")
-        formatter.formatOptions = [.withInternetDateTime]
-        let ISO8601String = formatter.string(from: self)        
-        return ISO8601String
-    }        
     
-    /// ISO8601 포맷을 Date 타입으로 변환합니다.    
+    func dateToISO8601() -> String {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let ISO8601String = formatter.string(from: self)
+        
+        return ISO8601String
+    }
+    
+    /// ISO8601 포맷을 Date 타입으로 변환합니다.
     static func ISO8601toDate(_ string: String) -> Date {
         let formatter = ISO8601DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "KST")

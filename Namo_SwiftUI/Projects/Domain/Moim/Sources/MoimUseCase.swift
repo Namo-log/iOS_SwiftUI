@@ -19,7 +19,11 @@ extension MoimUseCase: DependencyKey {
             return data.map { $0.toEntity() }
         },
         createMoim: { moim in
-            let response: BaseResponse<Int>? = try? await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moim.toDto()))
+            do {                
+                let response: BaseResponse<Int>? = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moim.toDto()))
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     )
 }

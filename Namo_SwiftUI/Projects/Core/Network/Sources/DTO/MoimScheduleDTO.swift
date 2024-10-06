@@ -55,7 +55,7 @@ public struct MoimScheduleResonseDTO: Decodable, Hashable {
 }
 
 // 모임일정 생성 DTO
-public struct MoimScheduleRequestDTO: Decodable, Encodable {
+public struct MoimScheduleRequestDTO: Encodable {
     public init(title: String,
                 imageUrl: String?,
                 period: PeriodDto,
@@ -74,7 +74,7 @@ public struct MoimScheduleRequestDTO: Decodable, Encodable {
     public let participants: [Int]
 }
 
-public struct PeriodDto: Decodable, Encodable {
+public struct PeriodDto: Encodable {
     public init(startDate: String,
                 endDate: String) {
         self.startDate = startDate
@@ -84,7 +84,7 @@ public struct PeriodDto: Decodable, Encodable {
     public let endDate: String
 }
 
-public struct LocationDto: Decodable, Encodable {
+public struct LocationDto: Encodable {
     public init(longitude: Double,
                 latitude: Double,
                 locationName: String,

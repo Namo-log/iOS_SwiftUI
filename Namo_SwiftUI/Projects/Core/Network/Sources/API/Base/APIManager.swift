@@ -42,7 +42,7 @@ public final class APIManager {
     /// - Returns: 디코딩된 Response
     public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async throws -> BaseResponse<T> {
         var result: Data = .init()
-        do {
+        do {           
             let request = await self.requestData(endPoint: endPoint)
             result = try request.result.get()
         } catch {
@@ -202,7 +202,7 @@ public extension APIManager {
             interceptor: AuthInterceptor()
           )
         
-      case let .requestCustomJSONEncodable(parameters, encoder):
+      case let .requestCustomJSONEncodable(parameters, encoder):          
           return AF.request(
             "\(endPoint.baseURL)\(endPoint.path)",
             method: endPoint.method,
