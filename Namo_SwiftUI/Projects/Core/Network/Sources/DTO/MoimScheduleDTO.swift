@@ -68,7 +68,7 @@ public struct MoimScheduleRequestDTO: Encodable {
         self.participants = participants
     }
     public let title: String
-    public let imageUrl: String?
+    public var imageUrl: String?
     public let period: PeriodDto
     public let location: LocationDto
     public let participants: [Int]

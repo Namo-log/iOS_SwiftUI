@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import UIKit
 import ComposableArchitecture
 import FeatureMoimInterface
-import Domain
+import DomainMoimInterface
 import SharedUtil
 
 extension MoimEditStore {
@@ -19,11 +20,13 @@ extension MoimEditStore {
             switch action {
             case .binding(\.$coverImageItem):
                 return .run { [imageItem = state.coverImageItem] send in
-                    if let loaded = try? await imageItem?.loadTransferable(type: Image.self) {
-                        await send(.selectedImage(loaded))
+                    if let loaded = try? await imageItem?.loadTransferable(type: Data.self) {
+                        guard let uiImage = UIImage(data: loaded) else {
+                            return
+                        }
+                        await send(.selectedImage(uiImage))
                     }
                 }
-                
             case let .selectedImage(image):
                 state.coverImage = image
                 return .none
@@ -37,16 +40,8 @@ extension MoimEditStore {
                 return .none
                 
             case .createButtonTapped:
-                return .run { [state = state] send in
-                    try await moimUseCase.createMoim(.init(title: state.title,
-                                                                        imageUrl: "",
-                                                                        startDate: state.startDate,
-                                                                        endDate: state.endDate,
-                                                                        longitude: 0.0,
-                                                                        latitude: 0.0,
-                                                                        locationName: "",
-                                                                        kakaoLocationId: "",
-                                                                        participants: []))                    
+                return .run { [state = state] send in                    
+                    try await moimUseCase.createMoim(state.makeMoim(), state.coverImage)
                 }
             case .viewOnAppear:
                 return .run { send in
@@ -58,6 +53,19 @@ extension MoimEditStore {
             }
         }
         self.init(reducer: reducer)
+    }
+}
+
+extension MoimEditStore.State {
+    func makeMoim() -> MoimSchedule {
+        .init(title: title,
+              startDate: startDate,
+              endDate: endDate,
+              longitude: longitude,
+              latitude: latitude,
+              locationName: locationName,
+              kakaoLocationId: kakaoLocationId,
+              participants: participants)
     }
 }
 

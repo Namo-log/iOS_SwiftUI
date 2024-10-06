@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import PhotosUI
 import ComposableArchitecture
 
@@ -25,7 +26,7 @@ public struct MoimEditStore {
         @BindingState public var isStartPickerPresented: Bool = false
         @BindingState public var isEndPickerPresented: Bool = false
         
-        public var coverImage: Image?
+        public var coverImage: UIImage?
         public var longitude = 0.0
         public var latitude = 0.0
         public var locationName = ""
@@ -37,11 +38,12 @@ public struct MoimEditStore {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        case selectedImage(Image)
+        case selectedImage(UIImage)
         case startPickerTapped
         case endPickerTapped
         case createButtonTapped
         case cancleButtonTapped
+        case goToKakaoMap
         case viewOnAppear
     }
     

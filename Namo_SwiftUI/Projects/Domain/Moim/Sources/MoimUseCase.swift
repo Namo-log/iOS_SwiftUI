@@ -18,9 +18,18 @@ extension MoimUseCase: DependencyKey {
             guard let data = response?.result else { return [] }
             return data.map { $0.toEntity() }
         },
-        createMoim: { moim in
-            do {                
-                let response: BaseResponse<Int>? = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moim.toDto()))
+        createMoim: { moim, imageFile in
+            do {
+                var moimDto = moim.toDto()
+                
+//                if let data = imageFile?.pngData() {
+//                    let response: BaseResponse<String> = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: "testFile")
+//                    guard let url = response.result else { return }
+//                    try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: data)
+//                    moimDto.imageUrl = url
+//                }
+                
+                let response: BaseResponse<Int>? = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moimDto))
             } catch {
                 print(error.localizedDescription)
             }

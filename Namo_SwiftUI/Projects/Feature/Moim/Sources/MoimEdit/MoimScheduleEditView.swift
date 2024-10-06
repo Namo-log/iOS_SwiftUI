@@ -128,7 +128,7 @@ extension MoimScheduleEditView {
             
             PhotosPicker(selection: viewStore.$coverImageItem, matching: .images) {
                 if let coverImage = viewStore.coverImage {
-                    coverImage
+                    Image(uiImage: coverImage)
                         .resizable()
                         .frame(width: 55, height: 55)
                         .cornerRadius(8)

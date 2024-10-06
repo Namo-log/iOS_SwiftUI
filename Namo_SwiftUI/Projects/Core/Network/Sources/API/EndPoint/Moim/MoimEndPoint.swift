@@ -12,17 +12,20 @@ import SharedUtil
 public enum MoimEndPoint {
     case getMoimList
     case createMoim(MoimScheduleRequestDTO)
+    case getPresignedUrl(prefix: String, filename: String)
 }
 
 extension MoimEndPoint: EndPoint {
     public var baseURL: String {
-        return "\(SecretConstants.baseURL)/schedules"
+        return "\(SecretConstants.baseURL)"
     }
     
     public var path: String {
         switch self {
         case .getMoimList, .createMoim:
-            return "/meeting"
+            return "/schedules/meeting"
+        case .getPresignedUrl:
+            return "/s3/generate-presigned-url"
         }
     }
     
@@ -32,6 +35,8 @@ extension MoimEndPoint: EndPoint {
             return .get
         case .createMoim:
             return .post
+        case .getPresignedUrl:
+            return .get
         }
     }
     
@@ -41,6 +46,12 @@ extension MoimEndPoint: EndPoint {
                return .requestPlain
         case let .createMoim(moimDto):            
             return .requestJSONEncodable(parameters: moimDto)
+        case let .getPresignedUrl(prefix, filename):
+            let parameter: [String: String] = [
+                "prefix": prefix,
+                "fileName": filename
+            ]
+            return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
         }
     }
     

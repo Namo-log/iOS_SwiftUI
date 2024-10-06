@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-
+import SwiftUI
 import SharedUtil
 
 /// 네트워크 요청을 관리하는 싱글톤 클래스인 APIManager입니다.
@@ -71,6 +71,29 @@ public final class APIManager {
             print("에러 발생: \(error)")
             throw APIError.customError(error.localizedDescription)
         }
+    }
+}
+
+// MARK: S3이미지 업로드 관련
+public extension APIManager {
+    func getPresignedUrl(prefix: String, filename: String) async throws -> BaseResponse<String> {
+        let parameter: [String: String] = ["prefix": prefix, "fileName": filename]
+        let response = await AF.request("\(SecretConstants.baseURL)/s3/generate-presigned-url",
+                                        method: .get,
+                                        parameters: parameter,
+                                        interceptor: AuthInterceptor())
+            .serializingDecodable(BaseResponse<String>.self)
+            .response
+        do {
+           let result = try response.result.get()
+            return result
+        } catch {
+            throw error
+        }
+    }
+    
+    func uploadImageToS3(presignedUrl: String, imageFile: Data) async throws {
+       
     }
 }
 
