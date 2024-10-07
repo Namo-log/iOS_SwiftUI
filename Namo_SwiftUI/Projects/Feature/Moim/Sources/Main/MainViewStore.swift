@@ -79,6 +79,7 @@ public struct MainViewStore {
                 state.moimEdit.latitude = moimSchedule.latitude
                 state.moimEdit.longitude = moimSchedule.longitude
                 state.moimEdit.kakaoLocationId = moimSchedule.kakaoLocationId
+                state.moimEdit.participants = moimSchedule.participants
                 return .none
             case .presentComposeSheet:
                 state.moimEdit = .init()

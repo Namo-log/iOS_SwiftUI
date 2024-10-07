@@ -43,6 +43,17 @@ public extension MoimScheduleResonseDTO {
               latitude: locationInfo.latitude,
               locationName: locationInfo.locationName,
               kakaoLocationId: locationInfo.kakaoLocationId,
-              participants: participants)
+              participants: participants.map { $0.toEntity() })
+    }
+}
+
+public extension ParticipantsDto {
+    func toEntity() -> Participant {
+        .init(participantId: participantId,
+              userId: userId,
+              isGuest: isGuest,
+              nickname: nickname,
+              colorId: colorId,
+              isOwner: isOwner)
     }
 }

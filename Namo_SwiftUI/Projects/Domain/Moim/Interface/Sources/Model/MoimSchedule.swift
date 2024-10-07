@@ -16,7 +16,7 @@ public struct MoimSchedule: Decodable, Hashable {
                 latitude: Double,
                 locationName: String,
                 kakaoLocationId: String,                
-                participants: [ParticipantsDto]) {
+                participants: [Participant]) {
         self.title = title
         self.startDate = startDate
         self.endDate = endDate
@@ -34,5 +34,27 @@ public struct MoimSchedule: Decodable, Hashable {
     public let latitude: Double
     public let locationName: String
     public let kakaoLocationId: String
-    public let participants: [ParticipantsDto]
+    public let participants: [Participant]
+}
+
+public struct Participant: Decodable, Hashable {
+    public init(participantId: Int, 
+                userId: Int,
+                isGuest: Bool,
+                nickname: String,
+                colorId: Int?,
+                isOwner: Bool) {
+        self.participantId = participantId
+        self.userId = userId
+        self.isGuest = isGuest
+        self.nickname = nickname
+        self.colorId = colorId
+        self.isOwner = isOwner
+    }
+    public let participantId: Int
+    public let userId: Int
+    public let isGuest: Bool
+    public let nickname: String
+    public let colorId: Int?
+    public let isOwner: Bool
 }

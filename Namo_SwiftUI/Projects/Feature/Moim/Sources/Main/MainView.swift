@@ -18,7 +18,7 @@ public struct MainView: View {
     @ObservedObject private var viewStore: ViewStoreOf<MainViewStore>
     
     public init(store: StoreOf<MainViewStore>) {
-        self.store = store        
+        self.store = store
         self.viewStore = ViewStore(store, observe: {$0})
     }
     

@@ -11,6 +11,7 @@ import SharedDesignSystem
 struct Participant: View {
     let name: String
     let color: Color
+    let isOwner: Bool
     
     var body: some View {
         VStack {
@@ -18,6 +19,11 @@ struct Participant: View {
                 Circle()
                     .frame(width: 14, height: 14)
                     .foregroundColor(color)
+                    .overlay {
+                        if isOwner {
+                            Image(asset: SharedDesignSystemAsset.Assets.icCrown)
+                        }
+                    }
                 
                 Text(name)
                     .font(.pretendard(.regular, size: 15))

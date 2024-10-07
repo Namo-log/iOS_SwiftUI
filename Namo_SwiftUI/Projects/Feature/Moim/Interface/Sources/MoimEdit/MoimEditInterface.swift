@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 import PhotosUI
 import ComposableArchitecture
+import DomainMoimInterface
 
 @Reducer
 public struct MoimEditStore {
@@ -31,7 +32,7 @@ public struct MoimEditStore {
         public var latitude = 0.0
         public var locationName = ""
         public var kakaoLocationId = ""
-        public var participants: [String] = []
+        public var participants: [Participant] = []
         
         public init() {}
     }

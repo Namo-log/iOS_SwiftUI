@@ -222,6 +222,12 @@ extension MoimScheduleEditView {
                     Image(asset: SharedDesignSystemAsset.Assets.icRight)
                 }
             }
+            
+            FlexibleGridView(data: viewStore.participants) { participant in
+                Participant(name: participant.nickname,
+                            color: Color.paletteColor(id: participant.colorId ?? 1),
+                            isOwner: participant.isOwner)
+            }
         }
     }
 }
