@@ -14,7 +14,7 @@ enum AppScreen {
     // 메인탭
     case mainTab(MainTabCoordinator)
     // 온보딩
-    case onBoarding(OnBoardingCoordinator)
+    case onboarding(OnboardingCoordinator)
     // 스플래시
     case splash(SplashCoordinator)
 }
@@ -27,34 +27,34 @@ struct AppCoordinator {
         static let initialState = State(routes: [.root(.splash(.init()), embedInNavigationView: true)],
                                         mainTab: .intialState,
                                         splash: .init(),
-                                        onBoarding: .init(onBoarding: .init()))
+                                        onboarding: OnboardingCoordinator.State.initialState)
         var routes: [Route<AppScreen.State>]
         var mainTab: MainTabCoordinator.State
         var splash: SplashCoordinator.State
-        var onBoarding: OnBoardingCoordinator.State
+        var onboarding: OnboardingCoordinator.State
     }
     
     enum Action {
         case router(IndexedRouterActionOf<AppScreen>)
         case mainTab(MainTabCoordinator.Action)
-        case onBoarding(OnBoardingCoordinator.Action)
+        case onboarding(OnboardingCoordinator.Action)
     }
     
     var body: some ReducerOf<Self> {
         Scope(state: \.mainTab, action: \.mainTab) {
             MainTabCoordinator()
         }
-        Scope(state: \.onBoarding, action: \.onBoarding) {
-            OnBoardingCoordinator()
+        Scope(state: \.onboarding, action: \.onboarding) {
+            OnboardingCoordinator()
         }
         
         Reduce<State, Action> { state, action in
 
             switch action {            
-            case .router(.routeAction(_, action: .onBoarding(.onboarding(.namoAppleLoginResponse(_))))):
+            case .router(.routeAction(_, action: .onboarding(.login(.namoAppleLoginResponse(_))))):
                 state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
             case .router(.routeAction(_, action: .splash(.goToOnboardingScreen))):
-                state.routes = [.root(.onBoarding(.init(onBoarding: .init())), embedInNavigationView: true)]
+                state.routes = [.root(.onboarding(OnboardingCoordinator.State.initialState), embedInNavigationView: true)]
             case .router(.routeAction(_, action: .splash(.goToMainScreen))):
                 state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
             default:

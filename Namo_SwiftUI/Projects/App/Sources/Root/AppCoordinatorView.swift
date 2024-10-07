@@ -17,8 +17,8 @@ struct AppCoordinatorView: View {
             switch screen.case {
             case let .mainTab(store):
                 MainTabCoordinatorView(store: store)
-            case let .onBoarding(store):
-                OnBoardingCoordinatorView(store: store)
+            case let .onboarding(store):
+                OnboardingCoordinatorView(store: store)
             case let .splash(store):
                 SplashCoordinatorView(store: store)
             }
