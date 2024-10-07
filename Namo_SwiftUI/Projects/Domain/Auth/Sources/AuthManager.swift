@@ -126,6 +126,24 @@ public extension AuthManager {
     }
 }
 
+// MARK: User Info Extension
+public extension AuthManager {
+    /// 회원 가입 유저 정보 작성 상태 가져오기
+    func getUserInfoCompletedState() -> Bool? {
+        guard let isUserInfoCompleted = UserDefaults.standard.value(forKey: "isUserInfoCompleted") as? Bool else { return nil }
+        return isUserInfoCompleted
+    }
+    /// 회원 가입 유저 정보 작성 상태 저장
+    func setUserInfoCompletedState(_ isCompleted: Bool) {
+        UserDefaults.standard.set(isCompleted, forKey: "isUserInfoCompleted")
+    }
+    
+    /// 회원 가입 유저 정보 작성 상태 제거
+    func deleteUserInfoCompletedState() {
+        UserDefaults.standard.removeObject(forKey: "isUserInfoCompleted")
+    }
+}
+
 // + UI 화면 변경 어디까지 쓸 진 모름
 // 로그인 했을 때
 //    DispatchQueue.main.async {
