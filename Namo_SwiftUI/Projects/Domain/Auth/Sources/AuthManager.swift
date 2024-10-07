@@ -11,7 +11,8 @@ import Core
 import ComposableArchitecture
 import DomainAuthInterface
 
-/// 로그인 및 로그아웃 상태를 관리하는 매니저입니다.
+/// 로그인, 로그아웃 및 유저 인증 관련 상태를 관리하는 매니저입니다.
+/// 유저 관련 UserDefaults 세팅은 여기에서 관리됩니다.
 /// - 의존성:
 ///   - `authClient`를 사용하여 로그아웃 및 로그인 API 요청을 처리합니다.
 public struct AuthManager: AuthManagerProtocol {
@@ -20,15 +21,18 @@ public struct AuthManager: AuthManagerProtocol {
     @Dependency(\.authClient) var authClient
     
     public init() {}
-    
+}
+
+// MARK: Login/Logout Extension
+public extension AuthManager {
     /// 로그인 상태 가져오기
-    public func getLoginState() -> OAuthType? {
+    func getLoginState() -> OAuthType? {
         guard let oAuthTypeString = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
         return OAuthType(rawValue: oAuthTypeString)
     }
-    
+        
     /// 카카오/네이버/애플 로그인 상태 저장
-    public func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
+    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. socialLogin 상태 저장
@@ -45,7 +49,7 @@ public struct AuthManager: AuthManagerProtocol {
     }
     
     /// 카카오/네이버/애플 로그아웃 상태 저장
-    public func setLogoutState(with oAuthType: OAuthType) async {
+    func setLogoutState(with oAuthType: OAuthType) async {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. get refreshToken
@@ -78,9 +82,12 @@ public struct AuthManager: AuthManagerProtocol {
             print("임시 처리: \(error.localizedDescription)")
         }
     }
-    
+}
+
+// MARK: Withdraw Extension
+public extension AuthManager {
     /// OAuthType별 회원탈퇴 처리
-    public func withdraw(with oAuthType: OAuthType) async {
+    func withdraw(with oAuthType: OAuthType) async {
         do {
             let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
             switch oAuthType {
@@ -97,6 +104,25 @@ public struct AuthManager: AuthManagerProtocol {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
         }
+    }
+}
+
+// MARK: Agreement Extension
+public extension AuthManager {
+    /// 약관 동의 상태 가져오기
+    func getAgreementCompletedState() -> Bool? {
+        guard let isAgreementCompleted = UserDefaults.standard.value(forKey: "agreementCompleted") as? Bool else { return nil }
+        return isAgreementCompleted
+    }
+    
+    /// 약관 동의 상태 저장
+    func setAgreementCompletedState(_ isCompleted: Bool) {
+        UserDefaults.standard.set(isCompleted, forKey: "isAgreementCompleted")
+    }
+    
+    /// 약관 동의 상태 제거
+    func deleteAgreementCompletedState() {
+        UserDefaults.standard.removeObject(forKey: "isAgreementCompleted")
     }
 }
 
