@@ -27,7 +27,15 @@ public struct AuthManager: AuthManagerProtocol {
 public extension AuthManager {
     /// 로그인 상태 가져오기
     func getLoginState() -> OAuthType? {
+        // 소셜 로그인 상태
         guard let oAuthTypeString = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
+        // 토큰 존재 여부
+        do {
+            _ = try KeyChainManager.readItem(key: "accessToken")
+            _ = try KeyChainManager.readItem(key: "refreshToken")
+        } catch {
+            return nil
+        }
         return OAuthType(rawValue: oAuthTypeString)
     }
         
