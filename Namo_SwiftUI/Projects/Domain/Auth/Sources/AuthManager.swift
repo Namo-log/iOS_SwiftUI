@@ -110,6 +110,7 @@ public extension AuthManager {
 // MARK: Agreement Extension
 public extension AuthManager {
     /// 약관 동의 상태 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
     func getAgreementCompletedState() -> Bool? {
         guard let isAgreementCompleted = UserDefaults.standard.value(forKey: "agreementCompleted") as? Bool else { return nil }
         return isAgreementCompleted
@@ -129,6 +130,7 @@ public extension AuthManager {
 // MARK: User Info Extension
 public extension AuthManager {
     /// 회원 가입 유저 정보 작성 상태 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
     func getUserInfoCompletedState() -> Bool? {
         guard let isUserInfoCompleted = UserDefaults.standard.value(forKey: "isUserInfoCompleted") as? Bool else { return nil }
         return isUserInfoCompleted

@@ -10,4 +10,11 @@ public protocol AuthManagerProtocol {
     func getLoginState() -> OAuthType?
     func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens)
     func setLogoutState(with oAuthType: OAuthType) async
+    func withdraw(with oAuthType: OAuthType) async
+    func getAgreementCompletedState() -> Bool?
+    func setAgreementCompletedState(_ isCompleted: Bool)
+    func deleteAgreementCompletedState()
+    func getUserInfoCompletedState() -> Bool?
+    func setUserInfoCompletedState(_ isCompleted: Bool)
+    func deleteUserInfoCompletedState()
 }
