@@ -42,7 +42,7 @@ extension MoimUseCase: DependencyKey {
         getMoimDetail: { meetingScheduleId in
             do {
                 let response: BaseResponse<MoimScheduleResonseDTO> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimDetail(meetingScheduleId))                
-                guard let data = response.result else { fatalError() }
+                guard let data = response.result else { fatalError() }                
                 return data.toEntity()
             } catch {
                 print(error.localizedDescription)

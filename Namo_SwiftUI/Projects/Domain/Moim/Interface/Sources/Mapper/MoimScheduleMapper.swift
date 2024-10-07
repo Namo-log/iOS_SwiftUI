@@ -28,8 +28,8 @@ public extension MoimSchedule {
                                        endDate: startDate.dateToISO8601()),
                      location: LocationDto(longitude: 0.0,
                                            latitude: 0.0,
-                                           locationName: "",
-                                           kakaoLocationId: ""),
+                                           locationName: locationName,
+                                           kakaoLocationId: kakaoLocationId),
                      participants: [11])
     }
 }
@@ -37,6 +37,7 @@ public extension MoimSchedule {
 public extension MoimScheduleResonseDTO {
     func toEntity() -> MoimSchedule {
         .init(title: title,
+              imageUrl: imageUrl,
               startDate: Date.ISO8601toDate(startDate),
               endDate: Date.ISO8601toDate(endDate),
               longitude: locationInfo.longitude,

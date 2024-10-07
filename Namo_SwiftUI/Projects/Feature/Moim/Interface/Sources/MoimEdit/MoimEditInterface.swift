@@ -27,6 +27,7 @@ public struct MoimEditStore {
         @BindingState public var isStartPickerPresented: Bool = false
         @BindingState public var isEndPickerPresented: Bool = false
         
+        public var imageUrl: String = ""
         public var coverImage: UIImage?
         public var longitude = 0.0
         public var latitude = 0.0

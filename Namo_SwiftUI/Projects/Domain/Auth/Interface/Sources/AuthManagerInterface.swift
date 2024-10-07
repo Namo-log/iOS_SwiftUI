@@ -10,4 +10,6 @@ public protocol AuthManagerProtocol {
     func getLoginState() -> OAuthType?
     func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens)
     func setLogoutState(with oAuthType: OAuthType) async
+    func setUserId(userId: Int)
+    func getUserId() -> Int
 }

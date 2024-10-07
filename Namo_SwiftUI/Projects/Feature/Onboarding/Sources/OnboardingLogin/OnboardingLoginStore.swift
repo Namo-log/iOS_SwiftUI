@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-
+import Foundation
 import DomainAuth
 import DomainAuthInterface
 import Core
@@ -101,7 +101,9 @@ public struct OnboardingLoginStore {
                     do {
                         let result = try await authClient.reqSignInWithApple(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
+                        
                         authClient.setLoginState(.apple, with: tokens)
+                        authClient.setUserId(userId: result.userId)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
                     }

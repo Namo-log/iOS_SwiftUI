@@ -46,8 +46,7 @@ public struct MainView: View {
                     FriendListView(store: store.scope(state: \.friendList, action: \.friendList))
                         .tag(1)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                
+                .tabViewStyle(.page(indexDisplayMode: .never))                
             }
             .namoNabBar(left: {
                 Text("Group Calendar")

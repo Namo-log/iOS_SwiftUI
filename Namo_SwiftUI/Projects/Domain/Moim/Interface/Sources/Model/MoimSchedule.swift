@@ -10,14 +10,16 @@ import CoreNetwork
 
 public struct MoimSchedule: Decodable, Hashable {
     public init(title: String,
+                imageUrl: String,
                 startDate: Date,
                 endDate: Date,
                 longitude: Double,
                 latitude: Double,
                 locationName: String,
-                kakaoLocationId: String,                
+                kakaoLocationId: String,
                 participants: [Participant]) {
         self.title = title
+        self.imageUrl = imageUrl
         self.startDate = startDate
         self.endDate = endDate
         self.longitude = longitude
@@ -27,7 +29,8 @@ public struct MoimSchedule: Decodable, Hashable {
         self.participants = participants
     }
     
-    public let title: String    
+    public let title: String
+    public let imageUrl: String
     public let startDate: Date
     public let endDate: Date
     public let longitude: Double
@@ -57,4 +60,10 @@ public struct Participant: Decodable, Hashable {
     public let nickname: String
     public let colorId: Int?
     public let isOwner: Bool
+}
+
+extension MoimSchedule {
+    var isOwner: Bool {
+        return true
+    }
 }

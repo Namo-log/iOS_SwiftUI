@@ -33,6 +33,12 @@ struct SplashCoordinator {
                 } else {
                     return .send(.goToOnboardingScreen)
                 }
+                
+                // 로그아웃은 임시로 해당 코드이 주석을 풀어서사용
+//                return .run { send in
+//                    await authClient.setLogoutState(with: .apple)
+//                    await send(.goToOnboardingScreen)
+//                }
             default:
                 return .none
             }

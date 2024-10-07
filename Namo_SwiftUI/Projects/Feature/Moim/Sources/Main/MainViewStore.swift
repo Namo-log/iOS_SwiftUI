@@ -18,7 +18,7 @@ public struct MainViewStore {
     public init() {}
     
     public struct State: Equatable {
-        public static let initialState = State(moimList: .init(), 
+        public static let initialState = State(moimList: .init(),
                                                friendList: .init(),
                                                moimEdit: .init())
         
@@ -66,7 +66,7 @@ public struct MainViewStore {
                 return .run { send in
                     do {
                         let moimSchedule = try await moimUseCase.getMoimDetail(meetingScheduleId)
-                            await send(.presentDetailSheet(moimSchedule))
+                        await send(.presentDetailSheet(moimSchedule))
                     } catch {
                         
                     }
@@ -80,6 +80,8 @@ public struct MainViewStore {
                 state.moimEdit.longitude = moimSchedule.longitude
                 state.moimEdit.kakaoLocationId = moimSchedule.kakaoLocationId
                 state.moimEdit.participants = moimSchedule.participants
+                state.moimEdit.locationName = moimSchedule.locationName            
+                state.moimEdit.imageUrl = moimSchedule.imageUrl                
                 return .none
             case .presentComposeSheet:
                 state.moimEdit = .init()

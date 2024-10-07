@@ -59,6 +59,7 @@ extension MoimEditStore {
 extension MoimEditStore.State {
     func makeMoim() -> MoimSchedule {
         .init(title: title,
+              imageUrl: imageUrl,
               startDate: startDate,
               endDate: endDate,
               longitude: longitude,

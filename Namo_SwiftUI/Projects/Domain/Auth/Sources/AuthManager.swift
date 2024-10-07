@@ -15,17 +15,27 @@ import DomainAuthInterface
 /// - 의존성:
 ///   - `authClient`를 사용하여 로그아웃 및 로그인 API 요청을 처리합니다.
 public struct AuthManager: AuthManagerProtocol {
-    
     // MARK: 추후 문제시 init에서 의존성 주입으로 변경
     @Dependency(\.authClient) var authClient
     
     public init() {}
+    
+    /// userId를 저장합니다.
+    public func setUserId(userId: Int) {
+        UserDefaults.standard.set(userId, forKey: "userId")
+    }
+    
+    /// userId를 반환합니다.
+    public func getUserId() -> Int {
+        return UserDefaults.standard.integer(forKey: "userId")
+    }
     
     /// 로그인 상태 가져오기
     public func getLoginState() -> OAuthType? {
         guard let oAuthTypeString = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
         return OAuthType(rawValue: oAuthTypeString)
     }
+    
     
     /// 카카오/네이버/애플 로그인 상태 저장
     public func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {

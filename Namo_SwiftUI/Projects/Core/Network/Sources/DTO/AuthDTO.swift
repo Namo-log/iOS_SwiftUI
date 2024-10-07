@@ -19,6 +19,7 @@ public struct TermDTO: Decodable {
 public struct SignInResponseDTO: Decodable {
 	public let accessToken: String
 	public let refreshToken: String
+    public let userId: Int
 	public let newUser: Bool
     public let signUpComplete: Bool
 	public let terms: [TermDTO]

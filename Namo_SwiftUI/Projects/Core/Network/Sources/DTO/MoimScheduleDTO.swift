@@ -34,7 +34,7 @@ public struct MoimScheduleListResponseDTO: Decodable {
 public struct MoimScheduleResonseDTO: Decodable {
     public init(scheduleId: Int,
                 title: String,
-                imageUrl: String?,
+                imageUrl: String,
                 startDate: String,
                 endDate: String,
                 interval: Int,
@@ -54,7 +54,7 @@ public struct MoimScheduleResonseDTO: Decodable {
     public let title: String
     public let startDate: String
     public let endDate: String
-    public let imageUrl: String?
+    public let imageUrl: String
     public let interval: Int
     public let participants: [ParticipantsDto]
     public let locationInfo: LocationDto

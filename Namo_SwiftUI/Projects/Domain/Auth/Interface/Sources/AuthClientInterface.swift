@@ -61,6 +61,16 @@ public struct AuthClient {
         return await authManager.setLogoutState(with: oAuthType)
     }
     
+    /// userId를 저장합니다.
+    public func setUserId(userId: Int) {
+        authManager.setUserId(userId: userId)
+    }
+    
+    /// userId를 반환합니다.
+    public func getUserId() -> Int {
+        return authManager.getUserId()
+    }
+    
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
     public var reqSignInWithApple: @Sendable (AppleSignInRequestDTO) async throws -> SignInResponseDTO

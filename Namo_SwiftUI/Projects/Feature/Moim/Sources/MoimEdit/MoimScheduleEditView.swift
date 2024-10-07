@@ -11,6 +11,7 @@ import PhotosUI
 import ComposableArchitecture
 import FeatureMoimInterface
 import SharedUtil
+import Kingfisher
 
 public struct MoimScheduleEditView: View {
     @Perception.Bindable private var store: StoreOf<MoimEditStore>
@@ -132,13 +133,18 @@ extension MoimScheduleEditView {
                         .resizable()
                         .frame(width: 55, height: 55)
                         .cornerRadius(8)
+                } else if !viewStore.imageUrl.isEmpty {
+                    KFImage(URL(string: viewStore.imageUrl))
+                        .resizable()
+                        .frame(width: 55, height: 55)
+                        .cornerRadius(8)
                 } else {
                     Image(asset: SharedDesignSystemAsset.Assets.addPicture)
                         .resizable()
                         .frame(width: 55, height: 55)
                 }
             }
-        }
+        }     
     }
     
     private var settingView: some View {
@@ -199,7 +205,7 @@ extension MoimScheduleEditView {
                 
                 Button(action: {}) {
                     HStack(spacing: 8) {
-                        Text("없음")
+                        Text(viewStore.locationName)
                             .font(.pretendard(.regular, size: 15))
                             .foregroundStyle(Color.mainText)
                         
