@@ -62,8 +62,8 @@ public struct Participant: Decodable, Hashable {
     public let isOwner: Bool
 }
 
-extension MoimSchedule {
+public extension MoimSchedule {
     var isOwner: Bool {
-        return true
+        participants.firstIndex(where: { $0.isOwner && $0.userId == UserDefaults.standard.integer(forKey: "userId")}) != nil
     }
 }

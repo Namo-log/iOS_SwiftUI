@@ -80,8 +80,10 @@ public struct MainViewStore {
                 state.moimEdit.longitude = moimSchedule.longitude
                 state.moimEdit.kakaoLocationId = moimSchedule.kakaoLocationId
                 state.moimEdit.participants = moimSchedule.participants
-                state.moimEdit.locationName = moimSchedule.locationName            
-                state.moimEdit.imageUrl = moimSchedule.imageUrl                
+                state.moimEdit.locationName = moimSchedule.locationName
+                state.moimEdit.imageUrl = moimSchedule.imageUrl
+                state.moimEdit.isOwner = moimSchedule.isOwner
+                state.moimEdit.mode =  moimSchedule.isOwner ? .edit : .view
                 return .none
             case .presentComposeSheet:
                 state.moimEdit = .init()

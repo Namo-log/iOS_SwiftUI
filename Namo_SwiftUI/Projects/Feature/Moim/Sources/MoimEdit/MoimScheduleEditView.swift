@@ -22,6 +22,30 @@ public struct MoimScheduleEditView: View {
         self.viewStore = ViewStore(store, observe: {$0})
     }
     
+    
+    /// 편집여부에 따라 보여지는 텍스트 설정
+    private var title: String {
+        switch viewStore.mode {
+        case .compose:
+            "새 모임 일정"
+        case .edit:
+            "모임 일정 편집"
+        case .view:
+            "모임 일정"
+        }
+    }
+    
+    private var buttonTitle: String {
+        switch viewStore.mode {
+        case .compose:
+            "생성"
+        case .edit:
+            "저장"
+        case .view:
+            ""
+        }
+    }
+    
     public  var body: some View {
         WithPerceptionTracking {
             // title
@@ -97,7 +121,7 @@ extension MoimScheduleEditView {
             
             Spacer()
             
-            Text("새 모임 일정")
+            Text(title)
                 .font(.pretendard(.bold, size: 15))
                 .foregroundStyle(Color.black)
             
@@ -106,10 +130,11 @@ extension MoimScheduleEditView {
             Button(action: {
                 store.send(.createButtonTapped)
             }) {
-                Text("생성")
+                Text(buttonTitle)
                     .font(.pretendard(.regular, size: 15))
                     .foregroundStyle(Color.mainText)
             }
+            .opacity(viewStore.mode == .view ? 0 : 1)
         }
     }
     
@@ -144,7 +169,7 @@ extension MoimScheduleEditView {
                         .frame(width: 55, height: 55)
                 }
             }
-        }     
+        }
     }
     
     private var settingView: some View {
