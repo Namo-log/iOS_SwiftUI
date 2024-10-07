@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 import TCACoordinators
 import SharedUtil
+import FeatureOnboarding
 
 /// 유저의 현재 상태를 분류합니다
 enum UserStatus {
@@ -29,12 +30,8 @@ struct SplashCoordinator {
     @Dependency(\.authClient) var authClient
     
     struct State: Equatable {
-        /// 로그인 여부
-        var isLogin: Bool = false
-        /// 약관 동의 여부
-        var agreementCompleted: Bool?
-        /// 회원 정보 작성 여부
-        var userInfoCompleted: Bool?
+        var splashState: OnboardingSplashStore.State
+        static let initialState: State = .init(splashState: OnboardingSplashStore.State())
     }
     
     enum Action {
@@ -50,10 +47,15 @@ struct SplashCoordinator {
         case goToUserInfoScreen
         // 메인 화면
         case goToMainScreen
+        // splash Store Action
+        case splash(OnboardingSplashStore.Action)
     }
     
     var body: some ReducerOf<Self> {
         
+        Scope(state: \.splashState, action: \.splash) {
+            OnboardingSplashStore()
+        }
         
         Reduce<State, Action> { state, action in
             switch action {
@@ -73,6 +75,26 @@ struct SplashCoordinator {
                     return .send(.goToMainScreen)
                 }
                 
+            default:
+                return .none
+            }
+        }
+    }
+    /// 유저의 현재 상태를 파악합니다
+    func userStatusCheck() -> UserStatus {
+        // 로그인 상태 확인
+        guard let _ = authClient.getLoginState() else { return .logout }
+        // 약관 동의 여부 nil 체크
+        guard let agreementCompleted = authClient.getAgreementCompletedState() else { return .loginWithoutAgreement }
+        // 유저 정보 작성 여부 nil 체크
+        guard let userInfoCompleted = authClient.getUserInfoCompletedState() else { return .loginWithoutUserInfo }
+        // 필요 정보 작성 여부 체크
+        guard agreementCompleted && userInfoCompleted else { return .loginWithoutEverything }
+        
+        return .loginWithAll
+    }
+}
+
 //                if authClient.getLoginState() != nil {
 //                    return .send(.goToMainScreen)
 //                } else {
@@ -84,22 +106,3 @@ struct SplashCoordinator {
 //                    await authClient.setLogoutState(with: .apple)
 //                    await send(.goToOnboardingScreen)
 //                }
-            default:
-                return .none
-            }
-        }
-    }
-    /// 유저의 현재 상태를 파악합니다
-    func userStatusCheck() -> UserStatus {
-        // 로그인 상태 확인
-        guard let isLogin = authClient.getLoginState() else { return .logout}
-        // 약관 동의 여부 nil 체크
-        guard let agreementCompleted = authClient.getAgreementCompletedState() else { return .loginWithoutAgreement }
-        // 유저 정보 작성 여부 nil 체크
-        guard let userInfoCompleted = authClient.getUserInfoCompletedState() else { return .loginWithoutUserInfo }
-        // 필요 정보 작성 여부 체크
-        guard agreementCompleted && userInfoCompleted else { return .loginWithoutEverything }
-        
-        return .loginWithAll
-    }
-}

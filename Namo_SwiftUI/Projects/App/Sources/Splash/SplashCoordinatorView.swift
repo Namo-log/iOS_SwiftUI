@@ -9,12 +9,13 @@ import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
 import SharedUtil
+import FeatureOnboarding
 
 struct SplashCoordinatorView: View {
     let store: StoreOf<SplashCoordinator>
     
     var body: some View {
-        Text("Splash 임시")
+        OnboardingSplashView(store: store.scope(state: \.splashState, action: \.splash))
             .onAppear {
                 store.send(.loginCheck)
             }

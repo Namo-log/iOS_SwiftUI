@@ -24,10 +24,10 @@ struct AppCoordinator {
     
     @ObservableState
     struct State {
-        static let initialState = State(routes: [.root(.splash(.init()), embedInNavigationView: true)],
+        static let initialState = State(routes: [.root(.splash(.initialState), embedInNavigationView: true)],
                                         mainTab: .intialState,
-                                        splash: .init(),
-                                        onboarding: OnboardingCoordinator.State.initialState)
+                                        splash: .initialState,
+                                        onboarding: .initialState)
         var routes: [Route<AppScreen.State>]
         var mainTab: MainTabCoordinator.State
         var splash: SplashCoordinator.State
