@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import FeatureMoimInterface
+import DomainMoimInterface
 import FeatureFriend
 
 @Reducer
@@ -39,7 +40,8 @@ public struct MainViewStore {
         case moimList(MoimListStore.Action)
         case moimEdit(MoimEditStore.Action)
         case friendList(FriendListStore.Action)
-        case presentDetailSheet
+        case presentDetailSheet(MoimSchedule)
+        case presentComposeSheet
     }
     
     public var body: some Reducer<State, Action> {
@@ -64,12 +66,22 @@ public struct MainViewStore {
                 return .run { send in
                     do {
                         let moimSchedule = try await moimUseCase.getMoimDetail(meetingScheduleId)
-                        await send(.presentDetailSheet)
+                            await send(.presentDetailSheet(moimSchedule))
                     } catch {
                         
                     }
                 }
-            case .presentDetailSheet:
+            case let .presentDetailSheet(moimSchedule):
+                state.isSheetPresented = true
+                state.moimEdit.title = moimSchedule.title
+                state.moimEdit.startDate = moimSchedule.startDate
+                state.moimEdit.endDate = moimSchedule.endDate
+                state.moimEdit.latitude = moimSchedule.latitude
+                state.moimEdit.longitude = moimSchedule.longitude
+                state.moimEdit.kakaoLocationId = moimSchedule.kakaoLocationId
+                return .none
+            case .presentComposeSheet:
+                state.moimEdit = .init()
                 state.isSheetPresented = true
                 return .none
             default:

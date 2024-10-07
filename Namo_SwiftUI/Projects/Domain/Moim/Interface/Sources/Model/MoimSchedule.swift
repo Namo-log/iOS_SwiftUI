@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreNetwork
 
 public struct MoimSchedule: Decodable, Hashable {
     public init(title: String,
@@ -15,7 +16,7 @@ public struct MoimSchedule: Decodable, Hashable {
                 latitude: Double,
                 locationName: String,
                 kakaoLocationId: String,                
-                participants: [String]) {
+                participants: [ParticipantsDto]) {
         self.title = title
         self.startDate = startDate
         self.endDate = endDate
@@ -33,5 +34,5 @@ public struct MoimSchedule: Decodable, Hashable {
     public let latitude: Double
     public let locationName: String
     public let kakaoLocationId: String
-    public let participants: [String]
+    public let participants: [ParticipantsDto]
 }

@@ -151,7 +151,7 @@ extension MoimScheduleEditView {
                     
                     Spacer()
                     
-                    Text("2024.08.07 (수) 08:00 AM")
+                    Text(viewStore.startDate.toYMDEHM())
                         .font(.pretendard(.regular, size: 15))
                         .foregroundStyle(Color.mainText)
                         .onTapGesture {
@@ -175,7 +175,7 @@ extension MoimScheduleEditView {
                         .foregroundStyle(Color.mainText)
                     
                     Spacer()
-                    Text("2024.08.07 (수) 08:00 AM")
+                    Text(viewStore.endDate.toYMDEHM())
                         .font(.pretendard(.regular, size: 15))
                         .foregroundStyle(Color.mainText)
                         .onTapGesture {

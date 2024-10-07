@@ -65,7 +65,7 @@ extension MoimEditStore.State {
               latitude: latitude,
               locationName: locationName,
               kakaoLocationId: kakaoLocationId,
-              participants: participants)
+              participants: [])
     }
 }
 

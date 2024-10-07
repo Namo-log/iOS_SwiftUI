@@ -106,12 +106,12 @@ public struct LocationDto: Encodable, Decodable {
     public let kakaoLocationId: String
 }
 
-public struct ParticipantsDto: Decodable {
+public struct ParticipantsDto: Decodable, Hashable {
     public init(participantId: Int,
                 userId: Int,
                 isGuest: Bool,
                 nickname: String,
-                colorId: Int,
+                colorId: Int?,
                 isOwner: Bool) {
         self.participantId = participantId
         self.userId = userId
@@ -124,6 +124,6 @@ public struct ParticipantsDto: Decodable {
     public let userId: Int
     public let isGuest: Bool
     public let nickname: String
-    public let colorId: Int
+    public let colorId: Int?
     public let isOwner: Bool
 }

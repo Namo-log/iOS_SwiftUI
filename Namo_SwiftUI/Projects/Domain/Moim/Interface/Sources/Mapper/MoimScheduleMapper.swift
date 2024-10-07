@@ -37,12 +37,12 @@ public extension MoimSchedule {
 public extension MoimScheduleResonseDTO {
     func toEntity() -> MoimSchedule {
         .init(title: title,
-              startDate: .now,
-              endDate: .now,
+              startDate: Date.ISO8601toDate(startDate),
+              endDate: Date.ISO8601toDate(endDate),
               longitude: locationInfo.longitude,
               latitude: locationInfo.latitude,
               locationName: locationInfo.locationName,
               kakaoLocationId: locationInfo.kakaoLocationId,
-              participants: [])
+              participants: participants)
     }
 }

@@ -33,7 +33,7 @@ public struct MainView: View {
                     MoimListView(store: store.scope(state: \.moimList, action: \.moimList))
                         .overlay(alignment: .bottomTrailing) {
                             FloatingButton {
-                                store.send(.set(\.$isSheetPresented, true))
+                                store.send(.presentComposeSheet)
                             }
                         }
                         .sheet(isPresented: viewStore.$isSheetPresented, content: {
