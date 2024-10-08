@@ -24,7 +24,7 @@ struct MoimListView: View {
                 if !store.moimList.isEmpty {
                     ScrollView {
                         LazyVStack(spacing: 20) {
-                            ForEach(store.moimList, id: \.self) { moimSchedule in
+                            ForEach(store.moimList, id: \.meetingScheduleId) { moimSchedule in
                                 MoimScheduleCell(scheduleItem: moimSchedule)
                                     .onTapGesture {
                                         store.send(.moimCellSelected(meetingScheduleId: moimSchedule.meetingScheduleId))
@@ -37,7 +37,7 @@ struct MoimListView: View {
                     EmptyListView(title: "모임 일정이 없습니다.\n 친구와의 모임 약속을 잡아보세요!")
                 }
             }
-            .frame(maxWidth: .infinity)           
+            .frame(maxWidth: .infinity)
             .onAppear {
                 store.send(.viewOnAppear)
             }

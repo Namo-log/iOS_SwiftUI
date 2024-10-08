@@ -11,8 +11,6 @@ import FeatureFriend
 import FeatureMoimInterface
 import ComposableArchitecture
 
-
-
 public struct MainView: View {
     @Perception.Bindable private var store: StoreOf<MainViewStore>
     @ObservedObject private var viewStore: ViewStoreOf<MainViewStore>
@@ -23,42 +21,49 @@ public struct MainView: View {
     }
     
     public var body: some View {
-        WithPerceptionTracking {
-            VStack(spacing: 0) {
-                TabBarView(currentTab: viewStore.$currentTab, tabBarOptions: ["모임 일정", "친구리스트"])
-                
-                TabView(selection: viewStore.$currentTab) {
+        ZStack {
+            WithPerceptionTracking {
+                VStack(spacing: 0) {
+                    TabBarView(currentTab: viewStore.$currentTab, tabBarOptions: ["모임 일정", "친구리스트"])
                     
-                    // 모임일정 리스트
-                    MoimListView(store: store.scope(state: \.moimList, action: \.moimList))
-                        .overlay(alignment: .bottomTrailing) {
-                            FloatingButton {
-                                store.send(.presentComposeSheet)
+                    TabView(selection: viewStore.$currentTab) {
+                        
+                        // 모임일정 리스트
+                        MoimListView(store: store.scope(state: \.moimList, action: \.moimList))
+                            .overlay(alignment: .bottomTrailing) {
+                                FloatingButton {
+                                    store.send(.presentComposeSheet)
+                                }
                             }
-                        }
-                        .sheet(isPresented: viewStore.$isSheetPresented, content: {
-                            MoimScheduleEditView(store: store.scope(state: \.moimEdit, action: \.moimEdit))
-                                .presentationDetents([.height(700)])
-                        })
-                        .tag(0)
-                    
-                    // 친구 리스트
-                    FriendListView(store: store.scope(state: \.friendList, action: \.friendList))
-                        .tag(1)
+                            .fullScreenCover(isPresented: viewStore.$isSheetPresented, content: {
+                                MoimScheduleEditView(store: store.scope(state: \.moimEdit, action: \.moimEdit))
+                                    .background(ClearBackground())
+                            })
+                            .tag(0)
+                        
+                        // 친구 리스트
+                        FriendListView(store: store.scope(state: \.friendList, action: \.friendList))
+                            .tag(1)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))                
+                .namoNabBar(left: {
+                    Text("Group Calendar")
+                        .font(.pretendard(.bold, size: 22))
+                        .foregroundStyle(.black)
+                }, right: {
+                    Button(action: {
+                        store.send(.notificationButtonTap)
+                    }) {
+                        Image(asset: SharedDesignSystemAsset.Assets.icNotification)
+                    }
+                })
+                .overlay(
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea(.all)
+                        .opacity(viewStore.isSheetPresented == true ? 1 : 0)
+                )
             }
-            .namoNabBar(left: {
-                Text("Group Calendar")
-                    .font(.pretendard(.bold, size: 22))
-                    .foregroundStyle(.black)
-            }, right: {
-                Button(action: {
-                    store.send(.notificationButtonTap)
-                }) {
-                    Image(asset: SharedDesignSystemAsset.Assets.icNotification)
-                }
-            })
         }
     }
 }

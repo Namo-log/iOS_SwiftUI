@@ -97,7 +97,7 @@ public extension APIManager {
             return nil
         }
         
-        let response = await AF.upload(imageFile, to: url, method: .put, headers: ["Content-Type": "image/png"])
+        let response = await AF.upload(imageFile, to: url, method: .put, headers: ["Content-Type": "image/jpeg"])
             .validate(statusCode: 200..<300)
             .serializingResponse(using: .data)
             .response

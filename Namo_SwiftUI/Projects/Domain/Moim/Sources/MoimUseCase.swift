@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 import DomainMoimInterface
 import CoreNetwork
+import SharedUtil
 
 // 모임 유즈케이스 구현체
 extension MoimUseCase: DependencyKey {
@@ -23,14 +24,18 @@ extension MoimUseCase: DependencyKey {
                 throw error
             }
         },
-        createMoim: { moim, imageFile in
+        createMoim: { moim, uiImage in
             do {
                 var moimDto = moim.toDto()
                 
                 // 선택한 이미지 파일이 존재하는 경우에만 요청
-                if let data = imageFile?.pngData(),
-                   let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)").result {
-                    let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: data)
+                // 이미지 렌더시 메모리 사용량을 줄이기 위해서는 해상도를 조정해야함
+                if let image = uiImage,
+                   let imageFile = image.resize(newWidth: 100).jpegData(compressionQuality: 0.6)
+                {
+                    let filename = "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
+                    let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: filename).result!
+                    let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: imageFile)
                     moimDto.imageUrl = uploadedUrl
                 }
                 

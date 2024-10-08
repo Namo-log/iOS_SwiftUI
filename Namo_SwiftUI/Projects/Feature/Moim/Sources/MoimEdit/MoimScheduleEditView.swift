@@ -48,48 +48,72 @@ public struct MoimScheduleEditView: View {
     }
     
     public  var body: some View {
-        WithPerceptionTracking {
-            // title
-            headerView
-                .padding(.horizontal, 20)
-            
-            // content
-            ScrollView {
+        // deleteButton
+        deleteScheduleButton
+            .padding(.bottom, 6)
+            .padding(.top, 10)
+        
+        VStack(spacing: 0) {
+            WithPerceptionTracking {
+                // title
+                headerView
+                    .padding(.horizontal, 20)
                 
-                VStack(spacing: 30) {
-                    // textField
-                    TextField("내 모임", text: viewStore.$title)
-                        .font(.pretendard(.bold, size: 22))
-                        .foregroundStyle(Color.mainText)
-                        .padding(.top, 20)
-                    
-                    // imagePicker
-                    imagePickerView
-                    
-                    // 장소, 시간
-                    settingView
-                    
-                    
-                    // 친구 초대
-                    participantListView
-                    
-                    
-                    // 일정보기 버튼
-                    showScheduleButton
+                // content
+                ScrollView {
+                    VStack(spacing: 30) {
+                        // textField
+                        TextField("내 모임", text: viewStore.$title)
+                            .font(.pretendard(.bold, size: 22))
+                            .foregroundStyle(Color.mainText)
+                            .padding(.top, 20)
+                        
+                        // imagePicker
+                        imagePickerView
+                        
+                        // 장소, 시간
+                        settingView
+                        
+                        // 친구 초대
+                        participantListView
+                        
+                        
+                        // 일정보기 버튼
+                        showScheduleButton
+                    }
+                    .padding(.horizontal, 30)
                 }
-                .padding(.horizontal, 30)
             }
-            .padding(.bottom, 13)
         }
-        .padding(.top, 15)
+        .background(.white)
+        .clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .topRight]))
+        .shadow(
+            color: Color.black.opacity(0.15),
+            radius: 12,
+            x: 0,
+            y: 0
+        )
+        .mask(Rectangle().padding(.top, -20))
         .edgesIgnoringSafeArea(.bottom)
-        .onAppear {
-            store.send(.viewOnAppear)
-        }
     }
 }
 
 extension MoimScheduleEditView {
+    
+    private var deleteScheduleButton: some View {
+        Button(action: {}, label: {
+            Circle()
+                .frame(width: 40, height: 40)
+                .foregroundStyle(.white)
+                .overlay {
+                    Image(asset: SharedDesignSystemAsset.Assets.icTrash)
+                }
+                .shadow(
+                    color: Color.black.opacity(0.25),
+                    radius: 6
+                )
+        })
+    }
     
     /// 일정 보기
     private var showScheduleButton: some View {
@@ -110,7 +134,7 @@ extension MoimScheduleEditView {
                 .stroke(.black, lineWidth: 1)
         )
     }
-        
+    
     /// 헤더뷰
     private var headerView: some View {
         HStack(alignment: .center, spacing: 0) {
@@ -139,6 +163,7 @@ extension MoimScheduleEditView {
             }
             .opacity(viewStore.mode == .view ? 0 : 1)
         }
+        .frame(height: 48)
     }
     
     /// 커버이미지 피커

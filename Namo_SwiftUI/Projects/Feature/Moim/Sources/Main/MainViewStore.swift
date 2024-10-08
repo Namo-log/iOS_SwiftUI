@@ -60,9 +60,9 @@ public struct MainViewStore {
         Reduce<State, Action> { state, action in
             switch action {
                 // 모임 수정 완료
-            case .moimEdit(.createButtonTapped):
-                state.isSheetPresented = false
+            case .moimEdit(.createButtonTapped):                
                 state.moimEdit = .init()
+                state.isSheetPresented = false
                 return .none
                 // 모임 수정 취소
             case .moimEdit(.cancleButtonTapped):
@@ -71,12 +71,10 @@ public struct MainViewStore {
                 // 모임일정 선택
             case let .moimList(.moimCellSelected(meetingScheduleId)):
                 return .run { send in
-                    do {
-                        let moimSchedule = try await moimUseCase.getMoimDetail(meetingScheduleId)
-                        await send(.presentDetailSheet(moimSchedule))
-                    } catch {
-                        
-                    }
+                    let moimSchedule = try await moimUseCase.getMoimDetail(meetingScheduleId)
+                    await send(.presentDetailSheet(moimSchedule))
+                } catch: { error, send in
+                    // 에러 처리
                 }
                 // 모임일정 선택후 상태
             case let .presentDetailSheet(moimSchedule):

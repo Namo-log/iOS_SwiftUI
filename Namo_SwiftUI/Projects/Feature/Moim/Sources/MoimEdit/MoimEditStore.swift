@@ -16,7 +16,7 @@ extension MoimEditStore {
     public init() {
         @Dependency(\.moimUseCase) var moimUseCase
         
-        let reducer: Reduce<State, Action> = Reduce { state, action in
+        let reducer: Reduce<State, Action> = Reduce { state, action in            
             switch action {
             case .binding(\.$coverImageItem):
                 return .run { [imageItem = state.coverImageItem] send in
@@ -40,7 +40,7 @@ extension MoimEditStore {
                 return .none
                 
             case .createButtonTapped:
-                return .run { [state = state] send in                    
+                return .run { [state = state] send in
                     try await moimUseCase.createMoim(state.makeMoim(), state.coverImage)
                 }
             case .viewOnAppear:

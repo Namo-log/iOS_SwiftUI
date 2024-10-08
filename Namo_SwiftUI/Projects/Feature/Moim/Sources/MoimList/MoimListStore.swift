@@ -19,8 +19,8 @@ extension MoimListStore {
             // 뷰가 로드되면 모임리스트 요청
             case .viewOnAppear:
                 return .run { send in
-                    let result = try await moimUseCase.getMoimList()
-                    return await send(.moimListResponse(result))
+                    let result = try await moimUseCase.getMoimList()                    
+                    await send(.moimListResponse(result))
                 }
             // 모임리스트 요청 결과 스토어 업데이트
             case let  .moimListResponse(moimList):                
