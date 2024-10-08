@@ -39,8 +39,6 @@ struct SplashCoordinator {
         case loginCheck
         // 로그인 화면
         case goToLoginScreen
-        // 온보딩 처음 화면
-        case goToOnboardingScreen
         // 약관 동의 화면
         case goToAgreementScreen
         // 유저 정보 작성 화면
@@ -66,7 +64,7 @@ struct SplashCoordinator {
                 case .logout:
                     return .send(.goToLoginScreen)
                 case .loginWithoutEverything:
-                    return .send(.goToOnboardingScreen)
+                    return .send(.goToAgreementScreen)
                 case .loginWithoutAgreement:
                     return .send(.goToAgreementScreen)
                 case .loginWithoutUserInfo:

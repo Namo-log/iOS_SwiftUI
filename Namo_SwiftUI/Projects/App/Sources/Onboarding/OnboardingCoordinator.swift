@@ -36,6 +36,15 @@ struct OnboardingCoordinator {
             userInfoState: .init(name: nil),
             routes: [.root(.login(OnboardingLoginStore.State()))] // 첫 화면은 로그인
         )
+        
+        static func manualState(_ routes: [Route<OnboardingScreen.State>]) -> State {
+            return State(
+                loginState: .init(),
+                agreementState: .init(),
+                userInfoState: .init(name: nil),
+                routes: routes
+            )
+        }
     }
     
     enum Action {

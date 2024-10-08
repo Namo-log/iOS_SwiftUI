@@ -50,13 +50,38 @@ struct AppCoordinator {
         
         Reduce<State, Action> { state, action in
 
-            switch action {            
-            case .router(.routeAction(_, action: .onboarding(.login(.namoAppleLoginResponse(_))))):
-                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
-            case .router(.routeAction(_, action: .splash(.goToOnboardingScreen))):
-                state.routes = [.root(.onboarding(OnboardingCoordinator.State.initialState), embedInNavigationView: true)]
-            case .router(.routeAction(_, action: .splash(.goToMainScreen))):
-                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
+            switch action {
+                
+            // Splash - 로그인 체크 결과 화면 라우팅
+            case .router(.routeAction(_, action: .splash(let action))):
+                switch action {
+
+                case .goToLoginScreen:
+                    state.routes = [.root(.onboarding(OnboardingCoordinator.State.initialState))]
+                        
+                case .goToAgreementScreen:
+                    state.routes = [
+                        .root(.onboarding(.manualState([
+                            .root(.login(.init()), embedInNavigationView: true),
+                            .push(.agreement(.init()))
+                        ])))
+                    ]
+                    
+                case .goToUserInfoScreen:
+                    state.routes = [
+                        .root(.onboarding(.manualState([
+                            .root(.login(.init()), embedInNavigationView: true),
+                            .push(.userInfo(.init(name: nil)))
+                        ])))
+                    ]
+                    
+                case .goToMainScreen:
+                    state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
+                    
+                default:
+                    break
+                }
+                
             default:
                 break
             }
