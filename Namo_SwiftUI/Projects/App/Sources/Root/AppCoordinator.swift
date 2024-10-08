@@ -24,29 +24,15 @@ struct AppCoordinator {
     
     @ObservableState
     struct State {
-        static let initialState = State(routes: [.root(.splash(.initialState), embedInNavigationView: true)],
-                                        mainTab: .intialState,
-                                        splash: .initialState,
-                                        onboarding: .initialState)
+        static let initialState = State(routes: [.root(.splash(.initialState), embedInNavigationView: true)])
         var routes: [Route<AppScreen.State>]
-        var mainTab: MainTabCoordinator.State
-        var splash: SplashCoordinator.State
-        var onboarding: OnboardingCoordinator.State
     }
     
     enum Action {
         case router(IndexedRouterActionOf<AppScreen>)
-        case mainTab(MainTabCoordinator.Action)
-        case onboarding(OnboardingCoordinator.Action)
     }
     
     var body: some ReducerOf<Self> {
-        Scope(state: \.mainTab, action: \.mainTab) {
-            MainTabCoordinator()
-        }
-        Scope(state: \.onboarding, action: \.onboarding) {
-            OnboardingCoordinator()
-        }
         
         Reduce<State, Action> { state, action in
 
@@ -57,23 +43,18 @@ struct AppCoordinator {
                 switch action {
 
                 case .goToLoginScreen:
-                    state.routes = [.root(.onboarding(OnboardingCoordinator.State.initialState))]
+                    state.routes.push(.onboarding(.initialState))
                         
                 case .goToAgreementScreen:
-                    state.routes = [
-                        .root(.onboarding(.manualState([
-                            .root(.login(.init()), embedInNavigationView: true),
-                            .push(.agreement(.init()))
-                        ])))
-                    ]
+                    state.routes.push(.onboarding(.routedState([
+                        .push(.agreement(.init()))
+                    ])))
                     
                 case .goToUserInfoScreen:
-                    state.routes = [
-                        .root(.onboarding(.manualState([
-                            .root(.login(.init()), embedInNavigationView: true),
-                            .push(.userInfo(.init(name: nil)))
-                        ])))
-                    ]
+                    state.routes.push(.onboarding(.routedState([
+                        .push(.agreement(.init())),
+                        .push(.userInfo(.init(name: nil)))
+                    ])))
                     
                 case .goToMainScreen:
                     state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
