@@ -24,51 +24,25 @@ struct OnboardingCoordinator {
     
     @ObservableState
     struct State: Equatable {
-        var loginState: OnboardingLoginStore.State
-        var agreementState: OnboardingTOSStore.State
-        var userInfoState: OnboardingInfoInputStore.State
         
         var routes: [Route<OnboardingScreen.State>]
         
         static let initialState: State = .init(
-            loginState: .init(),
-            agreementState: .init(),
-            userInfoState: .init(name: nil),
-            routes: [.root(.login(OnboardingLoginStore.State()))] // 첫 화면은 로그인
+            routes: [.root(.login(.init()))] // 첫 화면은 로그인
         )
         
-        static func manualState(_ routes: [Route<OnboardingScreen.State>]) -> State {
-            return State(
-                loginState: .init(),
-                agreementState: .init(),
-                userInfoState: .init(name: nil),
-                routes: routes
-            )
+        static func routedState(_ routes: [Route<OnboardingScreen.State>]) -> State {
+            var initState = initialState
+            initState.routes.append(contentsOf: routes)
+            return initState
         }
     }
     
     enum Action {
-        case login(OnboardingLoginStore.Action)
-        case agreement(OnboardingTOSStore.Action)
-        case userInfo(OnboardingInfoInputStore.Action)
-        case signUpCompletion
-        
         case router(IndexedRouterActionOf<OnboardingScreen>)
     }
     
     var body: some ReducerOf<Self> {
-        
-        Scope(state: \.loginState, action: \.login) {
-            OnboardingLoginStore()
-        }
-        
-        Scope(state: \.agreementState, action: \.agreement) {
-            OnboardingTOSStore()
-        }
-        
-        Scope(state: \.userInfoState, action: \.userInfo) {
-            OnboardingInfoInputStore()
-        }
         
         Reduce<State, Action> { state, action in
             switch action {
@@ -78,20 +52,18 @@ struct OnboardingCoordinator {
                     
                     // 약관 동의 화면으로 이동
                 case .login(.goToNextScreen):
-                    print("되는건가")
-                    state.routes.append(.push(.agreement(state.agreementState)))
+                    state.routes.push(.agreement(.init()))
                     return .none
                     
                     // 유저 정보 입력 화면으로 이동
                 case .agreement(.goToNextScreen):
-                    print("되는건가")
-                    state.routes.append(.push(.userInfo(state.userInfoState)))
+                    // TODO: 추후 기획 확정 시 수정
+                    state.routes.push(.userInfo(.init(name: nil)))
                     return .none
                     
                     // 회원가입 완료 화면으로 이동
-                case .userInfo(.goToNextScreen):
-                    print("되는건가")
-                    state.routes.append(.push(.signUpCompletion))
+                case .userInfo(.goToNextScreen):      
+                    state.routes.push(.signUpCompletion)
                     return .none
                     
                 default:
