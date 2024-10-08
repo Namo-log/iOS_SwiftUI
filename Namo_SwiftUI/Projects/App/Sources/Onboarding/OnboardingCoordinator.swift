@@ -54,9 +54,6 @@ struct OnboardingCoordinator {
         case signUpCompletion
         
         case router(IndexedRouterActionOf<OnboardingScreen>)
-        case pushToAgreementScreen
-        case pushToUserInfoScreen
-        case pushToSignUpCompletionScreen
     }
     
     var body: some ReducerOf<Self> {
@@ -76,24 +73,30 @@ struct OnboardingCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
                 
-            // 약관 동의 화면으로 이동
-            case .pushToAgreementScreen:
-                state.routes.append(.push(.agreement(state.agreementState)))
-                return .none
-                
-            // 유저 정보 입력 화면으로 이동
-            case .pushToUserInfoScreen:
-                state.routes.append(.push(.userInfo(state.userInfoState)))
-                return .none
-                
-            // 회원가입 완료 화면으로 이동
-            case .pushToSignUpCompletionScreen:
-                state.routes.append(.push(.signUpCompletion))
-                return .none
-                
-            // Router 액션 처리
-            case .router(let routerAction):
-                return .none
+            case .router(.routeAction(_, action: let action)):
+                switch action {
+                    
+                    // 약관 동의 화면으로 이동
+                case .login(.goToNextScreen):
+                    print("되는건가")
+                    state.routes.append(.push(.agreement(state.agreementState)))
+                    return .none
+                    
+                    // 유저 정보 입력 화면으로 이동
+                case .agreement(.goToNextScreen):
+                    print("되는건가")
+                    state.routes.append(.push(.userInfo(state.userInfoState)))
+                    return .none
+                    
+                    // 회원가입 완료 화면으로 이동
+                case .userInfo(.goToNextScreen):
+                    print("되는건가")
+                    state.routes.append(.push(.signUpCompletion))
+                    return .none
+                    
+                default:
+                    return .none
+                }
                 
             default:
                 return .none
