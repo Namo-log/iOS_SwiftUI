@@ -91,6 +91,11 @@ public extension AuthClient {
 
 // MARK: Auth Manager API
 public extension AuthClient {
+    
+    /// 유저의 현재 상태를 파악합니다
+    func userStatusCheck() -> UserStatus {
+        return authManager.userStatusCheck()
+    }
 
     /// 현재 로그인 상태를 가져옵니다
     func getLoginState() -> OAuthType? {

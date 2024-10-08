@@ -11,19 +11,6 @@ import TCACoordinators
 import SharedUtil
 import FeatureOnboarding
 
-/// 유저의 현재 상태를 분류합니다
-enum UserStatus {
-    /// 로그인 X
-    case logout
-    /// 로그인 + 추가 정보 미입력
-    case loginWithoutEverything
-    /// 로그인, 약관동의 정보 필요
-    case loginWithoutAgreement
-    /// 로그인, 유저 정보 필요
-    case loginWithoutUserInfo
-    /// 로그인 + 모든 정보 입력
-    case loginWithAll
-}
 
 @Reducer
 struct SplashCoordinator {
@@ -59,7 +46,7 @@ struct SplashCoordinator {
             switch action {
             case .loginCheck:
                 
-                switch userStatusCheck() {
+                switch authClient.userStatusCheck() {
                     
                 case .logout:
                     return .send(.goToLoginScreen)
@@ -77,19 +64,6 @@ struct SplashCoordinator {
                 return .none
             }
         }
-    }
-    /// 유저의 현재 상태를 파악합니다
-    func userStatusCheck() -> UserStatus {
-        // 로그인 상태 확인
-        guard let _ = authClient.getLoginState() else { return .logout }
-        // 약관 동의 여부 nil 체크
-        guard let agreementCompleted = authClient.getAgreementCompletedState() else { return .loginWithoutAgreement }
-        // 유저 정보 작성 여부 nil 체크
-        guard let userInfoCompleted = authClient.getUserInfoCompletedState() else { return .loginWithoutUserInfo }
-        // 필요 정보 작성 여부 체크
-        guard agreementCompleted && userInfoCompleted else { return .loginWithoutEverything }
-        
-        return .loginWithAll
     }
 }
 

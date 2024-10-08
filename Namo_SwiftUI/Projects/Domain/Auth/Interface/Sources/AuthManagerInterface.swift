@@ -7,6 +7,7 @@
 
 /// AuthManager의 인터페이스 프로토콜입니다.
 public protocol AuthManagerProtocol {
+    func userStatusCheck() -> UserStatus
     func getLoginState() -> OAuthType?
     func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens)
     func setLogoutState(with oAuthType: OAuthType) async

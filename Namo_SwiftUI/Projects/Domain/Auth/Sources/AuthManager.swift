@@ -21,6 +21,20 @@ public struct AuthManager: AuthManagerProtocol {
     @Dependency(\.authClient) var authClient
     
     public init() {}
+    
+    /// 유저의 현재 상태를 파악합니다
+    public func userStatusCheck() -> UserStatus {
+        // 로그인 상태 확인
+        guard let _ = authClient.getLoginState() else { return .logout }
+        // 약관 동의 여부 nil 체크
+        guard let agreementCompleted = authClient.getAgreementCompletedState() else { return .loginWithoutAgreement }
+        // 유저 정보 작성 여부 nil 체크
+        guard let userInfoCompleted = authClient.getUserInfoCompletedState() else { return .loginWithoutUserInfo }
+        // 필요 정보 작성 여부 체크
+        guard agreementCompleted && userInfoCompleted else { return .loginWithoutEverything }
+        
+        return .loginWithAll
+    }
 }
 
 // MARK: Login/Logout Extension
