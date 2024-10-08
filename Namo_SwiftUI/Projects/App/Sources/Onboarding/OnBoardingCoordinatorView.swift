@@ -23,8 +23,8 @@ struct OnboardingCoordinatorView: View {
                 OnboardingTOSView(store: store)
             case let .userInfo(store):
                 OnboardingInfoInputView(store: store)
-            case .signUpCompletion:
-                OnboardingCompleteView()
+            case let .signUpCompletion(store):
+                OnboardingCompleteView(store: store)
             }
         }
         .onAppear {

@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 
 public struct OnboardingCompleteView: View {
     
-    public init() {}
+    var store: StoreOf<OnboardingCompleteStore>
+    
+    public init(store: StoreOf<OnboardingCompleteStore>) {
+        self.store = store
+    }
     
     public var body: some View {
         VStack {
@@ -32,7 +37,9 @@ public struct OnboardingCompleteView: View {
             
             Spacer()
             
-            NamoButton(title: "확인", type: .active, action: {})
+            NamoButton(title: "확인", type: .active, action: {
+                store.send(.goToNextScreen)
+            })
                 .padding(.horizontal, 25)
         }
         .padding(.vertical, 40)

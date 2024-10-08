@@ -16,7 +16,7 @@ enum OnboardingScreen {
     case login(OnboardingLoginStore)
     case agreement(OnboardingTOSStore)
     case userInfo(OnboardingInfoInputStore)
-    case signUpCompletion
+    case signUpCompletion(OnboardingCompleteStore)
 }
 
 @Reducer
@@ -80,6 +80,10 @@ struct OnboardingCoordinator {
                 case .userInfo(.goToNextScreen):      
                     return .send(.goToSignUpCompletion)
                     
+                    // 메인 화면으로 이동
+                case .signUpCompletion(.goToNextScreen):
+                    return .send(.goToMainScreen)
+                    
                 default:
                     return .none
                 }
@@ -121,7 +125,7 @@ struct OnboardingCoordinator {
                 return .none
                 
             case .goToSignUpCompletion:
-                state.routes.push(.signUpCompletion)
+                state.routes.push(.signUpCompletion(.init()))
                 return .none
                 
             case .goToMainScreen:
