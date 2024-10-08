@@ -19,8 +19,6 @@ struct AppCoordinatorView: View {
                 MainTabCoordinatorView(store: store)
             case let .onboarding(store):
                 OnboardingCoordinatorView(store: store)
-            case let .splash(store):
-                SplashCoordinatorView(store: store)
             }
         }
     }

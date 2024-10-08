@@ -27,5 +27,8 @@ struct OnboardingCoordinatorView: View {
                 OnboardingCompleteView()
             }
         }
+        .onAppear {
+            store.send(.loginCheck)
+        }
     }
 }

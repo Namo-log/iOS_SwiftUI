@@ -15,8 +15,6 @@ enum AppScreen {
     case mainTab(MainTabCoordinator)
     // 온보딩
     case onboarding(OnboardingCoordinator)
-    // 스플래시
-    case splash(SplashCoordinator)
 }
 
 @Reducer
@@ -24,7 +22,7 @@ struct AppCoordinator {
     
     @ObservableState
     struct State {
-        static let initialState = State(routes: [.root(.splash(.initialState), embedInNavigationView: true)])
+        static let initialState = State(routes: [.root(.onboarding(.initialState), embedInNavigationView: true)])
         var routes: [Route<AppScreen.State>]
     }
     
@@ -38,35 +36,14 @@ struct AppCoordinator {
 
             switch action {
                 
-            // Splash - 로그인 체크 결과 화면 라우팅
-            case .router(.routeAction(_, action: .splash(let action))):
-                switch action {
-
-                case .goToLoginScreen:
-                    state.routes.push(.onboarding(.initialState))
-                        
-                case .goToAgreementScreen:
-                    state.routes.push(.onboarding(.routedState([
-                        .push(.agreement(.init()))
-                    ])))
-                    
-                case .goToUserInfoScreen:
-                    state.routes.push(.onboarding(.routedState([
-                        .push(.agreement(.init())),
-                        .push(.userInfo(.init(name: nil)))
-                    ])))
-                    
-                case .goToMainScreen:
-                    state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
-                    
-                default:
-                    break
-                }
+            // mainTab 이동 - 로그인 체크 결과 goToMainScreen 시
+            case .router(.routeAction(_, action: .onboarding(.goToMainScreen))):
+                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
+                return .none
                 
             default:
-                break
+                return .none
             }
-            return .none
         }
         .forEachRoute(\.routes, action: \.router)
     }
