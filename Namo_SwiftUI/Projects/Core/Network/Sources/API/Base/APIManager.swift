@@ -42,7 +42,7 @@ public final class APIManager {
     /// - Returns: 디코딩된 Response
     public func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async throws -> BaseResponse<T> {
         var result: Data = .init()
-        do {           
+        do {
             let request = await self.requestData(endPoint: endPoint)
             result = try request.result.get()
         } catch {
@@ -74,7 +74,7 @@ public final class APIManager {
     }
 }
 
-// MARK: S3이미지 업로드 관련
+// MARK: S3이미지 업로드 관련 extension
 public extension APIManager {
     func getPresignedUrl(prefix: String, filename: String) async throws -> BaseResponse<String> {
         let parameter: [String: String] = ["prefix": prefix, "fileName": filename]
@@ -85,15 +85,34 @@ public extension APIManager {
             .serializingDecodable(BaseResponse<String>.self)
             .response
         do {
-           let result = try response.result.get()
+            let result = try response.result.get()
             return result
         } catch {
             throw error
         }
     }
     
-    func uploadImageToS3(presignedUrl: String, imageFile: Data) async throws {
-       
+    func uploadImageToS3(presignedUrl: String, imageFile: Data) async throws -> String? {
+        guard let url = URL(string: presignedUrl) else {
+            return nil
+        }
+        
+        let response = await AF.upload(imageFile, to: url, method: .put, headers: ["Content-Type": "image/png"])
+            .validate(statusCode: 200..<300)
+            .serializingResponse(using: .data)
+            .response
+        
+        guard let statusCode = response.response?.statusCode, 200..<300 ~= statusCode else {
+            return nil
+        }
+        
+        guard var uploadedUrl = URLComponents(string: presignedUrl) else {
+            return nil
+        }
+        
+        uploadedUrl.query = nil
+        
+        return uploadedUrl.url?.absoluteString
     }
 }
 
@@ -114,9 +133,9 @@ private extension APIManager {
             print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
             // 로그아웃 처리
             // TODO: 로그아웃 처리 재확인 필요
-//            DispatchQueue.main.async {
-//                UserDefaults.standard.set(false, forKey: "isLogin")
-//            }
+            //            DispatchQueue.main.async {
+            //                UserDefaults.standard.set(false, forKey: "isLogin")
+            //            }
             return originalResponse
         }
         
@@ -153,7 +172,7 @@ private extension APIManager {
         do {
             // 새로운 토큰 키체인 저장을 시도합니다
             try KeyChainManager.addItem(key: "accessToken", value: accessToken)
-            try KeyChainManager.addItem(key: "refreshToken", value: refreshToken)            
+            try KeyChainManager.addItem(key: "refreshToken", value: refreshToken)
             print("새 토큰 저장 완료")
         } catch {
             print("토큰 저장 실패: \(error)")
@@ -205,104 +224,104 @@ public extension APIManager {
     /// - Returns: Alamofire에서 생성한 `DataRequest`
     private func makeDataRequest(endPoint: EndPoint) -> DataRequest {
         
-      switch endPoint.task {
-          
-      case .requestPlain:
-        return AF.request(
-          "\(endPoint.baseURL)\(endPoint.path)",
-          method: endPoint.method,
-          headers: endPoint.headers,
-          interceptor: AuthInterceptor()
-        )
-        
-      case let .requestJSONEncodable(parameters):
-          return AF.request(
-            "\(endPoint.baseURL)\(endPoint.path)",
-            method: endPoint.method,
-            parameters: parameters,
-            encoder: JSONParameterEncoder.default,
-            headers: endPoint.headers,
-            interceptor: AuthInterceptor()
-          )
-        
-      case let .requestCustomJSONEncodable(parameters, encoder):          
-          return AF.request(
-            "\(endPoint.baseURL)\(endPoint.path)",
-            method: endPoint.method,
-            parameters: parameters,
-            encoder: .json(encoder: encoder),
-            headers: endPoint.headers,
-            interceptor: AuthInterceptor()
-          )
-        
-      case let .requestParameters(parameters, encoding):
-          return AF.request(
-            "\(endPoint.baseURL)\(endPoint.path)",
-            method: endPoint.method,
-            parameters: parameters,
-            encoding: encoding,
-            headers: endPoint.headers,
-            interceptor: AuthInterceptor()
-          )
-          
-      case let .uploadImages(images, imageKeyName):
-          return AF.upload(multipartFormData: { multipartFormData in
-              for image in images {
-                  if let image = image {
-                      multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).png", mimeType: "image/png")
-                  }
-              }
-          }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
-          
-      case let .uploadImagesWithBody(images, body, imageKeyName):
-          return AF.upload(multipartFormData: { multipartFormData in
-              for image in images {
-                  if let image = image {
-                      multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
-                  }
-              }
-              
-              for (key, value) in body {
-                  if let data = String(describing: value).data(using: .utf8) {
-                      multipartFormData.append(data, withName: key)
-                  }
-              }
-          }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
-          
-      case let .uploadImagesWithParameter(images, params, imageKeyName):
-          return AF.upload(multipartFormData: { multipartFormData in
-              for image in images {
-                  if let image = image {
-                      multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
-                  }
-              }
-          }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)\(queryString(from: params))")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
-          
-      case let .authRequestJSONEncodable(parameters):
-          return AF.request(
-            "\(endPoint.baseURL)\(endPoint.path)",
-            method: endPoint.method,
-            parameters: parameters,
-            encoder: JSONParameterEncoder.default,
-            headers: endPoint.headers
-          )
-          
-      case .authRequestPlain:
-          return AF.request(
-            "\(endPoint.baseURL)\(endPoint.path)",
-            method: endPoint.method,
-            headers: endPoint.headers
-          )
-          
-      case let .requestParametersExAPI(parameters, encoding):
-          return AF.request(
-            "\(endPoint.baseURL)\(endPoint.path)",
-            method: endPoint.method,
-            parameters: parameters,
-            encoding: encoding,
-            headers: endPoint.headers
-          )
-      }
+        switch endPoint.task {
+            
+        case .requestPlain:
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                headers: endPoint.headers,
+                interceptor: AuthInterceptor()
+            )
+            
+        case let .requestJSONEncodable(parameters):
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default,
+                headers: endPoint.headers,
+                interceptor: AuthInterceptor()
+            )
+            
+        case let .requestCustomJSONEncodable(parameters, encoder):
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                parameters: parameters,
+                encoder: .json(encoder: encoder),
+                headers: endPoint.headers,
+                interceptor: AuthInterceptor()
+            )
+            
+        case let .requestParameters(parameters, encoding):
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                parameters: parameters,
+                encoding: encoding,
+                headers: endPoint.headers,
+                interceptor: AuthInterceptor()
+            )
+            
+        case let .uploadImages(images, imageKeyName):
+            return AF.upload(multipartFormData: { multipartFormData in
+                for image in images {
+                    if let image = image {
+                        multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).png", mimeType: "image/png")
+                    }
+                }
+            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
+            
+        case let .uploadImagesWithBody(images, body, imageKeyName):
+            return AF.upload(multipartFormData: { multipartFormData in
+                for image in images {
+                    if let image = image {
+                        multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
+                    }
+                }
+                
+                for (key, value) in body {
+                    if let data = String(describing: value).data(using: .utf8) {
+                        multipartFormData.append(data, withName: key)
+                    }
+                }
+            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
+            
+        case let .uploadImagesWithParameter(images, params, imageKeyName):
+            return AF.upload(multipartFormData: { multipartFormData in
+                for image in images {
+                    if let image = image {
+                        multipartFormData.append(image, withName: imageKeyName, fileName: "\(image).jpeg", mimeType: "image/jpeg")
+                    }
+                }
+            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)\(queryString(from: params))")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthInterceptor())
+            
+        case let .authRequestJSONEncodable(parameters):
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default,
+                headers: endPoint.headers
+            )
+            
+        case .authRequestPlain:
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                headers: endPoint.headers
+            )
+            
+        case let .requestParametersExAPI(parameters, encoding):
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                parameters: parameters,
+                encoding: encoding,
+                headers: endPoint.headers
+            )
+        }
     }
     
     func queryString(from parameters: [String: Any]) -> String {

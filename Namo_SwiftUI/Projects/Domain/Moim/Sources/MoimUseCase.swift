@@ -27,12 +27,12 @@ extension MoimUseCase: DependencyKey {
             do {
                 var moimDto = moim.toDto()
                 
-//                if let data = imageFile?.pngData() {
-//                    let response: BaseResponse<String> = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: "testFile")
-//                    guard let url = response.result else { return }
-//                    try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: data)
-//                    moimDto.imageUrl = url
-//                }
+                // 선택한 이미지 파일이 존재하는 경우에만 요청
+                if let data = imageFile?.pngData(),
+                   let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)").result {
+                    let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: data)
+                    moimDto.imageUrl = uploadedUrl
+                }
                 
                 let response: BaseResponse<Int>? = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.createMoim(moimDto))
             } catch {
@@ -41,8 +41,8 @@ extension MoimUseCase: DependencyKey {
         },
         getMoimDetail: { meetingScheduleId in
             do {
-                let response: BaseResponse<MoimScheduleResonseDTO> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimDetail(meetingScheduleId))                
-                guard let data = response.result else { fatalError() }                
+                let response: BaseResponse<MoimScheduleResonseDTO> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimDetail(meetingScheduleId))
+                guard let data = response.result else { fatalError() }
                 return data.toEntity()
             } catch {
                 print(error.localizedDescription)

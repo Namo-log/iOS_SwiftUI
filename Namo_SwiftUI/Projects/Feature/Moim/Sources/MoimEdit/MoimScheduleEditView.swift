@@ -35,6 +35,7 @@ public struct MoimScheduleEditView: View {
         }
     }
     
+    /// 편집여부에 따라서 보여지는 버튼 텍스트 설정
     private var buttonTitle: String {
         switch viewStore.mode {
         case .compose:
@@ -49,7 +50,7 @@ public struct MoimScheduleEditView: View {
     public  var body: some View {
         WithPerceptionTracking {
             // title
-            titleView
+            headerView
                 .padding(.horizontal, 20)
             
             // content
@@ -74,7 +75,7 @@ public struct MoimScheduleEditView: View {
                     
                     
                     // 일정보기 버튼
-                    shoeScheduleButton
+                    showScheduleButton
                 }
                 .padding(.horizontal, 30)
             }
@@ -90,7 +91,8 @@ public struct MoimScheduleEditView: View {
 
 extension MoimScheduleEditView {
     
-    private var shoeScheduleButton: some View {
+    /// 일정 보기
+    private var showScheduleButton: some View {
         Button(action: {}, label: {
             HStack(spacing: 12) {
                 Image(asset: SharedDesignSystemAsset.Assets.icCalendar)
@@ -108,8 +110,9 @@ extension MoimScheduleEditView {
                 .stroke(.black, lineWidth: 1)
         )
     }
-    
-    private var titleView: some View {
+        
+    /// 헤더뷰
+    private var headerView: some View {
         HStack(alignment: .center, spacing: 0) {
             Button(action: {
                 store.send(.cancleButtonTapped)
@@ -138,6 +141,7 @@ extension MoimScheduleEditView {
         }
     }
     
+    /// 커버이미지 피커
     private var imagePickerView: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 10) {
@@ -157,21 +161,26 @@ extension MoimScheduleEditView {
                     Image(uiImage: coverImage)
                         .resizable()
                         .frame(width: 55, height: 55)
-                        .cornerRadius(8)
+                        .cornerRadius(5)
                 } else if !viewStore.imageUrl.isEmpty {
                     KFImage(URL(string: viewStore.imageUrl))
+                        .placeholder({
+                            Image(asset: SharedDesignSystemAsset.Assets.appLogo)
+                        })
                         .resizable()
                         .frame(width: 55, height: 55)
-                        .cornerRadius(8)
+                        .cornerRadius(5)
                 } else {
                     Image(asset: SharedDesignSystemAsset.Assets.addPicture)
                         .resizable()
                         .frame(width: 55, height: 55)
+                        .cornerRadius(5)
                 }
             }
         }
     }
     
+    /// 날짜선택
     private var settingView: some View {
         VStack(spacing: 20) {
             VStack {
@@ -197,7 +206,6 @@ extension MoimScheduleEditView {
                         .tint(Color(asset: SharedDesignSystemAsset.Assets.mainOrange))
                 }
             }
-            
             
             VStack {
                 HStack {
@@ -241,6 +249,7 @@ extension MoimScheduleEditView {
         }
     }
     
+    /// 참가자 리스트
     private var participantListView: some View {
         VStack(spacing: 12) {
             HStack {

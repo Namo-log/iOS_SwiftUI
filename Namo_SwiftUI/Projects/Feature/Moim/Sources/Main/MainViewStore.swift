@@ -59,9 +59,16 @@ public struct MainViewStore {
         
         Reduce<State, Action> { state, action in
             switch action {
+                // 모임 수정 완료
+            case .moimEdit(.createButtonTapped):
+                state.isSheetPresented = false
+                state.moimEdit = .init()
+                return .none
+                // 모임 수정 취소
             case .moimEdit(.cancleButtonTapped):
                 state.isSheetPresented = false
                 return .none
+                // 모임일정 선택
             case let .moimList(.moimCellSelected(meetingScheduleId)):
                 return .run { send in
                     do {
@@ -71,6 +78,7 @@ public struct MainViewStore {
                         
                     }
                 }
+                // 모임일정 선택후 상태
             case let .presentDetailSheet(moimSchedule):
                 state.isSheetPresented = true
                 state.moimEdit.title = moimSchedule.title
@@ -85,6 +93,7 @@ public struct MainViewStore {
                 state.moimEdit.isOwner = moimSchedule.isOwner
                 state.moimEdit.mode =  moimSchedule.isOwner ? .edit : .view
                 return .none
+                // 모임일정 초기화
             case .presentComposeSheet:
                 state.moimEdit = .init()
                 state.isSheetPresented = true
