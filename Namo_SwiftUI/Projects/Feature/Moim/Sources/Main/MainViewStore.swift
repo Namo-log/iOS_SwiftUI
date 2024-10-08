@@ -59,9 +59,19 @@ public struct MainViewStore {
         
         Reduce<State, Action> { state, action in
             switch action {
+                // sheet가 사라질떄 데이터 로드
+            case .binding(\.$isSheetPresented):
+                if state.isSheetPresented == false {
+                    state.moimEdit = .init()
+                    return .send(.moimList(.viewOnAppear))
+                }
+                return .none
+                // 모임 삭제 완료
+            case .moimEdit(.deleteButtonConfirm):
+                state.isSheetPresented = false
+                return .none
                 // 모임 수정 완료
-            case .moimEdit(.createButtonTapped):                
-                state.moimEdit = .init()
+            case .moimEdit(.createButtonTapped):
                 state.isSheetPresented = false
                 return .none
                 // 모임 수정 취소
@@ -79,6 +89,8 @@ public struct MainViewStore {
                 // 모임일정 선택후 상태
             case let .presentDetailSheet(moimSchedule):
                 state.isSheetPresented = true
+                // TODO: 캡슐화 필요?
+                state.moimEdit.moimScheduleId = moimSchedule.scheduleId
                 state.moimEdit.title = moimSchedule.title
                 state.moimEdit.startDate = moimSchedule.startDate
                 state.moimEdit.endDate = moimSchedule.endDate

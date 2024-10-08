@@ -53,6 +53,14 @@ extension MoimUseCase: DependencyKey {
                 print(error.localizedDescription)
                 throw error
             }
+        },
+        withdrawMoim: { meetingScheduleId in
+            do {
+                let response: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.withdrawMoim(meetingScheduleId))
+            } catch {
+                print(error.localizedDescription)
+                throw error
+            }
         }
     )
 }

@@ -13,6 +13,7 @@ public enum MoimEndPoint {
     case getMoimList
     case createMoim(MoimScheduleRequestDTO)
     case getMoimDetail(Int)
+    case withdrawMoim(Int)
 }
 
 extension MoimEndPoint: EndPoint {
@@ -26,6 +27,8 @@ extension MoimEndPoint: EndPoint {
             return "/meeting"
         case let .getMoimDetail(meetingScheduleId):
             return "/meeting/\(meetingScheduleId)"
+        case let .withdrawMoim(meetingScheduleId):
+            return "/meeting/\(meetingScheduleId)/withdraw"
         }
     }
     
@@ -35,6 +38,8 @@ extension MoimEndPoint: EndPoint {
             return .get
         case .createMoim:
             return .post
+        case .withdrawMoim(_):
+            return .delete
         }
     }
     
@@ -47,7 +52,9 @@ extension MoimEndPoint: EndPoint {
             return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
         case let .createMoim(moimDto):
             return .requestJSONEncodable(parameters: moimDto)
-     
+        case let .withdrawMoim(meetingScheduleId):
+            let parameter: [String: Any] = ["meetingScheduleId": meetingScheduleId]
+            return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
         }
     }
     

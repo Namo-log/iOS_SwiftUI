@@ -9,7 +9,8 @@ import Foundation
 import CoreNetwork
 
 public struct MoimSchedule: Decodable, Hashable {
-    public init(title: String,
+    public init(scheduleId: Int,
+                title: String,
                 imageUrl: String,
                 startDate: Date,
                 endDate: Date,
@@ -18,6 +19,7 @@ public struct MoimSchedule: Decodable, Hashable {
                 locationName: String,
                 kakaoLocationId: String,
                 participants: [Participant]) {
+        self.scheduleId = scheduleId
         self.title = title
         self.imageUrl = imageUrl
         self.startDate = startDate
@@ -28,7 +30,7 @@ public struct MoimSchedule: Decodable, Hashable {
         self.kakaoLocationId = kakaoLocationId
         self.participants = participants
     }
-    
+    public let scheduleId: Int
     public let title: String
     public let imageUrl: String
     public let startDate: Date

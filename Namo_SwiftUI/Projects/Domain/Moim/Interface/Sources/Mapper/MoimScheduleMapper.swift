@@ -36,7 +36,8 @@ public extension MoimSchedule {
 
 public extension MoimScheduleResonseDTO {
     func toEntity() -> MoimSchedule {
-        .init(title: title,
+        .init(scheduleId: scheduleId,
+              title: title,
               imageUrl: imageUrl,
               startDate: Date.ISO8601toDate(startDate),
               endDate: Date.ISO8601toDate(endDate),

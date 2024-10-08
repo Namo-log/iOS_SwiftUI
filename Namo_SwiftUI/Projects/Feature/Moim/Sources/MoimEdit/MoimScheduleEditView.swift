@@ -95,13 +95,21 @@ public struct MoimScheduleEditView: View {
         )
         .mask(Rectangle().padding(.top, -20))
         .edgesIgnoringSafeArea(.bottom)
+        .namoAlertView(isPresented: viewStore.$isAlertPresented,
+                       title: "모임 일정에서 정말 나가시겠어요?",
+                       content: "모임 일정과 해당 일정의 기록을 \n 더 이상 보실 수 없습니다.",
+                       confirmAction: {
+            viewStore.send(.deleteButtonConfirm)
+        })
     }
 }
 
 extension MoimScheduleEditView {
     
     private var deleteScheduleButton: some View {
-        Button(action: {}, label: {
+        Button(action: {
+            viewStore.send(.deleteButtonTapped)
+        }, label: {
             Circle()
                 .frame(width: 40, height: 40)
                 .foregroundStyle(.white)

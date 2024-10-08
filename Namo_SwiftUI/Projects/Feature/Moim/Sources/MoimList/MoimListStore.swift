@@ -18,8 +18,8 @@ extension MoimListStore {
             switch action {
             // 뷰가 로드되면 모임리스트 요청
             case .viewOnAppear:
-                return .run { send in
-                    let result = try await moimUseCase.getMoimList()                    
+                return .run { send in                    
+                    let result = try await moimUseCase.getMoimList()
                     await send(.moimListResponse(result))
                 }
             // 모임리스트 요청 결과 스토어 업데이트

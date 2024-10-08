@@ -46,6 +46,12 @@ public struct MoimEditStore {
         /// 종료 날짜 선택 캘린더 보임여부
         @BindingState public var isEndPickerPresented: Bool = false
         
+        /// 삭제 알림 보임여부
+        @BindingState public var isAlertPresented: Bool = false
+        
+        /// 모임일정 id
+        public var moimScheduleId: Int = 0
+        
         /// 커버이미지 url
         public var imageUrl: String = ""
         
@@ -94,6 +100,12 @@ public struct MoimEditStore {
         
         /// 취소버튼 탭
         case cancleButtonTapped
+        
+        /// 삭제버튼 탭
+        case deleteButtonTapped
+        
+        /// 삭제확인
+        case deleteButtonConfirm        
         
         case viewOnAppear
     }
