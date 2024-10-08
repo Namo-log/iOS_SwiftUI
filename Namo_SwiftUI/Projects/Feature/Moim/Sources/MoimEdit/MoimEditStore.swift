@@ -41,7 +41,11 @@ extension MoimEditStore {
                 
             case .createButtonTapped:
                 return .run { [state = state] send in
-                    try await moimUseCase.createMoim(state.makeMoim(), state.coverImage)
+                    if state.mode == .compose {
+                        try await moimUseCase.createMoim(state.makeMoim(), state.coverImage)
+                    } else {
+                        try await moimUseCase.editMoim(state.moimScheduleId, state.makeMoim())
+                    }
                 }
             case .deleteButtonTapped:
                 state.isAlertPresented = true
@@ -49,7 +53,7 @@ extension MoimEditStore {
             case .deleteButtonConfirm:
                 return .run { [state = state] send in
                     try await moimUseCase.withdrawMoim(state.moimScheduleId)
-                }
+                }         
             default:
                 return .none
             }

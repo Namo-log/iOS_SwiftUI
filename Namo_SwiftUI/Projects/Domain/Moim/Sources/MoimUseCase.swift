@@ -61,6 +61,13 @@ extension MoimUseCase: DependencyKey {
                 print(error.localizedDescription)
                 throw error
             }
+        }, editMoim: { meetingScheduleId, moim in
+            do {
+                let response: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.editMoim(meetingScheduleId: meetingScheduleId, moimReqDto: moim.toEditDto()))
+            } catch {
+                print(error.localizedDescription)
+                throw error
+            }
         }
     )
 }

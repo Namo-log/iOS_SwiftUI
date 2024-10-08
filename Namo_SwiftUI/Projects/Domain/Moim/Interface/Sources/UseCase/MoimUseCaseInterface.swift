@@ -7,6 +7,7 @@
 
 import UIKit
 import ComposableArchitecture
+import CoreNetwork
 
 /// 모임 관련 유스케이스 인터페이스
 public struct MoimUseCase {
@@ -14,14 +15,17 @@ public struct MoimUseCase {
     public var createMoim: @Sendable (MoimSchedule, UIImage?) async throws -> Void
     public var getMoimDetail: @Sendable (_ meetingScheduleId: Int) async throws -> MoimSchedule
     public var withdrawMoim: @Sendable (_ meetingScheduleId: Int) async throws -> Void
+    public var editMoim: @Sendable (_ meetingScheduleId: Int, _ moim: MoimSchedule) async throws -> Void
     
     public init(getMoimList: @escaping @Sendable () async throws -> [MoimScheduleItem],
                 createMoim: @escaping @Sendable (MoimSchedule, UIImage?) async throws -> Void,
                 getMoimDetail: @escaping @Sendable (_ meetingScheduleId: Int) async throws -> MoimSchedule,
-                withdrawMoim: @escaping @Sendable (_ meetingScheduleId: Int) async throws -> Void) {
+                withdrawMoim: @escaping @Sendable (_ meetingScheduleId: Int) async throws -> Void,
+                editMoim: @escaping @Sendable (_ meetingScheduleId: Int, _ moim: MoimSchedule) async throws -> Void) {
         self.getMoimList = getMoimList
         self.createMoim = createMoim
         self.getMoimDetail = getMoimDetail
         self.withdrawMoim = withdrawMoim
+        self.editMoim = editMoim
     }
 }

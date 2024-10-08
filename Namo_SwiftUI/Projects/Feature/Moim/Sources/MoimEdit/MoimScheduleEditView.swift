@@ -47,11 +47,16 @@ public struct MoimScheduleEditView: View {
         }
     }
     
+    private var isVisible: Bool {
+        return !viewStore.isOwner
+    }
+    
     public  var body: some View {
         // deleteButton
         deleteScheduleButton
             .padding(.bottom, 6)
             .padding(.top, 10)
+            .opacity(isVisible ? 0 : 1)
         
         VStack(spacing: 0) {
             WithPerceptionTracking {
@@ -72,7 +77,7 @@ public struct MoimScheduleEditView: View {
                         imagePickerView
                         
                         // 장소, 시간
-                        settingView
+                        settingView                           
                         
                         // 친구 초대
                         participantListView
@@ -80,6 +85,7 @@ public struct MoimScheduleEditView: View {
                         
                         // 일정보기 버튼
                         showScheduleButton
+                       
                     }
                     .padding(.horizontal, 30)
                 }

@@ -80,6 +80,29 @@ public struct MoimScheduleRequestDTO: Encodable {
     public let participants: [Int]
 }
 
+// 모임 수정 DTO
+public struct MoimScheduleEditRequestDTO: Encodable {
+    public init(title: String,
+                imageUrl: String?,
+                period: PeriodDto,
+                location: LocationDto,
+                participantsToAdd: [Int],
+                participantsToRemove: [Int]) {
+        self.title = title
+        self.imageUrl = imageUrl
+        self.period = period
+        self.location = location
+        self.participantsToAdd = participantsToAdd
+        self.participantsToRemove = participantsToRemove
+    }
+    public let title: String
+    public var imageUrl: String?
+    public let period: PeriodDto
+    public let location: LocationDto
+    public let participantsToAdd: [Int]
+    public let participantsToRemove: [Int]
+}
+
 public struct PeriodDto: Encodable {
     public init(startDate: String,
                 endDate: String) {

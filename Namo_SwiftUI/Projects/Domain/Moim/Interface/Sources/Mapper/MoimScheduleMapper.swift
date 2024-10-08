@@ -34,6 +34,22 @@ public extension MoimSchedule {
     }
 }
 
+public extension MoimSchedule {
+    func toEditDto() -> MoimScheduleEditRequestDTO {
+        .init(title: title,
+              imageUrl: imageUrl,
+              period: PeriodDto(startDate: startDate.dateToISO8601(),
+                                endDate: startDate.dateToISO8601()),
+              location: LocationDto(longitude: 0.0,
+                                    latitude: 0.0,
+                                    locationName: locationName,
+                                    kakaoLocationId: kakaoLocationId),
+              participantsToAdd: [],
+              participantsToRemove: [])
+    }
+
+}
+
 public extension MoimScheduleResonseDTO {
     func toEntity() -> MoimSchedule {
         .init(scheduleId: scheduleId,
