@@ -8,5 +8,5 @@
 import CoreNetwork
 
 protocol PlaceRepository {
-    func getKakaoMapPlaces(query:String) async -> KakaoMapResponseDTO?
+    func getKakaoMapPlaces(query:String) async -> KakaoLocationSearchResponseDTO?
 }
