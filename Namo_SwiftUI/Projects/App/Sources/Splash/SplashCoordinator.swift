@@ -31,7 +31,6 @@ struct SplashCoordinator {
             switch action {
             case .loginCheck:
                 if authClient.getLoginState() != nil {
-					try! KeyChainManager.addItem(key: "accessToken", value: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInJlZ0RhdGUiOjE3MjgxOTE3NDExMzh9.eyJpZCI6IjE0IiwiZXhwIjoxNzI4MjM0OTQxfQ.gbvfL012Yz9Muu0qhxC4Zk7BHWg6hzBI7Xnu51H5jEY")
                     return .send(.goToMainScreen)
                 } else {
                     return .send(.goToOnboardingScreen)
