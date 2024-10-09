@@ -33,7 +33,7 @@ public struct CalendarDetailScheduleItem: View {
 	public var body: some View {
 		HStack(spacing: 14) {
 			Rectangle()
-				.fill(Color.paletteColor(id: schedule.categoryInfo.colorId))
+				.fill(PalleteColor(rawValue: schedule.categoryInfo.colorId)?.color ?? .clear)
 				.frame(width: 30, height: schedule.isMeetingSchedule ? 74 : 56)
 				.clipShape(RoundedCorners(radius: 15, corners: [.topLeft, .bottomLeft]))
 			

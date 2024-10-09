@@ -1,5 +1,5 @@
 //
-//  PlaceEndPoint.swift
+//  KakaoEndPoint.swift
 //  Namo_SwiftUI
 //
 //  Created by 박민서 on 2/23/24.
@@ -9,11 +9,11 @@ import Alamofire
 
 import SharedUtil
 
-public enum PlaceEndPoint {
-    case getKakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil)
+public enum KakaoEndPoint {
+	case getKakaoMapAPIRequest(req: KakaoLocationSearchRequest)
 }
 
-extension PlaceEndPoint: EndPoint {
+extension KakaoEndPoint: EndPoint {
     
     public var baseURL: String {
         return "https://dapi.kakao.com/v2/local/search/keyword.json"
@@ -42,14 +42,14 @@ extension PlaceEndPoint: EndPoint {
     
     public var task: APITask {
         switch self {
-        case let .getKakaoMapAPIRequest(query, x, y, radius, page, size):
-            var params: Parameters = [ "query" : query ]
+        case let .getKakaoMapAPIRequest(req):
+			var params: Parameters = [ "query" : req.query ]
             
-            if let x = x { params["x"] = String(x) }
-            if let y = y { params["y"] = String(y) }
-            if let radius = radius { params["radius"] = radius }
-            if let page = page { params["page"] = page }
-            if let size = size { params["size"] = size }
+			if let x = req.x { params["x"] = String(x) }
+			if let y = req.y { params["y"] = String(y) }
+			if let radius = req.radius { params["radius"] = radius }
+			if let page = req.page { params["page"] = page }
+			if let size = req.size { params["size"] = size }
             
             return .requestParametersExAPI(
                 parameters: params,

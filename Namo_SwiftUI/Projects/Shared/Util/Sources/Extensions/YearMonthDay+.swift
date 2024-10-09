@@ -46,6 +46,20 @@ public extension YearMonthDay {
 		}
 	}
 	
+	// 특정 시간 Date리턴
+	func toDateWithTime(hour: Int = 0, min: Int = 0, second: Int = 0) -> Date {
+		var dateComponents = DateComponents()
+		dateComponents.year = self.year
+		dateComponents.month = self.month
+		dateComponents.day = self.day
+		dateComponents.hour = hour // 오전 8시
+		dateComponents.minute = min
+		dateComponents.second = second
+		
+		let calendar = Calendar.current
+		return calendar.date(from: dateComponents)!
+	}
+	
 	static func < (lhs: Self, rhs: Self) -> Bool {
 		if lhs.year != rhs.year {
 			return lhs.year < rhs.year

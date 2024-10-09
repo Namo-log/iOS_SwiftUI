@@ -10,6 +10,8 @@ import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
 
+import SharedDesignSystem
+
 public struct HomeCoordinatorView: View {
 	let store: StoreOf<HomeCoordinator>
 	
@@ -22,6 +24,23 @@ public struct HomeCoordinatorView: View {
 			switch screen.case {
 			case let .homeMain(store):
 				HomeMainView(store: store)
+					.overlay {
+						if self.store.showBackgroundOpacity {
+							Color.black.opacity(0.3)
+								.ignoresSafeArea()
+						}
+					}
+			case let .scheduleEditCoordinator(store):
+				ScheduleEditCoordinatorView(store: store)
+					.background(
+						ClearBackground()
+							.onTapGesture {
+								self.store.send(.dismiss)
+							}
+					)
+					.onAppear {
+						self.store.send(.toggleBackgroundOpacity)
+					}
 			}
 		}
 	}

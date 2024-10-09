@@ -8,6 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
+import SharedDesignSystem
+
 /// InfoInput 작성 시 내용 구분용으로 사용하는 enum입니다
 public enum InfoFormState: Equatable {
     // 미작성
@@ -66,7 +68,7 @@ public struct OnboardingInfoInputStore {
         /// 한줄소개
         var bio: String = ""
         /// 선택된 팔레트 컬러
-        var selectedPaletterColor: Color?
+        var selectedPaletterColor: PalleteColor?
         /// 좋아하는 색상
         var favoriteColor: Color?
         /// 좋아하는 색상 선택 상태
@@ -110,9 +112,9 @@ public struct OnboardingInfoInputStore {
         /// 좋아하는 컬러 추가 버튼 탭
         case addFavoriteColorButtonTapped
         /// 컬러 팔레트 색 선택
-        case selectPaletteColor(Color)
+        case selectPaletteColor(PalleteColor)
         /// 컬러 저장
-        case saveFavoriteColor(Color?)
+        case saveFavoriteColor(PalleteColor?)
         /// 컬러 팔레트 dismiss
         case dismissColorPaletteView
         /// 닉네임 수정
@@ -175,7 +177,7 @@ public struct OnboardingInfoInputStore {
                 state.selectedPaletterColor = color
                 return .none
             case .saveFavoriteColor(let nilableColor):
-                if let color = nilableColor {
+                if let color = nilableColor?.color {
                     print("컬러 저장: \(color)")
                     state.favoriteColor = color
                     state.favoriteColorState = .valid

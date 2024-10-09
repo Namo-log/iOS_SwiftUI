@@ -48,6 +48,7 @@ public extension Color {
     static let colorRed = Color(asset: NamoColors.red)
     static let colorYellow = Color(asset: NamoColors.yellow)
     static let colorDarkGray = Color(asset: NamoColors.darkGray)
+	static let colorToggle = Color(asset: NamoColors.toggle)
     
     static let namoPaletteColors: [Color] = [
         .namoOrange,

@@ -32,7 +32,7 @@ struct CalendarScheduleItem: View {
 	var body: some View {
 		ZStack(alignment: .leading) {
 			Rectangle()
-				.fill(Color.paletteColor(id: backgroundColorId))
+				.fill(PalleteColor(rawValue: backgroundColorId)?.color ?? .clear)
 				.clipShape(
 					RoundedCorners(
 						radius: 3,

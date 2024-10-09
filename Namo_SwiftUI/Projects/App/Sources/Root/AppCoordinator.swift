@@ -41,28 +41,28 @@ struct AppCoordinator {
     }
     
     var body: some ReducerOf<Self> {
-            Scope(state: \.mainTab, action: \.mainTab) {
-                MainTabCoordinator()
-            }
-            Scope(state: \.onBoarding, action: \.onBoarding) {
-                OnBoardingCoordinator()
-            }
-            
-            Reduce<State, Action> { state, action in
-                switch action {
-                case .router(.routeAction(_, action: .onBoarding(.onboarding(.namoAppleLoginResponse(_))))):
-                    state.routes = [.root(.mainTab(.intialState), embedInNavigationView: true)]
-                case .router(.routeAction(_, action: .splash(.goToOnboardingScreen))):
-                    state.routes = [.root(.onBoarding(.init(onBoarding: .init())), embedInNavigationView: true)]
-                case .router(.routeAction(_, action: .splash(.goToMainScreen))):
-                    state.routes = [.root(.mainTab(.intialState), embedInNavigationView: true)]
-                default:
-                    break
-                }
-                return .none
-            }
-            .forEachRoute(\.routes, action: \.router)
+        Scope(state: \.mainTab, action: \.mainTab) {
+            MainTabCoordinator()
         }
-    }
+        Scope(state: \.onBoarding, action: \.onBoarding) {
+            OnBoardingCoordinator()
+        }
+        
+        Reduce<State, Action> { state, action in
 
+            switch action {
+            case .router(.routeAction(_, action: .onBoarding(.onboarding(.namoAppleLoginResponse(_))))):
+                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
+            case .router(.routeAction(_, action: .splash(.goToOnboardingScreen))):
+                state.routes = [.root(.onBoarding(.init(onBoarding: .init())), embedInNavigationView: true)]
+            case .router(.routeAction(_, action: .splash(.goToMainScreen))):
+                state.routes = [.root(.mainTab(.init(home: .initialState, moim: .initialState)), embedInNavigationView: true)]
+            default:
+                break
+            }
+            return .none
+        }
+        .forEachRoute(\.routes, action: \.router)
+    }
+}
 

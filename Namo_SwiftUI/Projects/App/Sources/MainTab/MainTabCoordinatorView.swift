@@ -22,6 +22,9 @@ struct MainTabCoordinatorView: View {
                 MoimCoordinatorView(store: store.scope(state: \.moim, action: \.moim))
                     .tabItem { Text("모임") }
             }
+			.onAppear {
+				store.send(.viewOnAppear)
+			}
         }
     }
 }

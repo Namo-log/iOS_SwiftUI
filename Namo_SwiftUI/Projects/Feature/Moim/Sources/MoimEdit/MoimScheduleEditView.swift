@@ -310,7 +310,7 @@ extension MoimScheduleEditView {
             
             FlexibleGridView(data: viewStore.participants) { participant in
                 Participant(name: participant.nickname,
-                            color: Color.paletteColor(id: participant.colorId ?? 1),
+                            color: PalleteColor(rawValue: participant.colorId ?? 1)?.color ?? .clear,
                             isOwner: participant.isOwner)
             }
         }

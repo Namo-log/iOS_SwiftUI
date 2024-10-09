@@ -118,6 +118,7 @@ public enum SharedDesignSystemAsset: Sendable {
     public static let pink = SharedDesignSystemColors(name: "Pink")
     public static let purple = SharedDesignSystemColors(name: "Purple")
     public static let red = SharedDesignSystemColors(name: "Red")
+    public static let toggle = SharedDesignSystemColors(name: "Toggle")
     public static let yellow = SharedDesignSystemColors(name: "Yellow")
     public static let icAdd = SharedDesignSystemImages(name: "ic_add")
     public static let icAddUser = SharedDesignSystemImages(name: "ic_add_user")

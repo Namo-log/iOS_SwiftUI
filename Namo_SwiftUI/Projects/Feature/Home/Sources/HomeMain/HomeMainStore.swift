@@ -55,6 +55,12 @@ public struct HomeMainStore {
 		case archiveTapped
 		// 특정 날짜 선택
 		case selectDate(YearMonthDay)
+		// 일정 생성/편집
+		case editSchedule(
+			isNewSchedule: Bool,
+			schedule: Schedule? = nil,
+			selectDate: YearMonthDay
+		)
 		
 	}
 	
@@ -104,6 +110,10 @@ public struct HomeMainStore {
 				} else {
 					state.focusDate = date
 				}
+				
+				return .none
+				
+			case .editSchedule(_, _, _):
 				
 				return .none
 			}

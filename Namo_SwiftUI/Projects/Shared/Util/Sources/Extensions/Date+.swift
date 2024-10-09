@@ -64,6 +64,17 @@ public extension Date {
         return dateFormatter.string(from: self)
     }
     
+    
+    //  2022.06.28 (화) 11:00 AM
+    func toYMDEHMa() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        return dateFormatter.string(from: self)
+    }
+    
     // date를 YM로 변환
     func toYM() -> YearMonth {
         let calendar = Calendar.current
@@ -99,8 +110,7 @@ public extension Date {
         return components.weekday == 1 // 일요일
     }
     
-    
-    /// Date타입을  ISO8601 포맷으로 변환합니다
+    /// Date타입을  ISO8601 포맷 문자열로 변환합니다.ex) "2024-10-09T15:25:44.983Z"
     func dateToISO8601() -> String {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "KST")
@@ -116,7 +126,7 @@ public extension Date {
         formatter.timeZone = TimeZone(abbreviation: "KST")
         formatter.formatOptions = [.withFullDate, .withTime, .withColonSeparatorInTime ]
         guard let date = formatter.date(from: string) else {
-            fatalError("Incorrect date format")            
+            fatalError("Incorrect date format")
         }
         return date
     }

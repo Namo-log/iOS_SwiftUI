@@ -25,4 +25,3 @@ struct AppCoordinatorView: View {
         }
     }
 }
-
