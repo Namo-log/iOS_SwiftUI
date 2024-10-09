@@ -19,47 +19,6 @@ public struct AuthClient {
     /// 로그인 상태 관리를 위한 매니저입니다
     private let authManager: AuthManagerProtocol
     
-    // MARK: SNS Login Helper API
-    /// 애플 로그인을 진행합니다. - Apple 로그인 토큰 인증을 위한 정보를 받습니다.
-    public func appleLogin() async -> AppleLoginInfo? {
-        return await loginHelper.appleLogin()
-    }
-    
-    /// 네이버 로그인을 진행합니다. - Naver 로그인 토큰 인증을 위한 정보를 받습니다.
-    public func naverLogin() async -> NaverLoginInfo? {
-        return await loginHelper.naverLogin()
-    }
-    
-    /// 카카오 로그인을 진행합니다. - Kakao 로그인 토큰 인증을 위한 정보를 받습니다.
-    public func kakaoLogin() async -> KakaoLoginInfo? {
-        return await loginHelper.kakaoLogin()
-    }
-    
-    /// 카카오 로그아웃을 진행합니다. - 실패 시 error를 throw 합니다.
-    public func kakaoLogout() async {
-        return await loginHelper.kakaoLogout()
-    }
-    
-    /// 네이버 로그아웃을 진행합니다.
-    public func naverLogout() async {
-        return await loginHelper.naverLogout()
-    }
-    
-    // MARK: Auth Manager API
-    /// 현재 로그인 상태를 가져옵니다
-    public func getLoginState() -> OAuthType? {
-        return authManager.getLoginState()
-    }
-    
-    /// 카카오/네이버/애플 중 소셜 로그인 된 상태와 토큰을 저장합니다
-    public func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
-        return authManager.setLoginState(oAuthType, with: tokens)
-    }
-    
-    /// 로그인 된 소셜 로그인 타입에 맞춰 로그아웃합니다
-    public func setLogoutState(with oAuthType: OAuthType) async {
-        return await authManager.setLogoutState(with: oAuthType)
-    }
     
     // MARK: API
     /// 나모 API : 애플 소셜 로그인을 통한 회원가입
@@ -101,10 +60,100 @@ public struct AuthClient {
     }
 }
 
+// MARK: SNS Login Helper API
+public extension AuthClient {
+    
+    /// 애플 로그인을 진행합니다. - Apple 로그인 토큰 인증을 위한 정보를 받습니다.
+    func appleLogin() async -> AppleLoginInfo? {
+        return await loginHelper.appleLogin()
+    }
+    
+    /// 네이버 로그인을 진행합니다. - Naver 로그인 토큰 인증을 위한 정보를 받습니다.
+    func naverLogin() async -> NaverLoginInfo? {
+        return await loginHelper.naverLogin()
+    }
+    
+    /// 카카오 로그인을 진행합니다. - Kakao 로그인 토큰 인증을 위한 정보를 받습니다.
+    func kakaoLogin() async -> KakaoLoginInfo? {
+        return await loginHelper.kakaoLogin()
+    }
+    
+    /// 카카오 로그아웃을 진행합니다. - 실패 시 error를 throw 합니다.
+    func kakaoLogout() async {
+        return await loginHelper.kakaoLogout()
+    }
+    
+    /// 네이버 로그아웃을 진행합니다.
+    func naverLogout() async {
+        return await loginHelper.naverLogout()
+    }
+}
+
+// MARK: Auth Manager API
+public extension AuthClient {
+    
+    /// 유저의 현재 상태를 파악합니다
+    func userStatusCheck() -> UserStatus {
+        return authManager.userStatusCheck()
+    }
+
+    /// 현재 로그인 상태를 가져옵니다
+    func getLoginState() -> OAuthType? {
+        return authManager.getLoginState()
+    }
+    
+    /// 카카오/네이버/애플 중 소셜 로그인 된 상태와 토큰을 저장합니다
+    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
+        return authManager.setLoginState(oAuthType, with: tokens)
+    }
+    
+    /// 로그인 된 소셜 로그인 타입에 맞춰 로그아웃합니다
+    func setLogoutState(with oAuthType: OAuthType) async {
+        return await authManager.setLogoutState(with: oAuthType)
+    }
+    
+    /// OAuthType별 회원탈퇴 처리
+    func withdraw(with oAuthType: OAuthType) async {
+        return await authManager.withdraw(with: oAuthType)
+    }
+    
+    /// 약관 동의 상태 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getAgreementCompletedState() -> Bool? {
+        return authManager.getAgreementCompletedState()
+    }
+    
+    /// 약관 동의 상태 저장
+    func setAgreementCompletedState(_ isCompleted: Bool) {
+        return authManager.setAgreementCompletedState(isCompleted)
+    }
+    
+    /// 약관 동의 상태 제거
+    func deleteAgreementCompletedState() {
+        return authManager.deleteAgreementCompletedState()
+    }
+    
+    /// 회원 가입 유저 정보 작성 상태 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getUserInfoCompletedState() -> Bool? {
+        return authManager.getUserInfoCompletedState()
+    }
+    /// 회원 가입 유저 정보 작성 상태 저장
+    func setUserInfoCompletedState(_ isCompleted: Bool) {
+        return authManager.setUserInfoCompletedState(isCompleted)
+    }
+    
+    /// 회원 가입 유저 정보 작성 상태 제거
+    func deleteUserInfoCompletedState() {
+        return authManager.deleteUserInfoCompletedState()
+    }
+}
+
+
 extension AuthClient: TestDependencyKey {
     public static var previewValue = Self(
         loginHelper: unimplemented("\(Self.self).loginHelper"),
-        authManager: unimplemented("\(Self.self).authManager"),
+        authManager: unimplemented("\(Self.self).authManagger"),
         reqSignInWithApple: unimplemented("\(Self.self).reqSignInWithApple"),
         reqSignInWithNaver: unimplemented("\(Self.self).reqSignInWithNaver"),
         reqSignInWithKakao: unimplemented("\(Self.self).reqSignInWithKakao"),

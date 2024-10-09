@@ -41,8 +41,11 @@ public struct OnboardingInfoInputView: View {
                     Text("＊표시는 필수 항목입니다.")
                         .font(.pretendard(.regular, size: 14))
                         .foregroundColor(.mainText)
-                    NamoButton(title: "확인", type: store.isNextButtonIsEnabled ? .active : .inactive, action: {})
+                    NamoButton(title: "확인", type: store.isNextButtonIsEnabled ? .active : .inactive, action: {
+                        store.send(.nextButtonTapped)
+                    })
                     .onTapGesture {
+                        // 버튼 비활성화 상태 시 버튼 탭 활성용
                         store.send(.nextButtonTapped)
                     }
                 }
