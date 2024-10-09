@@ -15,6 +15,7 @@ import DomainMoimInterface
 @Reducer
 /// 모임 생성/편집/조회
 public struct MoimEditStore {
+    
     /// 편집 여부
     public enum Mode: Equatable {
         case view
@@ -106,8 +107,6 @@ public struct MoimEditStore {
         
         /// 삭제확인
         case deleteButtonConfirm        
-        
-        case viewOnAppear
     }
     
     public var body: some ReducerOf<Self> {

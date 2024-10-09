@@ -25,7 +25,7 @@ extension MoimUseCase: DependencyKey {
             }
         },
         createMoim: { moim, uiImage in
-            do {
+            do {                
                 var moimDto = moim.toDto()
                 
                 // 선택한 이미지 파일이 존재하는 경우에만 요청
@@ -34,7 +34,7 @@ extension MoimUseCase: DependencyKey {
                    let imageFile = image.resize(newWidth: 100).jpegData(compressionQuality: 0.6)
                 {
                     let filename = "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
-                    let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: filename).result!
+                    let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: filename).result ?? ""
                     let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: imageFile)
                     moimDto.imageUrl = uploadedUrl
                 }
@@ -48,6 +48,7 @@ extension MoimUseCase: DependencyKey {
             do {
                 let response: BaseResponse<MoimScheduleResonseDTO> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.getMoimDetail(meetingScheduleId))
                 guard let data = response.result else { fatalError() }
+                
                 return data.toEntity()
             } catch {
                 print(error.localizedDescription)
@@ -61,9 +62,21 @@ extension MoimUseCase: DependencyKey {
                 print(error.localizedDescription)
                 throw error
             }
-        }, editMoim: { meetingScheduleId, moim in
+        }, editMoim: { moim, uiImage in
             do {
-                let response: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.editMoim(meetingScheduleId: meetingScheduleId, moimReqDto: moim.toEditDto()))
+                var moimReqDto = moim.toEditDto()
+                
+                if let image = uiImage,
+                   let imageFile = image.resize(newWidth: 100).jpegData(compressionQuality: 0.6)
+                {
+                    
+                    let filename = "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
+                    let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: filename).result!
+                    let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: imageFile)
+                    moimReqDto.imageUrl = uploadedUrl
+                }
+                
+                let response: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: MoimEndPoint.editMoim(meetingScheduleId: moim.scheduleId, moimReqDto: moimReqDto))
             } catch {
                 print(error.localizedDescription)
                 throw error

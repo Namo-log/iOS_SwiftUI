@@ -19,7 +19,7 @@ public struct MoimScheduleEditView: View {
     
     public init(store: StoreOf<MoimEditStore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: {$0})
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
     
     
@@ -77,7 +77,7 @@ public struct MoimScheduleEditView: View {
                         imagePickerView
                         
                         // 장소, 시간
-                        settingView                           
+                        settingView
                         
                         // 친구 초대
                         participantListView
@@ -85,7 +85,7 @@ public struct MoimScheduleEditView: View {
                         
                         // 일정보기 버튼
                         showScheduleButton
-                       
+                        
                     }
                     .padding(.horizontal, 30)
                 }
@@ -242,7 +242,7 @@ extension MoimScheduleEditView {
                     DatePicker("startTimeDatePicker", selection: viewStore.$startDate)
                         .datePickerStyle(.graphical)
                         .labelsHidden()
-                        .tint(Color(asset: SharedDesignSystemAsset.Assets.mainOrange))
+                        .tint(Color.mainOrange)
                 }
             }
             
@@ -265,7 +265,7 @@ extension MoimScheduleEditView {
                     DatePicker("endTimeDatePicker", selection: viewStore.$endDate)
                         .datePickerStyle(.graphical)
                         .labelsHidden()
-                        .tint(Color(asset: SharedDesignSystemAsset.Assets.mainOrange))
+                        .tint(Color.mainOrange)
                 }
             }
             

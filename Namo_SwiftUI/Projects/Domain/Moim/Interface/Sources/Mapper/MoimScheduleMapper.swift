@@ -25,7 +25,7 @@ public extension MoimSchedule {
         return .init(title: title,
                      imageUrl: nil,
                      period: PeriodDto(startDate: startDate.dateToISO8601(),
-                                       endDate: startDate.dateToISO8601()),
+                                       endDate: endDate.dateToISO8601()),
                      location: LocationDto(longitude: 0.0,
                                            latitude: 0.0,
                                            locationName: locationName,
@@ -47,7 +47,6 @@ public extension MoimSchedule {
               participantsToAdd: [],
               participantsToRemove: [])
     }
-
 }
 
 public extension MoimScheduleResonseDTO {

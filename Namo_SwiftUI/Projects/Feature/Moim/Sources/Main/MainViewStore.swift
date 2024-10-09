@@ -24,12 +24,16 @@ public struct MainViewStore {
         
         // 현재 선택한탭
         @BindingState public var currentTab = 0
+        
         // 일정생성뷰
         @BindingState public var isSheetPresented = false
+        
         // 모임리스트
         var moimList: MoimListStore.State
+        
         // 친구리스트
         var friendList: FriendListStore.State
+        
         // 모임생성
         var moimEdit: MoimEditStore.State
     }
@@ -45,6 +49,8 @@ public struct MainViewStore {
     }
     
     public var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Scope(state: \.moimList, action: \.moimList) {
             MoimListStore()
         }
@@ -55,8 +61,6 @@ public struct MainViewStore {
             MoimEditStore()
         }
         
-        BindingReducer()
-        
         Reduce<State, Action> { state, action in
             switch action {
                 // sheet가 사라질떄 데이터 로드
@@ -66,16 +70,11 @@ public struct MainViewStore {
                     return .send(.moimList(.viewOnAppear))
                 }
                 return .none
-                // 모임 삭제 완료
-            case .moimEdit(.deleteButtonConfirm):
-                state.isSheetPresented = false
-                return .none
-                // 모임 수정 완료
-            case .moimEdit(.createButtonTapped):
-                state.isSheetPresented = false
-                return .none
-                // 모임 수정 취소
-            case .moimEdit(.cancleButtonTapped):
+                // 모임 삭제/생성/취소
+            case .moimEdit(.deleteButtonConfirm),
+                    .moimEdit(.createButtonTapped),
+                    .moimEdit(.cancleButtonTapped)
+                :
                 state.isSheetPresented = false
                 return .none
                 // 모임일정 선택
