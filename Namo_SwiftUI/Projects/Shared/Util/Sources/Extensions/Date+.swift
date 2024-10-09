@@ -64,6 +64,17 @@ public extension Date {
         return dateFormatter.string(from: self)
     }
 	
+	
+	//  2022.06.28 (화) 11:00 AM
+	func toYMDEHMa() -> String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy.MM.dd (E) hh:mm a"
+		dateFormatter.locale = Locale(identifier: "ko_KR")
+		dateFormatter.amSymbol = "AM"
+		dateFormatter.pmSymbol = "PM"
+		return dateFormatter.string(from: self)
+	}
+	
 	// date를 YM로 변환
 	func toYM() -> YearMonth {
 		let calendar = Calendar.current

@@ -21,13 +21,19 @@ public struct ScheduleUseCase {
 		let startDateString = String(format: "%04d-%02d-%02d", startDate.year, startDate.month, startDate.day)
 		let endDateString = String(format: "%04d-%02d-%02d", endDate.year, endDate.month, endDate.day)
 		
-		let response: BaseResponse<GetMonthlyScheduleResponseDTO>? = try? await APIManager.shared.performRequest(
-			endPoint: ScheduleEndPoint.getSchedule(
-				startDate: startDateString, endDate: endDateString
+		do {
+			let response: BaseResponse<GetMonthlyScheduleResponseDTO> = try await APIManager.shared.performRequest(
+				endPoint: ScheduleEndPoint.getSchedule(
+					startDate: startDateString, endDate: endDateString
+				)
 			)
-		)
-		
-		return response?.result?.map {$0.toEntity()} ?? []
+			
+			return response.result?.map({$0.toEntity()}) ?? []
+		} catch(let e) {
+			// TODO: error handling
+			print(e.localizedDescription)
+			return []
+		}
 	}
 	
 	// 스케쥴을 캘린더에 뿌리기 위한 스케쥴로 변경
@@ -150,6 +156,35 @@ public struct ScheduleUseCase {
 			return "00:00 - 23:59"
 		}
 	}
+	
+	// Schedule 객체에서 일정 생성/편집에서 사용하는 ScheduleEdit 객체로 변환
+	public func scheduleToScheduleEdit(
+		schedule: Schedule? = nil,
+		selectDate: YearMonthDay
+	) -> ScheduleEdit {
+		if let schedule = schedule {
+			return ScheduleEdit(
+				title: schedule.title,
+				category: schedule.categoryInfo,
+				period: SchedulePeriod(
+					startDate: schedule.startDate,
+					endDate: schedule.endDate
+				),
+				location: schedule.locationInfo,
+				reminderTrigger: schedule.notificationInfo.map {$0.trigger}
+			)
+		} else {
+			return ScheduleEdit(
+				period: SchedulePeriod(
+					startDate: selectDate.toDateWithTime(hour: 8),
+					endDate: selectDate.toDateWithTime(hour: 9)
+				)
+			)
+		}
+	}
+	
+	
+	
 	
 }
 

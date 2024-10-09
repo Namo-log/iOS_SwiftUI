@@ -69,27 +69,27 @@ extension ScheduleNotificationDTO {
 	}
 }
 
-// MARK: - toDTO()
+// MARK: - toData()
 extension Schedule {
-	func toDTO() -> ScheduleDTO {
+	func toData() -> ScheduleDTO {
 		return ScheduleDTO(
 			scheduleId: scheduleId,
 			title: title,
-			categoryInfo: categoryInfo.toDTO(),
+			categoryInfo: categoryInfo.toData(),
 			startDate: Int(startDate.timeIntervalSince1970),
 			endDate: Int(endDate.timeIntervalSince1970),
 			interval: interval,
-			locationInfo: locationInfo.toDTO(),
+			locationInfo: locationInfo.toData(),
 			hasDiary: hasDiary,
 			isMeetingSchedule: isMeetingSchedule,
-			meetingInfo: meetingInfo?.toDTO(),
-			notificationInfo: notificationInfo.map { $0.toDTO() }
+			meetingInfo: meetingInfo?.toData(),
+			notificationInfo: notificationInfo.map { $0.toData() }
 		)
 	}
 }
 
 extension ScheduleCategory {
-	func toDTO() -> ScheduleCategoryDTO {
+	func toData() -> ScheduleCategoryDTO {
 		return ScheduleCategoryDTO(
 			categoryId: categoryId,
 			colorId: colorId,
@@ -100,7 +100,7 @@ extension ScheduleCategory {
 }
 
 extension ScheduleLocation {
-	func toDTO() -> ScheduleLocationDTO {
+	func toData() -> ScheduleLocationDTO {
 		return ScheduleLocationDTO(
 			longitude: longitude,
 			latitude: latitude,
@@ -111,7 +111,7 @@ extension ScheduleLocation {
 }
 
 extension ScheduleMeeting {
-	func toDTO() -> ScheduleMeetingDTO {
+	func toData() -> ScheduleMeetingDTO {
 		return ScheduleMeetingDTO(
 			participantCount: participantCount,
 			participantNicknames: participantNicknames,
@@ -121,7 +121,7 @@ extension ScheduleMeeting {
 }
 
 extension ScheduleNotification {
-	func toDTO() -> ScheduleNotificationDTO {
+	func toData() -> ScheduleNotificationDTO {
 		return ScheduleNotificationDTO(
 			notificationId: notificationId,
 			trigger: trigger

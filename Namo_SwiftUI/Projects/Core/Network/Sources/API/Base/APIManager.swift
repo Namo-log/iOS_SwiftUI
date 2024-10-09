@@ -301,7 +301,7 @@ public extension APIManager {
 
 // MARK: kakaoMap API 요청 extension
 public extension APIManager {
-    func KakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil, completion: @escaping (KakaoMapResponseDTO?, Error?) -> Void) {
+    func KakaoMapAPIRequest(query: String, x: Double?=nil, y: Double?=nil, radius: Int?=nil, page: Int?=nil, size: Int?=nil, completion: @escaping (KakaoLocationSearchResponseDTO?, Error?) -> Void) {
         
         var params: Parameters = [ "query" : query ]
         
@@ -321,7 +321,7 @@ public extension APIManager {
             headers: headers
         )
         .validate()
-        .responseDecodable(of: KakaoMapResponseDTO.self) { dataResponse in
+        .responseDecodable(of: KakaoLocationSearchResponseDTO.self) { dataResponse in
             switch dataResponse.result {
             case .success(let success):
                 completion(success, nil)

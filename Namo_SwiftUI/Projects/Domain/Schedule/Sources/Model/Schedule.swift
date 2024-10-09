@@ -7,8 +7,6 @@
 
 import Foundation
 
-import CoreNetwork
-
 public struct Schedule: Decodable, Hashable {
 	public let scheduleId: Int
 	public let title: String
@@ -49,7 +47,7 @@ public struct Schedule: Decodable, Hashable {
 	}
 }
 
-public struct ScheduleCategory: Decodable, Hashable {
+public struct ScheduleCategory: Codable, Hashable {
 	public let categoryId: Int
 	public let colorId: Int
 	public let name: String
@@ -68,7 +66,7 @@ public struct ScheduleCategory: Decodable, Hashable {
 	}
 }
 
-public struct ScheduleLocation: Decodable, Hashable {
+public struct ScheduleLocation: Codable, Hashable {
 	public let longitude: Double
 	public let latitude: Double
 	public let locationName: String
@@ -117,7 +115,7 @@ public struct ScheduleNotification: Decodable, Hashable {
 }
 
 public extension Schedule {
-	static public let dummySchedules: [Schedule] = [
+	static let dummySchedules: [Schedule] = [
 		Schedule(
 			scheduleId: 1,
 			title: "Test1",
