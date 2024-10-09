@@ -168,14 +168,20 @@ extension MoimScheduleEditView {
             
             Spacer()
             
-            Button(action: {
-                store.send(.createButtonTapped)
-            }) {
-                Text(buttonTitle)
+            if viewStore.mode == .view {
+                Text("취소")
                     .font(.pretendard(.regular, size: 15))
-                    .foregroundStyle(Color.mainText)
+                    .foregroundStyle(Color.white)
+            } else {
+                Button(action: {
+                    store.send(.createButtonTapped)
+                }) {
+                    Text(buttonTitle)
+                        .font(.pretendard(.regular, size: 15))
+                        .foregroundStyle(Color.mainText)
+                }
             }
-            .opacity(viewStore.mode == .view ? 0 : 1)
+            
         }
         .frame(height: 48)
     }

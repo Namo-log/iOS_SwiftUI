@@ -31,7 +31,7 @@ extension MoimUseCase: DependencyKey {
                 // 선택한 이미지 파일이 존재하는 경우에만 요청
                 // 이미지 렌더시 메모리 사용량을 줄이기 위해서는 해상도를 조정해야함
                 if let image = uiImage,
-                   let imageFile = image.resize(newWidth: 100).jpegData(compressionQuality: 0.6)
+                   let imageFile = image.resize(newWidth: 55).jpegData(compressionQuality: 0.6)
                 {
                     let filename = "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
                     let url = try await APIManager.shared.getPresignedUrl(prefix: "activity", filename: filename).result ?? ""
@@ -67,7 +67,7 @@ extension MoimUseCase: DependencyKey {
                 var moimReqDto = moim.toEditDto()
                 
                 if let image = uiImage,
-                   let imageFile = image.resize(newWidth: 100).jpegData(compressionQuality: 0.6)
+                   let imageFile = image.resize(newWidth: 55).jpegData(compressionQuality: 0.6)
                 {
                     
                     let filename = "schedule_cover_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"

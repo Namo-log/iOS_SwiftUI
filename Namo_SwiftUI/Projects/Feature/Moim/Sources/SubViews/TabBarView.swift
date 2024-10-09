@@ -14,6 +14,7 @@ struct TabBarView: View {
     public let tabBarOptions: [String]
     
     var body: some View {
+        ZStack(alignment: .bottom) {
             HStack(spacing: 0) {
                 Spacer()
                 ForEach(Array(tabBarOptions.enumerated()), id: \.self.0) { index, item in
@@ -37,8 +38,7 @@ struct TabBarView: View {
                                 Color.clear
                                     .frame(height: 1)
                             }
-                        }
-                      
+                        }                      
                         .fixedSize()
                         .animation(.spring, value: currentTab)
                     })
@@ -46,6 +46,12 @@ struct TabBarView: View {
                     Spacer()
                 }
             }
+            .zIndex(10)
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1)
+                .foregroundStyle(Color.mainGray)
+        }
             .background(.white)
+            
     }
 }
