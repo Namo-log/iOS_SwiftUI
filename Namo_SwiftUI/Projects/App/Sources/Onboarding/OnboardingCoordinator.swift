@@ -33,7 +33,7 @@ struct OnboardingCoordinator {
         // 버전 체크 여부 플래그
         var hasPerformedVersionCheck: Bool = false
         // 버전 업데이트 필요 표시 플래그
-        var showUpdateRequired: Bool = false
+        @Shared(.inMemory(SharedKeys.showUpdateRequired.rawValue)) var showUpdateRequired: Bool = false
         // 로그인 체크 여부 플래그
         var hasPerformedLoginCheck: Bool = false
         

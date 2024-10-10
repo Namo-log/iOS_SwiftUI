@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Shared
 
 @Reducer
 public struct OnboardingSplashStore {
@@ -17,11 +18,9 @@ public struct OnboardingSplashStore {
         /// 앱 스타팅 체크 로직  플래그
         var isChecking: Bool = false
         /// 업데이트 필요 표시 플래그
-        var showUpdateRequired: Bool = false
+        @Shared(.inMemory(SharedKeys.showUpdateRequired.rawValue)) var showUpdateRequired: Bool = false
         
-        public init() {
-            // 체크 로직 수행
-        }
+        public init() {}
     }
     
     public enum Action: BindableAction {
