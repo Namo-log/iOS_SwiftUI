@@ -30,7 +30,7 @@ struct OnboardingCoordinatorView: View {
             }
         }
         .onAppear {
-            store.send(.loginCheck)
+            store.send(.initialCheck)
         }
     }
 }
