@@ -13,12 +13,16 @@ public protocol LocationManagerProtocol {
     func requestLocationAuthorization()
     /// 위치 업데이트 요청
     func requestLocationUpdate()
+    /// 위치 정보 퍼블리셔
+    var userLocationPublisher: AnyPublisher<CLLocation?, Never> { get }
 }
 
-final public class LocationManager: NSObject, ObservableObject {
+final public class LocationManager: NSObject {
+    
+    /// 내부 CLLocationManager
     private var locationManager = CLLocationManager()
     /// 유저 위치
-    @Published var userLocation: CLLocation?
+    @Published private var userLocation: CLLocation?
     
     override init() {
         super.init()
@@ -26,8 +30,12 @@ final public class LocationManager: NSObject, ObservableObject {
     }
 }
 
-// MARK: LocationManagerProtocol
 extension LocationManager: LocationManagerProtocol {
+    /// 위치 정보 퍼블리셔
+    public var userLocationPublisher: AnyPublisher<CLLocation?, Never> {
+        $userLocation.eraseToAnyPublisher()
+    }
+    
     /// 위치 권한 요청
     public func requestLocationAuthorization() {
         // OS에서 해당 앱이 위치 권한이 allow 되어있는지 확인
