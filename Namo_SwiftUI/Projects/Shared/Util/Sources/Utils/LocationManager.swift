@@ -8,6 +8,13 @@
 import CoreLocation
 import Combine
 
+protocol LocationManagerProtocol {
+    /// 위치 권한 요청
+    func requestLocationAuthorization()
+    /// 위치 업데이트 요청
+    func requestLocationUpdate()
+}
+
 final public class LocationManager: NSObject, ObservableObject {
     private var locationManager = CLLocationManager()
     /// 유저 위치
@@ -15,6 +22,26 @@ final public class LocationManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        locationManager.delegate = self
+    }
+}
+
+// MARK: LocationManagerProtocol
+extension LocationManager: LocationManagerProtocol {
+    /// 위치 권한 요청
+    func requestLocationAuthorization() {
+        // OS에서 해당 앱이 위치 권한이 allow 되어있는지 확인
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestLocation() // 위치 정보 요청
+            locationManager.startUpdatingLocation() // 위치 업데이트 시작
+        } else {
+            print("위치 서비스 활성화가 필요합니다.")
+        }
+    }
+    
+    /// 위치 업데이트 요청
+    func requestLocationUpdate() {
+        locationManager.startUpdatingLocation()
     }
 }
 
