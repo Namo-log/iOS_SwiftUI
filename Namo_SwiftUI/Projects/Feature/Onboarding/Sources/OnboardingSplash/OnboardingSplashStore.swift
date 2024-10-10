@@ -6,7 +6,8 @@
 //
 
 import ComposableArchitecture
-import Shared
+import SharedUtil
+import UIKit
 
 @Reducer
 public struct OnboardingSplashStore {
@@ -48,6 +49,10 @@ public struct OnboardingSplashStore {
                 
             case .goUpdateButtonTapped:
                 print("go to app store")
+                if let url = URL(string: SecretConstants.namoAppStoreURL),
+                   UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
                 return .none
                 
             case .cancelUpdateButtonTapped:
