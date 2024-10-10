@@ -50,8 +50,9 @@ extension LocationManager: CLLocationManagerDelegate {
     
     // 위치 업데이트 시 호출
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("Location Updated: \(String(describing: locations.last))")
-        self.userLocation = locations.last
+        guard let userLocation = locations.last else { return }
+        print("Location Updated: \(userLocation)")
+        self.userLocation = userLocation
     }
     
     // 위치 권한 변경 시 호출
