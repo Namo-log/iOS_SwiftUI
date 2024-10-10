@@ -29,7 +29,7 @@ public protocol LocationManagerProtocol {
 
 /// 싱글톤으로 관리되는 LocationManager 입니다.
 final public class LocationManager: NSObject {
-    static let shared = LocationManager()
+    public static let shared: LocationManagerProtocol = LocationManager()
     
     /// 내부 CLLocationManager
     private var locationManager = CLLocationManager()
