@@ -30,10 +30,6 @@ public struct OnboardingSplashStore {
         case goUpdateButtonTapped
         /// 앱 업데이트 취소 버튼 탭
         case cancelUpdateButtonTapped
-        /// 앱 스타팅 체크 로직 종료
-        case appCheckDone
-        /// 다음 화면 이동
-        case moveNextScreen
     }
     
     /// 타이머
@@ -58,17 +54,6 @@ public struct OnboardingSplashStore {
             case .cancelUpdateButtonTapped:
                 print("exit this app")
                 return .none
-                
-            case .moveNextScreen:
-                print("move to next page")
-                return .none
-                
-            case .appCheckDone:
-                return .run { send in
-                    // 타이머 1초 기다린 후 send
-                    try await self.clock.sleep(for: .seconds(1))
-                    await send(.moveNextScreen)
-                }
             }
         }
     }
