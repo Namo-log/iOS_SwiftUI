@@ -8,7 +8,7 @@
 import CoreLocation
 import Combine
 
-protocol LocationManagerProtocol {
+public protocol LocationManagerProtocol {
     /// 위치 권한 요청
     func requestLocationAuthorization()
     /// 위치 업데이트 요청
@@ -29,7 +29,7 @@ final public class LocationManager: NSObject, ObservableObject {
 // MARK: LocationManagerProtocol
 extension LocationManager: LocationManagerProtocol {
     /// 위치 권한 요청
-    func requestLocationAuthorization() {
+    public func requestLocationAuthorization() {
         // OS에서 해당 앱이 위치 권한이 allow 되어있는지 확인
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation() // 위치 정보 요청
@@ -40,7 +40,7 @@ extension LocationManager: LocationManagerProtocol {
     }
     
     /// 위치 업데이트 요청
-    func requestLocationUpdate() {
+    public func requestLocationUpdate() {
         locationManager.startUpdatingLocation()
     }
 }
