@@ -15,8 +15,8 @@ public protocol LocationManagerProtocol {
     /// 위치 권한 요청
     func requestLocationAuthorization()
     /// 위치 업데이트 요청 - 단발성 업데이트
-    /// 업데이트된 내부 위치 정보의 현재 값 하나만 반환합니다.
-    func requestLocationOnce() -> CLLocation?
+    /// 매번 요청 가능
+    func requestLocationOnce()
     /// 위치 업데이트 요청 - 지속적으로 업데이트
     /// 처음 한 번만 호출해주세요
     func requestLocationUpdate()
@@ -100,11 +100,9 @@ extension LocationManager: LocationManagerProtocol {
     }
     
     /// 위치 업데이트 요청 - 단발성 업데이트
-    /// 업데이트된 내부 위치 정보의 현재 값 하나만 반환합니다.
     /// 매번 요청 가능
-    public func requestLocationOnce() -> CLLocation? {
+    public func requestLocationOnce() {
         locationManager.requestLocation()
-        return userLocation
     }
     
     /// 위치 업데이트 요청 - 지속적으로 업데이트
