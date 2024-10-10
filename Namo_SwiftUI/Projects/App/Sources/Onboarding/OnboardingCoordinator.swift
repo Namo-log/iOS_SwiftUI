@@ -13,6 +13,7 @@ import SharedUtil
 
 @Reducer(state: .equatable)
 enum OnboardingScreen {
+    case splash(OnboardingSplashStore)
     case login(OnboardingLoginStore)
     case agreement(OnboardingTOSStore)
     case userInfo(OnboardingInfoInputStore)
@@ -32,7 +33,7 @@ struct OnboardingCoordinator {
         var hasPerformedLoginCheck: Bool = false
         
         static let initialState: State = .init(
-            routes: [.root(.login(.init()))] // 첫 화면은 로그인
+            routes: [.root(.splash(.init()))]
         )
         
         static func routedState(_ routes: [Route<OnboardingScreen.State>]) -> State {
@@ -112,16 +113,22 @@ struct OnboardingCoordinator {
                 }
                 
             case .goToLoginScreen:
-                state.routes.push(.login(.init()))
+                state.routes = [.root(.login(.init()), embedInNavigationView: true)]
                 return .none
                 
             case .goToAgreementScreen:
-                state.routes.push(.agreement(.init()))
+                state.routes = [
+                    .root(.login(.init())),
+                    .push(.agreement(.init()))
+                ]
                 return .none
                 
             case .goToUserInfoScreen:
                 // TODO: 추후 기획 확정 시 수정
-                state.routes.push(.userInfo(.init(name: nil)))
+                state.routes = [
+                    .root(.login(.init())),
+                    .push(.userInfo(.init(name: nil)))
+                ]
                 return .none
                 
             case .goToSignUpCompletion:
