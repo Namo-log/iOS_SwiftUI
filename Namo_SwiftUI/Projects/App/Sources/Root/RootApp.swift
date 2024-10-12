@@ -10,15 +10,20 @@ import TCACoordinators
 import ComposableArchitecture
 import FeatureOnboarding
 import SharedUtil
+import Firebase
 
 @main
 struct RootApp: App {
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
             AppCoordinatorView(store: Store(initialState: .initialState, reducer: {
                 AppCoordinator()
             }))
-        }        
+        }
     }
 }

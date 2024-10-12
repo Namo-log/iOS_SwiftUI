@@ -17,6 +17,8 @@ struct OnboardingCoordinatorView: View {
         TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
             switch screen.case {
                 
+            case let .splash(store):
+                OnboardingSplashView(store: store)
             case let .login(store):
                 OnboardingLoginView(store: store)
             case let .agreement(store):
@@ -28,7 +30,7 @@ struct OnboardingCoordinatorView: View {
             }
         }
         .onAppear {
-            store.send(.loginCheck)
+            store.send(.initialCheck)
         }
     }
 }

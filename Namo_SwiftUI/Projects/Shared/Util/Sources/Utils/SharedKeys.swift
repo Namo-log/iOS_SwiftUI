@@ -7,4 +7,6 @@
 
 public enum SharedKeys: String {
 	case categories
+    /// 앱 버전 체크 필요 UI 표시용
+    case showUpdateRequired
 }
