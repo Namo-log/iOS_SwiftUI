@@ -8,10 +8,14 @@
 import SwiftUI
 import SharedDesignSystem
 import ComposableArchitecture
+import Combine
 
 public struct OnboardingTOSView: View {
     
+    @Dependency(\.locationManager) var locationManager
+    
     public let store: StoreOf<OnboardingTOSStore>
+    @State private var cancellables: Set<AnyCancellable> = []
     
     public init(store: StoreOf<OnboardingTOSStore>) {
         self.store = store
@@ -41,6 +45,13 @@ public struct OnboardingTOSView: View {
                 
             }
             .padding(.bottom, 40)
+        }
+        .onAppear {
+            locationManager.authorizationStatusPublisher
+                .sink { status in
+                    store.send(.authorizationStatusUpdated(status))
+                }
+                .store(in: &cancellables)
         }
     }
 }
