@@ -11,6 +11,8 @@ import SwiftUI
 @Reducer
 public struct OnboardingTOSStore {
     
+    @Dependency(\.locationManager) var locationManager
+    
     public init() {}
     
     @ObservableState

@@ -8,6 +8,7 @@
 import CoreLocation
 import Combine
 import UIKit
+import Dependencies
 
 public protocol LocationManagerProtocol {
     /// 위치 권한 요청
@@ -112,5 +113,17 @@ extension LocationManager: CLLocationManagerDelegate {
     // CLLocationManager 관련 에러 발생시 호출
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
         print("Location Error: \(error.localizedDescription)")
+    }
+}
+
+// MARK: LocationManager DI
+struct LocationManagerKey: DependencyKey {
+    static var liveValue: LocationManagerProtocol = LocationManager.shared
+}
+
+extension DependencyValues {
+    public var locationManager: LocationManagerProtocol {
+        get { self[LocationManagerKey.self] }
+        set { self[LocationManagerKey.self] = newValue }
     }
 }
