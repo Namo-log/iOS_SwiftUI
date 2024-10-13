@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-public struct FlexibleGridView<Content: View>: View {
-    let data: [String]
-    let content: (String) -> Content
+public struct FlexibleGridView<Content: View, Data: Hashable>: View {
+    let data: [Data]
+    let content: (Data) -> Content
     
     @State private var elementSizes: [CGFloat] = []
     @State private var viewSize: CGFloat = .zero
@@ -17,10 +17,10 @@ public struct FlexibleGridView<Content: View>: View {
     private var horizontalSpacing: CGFloat = 10
     private var verticalSpacing: CGFloat = 10
     
-    public init(data: [String],
+    public init(data: [Data],
                 horizontalSpacing: CGFloat = 10,
                 verticalSpacing: CGFloat = 10,
-                @ViewBuilder content: @escaping (String) -> Content) {
+                @ViewBuilder content: @escaping (Data) -> Content) {
         self.data = data
         self.content = content
         self.horizontalSpacing = horizontalSpacing
@@ -58,9 +58,9 @@ public struct FlexibleGridView<Content: View>: View {
         }
     }
     
-    private func makeRow() -> [[String]] {
+    private func makeRow() -> [[Data]] {
         
-        var row: [[String]] = [[]]
+        var row: [[Data]] = [[]]
         var currentRow: Int = 0
         var currentData = data
         var currentViewSize = viewSize
@@ -71,7 +71,7 @@ public struct FlexibleGridView<Content: View>: View {
             
             if itemSize <= currentViewSize {
                 row[currentRow].append(currentData.removeFirst())
-                currentViewSize -= itemSize                
+                currentViewSize -= itemSize
             } else {
                 currentRow += 1
                 row.append([currentData.removeFirst()])

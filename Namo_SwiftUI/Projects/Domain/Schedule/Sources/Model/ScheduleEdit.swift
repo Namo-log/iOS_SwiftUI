@@ -7,7 +7,7 @@
 
 import Foundation
 
-import DomainCategory
+import DomainCategoryInterface
 
 public struct ScheduleEdit: Encodable, Equatable {
 	public var title: String

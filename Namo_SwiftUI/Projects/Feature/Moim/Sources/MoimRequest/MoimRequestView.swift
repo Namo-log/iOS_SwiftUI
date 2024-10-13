@@ -6,38 +6,55 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 import SharedDesignSystem
 import FeatureFriend
-import ComposableArchitecture
+import FeatureMoimInterface
+
 
 public struct MoimRequestView: View {
-    let store: StoreOf<MoimRequestViewStore>
     
-    @State private var tabIndex = 0
+    private enum Tab: CaseIterable {
+        case moimRequest
+        case friendRequest
+        
+        var tabName: String {
+            switch self {
+            case .moimRequest:
+                "모임 요청"
+            case .friendRequest:
+                "친구 요청"
+            }
+        }
+        
+        var index: Int {
+            switch self {
+            case .moimRequest:
+                0
+            case .friendRequest:
+                1
+            }
+        }
+    }
     
-    public init(store: StoreOf<MoimRequestViewStore>) {
+    let store: StoreOf<MoimRequestStore>
+    
+    @State private var selectedTab: Tab = .moimRequest
+    @State private var tabSizes: [CGRect] = []
+    
+    private var padding: CGFloat = 10
+    
+    private var isTabSize: Bool {
+        tabSizes.count == Tab.allCases.count
+    }
+    
+    public init(store: StoreOf<MoimRequestStore>) {
         self.store = store
     }
     
     public var body: some View {
         VStack {
-            SectionTabBar(tabIndex: $tabIndex, tabTitle: ["모임 요청", "친구 요청"]) {
-                if tabIndex == 0 {
-                    MoimRequestList()
-                } else {
-                    FriendRequestListView(
-                        store: Store(
-                            initialState: FriendRequestListStore.State(
-                                friends: dummyFriends
-                            ),
-                            reducer: {
-                                FriendRequestListStore()
-                            }
-                        )
-                    )
-                }
-            }
-            
+  
         }
         .namoNabBar(center: {
             Text("새로운 요청")

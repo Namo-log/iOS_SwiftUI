@@ -7,109 +7,70 @@
 
 import Alamofire
 import Foundation
-
 import SharedUtil
 
 public enum MoimEndPoint {
-	case createMoim(groupName: String, image: Data?)
-	case getMoimList
-	case changeMoimName(data: changeMoimNameRequest)
-	case participateMoim(groupCode: String)
-	case withdrawMoim(moimId: Int)
-	case getMoimSchedule(moimId: Int)
-    // Schedule
-    case postMoimSchedule(data: postMoimScheduleRequest)
-    case patchMoimSchedule(data: patchMoimScheduleRequest)
-    case deleteMoimSchedule(scheduleId: Int)
-    case patchMoimScheduleCategory(data: patchMoimScheduleCategoryRequest)
+    case getMoimList
+    case createMoim(MoimScheduleRequestDTO)
+    case getMoimDetail(Int)
+    case withdrawMoim(Int)
+    case editMoim(meetingScheduleId: Int, moimReqDto: MoimScheduleEditRequestDTO)
 }
 
 extension MoimEndPoint: EndPoint {
-	public var baseURL: String {
-		return "\(SecretConstants.baseURL)"
-	}
-	
-	public var path: String {
-		switch self {
-		case .createMoim:
-			return "/groups"
-		case .getMoimList:
-			return "/groups"
-		case .changeMoimName:
-			return "/groups/name"
-		case .participateMoim(let groupCode):
-			return "/groups/participate/\(groupCode)"
-		case .withdrawMoim(let moimId):
-			return "/groups/withdraw/\(moimId)"
-		case .getMoimSchedule(let moimId):
-			return "/group/schedules/\(moimId)/all"
-        case .postMoimSchedule, .patchMoimSchedule:
-            return "/group/schedules"
-        case .patchMoimScheduleCategory:
-            return "/group/schedules/category"
-        case .deleteMoimSchedule(scheduleId: let scheduleId):
-            return "/group/schedules/\(scheduleId)"
-		}
-	}
-	
-	public var method: Alamofire.HTTPMethod {
-		switch self {
-		case .createMoim:
-			return .post
-		case .getMoimList:
-			return .get
-		case .changeMoimName:
-			return .patch
-		case .participateMoim:
-			return .patch
-		case .withdrawMoim:
-			return .delete
-		case .getMoimSchedule:
-			return .get
-        case .postMoimSchedule:
-            return .post
-        case .patchMoimSchedule:
-            return .patch
-        case .patchMoimScheduleCategory:
-            return .patch
-        case .deleteMoimSchedule:
-            return .delete
+    public var baseURL: String {
+        return "\(SecretConstants.baseURL)/schedules"
+    }
+    
+    public var path: String {
+        switch self {
+        case .getMoimList, .createMoim:
+            return "/meeting"
+        case let .getMoimDetail(meetingScheduleId):
+            return "/meeting/\(meetingScheduleId)"
+        case let .withdrawMoim(meetingScheduleId):
+            return "/meeting/\(meetingScheduleId)/withdraw"
+        case let .editMoim(meetingScheduleId, _):
+            return "/meeting/\(meetingScheduleId)"
         }
-	}
-	
-	public var task: APITask {
-		switch self {
-		case .createMoim(let groupName, let image):
-			return .uploadImagesWithBody(imageDatas: [image], body: ["groupName": groupName], imageKeyName: "img")
-		case .getMoimList:
-			return .requestPlain
-		case .changeMoimName(let data):
-			return .requestJSONEncodable(parameters: data)
-		case .participateMoim:
-			return .requestPlain
-		case .withdrawMoim:
-			return .requestPlain
-		case .getMoimSchedule:
-			return .requestPlain
-        case .postMoimSchedule(data: let data):
-            return .requestJSONEncodable(parameters: data)
-        case .patchMoimSchedule(data: let data):
-            return .requestJSONEncodable(parameters: data)
-        case .patchMoimScheduleCategory(data: let data):
-            return .requestJSONEncodable(parameters: data)
-        case .deleteMoimSchedule:
+    }
+    
+    public var method: Alamofire.HTTPMethod {
+        switch self {
+        case .getMoimList, .getMoimDetail(_):
+            return .get
+        case .createMoim:
+            return .post
+        case .withdrawMoim(_):
+            return .delete
+        case .editMoim(_, _):
+            return .patch
+        }
+    }
+    
+    public var task: APITask {
+        switch self {
+        case .getMoimList:
             return .requestPlain
-		}
-	}
-	
-	public var headers: HTTPHeaders? {
-		switch self {
-		case .createMoim:
-			return ["Content-Type": "multipart/form-data"]
-		default:
-			return ["Content-Type": "application/json"]
-		}
-	}
-	
-	
+        case let .getMoimDetail(meetingScheduleId):
+            let parameter: [String: Any] = ["meetingScheduleId": meetingScheduleId]
+            return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
+        case let .createMoim(moimDto):
+            return .requestJSONEncodable(parameters: moimDto)
+        case let .withdrawMoim(meetingScheduleId):
+            let parameter: [String: Any] = ["meetingScheduleId": meetingScheduleId]
+            return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
+        case let .editMoim(_, moimReqDto):            
+            return .requestJSONEncodable(parameters: moimReqDto)
+        }
+    }
+    
+    public var headers: HTTPHeaders? {
+        switch self {
+            //        case .createMoim:
+            //            return ["Content-Type": "multipart/form-data"]
+        default:
+            return ["Content-Type": "application/json"]
+        }
+    }
 }

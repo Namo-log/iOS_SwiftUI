@@ -23,4 +23,3 @@ struct AppCoordinatorView: View {
         }
     }
 }
-
