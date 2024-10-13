@@ -13,20 +13,18 @@ import ComposableArchitecture
 
 public struct MainView: View {
     @Perception.Bindable private var store: StoreOf<MainViewStore>
-    @ObservedObject private var viewStore: ViewStoreOf<MainViewStore>
     
     public init(store: StoreOf<MainViewStore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: {$0})
     }
     
     public var body: some View {
         ZStack {
             WithPerceptionTracking {
                 VStack(spacing: 0) {
-                    TabBarView(currentTab: viewStore.$currentTab, tabBarOptions: ["모임 일정", "친구리스트"])
+                    TabBarView(currentTab: $store.currentTab, tabBarOptions: ["모임 일정", "친구리스트"])
                     
-                    TabView(selection: viewStore.$currentTab) {
+                    TabView(selection: $store.currentTab) {
                         
                         // 모임일정 리스트
                         MoimListView(store: store.scope(state: \.moimList, action: \.moimList))
@@ -35,7 +33,7 @@ public struct MainView: View {
                                     store.send(.presentComposeSheet)
                                 }
                             }
-                            .fullScreenCover(isPresented: viewStore.$isSheetPresented, content: {
+                            .fullScreenCover(isPresented: $store.isSheetPresented, content: {
                                 MoimScheduleEditView(store: store.scope(state: \.moimEdit, action: \.moimEdit))
                                     .background(ClearBackground())
                             })
@@ -61,7 +59,7 @@ public struct MainView: View {
                 .overlay(
                     Color.black.opacity(0.5)
                         .ignoresSafeArea(.all)
-                        .opacity(viewStore.isSheetPresented == true ? 1 : 0)
+                        .opacity(store.isSheetPresented == true ? 1 : 0)
                 )
             }
         }

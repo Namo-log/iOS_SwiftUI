@@ -17,16 +17,17 @@ public struct MainViewStore {
     
     public init() {}
     
+    @ObservableState
     public struct State: Equatable {
         public static let initialState = State(moimList: .init(),
                                                friendList: .init(),
                                                moimEdit: .init())
         
         // 현재 선택한탭
-        @BindingState public var currentTab = 0
+        public var currentTab = 0
         
         // 일정생성뷰
-        @BindingState public var isSheetPresented = false
+        public var isSheetPresented = false
         
         // 모임리스트
         var moimList: MoimListStore.State
@@ -40,11 +41,11 @@ public struct MainViewStore {
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case notificationButtonTap
         case moimList(MoimListStore.Action)
         case moimEdit(MoimEditStore.Action)
         case friendList(FriendListStore.Action)
         case presentDetailSheet(MoimSchedule)
+        case notificationButtonTap
         case presentComposeSheet
     }
     
@@ -64,7 +65,7 @@ public struct MainViewStore {
         Reduce<State, Action> { state, action in
             switch action {
                 // sheet가 사라질떄 데이터 로드
-            case .binding(\.$isSheetPresented):
+            case .binding(\.isSheetPresented):
                 if state.isSheetPresented == false {
                     state.moimEdit = .init()
                     return .send(.moimList(.viewOnAppear))
