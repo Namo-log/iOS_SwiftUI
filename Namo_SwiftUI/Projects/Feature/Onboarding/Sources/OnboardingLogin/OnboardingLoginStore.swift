@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import Foundation
+
 import DomainAuth
 import DomainAuthInterface
 import Core
@@ -18,7 +18,6 @@ public struct OnboardingLoginStore {
     
 //    @ObservableState // 화면에 연결되어 재렌더링 매개체가 되는 경우에만 활성화
     public struct State: Equatable {
-        
         public init() {}
     }
     
@@ -29,6 +28,7 @@ public struct OnboardingLoginStore {
         case namoKakaoLoginResponse(SocialSignInRequestDTO)
         case namoNaverLoginResponse(SocialSignInRequestDTO)
         case namoAppleLoginResponse(AppleSignInRequestDTO)
+        case goToNextScreen
         case loginFailed(String)
     }
     
@@ -78,6 +78,7 @@ public struct OnboardingLoginStore {
                         let result = try await authClient.reqSignInWithKakao(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
                         authClient.setLoginState(.kakao, with: tokens)
+                        await send(.goToNextScreen)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
                     }
@@ -90,6 +91,7 @@ public struct OnboardingLoginStore {
                         let result = try await authClient.reqSignInWithNaver(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
                         authClient.setLoginState(.naver, with: tokens)
+                        await send(.goToNextScreen)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
                     }
@@ -101,13 +103,16 @@ public struct OnboardingLoginStore {
                     do {
                         let result = try await authClient.reqSignInWithApple(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
-                        
                         authClient.setLoginState(.apple, with: tokens)
-                        authClient.setUserId(userId: result.userId)
+                        await send(.goToNextScreen)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
                     }
                 }
+                
+            case .goToNextScreen:
+                print("namo login completed -> goToNextScreen")
+                return .none
                 
             case .loginFailed(let errorDesc):
                 print("임시 에러 처리: \(errorDesc)")

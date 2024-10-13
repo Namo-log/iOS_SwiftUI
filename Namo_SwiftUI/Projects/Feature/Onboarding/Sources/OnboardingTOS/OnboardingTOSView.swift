@@ -35,7 +35,7 @@ public struct OnboardingTOSView: View {
                 Spacer()
                 
                 NamoButton(title: "확인", type: store.nextButtonIsEnabled ? .active : .inactive, action: {
-                    print("확인")
+                    store.send(.nextButtonTapped)
                 })
                 .padding(.horizontal, 25)
                 

@@ -40,7 +40,7 @@ public struct OnboardingSplashView: View {
                 title: "업데이트가 필요합니다.",
                 content: "업데이트가 필요합니다.",
                 confirmAction: {
-                    // appStore 열기
+                    store.send(.goUpdateButtonTapped)
                 }
             )
         }

@@ -10,10 +10,27 @@ import ComposableArchitecture
 import TCACoordinators
 import FeatureOnboarding
 
-struct OnBoardingCoordinatorView: View {
-    let store: StoreOf<OnBoardingCoordinator>
+struct OnboardingCoordinatorView: View {
+    let store: StoreOf<OnboardingCoordinator>
     
     var body: some View {
-        OnboardingLoginView(store: store.scope(state: \.onBoarding, action: \.onboarding))
+        TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
+            switch screen.case {
+                
+            case let .splash(store):
+                OnboardingSplashView(store: store)
+            case let .login(store):
+                OnboardingLoginView(store: store)
+            case let .agreement(store):
+                OnboardingTOSView(store: store)
+            case let .userInfo(store):
+                OnboardingInfoInputView(store: store)
+            case let .signUpCompletion(store):
+                OnboardingCompleteView(store: store)
+            }
+        }
+        .onAppear {
+            store.send(.initialCheck)
+        }
     }
 }

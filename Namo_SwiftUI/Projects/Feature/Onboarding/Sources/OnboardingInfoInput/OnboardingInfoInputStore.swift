@@ -135,6 +135,8 @@ public struct OnboardingInfoInputStore {
         case nextButtonTapped
         /// 토스트뷰 표시
         case showToastView
+        /// 다음 화면으로
+        case goToNextScreen
     }
 
     public var body: some ReducerOf<Self> {
@@ -144,6 +146,7 @@ public struct OnboardingInfoInputStore {
             switch action {
             case .binding(let bindingAction):
                 switch bindingAction.keyPath {
+                    // 바인딩된 State 별 Action 라우팅
                 case \State.nickname:
                     return .send(.nicknameChanged(state.nickname))
                 case \State.bio:
@@ -165,17 +168,21 @@ public struct OnboardingInfoInputStore {
                 default:
                     return .none
                 }
+            
             case .addImageButtonTapped:
                 print("이미지 피커 표시")
                 return .none
+            
             case .addFavoriteColorButtonTapped:
                 print("컬러 팔레트 표시")
                 state.isShowingPalette = true
                 return .none
+            
             case .selectPaletteColor(let color):
                 print("컬러 선택: \(color)")
                 state.selectedPaletterColor = color
                 return .none
+            
             case .saveFavoriteColor(let nilableColor):
                 if let color = nilableColor?.color {
                     print("컬러 저장: \(color)")
@@ -187,39 +194,47 @@ public struct OnboardingInfoInputStore {
                     print("컬러 저장 불가")
                     return .none
                 }
+            
             case .dismissColorPaletteView:
                 print("컬러 팔레트 dismiss")
                 state.isShowingPalette = false
                 return .none
+            
             case .nicknameChanged(let nickname):
 //                state.nicknameState = nickname.isEmpty ? .blank : .filled
                 state.nicknameState = state.nickname.matches(regex: nicknameRegex) ? .valid : .invalid
                 print("현재 nickname: \(nickname), \(state.nicknameState)")
                 return .send(.checkFormStatus)
+            
             case .birthYearChanged(let year):
                 print("현재 year: \(year)")
 //                state.birthYearState = year.isEmpty ? .blank : .filled
                 state.birthYearState = state.birthYear.matches(regex: yearRegex) ? .valid : .invalid
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
+            
             case .birthMonthChanged(let month):
                 print("현재 month: \(month)")
 //                state.birthMonthState = month.isEmpty ? .blank : .filled
                 state.birthMonthState = state.birthMonth.matches(regex: monthRegex) ? .valid : .invalid
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
+            
             case .birthDayChanged(let day):
                 print("현재 day: \(day)")
 //                state.birthDayState = day.isEmpty ? .blank : .filled
                 state.birthDayState = state.birthDay.matches(regex: dayRegex) ? .valid : .invalid
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
+            
             case .birthDateMerge(let year, let month, let day):
                 state.birthDate = "\(year)-\(month)-\(day)"
                 print("현재 birthDate: \(state.birthDate)")
                 return .send(.checkFormStatus)
+            
             case .bioChanged(let bio):
                 print("현재 bio: \(bio)")
 //                state.bioState = bio.isEmpty ? .blank : .filled
                 state.bioState = state.bio.count <= 50 ? .valid : .invalid
                 return .send(.checkFormStatus)
+            
             case .checkFormStatus:
                 let status =
                 state.favoriteColorState == .valid
@@ -232,16 +247,23 @@ public struct OnboardingInfoInputStore {
                 
                 state.isNextButtonIsEnabled = status
                 return .none
+                
             case .nextButtonTapped:
                 if state.isNextButtonIsEnabled {
-                    print("다음 화면")
-                    return .none
+                    print("allowed to go next")
+                    return .send(.goToNextScreen)
                 } else {
+                    print("not allowed to go next")
                     return .concatenate(
                         // TODO: 모든 UI 일괄 검증 로직 추가
                         .send(.showToastView)
                     )
                 }
+            
+            case .goToNextScreen:
+                print("goToNextScreen")
+                return .none
+                
             case .showToastView:
                 state.isShowingNamoToast = true
                 return .none

@@ -11,34 +11,50 @@ import Core
 import ComposableArchitecture
 import DomainAuthInterface
 
-/// 로그인 및 로그아웃 상태를 관리하는 매니저입니다.
+/// 로그인, 로그아웃 및 유저 인증 관련 상태를 관리하는 매니저입니다.
+/// 유저 관련 UserDefaults 세팅은 여기에서 관리됩니다.
 /// - 의존성:
 ///   - `authClient`를 사용하여 로그아웃 및 로그인 API 요청을 처리합니다.
 public struct AuthManager: AuthManagerProtocol {
+    
     // MARK: 추후 문제시 init에서 의존성 주입으로 변경
     @Dependency(\.authClient) var authClient
     
     public init() {}
     
-    /// userId를 저장합니다.
-    public func setUserId(userId: Int) {
-        UserDefaults.standard.set(userId, forKey: "userId")
+    /// 유저의 현재 상태를 파악합니다
+    public func userStatusCheck() -> UserStatus {
+        // 로그인 상태 확인
+        guard let _ = authClient.getLoginState() else { return .logout }
+        // 약관 동의 여부 nil 체크
+        guard let agreementCompleted = authClient.getAgreementCompletedState() else { return .loginWithoutAgreement }
+        // 유저 정보 작성 여부 nil 체크
+        guard let userInfoCompleted = authClient.getUserInfoCompletedState() else { return .loginWithoutUserInfo }
+        // 필요 정보 작성 여부 체크
+        guard agreementCompleted && userInfoCompleted else { return .loginWithoutEverything }
+        
+        return .loginWithAll
     }
-    
-    /// userId를 반환합니다.
-    public func getUserId() -> Int {
-        return UserDefaults.standard.integer(forKey: "userId")
-    }
-    
+}
+
+// MARK: Login/Logout Extension
+public extension AuthManager {
     /// 로그인 상태 가져오기
-    public func getLoginState() -> OAuthType? {
+    func getLoginState() -> OAuthType? {
+        // 소셜 로그인 상태
         guard let oAuthTypeString = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
+        // 토큰 존재 여부
+        do {
+            _ = try KeyChainManager.readItem(key: "accessToken")
+            _ = try KeyChainManager.readItem(key: "refreshToken")
+        } catch {
+            return nil
+        }
         return OAuthType(rawValue: oAuthTypeString)
     }
-    
-    
+        
     /// 카카오/네이버/애플 로그인 상태 저장
-    public func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
+    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. socialLogin 상태 저장
@@ -48,7 +64,7 @@ public struct AuthManager: AuthManagerProtocol {
             try KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
             try KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
             print("!---로그인 처리 완료---!")
-			print("accessToken: \(tokens.accessToken)")
+            print("accessToken: \(tokens.accessToken)")
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
@@ -56,7 +72,7 @@ public struct AuthManager: AuthManagerProtocol {
     }
     
     /// 카카오/네이버/애플 로그아웃 상태 저장
-    public func setLogoutState(with oAuthType: OAuthType) async {
+    func setLogoutState(with oAuthType: OAuthType) async {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. get refreshToken
@@ -89,9 +105,12 @@ public struct AuthManager: AuthManagerProtocol {
             print("임시 처리: \(error.localizedDescription)")
         }
     }
-    
+}
+
+// MARK: Withdraw Extension
+public extension AuthManager {
     /// OAuthType별 회원탈퇴 처리
-    public func withdraw(with oAuthType: OAuthType) async {
+    func withdraw(with oAuthType: OAuthType) async {
         do {
             let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
             switch oAuthType {
@@ -108,6 +127,45 @@ public struct AuthManager: AuthManagerProtocol {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")
         }
+    }
+}
+
+// MARK: Agreement Extension
+public extension AuthManager {
+    /// 약관 동의 상태 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getAgreementCompletedState() -> Bool? {
+        guard let isAgreementCompleted = UserDefaults.standard.value(forKey: "agreementCompleted") as? Bool else { return nil }
+        return isAgreementCompleted
+    }
+    
+    /// 약관 동의 상태 저장
+    func setAgreementCompletedState(_ isCompleted: Bool) {
+        UserDefaults.standard.set(isCompleted, forKey: "isAgreementCompleted")
+    }
+    
+    /// 약관 동의 상태 제거
+    func deleteAgreementCompletedState() {
+        UserDefaults.standard.removeObject(forKey: "isAgreementCompleted")
+    }
+}
+
+// MARK: User Info Extension
+public extension AuthManager {
+    /// 회원 가입 유저 정보 작성 상태 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getUserInfoCompletedState() -> Bool? {
+        guard let isUserInfoCompleted = UserDefaults.standard.value(forKey: "isUserInfoCompleted") as? Bool else { return nil }
+        return isUserInfoCompleted
+    }
+    /// 회원 가입 유저 정보 작성 상태 저장
+    func setUserInfoCompletedState(_ isCompleted: Bool) {
+        UserDefaults.standard.set(isCompleted, forKey: "isUserInfoCompleted")
+    }
+    
+    /// 회원 가입 유저 정보 작성 상태 제거
+    func deleteUserInfoCompletedState() {
+        UserDefaults.standard.removeObject(forKey: "isUserInfoCompleted")
     }
 }
 
