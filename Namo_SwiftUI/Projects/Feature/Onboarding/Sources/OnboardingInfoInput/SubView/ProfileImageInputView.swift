@@ -40,6 +40,11 @@ public struct ProfileImageInputView: View {
                         Image(asset: SharedDesignSystemAsset.Assets.icFavColor)
                     case .filled, .valid:
                         Image(asset: SharedDesignSystemAsset.Assets.icFavColorValid)
+                            .overlay {
+                                Circle()
+                                    .frame(width: 32, height:32)
+                                    .foregroundColor(store.favoriteColor)
+                            }
                     case .invalid:
                         Image(asset: SharedDesignSystemAsset.Assets.icFavColorInvalid)
                     }
