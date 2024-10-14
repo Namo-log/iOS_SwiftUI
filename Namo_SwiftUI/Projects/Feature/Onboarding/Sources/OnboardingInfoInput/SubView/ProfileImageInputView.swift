@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 import ComposableArchitecture
 import SharedDesignSystem
 
@@ -19,17 +20,23 @@ public struct ProfileImageInputView: View {
     
     public var body: some View {
         WithPerceptionTracking {
-            ZStack {
-                RoundedRectangle(cornerRadius: 24)
-                    .frame(width: 120, height: 120)
-                    .foregroundColor(.mainGray)
-                
-                Image(asset: SharedDesignSystemAsset.Assets.icImage)
-                    .resizable()
-                    .frame(width: 28, height: 28)
-            }
-            .onTapGesture {
-                store.send(.addImageButtonTapped)
+            PhotosPicker(selection: $store.profileImageItem) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 24)
+                        .frame(width: 120, height: 120)
+                        .foregroundColor(.mainGray)
+                    if let selectedImage = store.profileImage {
+                        Image(uiImage: selectedImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                            .clipShape(.rect(cornerRadius: 24))
+                    } else {
+                        Image(asset: SharedDesignSystemAsset.Assets.icImage)
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                    }
+                }
             }
             .overlay {
                 Button(action: {

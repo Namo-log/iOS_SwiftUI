@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import PhotosUI
 
 import SharedDesignSystem
 
@@ -51,8 +52,10 @@ public struct OnboardingInfoInputStore {
     @ObservableState
     public struct State: Equatable {
         
+        /// 프로필 이미지 아이템 -> 프로필 이미지로 변환
+        var profileImageItem: PhotosPickerItem?
         /// 프로필 이미지
-        var profileImage: Image?
+        var profileImage: UIImage?
         /// 닉네임
         var nickname: String = ""
         /// 이름
@@ -112,8 +115,6 @@ public struct OnboardingInfoInputStore {
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        /// 이미지 추가 버튼 탭
-        case addImageButtonTapped
         /// 좋아하는 컬러 추가 버튼 탭
         case addFavoriteColorButtonTapped
         /// 컬러 팔레트 색 선택
@@ -122,6 +123,10 @@ public struct OnboardingInfoInputStore {
         case saveFavoriteColor(PalleteColor?)
         /// 컬러 팔레트 dismiss
         case dismissColorPaletteView
+        /// 프로필 이미지 수정
+        case profileImageChanged(PhotosPickerItem?)
+        /// 프로필 이미지 수정사항 반영
+        case profileImageLoaded(UIImage?)
         /// 닉네임 수정
         case nicknameChanged(String)
         /// 이름 수정
@@ -154,6 +159,8 @@ public struct OnboardingInfoInputStore {
             case .binding(let bindingAction):
                 switch bindingAction.keyPath {
                     // 바인딩된 State 별 Action 라우팅
+                case \State.profileImageItem:
+                    return .send(.profileImageChanged(state.profileImageItem))
                 case \State.nickname:
                     return .send(.nicknameChanged(state.nickname))
                 case \State.name:
@@ -177,22 +184,19 @@ public struct OnboardingInfoInputStore {
                 default:
                     return .none
                 }
-            
-            case .addImageButtonTapped:
-                print("이미지 피커 표시")
-                return .none
-        case .addFavoriteColorButtonTapped:
+                
+            case .addFavoriteColorButtonTapped:
                 print("컬러 팔레트 표시")
                 state.isShowingPalette = true
                 return .none
-            
+                
             case .selectPaletteColor(let color):
                 print("컬러 선택: \(color)")
                 state.selectedPaletterColor = color
                 return .none
-            
+                
             case .saveFavoriteColor(let nilableColor):
-				if let color = nilableColor?.color {
+                if let color = nilableColor?.color {
                     print("컬러 저장: \(color)")
                     state.favoriteColor = color
                     state.favoriteColorState = .valid
@@ -202,10 +206,33 @@ public struct OnboardingInfoInputStore {
                     print("컬러 저장 불가")
                     return .none
                 }
-            
+                
             case .dismissColorPaletteView:
                 print("컬러 팔레트 dismiss")
                 state.isShowingPalette = false
+                return .none
+                
+            case .profileImageChanged(let item):
+                guard let item = item else {
+                    return .send(.profileImageLoaded(nil))
+                }
+
+                return .run { send in
+                    do {
+                        if let data = try await item.loadTransferable(type: Data.self),
+                           let image = UIImage(data: data) {
+                            await send(.profileImageLoaded(image))
+                        } else {
+                            await send(.profileImageLoaded(nil))
+                        }
+                    } catch {
+                        print("Error loading image: \(error)")
+                        await send(.profileImageLoaded(nil))
+                    }
+                }
+                
+            case .profileImageLoaded(let image):
+                state.profileImage = image
                 return .none
             
             case .nicknameChanged(let nickname):
