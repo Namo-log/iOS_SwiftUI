@@ -56,7 +56,7 @@ public struct OnboardingInfoInputStore {
         /// 닉네임
         var nickname: String = ""
         /// 이름
-        let name: String
+        var name: String = ""
         /// 생년
         var birthYear: String = ""
         /// 생월
@@ -76,7 +76,9 @@ public struct OnboardingInfoInputStore {
         /// 닉네임 작성 상태
         var nicknameState: InfoFormState = .blank
         /// 이름 로드 여부
-        var isNameLoaded: Bool = false
+//        var isNameLoaded: Bool = false
+        /// 이름 작성 상태
+        var nameState: InfoFormState = .blank
         /// 생년 작성 상태
         var birthYearState: InfoFormState = .blank
         /// 생월 작성 상태
@@ -93,16 +95,19 @@ public struct OnboardingInfoInputStore {
         var isShowingNamoToast: Bool = false
         
         
-        public init(name: String?) {
-            if let name {
-                self.name = name
-                self.isNameLoaded = true
-            }
-            else {
-                self.name = "Unvalid"
-                self.isNameLoaded = false
-            }
-        }
+        //        public init(name: String?) {
+        //            if let name {
+        //                self.name = name
+        //                self.isNameLoaded = true
+        //            }
+        //            else {
+        //                self.name = "Unvalid"
+        //                self.isNameLoaded = false
+        //            }
+        //        }
+        
+        public init() {}
+
     }
     
     public enum Action: BindableAction {
@@ -119,6 +124,8 @@ public struct OnboardingInfoInputStore {
         case dismissColorPaletteView
         /// 닉네임 수정
         case nicknameChanged(String)
+        /// 이름 수정
+        case nameChanged(String)
         /// 생년 수정
         case birthYearChanged(String)
         /// 생월 수정
@@ -149,6 +156,8 @@ public struct OnboardingInfoInputStore {
                     // 바인딩된 State 별 Action 라우팅
                 case \State.nickname:
                     return .send(.nicknameChanged(state.nickname))
+                case \State.name:
+                    return .send(.nameChanged(state.name))
                 case \State.bio:
                     return .send(.bioChanged(state.bio))
                 case \State.birthYear:
@@ -172,8 +181,7 @@ public struct OnboardingInfoInputStore {
             case .addImageButtonTapped:
                 print("이미지 피커 표시")
                 return .none
-            
-            case .addFavoriteColorButtonTapped:
+        case .addFavoriteColorButtonTapped:
                 print("컬러 팔레트 표시")
                 state.isShowingPalette = true
                 return .none
@@ -205,7 +213,12 @@ public struct OnboardingInfoInputStore {
                 state.nicknameState = state.nickname.matches(regex: nicknameRegex) ? .valid : .invalid
                 print("현재 nickname: \(nickname), \(state.nicknameState)")
                 return .send(.checkFormStatus)
-            
+                
+            case .nameChanged(let name):
+                state.nameState = name.isEmpty ? .blank : .valid
+                print("현재 name: \(name), \(state.nameState)")
+                return .send(.checkFormStatus)
+                
             case .birthYearChanged(let year):
                 print("현재 year: \(year)")
 //                state.birthYearState = year.isEmpty ? .blank : .filled
@@ -239,7 +252,8 @@ public struct OnboardingInfoInputStore {
                 let status =
                 state.favoriteColorState == .valid
                 && state.nicknameState == .valid
-                && state.isNameLoaded
+//                && state.isNameLoaded
+                && state.nameState == .valid
                 && state.birthYearState == .valid
                 && state.birthMonthState == .valid
                 && state.birthDayState == .valid

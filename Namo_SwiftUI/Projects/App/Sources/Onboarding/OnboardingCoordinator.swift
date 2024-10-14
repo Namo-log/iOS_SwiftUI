@@ -147,7 +147,7 @@ struct OnboardingCoordinator {
                     return .send(.goToAgreementScreen)
                     // 토큰 O, 약관 X
                 case .loginWithoutAgreement:
-                    return .send(.goToAgreementScreen)
+                    return .send(.goToUserInfoScreen)
                     // 토큰 O, 약관 O, 정보입력 X
                 case .loginWithoutUserInfo:
                     return .send(.goToUserInfoScreen)
@@ -168,10 +168,9 @@ struct OnboardingCoordinator {
                 return .none
                 
             case .goToUserInfoScreen:
-                // TODO: 추후 기획 확정 시 수정
                 state.routes = [
                     .root(.login(.init())),
-                    .push(.userInfo(.init(name: nil)))
+                    .push(.userInfo(.init()))
                 ]
                 return .none
                 
