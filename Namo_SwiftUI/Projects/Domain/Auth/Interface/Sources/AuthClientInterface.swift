@@ -37,6 +37,8 @@ public struct AuthClient {
     public var reqWithdrawalKakao: @Sendable (LogoutRequestDTO) async throws -> Void
     /// 나모 API : 약관동의
     public var reqTermsAgreement: @Sendable (RegisterTermRequestDTO) async throws -> Void
+    /// 나모 API : 회원 가입 완료
+    public var reqSignUpComplete: @Sendable (SignUpCompleteRequestDTO) async throws -> Void
     
     // MARK: init
     public init(
@@ -49,7 +51,8 @@ public struct AuthClient {
         reqWithdrawalApple: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqWithdrawalNaver: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqWithdrawalKakao: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
-        reqTermsAgreement: @Sendable @escaping (RegisterTermRequestDTO) async throws -> Void
+        reqTermsAgreement: @Sendable @escaping (RegisterTermRequestDTO) async throws -> Void,
+        reqSignUpComplete: @Sendable @escaping (SignUpCompleteRequestDTO) async throws -> Void
     ) {
         self.loginHelper = loginHelper
         self.authManager = authManager
@@ -61,6 +64,7 @@ public struct AuthClient {
         self.reqWithdrawalNaver = reqWithdrawalNaver
         self.reqWithdrawalKakao = reqWithdrawalKakao
         self.reqTermsAgreement = reqTermsAgreement
+        self.reqSignUpComplete = reqSignUpComplete
     }
 }
 
@@ -165,7 +169,8 @@ extension AuthClient: TestDependencyKey {
         reqWithdrawalApple: unimplemented("\(Self.self).reqWithdrawalApple"),
         reqWithdrawalNaver: unimplemented("\(Self.self).reqWithdrawalNaver"),
         reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao"),
-        reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement")
+        reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement"),
+        reqSignUpComplete: unimplemented("\(Self.self).reqSignUpComplete")
     )
     
     public static let testValue = Self(
@@ -178,6 +183,7 @@ extension AuthClient: TestDependencyKey {
         reqWithdrawalApple: unimplemented("\(Self.self).reqWithdrawalApple"),
         reqWithdrawalNaver: unimplemented("\(Self.self).reqWithdrawalNaver"),
         reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao"),
-        reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement")
+        reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement"),
+        reqSignUpComplete: unimplemented("\(Self.self).reqSignUpComplete")
     )
 }

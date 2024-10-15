@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 import PhotosUI
+import Core
 
 import SharedDesignSystem
 
@@ -37,6 +38,8 @@ public enum InfoFormState: Equatable {
 
 @Reducer
 public struct OnboardingInfoInputStore {
+    
+    @Dependency(\.authClient) var authClient
     
     /// 닉네임 정규식 (영어, 한글, 숫자 포함 12자 이내, 특수 문자 및 이모지 불가)
     let nicknameRegex = "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{1,12}$"
@@ -73,7 +76,7 @@ public struct OnboardingInfoInputStore {
         /// 선택된 팔레트 컬러
 		var selectedPaletterColor: PalleteColor?
         /// 좋아하는 색상
-        var favoriteColor: Color?
+        var favoriteColor: PalleteColor?
         /// 좋아하는 색상 선택 상태
         var favoriteColorState: InfoFormState = .blank
         /// 닉네임 작성 상태
@@ -145,6 +148,8 @@ public struct OnboardingInfoInputStore {
         case checkFormValidate
         /// 확인 버튼 상태 업데이트
         case updateNextButtonStatus
+        /// 회원가입 완료 POST
+        case namoSignUpPost(SignUpCompleteRequestDTO)
         /// 확인 버튼 탭
         case nextButtonTapped
         /// 토스트뷰 표시
@@ -198,16 +203,9 @@ public struct OnboardingInfoInputStore {
                 return .none
                 
             case .saveFavoriteColor(let nilableColor):
-                if let color = nilableColor?.color {
-                    print("컬러 저장: \(color)")
-                    state.favoriteColor = color
-                    state.favoriteColorState = .filled
-                    return .send(.updateNextButtonStatus)
-                }
-                else {
-                    print("컬러 저장 불가")
-                    return .none
-                }
+                state.favoriteColor = nilableColor
+                state.favoriteColorState = .filled
+                return .send(.updateNextButtonStatus)
                 
             case .dismissColorPaletteView:
                 print("컬러 팔레트 dismiss")
@@ -236,7 +234,7 @@ public struct OnboardingInfoInputStore {
             case .profileImageLoaded(let image):
                 state.profileImage = image
                 return .none
-            
+                
             case .nicknameChanged(let nickname):
                 print("현재 nickname: \(nickname), \(state.nicknameState)")
                 state.nicknameState = nickname.isEmpty ? .blank : .filled
@@ -251,26 +249,26 @@ public struct OnboardingInfoInputStore {
                 print("현재 year: \(year)")
                 state.birthYearState = year.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
-            
+                
             case .birthMonthChanged(let month):
                 print("현재 month: \(month)")
                 state.birthMonthState = month.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
-            
+                
             case .birthDayChanged(let day):
                 print("현재 day: \(day)")
                 state.birthDayState = day.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
-            
+                
             case .birthDateMerge(let year, let month, let day):
                 state.birthDate = "\(year)-\(month)-\(day)"
                 return .send(.updateNextButtonStatus)
-            
+                
             case .bioChanged(let bio):
                 print("현재 bio: \(bio)")
                 state.bioState = bio.isEmpty ? .blank : .filled
                 return .send(.updateNextButtonStatus)
-            
+                
             case .updateNextButtonStatus:
                 let status =
                 state.favoriteColor != nil
@@ -302,17 +300,36 @@ public struct OnboardingInfoInputStore {
                     state.birthYearState == .valid &&
                     state.birthMonthState == .valid &&
                     state.birthDayState == .valid &&
-                    state.bioState == .valid {
+                    state.bioState == .valid,
+                   let birthdate = state.birthDate,
+                   let colorId = state.favoriteColor?.rawValue{
                     print("allowed to go next")
-                    return .send(.goToNextScreen)
+                    return .send(.namoSignUpPost(.init(
+                        name: state.name,
+                        nickname: state.nickname,
+                        birthday: state.birthDate ?? "",
+                        colorId: state.favoriteColor?.rawValue ?? -1,
+                        bio: state.bio,
+                        profileImage: "temp")
+                    ))
                 } else {
                     print("not allowed to go next")
                     return .send(.showToastView)
                 }
-            
+                
             case .goToNextScreen:
                 print("goToNextScreen")
                 return .none
+                
+            case .namoSignUpPost(let reqData):
+                return .run { send in
+                    do {
+                        try await authClient.reqSignUpComplete(reqData)
+                        await send(.goToNextScreen)
+                    } catch {
+                        print("post Error: \(error)")
+                    }
+                }
                 
             case .showToastView:
                 state.isShowingNamoToast = true
