@@ -147,7 +147,7 @@ struct OnboardingCoordinator {
                     return .send(.goToAgreementScreen)
                     // 토큰 O, 약관 X
                 case .loginWithoutAgreement:
-                    return .send(.goToUserInfoScreen)
+                    return .send(.goToAgreementScreen)
                     // 토큰 O, 약관 O, 정보입력 X
                 case .loginWithoutUserInfo:
                     return .send(.goToUserInfoScreen)

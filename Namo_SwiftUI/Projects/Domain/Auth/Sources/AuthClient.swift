@@ -71,6 +71,13 @@ extension AuthClient: DependencyKey {
             if result.code != 200 {
                 throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result.code)")
             }
+        },
+        reqTermsAgreement: { reqDTO in
+            let result: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: TermEndPoint.agreementTemrs(termAgreement: reqDTO))
+            
+            if result.code != 200 {
+                throw APIError.customError("약관 동의 실패: 응답 코드 \(result.code)")
+            }
         }
     )
 }

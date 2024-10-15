@@ -8,10 +8,12 @@
 import ComposableArchitecture
 import SwiftUI
 import CoreLocation
+import Core
 
 @Reducer
 public struct OnboardingTOSStore {
     
+    @Dependency(\.authClient) var authClient
     @Dependency(\.locationManager) var locationManager
     
     public init() {}
@@ -45,6 +47,8 @@ public struct OnboardingTOSStore {
         case authorizationStatusUpdated(CLAuthorizationStatus)
         /// 확인 버튼 탭
         case nextButtonTapped
+        /// 약관 동의 POST
+        case namoAgreementsPost(RegisterTermRequestDTO)
         /// 다음 화면으로
         case goToNextScreen
     }
@@ -121,10 +125,27 @@ public struct OnboardingTOSStore {
             case .nextButtonTapped:
                 if state.nextButtonIsEnabled {
                     print("allowed to go next")
-                    return .send(.goToNextScreen)
+                    return .send(
+                        .namoAgreementsPost(
+                            .init(
+                                isCheckTermOfUse: state.termsOfServiceAgreement,
+                                isCheckPersonalInformationCollection: state.personalDataConsent
+                            )
+                        )
+                    )
                 } else {
                     print("not allowed to go next")
                     return .none
+                }
+            
+            case .namoAgreementsPost(let reqData):
+                return .run { send in
+                    do {
+                        try await authClient.reqTermsAgreement(reqData)
+                        await send(.goToNextScreen)
+                    } catch {
+                        print("post Error: \(error)")
+                    }
                 }
                 
             case .goToNextScreen:
