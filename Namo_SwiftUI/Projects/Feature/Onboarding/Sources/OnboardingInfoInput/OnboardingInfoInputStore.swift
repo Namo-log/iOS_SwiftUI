@@ -74,7 +74,7 @@ public struct OnboardingInfoInputStore {
         /// 한줄소개
         var bio: String = ""
         /// 선택된 팔레트 컬러
-		var selectedPaletterColor: PalleteColor?
+        var selectedPaletterColor: PalleteColor?
         /// 좋아하는 색상
         var favoriteColor: PalleteColor?
         /// 좋아하는 색상 선택 상태
@@ -121,7 +121,7 @@ public struct OnboardingInfoInputStore {
         /// 좋아하는 컬러 추가 버튼 탭
         case addFavoriteColorButtonTapped
         /// 컬러 팔레트 색 선택
-		case selectPaletteColor(PalleteColor)
+        case selectPaletteColor(PalleteColor)
         /// 컬러 저장
         case saveFavoriteColor(PalleteColor?)
         /// 컬러 팔레트 dismiss
