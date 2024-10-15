@@ -47,6 +47,8 @@ public struct CategoryEditStore {
 		}
 	}
 	
+	@Dependency(\.categoryUseCase) var categoryUseCase
+	
 	public enum Action: BindableAction {
 		case binding(BindingAction<State>)
 		
