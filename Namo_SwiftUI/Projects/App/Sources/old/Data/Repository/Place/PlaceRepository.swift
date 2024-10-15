@@ -1,12 +1,12 @@
+////
+////  PlaceRepositor.swift
+////  Namo_SwiftUI
+////
+////  Created by 박민서 on 2/23/24.
+////
 //
-//  PlaceRepositor.swift
-//  Namo_SwiftUI
+//import CoreNetwork
 //
-//  Created by 박민서 on 2/23/24.
-//
-
-import CoreNetwork
-
-protocol PlaceRepository {
-    func getKakaoMapPlaces(query:String) async -> KakaoLocationSearchResponseDTO?
-}
+//protocol PlaceRepository {
+//    func getKakaoMapPlaces(query:String) async -> KakaoLocationSearchResponseDTO?
+//}

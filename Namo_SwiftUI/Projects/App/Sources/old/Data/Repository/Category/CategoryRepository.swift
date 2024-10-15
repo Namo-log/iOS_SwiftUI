@@ -1,15 +1,16 @@
+////
+////  CategoryRepository.swift
+////  Namo_SwiftUI
+////
+////  Created by 정현우 on 2/11/24.
+////
 //
-//  CategoryRepository.swift
-//  Namo_SwiftUI
-//
-//  Created by 정현우 on 2/11/24.
+//import CoreNetwork
 //
 
-import CoreNetwork
-
-protocol CategoryRepository {
+//protocol CategoryRepository {
 //	func postCategory(data: postCategoryRequest) async -> postCategoryResponse?
 //	func patchCategory(id: Int, data: postCategoryRequest) async -> postCategoryResponse?
-	func getAllCategory() async -> getCategoryResponse?
-	func deleteCategory(id: Int) async -> String?
-}
+//	func getAllCategory() async -> getCategoryResponse?
+//	func deleteCategory(id: Int) async -> String?
+//}

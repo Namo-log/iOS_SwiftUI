@@ -24,7 +24,7 @@ public class AuthInterceptor: RequestInterceptor {
     ///    - urlRequest: 원래의 URLRequest
     ///    - session : 진행하는 Alamofire Session
     ///    - completion: 변경된 URLRequest를 포함하는 Result를 비동기 처리하는 클로저
-	public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+    public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         
         // baseURL 확인
         guard urlRequest.url?.absoluteString.hasPrefix(SecretConstants.baseURL) == true else { return }
@@ -59,7 +59,7 @@ public class AuthInterceptor: RequestInterceptor {
     ///     - session: 진행하던 Alamofire Session
     ///     - error: 실패 원인의 error
     ///     - completion: RetryResult를 처리하여 재시도 여부를 알려주는 비동기 클로저
-	public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         
         print("=======retry 호출됨========")
         

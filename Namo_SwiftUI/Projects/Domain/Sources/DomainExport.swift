@@ -9,3 +9,5 @@
 @_exported import DomainCategory
 @_exported import DomainSchedule
 @_exported import DomainMoim
+@_exported import DomainAuth
+@_exported import DomainAuthInterface

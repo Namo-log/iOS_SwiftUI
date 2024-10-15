@@ -13,6 +13,7 @@ import SharedUtil
 
 @Reducer(state: .equatable)
 enum OnboardingScreen {
+    case splash(OnboardingSplashStore)
     case login(OnboardingLoginStore)
     case agreement(OnboardingTOSStore)
     case userInfo(OnboardingInfoInputStore)
@@ -23,16 +24,21 @@ enum OnboardingScreen {
 struct OnboardingCoordinator {
     
     @Dependency(\.authClient) var authClient
+    private let remoteConfig = RemoteConfigManager()
     
     @ObservableState
     struct State: Equatable {
         
         var routes: [Route<OnboardingScreen.State>]
+        // 버전 체크 여부 플래그
+        var hasPerformedVersionCheck: Bool = false
+        // 버전 업데이트 필요 표시 플래그
+        @Shared(.inMemory(SharedKeys.showUpdateRequired.rawValue)) var showUpdateRequired: Bool = false
         // 로그인 체크 여부 플래그
         var hasPerformedLoginCheck: Bool = false
         
         static let initialState: State = .init(
-            routes: [.root(.login(.init()))] // 첫 화면은 로그인
+            routes: [.root(.splash(.init()))]
         )
         
         static func routedState(_ routes: [Route<OnboardingScreen.State>]) -> State {
@@ -45,6 +51,12 @@ struct OnboardingCoordinator {
     enum Action {
         case router(IndexedRouterActionOf<OnboardingScreen>)
         
+        // 초기 체크
+        case initialCheck
+        // 버전 체크
+        case versionCheck
+        // 버전 체크 결과
+        case versionCheckResponse(Result<Bool, Error>)
         // 로그인 체크
         case loginCheck
         // 로그인 화면
@@ -87,6 +99,39 @@ struct OnboardingCoordinator {
                 default:
                     return .none
                 }
+            
+                // 초기 체크 -> 버전 체크로 시작
+            case .initialCheck:
+                return .send(.versionCheck)
+                
+                // 버전 체크
+            case .versionCheck:
+                guard !state.hasPerformedVersionCheck else { return .none }
+                state.hasPerformedVersionCheck = true
+
+                return .run { send in
+                    do {
+                        let updateRequired = try await remoteConfig.checkUpdateRequired()
+//                        if let baseUrl = try await remoteConfig.getBaseUrl() {
+//                            // TODO: BaseURL의 용도 체크 필요
+//                        } else {
+//                            throw NSError(domain: "API 테스트 실패", code: 1001)
+//                        }
+                        await send(.versionCheckResponse(.success(updateRequired)))
+                    } catch {
+                        await send(.versionCheckResponse(.failure(error)))
+                    }
+                }
+                
+            case .versionCheckResponse(.success(let updateRequired)):
+                state.showUpdateRequired = updateRequired
+                // 로그인 체크로 라우팅
+                return .send(.loginCheck)
+                
+            case .versionCheckResponse(.failure(let error)):
+                print("최소 버전 가져오기 실패: \(error.localizedDescription)")
+                // TODO: 앱 끌건지 체크 필요
+                return .none           
                 
                 // 로그인 체크 결과 라우팅
             case .loginCheck:
@@ -112,16 +157,22 @@ struct OnboardingCoordinator {
                 }
                 
             case .goToLoginScreen:
-                state.routes.push(.login(.init()))
+                state.routes = [.root(.login(.init()), embedInNavigationView: true)]
                 return .none
                 
             case .goToAgreementScreen:
-                state.routes.push(.agreement(.init()))
+                state.routes = [
+                    .root(.login(.init())),
+                    .push(.agreement(.init()))
+                ]
                 return .none
                 
             case .goToUserInfoScreen:
                 // TODO: 추후 기획 확정 시 수정
-                state.routes.push(.userInfo(.init(name: nil)))
+                state.routes = [
+                    .root(.login(.init())),
+                    .push(.userInfo(.init(name: nil)))
+                ]
                 return .none
                 
             case .goToSignUpCompletion:

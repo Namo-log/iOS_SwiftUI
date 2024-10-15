@@ -31,7 +31,4 @@ public struct EmptyListView: View {
     }
 }
 
-#Preview {
-    EmptyListView(title: "내용")
-}
 

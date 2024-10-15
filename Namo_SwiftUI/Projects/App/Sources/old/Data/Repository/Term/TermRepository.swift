@@ -1,16 +1,16 @@
+////
+////  TermRepository.swift
+////  Namo_SwiftUI
+////
+////  Created by KoSungmin on 7/3/24.
+////
 //
-//  TermRepository.swift
-//  Namo_SwiftUI
+//import Foundation
 //
-//  Created by KoSungmin on 7/3/24.
+//import CoreNetwork
 //
-
-import Foundation
-
-import CoreNetwork
-
-protocol TermRepository {
-    
-    // 약관동의
-    func registerTermsAgreement<T:Decodable>(termAgreement: RegisterTermRequestDTO) async -> BaseResponse<T>?
-}
+//protocol TermRepository {
+//    
+//    // 약관동의
+//    func registerTermsAgreement<T:Decodable>(termAgreement: RegisterTermRequestDTO) async -> BaseResponse<T>?
+//}
