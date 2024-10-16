@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import Core
+import UIKit
 
 /// BASE:
 /// 여기에서는 비즈니스 로직을 포함한 API 호출 로직만이 존재한다.
@@ -37,6 +38,8 @@ public struct AuthClient {
     public var reqWithdrawalKakao: @Sendable (LogoutRequestDTO) async throws -> Void
     /// 나모 API : 약관동의
     public var reqTermsAgreement: @Sendable (RegisterTermRequestDTO) async throws -> Void
+    /// 나모 API : S3 Image 업로드
+    public var reqProfileImageUpload: @Sendable (UIImage) async throws -> String
     /// 나모 API : 회원 가입 완료
     public var reqSignUpComplete: @Sendable (SignUpCompleteRequestDTO) async throws -> SignUpInfo
     
@@ -52,6 +55,7 @@ public struct AuthClient {
         reqWithdrawalNaver: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqWithdrawalKakao: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqTermsAgreement: @Sendable @escaping (RegisterTermRequestDTO) async throws -> Void,
+        reqProfileImageUpload: @Sendable @escaping (UIImage) async throws -> String,
         reqSignUpComplete: @Sendable @escaping (SignUpCompleteRequestDTO) async throws -> SignUpInfo
     ) {
         self.loginHelper = loginHelper
@@ -64,6 +68,7 @@ public struct AuthClient {
         self.reqWithdrawalNaver = reqWithdrawalNaver
         self.reqWithdrawalKakao = reqWithdrawalKakao
         self.reqTermsAgreement = reqTermsAgreement
+        self.reqProfileImageUpload = reqProfileImageUpload
         self.reqSignUpComplete = reqSignUpComplete
     }
 }
@@ -170,6 +175,7 @@ extension AuthClient: TestDependencyKey {
         reqWithdrawalNaver: unimplemented("\(Self.self).reqWithdrawalNaver"),
         reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao"),
         reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement"),
+        reqProfileImageUpload: unimplemented("\(Self.self).reqProfileImageUpload"),
         reqSignUpComplete: unimplemented("\(Self.self).reqSignUpComplete")
     )
     
@@ -184,6 +190,7 @@ extension AuthClient: TestDependencyKey {
         reqWithdrawalNaver: unimplemented("\(Self.self).reqWithdrawalNaver"),
         reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao"),
         reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement"),
+        reqProfileImageUpload: unimplemented("\(Self.self).reqProfileImageUpload"),
         reqSignUpComplete: unimplemented("\(Self.self).reqSignUpComplete")
     )
 }
