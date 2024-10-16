@@ -6,11 +6,11 @@
 //
 
 public struct SignUpInfo: Equatable {
-    let userId: Int
-    let nickname: String
-    let tag: String
-    let name: String
-    let bio: String
-    let birthday: String
-    let colorId: Int
+    public let userId: Int
+    public let nickname: String
+    public let tag: String
+    public let name: String
+    public let bio: String
+    public let birthday: String
+    public let colorId: Int
 }
