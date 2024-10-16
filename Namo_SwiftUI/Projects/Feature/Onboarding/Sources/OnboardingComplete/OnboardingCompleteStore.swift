@@ -17,9 +17,11 @@ public struct OnboardingCompleteStore {
     public struct State: Equatable {
 
         var presentInfo: SignUpInfo?
+        var imageURL: String?
         
-        public init(result: SignUpInfo) {
+        public init(result: SignUpInfo, imageURL: String?) {
             self.presentInfo = result
+            self.imageURL = imageURL
         }
     }
     

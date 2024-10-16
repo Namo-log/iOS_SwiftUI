@@ -156,13 +156,13 @@ public struct OnboardingInfoInputStore {
         /// 프로필 이미지 POST
         case profileImagePost(UIImage)
         /// 회원가입 완료 POST
-        case namoSignUpPost(SignUpCompleteRequestDTO)
+        case namoSignUpPost(dto: SignUpCompleteRequestDTO, imageURL: String?)
         /// 확인 버튼 탭
         case nextButtonTapped
         /// 토스트뷰 표시
         case showToastView
         /// 다음 화면으로
-        case goToNextScreen(SignUpInfo)
+        case goToNextScreen(info: SignUpInfo, imageURL: String?)
     }
 
     public var body: some ReducerOf<Self> {
@@ -315,13 +315,14 @@ public struct OnboardingInfoInputStore {
                     if let profileImage = state.profileImage {
                         return .send(.profileImagePost(profileImage))
                     } else {
-                        return .send(.namoSignUpPost(.init(
+                        return .send(.namoSignUpPost(dto: .init(
                             name: state.name,
                             nickname: state.nickname,
                             birthday: birthdate,
                             colorId: colorId,
                             bio: state.bio,
-                            profileImage: SecretConstants.namoDefaultProfileImageURL)
+                            profileImage: SecretConstants.namoDefaultProfileImageURL),
+                                                     imageURL: nil
                         ))
                     }
                 } else {
@@ -350,23 +351,23 @@ public struct OnboardingInfoInputStore {
                             bio: bio,
                             profileImage: imgString
                         )
-                        await send(.namoSignUpPost(reqDTO))
+                        await send(.namoSignUpPost(dto: reqDTO, imageURL: imgString))
                     } catch {
                         print("post image error: \(error)")
                     }
                 }
                 
-            case .namoSignUpPost(let reqData):
+            case let .namoSignUpPost(reqData, url):
                 return .run { send in
                     do {
                         let result = try await authClient.reqSignUpComplete(reqData)
-                        await send(.goToNextScreen(result))
+                        await send(.goToNextScreen(info: result, imageURL: url))
                     } catch {
                         print("post Error: \(error)")
                     }
                 }
                 
-            case .goToNextScreen(let result):
+            case let .goToNextScreen(result, url):
                 print("goToNextScreen")
                 return .none
                 

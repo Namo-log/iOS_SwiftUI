@@ -67,7 +67,7 @@ struct OnboardingCoordinator {
         // 유저 정보 작성 화면
         case goToUserInfoScreen
         // 회원가입 완료 화면
-        case goToSignUpCompletion(SignUpInfo)
+        case goToSignUpCompletion(info: SignUpInfo, imageURL: String?)
         // 메인 화면
         case goToMainScreen
     }
@@ -90,8 +90,8 @@ struct OnboardingCoordinator {
                     return .send(.goToUserInfoScreen)
                     
                     // 회원가입 완료 화면으로 이동
-                case .userInfo(.goToNextScreen(let result)):
-                    return .send(.goToSignUpCompletion(result))
+                case let .userInfo(.goToNextScreen(info, imageURL)):
+                    return .send(.goToSignUpCompletion(info: info, imageURL: imageURL))
                     
                     // 메인 화면으로 이동
                 case .signUpCompletion(.goToNextScreen):
@@ -175,8 +175,8 @@ struct OnboardingCoordinator {
                 ]
                 return .none
                 
-            case .goToSignUpCompletion(let result):
-                state.routes.push(.signUpCompletion(.init(result: result)))
+            case let .goToSignUpCompletion(info, imageURL):
+                state.routes.push(.signUpCompletion(.init(result: info, imageURL: imageURL)))
                 return .none
                 
             case .goToMainScreen:
