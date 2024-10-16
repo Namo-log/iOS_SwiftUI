@@ -82,7 +82,8 @@ extension AuthClient: DependencyKey {
         reqProfileImageUpload: { reqImg in
             guard let imageFile = reqImg.resize(newWidth: 55).jpegData(compressionQuality: 0.6) else { throw NSError(domain: "이미지 압축 에러", code: 1001) }
             
-            let filename = "profile_image_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
+            let userId = try KeyChainManager.readItem(key: "userId")
+            let filename = "profile_image_user_\(userId)_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
             guard let url = try await APIManager.shared.getPresignedUrl(prefix: "profile", filename: filename).result else { throw APIError.customError("s3 getPresignedUrl 에러") }
             
             guard let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: imageFile) else { throw APIError.customError("s3 uploadImageToS3 에러") }
