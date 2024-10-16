@@ -9,7 +9,7 @@ import Foundation
 import Core
 
 extension SignUpCompleteResponseDTO {
-    func toSignUpInfo() -> SignUpInfo {
+    public func toSignUpInfo() -> SignUpInfo {
         SignUpInfo(
             userId: userId,
             nickname: nickname,

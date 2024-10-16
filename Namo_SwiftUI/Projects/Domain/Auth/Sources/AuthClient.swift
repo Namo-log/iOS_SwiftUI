@@ -85,6 +85,11 @@ extension AuthClient: DependencyKey {
             if result.code != 200 {
                 throw APIError.customError("회원 가입 완료 실패: 응답 코드 \(result.code)")
             }
+            
+            guard let data = result.result else {
+                throw APIError.parseError("result.result is nil")
+            }
+            return data.toSignUpInfo()
         }
     )
 }

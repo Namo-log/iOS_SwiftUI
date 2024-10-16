@@ -38,7 +38,7 @@ public struct AuthClient {
     /// 나모 API : 약관동의
     public var reqTermsAgreement: @Sendable (RegisterTermRequestDTO) async throws -> Void
     /// 나모 API : 회원 가입 완료
-    public var reqSignUpComplete: @Sendable (SignUpCompleteRequestDTO) async throws -> Void
+    public var reqSignUpComplete: @Sendable (SignUpCompleteRequestDTO) async throws -> SignUpInfo
     
     // MARK: init
     public init(
@@ -52,7 +52,7 @@ public struct AuthClient {
         reqWithdrawalNaver: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqWithdrawalKakao: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqTermsAgreement: @Sendable @escaping (RegisterTermRequestDTO) async throws -> Void,
-        reqSignUpComplete: @Sendable @escaping (SignUpCompleteRequestDTO) async throws -> Void
+        reqSignUpComplete: @Sendable @escaping (SignUpCompleteRequestDTO) async throws -> SignUpInfo
     ) {
         self.loginHelper = loginHelper
         self.authManager = authManager
