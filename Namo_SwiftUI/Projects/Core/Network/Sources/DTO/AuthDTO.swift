@@ -65,7 +65,7 @@ public struct TokenReissuanceRequestDTO: Encodable {
 
 /// 토큰 재발급 응답 DTO
 public struct TokenReissuanceResponseDTO: Decodable {
-    
+    let userId: Int
     let accessToken: String
     let refreshToken: String
 }

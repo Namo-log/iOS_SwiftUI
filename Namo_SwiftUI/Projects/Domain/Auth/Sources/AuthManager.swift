@@ -54,7 +54,7 @@ public extension AuthManager {
     }
         
     /// 카카오/네이버/애플 로그인 상태 저장
-    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
+    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens, userId: Int) {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. socialLogin 상태 저장
@@ -63,6 +63,10 @@ public extension AuthManager {
             // 2. tokens 키체인 저장
             try KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
             try KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
+            
+            // 3. userId 키체인 저장
+            try KeyChainManager.addItem(key: "userId", value: String(userId))
+            
             print("!---로그인 처리 완료---!")
             print("accessToken: \(tokens.accessToken)")
         } catch {
@@ -98,6 +102,9 @@ public extension AuthManager {
             // 5. tokens 키체인 삭제
             try KeyChainManager.deleteItem(key: "accessToken")
             try KeyChainManager.deleteItem(key: "refreshToken")
+            
+            // 6. userId 키체인 삭제
+            try KeyChainManager.deleteItem(key: "userId")
             
             print("!---로그아웃 완료---!")
         } catch {
