@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 import TCACoordinators
 import FeatureOnboarding
+import DomainAuthInterface
 import SharedUtil
 
 @Reducer(state: .equatable)
@@ -66,7 +67,7 @@ struct OnboardingCoordinator {
         // 유저 정보 작성 화면
         case goToUserInfoScreen
         // 회원가입 완료 화면
-        case goToSignUpCompletion
+        case goToSignUpCompletion(SignUpInfo)
         // 메인 화면
         case goToMainScreen
     }
@@ -89,8 +90,8 @@ struct OnboardingCoordinator {
                     return .send(.goToUserInfoScreen)
                     
                     // 회원가입 완료 화면으로 이동
-                case .userInfo(.goToNextScreen):      
-                    return .send(.goToSignUpCompletion)
+                case .userInfo(.goToNextScreen(let result)):
+                    return .send(.goToSignUpCompletion(result))
                     
                     // 메인 화면으로 이동
                 case .signUpCompletion(.goToNextScreen):
@@ -174,8 +175,8 @@ struct OnboardingCoordinator {
                 ]
                 return .none
                 
-            case .goToSignUpCompletion:
-                state.routes.push(.signUpCompletion(.init()))
+            case .goToSignUpCompletion(let result):
+                state.routes.push(.signUpCompletion(.init(result: result)))
                 return .none
                 
             case .goToMainScreen:

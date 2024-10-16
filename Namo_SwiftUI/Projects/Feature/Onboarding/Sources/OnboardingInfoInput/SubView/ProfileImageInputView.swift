@@ -50,7 +50,7 @@ public struct ProfileImageInputView: View {
                             .overlay {
                                 Circle()
                                     .frame(width: 32, height:32)
-                                    .foregroundColor(store.favoriteColor)
+                                    .foregroundColor(store.favoriteColor?.color)
                             }
                     case .invalid:
                         Image(asset: SharedDesignSystemAsset.Assets.icFavColorInvalid)

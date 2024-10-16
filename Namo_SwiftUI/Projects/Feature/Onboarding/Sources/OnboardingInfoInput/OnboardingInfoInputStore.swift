@@ -8,7 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 import PhotosUI
-import Core
+import CoreNetwork
+import DomainAuthInterface
 
 import SharedDesignSystem
 
@@ -155,7 +156,7 @@ public struct OnboardingInfoInputStore {
         /// 토스트뷰 표시
         case showToastView
         /// 다음 화면으로
-        case goToNextScreen
+        case goToNextScreen(SignUpInfo)
     }
 
     public var body: some ReducerOf<Self> {
@@ -317,15 +318,15 @@ public struct OnboardingInfoInputStore {
                     return .send(.showToastView)
                 }
                 
-            case .goToNextScreen:
+            case .goToNextScreen(let result):
                 print("goToNextScreen")
                 return .none
                 
             case .namoSignUpPost(let reqData):
                 return .run { send in
                     do {
-                        try await authClient.reqSignUpComplete(reqData)
-                        await send(.goToNextScreen)
+                        let result = try await authClient.reqSignUpComplete(reqData)
+                        await send(.goToNextScreen(result))
                     } catch {
                         print("post Error: \(error)")
                     }
