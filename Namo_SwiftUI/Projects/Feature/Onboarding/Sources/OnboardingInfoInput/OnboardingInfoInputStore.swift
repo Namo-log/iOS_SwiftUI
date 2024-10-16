@@ -12,6 +12,7 @@ import CoreNetwork
 import DomainAuthInterface
 
 import SharedDesignSystem
+import SharedUtil
 
 /// InfoInput 작성 시 내용 구분용으로 사용하는 enum입니다
 public enum InfoFormState: Equatable {
@@ -114,7 +115,10 @@ public struct OnboardingInfoInputStore {
         //        }
         
         public init() {}
-
+        
+//        func getSignUpCompleteRequestDTO() -> SignUpCompleteRequestDTO {
+//
+//        }
     }
     
     public enum Action: BindableAction {
@@ -149,6 +153,8 @@ public struct OnboardingInfoInputStore {
         case checkFormValidate
         /// 확인 버튼 상태 업데이트
         case updateNextButtonStatus
+        /// 프로필 이미지 POST
+        case profileImagePost(UIImage)
         /// 회원가입 완료 POST
         case namoSignUpPost(SignUpCompleteRequestDTO)
         /// 확인 버튼 탭
@@ -305,22 +311,50 @@ public struct OnboardingInfoInputStore {
                    let birthdate = state.birthDate,
                    let colorId = state.favoriteColor?.rawValue{
                     print("allowed to go next")
-                    return .send(.namoSignUpPost(.init(
-                        name: state.name,
-                        nickname: state.nickname,
-                        birthday: state.birthDate ?? "",
-                        colorId: state.favoriteColor?.rawValue ?? -1,
-                        bio: state.bio,
-                        profileImage: "temp")
-                    ))
+                    
+                    if let profileImage = state.profileImage {
+                        return .send(.profileImagePost(profileImage))
+                    } else {
+                        return .send(.namoSignUpPost(.init(
+                            name: state.name,
+                            nickname: state.nickname,
+                            birthday: birthdate,
+                            colorId: colorId,
+                            bio: state.bio,
+                            profileImage: SecretConstants.namoDefaultProfileImageURL)
+                        ))
+                    }
                 } else {
                     print("not allowed to go next")
                     return .send(.showToastView)
                 }
                 
-            case .goToNextScreen(let result):
-                print("goToNextScreen")
-                return .none
+            case .profileImagePost(let reqImg):
+                guard
+                    let birthday = state.birthDate,
+                    let colorId = state.favoriteColor?.rawValue else {
+                    return .send(.showToastView)
+                }
+                let name = state.name
+                let nickname = state.nickname
+                let bio = state.bio
+                
+                return .run { send in
+                    do {
+                        let imgString = try await authClient.reqProfileImageUpload(reqImg)
+                        let reqDTO = SignUpCompleteRequestDTO(
+                            name: name,
+                            nickname: nickname,
+                            birthday: birthday,
+                            colorId: colorId,
+                            bio: bio,
+                            profileImage: imgString
+                        )
+                        await send(.namoSignUpPost(reqDTO))
+                    } catch {
+                        print("post image error: \(error)")
+                    }
+                }
                 
             case .namoSignUpPost(let reqData):
                 return .run { send in
@@ -331,6 +365,10 @@ public struct OnboardingInfoInputStore {
                         print("post Error: \(error)")
                     }
                 }
+                
+            case .goToNextScreen(let result):
+                print("goToNextScreen")
+                return .none
                 
             case .showToastView:
                 state.isShowingNamoToast = true
