@@ -92,11 +92,11 @@ public struct SignUpCompleteRequestDTO: Encodable {
 /// 회원 가입 완료 응답 DTO
 public struct SignUpCompleteResponseDTO: Decodable {
     
-    let userId: Int
-    let nickname: String
-    let tag: String
-    let name: String
-    let bio: String
-    let birthday: String
-    let colorId: Int
+    public let userId: Int
+    public let nickname: String
+    public let tag: String
+    public let name: String
+    public let bio: String
+    public let birthday: String
+    public let colorId: Int
 }
