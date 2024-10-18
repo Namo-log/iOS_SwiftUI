@@ -69,7 +69,7 @@ struct CategoryListView: View {
 						
 						Button(
 							action: {
-								store.send(.categorySelect(category))
+								store.send(.editCategoryTapped(category))
 							},
 							label: {
 								HStack {

@@ -16,30 +16,22 @@ struct ScheduleEditView: View {
 	
 	var body: some View {
 		WithPerceptionTracking {
-			ZStack(alignment: .top) {
-				if !store.isNewSchedule {
-					DeleteCircleButton(action: {
-						
-					})
-				}
+			VStack(spacing: 0) {
+				navigationBar
+					.padding(.horizontal, 19)
 				
-				VStack(spacing: 0) {
-					navigationBar
-						.padding(.horizontal, 19)
-					
-					ScrollView {
-						VStack {
-							title
-							
-							listItems
-							
-							Spacer()
-						}
+				ScrollView {
+					VStack {
+						title
+						
+						listItems
+						
+						Spacer()
 					}
-					.padding(.horizontal, 30)
 				}
-				.background(Color.white)
+				.padding(.horizontal, 30)
 			}
+			.background(Color.white)
 		}
 		.toolbar(.hidden, for: .navigationBar)
 	}
