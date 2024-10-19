@@ -54,21 +54,20 @@ public extension AuthManager {
     }
         
     /// 카카오/네이버/애플 로그인 상태 저장
-    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens, userId: Int) {
+    func setLoginState(_ oAuthType: OAuthType, with result: SignInResponseDTO) {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. socialLogin 상태 저장
             UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
             
             // 2. tokens 키체인 저장
-            try KeyChainManager.addItem(key: "accessToken", value: tokens.accessToken)
-            try KeyChainManager.addItem(key: "refreshToken", value: tokens.refreshToken)
+            try KeyChainManager.addItem(key: "accessToken", value: result.accessToken)
+            try KeyChainManager.addItem(key: "refreshToken", value: result.refreshToken)
             
             // 3. userId 키체인 저장
-            try KeyChainManager.addItem(key: "userId", value: String(userId))
+            try KeyChainManager.addItem(key: "userId", value: String(result.userId))
             
             print("!---로그인 처리 완료---!")
-            print("accessToken: \(tokens.accessToken)")
         } catch {
             // 에러 처리
             print("임시 처리: \(error.localizedDescription)")

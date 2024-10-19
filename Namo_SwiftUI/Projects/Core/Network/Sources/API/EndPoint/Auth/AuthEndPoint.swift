@@ -119,6 +119,19 @@ extension AuthEndPoint: EndPoint {
 			
 		case .reissuanceToken(let dto):
 			return ["refreshToken": dto.refreshToken]
+            
+        case .signUpComplete:
+            do {
+                let accessToken = try KeyChainManager.readItem(key: "accessToken")
+                let refreshToken = try KeyChainManager.readItem(key: "refreshToken")
+                return [
+                    "Authorization": "Bearer \(accessToken)",
+                    "refreshToken": refreshToken
+                ]
+            } catch {
+                return ["Content-Type": "application/json"]
+            }
+            
         default:
             return ["Content-Type": "application/json"]
         }

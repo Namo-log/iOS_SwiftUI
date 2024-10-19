@@ -115,9 +115,9 @@ public extension AuthClient {
         return authManager.getLoginState()
     }
     
-    /// 카카오/네이버/애플 중 소셜 로그인 된 상태와 토큰, User ID을 저장합니다
-    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens, userId: Int) {
-        return authManager.setLoginState(oAuthType, with: tokens, userId: userId)
+    /// 카카오/네이버/애플 중 소셜 로그인 된 상태와 유저  정보를 저장합니다.
+    func setLoginState(_ oAuthType: OAuthType, with result: SignInResponseDTO) {
+        return authManager.setLoginState(oAuthType, with: result)
     }
     
     /// 로그인 된 소셜 로그인 타입에 맞춰 로그아웃합니다

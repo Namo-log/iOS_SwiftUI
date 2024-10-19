@@ -5,11 +5,13 @@
 //  Created by 박민서 on 10/5/24.
 //
 
+import Core
+
 /// AuthManager의 인터페이스 프로토콜입니다.
 public protocol AuthManagerProtocol {
     func userStatusCheck() -> UserStatus
     func getLoginState() -> OAuthType?
-    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens, userId: Int)
+    func setLoginState(_ oAuthType: OAuthType, with result: SignInResponseDTO)
     func setLogoutState(with oAuthType: OAuthType) async
     func withdraw(with oAuthType: OAuthType) async
     func getAgreementCompletedState() -> Bool?

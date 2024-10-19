@@ -78,7 +78,7 @@ public struct OnboardingLoginStore {
                         let result = try await authClient.reqSignInWithKakao(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
                         let userId = result.userId
-                        authClient.setLoginState(.kakao, with: tokens, userId: userId)
+                        authClient.setLoginState(.kakao, with: result)
                         await send(.goToNextScreen)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
@@ -92,7 +92,7 @@ public struct OnboardingLoginStore {
                         let result = try await authClient.reqSignInWithNaver(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
                         let userId = result.userId
-                        authClient.setLoginState(.naver, with: tokens, userId: userId)
+                        authClient.setLoginState(.naver, with: result)
                         await send(.goToNextScreen)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
@@ -106,7 +106,7 @@ public struct OnboardingLoginStore {
                         let result = try await authClient.reqSignInWithApple(reqData)
                         let tokens: Tokens = (result.accessToken, result.refreshToken)
                         let userId = result.userId
-                        authClient.setLoginState(.apple, with: tokens, userId: userId)
+                        authClient.setLoginState(.apple, with: result)
                         await send(.goToNextScreen)
                     } catch {
                         await send(.loginFailed(error.localizedDescription))
