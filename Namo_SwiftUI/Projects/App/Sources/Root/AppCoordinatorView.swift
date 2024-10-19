@@ -8,9 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
+import Combine
 
 struct AppCoordinatorView: View {
     let store: StoreOf<AppCoordinator>
+    @State private var cancellables = Set<AnyCancellable>()
     
     var body: some View {
         TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
@@ -20,6 +22,11 @@ struct AppCoordinatorView: View {
             case let .onboarding(store):
                 OnboardingCoordinatorView(store: store)
             }
+        }
+        .onAppear {
+            NotificationCenter.default.publisher(for: .refreshTokenExpired)
+                .sink { _ in store.send(.refreshTokenExpired) }
+                .store(in: &cancellables)
         }
     }
 }

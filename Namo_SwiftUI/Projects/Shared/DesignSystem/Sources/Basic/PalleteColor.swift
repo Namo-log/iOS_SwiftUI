@@ -53,4 +53,49 @@ public enum PalleteColor: Int, CaseIterable {
 		case .colorBlack: return Color.colorBlack
 		}
 	}
+    
+    public var name: String {
+        switch self {
+        case .namoOrange:
+            return "Namo Orange"
+        case .namoPink:
+            return "Namo Pink"
+        case .namoYellow:
+            return "Namo Yellow"
+        case .namoBlue:
+            return "Namo Blue"
+        case .colorLightGray:
+            return "Light Gray"
+        case .colorRed:
+            return "Red"
+        case .colorPink:
+            return "Pink"
+        case .colorOrange:
+            return "Orange"
+        case .colorYellow:
+            return "Yellow"
+        case .colorLime:
+            return "Lime"
+        case .colorLightGreen:
+            return "Light Green"
+        case .colorGreen:
+            return "Green"
+        case .colorCyan:
+            return "Cyan"
+        case .colorLightBlue:
+            return "Light Blue"
+        case .colorBlue:
+            return "Blue"
+        case .colorLavendar:
+            return "Lavender"
+        case .colorPurple:
+            return "Purple"
+        case .colorMagenta:
+            return "Magenta"
+        case .colorDarkGray:
+            return "Dark Gray"
+        case .colorBlack:
+            return "Black"
+        }
+    }
 }

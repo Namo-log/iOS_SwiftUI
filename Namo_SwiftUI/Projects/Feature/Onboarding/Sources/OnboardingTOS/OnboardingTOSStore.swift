@@ -7,9 +7,14 @@
 
 import ComposableArchitecture
 import SwiftUI
+import CoreLocation
+import Core
 
 @Reducer
 public struct OnboardingTOSStore {
+    
+    @Dependency(\.authClient) var authClient
+    @Dependency(\.locationManager) var locationManager
     
     public init() {}
     
@@ -38,8 +43,12 @@ public struct OnboardingTOSStore {
         case tosListItemLinkTapped(AgreementItem)
         /// 약관 전체 상황 체크, 반영
         case checkAgreements
+        /// 위치 서비스 권한 업데이트
+        case authorizationStatusUpdated(CLAuthorizationStatus)
         /// 확인 버튼 탭
         case nextButtonTapped
+        /// 약관 동의 POST
+        case namoAgreementsPost(RegisterTermRequestDTO)
         /// 다음 화면으로
         case goToNextScreen
     }
@@ -57,16 +66,27 @@ public struct OnboardingTOSStore {
                     state.entireAgreement = newValue
                     state.termsOfServiceAgreement = newValue
                     state.personalDataConsent = newValue
-                    state.locationServiceAgreement = newValue
-                    state.pushNotificationConsent = newValue
-                    
+//                    state.locationServiceAgreement = newValue
+//                    state.pushNotificationConsent = newValue
+                    return .send(.tosListItemCheckCircleTapped(.locationServiceAgreement))
                 case .termsOfServiceAgreement:
                     state.termsOfServiceAgreement.toggle()
                 case .personalDataConsent:
                     state.personalDataConsent.toggle()
                 case .locationServiceAgreement:
-                    // TODO: 위치 허용 부분 추후 추가
-                    state.locationServiceAgreement.toggle()
+                    locationManager.authorizationStatusPublisher.sink { status in
+                        switch status {
+                            
+                        case .authorizedAlways, .authorizedWhenInUse:
+                            // 시스템 설정 화면으로 보내기
+                            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                            }
+                        default:
+                            locationManager.requestLocationAuthorization()
+                        }
+                    }
+                    .cancel()
                 case .pushNotificationConsent:
                     // TODO: 푸쉬 알림 허용 부분 추후 추가
                     state.pushNotificationConsent.toggle()
@@ -90,19 +110,43 @@ public struct OnboardingTOSStore {
                 // 필수 약관 동의 여부 판단
                 let requiredAgreementsChecked: Bool = state.termsOfServiceAgreement && state.personalDataConsent
                 // 모든 약관의 전체 동의 여부 판단
-                let allAgreementsChecked: Bool = requiredAgreementsChecked && state.locationServiceAgreement && state.pushNotificationConsent
+                let allAgreementsChecked: Bool = requiredAgreementsChecked && state.locationServiceAgreement
+//                && state.pushNotificationConsent
                 // 약관 동의 여부 반영
                 state.entireAgreement = allAgreementsChecked
                 state.nextButtonIsEnabled = requiredAgreementsChecked
                 return .none
-            
+                
+            case .authorizationStatusUpdated(let status):
+                let isAuthorized = status == .authorizedAlways || status == .authorizedWhenInUse
+                state.locationServiceAgreement = isAuthorized
+                return .none
+                
             case .nextButtonTapped:
                 if state.nextButtonIsEnabled {
                     print("allowed to go next")
-                    return .send(.goToNextScreen)
+                    return .send(
+                        .namoAgreementsPost(
+                            .init(
+                                isCheckTermOfUse: state.termsOfServiceAgreement,
+                                isCheckPersonalInformationCollection: state.personalDataConsent
+                            )
+                        )
+                    )
                 } else {
                     print("not allowed to go next")
                     return .none
+                }
+            
+            case .namoAgreementsPost(let reqData):
+                return .run { send in
+                    do {
+                        try await authClient.reqTermsAgreement(reqData)
+                        authClient.setAgreementCompletedState(reqData.isCheckTermOfUse && reqData.isCheckPersonalInformationCollection)
+                        await send(.goToNextScreen)
+                    } catch {
+                        print("post Error: \(error)")
+                    }
                 }
                 
             case .goToNextScreen:

@@ -54,20 +54,11 @@ public struct ProfileInfoInputView: View {
                 HStack {
                     ItemHeader(title: "이름", isRequired: true)
                     Spacer()
-                    HStack {
-                        Text(store.name)
-                            .font(.pretendard(.regular, size: 15))
-                            .foregroundColor(.textDisabled)
-                        Spacer()
-                        Circle()
-                            .fill(Color.namoOrange)
-                            .frame(width: 16, height: 16)
-                            .overlay {
-                                Image(asset: SharedDesignSystemAsset.Assets.icCheckmark)
-                                    .resizable()
-                                    .frame(width: 16, height: 16)
-                            }
-                    }
+                    ItemTextField(
+                        text: $store.name,
+                        state: $store.nameState,
+                        placeholder: "이름 입력"
+                    )
                     .frame(width: 240)
                 }
                 // 생년월일

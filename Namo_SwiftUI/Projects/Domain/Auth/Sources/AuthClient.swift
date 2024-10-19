@@ -71,6 +71,36 @@ extension AuthClient: DependencyKey {
             if result.code != 200 {
                 throw APIError.customError("회원 탈퇴 실패: 응답 코드 \(result.code)")
             }
+        },
+        reqTermsAgreement: { reqDTO in
+            let result: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: TermEndPoint.agreementTemrs(termAgreement: reqDTO))
+            
+            if result.code != 200 {
+                throw APIError.customError("약관 동의 실패: 응답 코드 \(result.code)")
+            }
+        },
+        reqProfileImageUpload: { reqImg in
+            guard let imageFile = reqImg.resize(newWidth: 55).jpegData(compressionQuality: 0.6) else { throw NSError(domain: "이미지 압축 에러", code: 1001) }
+            
+            let userId = try KeyChainManager.readItem(key: "userId")
+            let filename = "profile_image_user_\(userId)_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString)"
+            guard let url = try await APIManager.shared.getPresignedUrl(prefix: "profile", filename: filename).result else { throw APIError.customError("s3 getPresignedUrl 에러") }
+            
+            guard let uploadedUrl = try await APIManager.shared.uploadImageToS3(presignedUrl: url, imageFile: imageFile) else { throw APIError.customError("s3 uploadImageToS3 에러") }
+            
+            return uploadedUrl
+        },
+        reqSignUpComplete: { reqDTO in
+            let result: BaseResponse<SignUpCompleteResponseDTO> = try await APIManager.shared.performRequest(endPoint: AuthEndPoint.signUpComplete(signUpInfo: reqDTO))
+            
+            if result.code != 200 {
+                throw APIError.customError("회원 가입 완료 실패: 응답 코드 \(result.code)")
+            }
+            
+            guard let data = result.result else {
+                throw APIError.parseError("result.result is nil")
+            }
+            return data.toSignUpInfo()
         }
     )
 }

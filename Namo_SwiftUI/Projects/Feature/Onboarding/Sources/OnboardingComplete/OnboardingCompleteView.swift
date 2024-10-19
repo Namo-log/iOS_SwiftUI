@@ -32,7 +32,7 @@ public struct OnboardingCompleteView: View {
             }
             .padding(.bottom, 35)
             
-            ProfileCardView()
+            ProfileCardView(store: store)
                 .padding(.horizontal, 30)
             
             Spacer()

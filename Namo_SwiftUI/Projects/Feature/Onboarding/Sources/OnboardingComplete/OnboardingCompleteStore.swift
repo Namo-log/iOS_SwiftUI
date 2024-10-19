@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import DomainAuthInterface
 
 @Reducer
 public struct OnboardingCompleteStore {
@@ -14,7 +15,14 @@ public struct OnboardingCompleteStore {
     
     @ObservableState
     public struct State: Equatable {
-        public init() {}
+
+        var presentInfo: SignUpInfo?
+        var imageURL: String?
+        
+        public init(result: SignUpInfo, imageURL: String?) {
+            self.presentInfo = result
+            self.imageURL = imageURL
+        }
     }
     
     public enum Action {

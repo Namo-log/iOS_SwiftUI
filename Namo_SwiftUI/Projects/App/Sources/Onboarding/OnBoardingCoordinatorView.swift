@@ -21,12 +21,16 @@ struct OnboardingCoordinatorView: View {
                 OnboardingSplashView(store: store)
             case let .login(store):
                 OnboardingLoginView(store: store)
+                    .toolbar(.hidden)
             case let .agreement(store):
                 OnboardingTOSView(store: store)
+                    .toolbar(.hidden)
             case let .userInfo(store):
                 OnboardingInfoInputView(store: store)
+                    .toolbar(.hidden)
             case let .signUpCompletion(store):
                 OnboardingCompleteView(store: store)
+                    .toolbar(.hidden)
             }
         }
         .onAppear {

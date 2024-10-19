@@ -29,7 +29,7 @@ struct TOSListView: View {
             CheckItem(store: store, agreementItem: .termsOfServiceAgreement)
             CheckItem(store: store, agreementItem: .personalDataConsent)
             CheckItem(store: store, agreementItem: .locationServiceAgreement)
-            CheckItem(store: store, agreementItem: .pushNotificationConsent)
+//            CheckItem(store: store, agreementItem: .pushNotificationConsent)
         }
         .padding(.horizontal, 45)
     }
