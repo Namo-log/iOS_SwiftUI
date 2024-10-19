@@ -35,14 +35,29 @@ public struct AuthManager: AuthManagerProtocol {
         
         return .loginWithAll
     }
+    
+    /// 저장된 유저 정보를 삭제합니다
+    public func deleteUserInfo() {
+        do {
+            try KeyChainManager.deleteItem(key: "accessToken")
+            try KeyChainManager.deleteItem(key: "refreshToken")
+            try KeyChainManager.deleteItem(key: "userId")
+            self.deleteSocialLoginType()
+            self.deleteAgreementCompletedState()
+            self.deleteUserInfoCompletedState()
+        } catch {
+            print("임시 처리: \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: Login/Logout Extension
 public extension AuthManager {
     /// 로그인 상태 가져오기
+    /// 소셜 로그인 상태 없거나 토큰 없는 경우 nil 반환
     func getLoginState() -> OAuthType? {
         // 소셜 로그인 상태
-        guard let oAuthTypeString = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
+        guard let socialLoginType = getSocialLoginType() else { return nil }
         // 토큰 존재 여부
         do {
             _ = try KeyChainManager.readItem(key: "accessToken")
@@ -50,7 +65,7 @@ public extension AuthManager {
         } catch {
             return nil
         }
-        return OAuthType(rawValue: oAuthTypeString)
+        return socialLoginType
     }
         
     /// 카카오/네이버/애플 로그인 상태 저장
@@ -58,7 +73,7 @@ public extension AuthManager {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
             // 1. socialLogin 상태 저장
-            UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
+            setSocialLoginType(oAuthType)
             
             // 2. tokens 키체인 저장
             try KeyChainManager.addItem(key: "accessToken", value: result.accessToken)
@@ -100,15 +115,8 @@ public extension AuthManager {
                 return
             }
             
-            // 4. "socialLogin" 세팅 nil 처리
-            UserDefaults.standard.removeObject(forKey: "socialLogin")
-            
-            // 5. 유저 정보 삭제
-            try KeyChainManager.deleteItem(key: "accessToken")
-            try KeyChainManager.deleteItem(key: "refreshToken")
-            try KeyChainManager.deleteItem(key: "userId")
-            self.deleteAgreementCompletedState()
-            self.deleteUserInfoCompletedState()
+            // 4. 유저 정보 삭제
+            deleteUserInfo()
             
             print("!---로그아웃 완료---!")
         } catch {
@@ -180,19 +188,22 @@ public extension AuthManager {
     }
 }
 
-// + UI 화면 변경 어디까지 쓸 진 모름
-// 로그인 했을 때
-//    DispatchQueue.main.async {
-//        UserDefaults.standard.set(true, forKey: "isLogin")
-//        UserDefaults.standard.set(namoServerTokens?.newUser, forKey: "newUser")
-//        AppState.shared.isTabbarOpaque = false
-//        AppState.shared.isTabbarHidden = false
-//    }
-
-// 로그아웃 시
-//    DispatchQueue.main.async {
-//        // 로그인 화면으로 이동
-//        UserDefaults.standard.set(false, forKey: "isLogin")
-//        AppState.shared.isTabbarHidden = true
-//        AppState.shared.currentTab = .home
-//    }
+// MARK: Social Login Type Extension
+public extension AuthManager {
+    /// 소셜 로그인 타입 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getSocialLoginType() -> OAuthType? {
+        guard let socialLoginType = UserDefaults.standard.string(forKey: "socialLogin") else { return nil }
+        return  OAuthType(rawValue: socialLoginType)
+    }
+    
+    /// 소셜 로그인 타입 저장
+    func setSocialLoginType(_ oAuthType: OAuthType) {
+        UserDefaults.standard.set(oAuthType.rawValue, forKey: "socialLogin")
+    }
+    
+    /// 소셜 로그인 타입 제거
+    func deleteSocialLoginType() {
+        UserDefaults.standard.removeObject(forKey: "socialLogin")
+    }
+}

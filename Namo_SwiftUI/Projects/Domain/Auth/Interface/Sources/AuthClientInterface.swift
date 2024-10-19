@@ -109,6 +109,11 @@ public extension AuthClient {
     func userStatusCheck() -> UserStatus {
         return authManager.userStatusCheck()
     }
+    
+    /// 저장된 유저 정보를 삭제합니다
+    func deleteUserInfo() {
+        return authManager.deleteUserInfo()
+    }
 
     /// 현재 로그인 상태를 가져옵니다
     func getLoginState() -> OAuthType? {
@@ -159,6 +164,22 @@ public extension AuthClient {
     /// 회원 가입 유저 정보 작성 상태 제거
     func deleteUserInfoCompletedState() {
         return authManager.deleteUserInfoCompletedState()
+    }
+    
+    /// 소셜 로그인 타입 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getSocialLoginType() -> OAuthType? {
+        authManager.getSocialLoginType()
+    }
+    
+    /// 소셜 로그인 타입 저장
+    func setSocialLoginType(_ oAuthType: OAuthType) {
+        authManager.setSocialLoginType(oAuthType)
+    }
+    
+    /// 소셜 로그인 타입 제거
+    func deleteSocialLoginType() {
+        authManager.deleteSocialLoginType()
     }
 }
 
