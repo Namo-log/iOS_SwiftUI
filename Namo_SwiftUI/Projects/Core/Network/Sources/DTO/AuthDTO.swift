@@ -11,8 +11,8 @@ import Foundation
 /// 약관동의 여부 구조체
 public struct TermDTO: Decodable {
     
-    let content: String
-    let check: Bool
+    public let content: String
+    public let check: Bool
 }
 
 /// 로그인 응답 DTO

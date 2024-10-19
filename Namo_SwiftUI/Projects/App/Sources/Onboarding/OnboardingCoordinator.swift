@@ -83,11 +83,13 @@ struct OnboardingCoordinator {
                     
                     // 약관 동의 화면으로 이동
                 case .login(.goToNextScreen):
-                    return .send(.goToAgreementScreen)
+//                    return .send(.goToAgreementScreen)
+                    return .send(.loginCheck)
                     
                     // 유저 정보 입력 화면으로 이동
                 case .agreement(.goToNextScreen):
-                    return .send(.goToUserInfoScreen)
+//                    return .send(.goToUserInfoScreen)
+                    return .send(.loginCheck)
                     
                     // 회원가입 완료 화면으로 이동
                 case let .userInfo(.goToNextScreen(info, imageURL)):
@@ -136,8 +138,6 @@ struct OnboardingCoordinator {
                 
                 // 로그인 체크 결과 라우팅
             case .loginCheck:
-                guard !state.hasPerformedLoginCheck else { return .none }
-                state.hasPerformedLoginCheck = true
                 
                 switch authClient.userStatusCheck() {
                     

@@ -361,6 +361,7 @@ public struct OnboardingInfoInputStore {
                 return .run { send in
                     do {
                         let result = try await authClient.reqSignUpComplete(reqData)
+                        authClient.setUserInfoCompletedState(true)
                         await send(.goToNextScreen(info: result, imageURL: url))
                     } catch {
                         print("post Error: \(error)")

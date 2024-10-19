@@ -67,6 +67,11 @@ public extension AuthManager {
             // 3. userId 키체인 저장
             try KeyChainManager.addItem(key: "userId", value: String(result.userId))
             
+            // 4. 약관 동의, 필요 정보 작성 여부 저장
+            let termAgreement = result.terms.reduce(true) { $0 && $1.check }
+            self.setAgreementCompletedState(termAgreement)
+            self.setUserInfoCompletedState(result.signUpComplete)
+            
             print("!---로그인 처리 완료---!")
         } catch {
             // 에러 처리
@@ -98,12 +103,12 @@ public extension AuthManager {
             // 4. "socialLogin" 세팅 nil 처리
             UserDefaults.standard.removeObject(forKey: "socialLogin")
             
-            // 5. tokens 키체인 삭제
+            // 5. 유저 정보 삭제
             try KeyChainManager.deleteItem(key: "accessToken")
             try KeyChainManager.deleteItem(key: "refreshToken")
-            
-            // 6. userId 키체인 삭제
             try KeyChainManager.deleteItem(key: "userId")
+            self.deleteAgreementCompletedState()
+            self.deleteUserInfoCompletedState()
             
             print("!---로그아웃 완료---!")
         } catch {
@@ -141,7 +146,7 @@ public extension AuthManager {
     /// 약관 동의 상태 가져오기
     /// 저장된 값이 없는 경우 nil 반환
     func getAgreementCompletedState() -> Bool? {
-        guard let isAgreementCompleted = UserDefaults.standard.value(forKey: "agreementCompleted") as? Bool else { return nil }
+        guard let isAgreementCompleted = UserDefaults.standard.value(forKey: "isAgreementCompleted") as? Bool else { return nil }
         return isAgreementCompleted
     }
     

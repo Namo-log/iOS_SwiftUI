@@ -68,7 +68,7 @@ public struct OnboardingTOSStore {
                     state.personalDataConsent = newValue
 //                    state.locationServiceAgreement = newValue
 //                    state.pushNotificationConsent = newValue
-                    
+                    return .send(.tosListItemCheckCircleTapped(.locationServiceAgreement))
                 case .termsOfServiceAgreement:
                     state.termsOfServiceAgreement.toggle()
                 case .personalDataConsent:
@@ -142,6 +142,7 @@ public struct OnboardingTOSStore {
                 return .run { send in
                     do {
                         try await authClient.reqTermsAgreement(reqData)
+                        authClient.setAgreementCompletedState(reqData.isCheckTermOfUse && reqData.isCheckPersonalInformationCollection)
                         await send(.goToNextScreen)
                     } catch {
                         print("post Error: \(error)")
