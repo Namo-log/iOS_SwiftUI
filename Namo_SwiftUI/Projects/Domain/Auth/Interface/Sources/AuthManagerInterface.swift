@@ -13,8 +13,8 @@ public protocol AuthManagerProtocol {
     func deleteUserInfo()
     func getLoginState() -> OAuthType?
     func setLoginState(_ oAuthType: OAuthType, with result: SignInResponseDTO)
-    func setLogoutState(with oAuthType: OAuthType) async
-    func withdraw(with oAuthType: OAuthType) async
+    func setLogoutState() async
+    func withdraw() async
     func getAgreementCompletedState() -> Bool?
     func setAgreementCompletedState(_ isCompleted: Bool)
     func deleteAgreementCompletedState()

@@ -95,16 +95,19 @@ public extension AuthManager {
     }
     
     /// 카카오/네이버/애플 로그아웃 상태 저장
-    func setLogoutState(with oAuthType: OAuthType) async {
+    func setLogoutState() async {
         // TODO: 로그인 상태 관련 UI 처리 작업 필요한 지 확인
         do {
-            // 1. get refreshToken
+            // 1. get loginType
+            guard let oAuthType = getLoginState() else { throw NSError(domain: "로그인 상태 로딩 실패", code: 1001) }
+            
+            // 2. get refreshToken
             let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
             
-            // 2. 나모 로그아웃 API 호출
+            // 3. 나모 로그아웃 API 호출
             try await authClient.reqSignOut(LogoutRequestDTO(refreshToken: refreshToken))
             
-            // 3. 소셜 로그인 타입별 로그아웃 진행
+            // 4. 소셜 로그인 타입별 로그아웃 진행
             switch oAuthType {
                 
             case .kakao:
@@ -115,7 +118,7 @@ public extension AuthManager {
                 return
             }
             
-            // 4. 유저 정보 삭제
+            // 5. 유저 정보 삭제
             deleteUserInfo()
             
             print("!---로그아웃 완료---!")
@@ -129,9 +132,12 @@ public extension AuthManager {
 // MARK: Withdraw Extension
 public extension AuthManager {
     /// OAuthType별 회원탈퇴 처리
-    func withdraw(with oAuthType: OAuthType) async {
+    func withdraw() async {
         do {
+            guard let oAuthType = getLoginState() else { throw NSError(domain: "로그인 상태 로딩 실패", code: 1001) }
+            
             let refreshToken: String = try KeyChainManager.readItem(key: "refreshToken")
+            
             switch oAuthType {
                 
             case .kakao:
@@ -141,6 +147,9 @@ public extension AuthManager {
             case .apple:
                 try await authClient.reqWithdrawalApple(LogoutRequestDTO(refreshToken: refreshToken))
             }
+            
+            deleteUserInfo()
+            
             print("!---회원 탈퇴 완료---!")
         } catch {
             // 에러 처리

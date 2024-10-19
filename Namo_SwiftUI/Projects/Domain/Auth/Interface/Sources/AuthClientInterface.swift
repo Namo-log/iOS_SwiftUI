@@ -126,13 +126,13 @@ public extension AuthClient {
     }
     
     /// 로그인 된 소셜 로그인 타입에 맞춰 로그아웃합니다
-    func setLogoutState(with oAuthType: OAuthType) async {
-        return await authManager.setLogoutState(with: oAuthType)
+    func setLogoutState() async {
+        return await authManager.setLogoutState()
     }
     
     /// OAuthType별 회원탈퇴 처리
-    func withdraw(with oAuthType: OAuthType) async {
-        return await authManager.withdraw(with: oAuthType)
+    func withdraw() async {
+        return await authManager.withdraw()
     }
     
     /// 약관 동의 상태 가져오기
