@@ -4,7 +4,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
 	.feature(
-		interface: .KakaoMap,
+		interface: .PlaceSearch,
 		factory: .init(
 			dependencies: [
 				.domain
@@ -12,42 +12,42 @@ let targets: [Target] = [
 		)
 	),
 	.feature(
-		implements: .KakaoMap,
+		implements: .PlaceSearch,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .KakaoMap)
+				.feature(interface: .PlaceSearch)
 			]
 		)
 	),
 	.feature(
-		testing: .KakaoMap,
+		testing: .PlaceSearch,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .KakaoMap)
+				.feature(interface: .PlaceSearch)
 			]
 		)
 	),
 	.feature(
-		tests: .KakaoMap,
+		tests: .PlaceSearch,
 		factory: .init(
 			dependencies: [
-				.feature(testing: .KakaoMap)
+				.feature(testing: .PlaceSearch)
 			]
 		)
 	),
 	.feature(
-		example: .KakaoMap,
+		example: .PlaceSearch,
 		factory: .init(
 			infoPlist: .exampleAppDefault,
 			dependencies: [
-				.feature(implements: .KakaoMap)
+				.feature(implements: .PlaceSearch)
 			]
 		)
 	)
 ]
 
 let project: Project = .makeModule(
-	name: ModulePath.Feature.name+ModulePath.Feature.KakaoMap.rawValue,
+	name: ModulePath.Feature.name+ModulePath.Feature.PlaceSearch.rawValue,
 	targets: targets
 )
 
