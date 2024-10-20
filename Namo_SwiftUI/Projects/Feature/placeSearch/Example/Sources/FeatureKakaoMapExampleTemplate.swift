@@ -7,21 +7,18 @@
 
 import SwiftUI
 import FeaturePlaceSearch
+import FeaturePlaceSearchInterface
 import KakaoMapsSDK
 import SharedUtil
 
 @main
-struct FeatureKakaoMapExampleApp: App {
-    @State var draw: Bool = false
+struct FeatureKakaoMapExampleApp: App {    
     
     var body: some Scene {
         WindowGroup {
-            KakaoMapView(draw: $draw).onAppear(perform: {              
-                self.draw = true
-            }).onDisappear(perform: {
-                self.draw = false
-            }).frame(maxWidth: .infinity, maxHeight: 380)
-            Spacer()                 
+            PlaceSearchView(store: .init(initialState: PlaceSearchStore.State(), reducer: {
+                PlaceSearchStore()
+            }))
         }
     }
 }

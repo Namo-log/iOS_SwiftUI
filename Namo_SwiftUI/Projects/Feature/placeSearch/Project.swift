@@ -15,7 +15,7 @@ let targets: [Target] = [
 		implements: .PlaceSearch,
 		factory: .init(
 			dependencies: [
-				.feature(interface: .PlaceSearch)
+				.feature(interface: .PlaceSearch)                
 			]
 		)
 	),
@@ -40,7 +40,8 @@ let targets: [Target] = [
 		factory: .init(
 			infoPlist: .exampleAppDefault,
 			dependencies: [
-				.feature(implements: .PlaceSearch)
+				.feature(implements: .PlaceSearch),
+                .feature(interface: .PlaceSearch)
 			]
 		)
 	)
