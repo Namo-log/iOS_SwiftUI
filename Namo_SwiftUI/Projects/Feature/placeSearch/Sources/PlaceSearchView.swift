@@ -20,11 +20,13 @@ public struct PlaceSearchView: View {
     
     public var body: some View {
         WithPerceptionTracking {
-            KakaoMapView(draw: $draw).onAppear(perform: {
+            KakaoMapView(store: store, draw: $draw).onAppear(perform: {
                 self.draw = true
             }).onDisappear(perform: {
                 self.draw = false
             }).frame(maxWidth: .infinity, maxHeight: 380)
+            
+            
             HStack {
                 TextField("", text: $store.searchText)
                     .textFieldStyle(.roundedBorder)

@@ -21,9 +21,9 @@ public struct PlaceSearchStore {
     public struct State: Equatable {
         public init() {}
         
-        public var longitude: Double = 0.0
+        public var x: Double = 0.0
         
-        public var latitude: Double = 0.0
+        public var y: Double = 0.0
         
         public var locationName: String = ""
         
