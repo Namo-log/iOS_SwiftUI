@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+public struct PlaceSearchUseCase {
+    public var getSearchList: @Sendable (String) async throws -> Void
+    public init(getSearchList: @escaping @Sendable (_ query: String) async throws -> Void) {
+        self.getSearchList = getSearchList
+    }
+}

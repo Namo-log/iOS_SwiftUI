@@ -19,7 +19,7 @@ public struct PlaceSearchView: View {
     }
     
     public var body: some View {
-        VStack {
+        WithPerceptionTracking {
             KakaoMapView(draw: $draw).onAppear(perform: {
                 self.draw = true
             }).onDisappear(perform: {
@@ -28,7 +28,9 @@ public struct PlaceSearchView: View {
             HStack {
                 TextField("", text: $store.searchText)
                     .textFieldStyle(.roundedBorder)
-                Button(action: {}, label: {
+                Button(action: {
+                    store.send(.searchButtonTapped)
+                }, label: {
                     Text("검색")
                 })
             }

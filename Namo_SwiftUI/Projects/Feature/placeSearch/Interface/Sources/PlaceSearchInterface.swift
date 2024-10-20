@@ -31,7 +31,7 @@ public struct PlaceSearchStore {
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case searchLocations
+        case searchButtonTapped
     }
     
     public var body: some ReducerOf<Self> {
