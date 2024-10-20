@@ -35,6 +35,13 @@ public struct PlaceSearchView: View {
                 })
             }
             
+            List(store.searchList, id: \.self.placeName) { place in
+                VStack {
+                    Text(place.placeName)
+                        .font(.title)
+                    Text(place.addressName)
+                }
+            }
             Spacer()
         }
         .padding(.horizontal, 30)

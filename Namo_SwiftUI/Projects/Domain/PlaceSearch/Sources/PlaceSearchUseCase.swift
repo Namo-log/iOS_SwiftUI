@@ -8,10 +8,17 @@
 import Foundation
 import ComposableArchitecture
 import DomainPlaceSearchInterface
+import CoreNetwork
 
 extension PlaceSearchUseCase: DependencyKey {
     public static var liveValue: PlaceSearchUseCase = PlaceSearchUseCase { query in
-        print("검색어: ", query)
+        do {
+            let response: KakaoLocationSearchResponseDTO = try await  APIManager.shared.performRequestWithoutBaseResponse(endPoint: KakaoEndPoint.getKakaoMapAPIRequest(req: .init(query: query)))
+            
+            return response.documents.map { $0.toEntity() }
+        } catch {
+            throw error
+        }
     }
 }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import DomainPlaceSearchInterface
 
 @Reducer
 public struct PlaceSearchStore {
@@ -27,11 +28,14 @@ public struct PlaceSearchStore {
         public var locationName: String = ""
         
         public var searchText: String = ""
+        
+        public var searchList: [LocationInfo] = []
     }
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case searchButtonTapped
+        case placeListResponse([LocationInfo])
     }
     
     public var body: some ReducerOf<Self> {

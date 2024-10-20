@@ -18,8 +18,12 @@ public extension PlaceSearchStore {
             switch action {
             case .searchButtonTapped:
                 return .run { [state = state] send in
-                    try await placeUseCase.getSearchList(state.searchText)
+                   let placeList = try await placeUseCase.getSearchList(state.searchText)
+                    await send(.placeListResponse(placeList))
                 }
+            case let .placeListResponse(placeList):
+                state.searchList = placeList
+                return .none
             default:
                 return .none
             }
