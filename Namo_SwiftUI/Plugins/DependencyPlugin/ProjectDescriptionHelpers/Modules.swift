@@ -48,6 +48,7 @@ public extension ModulePath {
 		case Schedule
         case Moim
         case Auth
+        case PlaceSearch
 		
 		public static let name: String = "Domain"
 	}

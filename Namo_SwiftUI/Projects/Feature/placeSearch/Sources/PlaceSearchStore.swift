@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FeaturePlaceSearchInterface
 import ComposableArchitecture
 
 public extension PlaceSearchStore {
