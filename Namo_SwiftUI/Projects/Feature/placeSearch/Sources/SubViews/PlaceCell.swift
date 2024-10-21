@@ -9,7 +9,8 @@ import SwiftUI
 import SharedDesignSystem
 struct PlaceCell: View {
     let placeName: String
-    let placeAddress: String
+    let addressName: String
+    let roadAddressName: String
     let isSelected: Bool
     
     var body: some View {
@@ -20,12 +21,12 @@ struct PlaceCell: View {
                         .font(.pretendard(.bold, size: 14))
                         .foregroundStyle(Color.mainText)                    
                     
-                    Text(placeAddress)
+                    Text(addressName)
                         .font(.pretendard(.regular, size: 11))
                         .foregroundStyle(Color.mainText)
                         .padding(.top, 7)
                     
-                    Text(placeAddress)
+                    Text(roadAddressName)
                         .font(.pretendard(.regular, size: 11))
                         .foregroundStyle(Color.mainText)
                         .padding(.top, 5)

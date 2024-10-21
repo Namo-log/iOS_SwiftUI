@@ -12,12 +12,14 @@ public struct LocationInfo: Equatable {
                 placeName: String,
                 x: String,
                 y: String,
-                addressName: String) {
+                addressName: String,
+                roadAddressName: String) {
         self.id = id
         self.placeName = placeName
         self.x = x
         self.y = y
         self.addressName = addressName
+        self.roadAddressName = roadAddressName
     }
     
     public let id: String
@@ -25,6 +27,7 @@ public struct LocationInfo: Equatable {
     public let x: String
     public let y: String
     public let addressName: String
+    public let roadAddressName: String
 }
 
 

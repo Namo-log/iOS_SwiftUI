@@ -83,7 +83,8 @@ public struct PlaceSearchView: View {
                         store.send(.poiTapped(place.id))
                     }, label: {
                         PlaceCell(placeName: place.placeName,
-                                  placeAddress: place.addressName,
+                                  addressName: place.addressName,
+                                  roadAddressName: place.roadAddressName,
                                   isSelected: place.id == store.id)
                     })
                 }
@@ -92,9 +93,7 @@ public struct PlaceSearchView: View {
             .padding(.top, 24)
             .padding(.bottom, 8)
         }
-    }
-    
-
+    }    
 }
 
 // #Preview {

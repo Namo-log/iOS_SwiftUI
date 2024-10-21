@@ -14,6 +14,7 @@ public extension KakaoLocationSearchDocument {
               placeName: placeName,
               x: x,
               y: y,
-              addressName: addressName)
+              addressName: addressName,
+              roadAddressName: roadAddressName)
     }
 }
