@@ -19,7 +19,7 @@ public struct PlaceSearchView: View {
     }
     
     public var body: some View {
-        WithPerceptionTracking {
+        WithPerceptionTracking {            
             KakaoMapView(store: store, draw: $draw).onAppear(perform: {
                 self.draw = true
             }).onDisappear(perform: {

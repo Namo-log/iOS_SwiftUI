@@ -8,9 +8,12 @@
 import SwiftUI
 import KakaoMapsSDK
 import SharedUtil
+import SharedDesignSystem
 import ComposableArchitecture
 import FeaturePlaceSearchInterface
+import DomainPlaceSearchInterface
 import Combine
+
 public struct KakaoMapView: UIViewRepresentable {
     let store: StoreOf<PlaceSearchStore>
     
@@ -78,6 +81,9 @@ public struct KakaoMapView: UIViewRepresentable {
                           let  latitude = Double(firstLocation.y) else { return }
                     
                     moveCamera(longitude: longitude, latitude: latitude)
+                    createLabelLayer()
+                    createPoiStyle()
+                    createPois(placeList)
                 }
                 .store(in: &cancellables)
         }
@@ -90,6 +96,52 @@ public struct KakaoMapView: UIViewRepresentable {
                 autoElevation: true, // autoElevation 컨펌 필요
                 consecutive: true,
                 durationInMillis: 1500))
+        }
+        
+        private func createLabelLayer() {
+            let view: KakaoMap = controller?.getView("mapview") as! KakaoMap
+            let manager = view.getLabelManager()
+            let layerOption = LabelLayerOptions(layerID: "PoiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 0)
+            let _ = manager.addLabelLayer(option: layerOption)
+        }
+        
+        func createPoiStyle() {
+            let view = controller?.getView("mapview") as! KakaoMap
+            let manager = view.getLabelManager()
+            
+            // 검색 시 기본 핀
+            
+            let iconStyle = PoiIconStyle(symbol: UIImage(systemName: "pin"))
+            let poiStyle = PoiStyle(styleID: "defaultStyle", styles: [PerLevelPoiStyle(iconStyle: iconStyle, level: 0)])
+            
+            // 핀 탭시 변경되는 스타일
+            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "pin.fill"))
+            let poiStyle2 = PoiStyle(styleID: "selectedStyle", styles: [PerLevelPoiStyle(iconStyle: iconStyle2, level: 0)])
+            
+            manager.addPoiStyle(poiStyle)
+            manager.addPoiStyle(poiStyle2)
+        }
+        
+        func createPois(_ placeList: [LocationInfo]) {
+            let view = controller?.getView("mapview") as! KakaoMap
+            let manager = view.getLabelManager()
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            
+            let pois = layer?.getAllPois().map { $0.map { return $0.itemID} } ?? []
+            layer?.removePois(poiIDs: pois)
+            
+            for place in placeList {
+                guard let longitude = Double(place.x),
+                      let latitude = Double(place.y) else { return }
+                let poiOption = PoiOptions(styleID: "defaultStyle", poiID: UUID().uuidString)
+                poiOption.rank = 0
+                poiOption.clickable = true
+                
+                let poi1 = layer?.addPoi(option:poiOption, at: MapPoint(longitude: longitude, latitude: latitude))
+                poi1?.show()
+            }
+            
+            layer?.showAllPois()
         }
         
         private var cancellables = Set<AnyCancellable>()
