@@ -49,12 +49,11 @@ public struct KakaoMapView: UIViewRepresentable {
         return KakaoMapCoordinator(store: store)
     }
     
-    public class KakaoMapCoordinator: NSObject, MapControllerDelegate {
+    public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         
         public init(store: StoreOf<PlaceSearchStore>) {
             first = true
-            self.store = store
-            self.viewStore = ViewStoreOf<PlaceSearchStore>(store, observe: { $0 })
+            self.store = ViewStoreOf<PlaceSearchStore>(store, observe: { $0 })
             super.init()
         }
         
@@ -72,7 +71,9 @@ public struct KakaoMapView: UIViewRepresentable {
         }
         
         public func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-            viewStore.publisher
+            let mapView: KakaoMap = controller?.getView("mapview") as! KakaoMap
+            mapView.eventDelegate = self
+            store.publisher
                 .searchList
                 .sink { [weak self] placeList in
                     guard let self = self else { return }
@@ -86,16 +87,35 @@ public struct KakaoMapView: UIViewRepresentable {
                     createPois(placeList)
                 }
                 .store(in: &cancellables)
+            
+            store.publisher
+                .id
+                .sink(receiveValue: selectedPoi)
+                .store(in: &cancellables)
         }
         
-        private func moveCamera(longitude: Double, latitude: Double) {
+        private func selectedPoi(poiID: String) {
+            let mapView: KakaoMap = controller?.getView("mapview") as! KakaoMap
+            let manager = mapView.getLabelManager()
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            
+            guard let pois = layer?.getAllPois(),
+            let index = pois.firstIndex(where: { $0.itemID == poiID }) else { return }
+            
+            let latitude = pois[index].position.wgsCoord.latitude
+            let longitude = pois[index].position.wgsCoord.longitude
+            
+            moveCamera(longitude: longitude, latitude: latitude, durationInMillis: 300)
+        }
+        
+        private func moveCamera(longitude: Double, latitude: Double, durationInMillis: UInt = 1500) {
             let mapView: KakaoMap = controller?.getView("mapview") as! KakaoMap
             let cameraUpdate = CameraUpdate.make(cameraPosition: CameraPosition(target: MapPoint(longitude: longitude, latitude: latitude), height: 200, rotation: 0, tilt: 0))
             
             mapView.animateCamera(cameraUpdate: cameraUpdate, options: CameraAnimationOptions(
                 autoElevation: true, // autoElevation 컨펌 필요
                 consecutive: true,
-                durationInMillis: 1500))
+                durationInMillis: durationInMillis))
         }
         
         private func createLabelLayer() {
@@ -133,21 +153,30 @@ public struct KakaoMapView: UIViewRepresentable {
             for place in placeList {
                 guard let longitude = Double(place.x),
                       let latitude = Double(place.y) else { return }
-                let poiOption = PoiOptions(styleID: "defaultStyle", poiID: UUID().uuidString)
+                let poiOption = PoiOptions(styleID: "defaultStyle", poiID: place.id)
+                
                 poiOption.rank = 0
                 poiOption.clickable = true
                 
                 let poi1 = layer?.addPoi(option:poiOption, at: MapPoint(longitude: longitude, latitude: latitude))
+                
                 poi1?.show()
             }
             
             layer?.showAllPois()
         }
         
+        public func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
+            // 카메라 이동
+            moveCamera(longitude: position.wgsCoord.longitude, latitude: position.wgsCoord.latitude, durationInMillis: 300)
+            
+            // id 저장
+            store.send(.poiTapped(poiID))            
+        }
+        
         private var cancellables = Set<AnyCancellable>()
         public var controller: KMController?
         public var first: Bool
-        public let store: StoreOf<PlaceSearchStore>
-        private let viewStore: ViewStoreOf<PlaceSearchStore>
+        private let store: ViewStoreOf<PlaceSearchStore>
     }
 }

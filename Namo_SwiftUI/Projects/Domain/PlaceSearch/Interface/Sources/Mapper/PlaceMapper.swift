@@ -10,7 +10,8 @@ import CoreNetwork
 
 public extension KakaoLocationSearchDocument {
     func toEntity() -> LocationInfo {
-        .init(placeName: placeName,
+        .init(id: id,
+              placeName: placeName,
               x: x,
               y: y,
               addressName: addressName)

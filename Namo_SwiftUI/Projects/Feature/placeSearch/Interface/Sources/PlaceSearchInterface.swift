@@ -21,11 +21,13 @@ public struct PlaceSearchStore {
     public struct State: Equatable {
         public init() {}
         
+        public var id: String = ""
+        
         public var x: Double = 0.0
         
         public var y: Double = 0.0
         
-        public var locationName: String = ""
+        public var locationName: String = ""                
         
         public var searchText: String = ""
         
@@ -36,6 +38,7 @@ public struct PlaceSearchStore {
         case binding(BindingAction<State>)
         case searchButtonTapped
         case placeListResponse([LocationInfo])
+        case poiTapped(String)
     }
     
     public var body: some ReducerOf<Self> {

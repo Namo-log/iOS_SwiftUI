@@ -8,16 +8,19 @@
 import Foundation
 
 public struct LocationInfo: Equatable {
-    public init(placeName: String, 
+    public init(id: String,
+                placeName: String,
                 x: String,
                 y: String,
                 addressName: String) {
+        self.id = id
         self.placeName = placeName
         self.x = x
         self.y = y
         self.addressName = addressName
     }
     
+    public let id: String
     public let placeName: String
     public let x: String
     public let y: String

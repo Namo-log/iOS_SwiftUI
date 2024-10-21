@@ -24,6 +24,9 @@ public extension PlaceSearchStore {
             case let .placeListResponse(placeList):
                 state.searchList = placeList
                 return .none
+            case let .poiTapped(poiID):
+                state.id = poiID
+                return .none
             default:
                 return .none
             }

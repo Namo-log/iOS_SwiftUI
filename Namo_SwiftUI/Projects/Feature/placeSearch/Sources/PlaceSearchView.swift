@@ -37,11 +37,20 @@ public struct PlaceSearchView: View {
                 })
             }
             
-            List(store.searchList, id: \.self.placeName) { place in
+            List(store.searchList, id: \.self.id) { place in
                 VStack {
-                    Text(place.placeName)
-                        .font(.title)
+                    HStack {
+                        Text(place.placeName)
+                            .font(.title)
+                        
+                        if place.id == store.id {
+                            Text("✅")
+                        }
+                    }
                     Text(place.addressName)
+                }
+                .onTapGesture {
+                    store.send(.poiTapped(place.id))
                 }
             }
             Spacer()
