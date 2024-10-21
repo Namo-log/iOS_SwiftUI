@@ -20,28 +20,45 @@ public struct PlaceSearchStore {
     @ObservableState
     public struct State: Equatable {
         public init() {}
-        
+                
+        /// 맵뷰 렌더링 여부
         public var draw: Bool = false
-        
+                
+        /// 고유 id(poiID로 사용)
         public var id: String = ""
         
+        /// 경도
         public var x: Double = 0.0
         
+        /// 위도
         public var y: Double = 0.0
         
-        public var locationName: String = ""                
+        /// 장소이름
+        public var locationName: String = ""
         
+        /// 검색어
         public var searchText: String = ""
         
-        public var searchList: [LocationInfo] = []
+        /// 검색결과 리스트
+        public var placeList: [LocationInfo] = []
     }
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
+        
+        /// 검색버튼 탭(비동기)
         case searchButtonTapped
-        case placeListResponse([LocationInfo])
+        
+        /// 검색결과 응답
+        case responsePlaceList([LocationInfo])
+        
+        ///  위치핀 탭
         case poiTapped(String)
+        
+        /// 뷰나타남
         case viewOnAppear
+        
+        /// 뷰사라짐
         case viewOnDisappear
     }
     

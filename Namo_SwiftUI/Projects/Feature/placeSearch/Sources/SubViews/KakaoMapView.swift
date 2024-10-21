@@ -83,7 +83,7 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
         
         // 검색리스트 구독
         store.publisher
-            .searchList
+            .placeList
             .sink { [weak self] placeList in
                 guard let firstLocation = placeList.first,
                       let longitude = Double(firstLocation.x),
@@ -107,8 +107,8 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
     }
     
     private func showInfoWindow(poiID: String) {
-        guard let index = store.searchList.firstIndex(where: {$0.id == poiID}) else { return }
-        let curPlace = store.searchList[index]
+        guard let index = store.placeList.firstIndex(where: {$0.id == poiID}) else { return }
+        let curPlace = store.placeList[index]
         let mapView: KakaoMap = controller?.getView("mapview") as! KakaoMap
         guard let longitude = Double(curPlace.x), let latitude = Double(curPlace.y) else { return }
         

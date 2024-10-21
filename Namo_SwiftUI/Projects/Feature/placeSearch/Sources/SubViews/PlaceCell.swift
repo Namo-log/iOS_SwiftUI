@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedDesignSystem
+
 struct PlaceCell: View {
     let placeName: String
     let addressName: String

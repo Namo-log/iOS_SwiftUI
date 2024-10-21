@@ -19,12 +19,19 @@ public struct PlaceSearchView: View {
     
     public var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
-                mapView
-                searchAndResultView
+            ZStack(alignment: .topLeading) {
+                backButton
+                placeSearchView
             }
         }
         .edgesIgnoringSafeArea(.bottom)
+    }
+    
+    private var placeSearchView: some View {
+        VStack(spacing: 0) {
+            mapView
+            searchAndResultView
+        }
     }
     
     private var mapView: some View {
@@ -78,7 +85,7 @@ public struct PlaceSearchView: View {
     private var searchResults: some View {
         ScrollView {
             LazyVStack(spacing: 20) {
-                ForEach(store.searchList, id: \.id) { place in
+                ForEach(store.placeList, id: \.id) { place in
                     Button(action: {
                         store.send(.poiTapped(place.id))
                     }, label: {
@@ -93,9 +100,20 @@ public struct PlaceSearchView: View {
             .padding(.top, 24)
             .padding(.bottom, 8)
         }
-    }    
+    }
+    
+    private var backButton: some View {
+        Button(action: {}, label: {
+            Circle()
+                .overlay (
+                    Image(asset: SharedDesignSystemAsset.Assets.icArrowLeftThick)
+                )
+                .frame(width: 40, height: 40)
+                .foregroundStyle(.white)
+                .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 0)
+                .padding(.leading, 16)
+                .padding(.top, 16)
+        })
+        .zIndex(10)
+    }
 }
-
-// #Preview {
-//     PlaceSearchView()
-// }
