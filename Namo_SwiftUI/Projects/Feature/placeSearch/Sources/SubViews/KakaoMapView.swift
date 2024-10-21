@@ -16,12 +16,10 @@ import Combine
 
 public struct KakaoMapView: UIViewRepresentable {
     let store: StoreOf<PlaceSearchStore>
+        
     
-    @Binding var draw: Bool
-    
-    public init(store: StoreOf<PlaceSearchStore>, draw: Binding<Bool>) {
+    public init(store: StoreOf<PlaceSearchStore>) {
         self.store = store
-        self._draw = draw
     }
     
     public func makeUIView(context: Context) -> some KMViewContainer {
@@ -34,7 +32,7 @@ public struct KakaoMapView: UIViewRepresentable {
     }
     
     public func updateUIView(_ uiView: UIViewType, context: Context) {
-        if draw {
+        if store.draw {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 context.coordinator.controller?.prepareEngine()
                 context.coordinator.controller?.activateEngine()
@@ -175,7 +173,7 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
         let _ = pois.map { $0.changeStyle(styleID: "defaultStyle")}
         curPoi.changeStyle(styleID: "selectedStyle")
         
-        moveCamera(longitude: longitude, latitude: latitude, durationInMillis: 300)
+        moveCamera(longitude: longitude, latitude: latitude, durationInMillis: 600)
     }
     
     /// 카메라 이동
@@ -242,7 +240,7 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
     /// poiTap event
     public func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
         // 카메라 이동
-        moveCamera(longitude: position.wgsCoord.longitude, latitude: position.wgsCoord.latitude, durationInMillis: 300)
+        moveCamera(longitude: position.wgsCoord.longitude, latitude: position.wgsCoord.latitude, durationInMillis: 600)
         
         // id 저장
         store.send(.poiTapped(poiID))

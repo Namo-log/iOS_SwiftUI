@@ -27,6 +27,12 @@ public extension PlaceSearchStore {
             case let .poiTapped(poiID):
                 state.id = poiID
                 return .none
+            case .viewOnAppear:
+                state.draw = true
+                return .none
+            case .viewOnDisappear:
+                state.draw = false
+                return .none
             default:
                 return .none
             }

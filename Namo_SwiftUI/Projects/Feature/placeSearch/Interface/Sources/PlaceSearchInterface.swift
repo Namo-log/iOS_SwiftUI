@@ -21,6 +21,8 @@ public struct PlaceSearchStore {
     public struct State: Equatable {
         public init() {}
         
+        public var draw: Bool = false
+        
         public var id: String = ""
         
         public var x: Double = 0.0
@@ -39,6 +41,8 @@ public struct PlaceSearchStore {
         case searchButtonTapped
         case placeListResponse([LocationInfo])
         case poiTapped(String)
+        case viewOnAppear
+        case viewOnDisappear
     }
     
     public var body: some ReducerOf<Self> {
