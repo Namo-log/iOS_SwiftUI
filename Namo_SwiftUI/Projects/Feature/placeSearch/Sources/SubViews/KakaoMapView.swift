@@ -119,14 +119,15 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
         let infoWindow = InfoWindow("infoWindow")
         
         let bodyImage = GuiImage("bgImage")
-        bodyImage.image = SharedDesignSystemImages(name: "ic_info_window").image
+
+        bodyImage.image = UIImage.getDesignSystemImage(named: "ic_info_window")
         
         bodyImage.imageStretch = GuiEdgeInsets(top: 9, left: 9, bottom: 9, right: 9)
         
         // tailImage
         let tailImage = GuiImage("tailImage")
-        tailImage.image = SharedDesignSystemImages(name: "ic_info_window_tail").image
-        
+
+        tailImage.image =  UIImage.getDesignSystemImage(named: "ic_info_window_tail")
         //bodyImage의 child로 들어갈 layout.
         let layout: GuiLayout = GuiLayout("layout")
         layout.arrangement = .horizontal    //가로배치
@@ -201,11 +202,12 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
         let manager = view.getLabelManager()
         
         // 검색 시 기본 핀
-        let iconStyle = PoiIconStyle(symbol: SharedDesignSystemImages(name: "ic_pin").image)
+        
+        let iconStyle = PoiIconStyle(symbol: UIImage.getDesignSystemImage(named: "ic_pin"))
         let poiStyle = PoiStyle(styleID: "defaultStyle", styles: [PerLevelPoiStyle(iconStyle: iconStyle, level: 0)])
         
         // 핀 탭시 변경되는 스타일
-        let iconStyle2 = PoiIconStyle(symbol: SharedDesignSystemImages(name: "ic_pin_selected").image)
+        let iconStyle2 = PoiIconStyle(symbol: UIImage.getDesignSystemImage(named: "ic_pin_selected"))
         let poiStyle2 = PoiStyle(styleID: "selectedStyle", styles: [PerLevelPoiStyle(iconStyle: iconStyle2, level: 0)])
         
         manager.addPoiStyle(poiStyle)
