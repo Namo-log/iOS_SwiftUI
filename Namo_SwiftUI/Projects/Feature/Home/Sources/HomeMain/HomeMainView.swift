@@ -40,6 +40,9 @@ public struct HomeMainView: View {
 					},
 					scheduleAddTapAction: { date in
 						store.send(.editSchedule(isNewSchedule: true, selectDate: date))
+					},
+					scheduleEditTapAction: { schedule in
+						store.send(.editSchedule(isNewSchedule: false, schedule: schedule, selectDate: YearMonthDay.current))
 					}
 				)
 				

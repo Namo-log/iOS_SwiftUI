@@ -71,6 +71,11 @@ public struct HomeCoordinator {
 				
 				return .send(.dismiss)
 				
+			case .router(.routeAction(_, action: .scheduleEditCoordinator(.router(.routeAction(_, action: .scheduleEdit(.saveCompleted)))))):
+				// 스케쥴 저장 완료 후
+				
+				return .send(.dismiss)
+				
 			case .dismiss:
 				state.showBackgroundOpacity = false
 				state.routes.dismiss()

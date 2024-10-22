@@ -57,7 +57,7 @@ struct ScheduleEditView: View {
 						store.send(.saveBtnTapped)
 					},
 					label: {
-						Text("생성")
+						Text(store.isNewSchedule ? "생성" : "저장")
 							.font(.pretendard(.regular, size: 15))
 					}
 				)

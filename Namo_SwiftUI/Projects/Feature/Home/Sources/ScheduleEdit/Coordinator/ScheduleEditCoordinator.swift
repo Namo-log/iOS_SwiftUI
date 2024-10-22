@@ -30,6 +30,8 @@ public struct ScheduleEditCoordinator {
 		
 		// 하위 뷰에서 사용할 현재 편집 중인 스케쥴
 		@Shared var schedule: ScheduleEdit
+		// 편집의 경우 스케쥴 id
+		var scheduleId: Int
 		
 		@Shared(.inMemory(SharedKeys.categories.rawValue)) var categories: [NamoCategory] = []
 		
@@ -41,10 +43,12 @@ public struct ScheduleEditCoordinator {
 			
 		public init(
 			isNewSchedule: Bool,
-			schedule: ScheduleEdit
+			schedule: ScheduleEdit,
+			scheduleId: Int = -1
 		) {
 			self.routes = []
 			self._schedule = Shared(schedule)
+			self.scheduleId = scheduleId
 			self.isNewSchedule = isNewSchedule
 			self.showDeleteButton = !isNewSchedule
 			
@@ -54,7 +58,8 @@ public struct ScheduleEditCoordinator {
 					.scheduleEdit(
 						.init(
 							isNewSchedule: isNewSchedule,
-							schedule: $schedule
+							schedule: $schedule,
+							scheduleId: scheduleId
 						)
 					),
 					embedInNavigationView: true
@@ -72,12 +77,15 @@ public struct ScheduleEditCoordinator {
 		
 		case deleteButtonTapped
 		case categoryDeleteCompleted
+		case scheduleDeleleteCompleted
+		
 		case getAllCategoryList
 		case getAllCategoryResponse([NamoCategory])
 		
 	}
 	
 	@Dependency(\.categoryUseCase) var categoryUseCase
+	@Dependency(\.scheduleUseCase) var scheduleUseCase
 	
 	public var body: some ReducerOf<Self> {
 		Reduce { state, action in
@@ -183,8 +191,15 @@ public struct ScheduleEditCoordinator {
 					}
 					
 				case .scheduleEdit(_):
-					return .run { send in
+					return .run {[scheduleId = state.scheduleId] send in
 						// 삭제 요청
+						do {
+							try await scheduleUseCase.deleteSchedule(scheduleId)
+							await send(.scheduleDeleleteCompleted)
+						} catch (let error) {
+							// TODO: 에러 핸들링
+							print(error.localizedDescription)
+						}
 					}
 					
 				default:
