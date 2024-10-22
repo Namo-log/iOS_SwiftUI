@@ -64,6 +64,9 @@ public struct HomeMainView: View {
 				store.send(.scrollBackwardTo(ym: newYM))
 			}
 		}
+		.onReceive(NotificationCenter.default.publisher(for: .reloadCalendarViaNetwork)) { _ in
+			store.send(.getSchedule(ym: calendarController.yearMonth))
+		}
 		.namoUnderButtonPopupView(
 			isPresented: $store.showDatePicker,
 			contentView: {
