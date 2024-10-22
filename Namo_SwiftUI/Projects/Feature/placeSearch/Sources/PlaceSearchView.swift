@@ -62,6 +62,7 @@ public struct PlaceSearchView: View {
                         .foregroundStyle(Color.mainText)
                 }
                 Divider()
+                    .background(Color.textPlaceholder)
             }
             
             searchButton

@@ -106,6 +106,7 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
             .store(in: &cancellables)
     }
     
+    /// Poi 상단에 나타나는 infoWindow를 보여줍니다.
     private func showInfoWindow(poiID: String) {
         guard let index = store.placeList.firstIndex(where: {$0.id == poiID}) else { return }
         let curPlace = store.placeList[index]
@@ -174,7 +175,7 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
         let _ = pois.map { $0.changeStyle(styleID: "defaultStyle")}
         curPoi.changeStyle(styleID: "selectedStyle")
         
-        moveCamera(longitude: longitude, latitude: latitude, durationInMillis: 600)
+        moveCamera(longitude: longitude, latitude: latitude, durationInMillis: 800)
     }
     
     /// 카메라 이동
@@ -242,7 +243,7 @@ public class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEvent
     /// poiTap event
     public func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
         // 카메라 이동
-        moveCamera(longitude: position.wgsCoord.longitude, latitude: position.wgsCoord.latitude, durationInMillis: 600)
+        moveCamera(longitude: position.wgsCoord.longitude, latitude: position.wgsCoord.latitude, durationInMillis: 800)
         
         // id 저장
         store.send(.poiTapped(poiID))
