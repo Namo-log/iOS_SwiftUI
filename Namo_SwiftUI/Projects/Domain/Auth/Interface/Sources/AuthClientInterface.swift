@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import Core
+import UIKit
 
 /// BASE:
 /// 여기에서는 비즈니스 로직을 포함한 API 호출 로직만이 존재한다.
@@ -35,6 +36,12 @@ public struct AuthClient {
     public var reqWithdrawalNaver: @Sendable (LogoutRequestDTO) async throws -> Void
     /// 나모 API : 회원탈퇴 - Kakao
     public var reqWithdrawalKakao: @Sendable (LogoutRequestDTO) async throws -> Void
+    /// 나모 API : 약관동의
+    public var reqTermsAgreement: @Sendable (RegisterTermRequestDTO) async throws -> Void
+    /// 나모 API : S3 Image 업로드
+    public var reqProfileImageUpload: @Sendable (UIImage) async throws -> String
+    /// 나모 API : 회원 가입 완료
+    public var reqSignUpComplete: @Sendable (SignUpCompleteRequestDTO) async throws -> SignUpInfo
     
     // MARK: init
     public init(
@@ -46,7 +53,10 @@ public struct AuthClient {
         reqSignOut: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqWithdrawalApple: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
         reqWithdrawalNaver: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
-        reqWithdrawalKakao: @Sendable @escaping (LogoutRequestDTO) async throws -> Void
+        reqWithdrawalKakao: @Sendable @escaping (LogoutRequestDTO) async throws -> Void,
+        reqTermsAgreement: @Sendable @escaping (RegisterTermRequestDTO) async throws -> Void,
+        reqProfileImageUpload: @Sendable @escaping (UIImage) async throws -> String,
+        reqSignUpComplete: @Sendable @escaping (SignUpCompleteRequestDTO) async throws -> SignUpInfo
     ) {
         self.loginHelper = loginHelper
         self.authManager = authManager
@@ -57,6 +67,9 @@ public struct AuthClient {
         self.reqWithdrawalApple = reqWithdrawalApple
         self.reqWithdrawalNaver = reqWithdrawalNaver
         self.reqWithdrawalKakao = reqWithdrawalKakao
+        self.reqTermsAgreement = reqTermsAgreement
+        self.reqProfileImageUpload = reqProfileImageUpload
+        self.reqSignUpComplete = reqSignUpComplete
     }
 }
 
@@ -96,25 +109,30 @@ public extension AuthClient {
     func userStatusCheck() -> UserStatus {
         return authManager.userStatusCheck()
     }
+    
+    /// 저장된 유저 정보를 삭제합니다
+    func deleteUserInfo() {
+        return authManager.deleteUserInfo()
+    }
 
     /// 현재 로그인 상태를 가져옵니다
     func getLoginState() -> OAuthType? {
         return authManager.getLoginState()
     }
     
-    /// 카카오/네이버/애플 중 소셜 로그인 된 상태와 토큰을 저장합니다
-    func setLoginState(_ oAuthType: OAuthType, with tokens: Tokens) {
-        return authManager.setLoginState(oAuthType, with: tokens)
+    /// 카카오/네이버/애플 중 소셜 로그인 된 상태와 유저  정보를 저장합니다.
+    func setLoginState(_ oAuthType: OAuthType, with result: SignInResponseDTO) {
+        return authManager.setLoginState(oAuthType, with: result)
     }
     
     /// 로그인 된 소셜 로그인 타입에 맞춰 로그아웃합니다
-    func setLogoutState(with oAuthType: OAuthType) async {
-        return await authManager.setLogoutState(with: oAuthType)
+    func setLogoutState() async {
+        return await authManager.setLogoutState()
     }
     
     /// OAuthType별 회원탈퇴 처리
-    func withdraw(with oAuthType: OAuthType) async {
-        return await authManager.withdraw(with: oAuthType)
+    func withdraw() async {
+        return await authManager.withdraw()
     }
     
     /// 약관 동의 상태 가져오기
@@ -147,6 +165,22 @@ public extension AuthClient {
     func deleteUserInfoCompletedState() {
         return authManager.deleteUserInfoCompletedState()
     }
+    
+    /// 소셜 로그인 타입 가져오기
+    /// 저장된 값이 없는 경우 nil 반환
+    func getSocialLoginType() -> OAuthType? {
+        authManager.getSocialLoginType()
+    }
+    
+    /// 소셜 로그인 타입 저장
+    func setSocialLoginType(_ oAuthType: OAuthType) {
+        authManager.setSocialLoginType(oAuthType)
+    }
+    
+    /// 소셜 로그인 타입 제거
+    func deleteSocialLoginType() {
+        authManager.deleteSocialLoginType()
+    }
 }
 
 
@@ -160,7 +194,10 @@ extension AuthClient: TestDependencyKey {
         reqSignOut: unimplemented("\(Self.self).reqSignOut"),
         reqWithdrawalApple: unimplemented("\(Self.self).reqWithdrawalApple"),
         reqWithdrawalNaver: unimplemented("\(Self.self).reqWithdrawalNaver"),
-        reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao")
+        reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao"),
+        reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement"),
+        reqProfileImageUpload: unimplemented("\(Self.self).reqProfileImageUpload"),
+        reqSignUpComplete: unimplemented("\(Self.self).reqSignUpComplete")
     )
     
     public static let testValue = Self(
@@ -172,6 +209,9 @@ extension AuthClient: TestDependencyKey {
         reqSignOut: unimplemented("\(Self.self).reqSignOut"),
         reqWithdrawalApple: unimplemented("\(Self.self).reqWithdrawalApple"),
         reqWithdrawalNaver: unimplemented("\(Self.self).reqWithdrawalNaver"),
-        reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao")
+        reqWithdrawalKakao: unimplemented("\(Self.self).reqWithdrawalKakao"),
+        reqTermsAgreement: unimplemented("\(Self.self).reqTermsAgreement"),
+        reqProfileImageUpload: unimplemented("\(Self.self).reqProfileImageUpload"),
+        reqSignUpComplete: unimplemented("\(Self.self).reqSignUpComplete")
     )
 }
