@@ -292,7 +292,7 @@ public extension NSDataAsset {
 #endif
 
 public struct SharedDesignSystemImages: Sendable {
-  public let name: String      
+  public let name: String
 
   #if os(macOS)
   public typealias Image = NSImage

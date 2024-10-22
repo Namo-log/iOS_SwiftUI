@@ -154,6 +154,8 @@ private extension APIManager {
             let tokens = try await reissueTokens()
             // 토큰 저장을 시도합니다
             try storeTokens(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
+            // userID 저장을 시도합니다
+            try storeUserId(userId: tokens.userId)
             return true
         } catch {
             print("토큰 갱신 실패: \(error)")
@@ -176,6 +178,16 @@ private extension APIManager {
             print("새 토큰 저장 완료")
         } catch {
             print("토큰 저장 실패: \(error)")
+            throw error
+        }
+    }
+    
+    func storeUserId(userId: Int) throws {
+        do {
+            try KeyChainManager.addItem(key: "userId", value: String(userId))
+            print("UserID 저장 완료")
+        } catch {
+            print("UserID 저장 실패: \(error)")
             throw error
         }
     }

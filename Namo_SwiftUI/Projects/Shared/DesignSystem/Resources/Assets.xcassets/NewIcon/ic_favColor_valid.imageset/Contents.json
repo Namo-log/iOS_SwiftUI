@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Property=Valid.png",
+      "filename" : "ic_favColor_valid.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Property=Valid@2x.png",
+      "filename" : "ic_favColor_valid@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Property=Valid@3x.png",
+      "filename" : "ic_favColor_valid@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -36,6 +36,8 @@ public enum AuthEndPoint {
     // 토큰 재발급
     case reissuanceToken(token: TokenReissuanceRequestDTO)
     
+    // 회원 가입 완료
+    case signUpComplete(signUpInfo: SignUpCompleteRequestDTO)
 }
 
 extension AuthEndPoint: EndPoint {
@@ -71,12 +73,15 @@ extension AuthEndPoint: EndPoint {
             
         case .reissuanceToken:
             return "/reissuance"
+            
+        case .signUpComplete:
+            return "/signup/complete"
         }
     }
     
 	public var method: Alamofire.HTTPMethod {
         switch self {
-        case .signInKakao, .signInNaver, .signInApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout, .reissuanceToken:
+        case .signInKakao, .signInNaver, .signInApple, .withdrawMemberKakao, .withdrawMemberNaver, .withdrawMemberApple, .logout, .reissuanceToken, .signUpComplete:
             return .post
         }
     }
@@ -100,6 +105,8 @@ extension AuthEndPoint: EndPoint {
             return .requestPlain
         case .reissuanceToken:
             return .authRequestPlain
+        case .signUpComplete(signUpInfo: let dto):
+            return .requestJSONEncodable(parameters: dto)
         }
     }
     
@@ -112,6 +119,19 @@ extension AuthEndPoint: EndPoint {
 			
 		case .reissuanceToken(let dto):
 			return ["refreshToken": dto.refreshToken]
+            
+        case .signUpComplete:
+            do {
+                let accessToken = try KeyChainManager.readItem(key: "accessToken")
+                let refreshToken = try KeyChainManager.readItem(key: "refreshToken")
+                return [
+                    "Authorization": "Bearer \(accessToken)",
+                    "refreshToken": refreshToken
+                ]
+            } catch {
+                return ["Content-Type": "application/json"]
+            }
+            
         default:
             return ["Content-Type": "application/json"]
         }
