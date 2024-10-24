@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 import TCACoordinators
 import FeatureOnboarding
+import DomainAuthInterface
 import SharedUtil
 
 @Reducer(state: .equatable)
@@ -66,7 +67,7 @@ struct OnboardingCoordinator {
         // 유저 정보 작성 화면
         case goToUserInfoScreen
         // 회원가입 완료 화면
-        case goToSignUpCompletion
+        case goToSignUpCompletion(info: SignUpInfo, imageURL: String?)
         // 메인 화면
         case goToMainScreen
     }
@@ -82,15 +83,17 @@ struct OnboardingCoordinator {
                     
                     // 약관 동의 화면으로 이동
                 case .login(.goToNextScreen):
-                    return .send(.goToAgreementScreen)
+//                    return .send(.goToAgreementScreen)
+                    return .send(.loginCheck)
                     
                     // 유저 정보 입력 화면으로 이동
                 case .agreement(.goToNextScreen):
-                    return .send(.goToUserInfoScreen)
+//                    return .send(.goToUserInfoScreen)
+                    return .send(.loginCheck)
                     
                     // 회원가입 완료 화면으로 이동
-                case .userInfo(.goToNextScreen):      
-                    return .send(.goToSignUpCompletion)
+                case let .userInfo(.goToNextScreen(info, imageURL)):
+                    return .send(.goToSignUpCompletion(info: info, imageURL: imageURL))
                     
                     // 메인 화면으로 이동
                 case .signUpCompletion(.goToNextScreen):
@@ -135,8 +138,6 @@ struct OnboardingCoordinator {
                 
                 // 로그인 체크 결과 라우팅
             case .loginCheck:
-                guard !state.hasPerformedLoginCheck else { return .none }
-                state.hasPerformedLoginCheck = true
                 
                 switch authClient.userStatusCheck() {
                     
@@ -168,15 +169,14 @@ struct OnboardingCoordinator {
                 return .none
                 
             case .goToUserInfoScreen:
-                // TODO: 추후 기획 확정 시 수정
                 state.routes = [
                     .root(.login(.init())),
-                    .push(.userInfo(.init(name: nil)))
+                    .push(.userInfo(.init()))
                 ]
                 return .none
                 
-            case .goToSignUpCompletion:
-                state.routes.push(.signUpCompletion(.init()))
+            case let .goToSignUpCompletion(info, imageURL):
+                state.routes.push(.signUpCompletion(.init(result: info, imageURL: imageURL)))
                 return .none
                 
             case .goToMainScreen:

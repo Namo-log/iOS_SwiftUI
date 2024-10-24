@@ -7,8 +7,12 @@
 
 import ComposableArchitecture
 import SwiftUI
+import PhotosUI
+import CoreNetwork
+import DomainAuthInterface
 
 import SharedDesignSystem
+import SharedUtil
 
 /// InfoInput 작성 시 내용 구분용으로 사용하는 enum입니다
 public enum InfoFormState: Equatable {
@@ -37,6 +41,8 @@ public enum InfoFormState: Equatable {
 @Reducer
 public struct OnboardingInfoInputStore {
     
+    @Dependency(\.authClient) var authClient
+    
     /// 닉네임 정규식 (영어, 한글, 숫자 포함 12자 이내, 특수 문자 및 이모지 불가)
     let nicknameRegex = "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{1,12}$"
     /// 년도 정규식
@@ -45,18 +51,20 @@ public struct OnboardingInfoInputStore {
     let monthRegex = "^(0[1-9]|1[0-2])$"
     /// 일 정규식
     let dayRegex = "^(0[1-9]|[12][0-9]|3[01])$"
-
+    
     public init() {}
     
     @ObservableState
     public struct State: Equatable {
         
+        /// 프로필 이미지 아이템 -> 프로필 이미지로 변환
+        var profileImageItem: PhotosPickerItem?
         /// 프로필 이미지
-        var profileImage: Image?
+        var profileImage: UIImage?
         /// 닉네임
         var nickname: String = ""
         /// 이름
-        let name: String
+        var name: String = ""
         /// 생년
         var birthYear: String = ""
         /// 생월
@@ -70,13 +78,15 @@ public struct OnboardingInfoInputStore {
         /// 선택된 팔레트 컬러
         var selectedPaletterColor: PalleteColor?
         /// 좋아하는 색상
-        var favoriteColor: Color?
+        var favoriteColor: PalleteColor?
         /// 좋아하는 색상 선택 상태
         var favoriteColorState: InfoFormState = .blank
         /// 닉네임 작성 상태
         var nicknameState: InfoFormState = .blank
         /// 이름 로드 여부
-        var isNameLoaded: Bool = false
+//        var isNameLoaded: Bool = false
+        /// 이름 작성 상태
+        var nameState: InfoFormState = .blank
         /// 생년 작성 상태
         var birthYearState: InfoFormState = .blank
         /// 생월 작성 상태
@@ -93,22 +103,26 @@ public struct OnboardingInfoInputStore {
         var isShowingNamoToast: Bool = false
         
         
-        public init(name: String?) {
-            if let name {
-                self.name = name
-                self.isNameLoaded = true
-            }
-            else {
-                self.name = "Unvalid"
-                self.isNameLoaded = false
-            }
-        }
+        //        public init(name: String?) {
+        //            if let name {
+        //                self.name = name
+        //                self.isNameLoaded = true
+        //            }
+        //            else {
+        //                self.name = "Unvalid"
+        //                self.isNameLoaded = false
+        //            }
+        //        }
+        
+        public init() {}
+        
+//        func getSignUpCompleteRequestDTO() -> SignUpCompleteRequestDTO {
+//
+//        }
     }
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        /// 이미지 추가 버튼 탭
-        case addImageButtonTapped
         /// 좋아하는 컬러 추가 버튼 탭
         case addFavoriteColorButtonTapped
         /// 컬러 팔레트 색 선택
@@ -117,8 +131,14 @@ public struct OnboardingInfoInputStore {
         case saveFavoriteColor(PalleteColor?)
         /// 컬러 팔레트 dismiss
         case dismissColorPaletteView
+        /// 프로필 이미지 수정
+        case profileImageChanged(PhotosPickerItem?)
+        /// 프로필 이미지 수정사항 반영
+        case profileImageLoaded(UIImage?)
         /// 닉네임 수정
         case nicknameChanged(String)
+        /// 이름 수정
+        case nameChanged(String)
         /// 생년 수정
         case birthYearChanged(String)
         /// 생월 수정
@@ -129,14 +149,20 @@ public struct OnboardingInfoInputStore {
         case birthDateMerge(String, String, String)
         /// 한줄소개 수정
         case bioChanged(String)
-        /// 폼 작성 상태 확인
-        case checkFormStatus
+        /// 폼 작성 상태 검증
+        case checkFormValidate
+        /// 확인 버튼 상태 업데이트
+        case updateNextButtonStatus
+        /// 프로필 이미지 POST
+        case profileImagePost(UIImage)
+        /// 회원가입 완료 POST
+        case namoSignUpPost(dto: SignUpCompleteRequestDTO, imageURL: String?)
         /// 확인 버튼 탭
         case nextButtonTapped
         /// 토스트뷰 표시
         case showToastView
         /// 다음 화면으로
-        case goToNextScreen
+        case goToNextScreen(info: SignUpInfo, imageURL: String?)
     }
 
     public var body: some ReducerOf<Self> {
@@ -147,8 +173,12 @@ public struct OnboardingInfoInputStore {
             case .binding(let bindingAction):
                 switch bindingAction.keyPath {
                     // 바인딩된 State 별 Action 라우팅
+                case \State.profileImageItem:
+                    return .send(.profileImageChanged(state.profileImageItem))
                 case \State.nickname:
                     return .send(.nicknameChanged(state.nickname))
+                case \State.name:
+                    return .send(.nameChanged(state.name))
                 case \State.bio:
                     return .send(.bioChanged(state.bio))
                 case \State.birthYear:
@@ -168,99 +198,177 @@ public struct OnboardingInfoInputStore {
                 default:
                     return .none
                 }
-            
-            case .addImageButtonTapped:
-                print("이미지 피커 표시")
-                return .none
-            
+                
             case .addFavoriteColorButtonTapped:
                 print("컬러 팔레트 표시")
                 state.isShowingPalette = true
                 return .none
-            
+                
             case .selectPaletteColor(let color):
                 print("컬러 선택: \(color)")
                 state.selectedPaletterColor = color
                 return .none
-            
+                
             case .saveFavoriteColor(let nilableColor):
-                if let color = nilableColor?.color {
-                    print("컬러 저장: \(color)")
-                    state.favoriteColor = color
-                    state.favoriteColorState = .valid
-                    return .send(.checkFormStatus)
-                }
-                else {
-                    print("컬러 저장 불가")
-                    return .none
-                }
-            
+                state.favoriteColor = nilableColor
+                state.favoriteColorState = .filled
+                return .send(.updateNextButtonStatus)
+                
             case .dismissColorPaletteView:
                 print("컬러 팔레트 dismiss")
                 state.isShowingPalette = false
                 return .none
-            
+                
+            case .profileImageChanged(let item):
+                guard let item = item else {
+                    return .send(.profileImageLoaded(nil))
+                }
+
+                return .run { send in
+                    do {
+                        if let data = try await item.loadTransferable(type: Data.self),
+                           let image = UIImage(data: data) {
+                            await send(.profileImageLoaded(image))
+                        } else {
+                            await send(.profileImageLoaded(nil))
+                        }
+                    } catch {
+                        print("Error loading image: \(error)")
+                        await send(.profileImageLoaded(nil))
+                    }
+                }
+                
+            case .profileImageLoaded(let image):
+                state.profileImage = image
+                return .none
+                
             case .nicknameChanged(let nickname):
-//                state.nicknameState = nickname.isEmpty ? .blank : .filled
-                state.nicknameState = state.nickname.matches(regex: nicknameRegex) ? .valid : .invalid
                 print("현재 nickname: \(nickname), \(state.nicknameState)")
-                return .send(.checkFormStatus)
-            
+                state.nicknameState = nickname.isEmpty ? .blank : .filled
+                return .send(.updateNextButtonStatus)
+                
+            case .nameChanged(let name):
+                print("현재 name: \(name), \(state.nameState)")
+                state.nameState = name.isEmpty ? .blank : .filled
+                return .send(.updateNextButtonStatus)
+                
             case .birthYearChanged(let year):
                 print("현재 year: \(year)")
-//                state.birthYearState = year.isEmpty ? .blank : .filled
-                state.birthYearState = state.birthYear.matches(regex: yearRegex) ? .valid : .invalid
+                state.birthYearState = year.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
-            
+                
             case .birthMonthChanged(let month):
                 print("현재 month: \(month)")
-//                state.birthMonthState = month.isEmpty ? .blank : .filled
-                state.birthMonthState = state.birthMonth.matches(regex: monthRegex) ? .valid : .invalid
+                state.birthMonthState = month.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
-            
+                
             case .birthDayChanged(let day):
                 print("현재 day: \(day)")
-//                state.birthDayState = day.isEmpty ? .blank : .filled
-                state.birthDayState = state.birthDay.matches(regex: dayRegex) ? .valid : .invalid
+                state.birthDayState = day.isEmpty ? .blank : .filled
                 return .send(.birthDateMerge(state.birthYear, state.birthMonth, state.birthDay))
-            
+                
             case .birthDateMerge(let year, let month, let day):
                 state.birthDate = "\(year)-\(month)-\(day)"
-                print("현재 birthDate: \(state.birthDate)")
-                return .send(.checkFormStatus)
-            
+                return .send(.updateNextButtonStatus)
+                
             case .bioChanged(let bio):
                 print("현재 bio: \(bio)")
-//                state.bioState = bio.isEmpty ? .blank : .filled
-                state.bioState = state.bio.count <= 50 ? .valid : .invalid
-                return .send(.checkFormStatus)
-            
-            case .checkFormStatus:
+                state.bioState = bio.isEmpty ? .blank : .filled
+                return .send(.updateNextButtonStatus)
+                
+            case .updateNextButtonStatus:
                 let status =
-                state.favoriteColorState == .valid
-                && state.nicknameState == .valid
-                && state.isNameLoaded
-                && state.birthYearState == .valid
-                && state.birthMonthState == .valid
-                && state.birthDayState == .valid
-                && state.bioState != .invalid
+                state.favoriteColor != nil
+                && state.nickname.matches(regex: nicknameRegex)
+                && !state.name.isEmpty
+                && state.birthYear.matches(regex: yearRegex)
+                && state.birthMonth.matches(regex: monthRegex)
+                && state.birthDay.matches(regex: dayRegex)
+                && state.bio.count <= 50
                 
                 state.isNextButtonIsEnabled = status
                 return .none
                 
             case .nextButtonTapped:
-                if state.isNextButtonIsEnabled {
+                return .send(.checkFormValidate)
+                
+            case .checkFormValidate:
+                state.favoriteColorState = state.favoriteColor != nil ? .valid : .invalid
+                state.nicknameState = state.nickname.matches(regex: nicknameRegex) ? .valid : .invalid
+                state.nameState = state.name.isEmpty ? .blank : .valid
+                state.birthYearState = state.birthYear.matches(regex: yearRegex) ? .valid : .invalid
+                state.birthMonthState = state.birthMonth.matches(regex: monthRegex) ? .valid : .invalid
+                state.birthDayState = state.birthDay.matches(regex: dayRegex) ? .valid : .invalid
+                state.bioState = state.bio.count <= 50 ? .valid : .invalid
+                
+                if state.favoriteColorState == .valid &&
+                    state.nicknameState == .valid &&
+                    state.nameState == .valid &&
+                    state.birthYearState == .valid &&
+                    state.birthMonthState == .valid &&
+                    state.birthDayState == .valid &&
+                    state.bioState == .valid,
+                   let birthdate = state.birthDate,
+                   let colorId = state.favoriteColor?.rawValue{
                     print("allowed to go next")
-                    return .send(.goToNextScreen)
+                    
+                    if let profileImage = state.profileImage {
+                        return .send(.profileImagePost(profileImage))
+                    } else {
+                        return .send(.namoSignUpPost(dto: .init(
+                            name: state.name,
+                            nickname: state.nickname,
+                            birthday: birthdate,
+                            colorId: colorId,
+                            bio: state.bio,
+                            profileImage: SecretConstants.namoDefaultProfileImageURL),
+                                                     imageURL: nil
+                        ))
+                    }
                 } else {
                     print("not allowed to go next")
-                    return .concatenate(
-                        // TODO: 모든 UI 일괄 검증 로직 추가
-                        .send(.showToastView)
-                    )
+                    return .send(.showToastView)
                 }
-            
-            case .goToNextScreen:
+                
+            case .profileImagePost(let reqImg):
+                guard
+                    let birthday = state.birthDate,
+                    let colorId = state.favoriteColor?.rawValue else {
+                    return .send(.showToastView)
+                }
+                let name = state.name
+                let nickname = state.nickname
+                let bio = state.bio
+                
+                return .run { send in
+                    do {
+                        let imgString = try await authClient.reqProfileImageUpload(reqImg)
+                        let reqDTO = SignUpCompleteRequestDTO(
+                            name: name,
+                            nickname: nickname,
+                            birthday: birthday,
+                            colorId: colorId,
+                            bio: bio,
+                            profileImage: imgString
+                        )
+                        await send(.namoSignUpPost(dto: reqDTO, imageURL: imgString))
+                    } catch {
+                        print("post image error: \(error)")
+                    }
+                }
+                
+            case let .namoSignUpPost(reqData, url):
+                return .run { send in
+                    do {
+                        let result = try await authClient.reqSignUpComplete(reqData)
+                        authClient.setUserInfoCompletedState(true)
+                        await send(.goToNextScreen(info: result, imageURL: url))
+                    } catch {
+                        print("post Error: \(error)")
+                    }
+                }
+                
+            case let .goToNextScreen(result, url):
                 print("goToNextScreen")
                 return .none
                 
