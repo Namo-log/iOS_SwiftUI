@@ -206,22 +206,22 @@ public struct ScheduleUseCase {
 	
 	// 보여지는 알림(ex 정시, 5분 전 등)을 서버에서 요구하는 포맷으로 변경합니다.
 	func formatReminderTrigger(reminderTriggers: [String]) -> [String] {
-		// 정시 -> ST
 		return reminderTriggers.map { trigger in
 			if trigger.contains("정시") {
 				return "ST"
 			} else if trigger.contains("일 전") {
 				let number = Int(trigger.replacingOccurrences(of: "일 전", with: ""))!
-				return "D{\(number)}"
+				return "D\(number)"
 			} else if trigger.contains("시간 전") {
 				let number = Int(trigger.replacingOccurrences(of: "시간 전", with: ""))!
-				return "H{\(number)}"
+				return "H\(number)"
 			} else if trigger.contains("분 전") {
 				let number = Int(trigger.replacingOccurrences(of: "분 전", with: ""))!
-				return "M{\(number)}"
+				return "M\(number)"
 			} else {
 				return ""
 			}
+			
  
 		}
 	}
