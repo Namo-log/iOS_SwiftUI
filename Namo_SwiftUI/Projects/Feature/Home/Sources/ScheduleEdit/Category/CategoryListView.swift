@@ -15,14 +15,16 @@ struct CategoryListView: View {
 	let store: StoreOf<CategoryListStore>
 	
 	var body: some View {
-		VStack {
-			navigationBar
-				.padding(.horizontal, 19)
-			
-			ScrollView(.vertical, showsIndicators: false) {
-				categoryList
+		WithPerceptionTracking {
+			VStack {
+				navigationBar
+					.padding(.horizontal, 19)
+				
+				ScrollView(.vertical, showsIndicators: false) {
+					categoryList
+				}
+				.padding(.horizontal, 30)
 			}
-			.padding(.horizontal, 30)
 		}
 		.toolbar(.hidden, for: .navigationBar)
 	}
