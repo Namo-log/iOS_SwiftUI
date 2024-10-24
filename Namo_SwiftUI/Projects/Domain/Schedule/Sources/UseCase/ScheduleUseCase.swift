@@ -201,7 +201,7 @@ public struct ScheduleUseCase {
 		var schedule = schedule
 		schedule.reminderTrigger = formatReminderTrigger(reminderTriggers: schedule.reminderTrigger ?? [])
 		
-		let response: BaseResponse<Int> = try await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.updateSchedule(scheduleId: scheduleId, schedule: schedule.toData()))
+		let _: BaseResponse<String> = try await APIManager.shared.performRequest(endPoint: ScheduleEndPoint.updateSchedule(scheduleId: scheduleId, schedule: schedule.toData()))
 	}
 	
 	// 보여지는 알림(ex 정시, 5분 전 등)을 서버에서 요구하는 포맷으로 변경합니다.
