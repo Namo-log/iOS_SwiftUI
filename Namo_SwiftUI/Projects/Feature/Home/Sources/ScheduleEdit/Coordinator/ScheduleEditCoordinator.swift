@@ -153,7 +153,7 @@ public struct ScheduleEditCoordinator {
 				return .send(.checkAndShowDeleteButton, animation: .default)
 				
 			case .router(.routeAction(_, action: .categoryEdit(.saveCompleted))):
-				// 알림 편집/생성 완료 후 pop
+				// 카테고리 편집/생성 완료 후 pop
 				state.routes.pop()
 				
 				// 카테고리 목록 새로고침
@@ -164,7 +164,7 @@ public struct ScheduleEditCoordinator {
 				
 			case .checkAndShowDeleteButton:
 				// schedule edit으로 돌아오면 삭제 버튼 보여질지 체크
-				if state.isNewSchedule { state.showDeleteButton = true }
+				if !state.isNewSchedule { state.showDeleteButton = true }
 				
 				return .none
 				
